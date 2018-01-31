@@ -32,6 +32,8 @@ from snaps.openstack.create_image import OpenStackImage
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.utils import keystone_utils
+from snaps.openstack.utils import neutron_utils
+from snaps.openstack.utils import nova_utils
 import yaml
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
@@ -65,7 +67,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         )
 
         self.created_object = []
-        self.snaps_creds = snaps_utils.get_credentials()
         self.details['orchestrator'] = dict(
             name=get_config("orchestrator.name", config_file),
             version=get_config("orchestrator.version", config_file),
@@ -91,21 +92,14 @@ class JujuEpc(vnf.VnfOnBoarding):
         )
         self.images = get_config("tenant_images", config_file)
         self.__logger.info("Images needed for vEPC: %s", self.images)
-        self.keystone_client = os_utils.get_keystone_client()
-        self.glance_client = os_utils.get_glance_client()
-        self.neutron_client = os_utils.get_neutron_client()
-        self.nova_client = os_utils.get_nova_client()
         self.sec_group_id = None
         self.public_auth_url = None
-        self.creds = None
         self.filename = None
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
-        self.__logger.debug("OS Credentials: %s", os_utils.get_credentials())
-
         super(JujuEpc, self).prepare()
-
+        self.__logger.debug("OS Credentials: %s", self.snaps_creds)
         self.__logger.info("Additional pre-configuration steps")
         self.public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
@@ -114,18 +108,11 @@ class JujuEpc(vnf.VnfOnBoarding):
         if not self.public_auth_url.endswith(('v3', 'v3/', 'v2.0', 'v2.0/')):
             self.public_auth_url = urljoin(self.public_auth_url, 'v3')
 
-        self.creds = {
-            "tenant": self.tenant_name,
-            "username": self.tenant_name,
-            "password": self.tenant_name,
-            "auth_url": os_utils.get_credentials()['auth_url']
-            }
-
         cloud_data = {
             'url': self.public_auth_url,
-            'pass': self.tenant_name,
-            'tenant_n': self.tenant_name,
-            'user_n': self.tenant_name,
+            'pass': self.snaps_creds.password,
+            'tenant_n': self.snaps_creds.project_name,
+            'user_n': self.snaps_creds.username,
             'region': os.environ.get(
                 "OS_REGION_NAME", self.default_region_name)
         }
@@ -136,22 +123,8 @@ class JujuEpc(vnf.VnfOnBoarding):
 
         if self.snaps_creds.identity_api_version == 3:
             append_config(
-                self.filename, '{}'.format(
-                    os_utils.get_credentials()['project_domain_name']),
-                '{}'.format(os_utils.get_credentials()['user_domain_name']))
-
-        self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_file in self.images.iteritems():
-            self.__logger.info("image: %s, file: %s", image_name, image_file)
-            if image_file and image_name:
-                image_creator = OpenStackImage(
-                    self.snaps_creds,
-                    ImageConfig(name=image_name,
-                                image_user='cloud',
-                                img_format='qcow2',
-                                image_file=image_file))
-                image_creator.create()
-                self.created_object.append(image_creator)
+                self.filename, self.snaps_creds.project_domain_name,
+                self.snaps_creds.user_domain_name)
 
     def deploy_orchestrator(self):  # pylint: disable=too-many-locals
         """
@@ -180,7 +153,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         network_settings = NetworkConfig(name=private_net_name,
                                          subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
-        network_creator.create()
+        net_id = network_creator.create().id
         self.created_object.append(network_creator)
 
         ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
@@ -206,16 +179,24 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Creating Cloud for Abot-epc .....")
         os.system('juju add-cloud abot-epc -f {}'.format(self.filename))
         os.system('juju add-credential abot-epc -f {}'.format(self.filename))
-        for image_name in self.images.keys():
-            self.__logger.info("Generating Metadata for %s", image_name)
-            image_id = os_utils.get_image_id(self.glance_client, image_name)
-            os.system(
-                'juju metadata generate-image -d ~ -i {} -s {} -r '
-                '{} -u {}'.format(
-                    image_id, image_name,
-                    os.environ.get("OS_REGION_NAME", self.default_region_name),
-                    self.public_auth_url))
-        net_id = os_utils.get_network_id(self.neutron_client, private_net_name)
+        self.__logger.info("Upload some OS images if it doesn't exist")
+        for image_name, image_file in self.images.iteritems():
+            self.__logger.info("image: %s, file: %s", image_name, image_file)
+            if image_file and image_name:
+                image_creator = OpenStackImage(
+                    self.snaps_creds,
+                    ImageConfig(name=image_name,
+                                image_user='cloud',
+                                img_format='qcow2',
+                                image_file=image_file))
+                image_id = image_creator.create().id
+                os.system(
+                    'juju metadata generate-image -d ~ -i {} -s {} -r '
+                    '{} -u {}'.format(
+                        image_id, image_name,
+                        os.environ.get("OS_REGION_NAME", self.default_region_name),
+                        self.public_auth_url))
+                self.created_object.append(image_creator)
         self.__logger.info("Credential information  : %s", net_id)
         juju_bootstrap_command = ('juju bootstrap abot-epc abot-controller '
                                   '--config network={} --metadata-source ~  '
@@ -246,19 +227,21 @@ class JujuEpc(vnf.VnfOnBoarding):
         status = os.system('juju-wait')
         self.__logger.info("juju wait completed: %s", status)
         self.__logger.info("Deployed Abot-epc on Openstack")
+        nova_client = nova_utils.nova_client(self.snaps_creds)
+        neutron_client = neutron_utils.neutron_client(self.snaps_creds)
         if status == 0:
-            instances = os_utils.get_instances(self.nova_client)
+            instances = os_utils.get_instances(nova_client)
             for items in instances:
-                metadata = get_instance_metadata(self.nova_client, items)
+                metadata = get_instance_metadata(nova_client, items)
                 if 'juju-units-deployed' in metadata:
                     sec_group = ('juju-' + metadata['juju-controller-uuid'] +
                                  '-' + metadata['juju-model-uuid'])
                     self.sec_group_id = os_utils.get_security_group_id(
-                        self.neutron_client, sec_group)
+                        neutron_client, sec_group)
                     break
             self.__logger.info("Adding Security group rule....")
-            os_utils.create_secgroup_rule(self.neutron_client,
-                                          self.sec_group_id, 'ingress', 132)
+            os_utils.create_secgroup_rule(
+                neutron_client, self.sec_group_id, 'ingress', 132)
             self.__logger.info("Copying the feature files to Abot_node ")
             os.system('juju scp -- -r {}/featureFiles abot-'
                       'epc-basic/0:~/'.format(self.case_dir))
@@ -327,27 +310,8 @@ class JujuEpc(vnf.VnfOnBoarding):
 
         if not self.orchestrator['requirements']['preserve_setup']:
             self.__logger.info('Remove the Abot_epc OS object ..')
-            for creator in reversed(self.created_object):
-                try:
-                    creator.clean()
-                except Exception as exc:  # pylint: disable=broad-except
-                    self.__logger.error('Unexpected error cleaning - %s', exc)
+            super(JujuEpc, self).clean()
 
-            self.__logger.info("Releasing all the floating IPs")
-            floating_ips = os_utils.get_floating_ips(self.neutron_client)
-            tenant_id = os_utils.get_tenant_id(self.keystone_client,
-                                               self.tenant_name)
-            self.__logger.info("TENANT ID : %s", tenant_id)
-            for item in floating_ips:
-                if item['tenant_id'] == tenant_id:
-                    os_utils.delete_floating_ip(self.neutron_client,
-                                                item['id'])
-            self.__logger.info("Cleaning Projects and Users")
-            for creator in reversed(self.created_object):
-                try:
-                    creator.clean()
-                except Exception as exc:  # pylint: disable=broad-except
-                    self.__logger.error('Unexpected error cleaning - %s', exc)
         return True
 
 
