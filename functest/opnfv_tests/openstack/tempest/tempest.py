@@ -241,6 +241,7 @@ class TempestCommon(testcase.TestCase):
                 self.resources.os_creds)
             conf_utils.configure_tempest(
                 self.DEPLOYMENT_DIR,
+                network_name=resources.get("network_name"),
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
                 compute_cnt=compute_cnt)
@@ -378,10 +379,13 @@ class TempestResourcesManager(object):
             tempest_segmentation_id = CONST.__getattribute__(
                 'tempest_segmentation_id')
 
+        tempest_net_name = CONST.__getattribute__(
+            'tempest_private_net_name') + self.guid
+
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(
-                name=CONST.__getattribute__(
-                    'tempest_private_net_name') + self.guid,
+                name=tempest_net_name,
+                shared=True,
                 project_name=project_name,
                 network_type=tempest_network_type,
                 physical_network=tempest_physical_network,
@@ -477,6 +481,7 @@ class TempestResourcesManager(object):
                   image_id, image_id_alt, flavor_id, flavor_id_alt,))
 
         result = {
+            'network_name': tempest_net_name,
             'image_id': image_id,
             'image_id_alt': image_id_alt,
             'flavor_id': flavor_id,
