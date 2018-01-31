@@ -257,8 +257,9 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.openstack.tempest.'
                        'conf_utils.shutil.copyfile'):
             conf_utils.configure_tempest_defcore(
-                'test_dep_dir', 'test_image_id', 'test_flavor_id',
-                'test_image_alt_id', 'test_flavor_alt_id', 'test_tenant_id')
+                'test_dep_dir', 'test_network_name', 'test_image_id',
+                'test_flavor_id', 'test_image_alt_id', 'test_flavor_alt_id',
+                'test_tenant_id')
             mset.assert_any_call('compute', 'image_ref', 'test_image_id')
             mset.assert_any_call('compute', 'image_ref_alt',
                                  'test_image_alt_id')
