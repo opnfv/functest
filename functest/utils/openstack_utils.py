@@ -519,7 +519,10 @@ def create_instance_and_wait_for_active(flavor_name,
     count = VM_BOOT_TIMEOUT / SLEEP
     for n in range(count, -1, -1):
         status = get_instance_status(nova_client, instance)
-        if status.lower() == "active":
+        if status is None:
+            time.sleep(SLEEP)
+            continue
+        elif status.lower() == "active":
             return instance
         elif status.lower() == "error":
             logger.error("The instance %s went to ERROR status."
