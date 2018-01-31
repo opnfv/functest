@@ -5,7 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=missing-docstring
+# pylint: disable=missing-docstring,protected-access,invalid-name
 
 import json
 import logging
@@ -22,14 +22,16 @@ from snaps.openstack.os_credentials import OSCreds
 
 
 class OSRallyTesting(unittest.TestCase):
+    # pylint: disable=too-many-public-methods
     def setUp(self):
         os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
         with mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                        'get_credentials', return_value=os_creds) as m:
+                        'get_credentials',
+                        return_value=os_creds) as mock_get_creds:
             self.rally_base = rally.RallyBase()
-        self.assertTrue(m.called)
+        self.assertTrue(mock_get_creds.called)
 
     def test_build_task_args_missing_floating_network(self):
         CONST.__setattr__('OS_AUTH_URL', None)
@@ -230,6 +232,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_taskid_missing(self, mock_logger_error, *args):
+        # pylint: disable=unused-argument
         self.rally_base._run_task('test_name')
         text = 'Failed to retrieve task_id, validating task...'
         mock_logger_error.assert_any_call(text)
@@ -257,6 +260,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_default(self, mock_logger_error, mock_logger_info,
                               *args):
+        # pylint: disable=unused-argument
         self.rally_base._run_task('test_name')
         text = 'Test scenario: "test_name" OK.\n'
         mock_logger_info.assert_any_call(text)
@@ -311,18 +315,13 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router',
                 return_value=None)
-    def test_prepare_env_router_creation_failed(
-            self, mock_create_router, mock_create_net, mock_get_img,
-            mock_get_net, mock_get_comp_cnt):
+    def test_prepare_env_router_creation_failed(self, *args):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
-        mock_create_net.assert_called()
-        mock_get_img.assert_called()
-        mock_get_net.assert_called()
-        mock_create_router.assert_called()
-        mock_get_comp_cnt.assert_called()
+        for func in args:
+            func.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_active_compute_cnt')
@@ -333,18 +332,14 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
-    def test_prepare_env_flavor_creation_failed(
-            self, mock_create_flavor, mock_create_router, mock_create_net,
-            mock_get_img, mock_get_net, mock_get_comp_cnt):
+    def test_prepare_env_flavor_creation_failed(self, mock_create_flavor,
+                                                *args):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
-        mock_create_net.assert_called()
-        mock_get_img.assert_called()
-        mock_get_net.assert_called()
-        mock_create_router.assert_called()
-        mock_get_comp_cnt.assert_called()
+        for func in args:
+            func.assert_called()
         mock_create_flavor.assert_called_once()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
@@ -356,18 +351,14 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 side_effect=[mock.Mock, None])
-    def test_prepare_env_flavor_alt_creation_failed(
-            self, mock_create_flavor, mock_create_router, mock_create_net,
-            mock_get_img, mock_get_net, mock_get_comp_cnt):
+    def test_prepare_env_flavor_alt_creation_failed(self, mock_create_flavor,
+                                                    *args):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
-        mock_create_net.assert_called()
-        mock_get_img.assert_called()
-        mock_get_net.assert_called()
-        mock_create_router.assert_called()
-        mock_get_comp_cnt.assert_called()
+        for func in args:
+            func.assert_called()
         self.assertEqual(mock_create_flavor.call_count, 2)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -407,7 +398,8 @@ class OSRallyTesting(unittest.TestCase):
                 '_clean_up')
     def test_run_default(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
-        map(lambda m: m.assert_called(), args)
+        for func in args:
+            func.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment', side_effect=Exception)
@@ -415,12 +407,12 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_create_rally_dep.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_prepare_env', side_effect=Exception)
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment', return_value=mock.Mock())
-    def test_run_exception_prepare_env(self, mock_create_rally_dep,
-                                       mock_prep_env):
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                '_prepare_env', side_effect=Exception)
+    def test_run_exception_prepare_env(self, mock_prep_env, *args):
+        # pylint: disable=unused-argument
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_prep_env.assert_called()
 
