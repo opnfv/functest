@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+1: Periyasamy Palanisamy <periyasamy.palanisamy@ericsson.com>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Submitted-by: Juha Kosonen <juha.kosonen@nokia.com>
+Submitted-at: Thu, 01 Feb 2018 09:25:22 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/51413
+Project: functest
+Branch: refs/heads/master
