@@ -1,0 +1,68 @@
+---
+project: 'Base System Functionality Testing Project (functest)'
+project_creation_date: 'January 20, 2015'
+project_category: 'Integration & Testing'
+lifecycle_state: 'Incubation'
+project_lead: &opnfv_functest_ptl
+    name: 'Cédric Ollivier'
+    email: 'cedric.ollivier@orange.com'
+    company: 'orange'
+    id: 'ollivier'
+    timezone: 'Europe/Paris'
+primary_contact: *opnfv_functest_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.opnfv.org/projects/FUNCTEST'
+    key: 'FUNCTEST'
+mailing_list:
+    type: 'mailman2'
+    url: 'opnfv-tech-discuss@lists.opnfv.org'
+    tag: '[functest]'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#opnfv-functest'
+meetings:
+    - type: 'irc'
+      agenda: 'https://wiki.opnfv.org/display/functest/Functest+5.+Meeting'
+      url: 'http://ircbot.wl.linuxfoundation.org/meetings/opnfv-functest/'
+      server: 'freenode.net'
+      channel: '#opnfv-meeting'
+      repeats: 'weekly'
+      time: '08:00 UTC'
+repositories:
+    - 'functest'
+    - 'functest-kubernetes'
+    - 'functest-requirements'
+    - 'functest-xtesting'
+committers:
+    - <<: *opnfv_functest_ptl
+    - name: 'Morgan Richomme'
+      email: 'morgan.richomme@orange.com'
+      company: 'orange'
+      id: 'mrichomme'
+      timezone: ''
+    - name: 'valentin boucher'
+      email: 'valentin.boucher@kontron.com'
+      company: 'kontron'
+      id: 'boucherv'
+      timezone: ''
+    - name: 'Viktor Tikkanen'
+      email: 'viktor.tikkanen@nokia.com'
+      company: 'nokia'
+      id: 'vitikkan'
+      timezone: ''
+    - name: 'Juha Kosonen'
+      email: 'juha.kosonen@nokia.com'
+      company: 'nokia'
+      id: 'jukosone'
+      timezone: ''
+    - name: 'Linda Wang'
+      email: 'wangwulin@huawei.com'
+      company: 'huawei'
+      id: 'wangwulin'
+      timezone: ''
+tsc:
+    # yamllint disable rule:line-length
+    approval: 'http//meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html'
+    # yamllint enable rule:line-length
