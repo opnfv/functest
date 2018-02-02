@@ -139,7 +139,7 @@ class ODLTests(robotframework.RobotFramework):
     def run(self, **kwargs):
         """Run suites in OPNFV environment
 
-        It basically check env vars to call main() with the keywords
+        It basically checks env vars to call main() with the keywords
         required.
 
         Args:
