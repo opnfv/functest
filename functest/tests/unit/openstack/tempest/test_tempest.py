@@ -145,12 +145,11 @@ class OSTempestTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'subprocess.Popen'):
             conf_utils.TEMPEST_LIST = 'test_tempest_list'
-            cmd_line = ("rally verify start  --load-list "
-                        "test_tempest_list --detailed")
+            cmd = ["rally", "verify", "start", "--load-list",
+                   conf_utils.TEMPEST_LIST]
             self.tempestcommon.run_verifier_tests()
             mock_logger_info. \
-                assert_any_call("Starting Tempest test suite: '%s'."
-                                % cmd_line)
+                assert_any_call("Starting Tempest test suite: '%s'." % cmd)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
