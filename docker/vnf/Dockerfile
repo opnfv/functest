@@ -3,6 +3,11 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/pike
 ARG VIMS_TAG=stable
+ARG JUJU_TAG=tags/juju-2.2.5
+
+ENV GOPATH /src/epc-requirements/go
+ENV GOBIN /src/epc-requirements/go/bin
+ENV PATH $GOBIN:$PATH
 
 RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
@@ -18,6 +23,10 @@ RUN apk --no-cache add --update \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         juju-wait && \
     go get github.com/rogpeppe/godeps && \
+    go get -d -v github.com/juju/juju/... || true && \
+    (cd $GOPATH/src/github.com/juju/juju && git checkout $JUJU_TAG && godeps -u dependencies.tsv) && \
+    go install -v github.com/juju/juju/... && \
+    rm -rf $GOPATH/go/src/ $GOPATH/pkg && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     rm -r upper-constraints.txt /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps

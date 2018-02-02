@@ -9,7 +9,6 @@
 """Juju testcase implementation."""
 
 import logging
-import shutil
 import os
 import time
 import json
@@ -203,22 +202,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Juju Bootstrap: Skip creation of flavors")
         flavor_creator.create()
         self.created_object.append(flavor_creator)
-        self.__logger.info("Installing Dependency Packages .......")
-        source_dir = "/src/epc-requirements/juju_bin_build"
-        if os.path.exists(source_dir):
-            shutil.rmtree(source_dir)
-        os.makedirs(source_dir)
-        os.environ['GOPATH'] = str(source_dir)
-        os.environ['GOBIN'] = str(source_dir) + "/bin"
-        os.environ['PATH'] = ((os.path.expandvars('$GOPATH')) + ":" +
-                              (os.path.expandvars('$GOBIN')) + ":" +
-                              (os.path.expandvars('$PATH')))
-        os.system('go get -d -v github.com/juju/juju/...')
-        os.chdir(source_dir + "/src" + "/github.com" + "/juju" + "/juju")
-        os.system('git checkout tags/juju-2.2.5')
-        os.system('go get github.com/rogpeppe/godeps')
-        os.system('godeps -u dependencies.tsv')
-        os.system('go install -v github.com/juju/juju/...')
         self.__logger.info("Creating Cloud for Abot-epc .....")
         os.system('juju add-cloud abot-epc -f {}'.format(self.filename))
         os.system('juju add-credential abot-epc -f {}'.format(self.filename))
