@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Fri, 02 Feb 2018 23:12:14 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/51491
+Project: functest
+Branch: refs/heads/master
