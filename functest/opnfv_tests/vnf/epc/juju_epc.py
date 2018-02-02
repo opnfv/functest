@@ -16,7 +16,7 @@ import sys
 from copy import deepcopy
 from urlparse import urljoin
 
-import functest.core.vnf as vnf
+from functest.core import vnf
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
 import functest.utils.openstack_utils as os_utils
@@ -169,8 +169,6 @@ class JujuEpc(vnf.VnfOnBoarding):
             'vnf_{}_external_router'.format(self.case_name))
         dns_nameserver = CONST.__getattribute__(
             'vnf_{}_dns_nameserver'.format(self.case_name))
-        ext_net_name = CONST.__getattribute__(
-            'vnf_{}_external_network_name'.format(self.case_name))
 
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(name=private_subnet_name,
