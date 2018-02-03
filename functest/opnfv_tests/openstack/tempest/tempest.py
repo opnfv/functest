@@ -47,7 +47,7 @@ class TempestCommon(testcase.TestCase):
         super(TempestCommon, self).__init__(**kwargs)
         self.resources = TempestResourcesManager(**kwargs)
         self.MODE = ""
-        self.OPTION = ""
+        self.OPTION = []
         self.VERIFIER_ID = conf_utils.get_verifier_id()
         self.VERIFIER_REPO_DIR = conf_utils.get_verifier_repo_dir(
             self.VERIFIER_ID)
@@ -123,11 +123,10 @@ class TempestCommon(testcase.TestCase):
         result_file.close()
 
     def run_verifier_tests(self):
-        self.OPTION += (" --load-list {} --detailed"
-                        .format(conf_utils.TEMPEST_LIST))
-
-        cmd_line = "rally verify start " + self.OPTION
-        logger.info("Starting Tempest test suite: '%s'." % cmd_line)
+        cmd = ["rally", "verify", "start", "--load-list",
+               conf_utils.TEMPEST_LIST]
+        cmd.extend(self.OPTION)
+        logger.info("Starting Tempest test suite: '%s'." % cmd)
 
         header = ("Tempest environment:\n"
                   "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
@@ -146,7 +145,7 @@ class TempestCommon(testcase.TestCase):
         f_env.write(header)
 
         p = subprocess.Popen(
-            cmd_line, shell=True,
+            cmd,
             stdout=subprocess.PIPE,
             stderr=f_stderr,
             bufsize=1)
@@ -172,10 +171,9 @@ class TempestCommon(testcase.TestCase):
         if self.VERIFICATION_ID is None:
             raise Exception('Verification UUID not found')
 
-        cmd_line = "rally verify show --uuid {}".format(self.VERIFICATION_ID)
-        logger.info("Showing result for a verification: '%s'." % cmd_line)
-        p = subprocess.Popen(cmd_line,
-                             shell=True,
+        cmd = ["rally", "verify", "show", "--uuid", self.VERIFICATION_ID]
+        logger.info("Showing result for a verification: '%s'." % cmd)
+        p = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT)
         for line in p.stdout:
@@ -266,7 +264,7 @@ class TempestSmokeSerial(TempestCommon):
             kwargs["case_name"] = 'tempest_smoke_serial'
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "smoke"
-        self.OPTION = "--concurrency 1"
+        self.OPTION = ["--concurrency", "1"]
 
 
 class TempestSmokeParallel(TempestCommon):
@@ -276,7 +274,6 @@ class TempestSmokeParallel(TempestCommon):
             kwargs["case_name"] = 'tempest_smoke_parallel'
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "smoke"
-        self.OPTION = ""
 
 
 class TempestFullParallel(TempestCommon):
@@ -295,7 +292,7 @@ class TempestCustom(TempestCommon):
             kwargs["case_name"] = 'tempest_custom'
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "custom"
-        self.OPTION = "--concurrency 1"
+        self.OPTION = ["--concurrency", "1"]
 
 
 class TempestDefcore(TempestCommon):
@@ -305,7 +302,7 @@ class TempestDefcore(TempestCommon):
             kwargs["case_name"] = 'tempest_defcore'
         TempestCommon.__init__(self, **kwargs)
         self.MODE = "defcore"
-        self.OPTION = "--concurrency 1"
+        self.OPTION = ["--concurrency", "1"]
 
 
 class TempestResourcesManager(object):
