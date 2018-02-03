@@ -86,8 +86,8 @@ Testing healthcheck suite
 Run healthcheck suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
-      -v $(pwd)/images:/home/opnfv/functest/images  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/images:/home/opnfv/functest/images \
       opnfv/functest-healthcheck:euphrates
 
 Results shall be displayed as follows::
@@ -107,8 +107,8 @@ Testing smoke suite
 Run smoke suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
-      -v $(pwd)/images:/home/opnfv/functest/images  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/images:/home/opnfv/functest/images \
       opnfv/functest-smoke:euphrates
 
 Results shall be displayed as follows::
@@ -135,8 +135,8 @@ Testing features suite
 Run features suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
-      -v $(pwd)/images:/home/opnfv/functest/images  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/images:/home/opnfv/functest/images \
       opnfv/functest-features:euphrates
 
 Results shall be displayed as follows::
@@ -160,8 +160,8 @@ Testing components suite
 Run components suite::
 
   sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
-      -v $(pwd)/images:/home/opnfv/functest/images  \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+      -v $(pwd)/images:/home/opnfv/functest/images \
       opnfv/functest-components:euphrates
 
 Results shall be displayed as follows::
@@ -179,8 +179,8 @@ Testing vnf suite
 Run vnf suite::
 
 sudo docker run --env-file env \
-    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds  \
-    -v $(pwd)/images:/home/opnfv/functest/images  \
+    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/openstack.creds \
+    -v $(pwd)/images:/home/opnfv/functest/images \
     opnfv/functest-vnf:euphrates
 
 Results shall be displayed as follows::
@@ -731,6 +731,6 @@ work with the above pre-requisite actions.
 .. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
 .. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/
 .. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
-.. _`images/CentOS-7-x86_64-GenericCloud.qcow2` http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
-.. _`images/cirros-0.3.5-x86_64-disk.img` https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-.. _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img` https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+.. _`images/CentOS-7-x86_64-GenericCloud.qcow2`: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+.. _`images/cirros-0.3.5-x86_64-disk.img`: http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+.. _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img`: https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
