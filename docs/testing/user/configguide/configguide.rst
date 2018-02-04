@@ -79,7 +79,6 @@ Create a directory for the different images (attached as a Docker volume)::
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
   images/vyos-1.1.7.img
 
-
 Testing healthcheck suite
 --------------------------
 
@@ -95,9 +94,9 @@ Results shall be displayed as follows::
   +----------------------------+------------------+---------------------+------------------+----------------+
   |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +----------------------------+------------------+---------------------+------------------+----------------+
-  |      connection_check      |     functest     |     healthcheck     |      00:02       |      PASS      |
-  |         api_check          |     functest     |     healthcheck     |      04:57       |      PASS      |
-  |     snaps_health_check     |     functest     |     healthcheck     |      00:51       |      PASS      |
+  |      connection_check      |     functest     |     healthcheck     |      00:06       |      PASS      |
+  |         api_check          |     functest     |     healthcheck     |      06:52       |      PASS      |
+  |     snaps_health_check     |     functest     |     healthcheck     |      00:42       |      PASS      |
   +----------------------------+------------------+---------------------+------------------+----------------+
   NOTE: the duration is a reference and it might vary depending on your SUT.
 
@@ -116,15 +115,14 @@ Results shall be displayed as follows::
   +------------------------------+------------------+---------------+------------------+----------------+
   |          TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +------------------------------+------------------+---------------+------------------+----------------+
-  |          vping_ssh           |     functest     |     smoke     |      01:19       |      PASS      |
-  |        vping_userdata        |     functest     |     smoke     |      01:56       |      PASS      |
-  |     tempest_smoke_serial     |     functest     |     smoke     |      26:30       |      PASS      |
-  |         rally_sanity         |     functest     |     smoke     |      19:42       |      PASS      |
-  |       refstack_defcore       |     functest     |     smoke     |      22:00       |      PASS      |
-  |         snaps_smoke          |     functest     |     smoke     |      41:14       |      PASS      |
-  |             odl              |     functest     |     smoke     |      00:16       |      PASS      |
+  |          vping_ssh           |     functest     |     smoke     |      00:45       |      PASS      |
+  |        vping_userdata        |     functest     |     smoke     |      00:36       |      PASS      |
+  |     tempest_smoke_serial     |     functest     |     smoke     |      14:04       |      PASS      |
+  |         rally_sanity         |     functest     |     smoke     |      23:59       |      PASS      |
+  |       refstack_defcore       |     functest     |     smoke     |      14:37       |      FAIL      |
+  |         snaps_smoke          |     functest     |     smoke     |      42:09       |      PASS      |
+  |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
   |         odl_netvirt          |     functest     |     smoke     |      00:00       |      SKIP      |
-  |             fds              |     functest     |     smoke     |      00:00       |      SKIP      |
   +------------------------------+------------------+---------------+------------------+----------------+
   Note: if the scenario does not support some tests, they are indicated as SKIP.
   See User guide for details.
@@ -141,16 +139,15 @@ Run features suite::
 
 Results shall be displayed as follows::
 
-  +---------------------------+--------------------------+------------------+------------------+----------------+
-  |         TEST CASE         |         PROJECT          |       TIER       |     DURATION     |     RESULT     |
-  +---------------------------+--------------------------+------------------+------------------+----------------+
-  |          promise          |         promise          |     features     |      00:00       |      SKIP      |
-  |           bgpvpn          |          sdnvpn          |     features     |      00:00       |      SKIP      |
-  |       security_scan       |     securityscanning     |     features     |      00:00       |      SKIP      |
-  |      functest-odl-sfc     |           sfc            |     features     |      00:00       |      SKIP      |
-  |      domino-multinode     |          domino          |     features     |      00:00       |      SKIP      |
-  |     barometercollectd     |        barometer         |     features     |      00:00       |      SKIP      |
-  +---------------------------+--------------------------+------------------+------------------+----------------+
+  +-----------------------------+------------------------+------------------+------------------+----------------+
+  |          TEST CASE          |        PROJECT         |       TIER       |     DURATION     |     RESULT     |
+  +-----------------------------+------------------------+------------------+------------------+----------------+
+  |     doctor-notification     |         doctor         |     features     |      00:00       |      SKIP      |
+  |            bgpvpn           |         sdnvpn         |     features     |      00:00       |      SKIP      |
+  |       functest-odl-sfc      |          sfc           |     features     |      00:00       |      SKIP      |
+  |      barometercollectd      |       barometer        |     features     |      00:00       |      SKIP      |
+  |             fds             |     fastdatastacks     |     features     |      00:00       |      SKIP      |
+  +-----------------------------+------------------------+------------------+------------------+----------------+
   Note: if the scenario does not support some tests, they are indicated as SKIP.
   See User guide for details.
 
@@ -185,13 +182,15 @@ sudo docker run --env-file env \
 
 Results shall be displayed as follows::
 
-  +---------------------------------+------------------+--------------+------------------+----------------+
-  |            TEST CASE            |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
-  +---------------------------------+------------------+--------------+------------------+----------------+
-  |           cloudify_ims          |     functest     |     vnf      |      21:25       |      PASS      |
-  |        orchestra_openims        |     functest     |     vnf      |      11:02       |      FAIL      |
-  |     orchestra_clearwaterims     |     functest     |     vnf      |      09:13       |      FAIL      |
-  +---------------------------------+------------------+--------------+------------------+----------------+
+  +---------------------------------+-------------------+--------------+------------------+----------------+
+  |            TEST CASE            |      PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +---------------------------------+-------------------+--------------+------------------+----------------+
+  |           cloudify_ims          |      functest     |     vnf      |      28:49       |      FAIL      |
+  |           vyos_vrouter          |      functest     |     vnf      |      27:57       |      FAIL      |
+  |             juju_epc            |      functest     |     vnf      |      55:03       |      PASS      |
+  |        orchestra_openims        |     orchestra     |     vnf      |      00:00       |      SKIP      |
+  |     orchestra_clearwaterims     |     orchestra     |     vnf      |      00:00       |      SKIP      |
+  +---------------------------------+-------------------+--------------+------------------+----------------+
 
 
 Environment variables
@@ -402,58 +401,58 @@ The structure of functest repo can be described as follows::
     |        |-- models.py
     |  `-- swagger
     |-- ci
-    │   |-- check_deployment.py
-    │   |-- config_aarch64_patch.yaml
-    │   |-- config_functest.yaml
-    │   |-- config_patch.yaml
-    │   |-- download_images.sh
-    │   |-- logging.ini
-    │   |-- rally_aarch64_patch.conf
-    │   |-- run_tests.py
-    │   |-- testcases.yaml
-    │   |-- tier_builder.py
-    │   |-- tier_handler.py
+    │   |-- check_deployment.py
+    │   |-- config_aarch64_patch.yaml
+    │   |-- config_functest.yaml
+    │   |-- config_patch.yaml
+    │   |-- download_images.sh
+    │   |-- logging.ini
+    │   |-- rally_aarch64_patch.conf
+    │   |-- run_tests.py
+    │   |-- testcases.yaml
+    │   |-- tier_builder.py
+    │   |-- tier_handler.py
     |-- cli
-    │   |-- cli_base.py
-    │   |-- commands
-    │   │   |-- cli_env.py
-    │   │   |-- cli_os.py
-    │   │   |-- cli_testcase.py
-    │   │   |-- cli_tier.py
-    │   |-- functest-complete.sh
+    │   |-- cli_base.py
+    │   |-- commands
+    │   │   |-- cli_env.py
+    │   │   |-- cli_os.py
+    │   │   |-- cli_testcase.py
+    │   │   |-- cli_tier.py
+    │   |-- functest-complete.sh
     |-- core
-    │   |-- feature.py
-    │   |-- robotframework.py
-    │   |-- testcase.py
-    │   |-- unit.py
-    │   |-- vnf.py
+    │   |-- feature.py
+    │   |-- robotframework.py
+    │   |-- testcase.py
+    │   |-- unit.py
+    │   |-- vnf.py
     |-- energy
-    │   |-- energy.py
+    │   |-- energy.py
     |-- opnfv_tests
-    │   `-- openstack
-    │       |-- rally
-    │       |-- refstack_client
-    │       |-- snaps
-    │       |-- tempest
-    │       |-- vping
-    │   `-- sdn
-    │   │    `-- odl
-    │   `-- vnf
-    │       |-- ims
-    │       `-- router
+    │   `-- openstack
+    │       |-- rally
+    │       |-- refstack_client
+    │       |-- snaps
+    │       |-- tempest
+    │       |-- vping
+    │   `-- sdn
+    │   │    `-- odl
+    │   `-- vnf
+    │       |-- ims
+    │       `-- router
     |-- tests
-    │   `-- unit
-    │       |-- ci
-    │       |-- cli
-    │       |-- core
-    │       |-- energy
-    │       |-- features
-    │       |-- odl
-    │       |-- openstack
-    │       |-- opnfv_tests
-    │       |-- test_utils.py
-    │       |-- utils
-    │       `-- vnf
+    │   `-- unit
+    │       |-- ci
+    │       |-- cli
+    │       |-- core
+    │       |-- energy
+    │       |-- features
+    │       |-- odl
+    │       |-- openstack
+    │       |-- opnfv_tests
+    │       |-- test_utils.py
+    │       |-- utils
+    │       `-- vnf
     |-- utils
     |    |-- config.py
     |    |-- constants.py
