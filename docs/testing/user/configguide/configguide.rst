@@ -122,7 +122,7 @@ Results shall be displayed as follows::
   |         rally_sanity         |     functest     |     smoke     |      19:42       |      PASS      |
   |       refstack_defcore       |     functest     |     smoke     |      22:00       |      PASS      |
   |         snaps_smoke          |     functest     |     smoke     |      41:14       |      PASS      |
-  |             odl              |     functest     |     smoke     |      00:16       |      PASS      |
+  |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
   |         odl_netvirt          |     functest     |     smoke     |      00:00       |      SKIP      |
   |             fds              |     functest     |     smoke     |      00:00       |      SKIP      |
   +------------------------------+------------------+---------------+------------------+----------------+
@@ -141,16 +141,16 @@ Run features suite::
 
 Results shall be displayed as follows::
 
-  +---------------------------+--------------------------+------------------+------------------+----------------+
-  |         TEST CASE         |         PROJECT          |       TIER       |     DURATION     |     RESULT     |
-  +---------------------------+--------------------------+------------------+------------------+----------------+
-  |          promise          |         promise          |     features     |      00:00       |      SKIP      |
-  |           bgpvpn          |          sdnvpn          |     features     |      00:00       |      SKIP      |
-  |       security_scan       |     securityscanning     |     features     |      00:00       |      SKIP      |
-  |      functest-odl-sfc     |           sfc            |     features     |      00:00       |      SKIP      |
-  |      domino-multinode     |          domino          |     features     |      00:00       |      SKIP      |
-  |     barometercollectd     |        barometer         |     features     |      00:00       |      SKIP      |
-  +---------------------------+--------------------------+------------------+------------------+----------------+
+  +-----------------------------+-------------------+------------------+------------------+----------------+
+  |          TEST CASE          |      PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +-----------------------------+-------------------+------------------+------------------+----------------+
+  |       domino-multinode      |       domino      |     features     |      00:23       |      PASS      |
+  |           promise           |      promise      |     features     |      00:00       |      SKIP      |
+  |     doctor-notification     |       doctor      |     features     |      00:00       |      SKIP      |
+  |            bgpvpn           |       sdnvpn      |     features     |      00:00       |      SKIP      |
+  |       functest-odl-sfc      |        sfc        |     features     |      00:00       |      SKIP      |
+  |      barometercollectd      |     barometer     |     features     |      00:00       |      SKIP      |
+  +-----------------------------+-------------------+------------------+------------------+----------------+
   Note: if the scenario does not support some tests, they are indicated as SKIP.
   See User guide for details.
 
@@ -185,13 +185,14 @@ sudo docker run --env-file env \
 
 Results shall be displayed as follows::
 
-  +---------------------------------+------------------+--------------+------------------+----------------+
-  |            TEST CASE            |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
-  +---------------------------------+------------------+--------------+------------------+----------------+
-  |           cloudify_ims          |     functest     |     vnf      |      21:25       |      PASS      |
-  |        orchestra_openims        |     functest     |     vnf      |      11:02       |      FAIL      |
-  |     orchestra_clearwaterims     |     functest     |     vnf      |      09:13       |      FAIL      |
-  +---------------------------------+------------------+--------------+------------------+----------------+
+  +---------------------------------+-------------------+--------------+------------------+----------------+
+  |            TEST CASE            |      PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +---------------------------------+-------------------+--------------+------------------+----------------+
+  |           cloudify_ims          |      functest     |     vnf      |      40:07       |      PASS      |
+  |           vyos_vrouter          |      functest     |     vnf      |      18:36       |      PASS      |
+  |        orchestra_openims        |     orchestra     |     vnf      |      00:00       |      SKIP      |
+  |     orchestra_clearwaterims     |     orchestra     |     vnf      |      00:00       |      SKIP      |
+  +---------------------------------+-------------------+--------------+------------------+----------------+
 
 
 Environment variables
@@ -402,58 +403,58 @@ The structure of functest repo can be described as follows::
     |        |-- models.py
     |  `-- swagger
     |-- ci
-    │   |-- check_deployment.py
-    │   |-- config_aarch64_patch.yaml
-    │   |-- config_functest.yaml
-    │   |-- config_patch.yaml
-    │   |-- download_images.sh
-    │   |-- logging.ini
-    │   |-- prepare_env.py
-    │   |-- rally_aarch64_patch.conf
-    │   |-- run_tests.py
-    │   |-- testcases.yaml
-    │   |-- tier_builder.py
-    │   |-- tier_handler.py
+    │   |-- check_deployment.py
+    │   |-- config_aarch64_patch.yaml
+    │   |-- config_functest.yaml
+    │   |-- config_patch.yaml
+    │   |-- download_images.sh
+    │   |-- logging.ini
+    │   |-- prepare_env.py
+    │   |-- rally_aarch64_patch.conf
+    │   |-- run_tests.py
+    │   |-- testcases.yaml
+    │   |-- tier_builder.py
+    │   |-- tier_handler.py
     |-- cli
-    │   |-- cli_base.py
-    │   |-- commands
-    │   │   |-- cli_env.py
-    │   │   |-- cli_os.py
-    │   │   |-- cli_testcase.py
-    │   │   |-- cli_tier.py
-    │   |-- functest-complete.sh
+    │   |-- cli_base.py
+    │   |-- commands
+    │   │   |-- cli_env.py
+    │   │   |-- cli_os.py
+    │   │   |-- cli_testcase.py
+    │   │   |-- cli_tier.py
+    │   |-- functest-complete.sh
     |-- core
-    │   |-- feature.py
-    │   |-- testcase.py
-    │   |-- unit.py
-    │   |-- vnf.py
+    │   |-- feature.py
+    │   |-- testcase.py
+    │   |-- unit.py
+    │   |-- vnf.py
     |-- energy
-    │   |-- energy.py
+    │   |-- energy.py
     |-- opnfv_tests
-    │   `-- openstack
-    │       |-- rally
-    │       |-- refstack_client
-    │       |-- snaps
-    │       |-- tempest
-    │       |-- vping
-    │   `-- sdn
-    │   │    `-- odl
-    │   `-- vnf
-    │       |-- ims
-    │       `-- router
+    │   `-- openstack
+    │       |-- rally
+    │       |-- refstack_client
+    │       |-- snaps
+    │       |-- tempest
+    │       |-- vping
+    │   `-- sdn
+    │   │    `-- odl
+    │   `-- vnf
+    │       |-- ims
+    │       `-- router
     |-- tests
-    │   `-- unit
-    │       |-- ci
-    │       |-- cli
-    │       |-- core
-    │       |-- energy
-    │       |-- features
-    │       |-- odl
-    │       |-- openstack
-    │       |-- opnfv_tests
-    │       |-- test_utils.py
-    │       |-- utils
-    │       `-- vnf
+    │   `-- unit
+    │       |-- ci
+    │       |-- cli
+    │       |-- core
+    │       |-- energy
+    │       |-- features
+    │       |-- odl
+    │       |-- openstack
+    │       |-- opnfv_tests
+    │       |-- test_utils.py
+    │       |-- utils
+    │       `-- vnf
     |-- utils
     |    |-- config.py
     |    |-- constants.py
