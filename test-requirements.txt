@@ -7,4 +7,5 @@ nose # LGPL
 flake8<2.6.0,>=2.5.4 # MIT
 pylint==1.4.5 # GPLv2
 sphinx>=1.6.2 # BSD
+sphinx-rtd-theme
 yamllint
