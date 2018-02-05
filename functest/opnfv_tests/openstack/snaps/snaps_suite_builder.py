@@ -84,6 +84,7 @@ def add_openstack_client_tests(suite, os_creds, ext_net_name,
                                use_keystone=True, log_level=logging.INFO):
     """
     Adds tests written to exercise OpenStack client retrieval
+
     :param suite: the unittest.TestSuite object to which to add the tests
     :param os_creds: and instance of OSCreds that holds the credentials
                      required by OpenStack
@@ -130,6 +131,7 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
     # pylint: disable=too-many-arguments
     """
     Adds tests written to exercise all existing OpenStack APIs
+
     :param suite: the unittest.TestSuite object to which to add the tests
     :param os_creds: Instance of OSCreds that holds the credentials
                      required by OpenStack
@@ -246,6 +248,7 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
     Adds tests written to exercise all long-running OpenStack integration tests
     meaning they will be creating VM instances and potentially performing some
     SSH functions through floatingIPs
+
     :param suite: the unittest.TestSuite object to which to add the tests
     :param os_creds: and instance of OSCreds that holds the credentials
                      required by OpenStack
