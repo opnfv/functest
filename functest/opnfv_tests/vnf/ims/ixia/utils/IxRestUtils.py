@@ -76,6 +76,7 @@ class Connection(object):
         Use this instead of urlparse.urljoin directly so that we can customize
         its behavior if necessary.
         Currently differs in that it
+
             1. appends a / to base if not present.
             2. casts end to a str as a convenience
         """
@@ -186,7 +187,7 @@ class WebObject(object):
 
     def getOptions(self):
         '''
-            Get the JSON dictionary which represents the WebObject Instance
+        Get the JSON dictionary which represents the WebObject Instance
         '''
 
         return self.jsonOptions
