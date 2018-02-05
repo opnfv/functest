@@ -1,0 +1,3 @@
+git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
+sphinx>=1.6.2 # BSD
+sphinx-rtd-theme
