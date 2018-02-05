@@ -8,7 +8,13 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=missing-docstring
+"""
+Snaps test suite including openstack client tests, api tests and
+integration tests.
+add_openstack_client_tests: for connection_check
+add_openstack_api_tests: for api_check
+add_openstack_integration_tests: for snaps_smoke
+"""
 
 import logging
 

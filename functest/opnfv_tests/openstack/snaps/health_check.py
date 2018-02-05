@@ -8,7 +8,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=missing-docstring
+"""snaps_health_check test case implementation"""
 
 import unittest
 
