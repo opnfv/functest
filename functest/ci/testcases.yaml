@@ -328,7 +328,7 @@ tiers:
             -
                 case_name: rally_full
                 project_name: functest
-                criteria: 90
+                criteria: 100
                 blocking: false
                 description: >-
                     This test case runs the full suite of scenarios of the
