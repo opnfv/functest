@@ -7,7 +7,7 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=missing-docstring
+"""Some common utils wrapping snaps functions """
 
 from functest.utils.constants import CONST
 
