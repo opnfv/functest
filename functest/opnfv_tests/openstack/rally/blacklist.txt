@@ -59,6 +59,16 @@ scenario:
             # in Pike.
             # Ref: https://docs.openstack.org/releasenotes/ceilometer/pike.html
             - 'Ceilometer..*'
+    -
+        scenarios:
+            - '^os-'  # all scenarios
+        installers:
+            - '.+'  # all installers
+        tests:
+            # Following test occasionally fails due to race condition issue on
+            # quota manipulation in nova.
+            # Ref: https://bugs.launchpad.net/nova/+bug/1552622
+            - 'Quotas.nova_update_and_delete'
 
 functionality:
     -
