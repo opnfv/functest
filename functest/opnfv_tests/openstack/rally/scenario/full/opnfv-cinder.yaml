@@ -84,6 +84,9 @@
         size:
           max: 1
           min: 1
+        create_vm_params:
+            nics:
+              - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
@@ -101,6 +104,9 @@
         size:
           min: 1
           max: 5
+        create_vm_params:
+            nics:
+              - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
