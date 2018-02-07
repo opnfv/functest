@@ -226,13 +226,10 @@ class JujuEpc(vnf.VnfOnBoarding):
             CONST, 'vnf_{}_private_subnet_cidr'.format(self.case_name))
         abot_router = getattr(
             CONST, 'vnf_{}_external_router'.format(self.case_name))
-        dns_nameserver = getattr(
-            CONST, 'vnf_{}_dns_nameserver'.format(self.case_name))
 
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
-            name=private_subnet_name, cidr=private_subnet_cidr,
-            dns_nameservers=dns_nameserver)
+            name=private_subnet_name, cidr=private_subnet_cidr)
         network_settings = NetworkConfig(
             name=private_net_name, subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)

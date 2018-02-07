@@ -153,8 +153,6 @@ vnf:
         private_subnet_cidr: 172.16.0.0/24
         private_subnet_name: abot-subnet
         external_router: abot-router
-        dns_nameserver: ['8.8.8.8']
-
     cloudify_ims:
         tenant_name: cloudify_ims
         tenant_description: vIMS
