@@ -153,7 +153,7 @@ class ODLMainTesting(ODLTesting):
     def _test_run_suites(self, status, *args):
         kwargs = self._get_run_suites_kwargs()
         self.assertEqual(self.test.run_suites(**kwargs), status)
-        if len(args) > 0:
+        if args:
             args[0].assert_called_once_with(self.test.odl_variables_file)
         if len(args) > 1:
             variable = [
@@ -171,13 +171,11 @@ class ODLMainTesting(ODLTesting):
                 'PORT:{}'.format(self._odl_webport),
                 'RESTCONFPORT:{}'.format(self._odl_restconfport)]
             args[1].assert_called_once_with(
-                odl.ODLTests.basic_suite_dir,
-                odl.ODLTests.neutron_suite_dir,
+                odl.ODLTests.basic_suite_dir, odl.ODLTests.neutron_suite_dir,
                 log='NONE',
                 output=os.path.join(self.test.res_dir, 'output.xml'),
-                report='NONE',
-                stdout=mock.ANY,
-                variable=variable)
+                report='NONE', stdout=mock.ANY, variable=variable,
+                variablefile=[])
 
     def _test_no_keyword(self, key):
         kwargs = self._get_run_suites_kwargs(key)

@@ -117,6 +117,7 @@ class RunTesting(unittest.TestCase):
 
     suites = ["foo"]
     variable = []
+    variablefile = []
 
     def setUp(self):
         self.test = robotframework.RobotFramework(
@@ -129,7 +130,9 @@ class RunTesting(unittest.TestCase):
     def _test_makedirs_exc(self, *args):
         with mock.patch.object(self.test, 'parse_results') as mock_method:
             self.assertEqual(
-                self.test.run(suites=self.suites, variable=self.variable),
+                self.test.run(
+                    suites=self.suites, variable=self.variable,
+                    variablefile=self.variablefile),
                 self.test.EX_RUN_ERROR)
             args[0].assert_not_called()
             mock_method.asser_not_called()
@@ -152,7 +155,8 @@ class RunTesting(unittest.TestCase):
                 self.test.EX_OK)
             args[0].assert_called_once_with(
                 *self.suites, log='NONE', output=self.test.xml_file,
-                report='NONE', stdout=mock.ANY, variable=self.variable)
+                report='NONE', stdout=mock.ANY, variable=self.variable,
+                variablefile=self.variablefile)
             mock_method.assert_called_once_with()
 
     @mock.patch('os.makedirs', side_effect=OSError(errno.EEXIST, ''))
@@ -168,10 +172,14 @@ class RunTesting(unittest.TestCase):
     @mock.patch('robot.run')
     def _test_parse_results(self, status, *args):
         self.assertEqual(
-            self.test.run(suites=self.suites, variable=self.variable), status)
+            self.test.run(
+                suites=self.suites, variable=self.variable,
+                variablefile=self.variablefile),
+            status)
         args[0].assert_called_once_with(
             *self.suites, log='NONE', output=self.test.xml_file,
-            report='NONE', stdout=mock.ANY, variable=self.variable)
+            report='NONE', stdout=mock.ANY, variable=self.variable,
+            variablefile=self.variablefile)
 
     def test_parse_results_exc(self):
         with mock.patch.object(self.test, 'parse_results',

@@ -96,6 +96,7 @@ class RobotFramework(testcase.TestCase):
         try:
             suites = kwargs["suites"]
             variable = kwargs.get("variable", [])
+            variablefile = kwargs.get("variablefile", [])
         except KeyError:
             self.__logger.exception("Mandatory args were not passed")
             return self.EX_RUN_ERROR
@@ -109,8 +110,9 @@ class RobotFramework(testcase.TestCase):
             self.__logger.exception("Cannot create %s", self.res_dir)
             return self.EX_RUN_ERROR
         stream = StringIO()
-        robot.run(*suites, variable=variable, output=self.xml_file,
-                  log='NONE', report='NONE', stdout=stream)
+        robot.run(*suites, variable=variable, variablefile=variablefile,
+                  output=self.xml_file, log='NONE',
+                  report='NONE', stdout=stream)
         self.__logger.info("\n" + stream.getvalue())
         self.__logger.info("Results were successfully generated")
         try:
