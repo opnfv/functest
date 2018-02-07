@@ -75,7 +75,7 @@ from snaps.openstack.utils.tests.neutron_utils_tests import (
     NeutronUtilsFloatingIpTests)
 from snaps.openstack.utils.tests.nova_utils_tests import (
     NovaSmokeTests, NovaUtilsKeypairTests, NovaUtilsFlavorTests,
-    NovaUtilsInstanceTests)
+    NovaUtilsInstanceTests, NovaUtilsInstanceVolumeTests)
 from snaps.provisioning.tests.ansible_utils_tests import (
     AnsibleProvisioningTests)
 
@@ -189,12 +189,10 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
     suite.addTest(OSComponentTestCase.parameterize(
         NovaUtilsInstanceTests, os_creds=os_creds, ext_net_name=ext_net_name,
         log_level=log_level, image_metadata=image_metadata))
-    # Temporary disabled for gating
-    # JIRA: SNAPS-263
-    # suite.addTest(OSComponentTestCase.parameterize(
-    #     NovaUtilsInstanceVolumeTests, os_creds=os_creds,
-    #     ext_net_name=ext_net_name, log_level=log_level,
-    #     image_metadata=image_metadata))
+    suite.addTest(OSComponentTestCase.parameterize(
+        NovaUtilsInstanceVolumeTests, os_creds=os_creds,
+        ext_net_name=ext_net_name, log_level=log_level,
+        image_metadata=image_metadata))
     suite.addTest(OSComponentTestCase.parameterize(
         CreateFlavorTests, os_creds=os_creds, ext_net_name=ext_net_name,
         log_level=log_level))
