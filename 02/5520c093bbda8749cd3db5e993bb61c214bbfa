@@ -1,0 +1,8 @@
+Code-Review+2: Jose Lausuch <jalausuch@suse.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Linda Wang <wangwulin@huawei.com>
+Submitted-by: Linda Wang <wangwulin@huawei.com>
+Submitted-at: Wed, 07 Feb 2018 01:58:35 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/51749
+Project: functest
+Branch: refs/heads/master
