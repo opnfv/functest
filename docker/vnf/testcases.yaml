@@ -40,6 +40,7 @@ tiers:
             -
                 case_name: orchestra_openims
                 project_name: orchestra
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -54,6 +55,7 @@ tiers:
             -
                 case_name: orchestra_clearwaterims
                 project_name: orchestra
+                enable: false
                 criteria: 100
                 blocking: false
                 description: >-
