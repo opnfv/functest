@@ -26,10 +26,11 @@ import re
 import sys
 
 from six.moves import urllib
+from snaps.openstack.utils import keystone_utils
 
 from functest.core import robotframework
+from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import constants
-import functest.utils.openstack_utils as op_utils
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -155,8 +156,9 @@ class ODLTests(robotframework.RobotFramework):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            kwargs = {'neutronurl': op_utils.get_endpoint(
-                service_type='network')}
+            snaps_creds = snaps_utils.get_credentials()
+            kwargs = {'neutronurl': keystone_utils.get_endpoint(
+                snaps_creds, 'network')}
             kwargs['odlip'] = urllib.parse.urlparse(
                 kwargs['neutronurl']).hostname
             kwargs['odlwebport'] = '8080'
@@ -274,7 +276,6 @@ def main():
             return result
         if args['pushtodb']:
             return odl.push_to_db()
-        else:
-            return result
+        return result
     except Exception:  # pylint: disable=broad-except
         return robotframework.RobotFramework.EX_RUN_ERROR
