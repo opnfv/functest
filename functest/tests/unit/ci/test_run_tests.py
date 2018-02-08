@@ -9,6 +9,7 @@
 
 import logging
 import unittest
+import os
 
 import mock
 
@@ -84,6 +85,34 @@ class RunTestsTesting(unittest.TestCase):
         args[1].assert_called_once_with(
             "Cannot get %s's config options", testname)
 
+    def _test_source_envfile(self, msg, key='OS_TENANT_NAME', value='admin'):
+        try:
+            del os.environ[key]
+        except Exception:  # pylint: disable=broad-except
+            pass
+        envfile = 'rc_file'
+        with mock.patch('six.moves.builtins.open',
+                        mock.mock_open(read_data=msg),
+                        create=True) as mock_method:
+            mock_method.return_value.__iter__ = lambda self: iter(
+                self.readline, '')
+            self.runner.source_envfile(envfile)
+            mock_method.assert_called_once_with(envfile, 'r')
+            self.assertEqual(os.environ[key], value)
+
+    def test_source_envfile(self):
+        self._test_source_envfile('OS_TENANT_NAME=admin')
+        self._test_source_envfile('OS_TENANT_NAME= admin')
+        self._test_source_envfile('OS_TENANT_NAME = admin')
+        self._test_source_envfile('OS_TENANT_NAME = "admin"')
+        self._test_source_envfile('export OS_TENANT_NAME=admin')
+        self._test_source_envfile('export OS_TENANT_NAME =admin')
+        self._test_source_envfile('export OS_TENANT_NAME = admin')
+        self._test_source_envfile('export OS_TENANT_NAME = "admin"')
+        # This test will fail as soon as rc_file is fixed
+        self._test_source_envfile(
+            'export "\'OS_TENANT_NAME\'" = "\'admin\'"')
+
     @mock.patch('functest.ci.run_tests.Runner.get_run_dict',
                 return_value=None)
     def test_run_tests_import_exception(self, *args):
@@ -147,7 +176,7 @@ class RunTestsTesting(unittest.TestCase):
         self.runner.run_all()
         self.assertTrue(mock_methods[1].called)
 
-    @mock.patch('functest.utils.openstack_utils.source_credentials',
+    @mock.patch('functest.ci.run_tests.Runner.source_envfile',
                 side_effect=Exception)
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_main_failed(self, *mock_methods):
@@ -161,7 +190,7 @@ class RunTestsTesting(unittest.TestCase):
         mock_methods[1].assert_called_once_with(
             '/home/opnfv/functest/conf/env_file')
 
-    @mock.patch('functest.utils.openstack_utils.source_credentials')
+    @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
                 return_value=TestCase.EX_OK)
     @mock.patch('functest.ci.run_tests.Runner.summary')
@@ -181,7 +210,7 @@ class RunTestsTesting(unittest.TestCase):
                          run_tests.Result.EX_OK)
         mock_methods[1].assert_called()
 
-    @mock.patch('functest.utils.openstack_utils.source_credentials')
+    @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
                 return_value=TestCase.EX_OK)
     def test_main_test(self, *mock_methods):
@@ -195,7 +224,7 @@ class RunTestsTesting(unittest.TestCase):
                          run_tests.Result.EX_OK)
         mock_methods[0].assert_called_once_with('test_name')
 
-    @mock.patch('functest.utils.openstack_utils.source_credentials')
+    @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     @mock.patch('functest.ci.run_tests.Runner.run_all')
     @mock.patch('functest.ci.run_tests.Runner.summary')
     def test_main_all_tier(self, *args):
@@ -210,7 +239,7 @@ class RunTestsTesting(unittest.TestCase):
         args[1].assert_called_once_with()
         args[2].assert_called_once_with('/home/opnfv/functest/conf/env_file')
 
-    @mock.patch('functest.utils.openstack_utils.source_credentials')
+    @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     def test_main_any_tier_test_ko(self, *args):
         kwargs = {'get_tier.return_value': None,
                   'get_test.return_value': None}

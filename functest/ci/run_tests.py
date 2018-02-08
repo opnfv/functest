@@ -29,7 +29,6 @@ import prettytable
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
 import functest.utils.functest_utils as ft_utils
-import functest.utils.openstack_utils as os_utils
 from functest.utils.constants import CONST
 
 # __name__ cannot be used here
@@ -97,6 +96,22 @@ class Runner(object):
             CONST.__getattribute__('INSTALLER_TYPE'),
             CONST.__getattribute__('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
+
+    @staticmethod
+    def source_envfile(rc_file):
+        """Source the env file passed as args"""
+        with open(rc_file, "r") as rcfd:
+            for line in rcfd:
+                var = (line.rstrip('"\n').replace('export ', '').split(
+                    "=") if re.search(r'(.*)=(.*)', line) else None)
+                # The two next lines should be modified as soon as rc_file
+                # conforms with common rules. Be aware that it could induce
+                # issues if value starts with '
+                if var:
+                    key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
+                    value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
+                    os.environ[key] = value
+                    setattr(CONST, key, value)
 
     @staticmethod
     def get_run_dict(testname):
@@ -202,7 +217,7 @@ class Runner(object):
         try:
             if 'test' in kwargs:
                 LOGGER.debug("Sourcing the credential file...")
-                os_utils.source_credentials(CONST.__getattribute__('env_file'))
+                self.source_envfile(getattr(CONST, 'env_file'))
 
                 LOGGER.debug("Test args: %s", kwargs['test'])
                 if self.tiers.get_tier(kwargs['test']):

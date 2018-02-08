@@ -115,21 +115,6 @@ def get_credentials(other_creds={}):
     return creds
 
 
-def source_credentials(rc_file):
-    with open(rc_file, "r") as f:
-        for line in f:
-            var = (line.rstrip('"\n').replace('export ', '').split("=")
-                   if re.search(r'(.*)=(.*)', line) else None)
-            # The two next lines should be modified as soon as rc_file
-            # conforms with common rules. Be aware that it could induce
-            # issues if value starts with '
-            if var:
-                key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
-                value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
-                os.environ[key] = value
-                CONST.__setattr__(key, value)
-
-
 def get_session_auth(other_creds={}):
     loader = loading.get_plugin_loader('password')
     creds = get_credentials(other_creds)

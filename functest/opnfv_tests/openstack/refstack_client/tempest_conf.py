@@ -35,8 +35,6 @@ class TempestConf(object):
     def generate_tempestconf(self):
         """ Generate tempest.conf file"""
         try:
-            openstack_utils.source_credentials(
-                CONST.__getattribute__('env_file'))
             resources = self.resources.create(create_project=True,
                                               use_custom_images=True,
                                               use_custom_flavors=True)
