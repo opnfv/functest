@@ -155,11 +155,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds('juju_network_discovery_bug')
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
-        # 'tenant_n' should habe been equal to snaps_creds.project_name
-        # user_creator.get_os_creds() must be checked
         creds_data = {
             'pass': snaps_creds.password,
-            'tenant_n': self.snaps_creds.project_name,
+            'tenant_n': snaps_creds.project_name,
             'user_n': snaps_creds.username}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE2.format(**creds_data))
@@ -174,11 +172,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds('juju_network_discovery_bug')
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
-        # 'tenant_n' should habe been equal to snaps_creds.project_name
-        # user_creator.get_os_creds() must be checked
         creds_data = {
             'pass': snaps_creds.password,
-            'tenant_n': self.snaps_creds.project_name,
+            'tenant_n': snaps_creds.project_name,
             'user_n': snaps_creds.username,
             'project_domain_n': snaps_creds.project_domain_name,
             'user_domain_n': snaps_creds.user_domain_name}
