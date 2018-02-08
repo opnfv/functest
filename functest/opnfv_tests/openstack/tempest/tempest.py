@@ -318,42 +318,36 @@ class TempestResourcesManager(object):
         else:
             self.cirros_image_config = None
 
-    def create(self, use_custom_images=False, use_custom_flavors=False,
-               create_project=False):
-        if create_project:
-            logger.debug("Creating project (tenant) for Tempest suite")
-            project_name = CONST.__getattribute__(
-                'tempest_identity_tenant_name') + self.guid
-            project_creator = deploy_utils.create_project(
-                self.os_creds, ProjectConfig(
-                    name=project_name,
-                    description=CONST.__getattribute__(
-                        'tempest_identity_tenant_description')))
-            if (project_creator is None or
-                    project_creator.get_project() is None):
-                raise Exception("Failed to create tenant")
-            project_id = project_creator.get_project().id
-            self.creators.append(project_creator)
+    def _create_project(self):
+        """Create project for tests."""
+        project_creator = deploy_utils.create_project(
+            self.os_creds, ProjectConfig(
+                name=CONST.__getattribute__(
+                    'tempest_identity_tenant_name') + self.guid,
+                description=CONST.__getattribute__(
+                    'tempest_identity_tenant_description')))
+        if project_creator is None or project_creator.get_project() is None:
+            raise Exception("Failed to create tenant")
+        self.creators.append(project_creator)
+        return project_creator.get_project().id
 
-            logger.debug("Creating user for Tempest suite")
-            user_creator = deploy_utils.create_user(
-                self.os_creds, UserConfig(
-                    name=CONST.__getattribute__(
-                        'tempest_identity_user_name') + self.guid,
-                    password=CONST.__getattribute__(
-                        'tempest_identity_user_password'),
-                    project_name=project_name))
-            if user_creator is None or user_creator.get_user() is None:
-                raise Exception("Failed to create user")
-            user_id = user_creator.get_user().id
-            self.creators.append(user_creator)
-        else:
-            project_name = None
-            project_id = None
-            user_id = None
+    def _create_user(self):
+        """Create user for tests."""
+        user_creator = deploy_utils.create_user(
+            self.os_creds, UserConfig(
+                name=CONST.__getattribute__(
+                    'tempest_identity_user_name') + self.guid,
+                password=CONST.__getattribute__(
+                    'tempest_identity_user_password'),
+                project_name=CONST.__getattribute__(
+                    'tempest_identity_tenant_name') + self.guid))
+        if user_creator is None or user_creator.get_user() is None:
+            raise Exception("Failed to create user")
+        self.creators.append(user_creator)
+        return user_creator.get_user().id
 
-        logger.debug("Creating private network for Tempest suite")
-
+    def _create_network(self, project_name):
+        """Create network for tests."""
         tempest_network_type = None
         tempest_physical_network = None
         tempest_segmentation_id = None
@@ -380,103 +374,89 @@ class TempestResourcesManager(object):
                     name=CONST.__getattribute__(
                         'tempest_private_subnet_name') + self.guid,
                     project_name=project_name,
-                    cidr=CONST.__getattribute__('tempest_private_subnet_cidr'))
-                ]))
+                    cidr=CONST.__getattribute__(
+                        'tempest_private_subnet_cidr'))]))
         if network_creator is None or network_creator.get_network() is None:
             raise Exception("Failed to create private network")
         self.creators.append(network_creator)
 
-        image_id = None
-        image_id_alt = None
-        flavor_id = None
-        flavor_id_alt = None
-
-        logger.debug("Creating image for Tempest suite")
-        image_base_name = CONST.__getattribute__(
-            'openstack_image_name') + self.guid
+    def _create_image(self, name):
+        """Create image for tests"""
         os_image_settings = openstack_tests.cirros_image_settings(
-            image_base_name, public=True,
+            name, public=True,
             image_metadata=self.cirros_image_config)
-        logger.debug("Creating image for Tempest suite")
         image_creator = deploy_utils.create_image(
             self.os_creds, os_image_settings)
         if image_creator is None:
             raise Exception('Failed to create image')
         self.creators.append(image_creator)
-        image_id = image_creator.get_image().id
+        return image_creator.get_image().id
+
+    def _create_flavor(self, name):
+        """Create flavor for tests."""
+        scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+        flavor_metadata = None
+        if 'ovs' in scenario or 'fdio' in scenario:
+            flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
+        flavor_creator = OpenStackFlavor(
+            self.os_creds, FlavorConfig(
+                name=name,
+                ram=CONST.__getattribute__('openstack_flavor_ram'),
+                disk=CONST.__getattribute__('openstack_flavor_disk'),
+                vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
+                metadata=flavor_metadata))
+        flavor = flavor_creator.create()
+        if flavor is None:
+            raise Exception('Failed to create flavor')
+        self.creators.append(flavor_creator)
+        return flavor.id
+
+    def create(self, use_custom_images=False, use_custom_flavors=False,
+               create_project=False):
+        """Create resources for Tempest test suite."""
+        result = {
+            'image_id': None,
+            'image_id_alt': None,
+            'flavor_id': None,
+            'flavor_id_alt': None
+        }
+        project_name = None
+
+        if create_project:
+            logger.debug("Creating project and user for Tempest suite")
+            project_name = CONST.__getattribute__(
+                'tempest_identity_tenant_name') + self.guid
+            result['project_id'] = self._create_project()
+            result['user_id'] = self._create_user()
+            result['tenant_id'] = result['project_id']  # for compatibility
+
+        logger.debug("Creating private network for Tempest suite")
+        self._create_network(project_name)
+
+        logger.debug("Creating image for Tempest suite")
+        image_name = CONST.__getattribute__('openstack_image_name') + self.guid
+        result['image_id'] = self._create_image(image_name)
 
         if use_custom_images:
             logger.debug("Creating 2nd image for Tempest suite")
-            image_base_name_alt = CONST.__getattribute__(
+            image_name = CONST.__getattribute__(
                 'openstack_image_name_alt') + self.guid
-            os_image_settings_alt = openstack_tests.cirros_image_settings(
-                image_base_name_alt, public=True,
-                image_metadata=self.cirros_image_config)
-            logger.debug("Creating 2nd image for Tempest suite")
-            image_creator_alt = deploy_utils.create_image(
-                self.os_creds, os_image_settings_alt)
-            if image_creator_alt is None:
-                raise Exception('Failed to create image')
-            self.creators.append(image_creator_alt)
-            image_id_alt = image_creator_alt.get_image().id
+            result['image_id_alt'] = self._create_image(image_name)
 
         if (CONST.__getattribute__('tempest_use_custom_flavors') == 'True' or
-           use_custom_flavors):
+                use_custom_flavors):
             logger.info("Creating flavor for Tempest suite")
-            scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
-            flavor_metadata = None
-            if 'ovs' in scenario or 'fdio' in scenario:
-                flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
-            flavor_creator = OpenStackFlavor(
-                self.os_creds, FlavorConfig(
-                    name=CONST.__getattribute__(
-                        'openstack_flavor_name') + self.guid,
-                    ram=CONST.__getattribute__('openstack_flavor_ram'),
-                    disk=CONST.__getattribute__('openstack_flavor_disk'),
-                    vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
-                    metadata=flavor_metadata))
-            flavor = flavor_creator.create()
-            if flavor is None:
-                raise Exception('Failed to create flavor')
-            self.creators.append(flavor_creator)
-            flavor_id = flavor.id
+            name = CONST.__getattribute__('openstack_flavor_name') + self.guid
+            result['flavor_id'] = self._create_flavor(name)
 
         if use_custom_flavors:
             logger.info("Creating 2nd flavor for Tempest suite")
             scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
-            flavor_metadata_alt = None
             if 'ovs' in scenario or 'fdio' in scenario:
-                flavor_metadata_alt = create_flavor.MEM_PAGE_SIZE_LARGE
                 CONST.__setattr__('openstack_flavor_ram', 1024)
-            flavor_creator_alt = OpenStackFlavor(
-                self.os_creds, FlavorConfig(
-                    name=CONST.__getattribute__(
-                        'openstack_flavor_name_alt') + self.guid,
-                    ram=CONST.__getattribute__('openstack_flavor_ram'),
-                    disk=CONST.__getattribute__('openstack_flavor_disk'),
-                    vcpus=CONST.__getattribute__('openstack_flavor_vcpus'),
-                    metadata=flavor_metadata_alt))
-            flavor_alt = flavor_creator_alt.create()
-            if flavor_alt is None:
-                raise Exception('Failed to create flavor')
-            self.creators.append(flavor_creator_alt)
-            flavor_id_alt = flavor_alt.id
-
-        print("RESOURCES CREATE: image_id: %s, image_id_alt: %s, "
-              "flavor_id: %s, flavor_id_alt: %s" % (
-                  image_id, image_id_alt, flavor_id, flavor_id_alt,))
-
-        result = {
-            'image_id': image_id,
-            'image_id_alt': image_id_alt,
-            'flavor_id': flavor_id,
-            'flavor_id_alt': flavor_id_alt
-        }
-
-        if create_project:
-            result['project_id'] = project_id
-            result['tenant_id'] = project_id  # for compatibility
-            result['user_id'] = user_id
+            name = CONST.__getattribute__(
+                'openstack_flavor_name_alt') + self.guid
+            result['flavor_id_alt'] = self._create_flavor(name)
 
         return result
 
