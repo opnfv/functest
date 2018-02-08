@@ -12,8 +12,6 @@ import logging
 import pkg_resources
 
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import openstack_utils
-from functest.utils.constants import CONST
 from functest.opnfv_tests.openstack.tempest.tempest \
     import TempestResourcesManager
 
@@ -35,8 +33,6 @@ class TempestConf(object):
     def generate_tempestconf(self):
         """ Generate tempest.conf file"""
         try:
-            openstack_utils.source_credentials(
-                CONST.__getattribute__('env_file'))
             resources = self.resources.create(create_project=True,
                                               use_custom_images=True,
                                               use_custom_flavors=True)

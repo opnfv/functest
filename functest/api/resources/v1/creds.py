@@ -13,14 +13,15 @@ Resources to handle openstack related requests
 
 import collections
 import logging
-import pkg_resources
 import socket
 
 from flask import jsonify
 from flasgger.utils import swag_from
+import pkg_resources
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
+from functest.ci import run_tests
 from functest.cli.commands.cli_os import OpenStack
 from functest.utils import openstack_utils as os_utils
 from functest.utils.constants import CONST
@@ -39,7 +40,7 @@ class V1Creds(ApiResource):
         endpoint='{0}/credentials'.format(ENDPOINT_CREDS))
     def get(self):  # pylint: disable=no-self-use
         """ Get credentials """
-        os_utils.source_credentials(CONST.__getattribute__('env_file'))
+        run_tests.Runner.source_envfile(CONST.__getattribute__('env_file'))
         credentials_show = OpenStack.show_credentials()
         return jsonify(credentials_show)
 
@@ -71,7 +72,7 @@ class V1Creds(ApiResource):
 
         LOGGER.info("Sourcing the OpenStack RC file...")
         try:
-            os_utils.source_credentials(rc_file)
+            os_utils.source_envfile(rc_file)
         except Exception as err:  # pylint: disable=broad-except
             LOGGER.exception('Failed to source the OpenStack RC file')
             return api_utils.result_handler(status=0, data=str(err))
