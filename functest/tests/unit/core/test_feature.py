@@ -55,6 +55,9 @@ class FeatureTestingBase(unittest.TestCase):
 class FeatureTesting(FeatureTestingBase):
 
     def setUp(self):
+        # logging must be disabled else it calls time.time()
+        # what will break these unit tests.
+        logging.disable(logging.CRITICAL)
         with mock.patch('six.moves.builtins.open'):
             self.feature = feature.Feature(
                 project_name=self._project_name, case_name=self._case_name)
@@ -74,6 +77,9 @@ class FeatureTesting(FeatureTestingBase):
 class BashFeatureTesting(FeatureTestingBase):
 
     def setUp(self):
+        # logging must be disabled else it calls time.time()
+        # what will break these unit tests.
+        logging.disable(logging.CRITICAL)
         with mock.patch('six.moves.builtins.open'):
             self.feature = feature.BashFeature(
                 project_name=self._project_name, case_name=self._case_name)
@@ -108,7 +114,4 @@ class BashFeatureTesting(FeatureTestingBase):
 
 
 if __name__ == "__main__":
-    # logging must be disabled else it calls time.time()
-    # what will break these unit tests.
-    logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
