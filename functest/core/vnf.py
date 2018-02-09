@@ -13,13 +13,13 @@ import logging
 import time
 import uuid
 
-import functest.core.testcase as base
-from functest.utils.constants import CONST
 from snaps.config.user import UserConfig
 from snaps.config.project import ProjectConfig
 from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.create_project import OpenStackProject
 from snaps.openstack.tests import openstack_tests
+
+from functest.core import testcase
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>, "
               "Valentin Boucher <valentin.boucher@orange.com>")
@@ -41,18 +41,23 @@ class VnfTestException(Exception):
     """Raise when VNF cannot be tested."""
 
 
-class VnfOnBoarding(base.TestCase):
+class VnfOnBoarding(testcase.TestCase):
+    # pylint: disable=too-many-instance-attributes
     """Base model for VNF test cases."""
 
     __logger = logging.getLogger(__name__)
 
+    env_file = "/home/opnfv/functest/conf/env_file"
+
+
     def __init__(self, **kwargs):
         super(VnfOnBoarding, self).__init__(**kwargs)
-        self.tenant_name = CONST.__getattribute__(
-            'vnf_{}_tenant_name'.format(self.case_name))
+        self.user_name = self.case_name
+        self.tenant_name = self.case_name
         self.snaps_creds = {}
         self.created_object = []
-        self.os_project = None
+        self.tenant_description = "Created by OPNFV Functest: {}".format(
+            self.case_name)
 
     def run(self, **kwargs):
         """
@@ -79,15 +84,14 @@ class VnfOnBoarding(base.TestCase):
                 self.stop_time = time.time()
                 # Calculation with different weight depending on the steps TODO
                 self.result = 100
-                return base.TestCase.EX_OK
-            else:
-                self.result = 0
-                self.stop_time = time.time()
-                return base.TestCase.EX_TESTCASE_FAILED
+                return testcase.TestCase.EX_OK
+            self.result = 0
+            self.stop_time = time.time()
+            return testcase.TestCase.EX_TESTCASE_FAILED
         except Exception:  # pylint: disable=broad-except
             self.stop_time = time.time()
             self.__logger.exception("Exception on VNF testing")
-            return base.TestCase.EX_TESTCASE_FAILED
+            return testcase.TestCase.EX_TESTCASE_FAILED
 
     def prepare(self):
         """
@@ -102,36 +106,31 @@ class VnfOnBoarding(base.TestCase):
         Raise VnfPreparationException in case of problem
         """
         try:
-            tenant_description = CONST.__getattribute__(
-                'vnf_{}_tenant_description'.format(self.case_name))
-            self.__logger.info("Prepare VNF: %s, description: %s",
-                               self.tenant_name, tenant_description)
+            self.__logger.info(
+                "Prepare VNF: %s, description: %s", self.tenant_name,
+                self.tenant_description)
             snaps_creds = openstack_tests.get_credentials(
-                os_env_file=CONST.__getattribute__('env_file'))
+                os_env_file=self.env_file)
 
             project_creator = OpenStackProject(
                 snaps_creds,
                 ProjectConfig(
                     name=self.tenant_name,
-                    description=tenant_description
+                    description=self.tenant_description
                 ))
             project_creator.create()
             self.created_object.append(project_creator)
-            self.os_project = project_creator
-
             user_creator = OpenStackUser(
                 snaps_creds,
                 UserConfig(
-                    name=self.tenant_name,
+                    name=self.user_name,
                     password=str(uuid.uuid4()),
                     roles={'admin': self.tenant_name}))
-
             user_creator.create()
             self.created_object.append(user_creator)
-
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
 
-            return base.TestCase.EX_OK
+            return testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Exception raised during VNF preparation")
             raise VnfPreparationException
