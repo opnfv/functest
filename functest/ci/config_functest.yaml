@@ -184,8 +184,3 @@ example:
     router_name: example-router
     sg_name: example-sg
     sg_desc: Example Security group
-
-energy_recorder:
-    api_url: http://energy.opnfv.fr/resources
-    api_user: ""
-    api_password: ""

@@ -12,13 +12,11 @@
 
 import json
 import logging
+import os
 
 from functools import wraps
 import requests
 from six.moves import urllib
-
-from functest.utils.constants import CONST
-import functest.utils.functest_utils as ft_utils
 
 
 def finish_session(current_scenario):
@@ -94,22 +92,19 @@ class EnergyRecorder(object):
         # Singleton pattern for energy_recorder_api static member
         # Load only if not previouly done
         if EnergyRecorder.energy_recorder_api is None:
-            environment = CONST.__getattribute__('NODE_NAME')
+            environment = os.environ['NODE_NAME']
+            assert environment
 
             # API URL
-            energy_recorder_uri = ft_utils.get_functest_config(
-                "energy_recorder.api_url")
+            energy_recorder_uri = os.environ["ENERGY_RECORDER_API_URL"]
             assert energy_recorder_uri
-            assert environment
+
+            # Creds
+            creds_usr = os.environ.get("ENERGY_RECORDER_API_USER", "")
+            creds_pass = os.environ.get("ENERGY_RECORDER_API_PASSWORD", "")
 
             uri_comp = "/recorders/environment/"
             uri_comp += urllib.parse.quote_plus(environment)
-
-            # Creds
-            creds_usr = ft_utils.get_functest_config(
-                "energy_recorder.api_user")
-            creds_pass = ft_utils.get_functest_config(
-                "energy_recorder.api_password")
 
             if creds_usr != "" and creds_pass != "":
                 energy_recorder_api_auth = (creds_usr, creds_pass)
