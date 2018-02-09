@@ -22,7 +22,6 @@ from robot.utils.robottime import timestamp_to_secs
 from six import StringIO
 
 from functest.core import testcase
-from functest.utils import constants
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -54,10 +53,10 @@ class RobotFramework(testcase.TestCase):
     """RobotFramework runner."""
 
     __logger = logging.getLogger(__name__)
+    dir_results = "/home/opnfv/functest/results"
 
     def __init__(self, **kwargs):
-        self.res_dir = os.path.join(
-            constants.CONST.__getattribute__('dir_results'), 'robot')
+        self.res_dir = os.path.join(self.dir_results, 'robot')
         self.xml_file = os.path.join(self.res_dir, 'output.xml')
         super(RobotFramework, self).__init__(**kwargs)
 
