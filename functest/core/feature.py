@@ -18,7 +18,6 @@ import subprocess
 import time
 
 import functest.core.testcase as base
-from functest.utils.constants import CONST
 
 __author__ = ("Serena Feng <feng.xiaowei@zte.com.cn>, "
               "Cedric Ollivier <cedric.ollivier@orange.com>")
@@ -28,11 +27,11 @@ class Feature(base.TestCase):
     """Base model for single feature."""
 
     __logger = logging.getLogger(__name__)
+    dir_results = "/home/opnfv/functest/results"
 
     def __init__(self, **kwargs):
         super(Feature, self).__init__(**kwargs)
-        self.result_file = "{}/{}.log".format(
-            CONST.__getattribute__('dir_results'), self.case_name)
+        self.result_file = "{}/{}.log".format(self.dir_results, self.case_name)
         try:
             module = kwargs['run']['module']
             self.logger = logging.getLogger(module)
