@@ -29,13 +29,14 @@ import yaml
 
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
-from functest.utils.constants import CONST
 
 # __name__ cannot be used here
 LOGGER = logging.getLogger('functest.ci.run_tests')
 
 CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
     'functest', 'ci/config_functest.yaml')
+
+ENV_FILE = "/home/opnfv/functest/conf/env_file"
 
 
 class Result(enum.Enum):
@@ -93,12 +94,12 @@ class Runner(object):
         self.clean_flag = True
         self.report_flag = False
         self.tiers = tb.TierBuilder(
-            CONST.__getattribute__('INSTALLER_TYPE'),
-            CONST.__getattribute__('DEPLOY_SCENARIO'),
+            os.environ.get('INSTALLER_TYPE', None),
+            os.environ.get('DEPLOY_SCENARIO', None),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     @staticmethod
-    def source_envfile(rc_file):
+    def source_envfile(rc_file=ENV_FILE):
         """Source the env file passed as arg"""
         with open(rc_file, "r") as rcfd:
             for line in rcfd:
@@ -111,7 +112,6 @@ class Runner(object):
                     key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
                     value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
                     os.environ[key] = value
-                    setattr(CONST, key, value)
 
     @staticmethod
     def get_dict_by_test(testname):
@@ -208,9 +208,9 @@ class Runner(object):
             field_names=['tiers', 'order', 'CI Loop', 'description',
                          'testcases'])
         for tier in self.tiers.get_tiers():
-            if (tier.get_tests() and
-                    re.search(CONST.__getattribute__('CI_LOOP'),
-                              tier.get_ci_loop()) is not None):
+            ci_loop = os.environ.get('CI_LOOP', None)
+            if (tier.get_tests() and ci_loop and
+                    re.search(ci_loop, tier.get_ci_loop()) is not None):
                 tiers_to_run.append(tier)
                 msg.add_row([tier.get_name(), tier.get_order(),
                              tier.get_ci_loop(),
@@ -230,7 +230,7 @@ class Runner(object):
         try:
             if 'test' in kwargs:
                 LOGGER.debug("Sourcing the credential file...")
-                self.source_envfile(getattr(CONST, 'env_file'))
+                self.source_envfile()
 
                 LOGGER.debug("Test args: %s", kwargs['test'])
                 if self.tiers.get_tier(kwargs['test']):
@@ -248,7 +248,7 @@ class Runner(object):
                     LOGGER.error("Unknown test case or tier '%s', or not "
                                  "supported by the given scenario '%s'.",
                                  kwargs['test'],
-                                 CONST.__getattribute__('DEPLOY_SCENARIO'))
+                                 os.environ.get('DEPLOY_SCENARIO', ""))
                     LOGGER.debug("Available tiers are:\n\n%s",
                                  self.tiers)
                     return Result.EX_ERROR
@@ -271,7 +271,7 @@ class Runner(object):
             field_names=['env var', 'value'])
         for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
                         'CI_LOOP']:
-            msg.add_row([env_var, CONST.__getattribute__(env_var)])
+            msg.add_row([env_var, os.environ.get(env_var, "")])
         LOGGER.info("Deployment description:\n\n%s\n", msg)
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,
