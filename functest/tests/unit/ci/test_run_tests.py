@@ -55,7 +55,7 @@ class RunTestsTesting(unittest.TestCase):
 
         self.run_tests_parser = run_tests.RunTestsParser()
 
-    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test')
+    @mock.patch('functest.ci.run_tests.Runner.get_dict_by_test')
     def test_get_run_dict(self, *args):
         retval = {'run': mock.Mock()}
         args[0].return_value = retval
@@ -63,7 +63,7 @@ class RunTestsTesting(unittest.TestCase):
         args[0].assert_called_once_with('test_name')
 
     @mock.patch('functest.ci.run_tests.LOGGER.error')
-    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test',
+    @mock.patch('functest.ci.run_tests.Runner.get_dict_by_test',
                 return_value=None)
     def test_get_run_dict_config_ko(self, *args):
         testname = 'test_name'
@@ -77,7 +77,7 @@ class RunTestsTesting(unittest.TestCase):
         args[1].assert_has_calls(calls)
 
     @mock.patch('functest.ci.run_tests.LOGGER.exception')
-    @mock.patch('functest.ci.run_tests.ft_utils.get_dict_by_test',
+    @mock.patch('functest.ci.run_tests.Runner.get_dict_by_test',
                 side_effect=Exception)
     def test_get_run_dict_exception(self, *args):
         testname = 'test_name'
@@ -113,6 +113,19 @@ class RunTestsTesting(unittest.TestCase):
         self._test_source_envfile(
             'export "\'OS_TENANT_NAME\'" = "\'admin\'"')
 
+    def test_get_dict_by_test(self):
+        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
+                mock.patch('yaml.safe_load') as mock_yaml:
+            mock_obj = mock.Mock()
+            testcase_dict = {'case_name': 'testname',
+                             'criteria': 50}
+            attrs = {'get.return_value': [{'testcases': [testcase_dict]}]}
+            mock_obj.configure_mock(**attrs)
+            mock_yaml.return_value = mock_obj
+            self.assertDictEqual(
+                run_tests.Runner.get_dict_by_test('testname'),
+                testcase_dict)
+
     @mock.patch('functest.ci.run_tests.Runner.get_run_dict',
                 return_value=None)
     def test_run_tests_import_exception(self, *args):
@@ -129,7 +142,7 @@ class RunTestsTesting(unittest.TestCase):
     @mock.patch('importlib.import_module', name="module",
                 return_value=mock.Mock(test_class=mock.Mock(
                     side_effect=FakeModule)))
-    @mock.patch('functest.utils.functest_utils.get_dict_by_test')
+    @mock.patch('functest.ci.run_tests.Runner.get_dict_by_test')
     def test_run_tests_default(self, *args):
         mock_test = mock.Mock()
         kwargs = {'get_name.return_value': 'test_name',

@@ -25,10 +25,10 @@ import pkg_resources
 
 import enum
 import prettytable
+import yaml
 
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
-import functest.utils.functest_utils as ft_utils
 from functest.utils.constants import CONST
 
 # __name__ cannot be used here
@@ -114,10 +114,23 @@ class Runner(object):
                     setattr(CONST, key, value)
 
     @staticmethod
+    def get_dict_by_test(testname):
+        # pylint: disable=bad-continuation,missing-docstring
+        with open(pkg_resources.resource_filename(
+                'functest', 'ci/testcases.yaml')) as tyaml:
+            testcases_yaml = yaml.safe_load(tyaml)
+        for dic_tier in testcases_yaml.get("tiers"):
+            for dic_testcase in dic_tier['testcases']:
+                if dic_testcase['case_name'] == testname:
+                    return dic_testcase
+        LOGGER.error('Project %s is not defined in testcases.yaml', testname)
+        return None
+
+    @staticmethod
     def get_run_dict(testname):
         """Obtain the 'run' block of the testcase from testcases.yaml"""
         try:
-            dic_testcase = ft_utils.get_dict_by_test(testname)
+            dic_testcase = Runner.get_dict_by_test(testname)
             if not dic_testcase:
                 LOGGER.error("Cannot get %s's config options", testname)
             elif 'run' in dic_testcase:
@@ -139,7 +152,7 @@ class Runner(object):
             try:
                 module = importlib.import_module(run_dict['module'])
                 cls = getattr(module, run_dict['class'])
-                test_dict = ft_utils.get_dict_by_test(test.get_name())
+                test_dict = Runner.get_dict_by_test(test.get_name())
                 test_case = cls(**test_dict)
                 self.executed_test_cases[test.get_name()] = test_case
                 try:

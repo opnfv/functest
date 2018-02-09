@@ -17,7 +17,6 @@ import shutil
 import subprocess
 import sys
 
-import pkg_resources
 import dns.resolver
 from six.moves import urllib
 import yaml
@@ -133,28 +132,6 @@ def execute_command(cmd, info=False, error_msg="",
             LOGGER.error(error_msg)
 
     return returncode
-
-
-def get_dict_by_test(testname):
-    # pylint: disable=bad-continuation
-    with open(pkg_resources.resource_filename(
-            'functest', 'ci/testcases.yaml')) as tyaml:
-        testcases_yaml = yaml.safe_load(tyaml)
-
-    for dic_tier in testcases_yaml.get("tiers"):
-        for dic_testcase in dic_tier['testcases']:
-            if dic_testcase['case_name'] == testname:
-                return dic_testcase
-
-    LOGGER.error('Project %s is not defined in testcases.yaml', testname)
-    return None
-
-
-def get_criteria_by_test(testname):
-    tdict = get_dict_by_test(testname)
-    if tdict:
-        return tdict['criteria']
-    return None
 
 
 # ----------------------------------------------------------

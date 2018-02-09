@@ -55,8 +55,6 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.cmd = 'test_cmd'
         self.output_file = 'test_output_file'
         self.testname = 'testname'
-        self.testcase_dict = {'case_name': 'testname',
-                              'criteria': self.criteria}
         self.parameter = 'general.openstack.image_name'
         self.config_yaml = pkg_resources.resource_filename(
             'functest', 'ci/config_functest.yaml')
@@ -254,32 +252,6 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     def _get_functest_config(self, var):
         return var
-
-    @mock.patch('functest.utils.functest_utils.LOGGER.error')
-    def test_get_dict_by_test(self, mock_logger_error):
-        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
-                mock.patch('functest.utils.functest_utils.yaml.safe_load') \
-                as mock_yaml:
-            mock_obj = mock.Mock()
-            attrs = {'get.return_value': [{'testcases': [self.testcase_dict]}]}
-            mock_obj.configure_mock(**attrs)
-
-            mock_yaml.return_value = mock_obj
-
-            self.assertDictEqual(functest_utils.
-                                 get_dict_by_test(self.testname),
-                                 self.testcase_dict)
-
-    @mock.patch('functest.utils.functest_utils.get_dict_by_test')
-    def test_get_criteria_by_test_default(self, mock_get_dict_by_test):
-        mock_get_dict_by_test.return_value = self.testcase_dict
-        self.assertEqual(functest_utils.get_criteria_by_test(self.testname),
-                         self.criteria)
-
-    @mock.patch('functest.utils.functest_utils.get_dict_by_test')
-    def test_get_criteria_by_test_failed(self, mock_get_dict_by_test):
-        mock_get_dict_by_test.return_value = None
-        self.assertIsNone(functest_utils.get_criteria_by_test(self.testname))
 
     def test_get_parameter_from_yaml_failed(self):
         self.file_yaml['general'] = None
