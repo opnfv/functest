@@ -30,12 +30,7 @@ import yaml
 import functest.ci.tier_builder as tb
 import functest.core.testcase as testcase
 
-# __name__ cannot be used here
 LOGGER = logging.getLogger('functest.ci.run_tests')
-
-CONFIG_FUNCTEST_PATH = pkg_resources.resource_filename(
-    'functest', 'ci/config_functest.yaml')
-
 ENV_FILE = "/home/opnfv/functest/conf/env_file"
 
 
