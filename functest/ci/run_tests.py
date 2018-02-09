@@ -96,7 +96,11 @@ class Runner(object):
     @staticmethod
     def source_envfile(rc_file=ENV_FILE):
         """Source the env file passed as arg"""
+        if not os.path.isfile(rc_file):
+            LOGGER.debug("No env file %s found", rc_file)
+            return
         with open(rc_file, "r") as rcfd:
+            LOGGER.info("Sourcing env file %s", rc_file)
             for line in rcfd:
                 var = (line.rstrip('"\n').replace('export ', '').split(
                     "=") if re.search(r'(.*)=(.*)', line) else None)
