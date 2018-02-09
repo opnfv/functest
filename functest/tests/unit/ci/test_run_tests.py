@@ -200,8 +200,7 @@ class RunTestsTesting(unittest.TestCase):
         self.runner.tiers.configure_mock(**args)
         self.assertEqual(self.runner.main(**kwargs),
                          run_tests.Result.EX_ERROR)
-        mock_methods[1].assert_called_once_with(
-            '/home/opnfv/functest/conf/env_file')
+        mock_methods[1].assert_called_once_with()
 
     @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     @mock.patch('functest.ci.run_tests.Runner.run_test',
@@ -250,7 +249,7 @@ class RunTestsTesting(unittest.TestCase):
             run_tests.Result.EX_OK)
         args[0].assert_called_once_with(None)
         args[1].assert_called_once_with()
-        args[2].assert_called_once_with('/home/opnfv/functest/conf/env_file')
+        args[2].assert_called_once_with()
 
     @mock.patch('functest.ci.run_tests.Runner.source_envfile')
     def test_main_any_tier_test_ko(self, *args):
@@ -261,7 +260,7 @@ class RunTestsTesting(unittest.TestCase):
         self.assertEqual(
             self.runner.main(test='any', noclean=True, report=True),
             run_tests.Result.EX_ERROR)
-        args[0].assert_called_once_with('/home/opnfv/functest/conf/env_file')
+        args[0].assert_called_once_with()
 
 
 if __name__ == "__main__":
