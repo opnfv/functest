@@ -7,6 +7,9 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
+
+"""Tempest configuration utilities."""
+
 import ConfigParser
 import logging
 import fileinput
@@ -52,31 +55,32 @@ CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
 CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
 
 """ logging configuration """
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 def create_rally_deployment():
+    """Create new rally deployment"""
     # set the architecture to default
     pod_arch = os.getenv("POD_ARCH", None)
     arch_filter = ['aarch64']
 
     if pod_arch and pod_arch in arch_filter:
-        logger.info("Apply aarch64 specific to rally config...")
-        with open(RALLY_AARCH64_PATCH_PATH, "r") as f:
-            rally_patch_conf = f.read()
+        LOGGER.info("Apply aarch64 specific to rally config...")
+        with open(RALLY_AARCH64_PATCH_PATH, "r") as pfile:
+            rally_patch_conf = pfile.read()
 
         for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
             print line,
             if "cirros|testvm" in line:
                 print rally_patch_conf
 
-    logger.info("Creating Rally environment...")
+    LOGGER.info("Creating Rally environment...")
 
     cmd = "rally deployment destroy opnfv-rally"
     ft_utils.execute_command(cmd, error_msg=(
         "Deployment %s does not exist."
         % CONST.__getattribute__('rally_deployment_name')),
-        verbose=False)
+                             verbose=False)
 
     cmd = ("rally deployment create --fromenv --name={0}"
            .format(CONST.__getattribute__('rally_deployment_name')))
@@ -89,13 +93,14 @@ def create_rally_deployment():
 
 
 def create_verifier():
-    logger.info("Create verifier from existing repo...")
+    """Create new verifier"""
+    LOGGER.info("Create verifier from existing repo...")
     cmd = ("rally verify delete-verifier --id '{0}' --force").format(
         CONST.__getattribute__('tempest_verifier_name'))
     ft_utils.execute_command(cmd, error_msg=(
         "Verifier %s does not exist."
         % CONST.__getattribute__('tempest_verifier_name')),
-        verbose=False)
+                             verbose=False)
     cmd = ("rally verify create-verifier --source {0} "
            "--name {1} --type tempest --system-wide"
            .format(CONST.__getattribute__('dir_repo_tempest'),
@@ -113,12 +118,12 @@ def get_verifier_id():
     cmd = ("rally verify list-verifiers | awk '/" +
            CONST.__getattribute__('tempest_verifier_name') +
            "/ {print $2}'")
-    p = subprocess.Popen(cmd, shell=True,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-    deployment_uuid = p.stdout.readline().rstrip()
+    proc = subprocess.Popen(cmd, shell=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT)
+    deployment_uuid = proc.stdout.readline().rstrip()
     if deployment_uuid == "":
-        logger.error("Tempest verifier not found.")
+        LOGGER.error("Tempest verifier not found.")
         raise Exception('Error with command:%s' % cmd)
     return deployment_uuid
 
@@ -130,12 +135,12 @@ def get_verifier_deployment_id():
     cmd = ("rally deployment list | awk '/" +
            CONST.__getattribute__('rally_deployment_name') +
            "/ {print $2}'")
-    p = subprocess.Popen(cmd, shell=True,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-    deployment_uuid = p.stdout.readline().rstrip()
+    proc = subprocess.Popen(cmd, shell=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.STDOUT)
+    deployment_uuid = proc.stdout.readline().rstrip()
     if deployment_uuid == "":
-        logger.error("Rally deployment not found.")
+        LOGGER.error("Rally deployment not found.")
         raise Exception('Error with command:%s' % cmd)
     return deployment_uuid
 
@@ -192,13 +197,14 @@ def configure_tempest(deployment_dir, image_id=None, flavor_id=None,
 
 def configure_tempest_defcore(deployment_dir, image_id, flavor_id,
                               image_id_alt, flavor_id_alt, tenant_id):
+    # pylint: disable=too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
     """
     conf_file = configure_verifier(deployment_dir)
     configure_tempest_update_params(conf_file, image_id, flavor_id)
 
-    logger.debug("Updating selected tempest.conf parameters for defcore...")
+    LOGGER.debug("Updating selected tempest.conf parameters for defcore...")
     config = ConfigParser.RawConfigParser()
     config.read(conf_file)
     config.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
@@ -227,7 +233,7 @@ def generate_test_accounts_file(tenant_id):
     Add needed tenant and user params into test_accounts.yaml
     """
 
-    logger.debug("Add needed params into test_accounts.yaml...")
+    LOGGER.debug("Add needed params into test_accounts.yaml...")
     accounts_list = [
         {
             'tenant_name':
@@ -239,8 +245,25 @@ def generate_test_accounts_file(tenant_id):
         }
     ]
 
-    with open(TEST_ACCOUNTS_FILE, "w") as f:
-        yaml.dump(accounts_list, f, default_flow_style=False)
+    with open(TEST_ACCOUNTS_FILE, "w") as tfile:
+        yaml.dump(accounts_list, tfile, default_flow_style=False)
+
+
+def update_tempest_conf_file(conf_file, config):
+    """Update defined paramters into tempest config file"""
+    with open(TEMPEST_CONF_YAML) as yfile:
+        conf_yaml = yaml.safe_load(yfile)
+    if conf_yaml:
+        sections = config.sections()
+        for section in conf_yaml:
+            if section not in sections:
+                config.add_section(section)
+            sub_conf = conf_yaml.get(section)
+            for key, value in sub_conf.items():
+                config.set(section, key, value)
+
+    with open(conf_file, 'wb') as config_file:
+        config.write(config_file)
 
 
 def configure_tempest_update_params(tempest_conf_file, image_id=None,
@@ -248,7 +271,7 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
     """
     Add/update needed parameters into tempest.conf file
     """
-    logger.debug("Updating selected tempest.conf parameters...")
+    LOGGER.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
     config.set(
@@ -276,8 +299,9 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
                CONST.__getattribute__('OS_REGION_NAME'))
     identity_api_version = os.getenv(
         "OS_IDENTITY_API_VERSION", os.getenv("IDENTITY_API_VERSION"))
-    if (identity_api_version == '3'):
+    if identity_api_version == '3':
         auth_version = 'v3'
+        config.set('identity-feature-enabled', 'api_v2', False)
     else:
         auth_version = 'v2'
     config.set('identity', 'auth_version', auth_version)
@@ -290,9 +314,6 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
     if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
         config.set('identity', 'v3_endpoint_type',
                    CONST.__getattribute__('OS_ENDPOINT_TYPE'))
-
-    if (identity_api_version == '3'):
-        config.set('identity-feature-enabled', 'api_v2', False)
 
     if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
@@ -309,21 +330,9 @@ def configure_tempest_update_params(tempest_conf_file, image_id=None,
             config.set(service, 'endpoint_type',
                        CONST.__getattribute__('OS_ENDPOINT_TYPE'))
 
-    logger.debug('Add/Update required params defined in tempest_conf.yaml '
+    LOGGER.debug('Add/Update required params defined in tempest_conf.yaml '
                  'into tempest.conf file')
-    with open(TEMPEST_CONF_YAML) as f:
-        conf_yaml = yaml.safe_load(f)
-    if conf_yaml:
-        sections = config.sections()
-        for section in conf_yaml:
-            if section not in sections:
-                config.add_section(section)
-            sub_conf = conf_yaml.get(section)
-            for key, value in sub_conf.items():
-                config.set(section, key, value)
-
-    with open(tempest_conf_file, 'wb') as config_file:
-        config.write(config_file)
+    update_tempest_conf_file(tempest_conf_file, config)
 
     backup_tempest_config(tempest_conf_file)
 
@@ -334,18 +343,18 @@ def configure_verifier(deployment_dir):
     """
     tempest_conf_file = os.path.join(deployment_dir, "tempest.conf")
     if os.path.isfile(tempest_conf_file):
-        logger.debug("Verifier is already configured.")
-        logger.debug("Reconfiguring the current verifier...")
+        LOGGER.debug("Verifier is already configured.")
+        LOGGER.debug("Reconfiguring the current verifier...")
         cmd = "rally verify configure-verifier --reconfigure"
     else:
-        logger.info("Configuring the verifier...")
+        LOGGER.info("Configuring the verifier...")
         cmd = "rally verify configure-verifier"
     ft_utils.execute_command(cmd)
 
-    logger.debug("Looking for tempest.conf file...")
+    LOGGER.debug("Looking for tempest.conf file...")
     if not os.path.isfile(tempest_conf_file):
-        logger.error("Tempest configuration file %s NOT found."
-                     % tempest_conf_file)
+        LOGGER.error("Tempest configuration file %s NOT found.",
+                     tempest_conf_file)
         raise Exception("Tempest configuration file %s NOT found."
                         % tempest_conf_file)
     else:
