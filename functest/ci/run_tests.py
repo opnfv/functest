@@ -207,8 +207,8 @@ class Runner(object):
             field_names=['tiers', 'order', 'CI Loop', 'description',
                          'testcases'])
         for tier in self.tiers.get_tiers():
-            ci_loop = os.environ.get('CI_LOOP', None)
-            if (tier.get_tests() and ci_loop and
+            ci_loop = os.environ.get('CI_LOOP', 'daily')
+            if (tier.get_tests() and
                     re.search(ci_loop, tier.get_ci_loop()) is not None):
                 tiers_to_run.append(tier)
                 msg.add_row([tier.get_name(), tier.get_order(),
