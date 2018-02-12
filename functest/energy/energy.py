@@ -13,6 +13,7 @@
 import json
 import logging
 import os
+import traceback
 
 from functools import wraps
 import requests
@@ -92,12 +93,10 @@ class EnergyRecorder(object):
         # Singleton pattern for energy_recorder_api static member
         # Load only if not previouly done
         if EnergyRecorder.energy_recorder_api is None:
+            assert os.environ['NODE_NAME']
+            assert os.environ["ENERGY_RECORDER_API_URL"]
             environment = os.environ['NODE_NAME']
-            assert environment
-
-            # API URL
             energy_recorder_uri = os.environ["ENERGY_RECORDER_API_URL"]
-            assert energy_recorder_uri
 
             # Creds
             creds_usr = os.environ.get("ENERGY_RECORDER_API_USER", "")
@@ -179,8 +178,9 @@ class EnergyRecorder(object):
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
             # is safe for caller
-            EnergyRecorder.logger.exception(
-                "Error while submitting scenarion to energy recorder API"
+            EnergyRecorder.logger.info(
+                "Error while submitting scenarion to energy recorder API\n%s",
+                traceback.format_exc()
             )
             return_status = False
         return return_status
@@ -205,8 +205,9 @@ class EnergyRecorder(object):
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
             # is safe for caller
-            EnergyRecorder.logger.exception(
-                "Error while starting energy recorder API"
+            EnergyRecorder.logger.info(
+                "Error while starting energy recorder API\n%s",
+                traceback.format_exc()
             )
             return_status = False
         return return_status
@@ -241,8 +242,9 @@ class EnergyRecorder(object):
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
             # is safe for caller
-            EnergyRecorder.logger.exception(
-                "Error while stoping energy recorder API"
+            EnergyRecorder.logger.info(
+                "Error while stoping energy recorder API\n%s",
+                traceback.format_exc()
             )
             return_status = False
         return return_status
@@ -283,8 +285,9 @@ class EnergyRecorder(object):
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
             # is safe for caller
-            EnergyRecorder.logger.exception(
-                "Error while setting step on energy recorder API"
+            EnergyRecorder.logger.info(
+                "Error while setting step on energy recorder API\n%s",
+                traceback.format_exc()
             )
             return_status = False
         return return_status
@@ -323,8 +326,9 @@ class EnergyRecorder(object):
         except Exception:  # pylint: disable=broad-except
             # Default exception handler to ensure that method
             # is safe for caller
-            EnergyRecorder.logger.exception(
+            EnergyRecorder.logger.info(
                 "Error while getting current scenario from energy recorder API"
+                "\n%s", traceback.format_exc()
             )
             return_value = None
         return return_value
