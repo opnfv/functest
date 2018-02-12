@@ -8,13 +8,13 @@
 # pylint: disable=missing-docstring
 
 import logging
+import os
 import re
 import unittest
 
 import mock
 
 from functest.cli.commands import cli_env
-from functest.utils.constants import CONST
 
 
 class RegexMatch(object):  # pylint: disable=too-few-public-methods
@@ -34,22 +34,22 @@ class CliEnvTesting(unittest.TestCase):
     def _test_show_missing_env_var(self, var, *args):
         # pylint: disable=unused-argument
         if var == 'INSTALLER_TYPE':
-            CONST.__setattr__('INSTALLER_TYPE', None)
+            os.environ['INSTALLER_TYPE'] = ''
             reg_string = r"|  INSTALLER: Unknown, \S+\s*|"
         elif var == 'INSTALLER_IP':
-            CONST.__setattr__('INSTALLER_IP', None)
+            os.environ['INSTALLER_IP'] = ''
             reg_string = r"|  INSTALLER: \S+, Unknown\s*|"
         elif var == 'SCENARIO':
-            CONST.__setattr__('DEPLOY_SCENARIO', None)
+            os.environ['DEPLOY_SCENARIO'] = ''
             reg_string = r"|   SCENARIO: Unknown\s*|"
         elif var == 'NODE':
-            CONST.__setattr__('NODE_NAME', None)
+            os.environ['NODE_NAME'] = ''
             reg_string = r"|        POD: Unknown\s*|"
         elif var == 'BUILD_TAG':
-            CONST.__setattr__('BUILD_TAG', None)
+            os.environ['BUILD_TAG'] = ''
             reg_string = r"|  BUILD TAG: None|"
         elif var == 'DEBUG':
-            CONST.__setattr__('CI_DEBUG', None)
+            os.environ['CI_DEBUG'] = ''
             reg_string = r"| DEBUG FLAG: false\s*|"
 
         with mock.patch('functest.cli.commands.cli_env.click.echo') \
