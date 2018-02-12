@@ -13,7 +13,6 @@ class Environment(object):  # pylint: disable=too-few-public-methods
 
     default_envs = {
         'NODE_NAME': 'unknown_pod',
-        'CI_DEBUG': 'false',
         'DEPLOY_SCENARIO': 'os-nosdn-nofeature-noha',
         'DEPLOY_TYPE': 'virt',
         'INSTALLER_TYPE': None,

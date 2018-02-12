@@ -48,9 +48,6 @@ class CliEnvTesting(unittest.TestCase):
         elif var == 'BUILD_TAG':
             os.environ['BUILD_TAG'] = ''
             reg_string = r"|  BUILD TAG: None|"
-        elif var == 'DEBUG':
-            os.environ['CI_DEBUG'] = ''
-            reg_string = r"| DEBUG FLAG: false\s*|"
 
         with mock.patch('functest.cli.commands.cli_env.click.echo') \
                 as mock_click_echo:
@@ -71,9 +68,6 @@ class CliEnvTesting(unittest.TestCase):
 
     def test_show_missing_ci_build_tag(self, *args):
         self._test_show_missing_env_var('BUILD_TAG', *args)
-
-    def test_show_missing_ci_debug(self, *args):
-        self._test_show_missing_env_var('DEBUG', *args)
 
 
 if __name__ == "__main__":

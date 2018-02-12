@@ -235,7 +235,6 @@ when performing manual test scenarios:
 
   * NODE_NAME = <Test POD Name>
   * BUILD_TAG = <Jenkins Build Tag>
-  * CI_DEBUG = <DebugTraceValue>
 
 where:
 
@@ -255,11 +254,6 @@ where:
                          which are independently pushed to the results database
                          from different Jenkins jobs.
                          DO NOT USE THIS OPTION IN MANUAL TEST SCENARIOS.
-  * <DebugTraceValue> = "true" or "false"
-                       Default = "false", if not specified
-                       If "true" is specified, then additional debug trace
-                       text can be sent to the test results file / log files
-                       and also to the standard console output.
 
 
 Openstack credentials

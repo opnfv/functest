@@ -8,11 +8,10 @@
 
 # pylint: disable=missing-docstring
 
+import os
+
 import click
 import prettytable
-
-from functest.utils.constants import CONST
-
 import six
 
 
@@ -20,24 +19,19 @@ class Env(object):  # pylint: disable=too-few-public-methods
 
     @staticmethod
     def show():
-        def _get_value(attr, default='Unknown'):
-            return attr if attr else default
-
-        install_type = _get_value(CONST.__getattribute__('INSTALLER_TYPE'))
-        installer_ip = _get_value(CONST.__getattribute__('INSTALLER_IP'))
+        install_type = os.environ.get('INSTALLER_TYPE', 'Unknown')
+        installer_ip = os.environ.get('INSTALLER_IP', 'Unknown')
         installer_info = ("%s, %s" % (install_type, installer_ip))
-        scenario = _get_value(CONST.__getattribute__('DEPLOY_SCENARIO'))
-        node = _get_value(CONST.__getattribute__('NODE_NAME'))
-        is_debug = _get_value(CONST.__getattribute__('CI_DEBUG'), 'false')
-        build_tag = CONST.__getattribute__('BUILD_TAG')
-        if build_tag is not None:
+        scenario = os.environ.get('DEPLOY_SCENARIO', 'Unknown')
+        node = os.environ.get('NODE_NAME', 'Unknown')
+        build_tag = os.environ.get('BUILD_TAG', None)
+        if build_tag:
             build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
 
         env_info = {'INSTALLER': installer_info,
                     'SCENARIO': scenario,
                     'POD': node,
-                    'DEBUG FLAG': is_debug,
                     'BUILD_TAG': build_tag}
 
         return env_info
