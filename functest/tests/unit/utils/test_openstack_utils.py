@@ -9,12 +9,12 @@
 
 import copy
 import logging
+import os
 import unittest
 
 import mock
 
 from functest.utils import openstack_utils
-from functest.utils.constants import CONST
 
 
 class OSUtilsTesting(unittest.TestCase):
@@ -1577,7 +1577,7 @@ class OSUtilsTesting(unittest.TestCase):
     def test_create_tenant_default(self):
         with mock.patch('functest.utils.openstack_utils.'
                         'is_keystone_v3', return_value=True):
-            CONST.__setattr__('OS_PROJECT_DOMAIN_NAME', 'Default')
+            os.environ['OS_PROJECT_DOMAIN_NAME'] = 'Default'
             self.assertEqual(openstack_utils.
                              create_tenant(self.keystone_client,
                                            'test_tenant',

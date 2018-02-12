@@ -1320,7 +1320,7 @@ def get_domain_id(keystone_client, domain_name):
 def create_tenant(keystone_client, tenant_name, tenant_description):
     try:
         if is_keystone_v3():
-            domain_name = CONST.__getattribute__('OS_PROJECT_DOMAIN_NAME')
+            domain_name = os.environ['OS_PROJECT_DOMAIN_NAME']
             domain_id = get_domain_id(keystone_client, domain_name)
             tenant = keystone_client.projects.create(
                 name=tenant_name,
