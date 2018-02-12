@@ -20,10 +20,10 @@ from functest.utils.constants import CONST
 class OpenStack(object):
 
     def __init__(self):
-        self.os_auth_url = CONST.__getattribute__('OS_AUTH_URL')
+        self.os_auth_url = os.environ['OS_AUTH_URL']
         self.endpoint_ip = None
         self.endpoint_port = None
-        self.openstack_creds = CONST.__getattribute__('env_file')
+        self.openstack_creds = getattr(CONST, 'env_file')
         if self.os_auth_url:
             self.endpoint_ip = urllib.parse.urlparse(self.os_auth_url).hostname
             self.endpoint_port = urllib.parse.urlparse(self.os_auth_url).port
