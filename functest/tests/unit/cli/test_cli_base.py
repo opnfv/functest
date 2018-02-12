@@ -10,6 +10,7 @@
 # pylint: disable=missing-docstring
 
 import logging
+import os
 import unittest
 
 import mock
@@ -19,6 +20,7 @@ with mock.patch('functest.cli.commands.cli_testcase.CliTestcase.__init__',
                 mock.Mock(return_value=None)), \
     mock.patch('functest.cli.commands.cli_tier.CliTier.__init__',
                mock.Mock(return_value=None)):
+    os.environ['OS_AUTH_URL'] = ''
     from functest.cli import cli_base
 
 

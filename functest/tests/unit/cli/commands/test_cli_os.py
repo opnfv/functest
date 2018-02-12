@@ -26,6 +26,7 @@ class CliOpenStackTesting(unittest.TestCase):
         self.installer_ip = 'test_installer_ip'
         self.openstack_creds = 'test_env_file'
         self.snapshot_file = 'test_snapshot_file'
+        os.environ["OS_AUTH_URL"] = ''
         self.cli_os = cli_os.CliOpenStack()
 
     def test_ping_endpoint_default(self):

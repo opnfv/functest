@@ -8,12 +8,12 @@
 
 # pylint: disable=missing-docstring
 
+import os
 import pkg_resources
 
 import click
 
 from functest.ci import tier_builder
-from functest.utils.constants import CONST
 from functest.utils import functest_utils
 
 
@@ -21,8 +21,8 @@ class Tier(object):
 
     def __init__(self):
         self.tiers = tier_builder.TierBuilder(
-            CONST.__getattribute__('INSTALLER_TYPE'),
-            CONST.__getattribute__('DEPLOY_SCENARIO'),
+            os.environ['INSTALLER_TYPE'],
+            os.environ['DEPLOY_SCENARIO'],
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     def list(self):
