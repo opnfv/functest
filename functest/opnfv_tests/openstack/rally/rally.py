@@ -47,24 +47,20 @@ class RallyBase(testcase.TestCase):
     # pylint: disable=too-many-instance-attributes
     TESTS = ['authenticate', 'glance', 'ceilometer', 'cinder', 'heat',
              'keystone', 'neutron', 'nova', 'quotas', 'vm', 'all']
-    GLANCE_IMAGE_NAME = CONST.__getattribute__('openstack_image_name')
-    GLANCE_IMAGE_FILENAME = CONST.__getattribute__('openstack_image_file_name')
-    GLANCE_IMAGE_PATH = os.path.join(
-        CONST.__getattribute__('dir_functest_images'),
-        GLANCE_IMAGE_FILENAME)
-    GLANCE_IMAGE_FORMAT = CONST.__getattribute__('openstack_image_disk_format')
-    GLANCE_IMAGE_USERNAME = CONST.__getattribute__('openstack_image_username')
-    GLANCE_IMAGE_EXTRA_PROPERTIES = {}
-    if hasattr(CONST, 'openstack_extra_properties'):
-        GLANCE_IMAGE_EXTRA_PROPERTIES = CONST.__getattribute__(
-            'openstack_extra_properties')
-    FLAVOR_NAME = CONST.__getattribute__('rally_flavor_name')
-    FLAVOR_ALT_NAME = CONST.__getattribute__('rally_flavor_alt_name')
-    FLAVOR_EXTRA_SPECS = None
+    GLANCE_IMAGE_NAME = getattr(CONST, 'openstack_image_name')
+    GLANCE_IMAGE_FILENAME = getattr(CONST, 'openstack_image_file_name')
+    GLANCE_IMAGE_PATH = os.path.join(getattr(CONST, 'dir_functest_images'),
+                                     GLANCE_IMAGE_FILENAME)
+    GLANCE_IMAGE_FORMAT = getattr(CONST, 'openstack_image_disk_format')
+    GLANCE_IMAGE_USERNAME = getattr(CONST, 'openstack_image_username')
+    GLANCE_IMAGE_EXTRA_PROPERTIES = getattr(CONST,
+                                            'openstack_extra_properties', {})
+    FLAVOR_NAME = getattr(CONST, 'rally_flavor_name')
+    FLAVOR_ALT_NAME = getattr(CONST, 'rally_flavor_alt_name')
     FLAVOR_RAM = 512
     FLAVOR_RAM_ALT = 1024
-    if hasattr(CONST, 'flavor_extra_specs'):
-        FLAVOR_EXTRA_SPECS = CONST.__getattribute__('flavor_extra_specs')
+    FLAVOR_EXTRA_SPECS = getattr(CONST, 'flavor_extra_specs', None)
+    if FLAVOR_EXTRA_SPECS:
         FLAVOR_RAM = 1024
         FLAVOR_RAM_ALT = 2048
 
@@ -80,14 +76,14 @@ class RallyBase(testcase.TestCase):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
-    RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'), 'rally')
+    RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'rally')
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
-    RALLY_PRIVATE_NET_NAME = CONST.__getattribute__('rally_network_name')
-    RALLY_PRIVATE_SUBNET_NAME = CONST.__getattribute__('rally_subnet_name')
-    RALLY_PRIVATE_SUBNET_CIDR = CONST.__getattribute__('rally_subnet_cidr')
-    RALLY_ROUTER_NAME = CONST.__getattribute__('rally_router_name')
+    RALLY_PRIVATE_NET_NAME = getattr(CONST, 'rally_network_name')
+    RALLY_PRIVATE_SUBNET_NAME = getattr(CONST, 'rally_subnet_name')
+    RALLY_PRIVATE_SUBNET_CIDR = getattr(CONST, 'rally_subnet_cidr')
+    RALLY_ROUTER_NAME = getattr(CONST, 'rally_router_name')
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -222,8 +218,8 @@ class RallyBase(testcase.TestCase):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            installer_type = CONST.__getattribute__('INSTALLER_TYPE')
-            deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+            installer_type = os.getenv('INSTALLER_TYPE', None)
+            deploy_scenario = os.getenv('DEPLOY_SCENARIO', None)
             if (bool(installer_type) and bool(deploy_scenario) and
                     'scenario' in black_list_yaml.keys()):
                 for item in black_list_yaml['scenario']:
@@ -454,19 +450,9 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating network '%s'...", network_name)
 
-        rally_network_type = None
-        rally_physical_network = None
-        rally_segmentation_id = None
-
-        if hasattr(CONST, 'rally_network_type'):
-            rally_network_type = CONST.__getattribute__(
-                'rally_network_type')
-        if hasattr(CONST, 'rally_physical_network'):
-            rally_physical_network = CONST.__getattribute__(
-                'rally_physical_network')
-        if hasattr(CONST, 'rally_segmentation_id'):
-            rally_segmentation_id = CONST.__getattribute__(
-                'rally_segmentation_id')
+        rally_network_type = getattr(CONST, 'rally_network_type', None)
+        rally_physical_network = getattr(CONST, 'rally_physical_network', None)
+        rally_segmentation_id = getattr(CONST, 'rally_segmentation_id', None)
 
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(

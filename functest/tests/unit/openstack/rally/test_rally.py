@@ -16,7 +16,6 @@ import mock
 
 from functest.core import testcase
 from functest.opnfv_tests.openstack.rally import rally
-from functest.utils.constants import CONST
 
 from snaps.openstack.os_credentials import OSCreds
 
@@ -34,13 +33,13 @@ class OSRallyTesting(unittest.TestCase):
         self.assertTrue(mock_get_creds.called)
 
     def test_build_task_args_missing_floating_network(self):
-        CONST.__setattr__('OS_AUTH_URL', None)
+        os.environ['OS_AUTH_URL'] = ''
         self.rally_base.ext_net_name = ''
         task_args = self.rally_base._build_task_args('test_file_name')
         self.assertEqual(task_args['floating_network'], '')
 
     def test_build_task_args_missing_net_id(self):
-        CONST.__setattr__('OS_AUTH_URL', None)
+        os.environ['OS_AUTH_URL'] = ''
         self.rally_base.priv_net_id = ''
         task_args = self.rally_base._build_task_args('test_file_name')
         self.assertEqual(task_args['netid'], '')
@@ -121,8 +120,8 @@ class OSRallyTesting(unittest.TestCase):
                      'installers': ['test_installer'],
                      'tests': ['other_test']}]})
     def test_excl_scenario_default(self, mock_func):
-        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
-        CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
+        os.environ['INSTALLER_TYPE'] = 'test_installer'
+        os.environ['DEPLOY_SCENARIO'] = 'test_scenario'
         self.assertEqual(self.rally_base.excl_scenario(), ['test'])
         mock_func.assert_called()
 
@@ -148,8 +147,8 @@ class OSRallyTesting(unittest.TestCase):
                      'installers': ['test_installer'],
                      'tests': ['test0b']}]})
     def test_excl_scenario_regex(self, mock_func):
-        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
-        CONST.__setattr__('DEPLOY_SCENARIO', 'os-ctrlT-featT-modeT')
+        os.environ['INSTALLER_TYPE'] = 'test_installer'
+        os.environ['DEPLOY_SCENARIO'] = 'os-ctrlT-featT-modeT'
         self.assertEqual(self.rally_base.excl_scenario(),
                          ['test1', 'test2', 'test3', 'test4'])
         mock_func.assert_called()
@@ -166,8 +165,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_migration_supported', return_value=False)
     def test_excl_func_default(self, mock_func, mock_yaml_load):
-        CONST.__setattr__('INSTALLER_TYPE', 'test_installer')
-        CONST.__setattr__('DEPLOY_SCENARIO', 'test_scenario')
+        os.environ['INSTALLER_TYPE'] = 'test_installer'
+        os.environ['DEPLOY_SCENARIO'] = 'test_scenario'
         self.assertEqual(self.rally_base.excl_func(), ['test'])
         mock_func.assert_called()
         mock_yaml_load.assert_called()
