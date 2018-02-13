@@ -26,7 +26,6 @@ from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
 from functest.cli.commands.cli_testcase import Testcase
 from functest.api.database.v1.handlers import TasksHandler
-from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 LOGGER = logging.getLogger(__name__)
@@ -127,10 +126,10 @@ class V1Testcase(ApiResource):
             result = 'FAIL'
 
         env_info = {
-            'installer': CONST.__getattribute__('INSTALLER_TYPE'),
-            'scenario': CONST.__getattribute__('DEPLOY_SCENARIO'),
-            'build_tag': CONST.__getattribute__('BUILD_TAG'),
-            'ci_loop': CONST.__getattribute__('CI_LOOP')
+            'installer': os.environ.get('INSTALLER_TYPE', None),
+            'scenario': os.environ.get('DEPLOY_SCENARIO', None),
+            'build_tag': os.environ.get('BUILD_TAG', None),
+            'ci_loop': os.environ.get('CI_LOOP', 'daily')
         }
         result = {
             'task_id': args.get('task_id'),
