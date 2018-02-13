@@ -70,7 +70,6 @@ tiers:
 
             -
                 case_name: juju_epc
-                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false
