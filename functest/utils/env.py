@@ -32,15 +32,8 @@ class Environment(object):  # pylint: disable=too-few-public-methods
         for key, value in six.iteritems(self.default_envs):
             if key not in os.environ:
                 setattr(self, key, value)
-        self._set_ci_run()
         if 'CI_LOOP' not in os.environ:
             self._set_ci_loop()
-
-    def _set_ci_run(self):
-        if getattr(self, "BUILD_TAG"):
-            setattr(self, "IS_CI_RUN", True)
-        else:
-            setattr(self, "IS_CI_RUN", False)
 
     def _set_ci_loop(self):
         if (getattr(self, "BUILD_TAG") and
