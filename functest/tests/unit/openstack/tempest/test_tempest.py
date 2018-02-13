@@ -5,7 +5,7 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-# pylint: disable=invalid-name,missing-docstring
+# pylint: disable=missing-docstring
 
 import logging
 import unittest
@@ -50,7 +50,7 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestdefcore = tempest.TempestDefcore()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
-    def test_generate_test_list_defcore_mode(self, mock_logger_debug):
+    def test_gen_tl_defcore_mode(self, mock_logger_debug):
         # pylint: disable=unused-argument
         self.tempestcommon.mode = 'defcore'
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -60,9 +60,8 @@ class OSTempestTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
-    def test_generate_test_list_custom_mode_missing_file(self,
-                                                         mock_logger_debug,
-                                                         mock_logger_error):
+    def test_gen_tl_cm_missing_file(self, mock_logger_debug,
+                                    mock_logger_error):
         # pylint: disable=unused-argument
         self.tempestcommon.mode = 'custom'
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -72,7 +71,7 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.generate_test_list('test_verifier_repo_dir')
             self.assertTrue((msg % conf_utils.TEMPEST_CUSTOM) in context)
 
-    def test_generate_test_list_custom_mode_default(self):
+    def test_gen_tl_cm_default(self):
         self.tempestcommon.mode = 'custom'
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'shutil.copyfile') as mock_copyfile, \
@@ -81,7 +80,7 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.generate_test_list('test_verifier_repo_dir')
             self.assertTrue(mock_copyfile.called)
 
-    def _test_generate_test_list_mode_default(self, mode):
+    def _test_gen_tl_mode_default(self, mode):
         self.tempestcommon.mode = mode
         if self.tempestcommon.mode == 'smoke':
             testr_mode = "smoke"
@@ -100,34 +99,34 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.generate_test_list('test_verifier_repo_dir')
             mock_exec.assert_any_call(cmd)
 
-    def test_generate_test_list_smoke_mode(self):
-        self._test_generate_test_list_mode_default('smoke')
+    def test_gen_tl_smoke_mode(self):
+        self._test_gen_tl_mode_default('smoke')
 
-    def test_generate_test_list_full_mode(self):
-        self._test_generate_test_list_mode_default('full')
+    def test_gen_tl_full_mode(self):
+        self._test_gen_tl_mode_default('full')
 
-    def test_parse_verifier_result_missing_verification_uuid(self):
+    def test_verif_res_missing_verif_id(self):
         self.tempestcommon.verification_id = None
         with self.assertRaises(Exception):
             self.tempestcommon.parse_verifier_result()
 
-    def test_apply_tempest_blacklist_no_blacklist(self):
-        with mock.patch('__builtin__.open', mock.mock_open()) as m, \
+    def test_apply_missing_blacklist(self):
+        with mock.patch('__builtin__.open', mock.mock_open()) as mock_open, \
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']):
             conf_utils.TEMPEST_BLACKLIST = Exception
             CONST.__setattr__('INSTALLER_TYPE', 'installer_type')
             CONST.__setattr__('DEPLOY_SCENARIO', 'deploy_scenario')
             self.tempestcommon.apply_tempest_blacklist()
-            obj = m()
+            obj = mock_open()
             obj.write.assert_any_call('test1\n')
             obj.write.assert_any_call('test2\n')
 
-    def test_apply_tempest_blacklist_default(self):
+    def test_apply_blacklist_default(self):
         item_dict = {'scenarios': ['deploy_scenario'],
                      'installers': ['installer_type'],
                      'tests': ['test2']}
-        with mock.patch('__builtin__.open', mock.mock_open()) as m, \
+        with mock.patch('__builtin__.open', mock.mock_open()) as mock_open, \
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
@@ -135,7 +134,7 @@ class OSTempestTesting(unittest.TestCase):
             CONST.__setattr__('INSTALLER_TYPE', 'installer_type')
             CONST.__setattr__('DEPLOY_SCENARIO', 'deploy_scenario')
             self.tempestcommon.apply_tempest_blacklist()
-            obj = m()
+            obj = mock_open()
             obj.write.assert_any_call('test1\n')
             self.assertFalse(obj.write.assert_any_call('test2\n'))
 
@@ -166,7 +165,7 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestResourcesManager.create', side_effect=Exception)
-    def test_run_tempest_create_resources_ko(self, *args):
+    def test_run_create_resources_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
                          testcase.TestCase.EX_RUN_ERROR)
@@ -178,7 +177,7 @@ class OSTempestTesting(unittest.TestCase):
                 'TempestResourcesManager.create', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_active_compute_cnt', side_effect=Exception)
-    def test_run_get_active_compute_cnt_ko(self, *args):
+    def test_run_get_active_comp_cnt_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
                          testcase.TestCase.EX_RUN_ERROR)
@@ -210,12 +209,12 @@ class OSTempestTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(), status)
 
-    def test_run_missing_generate_test_list(self):
+    def test_run_missing_gen_test_list(self):
         with mock.patch.object(self.tempestcommon, 'generate_test_list',
                                side_effect=Exception):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_apply_tempest_blacklist_ko(self):
+    def test_run_apply_blacklist_ko(self):
         with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
                     mock.patch.object(self.tempestcommon,
                                       'apply_tempest_blacklist',
@@ -232,7 +231,7 @@ class OSTempestTesting(unittest.TestCase):
                                   side_effect=Exception):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run_parse_verifier_result_ko(self):
+    def test_run_verif_result_ko(self):
         with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
                 mock.patch.object(self.tempestcommon,
                                   'apply_tempest_blacklist'), \
