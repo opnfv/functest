@@ -85,7 +85,7 @@ class V1TaskLog(ApiResource):
         except ValueError:
             return api_utils.result_handler(status=1, data='No such task id')
 
-        task_log_dir = CONST.__getattribute__('dir_results')
+        task_log_dir = getattr(CONST, 'dir_results')
         # pylint: disable=maybe-no-member
         index = int(self._get_args().get('index', 0))
 

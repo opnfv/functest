@@ -127,10 +127,10 @@ class V1Testcase(ApiResource):
             result = 'FAIL'
 
         env_info = {
-            'installer': CONST.__getattribute__('INSTALLER_TYPE'),
-            'scenario': CONST.__getattribute__('DEPLOY_SCENARIO'),
-            'build_tag': CONST.__getattribute__('BUILD_TAG'),
-            'ci_loop': CONST.__getattribute__('CI_LOOP')
+            'installer': os.environ.get('INSTALLER_TYPE', None),
+            'scenario': os.environ.get('DEPLOY_SCENARIO', None),
+            'build_tag': os.environ.get('BUILD_TAG', None),
+            'ci_loop': os.environ.get('CI_LOOP', 'daily')
         }
         result = {
             'task_id': args.get('task_id'),
@@ -146,7 +146,7 @@ class V1Testcase(ApiResource):
         config = ConfigParser.RawConfigParser()
         config.read(
             pkg_resources.resource_filename('functest', 'ci/logging.ini'))
-        log_path = os.path.join(CONST.__getattribute__('dir_results'),
+        log_path = os.path.join(getattr(CONST, 'dir_results'),
                                 '{}.log'.format(task_id))
         config.set('handler_file', 'args', '("{}",)'.format(log_path))
 
