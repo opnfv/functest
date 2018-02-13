@@ -36,9 +36,6 @@ class CliEnvTesting(unittest.TestCase):
         if var == 'INSTALLER_TYPE':
             os.environ['INSTALLER_TYPE'] = ''
             reg_string = r"|  INSTALLER: Unknown, \S+\s*|"
-        elif var == 'INSTALLER_IP':
-            os.environ['INSTALLER_IP'] = ''
-            reg_string = r"|  INSTALLER: \S+, Unknown\s*|"
         elif var == 'SCENARIO':
             os.environ['DEPLOY_SCENARIO'] = ''
             reg_string = r"|   SCENARIO: Unknown\s*|"
@@ -56,9 +53,6 @@ class CliEnvTesting(unittest.TestCase):
 
     def test_show_ci_installer_type_ko(self, *args):
         self._test_show_missing_env_var('INSTALLER_TYPE', *args)
-
-    def test_show_ci_installer_ip_ko(self, *args):
-        self._test_show_missing_env_var('INSTALLER_IP', *args)
 
     def test_show_missing_ci_scenario(self, *args):
         self._test_show_missing_env_var('SCENARIO', *args)

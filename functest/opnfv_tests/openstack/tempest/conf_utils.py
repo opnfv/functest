@@ -52,7 +52,6 @@ TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
     'opnfv_tests/openstack/tempest/custom_tests/test_accounts.yaml')
 
 CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
-CI_INSTALLER_IP = CONST.__getattribute__('INSTALLER_IP')
 
 """ logging configuration """
 LOGGER = logging.getLogger(__name__)
