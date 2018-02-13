@@ -223,6 +223,7 @@ tiers:
             -
                 case_name: doctor-notification
                 project_name: doctor
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -410,7 +411,6 @@ tiers:
 
             -
                 case_name: juju_epc
-                enabled: true
                 project_name: functest
                 criteria: 100
                 blocking: false

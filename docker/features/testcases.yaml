@@ -11,6 +11,7 @@ tiers:
             -
                 case_name: doctor-notification
                 project_name: doctor
+                enable: false
                 criteria: 100
                 blocking: false
                 description: >-
