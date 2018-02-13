@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a3f45e8_0634e0dc",
+        "filename": "functest/cli/commands/cli_tier.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-02-13T09:31:11Z",
+      "side": 1,
+      "message": "The same as \"INSTALLER_TYPE\"",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "dd168d1587838be11d7a8372f77b16915a3af85b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_e373a613",
         "filename": "functest/cli/commands/cli_tier.py",
         "patchSetId": 2
