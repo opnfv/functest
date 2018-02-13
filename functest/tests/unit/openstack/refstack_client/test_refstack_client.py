@@ -10,6 +10,7 @@
 # pylint: disable=missing-docstring
 
 import logging
+import os
 import unittest
 
 import mock
@@ -18,7 +19,6 @@ import pkg_resources
 from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client.refstack_client import \
     RefstackClient, RefstackClientParser
-from functest.utils.constants import CONST
 
 from snaps.openstack.os_credentials import OSCreds
 
@@ -39,8 +39,8 @@ class OSRefstackClientTesting(unittest.TestCase):
     def setUp(self):
         self.default_args = {'config': self._config,
                              'testlist': self._testlist}
-        CONST.__setattr__('OS_AUTH_URL', 'https://ip:5000/v3')
-        CONST.__setattr__('OS_INSECURE', 'true')
+        os.environ['OS_AUTH_URL'] = 'https://ip:5000/v3'
+        os.environ['OS_INSECURE'] = 'true'
         self.case_name = 'refstack_defcore'
         self.result = 0
         self.os_creds = OSCreds(
@@ -70,7 +70,7 @@ class OSRefstackClientTesting(unittest.TestCase):
             m_cmd.assert_any_call(cmd)
 
     def test_run_defcore(self):
-        CONST.__setattr__('OS_AUTH_URL', 'http://ip:5000/v3')
+        os.environ['OS_AUTH_URL'] = 'http://ip:5000/v3'
         insecure = ''
         config = 'tempest.conf'
         testlist = 'testlist'
