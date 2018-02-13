@@ -45,7 +45,7 @@ class Config(object):
         for param_n, param_v in six.iteritems(left_parametes):
             attr_further = self._get_attr_further(attr_now, param_n)
             if attr_further:
-                self.__setattr__(attr_further, param_v)
+                setattr(self, attr_further, param_v)
             if isinstance(param_v, dict):
                 self._parse(attr_further, param_v)
 

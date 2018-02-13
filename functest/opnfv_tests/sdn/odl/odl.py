@@ -38,7 +38,7 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 class ODLTests(robotframework.RobotFramework):
     """ODL test runner."""
 
-    odl_test_repo = constants.CONST.__getattribute__('dir_repo_odl_test')
+    odl_test_repo = getattr(constants.CONST, 'dir_repo_odl_test')
     neutron_suite_dir = os.path.join(
         odl_test_repo, "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(
@@ -51,7 +51,7 @@ class ODLTests(robotframework.RobotFramework):
     def __init__(self, **kwargs):
         super(ODLTests, self).__init__(**kwargs)
         self.res_dir = os.path.join(
-            constants.CONST.__getattribute__('dir_results'), 'odl')
+            getattr(constants.CONST, 'dir_results'), 'odl')
         self.xml_file = os.path.join(self.res_dir, 'output.xml')
 
     @classmethod
