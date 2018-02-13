@@ -84,16 +84,6 @@ class RefstackClient(testcase.TestCase):
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
 
         with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                               "environment.log"), 'w+') as f_env:
-            f_env.write(
-                ("Refstack environment:\n"
-                 "  SUT: {}\n  Scenario: {}\n  Node: {}\n  Date: {}\n")
-                .format(os.getenv('INSTALLER_TYPE', None),
-                        os.getenv('DEPLOY_SCENARIO', None),
-                        os.getenv('NODE_NAME', 'unknown_pod'),
-                        time.strftime("%a %b %d %H:%M:%S %Z %Y")))
-
-        with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
                                "refstack.log"), 'w+') as f_stdout:
             subprocess.call(cmd, shell=False, stdout=f_stdout,
                             stderr=subprocess.STDOUT)

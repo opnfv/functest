@@ -164,21 +164,11 @@ class TempestCommon(testcase.TestCase):
         cmd.extend(self.option)
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
-        header = ("Tempest environment:\n"
-                  "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
-                  (CONST.__getattribute__('INSTALLER_TYPE'),
-                   CONST.__getattribute__('DEPLOY_SCENARIO'),
-                   CONST.__getattribute__('NODE_NAME'),
-                   time.strftime("%a %b %d %H:%M:%S %Z %Y")))
-
         f_stdout = open(
             os.path.join(conf_utils.TEMPEST_RESULTS_DIR, "tempest.log"), 'w+')
         f_stderr = open(
             os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
                          "tempest-error.log"), 'w+')
-        f_env = open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
-                                  "environment.log"), 'w+')
-        f_env.write(header)
 
         proc = subprocess.Popen(
             cmd,
@@ -201,7 +191,6 @@ class TempestCommon(testcase.TestCase):
 
         f_stdout.close()
         f_stderr.close()
-        f_env.close()
 
     def parse_verifier_result(self):
         """Parse and save test results."""
@@ -246,7 +235,7 @@ class TempestCommon(testcase.TestCase):
         LOGGER.info("Tempest %s success_rate is %s%%",
                     self.case_name, self.result)
 
-    def run(self):
+    def run(self, **kwargs):
 
         self.start_time = time.time()
         try:
