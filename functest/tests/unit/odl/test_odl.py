@@ -407,16 +407,6 @@ class ODLRunTesting(ODLTesting):
                        odlip=self._sdn_controller_ip, odlwebport='8081',
                        odlrestconfport='8081')
 
-    def test_joid_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "joid"
-        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
-
-    def test_joid(self):
-        os.environ["SDN_CONTROLLER"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "joid"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip, odlwebport='8080')
-
     def test_compass(self):
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase.TestCase.EX_OK, None,
