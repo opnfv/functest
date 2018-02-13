@@ -26,7 +26,6 @@ from functest.energy import energy
 from functest.opnfv_tests.openstack.refstack_client.tempest_conf \
     import TempestConf
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils.constants import CONST
 import functest.utils.functest_utils as ft_utils
 
 __author__ = ("Matthew Li <matthew.lijun@huawei.com>,"
@@ -58,8 +57,8 @@ class RefstackClient(testcase.TestCase):
             'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
         self.testlist = None
         self.insecure = ''
-        if ('https' in CONST.__getattribute__('OS_AUTH_URL') and
-                CONST.__getattribute__('OS_INSECURE').lower() == 'true'):
+        if ('https' in os.environ['OS_AUTH_URL'] and
+                os.environ['OS_INSECURE'].lower() == 'true'):
             self.insecure = '-k'
 
     def generate_conf(self):
@@ -89,9 +88,9 @@ class RefstackClient(testcase.TestCase):
             f_env.write(
                 ("Refstack environment:\n"
                  "  SUT: {}\n  Scenario: {}\n  Node: {}\n  Date: {}\n")
-                .format(CONST.__getattribute__('INSTALLER_TYPE'),
-                        CONST.__getattribute__('DEPLOY_SCENARIO'),
-                        CONST.__getattribute__('NODE_NAME'),
+                .format(os.environ.get('INSTALLER_TYPE', None),
+                        os.environ.get('DEPLOY_SCENARIO', None),
+                        os.environ.get('NODE_NAME', 'unknown_pod'),
                         time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
