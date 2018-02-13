@@ -184,25 +184,27 @@ def backup_tempest_config(conf_file):
                     os.path.join(TEMPEST_RESULTS_DIR, 'tempest.conf'))
 
 
-def configure_tempest(deployment_dir, image_id=None, flavor_id=None,
-                      compute_cnt=None):
+def configure_tempest(deployment_dir, network_name=None, image_id=None,
+                      flavor_id=None, compute_cnt=None):
     """
     Calls rally verify and updates the generated tempest.conf with
     given parameters
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file, image_id, flavor_id,
-                                    compute_cnt)
+    configure_tempest_update_params(conf_file, network_name, image_id,
+                                    flavor_id, compute_cnt)
 
 
-def configure_tempest_defcore(deployment_dir, image_id, flavor_id,
-                              image_id_alt, flavor_id_alt, tenant_id):
+def configure_tempest_defcore(deployment_dir, network_name, image_id,
+                              flavor_id, image_id_alt, flavor_id_alt,
+                              tenant_id):
     # pylint: disable=too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file, image_id, flavor_id)
+    configure_tempest_update_params(conf_file, network_name, image_id,
+                                    flavor_id)
 
     LOGGER.debug("Updating selected tempest.conf parameters for defcore...")
     config = ConfigParser.RawConfigParser()
@@ -266,18 +268,16 @@ def update_tempest_conf_file(conf_file, config):
         config.write(config_file)
 
 
-def configure_tempest_update_params(tempest_conf_file, image_id=None,
-                                    flavor_id=None, compute_cnt=1):
+def configure_tempest_update_params(tempest_conf_file, network_name=None,
+                                    image_id=None, flavor_id=None,
+                                    compute_cnt=1):
     """
     Add/update needed parameters into tempest.conf file
     """
     LOGGER.debug("Updating selected tempest.conf parameters...")
     config = ConfigParser.RawConfigParser()
     config.read(tempest_conf_file)
-    config.set(
-        'compute',
-        'fixed_network_name',
-        CONST.__getattribute__('tempest_private_net_name'))
+    config.set('compute', 'fixed_network_name', network_name)
     config.set('compute', 'volume_device_name',
                CONST.__getattribute__('tempest_volume_device_name'))
 

@@ -257,6 +257,7 @@ class TempestCommon(testcase.TestCase):
                 self.resources.os_creds)
             conf_utils.configure_tempest(
                 self.deployment_dir,
+                network_name=resources.get("network_name"),
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
                 compute_cnt=compute_cnt)
@@ -380,10 +381,12 @@ class TempestResourcesManager(object):
             tempest_segmentation_id = CONST.__getattribute__(
                 'tempest_segmentation_id')
 
+        tempest_net_name = CONST.__getattribute__(
+            'tempest_private_net_name') + self.guid
+
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(
-                name=CONST.__getattribute__(
-                    'tempest_private_net_name') + self.guid,
+                name=tempest_net_name,
                 project_name=project_name,
                 network_type=tempest_network_type,
                 physical_network=tempest_physical_network,
@@ -397,6 +400,7 @@ class TempestResourcesManager(object):
         if network_creator is None or network_creator.get_network() is None:
             raise Exception("Failed to create private network")
         self.creators.append(network_creator)
+        return tempest_net_name
 
     def _create_image(self, name):
         """Create image for tests"""
@@ -433,6 +437,7 @@ class TempestResourcesManager(object):
                create_project=False):
         """Create resources for Tempest test suite."""
         result = {
+            'tempest_net_name': None,
             'image_id': None,
             'image_id_alt': None,
             'flavor_id': None,
@@ -449,7 +454,7 @@ class TempestResourcesManager(object):
             result['tenant_id'] = result['project_id']  # for compatibility
 
         LOGGER.debug("Creating private network for Tempest suite")
-        self._create_network(project_name)
+        result['tempest_net_name'] = self._create_network(project_name)
 
         LOGGER.debug("Creating image for Tempest suite")
         image_name = CONST.__getattribute__('openstack_image_name') + self.guid
