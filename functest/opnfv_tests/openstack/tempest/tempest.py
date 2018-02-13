@@ -165,10 +165,9 @@ class TempestCommon(testcase.TestCase):
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
         header = ("Tempest environment:\n"
-                  "  SUT: %s\n  Scenario: %s\n  Node: %s\n  Date: %s\n" %
+                  "  SUT: %s\n  Scenario: %s\n  Date: %s\n" %
                   (CONST.__getattribute__('INSTALLER_TYPE'),
                    CONST.__getattribute__('DEPLOY_SCENARIO'),
-                   CONST.__getattribute__('NODE_NAME'),
                    time.strftime("%a %b %d %H:%M:%S %Z %Y")))
 
         f_stdout = open(
