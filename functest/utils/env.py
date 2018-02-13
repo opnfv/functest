@@ -16,7 +16,6 @@ class Environment(object):  # pylint: disable=too-few-public-methods
         'DEPLOY_SCENARIO': 'os-nosdn-nofeature-noha',
         'DEPLOY_TYPE': 'virt',
         'INSTALLER_TYPE': None,
-        'INSTALLER_IP': None,
         'BUILD_TAG': None,
         'OS_ENDPOINT_TYPE': None,
         'OS_AUTH_URL': None,

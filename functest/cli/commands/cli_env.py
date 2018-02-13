@@ -20,8 +20,6 @@ class Env(object):  # pylint: disable=too-few-public-methods
     @staticmethod
     def show():
         install_type = os.environ.get('INSTALLER_TYPE', 'Unknown')
-        installer_ip = os.environ.get('INSTALLER_IP', 'Unknown')
-        installer_info = ("%s, %s" % (install_type, installer_ip))
         scenario = os.environ.get('DEPLOY_SCENARIO', 'Unknown')
         node = os.environ.get('NODE_NAME', 'Unknown')
         build_tag = os.environ.get('BUILD_TAG', None)
@@ -29,7 +27,7 @@ class Env(object):  # pylint: disable=too-few-public-methods
             build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
 
-        env_info = {'INSTALLER': installer_info,
+        env_info = {'INSTALLER': install_type,
                     'SCENARIO': scenario,
                     'POD': node,
                     'BUILD_TAG': build_tag}
