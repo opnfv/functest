@@ -11,22 +11,23 @@
 Resources to handle testcase related requests
 """
 
+import ConfigParser
 import logging
 import os
 import re
-import pkg_resources
 import socket
 import uuid
 
-import ConfigParser
 from flask import jsonify
 from flasgger.utils import swag_from
+import pkg_resources
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
 from functest.cli.commands.cli_testcase import Testcase
 from functest.api.database.v1.handlers import TasksHandler
 from functest.utils.constants import CONST
+from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
 LOGGER = logging.getLogger(__name__)
@@ -127,10 +128,10 @@ class V1Testcase(ApiResource):
             result = 'FAIL'
 
         env_info = {
-            'installer': os.environ.get('INSTALLER_TYPE', None),
-            'scenario': os.environ.get('DEPLOY_SCENARIO', None),
-            'build_tag': os.environ.get('BUILD_TAG', None),
-            'ci_loop': os.environ.get('CI_LOOP', 'daily')
+            'installer': env.Environment.get('INSTALLER_TYPE'),
+            'scenario': env.Environment.get('DEPLOY_SCENARIO'),
+            'build_tag': env.Environment.get('BUILD_TAG'),
+            'ci_loop': env.Environment.get('CI_LOOP')
         }
         result = {
             'task_id': args.get('task_id'),

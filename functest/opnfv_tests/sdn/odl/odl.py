@@ -31,6 +31,7 @@ from snaps.openstack.utils import keystone_utils
 from functest.core import robotframework
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import constants
+from functest.utils import env
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 
@@ -165,9 +166,7 @@ class ODLTests(robotframework.RobotFramework):
             kwargs['odlrestconfport'] = '8181'
             kwargs['odlusername'] = 'admin'
             kwargs['odlpassword'] = 'admin'
-            installer_type = None
-            if 'INSTALLER_TYPE' in os.environ:
-                installer_type = os.environ['INSTALLER_TYPE']
+            installer_type = env.Environment.get('INSTALLER_TYPE')
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['osuserdomainname'] = os.environ.get(
                 'OS_USER_DOMAIN_NAME', 'Default')
@@ -180,17 +179,17 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlwebport'] = '8181'
                 kwargs['odlrestconfport'] = '8282'
             elif installer_type == 'apex' or installer_type == 'netvirt':
-                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
+                kwargs['odlip'] = env.Environment.get('SDN_CONTROLLER_IP')
                 kwargs['odlwebport'] = '8081'
                 kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'compass':
                 kwargs['odlrestconfport'] = '8080'
             elif installer_type == 'daisy':
-                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
+                kwargs['odlip'] = env.Environment.get('SDN_CONTROLLER_IP')
                 kwargs['odlwebport'] = '8181'
                 kwargs['odlrestconfport'] = '8087'
             else:
-                kwargs['odlip'] = os.environ['SDN_CONTROLLER_IP']
+                kwargs['odlip'] = env.Environment.get('SDN_CONTROLLER_IP')
         except KeyError as ex:
             self.__logger.error("Cannot run ODL testcases. "
                                 "Please check env var: "

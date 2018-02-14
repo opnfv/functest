@@ -128,7 +128,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(functest_utils.get_resolvconf_ns(),
                              self.test_ip[1:])
 
-    def _get_environ(self, var):
+    def _get_environ(self, var, *args):  # pylint: disable=unused-argument
         if var == 'INSTALLER_TYPE':
             return self.installer
         elif var == 'DEPLOY_SCENARIO':

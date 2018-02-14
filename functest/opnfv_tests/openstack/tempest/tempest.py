@@ -26,6 +26,7 @@ from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
+from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
 from snaps.config.flavor import FlavorConfig
@@ -128,8 +129,8 @@ class TempestCommon(testcase.TestCase):
         result_file = open(conf_utils.TEMPEST_LIST, 'w')
         black_tests = []
         try:
-            installer_type = CONST.__getattribute__('INSTALLER_TYPE')
-            deploy_scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+            installer_type = env.Environment.get('INSTALLER_TYPE')
+            deploy_scenario = env.Environment.get('DEPLOY_SCENARIO')
             if bool(installer_type) * bool(deploy_scenario):
                 # if INSTALLER_TYPE and DEPLOY_SCENARIO are set we read the
                 # file
@@ -405,7 +406,7 @@ class TempestResourcesManager(object):
 
     def _create_flavor(self, name):
         """Create flavor for tests."""
-        scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+        scenario = env.Environment.get('DEPLOY_SCENARIO')
         flavor_metadata = None
         if 'ovs' in scenario or 'fdio' in scenario:
             flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
@@ -463,7 +464,7 @@ class TempestResourcesManager(object):
 
         if use_custom_flavors:
             LOGGER.info("Creating 2nd flavor for Tempest suite")
-            scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+            scenario = env.Environment.get('DEPLOY_SCENARIO')
             if 'ovs' in scenario or 'fdio' in scenario:
                 CONST.__setattr__('openstack_flavor_ram', 1024)
             name = CONST.__getattribute__(

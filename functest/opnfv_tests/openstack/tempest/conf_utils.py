@@ -14,13 +14,14 @@ import ConfigParser
 import logging
 import fileinput
 import os
-import pkg_resources
 import shutil
 import subprocess
 
+import pkg_resources
 import yaml
 
 from functest.utils.constants import CONST
+from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
 
@@ -51,7 +52,7 @@ TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
     'functest',
     'opnfv_tests/openstack/tempest/custom_tests/test_accounts.yaml')
 
-CI_INSTALLER_TYPE = CONST.__getattribute__('INSTALLER_TYPE')
+CI_INSTALLER_TYPE = env.Environment.get('INSTALLER_TYPE')
 
 """ logging configuration """
 LOGGER = logging.getLogger(__name__)
@@ -60,7 +61,7 @@ LOGGER = logging.getLogger(__name__)
 def create_rally_deployment():
     """Create new rally deployment"""
     # set the architecture to default
-    pod_arch = os.getenv("POD_ARCH", None)
+    pod_arch = env.Environment.get("POD_ARCH")
     arch_filter = ['aarch64']
 
     if pod_arch and pod_arch in arch_filter:
@@ -294,10 +295,9 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
         config.set('compute', 'min_compute_nodes', compute_cnt)
         config.set('compute-feature-enabled', 'live_migration', True)
 
-    config.set('identity', 'region',
-               CONST.__getattribute__('OS_REGION_NAME'))
-    identity_api_version = os.getenv(
-        "OS_IDENTITY_API_VERSION", os.getenv("IDENTITY_API_VERSION"))
+    config.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
+    identity_api_version = os.environ.get(
+        "OS_IDENTITY_API_VERSION", os.environ.get("IDENTITY_API_VERSION"))
     if identity_api_version == '3':
         auth_version = 'v3'
         config.set('identity-feature-enabled', 'api_v2', False)
@@ -310,11 +310,11 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     config.set('object-storage', 'operator_role',
                CONST.__getattribute__('tempest_object_storage_operator_role'))
 
-    if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
+    if os.environ.get('OS_ENDPOINT_TYPE') is not None:
         config.set('identity', 'v3_endpoint_type',
-                   CONST.__getattribute__('OS_ENDPOINT_TYPE'))
+                   os.environ.get('OS_ENDPOINT_TYPE'))
 
-    if CONST.__getattribute__('OS_ENDPOINT_TYPE') is not None:
+    if os.environ.get('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
         services_list = ['compute',
                          'volume',
@@ -327,7 +327,7 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
             if service not in sections:
                 config.add_section(service)
             config.set(service, 'endpoint_type',
-                       CONST.__getattribute__('OS_ENDPOINT_TYPE'))
+                       os.environ.get('OS_ENDPOINT_TYPE'))
 
     LOGGER.debug('Add/Update required params defined in tempest_conf.yaml '
                  'into tempest.conf file')

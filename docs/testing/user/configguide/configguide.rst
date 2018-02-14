@@ -197,8 +197,12 @@ Environment variables
 
 Several environement variables may be specified:
   * INSTALLER_TYPE=(apex|compass|daisy|fuel|joid)
+  * INSTALLER_IP=<Specific IP Address>
   * DEPLOY_SCENARIO=<vim>-<controller>-<nfv_feature>-<ha_mode>
 
+
+INSTALLER_IP is required by Barometer in order to access the installer node and
+the deployment.
 
 The format for the DEPLOY_SCENARIO env variable can be described as follows:
   * vim: (os|k8s) = OpenStack or Kubernetes
