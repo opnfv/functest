@@ -15,6 +15,7 @@ import logging
 from functest.core import unit
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
+from functest.utils import env
 
 from snaps.openstack import create_flavor
 
@@ -44,7 +45,7 @@ class SnapsTestRunner(unit.Suite):
             CONST.__getattribute__('snaps_use_floating_ips') == 'True')
         self.use_keystone = (
             CONST.__getattribute__('snaps_use_keystone') == 'True')
-        scenario = CONST.__getattribute__('DEPLOY_SCENARIO')
+        scenario = env.get('DEPLOY_SCENARIO')
 
         self.flavor_metadata = None
         if 'ovs' in scenario or 'fdio' in scenario:

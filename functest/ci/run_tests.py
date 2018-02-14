@@ -27,8 +27,9 @@ import enum
 import prettytable
 import yaml
 
-import functest.ci.tier_builder as tb
-import functest.core.testcase as testcase
+from functest.ci import tier_builder
+from functest.core import testcase
+from functest.utils import env
 
 LOGGER = logging.getLogger('functest.ci.run_tests')
 ENV_FILE = "/home/opnfv/functest/conf/env_file"
@@ -88,9 +89,9 @@ class Runner(object):
         self.overall_result = Result.EX_OK
         self.clean_flag = True
         self.report_flag = False
-        self.tiers = tb.TierBuilder(
-            os.environ.get('INSTALLER_TYPE', None),
-            os.environ.get('DEPLOY_SCENARIO', None),
+        self.tiers = tier_builder.TierBuilder(
+            env.get('INSTALLER_TYPE'),
+            env.get('DEPLOY_SCENARIO'),
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     @staticmethod
@@ -207,7 +208,7 @@ class Runner(object):
             field_names=['tiers', 'order', 'CI Loop', 'description',
                          'testcases'])
         for tier in self.tiers.get_tiers():
-            ci_loop = os.environ.get('CI_LOOP', 'daily')
+            ci_loop = env.get('CI_LOOP')
             if (tier.get_tests() and
                     re.search(ci_loop, tier.get_ci_loop()) is not None):
                 tiers_to_run.append(tier)
@@ -247,7 +248,7 @@ class Runner(object):
                     LOGGER.error("Unknown test case or tier '%s', or not "
                                  "supported by the given scenario '%s'.",
                                  kwargs['test'],
-                                 os.environ.get('DEPLOY_SCENARIO', ""))
+                                 env.get('DEPLOY_SCENARIO'))
                     LOGGER.debug("Available tiers are:\n\n%s",
                                  self.tiers)
                     return Result.EX_ERROR
@@ -270,7 +271,7 @@ class Runner(object):
             field_names=['env var', 'value'])
         for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
                         'CI_LOOP']:
-            msg.add_row([env_var, os.environ.get(env_var, "")])
+            msg.add_row([env_var, env.get(env_var)])
         LOGGER.info("Deployment description:\n\n%s\n", msg)
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,

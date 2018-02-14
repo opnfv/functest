@@ -2,11 +2,12 @@
 
 # pylint: disable=missing-docstring
 
-import os
 import pkg_resources
 import yaml
 
 import six
+
+from functest.utils import env
 
 
 class Config(object):
@@ -37,7 +38,7 @@ class Config(object):
             patch_file = yaml.safe_load(yfile)
 
         for key in patch_file:
-            if key in os.environ.get('DEPLOY_SCENARIO', ""):
+            if key in env.get('DEPLOY_SCENARIO'):
                 self.functest_yaml = dict(Config._merge_dicts(
                     self.functest_yaml, patch_file[key]))
 
@@ -64,7 +65,7 @@ class Config(object):
 CONF = Config()
 CONF.patch_file(pkg_resources.resource_filename(
     'functest', 'ci/config_patch.yaml'))
-if os.getenv("POD_ARCH", None) and os.getenv("POD_ARCH", None) in ['aarch64']:
+if env.get("POD_ARCH") in ['aarch64']:
     CONF.patch_file(pkg_resources.resource_filename(
         'functest', 'ci/config_aarch64_patch.yaml'))
 CONF.fill()

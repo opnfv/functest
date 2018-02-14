@@ -1,45 +1,46 @@
 #!/usr/bin/env python
 
+# Copyright (c) 2018 Orange and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+
 # pylint: disable=missing-docstring
 
 import os
-import re
 
-import pkg_resources
 import six
+
+INPUTS = {
+    'EXTERNAL_NETWORK': None,
+    'CI_LOOP': 'daily',
+    'DEPLOY_SCENARIO': 'os-nosdn-nofeature-noha',
+    'INSTALLER_TYPE': None,
+    'SDN_CONTROLLER_IP': None,
+    'BUILD_TAG': None,
+    'NODE_NAME': None,
+    'POD_ARCH': None,
+    'TEST_DB_URL': 'http://testresults.opnfv.org/test/api/v1/results',
+    'ENERGY_RECORDER_API_URL': 'http://energy.opnfv.fr/resources',
+    'ENERGY_RECORDER_API_USER': '',
+    'ENERGY_RECORDER_API_PASSWORD': ''
+}
+
+
+def get(env_var):
+    if env_var not in INPUTS.keys():
+        return os.environ.get(env_var, None)
+    return os.environ.get(env_var, INPUTS[env_var])
 
 
 class Environment(object):  # pylint: disable=too-few-public-methods
 
-    default_envs = {
-        'NODE_NAME': 'unknown_pod',
-        'DEPLOY_SCENARIO': 'os-nosdn-nofeature-noha',
-        'DEPLOY_TYPE': 'virt',
-        'INSTALLER_TYPE': None,
-        'BUILD_TAG': None,
-        'OS_ENDPOINT_TYPE': None,
-        'OS_AUTH_URL': None,
-        'CONFIG_FUNCTEST_YAML': pkg_resources.resource_filename(
-            'functest', 'ci/config_functest.yaml'),
-        'OS_INSECURE': '',
-        'OS_REGION_NAME': 'RegionOne'
-    }
-
+    # Backward compatibilty (waiting for SDNVPN and SFC)
     def __init__(self):
-        for key, value in six.iteritems(os.environ):
-            setattr(self, key, value)
-        for key, value in six.iteritems(self.default_envs):
-            if key not in os.environ:
-                setattr(self, key, value)
-        if 'CI_LOOP' not in os.environ:
-            self._set_ci_loop()
+        for key, _ in six.iteritems(INPUTS):
+            setattr(self, key, get(key))
 
-    def _set_ci_loop(self):
-        if (getattr(self, "BUILD_TAG") and
-                re.search("daily", getattr(self, "BUILD_TAG"))):
-            setattr(self, "CI_LOOP", "daily")
-        else:
-            setattr(self, "CI_LOOP", "weekly")
-
-
+# Backward compatibilty (waiting for SDNVPN and SFC)
 ENV = Environment()
