@@ -3,7 +3,7 @@ scenario:
         scenarios:
             - '^os-nosdn-lxd-(no)?ha$'
         installers:
-            - joid
+            - '.+'  # all installers
         tests:
             - NovaServers.boot_server_from_volume_and_delete
     -
