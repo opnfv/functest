@@ -29,6 +29,7 @@ from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils.constants import CONST
+from functest.utils import env
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -218,8 +219,8 @@ class RallyBase(testcase.TestCase):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            installer_type = os.getenv('INSTALLER_TYPE', None)
-            deploy_scenario = os.getenv('DEPLOY_SCENARIO', None)
+            installer_type = env.Environment.get('INSTALLER_TYPE')
+            deploy_scenario = env.Environment.get('DEPLOY_SCENARIO')
             if (bool(installer_type) and bool(deploy_scenario) and
                     'scenario' in black_list_yaml.keys()):
                 for item in black_list_yaml['scenario']:

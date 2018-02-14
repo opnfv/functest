@@ -8,6 +8,7 @@
 # pylint: disable=missing-docstring
 
 import logging
+import os
 import unittest
 
 import mock
@@ -15,7 +16,6 @@ import mock
 from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils.constants import CONST
 
 from snaps.openstack.os_credentials import OSCreds
 
@@ -115,8 +115,8 @@ class OSTempestTesting(unittest.TestCase):
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']):
             conf_utils.TEMPEST_BLACKLIST = Exception
-            CONST.__setattr__('INSTALLER_TYPE', 'installer_type')
-            CONST.__setattr__('DEPLOY_SCENARIO', 'deploy_scenario')
+            os.environ['INSTALLER_TYPE'] = 'installer_type'
+            os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
             self.tempestcommon.apply_tempest_blacklist()
             obj = mock_open()
             obj.write.assert_any_call('test1\n')
@@ -131,8 +131,8 @@ class OSTempestTesting(unittest.TestCase):
                               return_value=['test1', 'test2']), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'yaml.safe_load', return_value=item_dict):
-            CONST.__setattr__('INSTALLER_TYPE', 'installer_type')
-            CONST.__setattr__('DEPLOY_SCENARIO', 'deploy_scenario')
+            os.environ['INSTALLER_TYPE'] = 'installer_type'
+            os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
             self.tempestcommon.apply_tempest_blacklist()
             obj = mock_open()
             obj.write.assert_any_call('test1\n')

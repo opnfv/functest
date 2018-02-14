@@ -17,6 +17,7 @@ import re
 import requests
 
 from functest.utils import decorators
+from functest.utils import env
 
 
 import prettytable
@@ -180,14 +181,14 @@ class TestCase(object):
             assert self.case_name
             assert self.start_time
             assert self.stop_time
-            url = os.environ['TEST_DB_URL']
+            url = env.Environment.get('TEST_DB_URL')
             data = {"project_name": self.project_name,
                     "case_name": self.case_name,
                     "details": self.details}
-            data["installer"] = os.environ['INSTALLER_TYPE']
-            data["scenario"] = os.environ['DEPLOY_SCENARIO']
-            data["pod_name"] = os.environ['NODE_NAME']
-            data["build_tag"] = os.environ['BUILD_TAG']
+            data["installer"] = env.Environment.get('INSTALLER_TYPE')
+            data["scenario"] = env.Environment.get('DEPLOY_SCENARIO')
+            data["pod_name"] = env.Environment.get('NODE_NAME')
+            data["build_tag"] = env.Environment.get('BUILD_TAG')
             data["criteria"] = 'PASS' if self.is_successful(
                 ) == TestCase.EX_OK else 'FAIL'
             data["start_date"] = datetime.fromtimestamp(
@@ -197,7 +198,7 @@ class TestCase(object):
             try:
                 data["version"] = re.search(
                     TestCase._job_name_rule,
-                    os.environ['BUILD_TAG']).group(2)
+                    env.Environment.get('BUILD_TAG')).group(2)
             except Exception:  # pylint: disable=broad-except
                 data["version"] = "unknown"
             req = requests.post(

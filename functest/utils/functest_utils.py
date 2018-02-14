@@ -11,7 +11,6 @@
 
 from __future__ import print_function
 import logging
-import os
 import re
 import shutil
 import subprocess
@@ -22,6 +21,7 @@ from six.moves import urllib
 import yaml
 
 from functest.utils import constants
+from functest.utils import env
 
 LOGGER = logging.getLogger(__name__)
 
@@ -90,8 +90,8 @@ def get_ci_envvars():
     Get the CI env variables
     """
     ci_env_var = {
-        "installer": os.environ.get('INSTALLER_TYPE'),
-        "scenario": os.environ.get('DEPLOY_SCENARIO')}
+        "installer": env.Environment.get('INSTALLER_TYPE'),
+        "scenario": env.Environment.get('DEPLOY_SCENARIO')}
     return ci_env_var
 
 

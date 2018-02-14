@@ -22,7 +22,7 @@ from novaclient import client as novaclient
 from keystoneclient import client as keystoneclient
 from neutronclient.neutron import client as neutronclient
 
-from functest.utils.constants import CONST
+from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
 logger = logging.getLogger(__name__)
@@ -659,8 +659,8 @@ def get_private_net(neutron_client):
 
 
 def get_external_net(neutron_client):
-    if (hasattr(CONST, 'EXTERNAL_NETWORK')):
-        return CONST.__getattribute__('EXTERNAL_NETWORK')
+    if (env.Environment.get('EXTERNAL_NETWORK')):
+        return env.Environment.get('EXTERNAL_NETWORK')
     for network in neutron_client.list_networks()['networks']:
         if network['router:external']:
             return network['name']
@@ -668,9 +668,9 @@ def get_external_net(neutron_client):
 
 
 def get_external_net_id(neutron_client):
-    if (hasattr(CONST, 'EXTERNAL_NETWORK')):
+    if (env.Environment.get('EXTERNAL_NETWORK')):
         networks = neutron_client.list_networks(
-            name=CONST.__getattribute__('EXTERNAL_NETWORK'))
+            name=env.Environment.get('EXTERNAL_NETWORK'))
         net_id = networks['networks'][0]['id']
         return net_id
     for network in neutron_client.list_networks()['networks']:

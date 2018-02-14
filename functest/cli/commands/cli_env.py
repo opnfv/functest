@@ -8,21 +8,21 @@
 
 # pylint: disable=missing-docstring
 
-import os
-
 import click
 import prettytable
 import six
+
+from functest.utils import env
 
 
 class Env(object):  # pylint: disable=too-few-public-methods
 
     @staticmethod
     def show():
-        install_type = os.environ.get('INSTALLER_TYPE', 'Unknown')
-        scenario = os.environ.get('DEPLOY_SCENARIO', 'Unknown')
-        node = os.environ.get('NODE_NAME', 'Unknown')
-        build_tag = os.environ.get('BUILD_TAG', None)
+        install_type = env.Environment.get('INSTALLER_TYPE')
+        scenario = env.Environment.get('DEPLOY_SCENARIO')
+        node = env.Environment.get('NODE_NAME')
+        build_tag = env.Environment.get('BUILD_TAG')
         if build_tag:
             build_tag = build_tag.lstrip(
                 "jenkins-").lstrip("functest").lstrip("-")
