@@ -12,12 +12,13 @@
 
 import json
 import logging
-import os
 import traceback
 
 from functools import wraps
 import requests
 from six.moves import urllib
+
+from functest.utils import env
 
 
 def finish_session(current_scenario):
@@ -93,14 +94,15 @@ class EnergyRecorder(object):
         # Singleton pattern for energy_recorder_api static member
         # Load only if not previouly done
         if EnergyRecorder.energy_recorder_api is None:
-            assert os.environ['NODE_NAME']
-            assert os.environ["ENERGY_RECORDER_API_URL"]
-            environment = os.environ['NODE_NAME']
-            energy_recorder_uri = os.environ["ENERGY_RECORDER_API_URL"]
+            assert env.get('NODE_NAME')
+            assert env.get('ENERGY_RECORDER_API_URL')
+            environment = env.get('NODE_NAME')
+            energy_recorder_uri = env.get(
+                'ENERGY_RECORDER_API_URL')
 
             # Creds
-            creds_usr = os.environ.get("ENERGY_RECORDER_API_USER", "")
-            creds_pass = os.environ.get("ENERGY_RECORDER_API_PASSWORD", "")
+            creds_usr = env.get("ENERGY_RECORDER_API_USER")
+            creds_pass = env.get("ENERGY_RECORDER_API_PASSWORD")
 
             uri_comp = "/recorders/environment/"
             uri_comp += urllib.parse.quote_plus(environment)

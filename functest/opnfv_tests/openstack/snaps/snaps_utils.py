@@ -10,6 +10,7 @@
 """Some common utils wrapping snaps functions """
 
 from functest.utils.constants import CONST
+from functest.utils import env
 
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import neutron_utils, nova_utils
@@ -24,8 +25,8 @@ def get_ext_net_name(os_creds):
     """
     neutron = neutron_utils.neutron_client(os_creds)
     ext_nets = neutron_utils.get_external_networks(neutron)
-    if hasattr(CONST, 'EXTERNAL_NETWORK'):
-        extnet_config = CONST.__getattribute__('EXTERNAL_NETWORK')
+    if env.get('EXTERNAL_NETWORK'):
+        extnet_config = env.get('EXTERNAL_NETWORK')
         for ext_net in ext_nets:
             if ext_net.name == extnet_config:
                 return extnet_config

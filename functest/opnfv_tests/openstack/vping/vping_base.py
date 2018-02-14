@@ -18,6 +18,7 @@ import uuid
 from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
+from functest.utils import env
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
@@ -135,7 +136,7 @@ class VPingBase(testcase.TestCase):
 
         self.logger.info(
             "Creating flavor with name: '%s'", self.flavor_name)
-        scenario = getattr(CONST, 'DEPLOY_SCENARIO')
+        scenario = env.get('DEPLOY_SCENARIO')
         flavor_metadata = None
         flavor_ram = 512
         if 'ovs' in scenario or 'fdio' in scenario:
