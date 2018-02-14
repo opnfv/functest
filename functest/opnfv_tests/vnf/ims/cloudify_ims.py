@@ -124,7 +124,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                         name=image_name, image_user='cloud',
                         img_format='qcow2', image_file=image_file))
                 image_creator.create()
-                # self.created_object.append(image_creator)
+                self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
         """
@@ -144,10 +144,12 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.created_object.append(keypair_creator)
 
         self.__logger.info("Creating full network ...")
-        subnet_settings = SubnetConfig(name='cloudify_ims_subnet',
-                                       cidr='10.67.79.0/24')
-        network_settings = NetworkConfig(name='cloudify_ims_network',
-                                         subnet_settings=[subnet_settings])
+        subnet_settings = SubnetConfig(
+            name='cloudify_ims_subnet-{}'.format(self.uuid),
+            cidr='10.67.79.0/24')
+        network_settings = NetworkConfig(
+            name='cloudify_ims_network-{}'.format(self.uuid),
+            subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
@@ -155,7 +157,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         router_creator = OpenStackRouter(
             self.snaps_creds,
             RouterConfig(
-                name='cloudify_ims_router',
+                name='cloudify_ims_router-{}'.format(self.uuid),
                 external_gateway=ext_net_name,
                 internal_subnets=[subnet_settings.name]))
         router_creator.create()
@@ -166,19 +168,19 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         sg_rules = list()
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="sg-cloudify-manager",
+                sec_grp_name="sg-cloudify-manager-{}".format(self.uuid),
                 direction=Direction.ingress, protocol=Protocol.tcp,
                 port_range_min=1, port_range_max=65535))
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="sg-cloudify-manager",
+                sec_grp_name="sg-cloudify-manager-{}".format(self.uuid),
                 direction=Direction.ingress, protocol=Protocol.udp,
                 port_range_min=1, port_range_max=65535))
 
         security_group_creator = OpenStackSecurityGroup(
             self.snaps_creds,
             SecurityGroupConfig(
-                name="sg-cloudify-manager",
+                name="sg-cloudify-manager-{}".format(self.uuid),
                 rule_settings=sg_rules))
 
         security_group_creator.create()
@@ -200,24 +202,24 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             image_user='centos',
             exists=True)
 
-        port_settings = PortConfig(name='cloudify_manager_port',
-                                   network_name=network_settings.name)
+        port_settings = PortConfig(
+            name='cloudify_manager_port-{}'.format(self.uuid),
+            network_name=network_settings.name)
 
         manager_settings = VmInstanceConfig(
-            name='cloudify_manager',
+            name='cloudify_manager-{}'.format(self.uuid),
             flavor=flavor_settings.name,
             port_settings=[port_settings],
             security_group_names=[
                 security_group_creator.sec_grp_settings.name],
             floating_ip_settings=[FloatingIpConfig(
-                name='cloudify_manager_fip',
+                name='cloudify_manager_fip-{}'.format(self.uuid),
                 port_name=port_settings.name,
                 router_name=router_creator.router_settings.name)])
 
-        manager_creator = OpenStackVmInstance(self.snaps_creds,
-                                              manager_settings,
-                                              image_settings,
-                                              keypair_settings)
+        manager_creator = OpenStackVmInstance(
+            self.snaps_creds, manager_settings, image_settings,
+            keypair_settings)
 
         self.__logger.info("Creating cloudify manager VM")
         manager_creator.create()
