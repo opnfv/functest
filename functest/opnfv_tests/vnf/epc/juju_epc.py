@@ -17,13 +17,13 @@ import sys
 import uuid
 from copy import deepcopy
 from urlparse import urljoin
+import yaml
+import pkg_resources
 
 from functest.core import vnf
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils.constants import CONST
-import functest.utils.openstack_utils as os_utils
 
-import pkg_resources
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
@@ -35,9 +35,10 @@ from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.utils import keystone_utils
-from snaps.openstack.utils import neutron_utils
 from snaps.openstack.utils import nova_utils
-import yaml
+from snaps.config.security_group import (
+    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.openstack.create_security_group import OpenStackSecurityGroup
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
 __author__ = "Soumaya K Nayek <soumaya.nayek@rebaca.com>"
@@ -185,6 +186,21 @@ class JujuEpc(vnf.VnfOnBoarding):
                     credentials_yaml)):
             raise vnf.VnfPreparationException
 
+    def _add_custom_rule(self, sec_grp_name):
+        """ To add custom rule for SCTP Traffic """
+        sec_grp_rules = list()
+        security_group_init = OpenStackSecurityGroup(
+            self.snaps_creds,
+            SecurityGroupConfig(
+                name=sec_grp_name,
+                rule_settings=sec_grp_rules))
+        security_group_init.initialize()
+        sctp_rule = SecurityGroupRuleConfig(
+            sec_grp_name=sec_grp_name, direction=Direction.ingress,
+            protocol=Protocol.sctp)
+        security_group_init.add_rule(sctp_rule)
+        self.created_object.append(security_group_init)
+
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
         self.__logger.info("Additional pre-configuration steps")
@@ -267,7 +283,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                             "OS_REGION_NAME", self.default_region_name),
                         self.public_auth_url))
                 self.created_object.append(image_creator)
-        self.__logger.info("Credential information  : %s", net_id)
+        self.__logger.info("Network ID  : %s", net_id)
         juju_bootstrap_command = (
             'juju bootstrap abot-epc abot-controller --config network={} '
             '--metadata-source ~  --config ssl-hostname-verification=false '
@@ -297,20 +313,23 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("juju wait completed: %s", status)
         self.__logger.info("Deployed Abot-epc on Openstack")
         nova_client = nova_utils.nova_client(self.snaps_creds)
-        neutron_client = neutron_utils.neutron_client(self.snaps_creds)
         if status == 0:
-            instances = os_utils.get_instances(nova_client)
+            instances = get_instances(nova_client)
+            self.__logger.info("List of Instance: %s", instances)
             for items in instances:
                 metadata = get_instance_metadata(nova_client, items)
                 if 'juju-units-deployed' in metadata:
-                    sec_group = ('juju-' + metadata['juju-controller-uuid'] +
+                    sec_group = ('juju-' +
+                                 metadata['juju-controller-uuid'] +
                                  '-' + metadata['juju-model-uuid'])
-                    self.sec_group_id = os_utils.get_security_group_id(
-                        neutron_client, sec_group)
+                    self.__logger.info("Instance: %s", sec_group)
+                    # self.sec_group_id = os_utils.get_security_group_id(
+                    #    self.neutron_client, sec_group)
                     break
             self.__logger.info("Adding Security group rule....")
-            os_utils.create_secgroup_rule(
-                neutron_client, self.sec_group_id, 'ingress', 132)
+            # This will add sctp rule to a common Security Group Created
+            # by juju and shared to all deployed units.
+            self._add_custom_rule(sec_group)
             self.__logger.info("Copying the feature files to Abot_node ")
             os.system('juju scp -- -r {}/featureFiles abot-'
                       'epc-basic/0:~/'.format(self.case_dir))
@@ -479,6 +498,16 @@ def update_data(obj):
         raise
 
     return obj
+
+
+def get_instances(nova_client):
+    """ To get all vm info of a project """
+    try:
+        instances = nova_client.servers.list()
+        return instances
+    except Exception as exc:  # pylint: disable=broad-except
+        logging.error("Error [get_instances(nova_client)]: %s", exc)
+        return None
 
 
 def get_instance_metadata(nova_client, instance):
