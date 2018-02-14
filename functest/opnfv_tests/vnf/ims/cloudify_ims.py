@@ -63,8 +63,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         except Exception:
             raise Exception("VNF config file not found")
 
-        self.snaps_creds = ''
-
         config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
             requirements=get_config("orchestrator.requirements", config_file),
@@ -177,14 +175,14 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                 direction=Direction.ingress, protocol=Protocol.udp,
                 port_range_min=1, port_range_max=65535))
 
-        securit_group_creator = OpenStackSecurityGroup(
+        security_group_creator = OpenStackSecurityGroup(
             self.snaps_creds,
             SecurityGroupConfig(
                 name="sg-cloudify-manager",
                 rule_settings=sg_rules))
 
-        securit_group_creator.create()
-        self.created_object.append(securit_group_creator)
+        security_group_creator.create()
+        self.created_object.append(security_group_creator)
 
         # orchestrator VM flavor
         self.__logger.info("Get or create flavor for cloudify manager vm ...")
@@ -209,7 +207,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             name='cloudify_manager',
             flavor=flavor_settings.name,
             port_settings=[port_settings],
-            security_group_names=[securit_group_creator.sec_grp_settings.name],
+            security_group_names=[security_group_creator.sec_grp_settings.name],
             floating_ip_settings=[FloatingIpConfig(
                 name='cloudify_manager_fip',
                 port_name=port_settings.name,
