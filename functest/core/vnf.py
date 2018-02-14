@@ -50,13 +50,15 @@ class VnfOnBoarding(testcase.TestCase):
 
     def __init__(self, **kwargs):
         super(VnfOnBoarding, self).__init__(**kwargs)
-        self.user_name = self.case_name
-        self.tenant_name = self.case_name
+        self.uuid = uuid.uuid4()
+        self.user_name = "{}-{}".format(self.case_name, self.uuid)
+        self.tenant_name = "{}-{}".format(self.case_name, self.uuid)
         self.snaps_creds = {}
         self.created_object = []
         self.os_project = None
         self.tenant_description = "Created by OPNFV Functest: {}".format(
             self.case_name)
+
 
     def run(self, **kwargs):
         """
@@ -106,7 +108,7 @@ class VnfOnBoarding(testcase.TestCase):
         """
         try:
             self.__logger.info(
-                "Prepare VNF: %s, description: %s", self.tenant_name,
+                "Prepare VNF: %s, description: %s", self.case_name,
                 self.tenant_description)
             snaps_creds = openstack_tests.get_credentials(
                 os_env_file=self.env_file)
