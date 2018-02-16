@@ -39,6 +39,24 @@
       "revId": "3beed1cd99ae8727441e7b7afcd6e6afc2bb7afb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_49655444",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-02-16T15:00:41Z",
+      "side": 1,
+      "message": "No because in cloudify_vrouter the orchestrator create a new keypair for the VNF",
+      "parentUuid": "5a3f45e8_497ef4e5",
+      "revId": "3beed1cd99ae8727441e7b7afcd6e6afc2bb7afb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
