@@ -329,6 +329,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_project')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
     def test_prepare_env_flavor_creation_failed(self, mock_create_flavor,
@@ -348,6 +350,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_network')
     @mock.patch('snaps.openstack.utils.deploy_utils.create_router')
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_project')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 side_effect=[mock.Mock, None])
     def test_prepare_env_flavor_alt_creation_failed(self, mock_create_flavor,

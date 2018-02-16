@@ -67,6 +67,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 return_value=mock.Mock())
     @mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                 return_value=mock.Mock())
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_project')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
     def test_create_res_missing_flavor(self, *mock_args):

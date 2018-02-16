@@ -50,6 +50,8 @@ class VPingUserdataTesting(unittest.TestCase):
 
     @mock.patch('snaps.openstack.utils.deploy_utils.create_vm_instance')
     @mock.patch('os.path.exists', return_value=True)
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_project')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
     @mock.patch('snaps.openstack.create_instance.OpenStackVmInstance.'
@@ -99,6 +101,8 @@ class VPingSSHTesting(unittest.TestCase):
 
     @mock.patch('snaps.openstack.utils.deploy_utils.create_vm_instance')
     @mock.patch('os.path.exists', return_value=True)
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_project')
     @mock.patch('snaps.openstack.create_flavor.OpenStackFlavor.create',
                 return_value=None)
     @mock.patch('snaps.openstack.create_instance.OpenStackVmInstance.'
