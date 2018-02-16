@@ -265,7 +265,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         cfy_status = None
         retry = 10
         while str(cfy_status) != 'running' and retry:
-            print cfy_client.manager.get_status()
             try:
                 cfy_status = cfy_client.manager.get_status()['status']
                 self.__logger.debug("The current manager status is %s",
