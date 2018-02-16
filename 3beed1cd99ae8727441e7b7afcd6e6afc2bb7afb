@@ -22,6 +22,23 @@
       "revId": "3beed1cd99ae8727441e7b7afcd6e6afc2bb7afb",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_497ef4e5",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-02-16T14:48:26Z",
+      "side": 1,
+      "message": "I should add it here too, no?",
+      "revId": "3beed1cd99ae8727441e7b7afcd6e6afc2bb7afb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
