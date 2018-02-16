@@ -152,8 +152,9 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         start_time = time.time()
         self.__logger.info("Creating keypair ...")
         kp_file = os.path.join(self.data_dir, "cloudify_vrouter.pem")
-        keypair_settings = KeypairConfig(name='cloudify_vrouter_kp',
-                                         private_filepath=kp_file)
+        keypair_settings = KeypairConfig(
+            name='cloudify_vrouter_kp-{}'.format(self.uuid),
+            private_filepath=kp_file)
         keypair_creator = OpenStackKeypair(self.snaps_creds, keypair_settings)
         keypair_creator.create()
         self.created_object.append(keypair_creator)
@@ -246,15 +247,15 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             self.snaps_creds, 'identity')
 
         self.__logger.info("Set creds for cloudify manager")
-        cfy_creds = dict(keystone_username=self.tenant_name,
-                         keystone_password=self.tenant_name,
-                         keystone_tenant_name=self.tenant_name,
-                         keystone_url=public_auth_url)
+        cfy_creds = dict(
+            keystone_username=self.snaps_creds.username,
+            keystone_password=self.snaps_creds.password,
+            keystone_tenant_name=self.snaps_creds.project_name,
+            keystone_url=public_auth_url)
 
-        cfy_client = CloudifyClient(host=manager_creator.get_floating_ip().ip,
-                                    username='admin',
-                                    password='admin',
-                                    tenant='default_tenant')
+        cfy_client = CloudifyClient(
+            host=manager_creator.get_floating_ip().ip,
+            username='admin', password='admin', tenant='default_tenant')
 
         self.orchestrator['object'] = cfy_client
 
@@ -264,13 +265,14 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         cfy_status = None
         retry = 10
         while str(cfy_status) != 'running' and retry:
+            print cfy_client.manager.get_status()
             try:
                 cfy_status = cfy_client.manager.get_status()['status']
                 self.__logger.debug("The current manager status is %s",
                                     cfy_status)
             except Exception:  # pylint: disable=broad-except
-                self.__logger.warning("Cloudify Manager isn't " +
-                                      "up and running. Retrying ...")
+                self.__logger.exception(
+                    "Cloudify Manager isn't up and running. Retrying ...")
             retry = retry - 1
             time.sleep(30)
 
