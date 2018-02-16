@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_893abc34",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-02-16T14:01:28Z",
+      "side": 1,
+      "message": "I added one line because the orchestrator reuse this keypair for the VNF!\n\nFor the vRouter testcase normally it\u0027s fine because the orchestrator create a new keypair for the VNF",
+      "range": {
+        "startLine": 292,
+        "startChar": 12,
+        "endLine": 292,
+        "endChar": 47
+      },
+      "revId": "3beed1cd99ae8727441e7b7afcd6e6afc2bb7afb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
