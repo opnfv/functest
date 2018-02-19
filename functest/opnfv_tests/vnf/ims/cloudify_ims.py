@@ -229,12 +229,13 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
 
-        self.__logger.info("Set creds for cloudify manager")
         cfy_creds = dict(
             keystone_username=self.snaps_creds.username,
             keystone_password=self.snaps_creds.password,
             keystone_tenant_name=self.snaps_creds.project_name,
-            keystone_url=public_auth_url)
+            keystone_url=public_auth_url,
+            region=self.snaps_creds.region_name)
+        self.__logger.info("Set creds for cloudify manager %s", cfy_creds)
 
         cfy_client = CloudifyClient(
             host=manager_creator.get_floating_ip().ip,
