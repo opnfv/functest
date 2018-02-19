@@ -37,8 +37,8 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
         super(VrouterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
-        self.data_dir = CONST.__getattribute__('dir_router_data')
-        self.result_dir = os.path.join(CONST.__getattribute__('dir_results'),
+        self.data_dir = getattr(CONST, 'dir_router_data')
+        self.result_dir = os.path.join(getattr(CONST, 'dir_results'),
                                        self.case_name)
         self.util = Utilvnf()
         self.util_info = {}

@@ -55,10 +55,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
     def __init__(self):
         self.snaps_creds = ""
-
-        data_dir = data_dir = CONST.__getattribute__('dir_router_data')
-
-        self.vnf_data_dir = data_dir
+        self.vnf_data_dir = getattr(CONST, 'dir_router_data')
         self.opnfv_vnf_data_dir = "opnfv-vnf-data/"
         self.command_template_dir = "command_template/"
         self.test_scenario_yaml = "test_scenario.yaml"
@@ -78,8 +75,8 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
         case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
 
-        config_file_name = CONST.__getattribute__(
-            'vnf_{}_config'.format("vyos_vrouter"))
+        config_file_name = getattr(
+            CONST, 'vnf_{}_config'.format("vyos_vrouter"))
 
         config_file = os.path.join(case_dir, config_file_name)
 

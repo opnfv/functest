@@ -65,8 +65,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
         # Retrieve the configuration
         try:
-            self.config = CONST.__getattribute__(
-                'vnf_{}_config'.format(self.case_name))
+            self.config = getattr(
+                CONST, 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
 

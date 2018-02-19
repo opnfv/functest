@@ -9,12 +9,12 @@
 import json
 import logging
 import os
-import pkg_resources
 import shlex
 import shutil
 import subprocess
 import time
 
+import pkg_resources
 import requests
 
 import functest.core.vnf as vnf
@@ -33,10 +33,10 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
-        self.data_dir = CONST.__getattribute__('dir_ims_data')
-        self.result_dir = os.path.join(CONST.__getattribute__('dir_results'),
+        self.data_dir = getattr(CONST, 'dir_ims_data')
+        self.result_dir = os.path.join(getattr(CONST, 'dir_results'),
                                        self.case_name)
-        self.test_dir = CONST.__getattribute__('dir_repo_vims_test')
+        self.test_dir = getattr(CONST, 'dir_repo_vims_test')
 
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
@@ -71,15 +71,14 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         self.logger.debug('Cookies: %s', cookies)
 
         number_url = 'http://{0}/accounts/{1}/numbers'.format(
-                     ellis_ip,
-                     params['email'])
+            ellis_ip, params['email'])
         self.logger.debug('Create 1st calling number on Ellis')
         i = 30
         while rq.status_code != 200 and i > 0:
             try:
                 number_res = self.create_ellis_number(number_url, cookies)
                 break
-            except:
+            except Exception:  # pylint: disable=broad-except
                 if i == 1:
                     raise Exception("Unable to create a number")
                 self.logger.warn("Unable to create a number. Retry ..")
@@ -154,12 +153,12 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
             with open(tempFile) as f:
                 vims_test_result = json.load(f)
             f.close()
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.logger.error("Unable to retrieve test results")
 
         try:
             os.remove(tempFile)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             self.logger.error("Deleting file failed")
 
         return vims_test_result
