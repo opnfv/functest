@@ -110,11 +110,11 @@ class TempestCommon(testcase.TestCase):
                                 % conf_utils.TEMPEST_CUSTOM)
         else:
             if self.mode == 'smoke':
-                testr_mode = "smoke"
+                testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
             elif self.mode == 'full':
-                testr_mode = ""
+                testr_mode = r"'^tempest\.'"
             else:
-                testr_mode = 'tempest.api.' + self.mode
+                testr_mode = self.mode
             cmd = ("cd {0};"
                    "testr list-tests {1} > {2};"
                    "cd -;".format(verifier_repo_dir,
