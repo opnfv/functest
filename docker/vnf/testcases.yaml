@@ -55,7 +55,7 @@ tiers:
             -
                 case_name: orchestra_clearwaterims
                 project_name: orchestra
-                enable: false
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
