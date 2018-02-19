@@ -52,15 +52,7 @@ class JujuEpcTesting(unittest.TestCase):
                        return_value={'tenant_images': 'foo',
                                      'orchestrator': self.orchestrator,
                                      'vnf': self.vnf, 'vnf_test_suite': '',
-                                     'version': 'whatever'}), \
-            mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                       return_value='test'), \
-            mock.patch('functest.utils.openstack_utils.get_glance_client',
-                       return_value='test'), \
-            mock.patch('functest.utils.openstack_utils.get_neutron_client',
-                       return_value='test'), \
-            mock.patch('functest.utils.openstack_utils.get_nova_client',
-                       return_value='test'):
+                                     'version': 'whatever'}):
             self.epc_vnf = juju_epc.JujuEpc()
 
         self.images = {'image1': 'url1',
@@ -70,15 +62,6 @@ class JujuEpcTesting(unittest.TestCase):
                         'test_vnf':  {}}
 
     @unittest.skip("It must be fixed. Please see JIRA FUNCTEST-915")
-    @mock.patch('functest.utils.openstack_utils.get_keystone_client',
-                return_value='test')
-    @mock.patch('functest.utils.openstack_utils.get_or_create_tenant_for_vnf',
-                return_value=True)
-    @mock.patch('functest.utils.openstack_utils.get_or_create_user_for_vnf',
-                return_value=True)
-    @mock.patch('functest.utils.openstack_utils.get_credentials',
-                return_value={'auth_url': 'test/v1',
-                              'project_name': 'test_tenant'})
     @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
     @mock.patch('os.system')
     def test_prepare_default(self, *args):
