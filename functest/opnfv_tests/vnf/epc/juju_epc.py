@@ -189,17 +189,17 @@ class JujuEpc(vnf.VnfOnBoarding):
     def _add_custom_rule(self, sec_grp_name):
         """ To add custom rule for SCTP Traffic """
         sec_grp_rules = list()
-        security_group_init = OpenStackSecurityGroup(
+        sec_grp_rules.append(
+            SecurityGroupRuleConfig(
+                sec_grp_name=sec_grp_name, direction=Direction.ingress,
+                protocol=Protocol.sctp))
+        security_group = OpenStackSecurityGroup(
             self.snaps_creds,
             SecurityGroupConfig(
                 name=sec_grp_name,
                 rule_settings=sec_grp_rules))
-        security_group_init.initialize()
-        sctp_rule = SecurityGroupRuleConfig(
-            sec_grp_name=sec_grp_name, direction=Direction.ingress,
-            protocol=Protocol.sctp)
-        security_group_init.add_rule(sctp_rule)
-        self.created_object.append(security_group_init)
+        security_group.create()
+        self.created_object.append(security_group)
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
