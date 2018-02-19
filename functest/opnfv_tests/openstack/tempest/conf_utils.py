@@ -31,10 +31,9 @@ RALLY_CONF_PATH = "/etc/rally/rally.conf"
 RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
     'functest', 'ci/rally_aarch64_patch.conf')
 GLANCE_IMAGE_PATH = os.path.join(
-    CONST.__getattribute__('dir_functest_images'),
-    CONST.__getattribute__('openstack_image_file_name'))
-TEMPEST_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
-                                   'tempest')
+    getattr(CONST, 'dir_functest_images'),
+    getattr(CONST, 'openstack_image_file_name'))
+TEMPEST_RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'tempest')
 TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
@@ -44,8 +43,7 @@ TEMPEST_DEFCORE = pkg_resources.resource_filename(
     'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
-REFSTACK_RESULTS_DIR = os.path.join(CONST.__getattribute__('dir_results'),
-                                    'refstack')
+REFSTACK_RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'refstack')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
@@ -79,11 +77,11 @@ def create_rally_deployment():
     cmd = "rally deployment destroy opnfv-rally"
     ft_utils.execute_command(cmd, error_msg=(
         "Deployment %s does not exist."
-        % CONST.__getattribute__('rally_deployment_name')),
+        % getattr(CONST, 'rally_deployment_name')),
                              verbose=False)
 
     cmd = ("rally deployment create --fromenv --name={0}"
-           .format(CONST.__getattribute__('rally_deployment_name')))
+           .format(getattr(CONST, 'rally_deployment_name')))
     error_msg = "Problem while creating Rally deployment"
     ft_utils.execute_command_raise(cmd, error_msg=error_msg)
 
@@ -96,15 +94,15 @@ def create_verifier():
     """Create new verifier"""
     LOGGER.info("Create verifier from existing repo...")
     cmd = ("rally verify delete-verifier --id '{0}' --force").format(
-        CONST.__getattribute__('tempest_verifier_name'))
+        getattr(CONST, 'tempest_verifier_name'))
     ft_utils.execute_command(cmd, error_msg=(
         "Verifier %s does not exist."
-        % CONST.__getattribute__('tempest_verifier_name')),
+        % getattr(CONST, 'tempest_verifier_name')),
                              verbose=False)
     cmd = ("rally verify create-verifier --source {0} "
            "--name {1} --type tempest --system-wide"
-           .format(CONST.__getattribute__('dir_repo_tempest'),
-                   CONST.__getattribute__('tempest_verifier_name')))
+           .format(getattr(CONST, 'dir_repo_tempest'),
+                   getattr(CONST, 'tempest_verifier_name')))
     ft_utils.execute_command_raise(cmd,
                                    error_msg='Problem while creating verifier')
 
@@ -116,7 +114,7 @@ def get_verifier_id():
     create_rally_deployment()
     create_verifier()
     cmd = ("rally verify list-verifiers | awk '/" +
-           CONST.__getattribute__('tempest_verifier_name') +
+           getattr(CONST, 'tempest_verifier_name') +
            "/ {print $2}'")
     proc = subprocess.Popen(cmd, shell=True,
                             stdout=subprocess.PIPE,
@@ -133,7 +131,7 @@ def get_verifier_deployment_id():
     Returns deployment id for active Rally deployment
     """
     cmd = ("rally deployment list | awk '/" +
-           CONST.__getattribute__('rally_deployment_name') +
+           getattr(CONST, 'rally_deployment_name') +
            "/ {print $2}'")
     proc = subprocess.Popen(cmd, shell=True,
                             stdout=subprocess.PIPE,
@@ -152,7 +150,7 @@ def get_verifier_repo_dir(verifier_id):
     if not verifier_id:
         verifier_id = get_verifier_id()
 
-    return os.path.join(CONST.__getattribute__('dir_rally_inst'),
+    return os.path.join(getattr(CONST, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'repo')
@@ -168,7 +166,7 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
     if not deployment_id:
         deployment_id = get_verifier_deployment_id()
 
-    return os.path.join(CONST.__getattribute__('dir_rally_inst'),
+    return os.path.join(getattr(CONST, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'for-deployment-{}'.format(deployment_id))
@@ -238,12 +236,10 @@ def generate_test_accounts_file(tenant_id):
     LOGGER.debug("Add needed params into test_accounts.yaml...")
     accounts_list = [
         {
-            'tenant_name':
-                CONST.__getattribute__('tempest_identity_tenant_name'),
+            'tenant_name': getattr(CONST, 'tempest_identity_tenant_name'),
             'tenant_id': str(tenant_id),
-            'username': CONST.__getattribute__('tempest_identity_user_name'),
-            'password':
-                CONST.__getattribute__('tempest_identity_user_password')
+            'username': getattr(CONST, 'tempest_identity_user_name'),
+            'password': getattr(CONST, 'tempest_identity_user_password')
         }
     ]
 
@@ -279,13 +275,13 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     config.read(tempest_conf_file)
     config.set('compute', 'fixed_network_name', network_name)
     config.set('compute', 'volume_device_name',
-               CONST.__getattribute__('tempest_volume_device_name'))
+               getattr(CONST, 'tempest_volume_device_name'))
 
     if image_id is not None:
         config.set('compute', 'image_ref', image_id)
     if IMAGE_ID_ALT is not None:
         config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if CONST.__getattribute__('tempest_use_custom_flavors'):
+    if getattr(CONST, 'tempest_use_custom_flavors'):
         if flavor_id is not None:
             config.set('compute', 'flavor_ref', flavor_id)
         if FLAVOR_ID_ALT is not None:
@@ -306,9 +302,9 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     config.set('identity', 'auth_version', auth_version)
     config.set(
         'validation', 'ssh_timeout',
-        CONST.__getattribute__('tempest_validation_ssh_timeout'))
+        getattr(CONST, 'tempest_validation_ssh_timeout'))
     config.set('object-storage', 'operator_role',
-               CONST.__getattribute__('tempest_object_storage_operator_role'))
+               getattr(CONST, 'tempest_object_storage_operator_role'))
 
     if os.environ.get('OS_ENDPOINT_TYPE') is not None:
         config.set('identity', 'v3_endpoint_type',
