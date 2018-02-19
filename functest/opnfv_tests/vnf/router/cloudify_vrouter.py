@@ -70,9 +70,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         except Exception:
             raise Exception("VNF config file not found")
 
-        self.snaps_creds = ''
-        self.created_object = []
-
         self.cfy_manager_ip = ''
         self.util_info = {}
         self.deployment_name = ''
@@ -123,12 +120,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
     def prepare(self):
         super(CloudifyVrouter, self).prepare()
-
         self.__logger.info("Additional pre-configuration steps")
-
         self.util.set_credentials(self.snaps_creds)
-
-        # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
         for image_name, image_file in self.images.iteritems():
             self.__logger.info("image: %s, file: %s", image_name, image_file)
@@ -148,7 +141,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         network, security group, fip, VM creation
         """
         # network creation
-
         start_time = time.time()
         self.__logger.info("Creating keypair ...")
         kp_file = os.path.join(self.data_dir, "cloudify_vrouter.pem")
@@ -210,15 +202,13 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         flavor_settings = FlavorConfig(
             name=self.orchestrator['requirements']['flavor']['name'],
             ram=self.orchestrator['requirements']['flavor']['ram_min'],
-            disk=50,
-            vcpus=2)
+            disk=50, vcpus=2)
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         image_settings = ImageConfig(
             name=self.orchestrator['requirements']['os_image'],
-            image_user='centos',
-            exists=True)
+            image_user='centos', exists=True)
 
         port_settings = PortConfig(
             name='cloudify_manager_port-{}'.format(self.uuid),
@@ -242,16 +232,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.__logger.info("Creating cloudify manager VM")
         manager_creator.create()
         self.created_object.append(manager_creator)
-
-        public_auth_url = keystone_utils.get_endpoint(
-            self.snaps_creds, 'identity')
-
-        self.__logger.info("Set creds for cloudify manager")
-        cfy_creds = dict(
-            keystone_username=self.snaps_creds.username,
-            keystone_password=self.snaps_creds.password,
-            keystone_tenant_name=self.snaps_creds.project_name,
-            keystone_url=public_auth_url)
 
         cfy_client = CloudifyClient(
             host=manager_creator.get_floating_ip().ip,
@@ -279,14 +259,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             self.__logger.info("Cloudify Manager is up and running")
         else:
             raise Exception("Cloudify Manager isn't up and running")
-
-        self.__logger.info("Put OpenStack creds in manager")
-        secrets_list = cfy_client.secrets.list()
-        for k, val in cfy_creds.iteritems():
-            if not any(d.get('key', None) == k for d in secrets_list):
-                cfy_client.secrets.create(k, val)
-            else:
-                cfy_client.secrets.update(k, val)
 
         duration = time.time() - start_time
 
@@ -317,55 +289,54 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         descriptor = self.vnf['descriptor']
         self.deployment_name = descriptor.get('name')
 
-        vrouter_blueprint_dir = os.path.join(self.data_dir,
-                                             self.util.blueprint_dir)
+        vrouter_blueprint_dir = os.path.join(
+            self.data_dir, self.util.blueprint_dir)
         if not os.path.exists(vrouter_blueprint_dir):
-            Repo.clone_from(descriptor.get('url'),
-                            vrouter_blueprint_dir,
-                            branch=descriptor.get('version'))
+            Repo.clone_from(
+                descriptor.get('url'), vrouter_blueprint_dir,
+                branch=descriptor.get('version'))
 
-        cfy_client.blueprints.upload(vrouter_blueprint_dir +
-                                     self.util.blueprint_file_name,
-                                     descriptor.get('name'))
+        cfy_client.blueprints.upload(
+            vrouter_blueprint_dir + self.util.blueprint_file_name,
+            descriptor.get('name'))
 
         self.__logger.info("Get or create flavor for vrouter")
         flavor_settings = FlavorConfig(
             name=self.vnf['requirements']['flavor']['name'],
             ram=self.vnf['requirements']['flavor']['ram_min'],
-            disk=25,
-            vcpus=1)
+            disk=25, vcpus=1)
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor = flavor_creator.create()
         self.created_object.append(flavor_creator)
 
         # set image name
         glance = glance_utils.glance_client(self.snaps_creds)
-        image = glance_utils.get_image(glance,
-                                       "vyos1.1.7")
+        image = glance_utils.get_image(glance, "vyos1.1.7")
+
         self.vnf['inputs'].update(dict(target_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(reference_vnf_image_id=image.id))
-
-        # set flavor id
         self.vnf['inputs'].update(dict(target_vnf_flavor_id=flavor.id))
         self.vnf['inputs'].update(dict(reference_vnf_flavor_id=flavor.id))
-
-        self.vnf['inputs'].update(dict(keystone_username=self.tenant_name))
-        self.vnf['inputs'].update(dict(keystone_password=self.tenant_name))
-        self.vnf['inputs'].update(dict(keystone_tenant_name=self.tenant_name))
-        self.vnf['inputs'].update(
-            dict(keystone_url=keystone_utils.get_endpoint(
+        self.vnf['inputs'].update(dict(
+            keystone_username=self.snaps_creds.username))
+        self.vnf['inputs'].update(dict(
+            keystone_password=self.snaps_creds.password))
+        self.vnf['inputs'].update(dict(
+            keystone_tenant_name=self.snaps_creds.project_name))
+        self.vnf['inputs'].update(dict(
+            region=self.snaps_creds.region_name))
+        self.vnf['inputs'].update(dict(
+            keystone_url=keystone_utils.get_endpoint(
                 self.snaps_creds, 'identity')))
 
         self.__logger.info("Create VNF Instance")
-        cfy_client.deployments.create(descriptor.get('name'),
-                                      descriptor.get('name'),
-                                      self.vnf.get('inputs'))
+        cfy_client.deployments.create(
+            descriptor.get('name'), descriptor.get('name'),
+            self.vnf.get('inputs'))
 
-        wait_for_execution(cfy_client,
-                           get_execution_id(
-                               cfy_client, descriptor.get('name')),
-                           self.__logger,
-                           timeout=7200)
+        wait_for_execution(
+            cfy_client, get_execution_id(cfy_client, descriptor.get('name')),
+            self.__logger, timeout=7200)
 
         self.__logger.info("Start the VNF Instance deployment")
         execution = cfy_client.executions.start(descriptor.get('name'),
@@ -403,15 +374,13 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         duration = time.time() - start_time
 
         if result:
-            self.details['test_vnf'].update(status='PASS',
-                                            result='OK',
-                                            full_result=test_result_data,
-                                            duration=duration)
+            self.details['test_vnf'].update(
+                status='PASS', result='OK', full_result=test_result_data,
+                duration=duration)
         else:
-            self.details['test_vnf'].update(status='FAIL',
-                                            result='NG',
-                                            full_result=test_result_data,
-                                            duration=duration)
+            self.details['test_vnf'].update(
+                status='FAIL', result='NG', full_result=test_result_data,
+                duration=duration)
 
         return True
 
@@ -425,15 +394,13 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             for execution in exec_list:
                 if execution['status'] == "started":
                     try:
-                        cfy_client.executions.cancel(execution['id'],
-                                                     force=True)
+                        cfy_client.executions.cancel(
+                            execution['id'], force=True)
                     except Exception:  # pylint: disable=broad-except
                         self.__logger.warn("Can't cancel the current exec")
 
             execution = cfy_client.executions.start(
-                dep_name,
-                'uninstall',
-                parameters=dict(ignore_failure=True))
+                dep_name, 'uninstall', parameters=dict(ignore_failure=True))
 
             wait_for_execution(cfy_client, execution, self.__logger)
             cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
@@ -465,11 +432,8 @@ def wait_for_execution(client, execution, logger, timeout=7200, ):
     execution_ended = False
     while True:
         event_list = client.events.list(
-            execution_id=execution.id,
-            _offset=offset,
-            _size=batch_size,
-            include_logs=False,
-            sort='@timestamp').items
+            execution_id=execution.id, _offset=offset, _size=batch_size,
+            include_logs=False, sort='@timestamp').items
 
         offset = offset + len(event_list)
         for event in event_list:
