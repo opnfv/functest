@@ -193,11 +193,11 @@ class TempestCommon(testcase.TestCase):
         f_stdout.close()
         f_stderr.close()
 
-    def parse_verifier_result(self):
-        """Parse and save test results."""
         if self.verification_id is None:
             raise Exception('Verification UUID not found')
 
+    def parse_verifier_result(self):
+        """Parse and save test results."""
         stat = self.get_verifier_result(self.verification_id)
         try:
             num_executed = stat['num_tests'] - stat['num_skipped']
@@ -236,6 +236,15 @@ class TempestCommon(testcase.TestCase):
         LOGGER.info("Tempest %s success_rate is %s%%",
                     self.case_name, self.result)
 
+    def generate_report(self):
+        """Generate verification report."""
+        html_file = os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                                 "tempest-report.html")
+        cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
+               self.verification_id, "--to", html_file]
+        subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
+
     def run(self, **kwargs):
 
         self.start_time = time.time()
@@ -255,6 +264,7 @@ class TempestCommon(testcase.TestCase):
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
+            self.generate_report()
             res = testcase.TestCase.EX_OK
         except Exception as err:  # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', err)

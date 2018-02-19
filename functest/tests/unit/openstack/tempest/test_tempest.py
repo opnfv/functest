@@ -147,9 +147,22 @@ class OSTempestTesting(unittest.TestCase):
             conf_utils.TEMPEST_LIST = 'test_tempest_list'
             cmd = ["rally", "verify", "start", "--load-list",
                    conf_utils.TEMPEST_LIST]
-            self.tempestcommon.run_verifier_tests()
-            mock_logger_info. \
-                assert_any_call("Starting Tempest test suite: '%s'.", cmd)
+            with self.assertRaises(Exception):
+                self.tempestcommon.run_verifier_tests()
+                mock_logger_info. \
+                    assert_any_call("Starting Tempest test suite: '%s'.", cmd)
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'subprocess.Popen')
+    def test_generate_report(self, mock_popen):
+        self.tempestcommon.verification_id = "1234"
+        html_file = os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+                                 "tempest-report.html")
+        cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
+               "1234", "--to", html_file]
+        self.tempestcommon.generate_report()
+        mock_popen.assert_called_once_with(cmd, stdout=mock.ANY,
+                                           stderr=mock.ANY)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
@@ -245,7 +258,9 @@ class OSTempestTesting(unittest.TestCase):
                 mock.patch.object(self.tempestcommon,
                                   'apply_tempest_blacklist'), \
                 mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
-                mock.patch.object(self.tempestcommon, 'parse_verifier_result'):
+                mock.patch.object(self.tempestcommon,
+                                  'parse_verifier_result'), \
+                mock.patch.object(self.tempestcommon, 'generate_report'):
             self._test_run(testcase.TestCase.EX_OK)
 
 
