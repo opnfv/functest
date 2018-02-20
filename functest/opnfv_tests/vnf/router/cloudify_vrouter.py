@@ -14,6 +14,7 @@
 import logging
 import os
 import time
+import uuid
 
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
@@ -34,6 +35,7 @@ from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
 from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.user import UserConfig
 from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
 
 from snaps.openstack.create_flavor import OpenStackFlavor
@@ -43,6 +45,7 @@ from snaps.openstack.create_keypairs import OpenStackKeypair
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
 from snaps.openstack.create_router import OpenStackRouter
+from snaps.openstack.create_user import OpenStackUser
 
 import snaps.openstack.utils.glance_utils as glance_utils
 from snaps.openstack.utils import keystone_utils
@@ -313,21 +316,31 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         glance = glance_utils.glance_client(self.snaps_creds)
         image = glance_utils.get_image(glance, "vyos1.1.7")
 
+        user_creator = OpenStackUser(
+            self.snaps_creds,
+            UserConfig(
+                name='cloudify_network_bug-{}'.format(self.uuid),
+                password=str(uuid.uuid4()),
+                roles={'_member_': self.tenant_name}))
+        user_creator.create()
+        self.created_object.append(user_creator)
+        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+
         self.vnf['inputs'].update(dict(target_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(reference_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(target_vnf_flavor_id=flavor.id))
         self.vnf['inputs'].update(dict(reference_vnf_flavor_id=flavor.id))
         self.vnf['inputs'].update(dict(
-            keystone_username=self.snaps_creds.username))
+            keystone_username=snaps_creds.username))
         self.vnf['inputs'].update(dict(
-            keystone_password=self.snaps_creds.password))
+            keystone_password=snaps_creds.password))
         self.vnf['inputs'].update(dict(
-            keystone_tenant_name=self.snaps_creds.project_name))
+            keystone_tenant_name=snaps_creds.project_name))
         self.vnf['inputs'].update(dict(
-            region=self.snaps_creds.region_name))
+            region=snaps_creds.region_name))
         self.vnf['inputs'].update(dict(
             keystone_url=keystone_utils.get_endpoint(
-                self.snaps_creds, 'identity')))
+                snaps_creds, 'identity')))
 
         self.__logger.info("Create VNF Instance")
         cfy_client.deployments.create(
