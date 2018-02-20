@@ -42,11 +42,11 @@ class VPingSSH(vping_base.VPingBase):
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
 
-        self.kp_name = CONST.__getattribute__('vping_keypair_name') + self.guid
-        self.kp_priv_file = CONST.__getattribute__('vping_keypair_priv_file')
-        self.kp_pub_file = CONST.__getattribute__('vping_keypair_pub_file')
-        self.sg_name = CONST.__getattribute__('vping_sg_name') + self.guid
-        self.sg_desc = CONST.__getattribute__('vping_sg_desc')
+        self.kp_name = getattr(CONST, 'vping_keypair_name') + self.guid
+        self.kp_priv_file = getattr(CONST, 'vping_keypair_priv_file')
+        self.kp_pub_file = getattr(CONST, 'vping_keypair_pub_file')
+        self.sg_name = getattr(CONST, 'vping_sg_name') + self.guid
+        self.sg_desc = getattr(CONST, 'vping_sg_desc')
 
     @energy.enable_recording
     def run(self, **kwargs):

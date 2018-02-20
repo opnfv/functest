@@ -151,14 +151,14 @@ class OpenImsVnf(vnf.VnfOnBoarding):
 
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims/')
-        self.data_dir = CONST.__getattribute__('dir_ims_data')
-        self.test_dir = CONST.__getattribute__('dir_repo_vims_test')
+        self.data_dir = getattr(CONST, 'dir_ims_data')
+        self.test_dir = getattr(CONST, 'dir_repo_vims_test')
         self.created_resources = []
         self.logger.info("%s VNF onboarding test starting", self.case_name)
 
         try:
-            self.config = CONST.__getattribute__(
-                'vnf_{}_config'.format(self.case_name))
+            self.config = getattr(
+                CONST, 'vnf_{}_config'.format(self.case_name))
         except BaseException:
             raise Exception("Orchestra VNF config file not found")
         config_file = self.case_dir + self.config

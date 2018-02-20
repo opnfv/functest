@@ -38,13 +38,12 @@ class SnapsTestRunner(unit.Suite):
 
         self.netconf_override = None
         if hasattr(CONST, 'snaps_network_config'):
-            self.netconf_override = CONST.__getattribute__(
-                'snaps_network_config')
+            self.netconf_override = getattr(CONST, 'snaps_network_config')
 
         self.use_fip = (
-            CONST.__getattribute__('snaps_use_floating_ips') == 'True')
+            getattr(CONST, 'snaps_use_floating_ips') == 'True')
         self.use_keystone = (
-            CONST.__getattribute__('snaps_use_keystone') == 'True')
+            getattr(CONST, 'snaps_use_keystone') == 'True')
         scenario = env.get('DEPLOY_SCENARIO')
 
         self.flavor_metadata = None
@@ -55,4 +54,4 @@ class SnapsTestRunner(unit.Suite):
 
         self.image_metadata = None
         if hasattr(CONST, 'snaps_images'):
-            self.image_metadata = CONST.__getattribute__('snaps_images')
+            self.image_metadata = getattr(CONST, 'snaps_images')
