@@ -28,7 +28,9 @@ from snaps.openstack.utils import keystone_utils
 from snaps.openstack.utils import neutron_utils
 from snaps.openstack.utils import nova_utils
 
+from functest.utils import constants
 from functest.opnfv_tests.openstack.snaps import snaps_utils
+
 
 __author__ = "Jose Lausuch <jose.lausuch@ericsson.com>"
 
@@ -68,7 +70,7 @@ def get_auth_token(os_creds):
 class CheckDeployment(object):
     """ Check deployment class."""
 
-    def __init__(self, rc_file='/home/opnfv/functest/conf/env_file'):
+    def __init__(self, rc_file=constants.ENV_FILE):
         self.rc_file = rc_file
         self.services = ('compute', 'network', 'image')
         self.os_creds = None

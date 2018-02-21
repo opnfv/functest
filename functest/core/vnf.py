@@ -20,6 +20,7 @@ from snaps.openstack.create_project import OpenStackProject
 from snaps.openstack.tests import openstack_tests
 
 from functest.core import testcase
+from functest.utils import constants
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>, "
               "Valentin Boucher <valentin.boucher@orange.com>")
@@ -46,7 +47,6 @@ class VnfOnBoarding(testcase.TestCase):
     """Base model for VNF test cases."""
 
     __logger = logging.getLogger(__name__)
-    env_file = "/home/opnfv/functest/conf/env_file"
 
     def __init__(self, **kwargs):
         super(VnfOnBoarding, self).__init__(**kwargs)
@@ -110,7 +110,7 @@ class VnfOnBoarding(testcase.TestCase):
                 "Prepare VNF: %s, description: %s", self.case_name,
                 self.tenant_description)
             snaps_creds = openstack_tests.get_credentials(
-                os_env_file=self.env_file)
+                os_env_file=constants.ENV_FILE)
 
             self.os_project = OpenStackProject(
                 snaps_creds,
