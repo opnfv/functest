@@ -278,12 +278,12 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             scp = SCPClient(ssh.get_transport(), socket_timeout=15.0)
             scp.put(kp_file, '~/')
             cmd = "sudo cp ~/cloudify_ims.pem /etc/cloudify/"
-            run_blocking_ssh_command(ssh, cmd)
+            self.run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo chmod 444 /etc/cloudify/cloudify_ims.pem"
-            run_blocking_ssh_command(ssh, cmd)
+            self.run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo yum install -y gcc python-devel"
-            run_blocking_ssh_command(ssh, cmd, "Unable to install packages \
-                                                on manager")
+            self.run_blocking_ssh_command(
+                ssh, cmd, "Unable to install packages on manager")
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
@@ -397,7 +397,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                     try:
                         cfy_client.executions.cancel(execution['id'],
                                                      force=True)
-                    except:  # pylint: disable=broad-except
+                    except Exception:  # pylint: disable=broad-except
                         self.__logger.warn("Can't cancel the current exec")
 
             execution = cfy_client.executions.start(
@@ -409,11 +409,21 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             wait_for_execution(cfy_client, execution, self.__logger)
             cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
             cfy_client.blueprints.delete(self.vnf['descriptor'].get('name'))
-        except:  # pylint: disable=broad-except
+        except Exception:  # pylint: disable=broad-except
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
 
         super(CloudifyIms, self).clean()
+
+    @staticmethod
+    def run_blocking_ssh_command(ssh, cmd,
+                                 error_msg="Unable to run this command"):
+        """Command to run ssh command with the exit status."""
+        _, stdout, stderr = ssh.exec_command(cmd)
+        CloudifyIms.__logger.debug("SSH %s stdout: %s", cmd, stdout.read())
+        if stdout.channel.recv_exit_status() != 0:
+            CloudifyIms.__logger.error("SSH %s stderr: %s", cmd, stderr.read())
+            raise Exception(error_msg)
 
     @energy.enable_recording
     def run(self, **kwargs):
@@ -528,10 +538,3 @@ def sig_test_format(sig_test):
     short_sig_test_result['skipped'] = nb_skipped
     nb_test = nb_passed + nb_skipped
     return (short_sig_test_result, nb_test)
-
-
-def run_blocking_ssh_command(ssh, cmd, error_msg="Unable to run this command"):
-    """Command to run ssh command with the exit status."""
-    stdin, stdout, stderr = ssh.exec_command(cmd)
-    if stdout.channel.recv_exit_status() != 0:
-        raise Exception(error_msg)
