@@ -15,8 +15,6 @@ general:
         functest_images: /home/opnfv/functest/images
         rally_inst: /root/.rally
 
-    env_file: /home/opnfv/functest/conf/env_file
-
     openstack:
         image_name: Cirros-0.4.0
         image_name_alt: Cirros-0.4.0-1

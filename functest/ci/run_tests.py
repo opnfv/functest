@@ -29,10 +29,10 @@ import yaml
 
 from functest.ci import tier_builder
 from functest.core import testcase
+from functest.utils import constants
 from functest.utils import env
 
 LOGGER = logging.getLogger('functest.ci.run_tests')
-ENV_FILE = "/home/opnfv/functest/conf/env_file"
 
 
 class Result(enum.Enum):
@@ -95,7 +95,7 @@ class Runner(object):
             pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
 
     @staticmethod
-    def source_envfile(rc_file=ENV_FILE):
+    def source_envfile(rc_file=constants.Constants.env_file):
         """Source the env file passed as arg"""
         if not os.path.isfile(rc_file):
             LOGGER.debug("No env file %s found", rc_file)

@@ -37,10 +37,10 @@ def get(env_var):
 
 class Environment(object):  # pylint: disable=too-few-public-methods
 
-    # Backward compatibilty (waiting for SDNVPN and SFC)
+    # Backward compatibility (waiting for SDNVPN and SFC)
     def __init__(self):
         for key, _ in six.iteritems(INPUTS):
             setattr(self, key, get(key))
 
-# Backward compatibilty (waiting for SDNVPN and SFC)
+# Backward compatibility (waiting for SDNVPN and SFC)
 ENV = Environment()

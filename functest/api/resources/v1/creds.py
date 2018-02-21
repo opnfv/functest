@@ -23,7 +23,7 @@ from functest.api.base import ApiResource
 from functest.api.common import api_utils
 from functest.ci import run_tests
 from functest.cli.commands.cli_os import OpenStack
-from functest.utils.constants import CONST
+from functest.utils import constants
 
 LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ class V1Creds(ApiResource):
         endpoint='{0}/credentials'.format(ENDPOINT_CREDS))
     def get(self):  # pylint: disable=no-self-use
         """ Get credentials """
-        run_tests.Runner.source_envfile(getattr(CONST, 'env_file'))
+        run_tests.Runner.source_envfile(constants.Constants.env_file)
         credentials_show = OpenStack.show_credentials()
         return jsonify(credentials_show)
 
@@ -65,7 +65,7 @@ class V1Creds(ApiResource):
 
         lines = ['export {}={}\n'.format(k, v) for k, v in openrc_vars.items()]
 
-        rc_file = getattr(CONST, 'env_file')
+        rc_file = constants.Constants.env_file
         with open(rc_file, 'w') as creds_file:
             creds_file.writelines(lines)
 
