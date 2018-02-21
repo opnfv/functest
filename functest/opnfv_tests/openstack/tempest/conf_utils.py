@@ -38,12 +38,8 @@ TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
-TEMPEST_DEFCORE = pkg_resources.resource_filename(
-    'functest',
-    'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
-REFSTACK_RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'refstack')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
@@ -193,7 +189,7 @@ def configure_tempest(deployment_dir, network_name=None, image_id=None,
                                     flavor_id, compute_cnt)
 
 
-def configure_tempest_defcore(deployment_dir, network_name, image_id,
+def configure_tempest_defcore(config_file, deployment_dir, network_name, image_id,
                               flavor_id, image_id_alt, flavor_id_alt,
                               tenant_id):
     # pylint: disable=too-many-arguments
@@ -203,7 +199,6 @@ def configure_tempest_defcore(deployment_dir, network_name, image_id,
     conf_file = configure_verifier(deployment_dir)
     configure_tempest_update_params(conf_file, network_name, image_id,
                                     flavor_id)
-
     LOGGER.debug("Updating selected tempest.conf parameters for defcore...")
     config = ConfigParser.RawConfigParser()
     config.read(conf_file)
@@ -218,14 +213,8 @@ def configure_tempest_defcore(deployment_dir, network_name, image_id,
     config.set('compute', 'image_ref_alt', image_id_alt)
     config.set('compute', 'flavor_ref', flavor_id)
     config.set('compute', 'flavor_ref_alt', flavor_id_alt)
-
-    with open(conf_file, 'wb') as config_file:
-        config.write(config_file)
-
-    confpath = pkg_resources.resource_filename(
-        'functest',
-        'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
-    shutil.copyfile(conf_file, confpath)
+    with open(config_file, 'wb') as config_fd:
+        config.write(config_fd)
 
 
 def generate_test_accounts_file(tenant_id):
@@ -312,13 +301,9 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
 
     if os.environ.get('OS_ENDPOINT_TYPE') is not None:
         sections = config.sections()
-        services_list = ['compute',
-                         'volume',
-                         'image',
-                         'network',
-                         'data-processing',
-                         'object-storage',
-                         'orchestration']
+        services_list = [
+            'compute', 'volume', 'image', 'network', 'data-processing',
+            'object-storage', 'orchestration']
         for service in services_list:
             if service not in sections:
                 config.add_section(service)
