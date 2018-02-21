@@ -49,15 +49,6 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcustom = tempest.TempestCustom()
             self.tempestdefcore = tempest.TempestDefcore()
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
-    def test_gen_tl_defcore_mode(self, mock_logger_debug):
-        # pylint: disable=unused-argument
-        self.tempestcommon.mode = 'defcore'
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'shutil.copyfile') as mock_copyfile:
-            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
-            self.assertTrue(mock_copyfile.called)
-
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
     def test_gen_tl_cm_missing_file(self, mock_logger_debug,
@@ -69,7 +60,8 @@ class OSTempestTesting(unittest.TestCase):
                 self.assertRaises(Exception) as context:
             msg = "Tempest test list file %s NOT found."
             self.tempestcommon.generate_test_list('test_verifier_repo_dir')
-            self.assertTrue((msg % conf_utils.TEMPEST_CUSTOM) in context)
+            self.assertTrue(
+                (msg % conf_utils.TEMPEST_CUSTOM) in context.exception)
 
     def test_gen_tl_cm_default(self):
         self.tempestcommon.mode = 'custom'
