@@ -16,6 +16,7 @@ import mock
 
 from functest.core import vnf
 from functest.core import testcase
+from functest.utils import constants
 
 from snaps.openstack.os_credentials import OSCreds
 
@@ -113,7 +114,7 @@ class VnfBaseTesting(unittest.TestCase):
     def test_prepare_exc1(self, *args):
         with self.assertRaises(Exception):
             self.test.prepare()
-        args[0].assert_called_with(os_env_file=vnf.VnfOnBoarding.env_file)
+        args[0].assert_called_with(os_env_file=constants.Constants.env_file)
         args[1].assert_not_called()
         args[2].assert_not_called()
 
@@ -123,7 +124,7 @@ class VnfBaseTesting(unittest.TestCase):
     def test_prepare_exc2(self, *args):
         with self.assertRaises(Exception):
             self.test.prepare()
-        args[0].assert_called_with(os_env_file=vnf.VnfOnBoarding.env_file)
+        args[0].assert_called_with(os_env_file=constants.Constants.env_file)
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_not_called()
 
@@ -133,7 +134,7 @@ class VnfBaseTesting(unittest.TestCase):
     def test_prepare_exc3(self, *args):
         with self.assertRaises(Exception):
             self.test.prepare()
-        args[0].assert_called_with(os_env_file=vnf.VnfOnBoarding.env_file)
+        args[0].assert_called_with(os_env_file=constants.Constants.env_file)
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 
@@ -142,7 +143,7 @@ class VnfBaseTesting(unittest.TestCase):
     @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
     def test_prepare_default(self, *args):
         self.assertEqual(self.test.prepare(), testcase.TestCase.EX_OK)
-        args[0].assert_called_with(os_env_file=vnf.VnfOnBoarding.env_file)
+        args[0].assert_called_with(os_env_file=constants.Constants.env_file)
         args[1].assert_called_with(mock.ANY, mock.ANY)
         args[2].assert_called_with(mock.ANY, mock.ANY)
 
