@@ -14,6 +14,11 @@ class Constants(object):  # pylint: disable=too-few-public-methods
     CONFIG_FUNCTEST_YAML = pkg_resources.resource_filename(
         'functest', 'ci/config_functest.yaml')
 
+    env_file = '/home/opnfv/functest/conf/env_file'
+
+    # Backward compatibilty (waiting for SDNVPN and SFC)
+    openstack_creds = env_file
+
     def __init__(self):
         for attr_n, attr_v in six.iteritems(config.CONF.__dict__):
             setattr(self, attr_n, attr_v)
