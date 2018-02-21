@@ -79,8 +79,6 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     __logger = logging.getLogger(__name__)
 
-    default_region_name = "RegionOne"
-
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "juju_epc"
@@ -142,8 +140,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         clouds_yaml = os.path.join(self.res_dir, "clouds.yaml")
         cloud_data = {
             'url': self.public_auth_url,
-            'region': os.environ.get(
-                "OS_REGION_NAME", self.default_region_name)}
+            'region': self.snaps_creds.region_name}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         if os.system(
@@ -278,9 +275,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                 os.system(
                     'juju metadata generate-image -d ~ -i {} -s {} -r '
                     '{} -u {}'.format(
-                        image_id, image_name,
-                        os.environ.get(
-                            "OS_REGION_NAME", self.default_region_name),
+                        image_id, image_name, self.snaps_creds.region_name,
                         self.public_auth_url))
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
