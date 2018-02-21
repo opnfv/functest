@@ -241,39 +241,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             conf_utils.configure_tempest('test_dep_dir')
             self.assertTrue(mock_upd.called)
 
-    def test_conf_tempest_defcore_def(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.configure_verifier',
-                        return_value='test_conf_file'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.configure_tempest_update_params'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'set') as mset, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'read') as mread, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
-                       'write') as mwrite, \
-            mock.patch('__builtin__.open', mock.mock_open()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.generate_test_accounts_file'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.shutil.copyfile'):
-            conf_utils.configure_tempest_defcore(
-                'test_dep_dir', 'test_network_name', 'test_image_id',
-                'test_flavor_id', 'test_image_alt_id', 'test_flavor_alt_id',
-                'test_tenant_id')
-            mset.assert_any_call('compute', 'image_ref', 'test_image_id')
-            mset.assert_any_call('compute', 'image_ref_alt',
-                                 'test_image_alt_id')
-            mset.assert_any_call('compute', 'flavor_ref', 'test_flavor_id')
-            mset.assert_any_call('compute', 'flavor_ref_alt',
-                                 'test_flavor_alt_id')
-            self.assertTrue(mread.called)
-            self.assertTrue(mwrite.called)
-
     def test_gen_test_accounts_file_def(self):
         with mock.patch("__builtin__.open", mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'

@@ -33,12 +33,10 @@ class OSRefstackClientTesting(unittest.TestCase):
     _config = pkg_resources.resource_filename(
         'functest',
         'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
-    _testlist = pkg_resources.resource_filename(
-        'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
 
     def setUp(self):
-        self.default_args = {'config': self._config,
-                             'testlist': self._testlist}
+        self.default_args = {'config': None,
+                             'testlist': RefstackClient.defcorelist}
         os.environ['OS_AUTH_URL'] = 'https://ip:5000/v3'
         os.environ['OS_INSECURE'] = 'true'
         self.case_name = 'refstack_defcore'
@@ -57,30 +55,28 @@ class OSRefstackClientTesting(unittest.TestCase):
                         'get_credentials', return_value=self.os_creds):
             return RefstackClient()
 
-    def test_run_defcore_insecure(self):
+    @mock.patch('functest.utils.functest_utils.execute_command')
+    def test_run_defcore_insecure(self, m_cmd):
         insecure = '-k'
         config = 'tempest.conf'
         testlist = 'testlist'
         client = self._create_client()
-        with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
-                        'refstack_client.ft_utils.execute_command') as m_cmd:
-            cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
-                   .format(insecure, config, testlist))
-            client.run_defcore(config, testlist)
-            m_cmd.assert_any_call(cmd)
+        cmd = ("refstack-client test {0} -c {1} -v --test-list {2}".format(
+            insecure, config, testlist))
+        client.run_defcore(config, testlist)
+        m_cmd.assert_any_call(cmd)
 
-    def test_run_defcore(self):
+    @mock.patch('functest.utils.functest_utils.execute_command')
+    def test_run_defcore(self, m_cmd):
         os.environ['OS_AUTH_URL'] = 'http://ip:5000/v3'
         insecure = ''
         config = 'tempest.conf'
         testlist = 'testlist'
         client = self._create_client()
-        with mock.patch('functest.opnfv_tests.openstack.refstack_client.'
-                        'refstack_client.ft_utils.execute_command') as m_cmd:
-            cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
-                   .format(insecure, config, testlist))
-            client.run_defcore(config, testlist)
-            m_cmd.assert_any_call(cmd)
+        cmd = ("refstack-client test {0} -c {1} -v --test-list {2}".format(
+            insecure, config, testlist))
+        client.run_defcore(config, testlist)
+        m_cmd.assert_any_call(cmd)
 
     @mock.patch('functest.opnfv_tests.openstack.refstack_client.'
                 'refstack_client.LOGGER.info')
@@ -109,7 +105,7 @@ class OSRefstackClientTesting(unittest.TestCase):
 
     def _get_main_kwargs(self, key=None):
         kwargs = {'config': self._config,
-                  'testlist': self._testlist}
+                  'testlist': RefstackClient.defcorelist}
         if key:
             del kwargs[key]
         return kwargs
@@ -136,15 +132,16 @@ class OSRefstackClientTesting(unittest.TestCase):
         self._test_argparser('config', self._config)
 
     def test_argparser_testlist(self):
-        self._test_argparser('testlist', self._testlist)
+        self._test_argparser('testlist', RefstackClient.defcorelist)
 
     def test_argparser_multiple_args(self):
         self.default_args['config'] = self._config
-        self.default_args['testlist'] = self._testlist
+        self.default_args['testlist'] = RefstackClient.defcorelist
         parser = RefstackClientParser()
         self.assertEqual(parser.parse_args(
             ["--config={}".format(self._config),
-             "--testlist={}".format(self._testlist)]), self.default_args)
+             "--testlist={}".format(RefstackClient.defcorelist)]),
+                         self.default_args)
 
 
 if __name__ == "__main__":
