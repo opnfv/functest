@@ -6,6 +6,7 @@ ARG ODL_TAG=master
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
 ARG REFSTACK_TAG=master
+ARG REFSTACK_TARGET=2017.09
 ARG FDS_TAG=master
 ARG VIMS_TAG=stable
 
@@ -56,6 +57,9 @@ RUN apk --no-cache add --update python3 sshpass \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
+    mkdir -p /home/opnfv/functest/data/refstack && \
+    wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
+        -O /home/opnfv/functest/data/refstack/defcore.txt && \
     apk del .build-deps
 EXPOSE 5000
 CMD ["functest_restapi"]
