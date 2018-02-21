@@ -12,6 +12,7 @@
 from __future__ import division
 
 import argparse
+import ConfigParser
 import logging
 import os
 import re
@@ -19,14 +20,13 @@ import sys
 import subprocess
 import time
 
-import pkg_resources
-
 from functest.core import testcase
 from functest.energy import energy
-from functest.opnfv_tests.openstack.refstack_client.tempest_conf \
-    import TempestConf
 from functest.opnfv_tests.openstack.tempest import conf_utils
-import functest.utils.functest_utils as ft_utils
+from functest.opnfv_tests.openstack.tempest import tempest
+from functest.utils import config
+from functest.utils import functest_utils
+
 
 __author__ = ("Matthew Li <matthew.lijun@huawei.com>,"
               "Linda Wang <wangwulin@huawei.com>")
@@ -39,59 +39,48 @@ class RefstackClient(testcase.TestCase):
     """RefstackClient testcase implementation class."""
     # pylint: disable=too-many-instance-attributes
 
+    defcorelist = os.path.join(
+        getattr(config.CONF, 'dir_refstack_data'), 'defcore.txt')
+
     def __init__(self, **kwargs):
         """Initialize RefstackClient testcase object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "refstack_defcore"
         super(RefstackClient, self).__init__(**kwargs)
-        self.tempestconf = None
-        self.conf_path = pkg_resources.resource_filename(
-            'functest',
-            'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
-        self.functest_test = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests')
-        self.defcore_list = 'openstack/refstack_client/defcore.txt'
-        self.confpath = os.path.join(self.functest_test,
-                                     self.conf_path)
-        self.defcorelist = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
-        self.testlist = None
-        self.insecure = ''
+        self.resdir = os.path.join(
+            getattr(config.CONF, 'dir_results'), 'refstack')
+        self.conf_path = os.path.join(self.resdir, 'refstack_tempest.conf')
+
+    @staticmethod
+    def run_defcore(conf, testlist):
+        """Run defcore sys command."""
+        insecure = ''
         if ('https' in os.environ['OS_AUTH_URL'] and
                 os.getenv('OS_INSECURE', '').lower() == 'true'):
-            self.insecure = '-k'
-
-    def generate_conf(self):
-        """ Generate tempest.conf file to run tempest"""
-        if not os.path.exists(conf_utils.REFSTACK_RESULTS_DIR):
-            os.makedirs(conf_utils.REFSTACK_RESULTS_DIR)
-
-        self.tempestconf = TempestConf()
-        self.tempestconf.generate_tempestconf()
-
-    def run_defcore(self, conf, testlist):
-        """Run defcore sys command."""
+            insecure = '-k'
         cmd = ("refstack-client test {0} -c {1} -v --test-list {2}"
-               .format(self.insecure, conf, testlist))
+               .format(insecure, conf, testlist))
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
-        ft_utils.execute_command(cmd)
+        functest_utils.execute_command(cmd)
 
     def run_defcore_default(self):
         """Run default defcore sys command."""
-        options = ["-v"] if not self.insecure else ["-v", self.insecure]
-        cmd = (["refstack-client", "test", "-c", self.confpath] +
+        insecure = ''
+        if ('https' in os.environ['OS_AUTH_URL'] and
+                os.getenv('OS_INSECURE', '').lower() == 'true'):
+            insecure = '-k'
+        options = ["-v"] if not insecure else ["-v", insecure]
+        cmd = (["refstack-client", "test", "-c", self.conf_path] +
                options + ["--test-list", self.defcorelist])
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
-
-        with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
-                               "refstack.log"), 'w+') as f_stdout:
+        with open(os.path.join(self.resdir, "refstack.log"), 'w+') as f_stdout:
             subprocess.call(cmd, shell=False, stdout=f_stdout,
                             stderr=subprocess.STDOUT)
 
     def parse_refstack_result(self):
         """Parse Refstack results."""
         try:
-            with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+            with open(os.path.join(self.resdir,
                                    "refstack.log"), 'r') as logfile:
                 for line in logfile.readlines():
                     if 'Tests' in line:
@@ -99,7 +88,7 @@ class RefstackClient(testcase.TestCase):
                     if re.search(r"\} tempest\.", line):
                         LOGGER.info(line.replace('\n', ''))
 
-            with open(os.path.join(conf_utils.REFSTACK_RESULTS_DIR,
+            with open(os.path.join(self.resdir,
                                    "refstack.log"), 'r') as logfile:
                 output = logfile.read()
 
@@ -140,9 +129,46 @@ class RefstackClient(testcase.TestCase):
                             "skipped": skipped_testcases}
         except Exception:  # pylint: disable=broad-except
             self.result = 0
-
         LOGGER.info("Testcase %s success_rate is %s%%",
                     self.case_name, self.result)
+
+    def configure_tempest_defcore(self):
+        # pylint: disable=too-many-arguments
+        """
+        Add/update needed parameters into tempest.conf file
+        """
+        resources = tempest.TempestResourcesManager().create(
+            create_project=True, use_custom_images=True,
+            use_custom_flavors=True)
+        verifier_id = conf_utils.get_verifier_id()
+        deployment_id = conf_utils.get_verifier_deployment_id()
+        deployment_dir = conf_utils.get_verifier_deployment_dir(
+            verifier_id, deployment_id)
+        conf_file = conf_utils.configure_verifier(deployment_dir)
+        conf_utils.configure_tempest_update_params(
+            conf_file, resources.get("network_name"),
+            resources.get("image_id"), resources.get("flavor_id"))
+        LOGGER.debug(
+            "Updating selected tempest.conf parameters for defcore...")
+        config = ConfigParser.RawConfigParser()
+        config.read(conf_file)
+        config.set(
+            'DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
+        config.set('oslo_concurrency', 'lock_path',
+                   '{}/lock_files'.format(deployment_dir))
+        conf_utils.generate_test_accounts_file(
+            tenant_id=resources.get("project_id"))
+        config.set('auth', 'test_accounts_file', conf_utils.TEST_ACCOUNTS_FILE)
+        config.set('scenario', 'img_dir', '{}'.format(deployment_dir))
+        config.set('scenario', 'img_file', 'tempest-image')
+        config.set('compute', 'image_ref', resources.get("image_id"))
+        config.set('compute', 'image_ref_alt', resources.get("image_id_alt"))
+        config.set('compute', 'flavor_ref', resources.get("flavor_id"))
+        config.set('compute', 'flavor_ref_alt', resources.get("flavor_id_alt"))
+        if not os.path.exists(self.resdir):
+            os.makedirs(self.resdir)
+        with open(self.conf_path, 'w') as config_fd:
+            config.write(config_fd)
 
     @energy.enable_recording
     def run(self, **kwargs):
@@ -153,31 +179,20 @@ class RefstackClient(testcase.TestCase):
         functest testcase run refstack_defcore
         """
         self.start_time = time.time()
-
         try:
             # Make sure that Tempest is configured
-            if not self.tempestconf:
-                self.generate_conf()
+            self.configure_tempest_defcore()
             self.run_defcore_default()
             self.parse_refstack_result()
             res = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception("Error with run")
             res = testcase.TestCase.EX_RUN_ERROR
-        finally:
-            self.tempestconf.clean()
-
         self.stop_time = time.time()
         return res
 
-    def _prep_test(self):
-        """Check that the config file exists."""
-        if not os.path.isfile(self.confpath):
-            LOGGER.error("Conf file not valid: %s", self.confpath)
-        if not os.path.isfile(self.testlist):
-            LOGGER.error("testlist file not valid: %s", self.testlist)
-
-    def main(self, **kwargs):
+    @staticmethod
+    def main(**kwargs):
         """
         Execute RefstackClient testcase manually.
 
@@ -188,21 +203,24 @@ class RefstackClient(testcase.TestCase):
            python tempest_conf.py
         """
         try:
-            self.confpath = kwargs['config']
-            self.testlist = kwargs['testlist']
+            conf_path = kwargs['config']
+            if not os.path.isfile(conf_path):
+                LOGGER.error("Conf file not valid: %s", conf_path)
+                return testcase.TestCase.EX_RUN_ERROR
+            testlist = kwargs['testlist']
+            if not os.path.isfile(testlist):
+                LOGGER.error("testlist file not valid: %s", testlist)
+                return testcase.TestCase.EX_RUN_ERROR
         except KeyError as exc:
             LOGGER.error("Cannot run refstack client. Please check "
                          "%s", exc)
-            return self.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
         try:
-            self._prep_test()
-            self.run_defcore(self.confpath, self.testlist)
-            res = testcase.TestCase.EX_OK
+            RefstackClient.run_defcore(conf_path, testlist)
         except Exception as exc:  # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
-            res = testcase.TestCase.EX_RUN_ERROR
-
-        return res
+            return testcase.TestCase.EX_RUN_ERROR
+        return testcase.TestCase.EX_OK
 
 
 class RefstackClientParser(object):  # pylint: disable=too-few-public-methods
@@ -210,28 +228,16 @@ class RefstackClientParser(object):  # pylint: disable=too-few-public-methods
 
     def __init__(self):
         """Initialize helper object."""
-        self.functest_test = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests')
-        self.conf_path = pkg_resources.resource_filename(
-            'functest',
-            'opnfv_tests/openstack/refstack_client/refstack_tempest.conf')
-        self.defcore_list = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests/openstack/refstack_client/defcore.txt')
-        self.confpath = os.path.join(self.functest_test,
-                                     self.conf_path)
-        self.defcorelist = os.path.join(self.functest_test,
-                                        self.defcore_list)
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument(
             '-c', '--config',
-            help='the file path of refstack_tempest.conf',
-            default=self.confpath)
+            help='the file path of refstack_tempest.conf')
         self.parser.add_argument(
             '-t', '--testlist',
             help='Specify the file path or URL of a test list text file. '
                  'This test list will contain specific test cases that '
                  'should be tested.',
-            default=self.defcorelist)
+            default=RefstackClient.defcorelist)
 
     def parse_args(self, argv=None):
         """Parse command line arguments."""
