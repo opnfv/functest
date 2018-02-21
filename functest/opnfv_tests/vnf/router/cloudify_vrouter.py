@@ -121,6 +121,17 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             "tenant_images", config_file)
         self.__logger.info("Images needed for vrouter: %s", self.images)
 
+    @staticmethod
+    def run_blocking_ssh_command(ssh, cmd,
+                                 error_msg="Unable to run this command"):
+        """Command to run ssh command with the exit status."""
+        (_, stdout, stderr) = ssh.exec_command(cmd)
+        CloudifyVrouter.__logger.debug("SSH %s stdout: %s", cmd, stdout.read())
+        if stdout.channel.recv_exit_status() != 0:
+            CloudifyVrouter.__logger.error(
+                "SSH %s stderr: %s", cmd, stderr.read())
+            raise Exception(error_msg)
+
     def prepare(self):
         super(CloudifyVrouter, self).prepare()
         self.__logger.info("Additional pre-configuration steps")
@@ -271,11 +282,11 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             scp = SCPClient(ssh.get_transport(), socket_timeout=15.0)
             scp.put(kp_file, '~/')
             cmd = "sudo cp ~/cloudify_vrouter.pem /etc/cloudify/"
-            run_blocking_ssh_command(ssh, cmd)
+            self.run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo chmod 444 /etc/cloudify/cloudify_vrouter.pem"
-            run_blocking_ssh_command(ssh, cmd)
+            self.run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo yum install -y gcc python-devel"
-            run_blocking_ssh_command(
+            self.run_blocking_ssh_command(
                 ssh, cmd, "Unable to install packages on manager")
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
@@ -486,10 +497,3 @@ def get_execution_id(client, deployment_id):
     raise RuntimeError('Failed to get create_deployment_environment '
                        'workflow execution.'
                        'Available executions: {0}'.format(executions))
-
-
-def run_blocking_ssh_command(ssh, cmd, error_msg="Unable to run this command"):
-    """Command to run ssh command with the exit status."""
-    (_, stdout, _) = ssh.exec_command(cmd)
-    if stdout.channel.recv_exit_status() != 0:
-        raise Exception(error_msg)
