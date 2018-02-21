@@ -98,10 +98,7 @@ class TempestCommon(testcase.TestCase):
     def generate_test_list(self, verifier_repo_dir):
         """Generate test list based on the test mode."""
         LOGGER.debug("Generating test case list...")
-        if self.mode == 'defcore':
-            shutil.copyfile(
-                conf_utils.TEMPEST_DEFCORE, conf_utils.TEMPEST_RAW_LIST)
-        elif self.mode == 'custom':
+        if self.mode == 'custom':
             if os.path.isfile(conf_utils.TEMPEST_CUSTOM):
                 shutil.copyfile(
                     conf_utils.TEMPEST_CUSTOM, conf_utils.TEMPEST_RAW_LIST)
