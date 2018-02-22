@@ -14,7 +14,7 @@ import unittest
 import mock
 
 from functest.opnfv_tests.openstack.tempest import tempest, conf_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 from snaps.openstack.os_credentials import OSCreds
 
 
@@ -77,13 +77,13 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         tempest_resources = tempest.TempestResourcesManager(
             os_creds=self.os_creds)
 
-        setattr(CONST, 'tempest_use_custom_flavors', 'True')
+        setattr(config.CONF, 'tempest_use_custom_flavors', 'True')
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
-        setattr(CONST, 'tempest_use_custom_flavors', 'False')
+        setattr(config.CONF, 'tempest_use_custom_flavors', 'False')
         with self.assertRaises(Exception) as context:
             tempest_resources.create(use_custom_flavors=True)
         msg = 'Failed to create flavor'
@@ -101,12 +101,12 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
 
         cmd = "rally deployment destroy opnfv-rally"
         error_msg = "Deployment %s does not exist." % \
-                    getattr(CONST, 'rally_deployment_name')
+                    getattr(config.CONF, 'rally_deployment_name')
         mock_logger_info.assert_any_call("Creating Rally environment...")
         mock_exec.assert_any_call(cmd, error_msg=error_msg, verbose=False)
 
         cmd = "rally deployment create --fromenv --name="
-        cmd += getattr(CONST, 'rally_deployment_name')
+        cmd += getattr(config.CONF, 'rally_deployment_name')
         error_msg = "Problem while creating Rally deployment"
         mock_exec_raise.assert_any_call(cmd, error_msg=error_msg)
 
@@ -123,12 +123,12 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                  'stdout.readline.return_value': '0'}
         mock_popen.configure_mock(**attrs)
 
-        setattr(CONST, 'tempest_verifier_name', 'test_veifier_name')
+        setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
         with mock.patch('functest.utils.functest_utils.execute_command_raise',
                         side_effect=Exception), \
                 self.assertRaises(Exception):
             conf_utils.create_verifier()
-            mock_logger_debug.assert_any_call("Tempest test_veifier_name"
+            mock_logger_debug.assert_any_call("Tempest test_verifier_name"
                                               " does not exist")
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
@@ -137,7 +137,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 'create_rally_deployment', return_value=mock.Mock())
     def test_get_verif_id_missing_verif(self, mock_rally, mock_tempest):
         # pylint: disable=unused-argument
-        setattr(CONST, 'tempest_verifier_name', 'test_verifier_name')
+        setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen, \
                 self.assertRaises(Exception):
@@ -153,7 +153,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 'create_rally_deployment', return_value=mock.Mock())
     def test_get_verifier_id_default(self, mock_rally, mock_tempest):
         # pylint: disable=unused-argument
-        setattr(CONST, 'tempest_verifier_name', 'test_verifier_name')
+        setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()
@@ -165,7 +165,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                              'test_deploy_id')
 
     def test_get_depl_id_missing_rally(self):
-        setattr(CONST, 'tempest_verifier_name', 'test_deploy_name')
+        setattr(config.CONF, 'tempest_verifier_name', 'test_deploy_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen, \
                 self.assertRaises(Exception):
@@ -176,7 +176,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             conf_utils.get_verifier_deployment_id()
 
     def test_get_depl_id_default(self):
-        setattr(CONST, 'tempest_verifier_name', 'test_deploy_name')
+        setattr(config.CONF, 'tempest_verifier_name', 'test_deploy_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()
@@ -313,12 +313,12 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                                   'test_image_id_alt'), None, None)
 
     def test_upd_missing_flavor_id(self):
-        setattr(CONST, 'tempest_use_custom_flavors', 'True')
+        setattr(config.CONF, 'tempest_use_custom_flavors', 'True')
         self._test_missing_param(('compute', 'flavor_ref', 'test_flavor_id'),
                                  None, 'test_flavor_id')
 
     def test_upd_missing_flavor_id_alt(self):
-        setattr(CONST, 'tempest_use_custom_flavors', 'True')
+        setattr(config.CONF, 'tempest_use_custom_flavors', 'True')
         conf_utils.FLAVOR_ID_ALT = 'test_flavor_id_alt'
         self._test_missing_param(('compute', 'flavor_ref_alt',
                                   'test_flavor_id_alt'), None, None)
@@ -327,14 +327,14 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.os.path.isfile',
                         return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ft_utils.execute_command') as mexe, \
+                mock.patch('functest.opnfv_tests.openstack.tempest.'
+                           'conf_utils.ft_utils.execute_command') as mexe, \
                 self.assertRaises(Exception) as context:
             conf_utils.configure_verifier('test_dep_dir')
             mexe.assert_any_call("rally verify configure-verifier")
             msg = ("Tempest configuration file 'test_dep_dir/tempest.conf'"
                    " NOT found.")
-            self.assertTrue(msg in context)
+            self.assertTrue(msg in context.exception)
 
     def test_configure_verifier_default(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'

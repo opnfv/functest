@@ -18,7 +18,7 @@ import pkg_resources
 import requests
 
 import functest.core.vnf as vnf
-from functest.utils.constants import CONST
+from functest.utils import config
 import functest.utils.functest_utils as ft_utils
 
 __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
@@ -33,10 +33,10 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
-        self.data_dir = getattr(CONST, 'dir_ims_data')
-        self.result_dir = os.path.join(getattr(CONST, 'dir_results'),
+        self.data_dir = getattr(config.CONF, 'dir_ims_data')
+        self.result_dir = os.path.join(getattr(config.CONF, 'dir_results'),
                                        self.case_name)
-        self.test_dir = getattr(CONST, 'dir_repo_vims_test')
+        self.test_dir = getattr(config.CONF, 'dir_repo_vims_test')
 
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)

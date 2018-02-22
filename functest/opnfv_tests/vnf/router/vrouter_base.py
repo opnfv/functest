@@ -20,7 +20,7 @@ import time
 import pkg_resources
 
 import functest.core.vnf as vnf
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.opnfv_tests.vnf.router.test_controller import function_test_exec
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 
@@ -37,8 +37,8 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
         super(VrouterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
-        self.data_dir = getattr(CONST, 'dir_router_data')
-        self.result_dir = os.path.join(getattr(CONST, 'dir_results'),
+        self.data_dir = getattr(config.CONF, 'dir_router_data')
+        self.result_dir = os.path.join(getattr(config.CONF, 'dir_results'),
                                        self.case_name)
         self.util = Utilvnf()
         self.util_info = {}

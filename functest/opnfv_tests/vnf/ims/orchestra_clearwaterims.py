@@ -20,7 +20,7 @@ import yaml
 import functest.core.vnf as vnf
 import functest.utils.openstack_utils as os_utils
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 
 from org.openbaton.cli.errors.errors import NfvoException
 from org.openbaton.cli.agents.agents import MainAgent
@@ -150,14 +150,14 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
 
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims/')
-        self.data_dir = getattr(CONST, 'dir_ims_data')
-        self.test_dir = getattr(CONST, 'dir_repo_vims_test')
+        self.data_dir = getattr(config.CONF, 'dir_ims_data')
+        self.test_dir = getattr(config.CONF, 'dir_repo_vims_test')
         self.created_resources = []
         self.logger.info("%s VNF onboarding test starting", self.case_name)
 
         try:
             self.config = getattr(
-                CONST, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, 'vnf_{}_config'.format(self.case_name))
         except BaseException:
             raise Exception("Orchestra VNF config file not found")
 

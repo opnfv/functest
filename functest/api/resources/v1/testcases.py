@@ -26,7 +26,7 @@ from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
 from functest.cli.commands.cli_testcase import Testcase
 from functest.api.database.v1.handlers import TasksHandler
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
@@ -144,14 +144,14 @@ class V1Testcase(ApiResource):
 
     def _update_logging_ini(self, task_id):  # pylint: disable=no-self-use
         """ Update the log file for each task"""
-        config = ConfigParser.RawConfigParser()
-        config.read(
+        rconfig = ConfigParser.RawConfigParser()
+        rconfig.read(
             pkg_resources.resource_filename('functest', 'ci/logging.ini'))
-        log_path = os.path.join(getattr(CONST, 'dir_results'),
+        log_path = os.path.join(getattr(config.CONF, 'dir_results'),
                                 '{}.log'.format(task_id))
-        config.set('handler_file', 'args', '("{}",)'.format(log_path))
+        rconfig.set('handler_file', 'args', '("{}",)'.format(log_path))
 
         with open(
             pkg_resources.resource_filename(
                 'functest', 'ci/logging.ini'), 'wb') as configfile:
-            config.write(configfile)
+            rconfig.write(configfile)

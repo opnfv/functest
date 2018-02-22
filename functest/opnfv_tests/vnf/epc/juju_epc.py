@@ -22,7 +22,7 @@ import yaml
 
 from functest.core import vnf
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -89,7 +89,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             'functest', 'opnfv_tests/vnf/epc')
         try:
             self.config = getattr(
-                CONST, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
         self.config_file = os.path.join(self.case_dir, self.config)
@@ -123,7 +123,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.public_auth_url = None
 
         self.res_dir = os.path.join(
-            getattr(CONST, 'dir_results'), self.case_name)
+            getattr(config.CONF, 'dir_results'), self.case_name)
 
     def _bypass_juju_network_discovery_bug(self, name):
         user_creator = OpenStackUser(
@@ -228,13 +228,13 @@ class JujuEpc(vnf.VnfOnBoarding):
         """
         self.__logger.info("Deployed Orchestrator")
         private_net_name = getattr(
-            CONST, 'vnf_{}_private_net_name'.format(self.case_name))
+            config.CONF, 'vnf_{}_private_net_name'.format(self.case_name))
         private_subnet_name = getattr(
-            CONST, 'vnf_{}_private_subnet_name'.format(self.case_name))
+            config.CONF, 'vnf_{}_private_subnet_name'.format(self.case_name))
         private_subnet_cidr = getattr(
-            CONST, 'vnf_{}_private_subnet_cidr'.format(self.case_name))
+            config.CONF, 'vnf_{}_private_subnet_cidr'.format(self.case_name))
         abot_router = getattr(
-            CONST, 'vnf_{}_external_router'.format(self.case_name))
+            config.CONF, 'vnf_{}_external_router'.format(self.case_name))
 
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(

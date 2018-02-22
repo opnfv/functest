@@ -21,7 +21,7 @@ import yaml
 from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
-from functest.utils.constants import CONST
+from functest.utils import config
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -59,7 +59,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         # Retrieve the configuration
         try:
             self.config = getattr(
-                CONST, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
 

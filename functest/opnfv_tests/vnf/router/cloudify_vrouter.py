@@ -23,7 +23,7 @@ from scp import SCPClient
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.router.vrouter_base as vrouter_base
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import functest_utils
 
 from git import Repo
@@ -69,7 +69,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         # Retrieve the configuration
         try:
             self.config = getattr(
-                CONST, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
 

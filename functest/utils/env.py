@@ -11,8 +11,6 @@
 
 import os
 
-import six
-
 INPUTS = {
     'EXTERNAL_NETWORK': None,
     'CI_LOOP': 'daily',
@@ -33,14 +31,3 @@ def get(env_var):
     if env_var not in INPUTS.keys():
         return os.environ.get(env_var, None)
     return os.environ.get(env_var, INPUTS[env_var])
-
-
-class Environment(object):  # pylint: disable=too-few-public-methods
-
-    # Backward compatibility (waiting for SDNVPN and SFC)
-    def __init__(self):
-        for key, _ in six.iteritems(INPUTS):
-            setattr(self, key, get(key))
-
-# Backward compatibility (waiting for SDNVPN and SFC)
-ENV = Environment()

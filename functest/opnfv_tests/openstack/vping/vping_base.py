@@ -17,7 +17,7 @@ import uuid
 
 from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 
 from snaps.config.flavor import FlavorConfig
@@ -52,20 +52,24 @@ class VPingBase(testcase.TestCase):
         # Shared metadata
         self.guid = '-' + str(uuid.uuid4())
 
-        self.router_name = getattr(CONST, 'vping_router_name') + self.guid
-        self.vm1_name = getattr(CONST, 'vping_vm_name_1') + self.guid
-        self.vm2_name = getattr(CONST, 'vping_vm_name_2') + self.guid
+        self.router_name = getattr(
+            config.CONF, 'vping_router_name') + self.guid
+        self.vm1_name = getattr(
+            config.CONF, 'vping_vm_name_1') + self.guid
+        self.vm2_name = getattr(config.CONF, 'vping_vm_name_2') + self.guid
 
-        self.vm_boot_timeout = getattr(CONST, 'vping_vm_boot_timeout')
-        self.vm_delete_timeout = getattr(CONST, 'vping_vm_delete_timeout')
+        self.vm_boot_timeout = getattr(config.CONF, 'vping_vm_boot_timeout')
+        self.vm_delete_timeout = getattr(
+            config.CONF, 'vping_vm_delete_timeout')
         self.vm_ssh_connect_timeout = getattr(
-            CONST, 'vping_vm_ssh_connect_timeout')
-        self.ping_timeout = getattr(CONST, 'vping_ping_timeout')
+            config.CONF, 'vping_vm_ssh_connect_timeout')
+        self.ping_timeout = getattr(config.CONF, 'vping_ping_timeout')
         self.flavor_name = 'vping-flavor' + self.guid
 
         # Move this configuration option up for all tests to leverage
-        if hasattr(CONST, 'snaps_images_cirros'):
-            self.cirros_image_config = getattr(CONST, 'snaps_images_cirros')
+        if hasattr(config.CONF, 'snaps_images_cirros'):
+            self.cirros_image_config = getattr(
+                config.CONF, 'snaps_images_cirros')
         else:
             self.cirros_image_config = None
 
@@ -82,7 +86,7 @@ class VPingBase(testcase.TestCase):
                 '%Y-%m-%d %H:%M:%S'))
 
         image_base_name = '{}-{}'.format(
-            getattr(CONST, 'vping_image_name'),
+            getattr(config.CONF, 'vping_image_name'),
             str(self.guid))
         os_image_settings = openstack_tests.cirros_image_settings(
             image_base_name, image_metadata=self.cirros_image_config)
@@ -92,21 +96,24 @@ class VPingBase(testcase.TestCase):
             self.os_creds, os_image_settings)
         self.creators.append(self.image_creator)
 
-        private_net_name = getattr(CONST, 'vping_private_net_name') + self.guid
+        private_net_name = getattr(
+            config.CONF, 'vping_private_net_name') + self.guid
         private_subnet_name = getattr(
-            CONST, 'vping_private_subnet_name') + self.guid
-        private_subnet_cidr = getattr(CONST, 'vping_private_subnet_cidr')
+            config.CONF, 'vping_private_subnet_name') + self.guid
+        private_subnet_cidr = getattr(config.CONF, 'vping_private_subnet_cidr')
 
         vping_network_type = None
         vping_physical_network = None
         vping_segmentation_id = None
 
-        if hasattr(CONST, 'vping_network_type'):
-            vping_network_type = getattr(CONST, 'vping_network_type')
-        if hasattr(CONST, 'vping_physical_network'):
-            vping_physical_network = getattr(CONST, 'vping_physical_network')
-        if hasattr(CONST, 'vping_segmentation_id'):
-            vping_segmentation_id = getattr(CONST, 'vping_segmentation_id')
+        if hasattr(config.CONF, 'vping_network_type'):
+            vping_network_type = getattr(config.CONF, 'vping_network_type')
+        if hasattr(config.CONF, 'vping_physical_network'):
+            vping_physical_network = getattr(
+                config.CONF, 'vping_physical_network')
+        if hasattr(config.CONF, 'vping_segmentation_id'):
+            vping_segmentation_id = getattr(
+                config.CONF, 'vping_segmentation_id')
 
         self.logger.info(
             "Creating network with name: '%s'", private_net_name)
@@ -179,7 +186,7 @@ class VPingBase(testcase.TestCase):
         Cleanup all OpenStack objects. Should be called on completion
         :return:
         """
-        if getattr(CONST, 'vping_cleanup_objects') == 'True':
+        if getattr(config.CONF, 'vping_cleanup_objects') == 'True':
             for creator in reversed(self.creators):
                 try:
                     creator.clean()

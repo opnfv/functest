@@ -17,7 +17,7 @@ import pkg_resources
 from functest.core.testcase import TestCase
 from functest.energy import energy
 from functest.opnfv_tests.openstack.vping import vping_base
-from functest.utils.constants import CONST
+from functest.utils import config
 
 from snaps.config.keypair import KeypairConfig
 from snaps.config.network import PortConfig
@@ -42,11 +42,11 @@ class VPingSSH(vping_base.VPingBase):
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
 
-        self.kp_name = getattr(CONST, 'vping_keypair_name') + self.guid
-        self.kp_priv_file = getattr(CONST, 'vping_keypair_priv_file')
-        self.kp_pub_file = getattr(CONST, 'vping_keypair_pub_file')
-        self.sg_name = getattr(CONST, 'vping_sg_name') + self.guid
-        self.sg_desc = getattr(CONST, 'vping_sg_desc')
+        self.kp_name = getattr(config.CONF, 'vping_keypair_name') + self.guid
+        self.kp_priv_file = getattr(config.CONF, 'vping_keypair_priv_file')
+        self.kp_pub_file = getattr(config.CONF, 'vping_keypair_pub_file')
+        self.sg_name = getattr(config.CONF, 'vping_sg_name') + self.guid
+        self.sg_desc = getattr(config.CONF, 'vping_sg_desc')
 
     @energy.enable_recording
     def run(self, **kwargs):

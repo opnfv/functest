@@ -20,7 +20,7 @@ import subprocess
 import pkg_resources
 import yaml
 
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
@@ -31,9 +31,10 @@ RALLY_CONF_PATH = "/etc/rally/rally.conf"
 RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
     'functest', 'ci/rally_aarch64_patch.conf')
 GLANCE_IMAGE_PATH = os.path.join(
-    getattr(CONST, 'dir_functest_images'),
-    getattr(CONST, 'openstack_image_file_name'))
-TEMPEST_RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'tempest')
+    getattr(config.CONF, 'dir_functest_images'),
+    getattr(config.CONF, 'openstack_image_file_name'))
+TEMPEST_RESULTS_DIR = os.path.join(
+    getattr(config.CONF, 'dir_results'), 'tempest')
 TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
@@ -43,7 +44,8 @@ TEMPEST_DEFCORE = pkg_resources.resource_filename(
     'opnfv_tests/openstack/tempest/custom_tests/defcore_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
-REFSTACK_RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'refstack')
+REFSTACK_RESULTS_DIR = os.path.join(
+    getattr(config.CONF, 'dir_results'), 'refstack')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
@@ -77,11 +79,10 @@ def create_rally_deployment():
     cmd = "rally deployment destroy opnfv-rally"
     ft_utils.execute_command(cmd, error_msg=(
         "Deployment %s does not exist."
-        % getattr(CONST, 'rally_deployment_name')),
-                             verbose=False)
+        % getattr(config.CONF, 'rally_deployment_name')), verbose=False)
 
     cmd = ("rally deployment create --fromenv --name={0}"
-           .format(getattr(CONST, 'rally_deployment_name')))
+           .format(getattr(config.CONF, 'rally_deployment_name')))
     error_msg = "Problem while creating Rally deployment"
     ft_utils.execute_command_raise(cmd, error_msg=error_msg)
 
@@ -94,15 +95,15 @@ def create_verifier():
     """Create new verifier"""
     LOGGER.info("Create verifier from existing repo...")
     cmd = ("rally verify delete-verifier --id '{0}' --force").format(
-        getattr(CONST, 'tempest_verifier_name'))
+        getattr(config.CONF, 'tempest_verifier_name'))
     ft_utils.execute_command(cmd, error_msg=(
         "Verifier %s does not exist."
-        % getattr(CONST, 'tempest_verifier_name')),
+        % getattr(config.CONF, 'tempest_verifier_name')),
                              verbose=False)
     cmd = ("rally verify create-verifier --source {0} "
            "--name {1} --type tempest --system-wide"
-           .format(getattr(CONST, 'dir_repo_tempest'),
-                   getattr(CONST, 'tempest_verifier_name')))
+           .format(getattr(config.CONF, 'dir_repo_tempest'),
+                   getattr(config.CONF, 'tempest_verifier_name')))
     ft_utils.execute_command_raise(cmd,
                                    error_msg='Problem while creating verifier')
 
@@ -114,7 +115,7 @@ def get_verifier_id():
     create_rally_deployment()
     create_verifier()
     cmd = ("rally verify list-verifiers | awk '/" +
-           getattr(CONST, 'tempest_verifier_name') +
+           getattr(config.CONF, 'tempest_verifier_name') +
            "/ {print $2}'")
     proc = subprocess.Popen(cmd, shell=True,
                             stdout=subprocess.PIPE,
@@ -131,7 +132,7 @@ def get_verifier_deployment_id():
     Returns deployment id for active Rally deployment
     """
     cmd = ("rally deployment list | awk '/" +
-           getattr(CONST, 'rally_deployment_name') +
+           getattr(config.CONF, 'rally_deployment_name') +
            "/ {print $2}'")
     proc = subprocess.Popen(cmd, shell=True,
                             stdout=subprocess.PIPE,
@@ -150,7 +151,7 @@ def get_verifier_repo_dir(verifier_id):
     if not verifier_id:
         verifier_id = get_verifier_id()
 
-    return os.path.join(getattr(CONST, 'dir_rally_inst'),
+    return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'repo')
@@ -166,7 +167,7 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
     if not deployment_id:
         deployment_id = get_verifier_deployment_id()
 
-    return os.path.join(getattr(CONST, 'dir_rally_inst'),
+    return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
                         'for-deployment-{}'.format(deployment_id))
@@ -205,22 +206,22 @@ def configure_tempest_defcore(deployment_dir, network_name, image_id,
                                     flavor_id)
 
     LOGGER.debug("Updating selected tempest.conf parameters for defcore...")
-    config = ConfigParser.RawConfigParser()
-    config.read(conf_file)
-    config.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
-    config.set('oslo_concurrency', 'lock_path',
-               '{}/lock_files'.format(deployment_dir))
+    rconfig = ConfigParser.RawConfigParser()
+    rconfig.read(conf_file)
+    rconfig.set('DEFAULT', 'log_file', '{}/tempest.log'.format(deployment_dir))
+    rconfig.set('oslo_concurrency', 'lock_path',
+                '{}/lock_files'.format(deployment_dir))
     generate_test_accounts_file(tenant_id=tenant_id)
-    config.set('auth', 'test_accounts_file', TEST_ACCOUNTS_FILE)
-    config.set('scenario', 'img_dir', '{}'.format(deployment_dir))
-    config.set('scenario', 'img_file', 'tempest-image')
-    config.set('compute', 'image_ref', image_id)
-    config.set('compute', 'image_ref_alt', image_id_alt)
-    config.set('compute', 'flavor_ref', flavor_id)
-    config.set('compute', 'flavor_ref_alt', flavor_id_alt)
+    rconfig.set('auth', 'test_accounts_file', TEST_ACCOUNTS_FILE)
+    rconfig.set('scenario', 'img_dir', '{}'.format(deployment_dir))
+    rconfig.set('scenario', 'img_file', 'tempest-image')
+    rconfig.set('compute', 'image_ref', image_id)
+    rconfig.set('compute', 'image_ref_alt', image_id_alt)
+    rconfig.set('compute', 'flavor_ref', flavor_id)
+    rconfig.set('compute', 'flavor_ref_alt', flavor_id_alt)
 
     with open(conf_file, 'wb') as config_file:
-        config.write(config_file)
+        rconfig.write(config_file)
 
     confpath = pkg_resources.resource_filename(
         'functest',
@@ -236,10 +237,11 @@ def generate_test_accounts_file(tenant_id):
     LOGGER.debug("Add needed params into test_accounts.yaml...")
     accounts_list = [
         {
-            'tenant_name': getattr(CONST, 'tempest_identity_tenant_name'),
+            'tenant_name': getattr(
+                config.CONF, 'tempest_identity_tenant_name'),
             'tenant_id': str(tenant_id),
-            'username': getattr(CONST, 'tempest_identity_user_name'),
-            'password': getattr(CONST, 'tempest_identity_user_password')
+            'username': getattr(config.CONF, 'tempest_identity_user_name'),
+            'password': getattr(config.CONF, 'tempest_identity_user_password')
         }
     ]
 
@@ -247,21 +249,21 @@ def generate_test_accounts_file(tenant_id):
         yaml.dump(accounts_list, tfile, default_flow_style=False)
 
 
-def update_tempest_conf_file(conf_file, config):
+def update_tempest_conf_file(conf_file, rconfig):
     """Update defined paramters into tempest config file"""
     with open(TEMPEST_CONF_YAML) as yfile:
         conf_yaml = yaml.safe_load(yfile)
     if conf_yaml:
-        sections = config.sections()
+        sections = rconfig.sections()
         for section in conf_yaml:
             if section not in sections:
-                config.add_section(section)
+                rconfig.add_section(section)
             sub_conf = conf_yaml.get(section)
             for key, value in sub_conf.items():
-                config.set(section, key, value)
+                rconfig.set(section, key, value)
 
     with open(conf_file, 'wb') as config_file:
-        config.write(config_file)
+        rconfig.write(config_file)
 
 
 def configure_tempest_update_params(tempest_conf_file, network_name=None,
@@ -271,47 +273,47 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     Add/update needed parameters into tempest.conf file
     """
     LOGGER.debug("Updating selected tempest.conf parameters...")
-    config = ConfigParser.RawConfigParser()
-    config.read(tempest_conf_file)
-    config.set('compute', 'fixed_network_name', network_name)
-    config.set('compute', 'volume_device_name',
-               getattr(CONST, 'tempest_volume_device_name'))
+    rconfig = ConfigParser.RawConfigParser()
+    rconfig.read(tempest_conf_file)
+    rconfig.set('compute', 'fixed_network_name', network_name)
+    rconfig.set('compute', 'volume_device_name',
+                getattr(config.CONF, 'tempest_volume_device_name'))
 
     if image_id is not None:
-        config.set('compute', 'image_ref', image_id)
+        rconfig.set('compute', 'image_ref', image_id)
     if IMAGE_ID_ALT is not None:
-        config.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if getattr(CONST, 'tempest_use_custom_flavors'):
+        rconfig.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
+    if getattr(config.CONF, 'tempest_use_custom_flavors'):
         if flavor_id is not None:
-            config.set('compute', 'flavor_ref', flavor_id)
+            rconfig.set('compute', 'flavor_ref', flavor_id)
         if FLAVOR_ID_ALT is not None:
-            config.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
+            rconfig.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
     if compute_cnt > 1:
         # enable multinode tests
-        config.set('compute', 'min_compute_nodes', compute_cnt)
-        config.set('compute-feature-enabled', 'live_migration', True)
+        rconfig.set('compute', 'min_compute_nodes', compute_cnt)
+        rconfig.set('compute-feature-enabled', 'live_migration', True)
 
-    config.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
+    rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
     identity_api_version = os.environ.get(
         "OS_IDENTITY_API_VERSION", os.environ.get("IDENTITY_API_VERSION"))
     if identity_api_version == '3':
         auth_version = 'v3'
-        config.set('identity-feature-enabled', 'api_v2', False)
+        rconfig.set('identity-feature-enabled', 'api_v2', False)
     else:
         auth_version = 'v2'
-    config.set('identity', 'auth_version', auth_version)
-    config.set(
+    rconfig.set('identity', 'auth_version', auth_version)
+    rconfig.set(
         'validation', 'ssh_timeout',
-        getattr(CONST, 'tempest_validation_ssh_timeout'))
-    config.set('object-storage', 'operator_role',
-               getattr(CONST, 'tempest_object_storage_operator_role'))
+        getattr(config.CONF, 'tempest_validation_ssh_timeout'))
+    rconfig.set('object-storage', 'operator_role',
+                getattr(config.CONF, 'tempest_object_storage_operator_role'))
 
     if os.environ.get('OS_ENDPOINT_TYPE') is not None:
-        config.set('identity', 'v3_endpoint_type',
-                   os.environ.get('OS_ENDPOINT_TYPE'))
+        rconfig.set('identity', 'v3_endpoint_type',
+                    os.environ.get('OS_ENDPOINT_TYPE'))
 
     if os.environ.get('OS_ENDPOINT_TYPE') is not None:
-        sections = config.sections()
+        sections = rconfig.sections()
         services_list = ['compute',
                          'volume',
                          'image',
@@ -321,9 +323,9 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
                          'orchestration']
         for service in services_list:
             if service not in sections:
-                config.add_section(service)
-            config.set(service, 'endpoint_type',
-                       os.environ.get('OS_ENDPOINT_TYPE'))
+                rconfig.add_section(service)
+            rconfig.set(service, 'endpoint_type',
+                        os.environ.get('OS_ENDPOINT_TYPE'))
 
     LOGGER.debug('Add/Update required params defined in tempest_conf.yaml '
                  'into tempest.conf file')

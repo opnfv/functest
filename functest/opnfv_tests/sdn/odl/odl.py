@@ -30,7 +30,7 @@ from snaps.openstack.utils import keystone_utils
 
 from functest.core import robotframework
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils import constants
+from functest.utils import config
 from functest.utils import env
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
@@ -39,7 +39,7 @@ __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 class ODLTests(robotframework.RobotFramework):
     """ODL test runner."""
 
-    odl_test_repo = getattr(constants.CONST, 'dir_repo_odl_test')
+    odl_test_repo = getattr(config.CONF, 'dir_repo_odl_test')
     neutron_suite_dir = os.path.join(
         odl_test_repo, "csit/suites/openstack/neutron")
     basic_suite_dir = os.path.join(
@@ -52,7 +52,7 @@ class ODLTests(robotframework.RobotFramework):
     def __init__(self, **kwargs):
         super(ODLTests, self).__init__(**kwargs)
         self.res_dir = os.path.join(
-            getattr(constants.CONST, 'dir_results'), 'odl')
+            getattr(config.CONF, 'dir_results'), 'odl')
         self.xml_file = os.path.join(self.res_dir, 'output.xml')
 
     @classmethod
