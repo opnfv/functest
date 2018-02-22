@@ -25,7 +25,7 @@ import yaml
 from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 import functest.utils.functest_utils as ft_utils
 
@@ -330,16 +330,17 @@ class TempestResourcesManager(object):
         self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
         self.guid = '-' + str(uuid.uuid4())
         self.creators = list()
-        self.cirros_image_config = getattr(CONST, 'snaps_images_cirros', None)
+        self.cirros_image_config = getattr(
+            config.CONF, 'snaps_images_cirros', None)
 
     def _create_project(self):
         """Create project for tests."""
         project_creator = deploy_utils.create_project(
             self.os_creds, ProjectConfig(
                 name=getattr(
-                    CONST, 'tempest_identity_tenant_name') + self.guid,
+                    config.CONF, 'tempest_identity_tenant_name') + self.guid,
                 description=getattr(
-                    CONST, 'tempest_identity_tenant_description')))
+                    config.CONF, 'tempest_identity_tenant_description')))
         if project_creator is None or project_creator.get_project() is None:
             raise Exception("Failed to create tenant")
         self.creators.append(project_creator)
@@ -350,11 +351,11 @@ class TempestResourcesManager(object):
         user_creator = deploy_utils.create_user(
             self.os_creds, UserConfig(
                 name=getattr(
-                    CONST, 'tempest_identity_user_name') + self.guid,
+                    config.CONF, 'tempest_identity_user_name') + self.guid,
                 password=getattr(
-                    CONST, 'tempest_identity_user_password'),
+                    config.CONF, 'tempest_identity_user_password'),
                 project_name=getattr(
-                    CONST, 'tempest_identity_tenant_name') + self.guid))
+                    config.CONF, 'tempest_identity_tenant_name') + self.guid))
         if user_creator is None or user_creator.get_user() is None:
             raise Exception("Failed to create user")
         self.creators.append(user_creator)
@@ -367,13 +368,13 @@ class TempestResourcesManager(object):
         tempest_segmentation_id = None
 
         tempest_network_type = getattr(
-            CONST, 'tempest_network_type', None)
+            config.CONF, 'tempest_network_type', None)
         tempest_physical_network = getattr(
-            CONST, 'tempest_physical_network', None)
+            config.CONF, 'tempest_physical_network', None)
         tempest_segmentation_id = getattr(
-            CONST, 'tempest_segmentation_id', None)
+            config.CONF, 'tempest_segmentation_id', None)
         tempest_net_name = getattr(
-            CONST, 'tempest_private_net_name') + self.guid
+            config.CONF, 'tempest_private_net_name') + self.guid
 
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(
@@ -384,10 +385,11 @@ class TempestResourcesManager(object):
                 segmentation_id=tempest_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=getattr(
-                        CONST, 'tempest_private_subnet_name') + self.guid,
+                        config.CONF,
+                        'tempest_private_subnet_name') + self.guid,
                     project_name=project_name,
                     cidr=getattr(
-                        CONST, 'tempest_private_subnet_cidr'))]))
+                        config.CONF, 'tempest_private_subnet_cidr'))]))
         if network_creator is None or network_creator.get_network() is None:
             raise Exception("Failed to create private network")
         self.creators.append(network_creator)
@@ -414,9 +416,9 @@ class TempestResourcesManager(object):
         flavor_creator = OpenStackFlavor(
             self.os_creds, FlavorConfig(
                 name=name,
-                ram=getattr(CONST, 'openstack_flavor_ram'),
-                disk=getattr(CONST, 'openstack_flavor_disk'),
-                vcpus=getattr(CONST, 'openstack_flavor_vcpus'),
+                ram=getattr(config.CONF, 'openstack_flavor_ram'),
+                disk=getattr(config.CONF, 'openstack_flavor_disk'),
+                vcpus=getattr(config.CONF, 'openstack_flavor_vcpus'),
                 metadata=flavor_metadata))
         flavor = flavor_creator.create()
         if flavor is None:
@@ -439,7 +441,7 @@ class TempestResourcesManager(object):
         if create_project:
             LOGGER.debug("Creating project and user for Tempest suite")
             project_name = getattr(
-                CONST, 'tempest_identity_tenant_name') + self.guid
+                config.CONF, 'tempest_identity_tenant_name') + self.guid
             result['project_id'] = self._create_project()
             result['user_id'] = self._create_user()
             result['tenant_id'] = result['project_id']  # for compatibility
@@ -448,26 +450,28 @@ class TempestResourcesManager(object):
         result['tempest_net_name'] = self._create_network(project_name)
 
         LOGGER.debug("Creating image for Tempest suite")
-        image_name = getattr(CONST, 'openstack_image_name') + self.guid
+        image_name = getattr(config.CONF, 'openstack_image_name') + self.guid
         result['image_id'] = self._create_image(image_name)
 
         if use_custom_images:
             LOGGER.debug("Creating 2nd image for Tempest suite")
-            image_name = getattr(CONST, 'openstack_image_name_alt') + self.guid
+            image_name = getattr(
+                config.CONF, 'openstack_image_name_alt') + self.guid
             result['image_id_alt'] = self._create_image(image_name)
 
-        if (getattr(CONST, 'tempest_use_custom_flavors') == 'True' or
+        if (getattr(config.CONF, 'tempest_use_custom_flavors') == 'True' or
                 use_custom_flavors):
             LOGGER.info("Creating flavor for Tempest suite")
-            name = getattr(CONST, 'openstack_flavor_name') + self.guid
+            name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
             result['flavor_id'] = self._create_flavor(name)
 
         if use_custom_flavors:
             LOGGER.info("Creating 2nd flavor for Tempest suite")
             scenario = env.get('DEPLOY_SCENARIO')
             if 'ovs' in scenario or 'fdio' in scenario:
-                setattr(CONST, 'openstack_flavor_ram', 1024)
-            name = getattr(CONST, 'openstack_flavor_name_alt') + self.guid
+                setattr(config.CONF, 'openstack_flavor_ram', 1024)
+            name = getattr(
+                config.CONF, 'openstack_flavor_name_alt') + self.guid
             result['flavor_id_alt'] = self._create_flavor(name)
 
         return result

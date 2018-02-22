@@ -9,6 +9,7 @@
 
 """Some common utils wrapping snaps functions """
 
+from functest.utils import config
 from functest.utils import constants
 from functest.utils import env
 
@@ -52,8 +53,8 @@ def get_credentials(proxy_settings_str=None, ssh_proxy_cmd=None):
     :return: an instance of snaps OSCreds object
     """
     creds_override = None
-    if hasattr(constants.CONST, 'snaps_os_creds_override'):
-        creds_override = getattr(constants.CONST, 'snaps_os_creds_override')
+    if hasattr(config.CONF, 'snaps_os_creds_override'):
+        creds_override = getattr(config.CONF, 'snaps_os_creds_override')
     os_creds = openstack_tests.get_credentials(
         os_env_file=constants.ENV_FILE, proxy_settings_str=proxy_settings_str,
         ssh_proxy_cmd=ssh_proxy_cmd, overrides=creds_override)

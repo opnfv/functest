@@ -14,7 +14,7 @@ import logging
 
 from functest.core import unit
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 
 from snaps.openstack import create_flavor
@@ -37,13 +37,14 @@ class SnapsTestRunner(unit.Suite):
             self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
 
         self.netconf_override = None
-        if hasattr(CONST, 'snaps_network_config'):
-            self.netconf_override = getattr(CONST, 'snaps_network_config')
+        if hasattr(config.CONF, 'snaps_network_config'):
+            self.netconf_override = getattr(
+                config.CONF, 'snaps_network_config')
 
         self.use_fip = (
-            getattr(CONST, 'snaps_use_floating_ips') == 'True')
+            getattr(config.CONF, 'snaps_use_floating_ips') == 'True')
         self.use_keystone = (
-            getattr(CONST, 'snaps_use_keystone') == 'True')
+            getattr(config.CONF, 'snaps_use_keystone') == 'True')
         scenario = env.get('DEPLOY_SCENARIO')
 
         self.flavor_metadata = None
@@ -53,5 +54,5 @@ class SnapsTestRunner(unit.Suite):
         self.logger.info("Using flavor metadata '%s'", self.flavor_metadata)
 
         self.image_metadata = None
-        if hasattr(CONST, 'snaps_images'):
-            self.image_metadata = getattr(CONST, 'snaps_images')
+        if hasattr(config.CONF, 'snaps_images'):
+            self.image_metadata = getattr(config.CONF, 'snaps_images')

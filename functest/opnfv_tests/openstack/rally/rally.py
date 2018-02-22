@@ -28,7 +28,7 @@ from functest.core import testcase
 from functest.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils.constants import CONST
+from functest.utils import config
 from functest.utils import env
 
 from snaps.config.flavor import FlavorConfig
@@ -48,19 +48,19 @@ class RallyBase(testcase.TestCase):
     # pylint: disable=too-many-instance-attributes
     TESTS = ['authenticate', 'glance', 'ceilometer', 'cinder', 'heat',
              'keystone', 'neutron', 'nova', 'quotas', 'vm', 'all']
-    GLANCE_IMAGE_NAME = getattr(CONST, 'openstack_image_name')
-    GLANCE_IMAGE_FILENAME = getattr(CONST, 'openstack_image_file_name')
-    GLANCE_IMAGE_PATH = os.path.join(getattr(CONST, 'dir_functest_images'),
-                                     GLANCE_IMAGE_FILENAME)
-    GLANCE_IMAGE_FORMAT = getattr(CONST, 'openstack_image_disk_format')
-    GLANCE_IMAGE_USERNAME = getattr(CONST, 'openstack_image_username')
-    GLANCE_IMAGE_EXTRA_PROPERTIES = getattr(CONST,
-                                            'openstack_extra_properties', {})
-    FLAVOR_NAME = getattr(CONST, 'rally_flavor_name')
-    FLAVOR_ALT_NAME = getattr(CONST, 'rally_flavor_alt_name')
+    GLANCE_IMAGE_NAME = getattr(config.CONF, 'openstack_image_name')
+    GLANCE_IMAGE_FILENAME = getattr(config.CONF, 'openstack_image_file_name')
+    GLANCE_IMAGE_PATH = os.path.join(getattr(
+        config.CONF, 'dir_functest_images'), GLANCE_IMAGE_FILENAME)
+    GLANCE_IMAGE_FORMAT = getattr(config.CONF, 'openstack_image_disk_format')
+    GLANCE_IMAGE_USERNAME = getattr(config.CONF, 'openstack_image_username')
+    GLANCE_IMAGE_EXTRA_PROPERTIES = getattr(
+        config.CONF, 'openstack_extra_properties', {})
+    FLAVOR_NAME = getattr(config.CONF, 'rally_flavor_name')
+    FLAVOR_ALT_NAME = getattr(config.CONF, 'rally_flavor_alt_name')
     FLAVOR_RAM = 512
     FLAVOR_RAM_ALT = 1024
-    FLAVOR_EXTRA_SPECS = getattr(CONST, 'flavor_extra_specs', None)
+    FLAVOR_EXTRA_SPECS = getattr(config.CONF, 'flavor_extra_specs', None)
     if FLAVOR_EXTRA_SPECS:
         FLAVOR_RAM = 1024
         FLAVOR_RAM_ALT = 2048
@@ -77,14 +77,14 @@ class RallyBase(testcase.TestCase):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
-    RESULTS_DIR = os.path.join(getattr(CONST, 'dir_results'), 'rally')
+    RESULTS_DIR = os.path.join(getattr(config.CONF, 'dir_results'), 'rally')
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
-    RALLY_PRIVATE_NET_NAME = getattr(CONST, 'rally_network_name')
-    RALLY_PRIVATE_SUBNET_NAME = getattr(CONST, 'rally_subnet_name')
-    RALLY_PRIVATE_SUBNET_CIDR = getattr(CONST, 'rally_subnet_cidr')
-    RALLY_ROUTER_NAME = getattr(CONST, 'rally_router_name')
+    RALLY_PRIVATE_NET_NAME = getattr(config.CONF, 'rally_network_name')
+    RALLY_PRIVATE_SUBNET_NAME = getattr(config.CONF, 'rally_subnet_name')
+    RALLY_PRIVATE_SUBNET_CIDR = getattr(config.CONF, 'rally_subnet_cidr')
+    RALLY_ROUTER_NAME = getattr(config.CONF, 'rally_router_name')
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -451,9 +451,11 @@ class RallyBase(testcase.TestCase):
 
         LOGGER.debug("Creating network '%s'...", network_name)
 
-        rally_network_type = getattr(CONST, 'rally_network_type', None)
-        rally_physical_network = getattr(CONST, 'rally_physical_network', None)
-        rally_segmentation_id = getattr(CONST, 'rally_segmentation_id', None)
+        rally_network_type = getattr(config.CONF, 'rally_network_type', None)
+        rally_physical_network = getattr(
+            config.CONF, 'rally_physical_network', None)
+        rally_segmentation_id = getattr(
+            config.CONF, 'rally_segmentation_id', None)
 
         network_creator = deploy_utils.create_network(
             self.os_creds, NetworkConfig(

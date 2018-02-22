@@ -18,7 +18,7 @@ import pkg_resources
 import requests
 import yaml
 
-from functest.utils.constants import CONST
+from functest.utils import config
 from git import Repo
 from requests.auth import HTTPBasicAuth
 from snaps.openstack.utils import nova_utils
@@ -55,7 +55,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
     def __init__(self):
         self.snaps_creds = ""
-        self.vnf_data_dir = getattr(CONST, 'dir_router_data')
+        self.vnf_data_dir = getattr(config.CONF, 'dir_router_data')
         self.opnfv_vnf_data_dir = "opnfv-vnf-data/"
         self.command_template_dir = "command_template/"
         self.test_scenario_yaml = "test_scenario.yaml"
@@ -76,7 +76,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
             'functest', 'opnfv_tests/vnf/router')
 
         config_file_name = getattr(
-            CONST, 'vnf_{}_config'.format("vyos_vrouter"))
+            config.CONF, 'vnf_{}_config'.format("vyos_vrouter"))
 
         config_file = os.path.join(case_dir, config_file_name)
 

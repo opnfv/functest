@@ -15,16 +15,16 @@ import errno
 import json
 import logging
 import os
-import pkg_resources
 import uuid
 
 from flask import jsonify
 from flasgger.utils import swag_from
+import pkg_resources
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
 from functest.api.database.v1.handlers import TasksHandler
-from functest.utils.constants import CONST
+from functest.utils import config
 
 
 LOGGER = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ class V1TaskLog(ApiResource):
         except ValueError:
             return api_utils.result_handler(status=1, data='No such task id')
 
-        task_log_dir = getattr(CONST, 'dir_results')
+        task_log_dir = getattr(config.CONF, 'dir_results')
         # pylint: disable=maybe-no-member
         index = int(self._get_args().get('index', 0))
 

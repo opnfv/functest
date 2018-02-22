@@ -25,7 +25,7 @@ from functest.opnfv_tests.vnf.ims import cloudify_ims
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxChassisUtils
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxLoadUtils
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
-from functest.utils.constants import CONST
+from functest.utils import config
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -58,7 +58,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         # Retrieve the configuration
         try:
             self.config = getattr(
-                CONST, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, 'vnf_{}_config'.format(self.case_name))
         except Exception:
             raise Exception("VNF config file not found")
 
