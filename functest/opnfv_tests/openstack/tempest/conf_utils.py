@@ -271,6 +271,8 @@ def configure_tempest_update_params(tempest_conf_file, res_dir,
         rconfig.set('identity', 'v3_endpoint_type',
                     os.environ.get('OS_ENDPOINT_TYPE'))
 
+    rconfig.set('network-feature-enabled', 'api_extensions', 'all')
+
     if os.environ.get('OS_ENDPOINT_TYPE') is not None:
         sections = rconfig.sections()
         services_list = [
