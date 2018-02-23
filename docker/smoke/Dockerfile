@@ -35,6 +35,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -e git+https://github.com/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
         /src/os-faults /src/rally && \
     mkdir -p /etc/rally && \
@@ -44,5 +47,5 @@ RUN apk --no-cache add --virtual .build-deps --update \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
