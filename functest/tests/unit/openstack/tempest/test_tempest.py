@@ -48,7 +48,28 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestfull_parallel = tempest.TempestFullParallel()
             self.tempestcustom = tempest.TempestCustom()
             self.tempestdefcore = tempest.TempestDefcore()
+            #Insert NEW set of testcases related to neutron trunk suite - pkaralis
+            self.tempestneutrontrunk = tempest.TempestNeutronTrunk()
 
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
+    def test_gen_tl_defcore_mode(self, mock_logger_debug):
+        # pylint: disable=unused-argument
+        self.tempestcommon.mode = 'defcore'
+        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                        'shutil.copyfile') as mock_copyfile:
+            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+            self.assertTrue(mock_copyfile.called)
+
+    #NEW Function for neutron trunk instance -pkaralis
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
+    def test_gen_tl_neutron_trunk_mode(self, mock_logger_debug):
+        self.tempestcommon.mode = 'neutron_trunk'
+        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                        'shutil.copyfile') as mock_copyfile:
+            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+            self.assertTrue(mock_copyfile.called)
+
+>>>>>>> a98b25b... [WIP] Implement trunk ports testcase
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
     def test_gen_tl_cm_missing_file(self, mock_logger_debug,
