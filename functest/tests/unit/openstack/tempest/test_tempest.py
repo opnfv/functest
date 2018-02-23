@@ -48,6 +48,7 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestfull_parallel = tempest.TempestFullParallel()
             self.tempestcustom = tempest.TempestCustom()
             self.tempestdefcore = tempest.TempestDefcore()
+            self.tempestneutrontrunk = tempest.TempestNeutronTrunk()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
@@ -78,6 +79,8 @@ class OSTempestTesting(unittest.TestCase):
             testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
         elif self.tempestcommon.mode == 'full':
             testr_mode = r"'^tempest\.'"
+        elif self.tempestcommon.mode == 'neutron_trunk':
+            testr_mode = r"'neutron\.tests\.tempest\.api\.test_trunk*'"
         else:
             testr_mode = 'tempest.api.' + self.tempestcommon.mode
         conf_utils.TEMPEST_RAW_LIST = 'raw_list'
@@ -96,6 +99,9 @@ class OSTempestTesting(unittest.TestCase):
 
     def test_gen_tl_full_mode(self):
         self._test_gen_tl_mode_default('full')
+
+    def test_gen_tl_full_mode(self):
+        self._test_gen_tl_mode_default('neutron_trunk')
 
     def test_verif_res_missing_verif_id(self):
         self.tempestcommon.verification_id = None

@@ -110,6 +110,8 @@ class TempestCommon(testcase.TestCase):
                 testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
             elif self.mode == 'full':
                 testr_mode = r"'^tempest\.'"
+            elif self.mode =='neutron_trunk':
+                testr_mode = r"'neutron\.tests\.tempest\.api\.test_trunk*'"
             else:
                 testr_mode = self.mode
             cmd = ("cd {0};"
@@ -280,6 +282,16 @@ class TempestSmokeSerial(TempestCommon):
             kwargs["case_name"] = 'tempest_smoke_serial'
         TempestCommon.__init__(self, **kwargs)
         self.mode = "smoke"
+        self.option = ["--concurrency", "1"]
+
+
+class TempestNeutronTrunk(TempestCommon):
+    """Tempest neutron trunk testcase implementation."""
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_neutron_trunk'
+        TempestCommon.__init__(self, **kwargs)
+        self.mode = "neutron_trunk"
         self.option = ["--concurrency", "1"]
 
 

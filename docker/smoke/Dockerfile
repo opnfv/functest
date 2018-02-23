@@ -43,6 +43,10 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
-    apk del .build-deps
+    apk del .build-deps && \
+    rm -rf /usr/lib/python2.7/site-packages/neutron
+    mkdir -p /home/opnfv/tempest && cd /home/opnfv/tempest && \
+    git clone https://github.com/openstack/neutron.git && cd neutron && git checkout stable/pike && \
+    python setup.py install
 COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
