@@ -52,6 +52,12 @@ RUN apk --no-cache add --update python3 sshpass \
         juju-wait && \
     go get github.com/rogpeppe/godeps && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -e git+https://github.com/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -r /src/neutron/test-requirements.txt && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
         /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     mkdir -p /etc/rally && \
