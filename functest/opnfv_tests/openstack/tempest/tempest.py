@@ -101,6 +101,10 @@ class TempestCommon(testcase.TestCase):
         if self.mode == 'defcore':
             shutil.copyfile(
                 conf_utils.TEMPEST_DEFCORE, conf_utils.TEMPEST_RAW_LIST)
+        # NEW instance for neutron case - pkaralis
+        elif self.mode == 'neutron_trunk':
+            shutil.copyfile(
+                conf_utils.TEMPEST_NEUTRON, conf_utils.TEMPEST_RAW_LIST)
         elif self.mode == 'custom':
             if os.path.isfile(conf_utils.TEMPEST_CUSTOM):
                 shutil.copyfile(
@@ -285,6 +289,15 @@ class TempestSmokeSerial(TempestCommon):
         self.mode = "smoke"
         self.option = ["--concurrency", "1"]
 
+# NEW class for neutron instance - pkaralis
+class TempestNeutronTrunk(TempestCommon):
+    """Tempest neutron trunk testcase implementation."""
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_neutron_trunk'
+        TempestCommon.__init__(self, **kwargs)
+        self.mode = "neutron_trunk"
+        self.option = ["--concurrency", "1"]
 
 class TempestSmokeParallel(TempestCommon):
     """Tempest smoke parallel testcase implementation."""
