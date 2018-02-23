@@ -39,6 +39,10 @@ TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
+# NEW test case list - pkaralis
+TEMPEST_NEUTRON = pkg_resources.resource_filename(
+    'functest',
+    'opnfv_tests/openstack/tempest/custom_tests/neutron_trunk_req.txt')
 TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
 TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
