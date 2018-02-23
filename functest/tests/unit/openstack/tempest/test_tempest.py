@@ -48,6 +48,16 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestfull_parallel = tempest.TempestFullParallel()
             self.tempestcustom = tempest.TempestCustom()
             self.tempestdefcore = tempest.TempestDefcore()
+            self.tempestneutrontrunk = tempest.TempestNeutronTrunk()
+
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
+    def test_gen_tl_neutron_trunk_mode(self, mock_logger_debug):
+        # pylint: disable=unused-argument
+        self.tempestcommon.mode = 'neutron_trunk'
+        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                        'shutil.copyfile') as mock_copyfile:
+            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+            self.assertTrue(mock_copyfile.called)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
