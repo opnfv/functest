@@ -105,6 +105,9 @@ class TempestCommon(testcase.TestCase):
             else:
                 raise Exception("Tempest test list file %s NOT found."
                                 % conf_utils.TEMPEST_CUSTOM)
+        elif self.mode == 'neutron_trunk':
+            shutil.copyfile(
+                conf_utils.TEMPEST_NEUTRON_TRUNK, conf_utils.TEMPEST_RAW_LIST)
         else:
             if self.mode == 'smoke':
                 testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
@@ -280,6 +283,16 @@ class TempestSmokeSerial(TempestCommon):
             kwargs["case_name"] = 'tempest_smoke_serial'
         TempestCommon.__init__(self, **kwargs)
         self.mode = "smoke"
+        self.option = ["--concurrency", "1"]
+
+
+class TempestNeutronTrunk(TempestCommon):
+    """Tempest neutron trunk testcase implementation."""
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'tempest_neutron_trunk'
+        TempestCommon.__init__(self, **kwargs)
+        self.mode = "neutron_trunk"
         self.option = ["--concurrency", "1"]
 
 
