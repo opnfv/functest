@@ -35,6 +35,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -e git+https://github.com/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
         /src/os-faults /src/rally && \
     mkdir -p /etc/rally && \
