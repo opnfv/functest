@@ -2,7 +2,7 @@
 
 set -e
 
-repo=${repo:-opnfv}
+repo=${REPO:-opnfv}
 amd64_dirs=${amd64_dirs-"\
 docker/core \
 docker/healthcheck \
