@@ -107,7 +107,7 @@ class EnergyRecorder(object):
             uri_comp = "/recorders/environment/"
             uri_comp += urllib.parse.quote_plus(environment)
 
-            if creds_usr != "" and creds_pass != "":
+            if creds_usr and creds_pass:
                 energy_recorder_api_auth = (creds_usr, creds_pass)
             else:
                 energy_recorder_api_auth = None

@@ -24,8 +24,8 @@ INPUTS = {
     'POD_ARCH': None,
     'TEST_DB_URL': 'http://testresults.opnfv.org/test/api/v1/results',
     'ENERGY_RECORDER_API_URL': 'http://energy.opnfv.fr/resources',
-    'ENERGY_RECORDER_API_USER': '',
-    'ENERGY_RECORDER_API_PASSWORD': ''
+    'ENERGY_RECORDER_API_USER': None,
+    'ENERGY_RECORDER_API_PASSWORD': None
 }
 
 
