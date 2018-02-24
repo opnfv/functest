@@ -14,12 +14,12 @@ jobs:
     - stage: build functest-core images
       script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/core"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/core"
         - arm64_dirs=""
     - stage: publish functest-core manifests
@@ -31,62 +31,62 @@ jobs:
     - stage: build all functest images
       script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/healthcheck"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/smoke"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/features"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/components"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/parser"
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/healthcheck"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/smoke"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/features"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/components"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/vnf"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/restapi"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
       env:
-        - repo="${DOCKER_USERNAME}"
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/parser"
         - arm64_dirs=""
     - stage: publish all manifests
