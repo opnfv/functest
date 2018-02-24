@@ -376,9 +376,10 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
                     break
         else:
             self.logger.info("Creating floating IP for Open Baton NFVO")
+            keystone_client = os_utils.get_keystone_client(self.creds)
             self.mano['details']['fip'] = snaps_utils.neutron_utils.\
                 create_floating_ip(
-                    neutron_client,
+                    neutron_client, keystone_client,
                     self.mano['details']['external_net_name'])
             self.logger.info(
                 "Created floating IP for Open Baton NFVO %s",
@@ -643,9 +644,10 @@ class ClearwaterImsVnf(vnf.VnfOnBoarding):
 
         try:
             neutron_client = os_utils.get_neutron_client(self.creds)
+            keystone_client = os_utils.get_keystone_client(self.creds)
             self.logger.info("Deleting Open Baton Port...")
             port = snaps_utils.neutron_utils.get_port(
-                neutron_client,
+                neutron_client, keystone_client,
                 port_name='%s_port' % self.case_name)
             snaps_utils.neutron_utils.delete_port(neutron_client, port)
             time.sleep(10)
