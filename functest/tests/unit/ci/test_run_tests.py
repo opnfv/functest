@@ -91,8 +91,7 @@ class RunTestsTesting(unittest.TestCase):
             pass
         envfile = 'rc_file'
         with mock.patch('six.moves.builtins.open',
-                        mock.mock_open(read_data=msg),
-                        create=True) as mock_method,\
+                        mock.mock_open(read_data=msg)) as mock_method,\
                 mock.patch('os.path.isfile', return_value=True):
             mock_method.return_value.__iter__ = lambda self: iter(
                 self.readline, '')

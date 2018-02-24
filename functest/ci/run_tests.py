@@ -101,7 +101,6 @@ class Runner(object):
             LOGGER.debug("No env file %s found", rc_file)
             return
         with open(rc_file, "r") as rcfd:
-            LOGGER.info("Sourcing env file %s", rc_file)
             for line in rcfd:
                 var = (line.rstrip('"\n').replace('export ', '').split(
                     "=") if re.search(r'(.*)=(.*)', line) else None)
@@ -112,6 +111,8 @@ class Runner(object):
                     key = re.sub(r'^["\' ]*|[ \'"]*$', '', var[0])
                     value = re.sub(r'^["\' ]*|[ \'"]*$', '', "".join(var[1:]))
                     os.environ[key] = value
+            rcfd.seek(0, 0)
+            LOGGER.info("Sourcing env file %s\n\n%s", rc_file, rcfd.read())
 
     @staticmethod
     def get_dict_by_test(testname):
@@ -228,10 +229,9 @@ class Runner(object):
         if 'report' in kwargs:
             self.report_flag = kwargs['report']
         try:
+            LOGGER.info("Deployment description:\n\n%s\n", env.string())
+            self.source_envfile()
             if 'test' in kwargs:
-                LOGGER.debug("Sourcing the credential file...")
-                self.source_envfile()
-
                 LOGGER.debug("Test args: %s", kwargs['test'])
                 if self.tiers.get_tier(kwargs['test']):
                     self.run_tier(self.tiers.get_tier(kwargs['test']))
@@ -266,13 +266,6 @@ class Runner(object):
 
     def summary(self, tier=None):
         """To generate functest report showing the overall results"""
-        msg = prettytable.PrettyTable(
-            header_style='upper', padding_width=5,
-            field_names=['env var', 'value'])
-        for env_var in ['INSTALLER_TYPE', 'DEPLOY_SCENARIO', 'BUILD_TAG',
-                        'CI_LOOP']:
-            msg.add_row([env_var, env.get(env_var)])
-        LOGGER.info("Deployment description:\n\n%s\n", msg)
         msg = prettytable.PrettyTable(
             header_style='upper', padding_width=5,
             field_names=['test case', 'project', 'tier',

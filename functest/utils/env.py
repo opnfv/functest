@@ -11,6 +11,8 @@
 
 import os
 
+import prettytable
+
 INPUTS = {
     'EXTERNAL_NETWORK': None,
     'CI_LOOP': 'daily',
@@ -31,3 +33,12 @@ def get(env_var):
     if env_var not in INPUTS.keys():
         return os.environ.get(env_var, None)
     return os.environ.get(env_var, INPUTS[env_var])
+
+
+def string():
+    msg = prettytable.PrettyTable(
+        header_style='upper', padding_width=5,
+        field_names=['env var', 'value'])
+    for env_var in INPUTS:
+        msg.add_row([env_var, get(env_var) if get(env_var) else ''])
+    return msg
