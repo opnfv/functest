@@ -254,8 +254,7 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
         rconfig.set('compute-feature-enabled', 'live_migration', True)
 
     rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
-    identity_api_version = os.environ.get(
-        "OS_IDENTITY_API_VERSION", os.environ.get("IDENTITY_API_VERSION"))
+    identity_api_version = os.environ.get("OS_IDENTITY_API_VERSION", '3')
     if identity_api_version == '3':
         auth_version = 'v3'
         rconfig.set('identity-feature-enabled', 'api_v2', False)
