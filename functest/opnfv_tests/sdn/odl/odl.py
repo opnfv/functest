@@ -190,6 +190,7 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlrestconfport'] = '8087'
             else:
                 kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
+            assert kwargs['odlip']
         except KeyError as ex:
             self.__logger.error("Cannot run ODL testcases. "
                                 "Please check env var: "
