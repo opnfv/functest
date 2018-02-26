@@ -11,88 +11,11 @@
 
 from __future__ import print_function
 import logging
-import re
-import shutil
 import subprocess
 import sys
-
-import dns.resolver
-from six.moves import urllib
 import yaml
 
-from functest.utils import constants
-from functest.utils import env
-
 LOGGER = logging.getLogger(__name__)
-
-
-# ----------------------------------------------------------
-#
-#               INTERNET UTILS
-#
-# -----------------------------------------------------------
-def check_internet_connectivity(url='http://www.opnfv.org/'):
-    """
-    Check if there is access to the internet
-    """
-    try:
-        urllib.request.urlopen(url, timeout=5)
-        return True
-    except urllib.error.URLError:
-        return False
-
-
-def download_url(url, dest_path):
-    """
-    Download a file to a destination path given a URL
-    """
-    name = url.rsplit('/')[-1]
-    dest = dest_path + "/" + name
-    try:
-        response = urllib.request.urlopen(url)
-    except (urllib.error.HTTPError, urllib.error.URLError):
-        return False
-
-    with open(dest, 'wb') as lfile:
-        shutil.copyfileobj(response, lfile)
-    return True
-
-
-# ----------------------------------------------------------
-#
-#               CI UTILS
-#
-# -----------------------------------------------------------
-def get_resolvconf_ns():
-    """
-    Get nameservers from current resolv.conf
-    """
-    nameservers = []
-    rconf = open("/etc/resolv.conf", "r")
-    line = rconf.readline()
-    resolver = dns.resolver.Resolver()
-    while line:
-        addr_ip = re.search(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", line)
-        if addr_ip:
-            resolver.nameservers = [addr_ip.group(0)]
-            try:
-                result = resolver.query('opnfv.org')[0]
-                if result != "":
-                    nameservers.append(addr_ip.group())
-            except dns.exception.Timeout:
-                pass
-        line = rconf.readline()
-    return nameservers
-
-
-def get_ci_envvars():
-    """
-    Get the CI env variables
-    """
-    ci_env_var = {
-        "installer": env.get('INSTALLER_TYPE'),
-        "scenario": env.get('DEPLOY_SCENARIO')}
-    return ci_env_var
 
 
 def execute_command_raise(cmd, info=False, error_msg="",
@@ -134,11 +57,6 @@ def execute_command(cmd, info=False, error_msg="",
     return returncode
 
 
-# ----------------------------------------------------------
-#
-#               YAML UTILS
-#
-# -----------------------------------------------------------
 def get_parameter_from_yaml(parameter, yfile):
     """
     Returns the value of a given parameter in file.yaml
@@ -154,19 +72,3 @@ def get_parameter_from_yaml(parameter, yfile):
             raise ValueError("The parameter %s is not defined in"
                              " %s" % (parameter, yfile))
     return value
-
-
-def get_functest_config(parameter):
-    yaml_ = constants.CONFIG_FUNCTEST_YAML
-    return get_parameter_from_yaml(parameter, yaml_)
-
-
-def get_functest_yaml():
-    # pylint: disable=bad-continuation
-    with open(constants.CONFIG_FUNCTEST_YAML) as yaml_fd:
-        functest_yaml = yaml.safe_load(yaml_fd)
-    return functest_yaml
-
-
-def print_separator():
-    LOGGER.info("==============================================")

@@ -10,13 +10,11 @@
 # pylint: disable=missing-docstring
 
 import logging
-import os
 import time
 import unittest
 
 import mock
 import pkg_resources
-from six.moves import urllib
 
 from functest.utils import functest_utils
 
@@ -63,40 +61,6 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.file_yaml = {'general': {'openstack': {'image_name':
                                                     'test_image_name'}}}
 
-    @mock.patch('six.moves.urllib.request.urlopen',
-                side_effect=urllib.error.URLError('no host given'))
-    def test_check_internet_connectivity_failed(self, mock_method):
-        self.assertFalse(functest_utils.check_internet_connectivity())
-        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
-
-    @mock.patch('six.moves.urllib.request.urlopen')
-    def test_check_internet_connectivity_default(self, mock_method):
-        self.assertTrue(functest_utils.check_internet_connectivity())
-        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
-
-    @mock.patch('six.moves.urllib.request.urlopen')
-    def test_check_internet_connectivity_debian(self, mock_method):
-        self.url = "https://www.debian.org/"
-        self.assertTrue(functest_utils.check_internet_connectivity(self.url))
-        mock_method.assert_called_once_with(self.url, timeout=self.timeout)
-
-    @mock.patch('six.moves.urllib.request.urlopen',
-                side_effect=urllib.error.URLError('no host given'))
-    def test_download_url_failed(self, mock_url):
-        self.assertFalse(functest_utils.download_url(self.url, self.dest_path))
-
-    @mock.patch('six.moves.urllib.request.urlopen')
-    def test_download_url_default(self, mock_url):
-        with mock.patch("six.moves.builtins.open", mock.mock_open()) as m, \
-                mock.patch('functest.utils.functest_utils.shutil.copyfileobj')\
-                as mock_sh:
-            name = self.url.rsplit('/')[-1]
-            dest = self.dest_path + "/" + name
-            self.assertTrue(functest_utils.download_url(self.url,
-                                                        self.dest_path))
-            m.assert_called_once_with(dest, 'wb')
-            self.assertTrue(mock_sh.called)
-
     def _get_env_dict(self, var):
         dic = {'INSTALLER_TYPE': self.installer,
                'DEPLOY_SCENARIO': self.scenario,
@@ -113,21 +77,6 @@ class FunctestUtilsTesting(unittest.TestCase):
         FunctestUtilsTesting.readline += 1
         return FunctestUtilsTesting.test_ip[FunctestUtilsTesting.readline]
 
-    # TODO: get_resolvconf_ns
-    @mock.patch('functest.utils.functest_utils.dns.resolver.Resolver')
-    def test_get_resolvconf_ns_default(self, mock_dns_resolve):
-        attrs = {'query.return_value': ["test"]}
-        mock_dns_resolve.configure_mock(**attrs)
-
-        m = mock.Mock()
-        attrs = {'readline.side_effect': self.readline_side}
-        m.configure_mock(**attrs)
-
-        with mock.patch("six.moves.builtins.open") as mo:
-            mo.return_value = m
-            self.assertEqual(functest_utils.get_resolvconf_ns(),
-                             self.test_ip[1:])
-
     def _get_environ(self, var, *args):  # pylint: disable=unused-argument
         if var == 'INSTALLER_TYPE':
             return self.installer
@@ -135,14 +84,8 @@ class FunctestUtilsTesting(unittest.TestCase):
             return self.scenario
         return var
 
-    def test_get_ci_envvars_default(self):
-        with mock.patch('os.environ.get',
-                        side_effect=self._get_environ):
-            dic = {"installer": self.installer,
-                   "scenario": self.scenario}
-            self.assertDictEqual(functest_utils.get_ci_envvars(), dic)
-
-    def cmd_readline(self):
+    @staticmethod
+    def cmd_readline():
         return 'test_value\n'
 
     @mock.patch('functest.utils.functest_utils.LOGGER.error')
@@ -250,9 +193,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                   output_file=None)
             self.assertEqual(resp, 1)
 
-    def _get_functest_config(self, var):
-        return var
-
     def test_get_parameter_from_yaml_failed(self):
         self.file_yaml['general'] = None
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
@@ -275,29 +215,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                              get_parameter_from_yaml(self.parameter,
                                                      self.test_file),
                              'test_image_name')
-
-    @mock.patch('functest.utils.functest_utils.get_parameter_from_yaml')
-    def test_get_functest_config_default(self, mock_get_parameter_from_yaml):
-        with mock.patch.dict(os.environ,
-                             {'CONFIG_FUNCTEST_YAML': self.config_yaml}):
-            functest_utils.get_functest_config(self.parameter)
-            mock_get_parameter_from_yaml. \
-                assert_called_once_with(self.parameter,
-                                        self.config_yaml)
-
-    def test_get_functest_yaml(self):
-        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
-                mock.patch('functest.utils.functest_utils.yaml.safe_load') \
-                as mock_yaml:
-            mock_yaml.return_value = self.file_yaml
-            resp = functest_utils.get_functest_yaml()
-            self.assertEqual(resp, self.file_yaml)
-
-    @mock.patch('functest.utils.functest_utils.LOGGER.info')
-    def test_print_separator(self, mock_logger_info):
-        functest_utils.print_separator()
-        mock_logger_info.assert_called_once_with("======================="
-                                                 "=======================")
 
 
 if __name__ == "__main__":
