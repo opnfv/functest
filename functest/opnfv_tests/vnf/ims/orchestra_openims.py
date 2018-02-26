@@ -17,8 +17,7 @@ import time
 import pkg_resources
 import yaml
 
-import functest.core.vnf as vnf
-import functest.utils.openstack_utils as os_utils
+from functest.core import vnf
 from functest.utils import config
 
 from org.openbaton.cli.errors.errors import NfvoException
@@ -29,6 +28,7 @@ from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
 from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.vm_inst import FloatingIpConfig
 from snaps.config.vm_inst import VmInstanceConfig
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.create_image import OpenStackImage
@@ -89,8 +89,6 @@ def get_userdata(orchestrator=dict):
     userdata += "echo \"Executing userdata...\"\n"
     userdata += "set -x\n"
     userdata += "set -e\n"
-    userdata += "echo \"Set nameserver to '8.8.8.8'...\"\n"
-    userdata += "echo \"nameserver   8.8.8.8\" >> /etc/resolv.conf\n"
     userdata += "echo \"Install curl...\"\n"
     userdata += "apt-get install curl\n"
     userdata += "echo \"Inject public key...\"\n"
@@ -110,10 +108,6 @@ def get_userdata(orchestrator=dict):
                  orchestrator['bootstrap']['config']['url'])
     userdata += ("echo \"Disable usage of mysql...\"\n")
     userdata += "sed -i s/mysql=.*/mysql=no/g /config_file\n"
-    userdata += ("echo \"Setting 'rabbitmq_broker_ip' to '%s'\"\n"
-                 % orchestrator['details']['fip'].ip)
-    userdata += ("sed -i s/rabbitmq_broker_ip=localhost/rabbitmq_broker_ip"
-                 "=%s/g /config_file\n" % orchestrator['details']['fip'].ip)
     userdata += "echo \"Set autostart of components to 'false'\"\n"
     userdata += "export OPENBATON_COMPONENT_AUTOSTART=false\n"
     userdata += "echo \"Execute bootstrap...\"\n"
@@ -196,6 +190,8 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         self.images = get_config("tenant_images.orchestrator", config_file)
         self.images.update(get_config("tenant_images.%s" %
                                       self.case_name, config_file))
+        self.creds = None
+        self.orchestra_router = None
 
     def prepare(self):
         """Prepare testscase (Additional pre-configuration steps)."""
@@ -214,7 +210,6 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         self.prepare_flavor()
         self.prepare_security_groups()
         self.prepare_network()
-        self.prepare_floating_ip()
 
     def prepare_images(self):
         """Upload images if they doen't exist yet"""
@@ -230,7 +225,7 @@ class OpenImsVnf(vnf.VnfOnBoarding):
                                 image_file=image_file,
                                 public=True))
                 image.create()
-                # self.created_resources.append(image);
+                self.created_resources.append(image)
 
     def prepare_security_groups(self):
         """Create Open Baton security group if it doesn't exist yet"""
@@ -239,28 +234,32 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         sg_rules = list()
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="orchestra-sec-group-allowall",
+                sec_grp_name="orchestra-sec-group-allowall-{}".format(
+                    self.uuid),
                 direction=Direction.ingress,
                 protocol=Protocol.tcp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="orchestra-sec-group-allowall",
+                sec_grp_name="orchestra-sec-group-allowall-{}".format(
+                    self.uuid),
                 direction=Direction.egress,
                 protocol=Protocol.tcp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="orchestra-sec-group-allowall",
+                sec_grp_name="orchestra-sec-group-allowall-{}".format(
+                    self.uuid),
                 direction=Direction.ingress,
                 protocol=Protocol.udp,
                 port_range_min=1,
                 port_range_max=65535))
         sg_rules.append(
             SecurityGroupRuleConfig(
-                sec_grp_name="orchestra-sec-group-allowall",
+                sec_grp_name="orchestra-sec-group-allowall-{}".format(
+                    self.uuid),
                 direction=Direction.egress,
                 protocol=Protocol.udp,
                 port_range_min=1,
@@ -268,7 +267,8 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         security_group = OpenStackSecurityGroup(
             self.snaps_creds,
             SecurityGroupConfig(
-                name="orchestra-sec-group-allowall",
+                name="orchestra-sec-group-allowall-{}".format(
+                    self.uuid),
                 rule_settings=sg_rules))
 
         security_group_info = security_group.create()
@@ -299,12 +299,10 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         self.logger.info(
             "Creating network/subnet/router if they doen't exist yet...")
         subnet_settings = SubnetConfig(
-            name='%s_subnet' %
-            self.case_name,
+            name='{}_subnet-{}'.format(self.case_name, self.uuid),
             cidr="192.168.100.0/24")
         network_settings = NetworkConfig(
-            name='%s_net' %
-            self.case_name,
+            name='{}_net-{}'.format(self.case_name, self.uuid),
             subnet_settings=[subnet_settings])
         orchestra_network = OpenStackNetwork(
             self.snaps_creds, network_settings)
@@ -315,79 +313,27 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         self.mano['details']['external_net_name'] = \
             snaps_utils.get_ext_net_name(self.snaps_creds)
         self.created_resources.append(orchestra_network)
-        orchestra_router = OpenStackRouter(
+        self.orchestra_router = OpenStackRouter(
             self.snaps_creds,
             RouterConfig(
-                name='%s_router' %
-                self.case_name,
+                name='{}_router-{}'.format(self.case_name, self.uuid),
                 external_gateway=self.mano['details']['external_net_name'],
                 internal_subnets=[
                     subnet_settings.name]))
-        orchestra_router.create()
-        self.created_resources.append(orchestra_router)
+        self.orchestra_router.create()
+        self.created_resources.append(self.orchestra_router)
         self.logger.info("Created network and router for Open Baton NFVO...")
-
-    def prepare_floating_ip(self):
-        """Select/Create Floating IP if it doesn't exist yet"""
-        self.logger.info("Retrieving floating IP for Open Baton NFVO")
-        neutron_client = snaps_utils.neutron_utils.neutron_client(
-            self.snaps_creds)
-        # Finding Tenant ID to check to which tenant the Floating IP belongs
-        tenant_id = os_utils.get_tenant_id(
-            os_utils.get_keystone_client(self.creds),
-            self.tenant_name)
-        # Use os_utils to retrieve complete information of Floating IPs
-        floating_ips = os_utils.get_floating_ips(neutron_client)
-        my_floating_ips = []
-        # Filter Floating IPs with tenant id
-        for floating_ip in floating_ips:
-            # self.logger.info("Floating IP: %s", floating_ip)
-            if floating_ip.get('tenant_id') == tenant_id:
-                my_floating_ips.append(floating_ip.get('floating_ip_address'))
-        # Select if Floating IP exist else create new one
-        if len(my_floating_ips) >= 1:
-            # Get Floating IP object from snaps for clean up
-            snaps_floating_ips = snaps_utils.neutron_utils.get_floating_ips(
-                neutron_client)
-            for my_floating_ip in my_floating_ips:
-                for snaps_floating_ip in snaps_floating_ips:
-                    if snaps_floating_ip.ip == my_floating_ip:
-                        self.mano['details']['fip'] = snaps_floating_ip
-                        self.logger.info(
-                            "Selected floating IP for Open Baton NFVO %s",
-                            (self.mano['details']['fip'].ip))
-                        break
-                if self.mano['details']['fip'] is not None:
-                    break
-        else:
-            self.logger.info("Creating floating IP for Open Baton NFVO")
-            keystone_client = os_utils.get_keystone_client(self.creds)
-            self.mano['details']['fip'] = (
-                snaps_utils.neutron_utils.create_floating_ip(
-                    neutron_client, keystone_client,
-                    self.mano['details']['external_net_name']))
-            self.logger.info(
-                "Created floating IP for Open Baton NFVO %s",
-                (self.mano['details']['fip'].ip))
 
     def get_vim_descriptor(self):
         """"Create VIM descriptor to be used for onboarding"""
         self.logger.info(
             "Building VIM descriptor with PoP creds: %s",
             self.creds)
-        # Depending on API version either tenant ID or project name must be
-        # used
-        if os_utils.is_keystone_v3():
-            self.logger.info(
-                "Using v3 API of OpenStack... -> Using OS_PROJECT_ID")
-            project_id = os_utils.get_tenant_id(
-                os_utils.get_keystone_client(),
-                self.creds.get("project_name"))
-        else:
-            self.logger.info(
-                "Using v2 API of OpenStack... -> Using OS_TENANT_NAME")
-            project_id = self.creds.get("tenant_name")
-        self.logger.debug("VIM project/tenant id: %s", project_id)
+        self.logger.debug("VIM project/tenant id: %s",
+                          self.snaps_creds.project_name)
+        keystone = keystone_utils.keystone_client(self.snaps_creds)
+        project_id = keystone_utils.get_project(
+            keystone=keystone, project_name=self.snaps_creds.project_name).id
         vim_json = {
             "name": "vim-instance",
             "authUrl": self.creds.get("auth_url"),
@@ -428,40 +374,27 @@ class OpenImsVnf(vnf.VnfOnBoarding):
             exists=True)
         # setting up port
         port_settings = PortConfig(
-            name='%s_port' % self.case_name,
+            name='{}_port-{}'.format(self.case_name, self.uuid),
             network_name=self.mano['details']['network']['name'])
         # build configuration of vm
         orchestra_settings = VmInstanceConfig(
-            name=self.case_name,
+            name='{}-{}'.format(self.case_name, self.uuid),
             flavor=self.mano['details']['flavor']['name'],
             port_settings=[port_settings],
             security_group_names=[self.mano['details']['sec_group']],
+            floating_ip_settings=[FloatingIpConfig(
+                name='orchestra_fip-{}'.format(self.uuid),
+                port_name=port_settings.name,
+                router_name=self.orchestra_router.router_settings.name)],
             userdata=str(userdata))
-        orchestra_vm = OpenStackVmInstance(self.snaps_creds,
-                                           orchestra_settings,
-                                           image_settings)
-
+        orchestra_vm = OpenStackVmInstance(
+            self.snaps_creds, orchestra_settings, image_settings)
         orchestra_vm.create()
+        self.mano['details']['fip'] = orchestra_vm.get_floating_ip()
         self.created_resources.append(orchestra_vm)
         self.mano['details']['id'] = orchestra_vm.get_vm_info()['id']
         self.logger.info(
-            "Created orchestra instance: %s",
-            self.mano['details']['id'])
-
-        self.logger.info("Associating floating ip: '%s' to VM '%s' ",
-                         self.mano['details']['fip'].ip,
-                         self.case_name)
-        nova_client = os_utils.get_nova_client()
-        if not os_utils.add_floating_ip(
-                nova_client,
-                self.mano['details']['id'],
-                self.mano['details']['fip'].ip):
-            duration = time.time() - start_time
-            self.details["orchestrator"].update(
-                status='FAIL', duration=duration)
-            self.logger.error("Cannot associate floating IP to VM.")
-            return False
-
+            "Created orchestra instance: %s", self.mano['details']['id'])
         self.logger.info("Waiting for Open Baton NFVO to be up and running...")
         timeout = 0
         while timeout < 20:
@@ -546,8 +479,8 @@ class OpenImsVnf(vnf.VnfOnBoarding):
 
             self.mano['details']['nsr'] = nsr_agent.create(
                 self.mano['details']['nsd_id'])
-        except NfvoException as exc:
-            self.logger.error(exc.message)
+        except NfvoException:
+            self.logger.exception("failed")
             duration = time.time() - start_time
             self.details["vnf"].update(status='FAIL', duration=duration)
             return False
@@ -647,13 +580,11 @@ class OpenImsVnf(vnf.VnfOnBoarding):
         try:
             main_agent = MainAgent(
                 nfvo_ip=self.mano['details']['fip'].ip,
-                nfvo_port=8080,
-                https=False,
-                version=1,
+                nfvo_port=8080, https=False, version=1,
                 username=self.mano['credentials']['username'],
                 password=self.mano['credentials']['password'])
             self.logger.info("Terminating %s...", self.vnf['name'])
-            if (self.mano['details'].get('nsr')):
+            if self.mano['details'].get('nsr'):
                 main_agent.get_agent(
                     "nsr",
                     project_id=self.mano['details']['project_id']).\
@@ -664,29 +595,4 @@ class OpenImsVnf(vnf.VnfOnBoarding):
                 self.logger.info("No need to terminate the VNF...")
         except (NfvoException, KeyError) as exc:
             self.logger.error('Unexpected error cleaning - %s', exc)
-
-        try:
-            neutron_client = os_utils.get_neutron_client(self.creds)
-            keystone_client = os_utils.get_keystone_client(self.creds)
-            self.logger.info("Deleting Open Baton Port...")
-            port = snaps_utils.neutron_utils.get_port(
-                neutron_client, keystone_client,
-                port_name='%s_port' % self.case_name)
-            snaps_utils.neutron_utils.delete_port(neutron_client, port)
-            time.sleep(10)
-        except Exception as exc:  # pylint: disable=broad-except
-            self.logger.error('Unexpected error cleaning - %s', exc)
-        try:
-            self.logger.info("Deleting Open Baton Floating IP...")
-            snaps_utils.neutron_utils.delete_floating_ip(
-                neutron_client, self.mano['details']['fip'])
-        except Exception as exc:  # pylint: disable=broad-except
-            self.logger.error('Unexpected error cleaning - %s', exc)
-
-        for resource in reversed(self.created_resources):
-            try:
-                self.logger.info("Cleaning %s", str(resource))
-                resource.clean()
-            except Exception as exc:
-                self.logger.error('Unexpected error cleaning - %s', exc)
         super(OpenImsVnf, self).clean()
