@@ -227,15 +227,20 @@ class JujuEpc(vnf.VnfOnBoarding):
         Bootstrap juju
         """
         self.__logger.info("Deployed Orchestrator")
-        private_net_name = getattr(
-            config.CONF, 'vnf_{}_private_net_name'.format(self.case_name))
-        private_subnet_name = getattr(
-            config.CONF, 'vnf_{}_private_subnet_name'.format(self.case_name))
+        private_net_name = '{}-{}'.format(
+            getattr(config.CONF,
+                    'vnf_{}_private_net_name'.format(self.case_name)),
+            self.uuid)
+        private_subnet_name = '{}-{}'.format(
+            getattr(config.CONF,
+                    'vnf_{}_private_subnet_name'.format(self.case_name)),
+            self.uuid)
         private_subnet_cidr = getattr(
             config.CONF, 'vnf_{}_private_subnet_cidr'.format(self.case_name))
-        abot_router = getattr(
-            config.CONF, 'vnf_{}_external_router'.format(self.case_name))
-
+        abot_router = '{}-{}'.format(
+            getattr(config.CONF,
+                    'vnf_{}_external_router'.format(self.case_name)),
+            self.uuid)
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
             name=private_subnet_name, cidr=private_subnet_cidr)
