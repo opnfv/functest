@@ -20,7 +20,7 @@ from functest.utils import constants
 class OpenStack(object):
 
     def __init__(self):
-        self.os_auth_url = os.environ['OS_AUTH_URL']
+        self.os_auth_url = os.getenv('OS_AUTH_URL', None)
         self.endpoint_ip = None
         self.endpoint_port = None
         self.openstack_creds = constants.ENV_FILE
