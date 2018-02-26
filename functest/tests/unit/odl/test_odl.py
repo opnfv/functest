@@ -282,6 +282,15 @@ class ODLRunTesting(ODLTesting):
                 return_value=ODLTesting._neutron_url)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_credentials')
+    def _test_missing_value(self, *args):
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].assert_called_once_with()
+        args[1].assert_called_once_with(mock.ANY, 'network')
+
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
+                return_value=ODLTesting._neutron_url)
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
+                'get_credentials')
     def _test_run(self, status=testcase.TestCase.EX_OK,
                   exception=None, *args, **kwargs):
         odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
@@ -361,7 +370,7 @@ class ODLRunTesting(ODLTesting):
                            odlwebport=self._odl_webport)
 
     def test_no_sdn_controller_ip(self):
-        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        self._test_missing_value()
 
     def test_without_installer_type(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
@@ -386,7 +395,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_apex_no_controller_ip(self):
         os.environ["INSTALLER_TYPE"] = "apex"
-        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        self._test_missing_value()
 
     def test_apex(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
@@ -397,7 +406,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_netvirt_no_controller_ip(self):
         os.environ["INSTALLER_TYPE"] = "netvirt"
-        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        self._test_missing_value()
 
     def test_netvirt(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
@@ -414,7 +423,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_daisy_no_controller_ip(self):
         os.environ["INSTALLER_TYPE"] = "daisy"
-        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        self._test_missing_value()
 
     def test_daisy(self):
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
