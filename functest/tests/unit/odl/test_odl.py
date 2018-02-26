@@ -13,7 +13,6 @@ import logging
 import os
 import unittest
 
-from keystoneauth1.exceptions import auth_plugins
 import mock
 from robot.errors import RobotError
 import six
@@ -331,7 +330,7 @@ class ODLRunTesting(ODLTesting):
 
     def test_exc(self):
         with mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
-                        side_effect=auth_plugins.MissingAuthPlugin()):
+                        side_effect=Exception()):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
 
