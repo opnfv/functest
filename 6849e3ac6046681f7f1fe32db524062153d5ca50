@@ -22,6 +22,24 @@
       "revId": "6849e3ac6046681f7f1fe32db524062153d5ca50",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_2d544253",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-02-27T06:22:05Z",
+      "side": 1,
+      "message": "we can\u0027t add any guid in this case (detected when testing).  it may raise side effects when testing two juju_epc in parallel. \nbyw I think we shouldn\u0027t register any name in config",
+      "parentUuid": "5a3f45e8_8dee3621",
+      "revId": "6849e3ac6046681f7f1fe32db524062153d5ca50",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
