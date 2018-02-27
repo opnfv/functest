@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_8dee3621",
+        "filename": "functest/opnfv_tests/vnf/epc/juju_epc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-02-27T01:19:32Z",
+      "side": 1,
+      "message": "Why isn\u0027t self.uuid considered when defining private_net_name?",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 233,
+        "endChar": 21
+      },
+      "revId": "6849e3ac6046681f7f1fe32db524062153d5ca50",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
