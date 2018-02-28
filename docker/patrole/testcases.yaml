@@ -1,0 +1,22 @@
+---
+tiers:
+    -
+        name: smoke
+        order: 1
+        ci_loop: '(daily)|(weekly)'
+        description: >-
+            Set of basic Functional tests to validate the OPNFV scenarios.
+        testcases:
+            -
+                case_name: patrole
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    Test suite from Patrole project.
+                dependencies:
+                    installer: '^((?!netvirt).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.patrole.patrole'
+                    class: 'Patrole'
