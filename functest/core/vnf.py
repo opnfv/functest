@@ -17,6 +17,7 @@ from snaps.config.user import UserConfig
 from snaps.config.project import ProjectConfig
 from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.create_project import OpenStackProject
+from snaps.openstack.utils import keystone_utils
 from snaps.openstack.tests import openstack_tests
 
 from functest.core import testcase
@@ -116,16 +117,31 @@ class VnfOnBoarding(testcase.TestCase):
                 snaps_creds,
                 ProjectConfig(
                     name=self.tenant_name,
-                    description=self.tenant_description
+                    description=self.tenant_description,
+                    domain=snaps_creds.project_domain_name
                 ))
             self.os_project.create()
             self.created_object.append(self.os_project)
+
+            snaps_creds.project_domain_id = \
+                self.os_project.get_project().domain_id
+            snaps_creds.user_domain_id = \
+                self.os_project.get_project().domain_id
+
+            for role in ['admin', 'Admin']:
+                if keystone_utils.get_role_by_name(
+                        keystone_utils.keystone_client(snaps_creds), role):
+                    admin_role = role
+                    break
+
             user_creator = OpenStackUser(
                 snaps_creds,
                 UserConfig(
                     name=self.user_name,
                     password=str(uuid.uuid4()),
-                    roles={'admin': self.tenant_name}))
+                    project_name=self.tenant_name,
+                    domain_name=snaps_creds.user_domain_name,
+                    roles={admin_role: self.tenant_name}))
             user_creator.create()
             self.created_object.append(user_creator)
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)

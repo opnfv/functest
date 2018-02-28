@@ -129,6 +129,9 @@ class VnfBaseTesting(unittest.TestCase):
         args[2].assert_not_called()
 
     @mock.patch('functest.core.vnf.OpenStackUser', side_effect=Exception)
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_role_by_name',
+                return_value="admin")
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
     @mock.patch('functest.core.vnf.OpenStackProject')
     @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
     def test_prepare_exc3(self, *args):
@@ -136,16 +139,23 @@ class VnfBaseTesting(unittest.TestCase):
             self.test.prepare()
         args[0].assert_called_with(os_env_file=constants.ENV_FILE)
         args[1].assert_called_with(mock.ANY, mock.ANY)
-        args[2].assert_called_with(mock.ANY, mock.ANY)
+        args[2].assert_called_with(mock.ANY)
+        args[3].assert_called_with(mock.ANY, mock.ANY)
+        args[4].assert_called_with(mock.ANY, mock.ANY)
 
     @mock.patch('functest.core.vnf.OpenStackUser')
+    @mock.patch('snaps.openstack.utils.keystone_utils.get_role_by_name',
+                return_value="admin")
+    @mock.patch('snaps.openstack.utils.keystone_utils.keystone_client')
     @mock.patch('functest.core.vnf.OpenStackProject')
     @mock.patch('snaps.openstack.tests.openstack_tests.get_credentials')
     def test_prepare_default(self, *args):
         self.assertEqual(self.test.prepare(), testcase.TestCase.EX_OK)
         args[0].assert_called_with(os_env_file=constants.ENV_FILE)
         args[1].assert_called_with(mock.ANY, mock.ANY)
-        args[2].assert_called_with(mock.ANY, mock.ANY)
+        args[2].assert_called_with(mock.ANY)
+        args[3].assert_called_with(mock.ANY, mock.ANY)
+        args[4].assert_called_with(mock.ANY, mock.ANY)
 
     def test_deploy_vnf_unimplemented(self):
         with self.assertRaises(vnf.VnfDeploymentException):
