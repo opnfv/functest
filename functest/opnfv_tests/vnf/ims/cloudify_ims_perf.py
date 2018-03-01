@@ -18,15 +18,6 @@ import yaml
 import paramiko
 import dns.resolver
 from jinja2 import Environment, FileSystemLoader
-
-from functest.energy import energy
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.opnfv_tests.vnf.ims import cloudify_ims
-from functest.opnfv_tests.vnf.ims.ixia.utils import IxChassisUtils
-from functest.opnfv_tests.vnf.ims.ixia.utils import IxLoadUtils
-from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
-from functest.utils import config
-
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
@@ -39,7 +30,14 @@ from snaps.openstack.create_instance import OpenStackVmInstance
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
+from xtesting.energy import energy
 
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.vnf.ims import cloudify_ims
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxChassisUtils
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxLoadUtils
+from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
+from functest.utils import config
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 

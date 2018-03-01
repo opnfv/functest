@@ -15,12 +15,11 @@ import unittest
 
 import mock
 import pkg_resources
+from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
 
-from functest.core import testcase
 from functest.opnfv_tests.openstack.refstack_client.refstack_client import \
     RefstackClient, RefstackClientParser
-
-from snaps.openstack.os_credentials import OSCreds
 
 __author__ = ("Matthew Li <matthew.lijun@huawei.com>,"
               "Linda Wang <wangwulin@huawei.com>")

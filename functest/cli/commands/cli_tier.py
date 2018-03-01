@@ -11,8 +11,8 @@
 import pkg_resources
 
 import click
+from xtesting.ci import tier_builder
 
-from functest.ci import tier_builder
 from functest.utils import functest_utils
 from functest.utils import env
 

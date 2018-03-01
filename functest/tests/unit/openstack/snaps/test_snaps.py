@@ -13,8 +13,8 @@ import unittest
 
 import mock
 from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
 
-from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.snaps import (
     connection_check, api_check, health_check, smoke)
 
@@ -41,9 +41,9 @@ class ConnectionCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = []
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.connection_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.connection_check.is_successful())
+            testcase.TestCase.EX_OK, self.connection_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
@@ -57,9 +57,10 @@ class ConnectionCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.connection_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
         self.assertEquals(
-            TestCase.EX_TESTCASE_FAILED, self.connection_check.is_successful())
+            testcase.TestCase.EX_TESTCASE_FAILED,
+            self.connection_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
@@ -74,9 +75,9 @@ class ConnectionCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.connection_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.connection_check.is_successful())
+            testcase.TestCase.EX_OK, self.connection_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
@@ -105,9 +106,9 @@ class APICheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = []
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.api_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.api_check.is_successful())
+            testcase.TestCase.EX_OK, self.api_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', image_metadata=mock.ANY,
@@ -121,9 +122,10 @@ class APICheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.api_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
-            TestCase.EX_TESTCASE_FAILED, self.api_check.is_successful())
+            testcase.TestCase.EX_TESTCASE_FAILED,
+            self.api_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', image_metadata=mock.ANY,
@@ -138,9 +140,9 @@ class APICheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.api_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.api_check.is_successful())
+            testcase.TestCase.EX_OK, self.api_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', image_metadata=mock.ANY,
@@ -169,9 +171,9 @@ class HealthCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = []
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.health_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.health_check.is_successful())
+            testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             mock.ANY, ext_net_name='foo', flavor_metadata=None,
@@ -186,9 +188,10 @@ class HealthCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.health_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
-            TestCase.EX_TESTCASE_FAILED, self.health_check.is_successful())
+            testcase.TestCase.EX_TESTCASE_FAILED,
+            self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             mock.ANY, ext_net_name='foo', flavor_metadata=None,
@@ -204,9 +207,9 @@ class HealthCheckTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.health_check.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
-            TestCase.EX_OK, self.health_check.is_successful())
+            testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             mock.ANY, ext_net_name='foo', flavor_metadata=None,
@@ -236,8 +239,8 @@ class SmokeTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = []
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.smoke.run())
-        self.assertEquals(TestCase.EX_OK, self.smoke.is_successful())
+        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,
@@ -252,9 +255,9 @@ class SmokeTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.smoke.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
         self.assertEquals(
-            TestCase.EX_TESTCASE_FAILED, self.smoke.is_successful())
+            testcase.TestCase.EX_TESTCASE_FAILED, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,
@@ -270,9 +273,9 @@ class SmokeTesting(unittest.TestCase):
         args[0].return_value.testsRun = 100
         args[0].return_value.failures = ['foo']
         args[0].return_value.errors = []
-        self.assertEquals(TestCase.EX_OK, self.smoke.run())
+        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
         self.assertEquals(
-            TestCase.EX_OK, self.smoke.is_successful())
+            testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
             ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,

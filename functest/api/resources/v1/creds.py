@@ -18,10 +18,10 @@ import socket
 from flask import jsonify
 from flasgger.utils import swag_from
 import pkg_resources
+from xtesting.ci import run_tests
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
-from functest.ci import run_tests
 from functest.cli.commands.cli_os import OpenStack
 from functest.utils import constants
 

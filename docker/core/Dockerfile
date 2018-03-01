@@ -17,5 +17,8 @@ RUN apk --no-cache add --update \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         /src/functest && \
     rm -r upper-constraints.txt /src/functest && \
+    cp /usr/lib/python2.7/site-packages/functest/ci/logging.ini /usr/lib/python2.7/site-packages/xtesting/ci/ && \
+    bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
+    ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
     apk del .build-deps

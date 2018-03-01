@@ -20,25 +20,22 @@ import subprocess
 import time
 import uuid
 
-import yaml
-
-from functest.core import testcase
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import config
-from functest.utils import env
-import functest.utils.functest_utils as ft_utils
-
 from snaps.config.flavor import FlavorConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
 from snaps.config.project import ProjectConfig
 from snaps.config.user import UserConfig
-
 from snaps.openstack import create_flavor
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
+from xtesting.core import testcase
+import yaml
 
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.openstack.tempest import conf_utils
+from functest.utils import config
+from functest.utils import env
+from functest.utils import functest_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -117,7 +114,7 @@ class TempestCommon(testcase.TestCase):
                    "cd -;".format(verifier_repo_dir,
                                   testr_mode,
                                   conf_utils.TEMPEST_RAW_LIST))
-            ft_utils.execute_command(cmd)
+            functest_utils.execute_command(cmd)
 
     def apply_tempest_blacklist(self):
         """Exclude blacklisted test cases."""
