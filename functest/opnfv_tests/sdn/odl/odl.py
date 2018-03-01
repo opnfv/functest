@@ -28,10 +28,10 @@ import sys
 from six.moves import urllib
 from snaps.openstack.utils import keystone_utils
 
-from functest.core import robotframework
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
 from functest.utils import env
+from xtesting.core import robotframework
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 

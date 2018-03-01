@@ -231,7 +231,7 @@ tiers:
                     installer: 'apex'
                     scenario: '^((?!fdio).)*$'
                 run:
-                    module: 'functest.core.feature'
+                    module: 'xtesting.core.feature'
                     class: 'BashFeature'
                     args:
                         cmd: 'doctor-test'
@@ -262,7 +262,7 @@ tiers:
                     installer: ''
                     scenario: 'odl.*sfc'
                 run:
-                    module: 'functest.core.feature'
+                    module: 'xtesting.core.feature'
                     class: 'BashFeature'
                     args:
                         cmd: 'run_sfc_tests.py'

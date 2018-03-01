@@ -13,12 +13,11 @@ import logging
 import unittest
 
 import mock
+from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
 
 from functest.core import vnf
-from functest.core import testcase
 from functest.utils import constants
-
-from snaps.openstack.os_credentials import OSCreds
 
 
 class VnfBaseTesting(unittest.TestCase):

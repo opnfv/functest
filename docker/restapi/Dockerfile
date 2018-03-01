@@ -60,6 +60,7 @@ RUN apk --no-cache add --update python3 sshpass \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
+    cp /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci && \
     apk del .build-deps
 EXPOSE 5000
 CMD ["functest_restapi"]

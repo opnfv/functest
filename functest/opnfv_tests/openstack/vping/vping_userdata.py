@@ -14,8 +14,8 @@ import time
 from snaps.config.network import PortConfig
 from snaps.config.vm_inst import VmInstanceConfig
 from snaps.openstack.utils import deploy_utils
+from xtesting.core import testcase
 
-from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.vping import vping_base
 
 
@@ -90,7 +90,7 @@ class VPingUserdata(vping_base.VPingBase):
         Override from super
         """
         self.logger.info("Waiting for ping...")
-        exit_code = TestCase.EX_TESTCASE_FAILED
+        exit_code = testcase.TestCase.EX_TESTCASE_FAILED
         sec = 0
         tries = 0
 
@@ -99,7 +99,7 @@ class VPingUserdata(vping_base.VPingBase):
             p_console = vm_creator.get_console_output()
             if "vPing OK" in p_console:
                 self.logger.info("vPing detected!")
-                exit_code = TestCase.EX_OK
+                exit_code = testcase.TestCase.EX_OK
                 break
             elif "failed to read iid from metadata" in p_console or tries > 5:
                 self.logger.info("Failed to read iid from metadata")

@@ -18,11 +18,6 @@ from cloudify_rest_client.executions import Execution
 from scp import SCPClient
 import yaml
 
-from functest.energy import energy
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
-from functest.utils import config
-
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.keypair import KeypairConfig
@@ -31,7 +26,6 @@ from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
 from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
-
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.create_image import OpenStackImage
 from snaps.openstack.create_instance import OpenStackVmInstance
@@ -40,7 +34,11 @@ from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
 from snaps.openstack.utils import keystone_utils
+from xtesting.energy import energy
 
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
+from functest.utils import config
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 

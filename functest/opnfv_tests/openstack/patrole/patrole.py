@@ -13,10 +13,10 @@ import logging
 import os
 import time
 
-from functest.core import testcase
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.opnfv_tests.openstack.tempest import tempest
+from xtesting.core import testcase
 
 
 class Patrole(tempest.TempestCommon):

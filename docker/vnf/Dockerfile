@@ -30,5 +30,5 @@ RUN apk --no-cache add --update \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     rm -r upper-constraints.txt /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
