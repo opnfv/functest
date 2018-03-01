@@ -12,20 +12,21 @@
 import os
 
 import prettytable
+from xtesting.utils import env
 
 INPUTS = {
     'EXTERNAL_NETWORK': None,
-    'CI_LOOP': 'daily',
-    'DEPLOY_SCENARIO': 'os-nosdn-nofeature-noha',
-    'INSTALLER_TYPE': None,
+    'CI_LOOP': env.INPUTS['CI_LOOP'],
+    'DEPLOY_SCENARIO': env.INPUTS['DEPLOY_SCENARIO'],
+    'INSTALLER_TYPE': env.INPUTS['INSTALLER_TYPE'],
     'SDN_CONTROLLER_IP': None,
-    'BUILD_TAG': None,
-    'NODE_NAME': None,
+    'BUILD_TAG': env.INPUTS['BUILD_TAG'],
+    'NODE_NAME': env.INPUTS['NODE_NAME'],
     'POD_ARCH': None,
-    'TEST_DB_URL': 'http://testresults.opnfv.org/test/api/v1/results',
-    'ENERGY_RECORDER_API_URL': 'http://energy.opnfv.fr/resources',
-    'ENERGY_RECORDER_API_USER': None,
-    'ENERGY_RECORDER_API_PASSWORD': None
+    'TEST_DB_URL': env.INPUTS['TEST_DB_URL'],
+    'ENERGY_RECORDER_API_URL': env.INPUTS['ENERGY_RECORDER_API_URL'],
+    'ENERGY_RECORDER_API_USER': env.INPUTS['ENERGY_RECORDER_API_USER'],
+    'ENERGY_RECORDER_API_PASSWORD': env.INPUTS['ENERGY_RECORDER_API_PASSWORD']
 }
 
 

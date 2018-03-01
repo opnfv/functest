@@ -10,7 +10,6 @@
 """Define the parent class of all VNF TestCases."""
 
 import logging
-import time
 import uuid
 
 from snaps.config.user import UserConfig
@@ -20,32 +19,32 @@ from snaps.openstack.create_project import OpenStackProject
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.tests import openstack_tests
 
-from functest.core import testcase
+from xtesting.core import vnf
 from functest.utils import constants
 
 __author__ = ("Morgan Richomme <morgan.richomme@orange.com>, "
               "Valentin Boucher <valentin.boucher@orange.com>")
 
 
-class VnfPreparationException(Exception):
+class VnfPreparationException(vnf.VnfPreparationException):
     """Raise when VNF preparation cannot be executed."""
 
 
-class OrchestratorDeploymentException(Exception):
+class OrchestratorDeploymentException(vnf.OrchestratorDeploymentException):
     """Raise when orchestrator cannot be deployed."""
 
 
-class VnfDeploymentException(Exception):
+class VnfDeploymentException(vnf.VnfDeploymentException):
     """Raise when VNF cannot be deployed."""
 
 
-class VnfTestException(Exception):
+class VnfTestException(vnf.VnfTestException):
     """Raise when VNF cannot be tested."""
 
 
-class VnfOnBoarding(testcase.TestCase):
+class VnfOnBoarding(vnf.VnfOnBoarding):
     # pylint: disable=too-many-instance-attributes
-    """Base model for VNF test cases."""
+    """Base model for OpenStack VNF test cases."""
 
     __logger = logging.getLogger(__name__)
 
@@ -59,40 +58,6 @@ class VnfOnBoarding(testcase.TestCase):
         self.os_project = None
         self.tenant_description = "Created by OPNFV Functest: {}".format(
             self.case_name)
-
-    def run(self, **kwargs):
-        """
-        Run of the VNF test case:
-
-            * Deploy an orchestrator if needed (e.g. heat, cloudify, ONAP,...),
-            * Deploy the VNF,
-            * Perform tests on the VNF
-
-          A VNF test case is successfull when the 3 steps are PASS
-          If one of the step is FAIL, the test case is FAIL
-
-        Returns:
-          TestCase.EX_OK if result is 'PASS'.
-          TestCase.EX_TESTCASE_FAILED otherwise.
-        """
-        self.start_time = time.time()
-
-        try:
-            self.prepare()
-            if (self.deploy_orchestrator() and
-                    self.deploy_vnf() and
-                    self.test_vnf()):
-                self.stop_time = time.time()
-                # Calculation with different weight depending on the steps TODO
-                self.result = 100
-                return testcase.TestCase.EX_OK
-            self.result = 0
-            self.stop_time = time.time()
-            return testcase.TestCase.EX_TESTCASE_FAILED
-        except Exception:  # pylint: disable=broad-except
-            self.stop_time = time.time()
-            self.__logger.exception("Exception on VNF testing")
-            return testcase.TestCase.EX_TESTCASE_FAILED
 
     def prepare(self):
         """
@@ -146,7 +111,7 @@ class VnfOnBoarding(testcase.TestCase):
             self.created_object.append(user_creator)
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
 
-            return testcase.TestCase.EX_OK
+            return vnf.VnfOnBoarding.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Exception raised during VNF preparation")
             raise VnfPreparationException

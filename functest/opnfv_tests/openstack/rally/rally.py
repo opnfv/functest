@@ -22,22 +22,20 @@ import uuid
 
 import pkg_resources
 import prettytable
-import yaml
-
-from functest.core import testcase
-from functest.energy import energy
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import config
-from functest.utils import env
-
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
 from snaps.config.router import RouterConfig
-
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.utils import deploy_utils
+from xtesting.core import testcase
+from xtesting.energy import energy
+import yaml
+
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.opnfv_tests.openstack.tempest import conf_utils
+from functest.utils import config
+from functest.utils import env
 
 LOGGER = logging.getLogger(__name__)
 

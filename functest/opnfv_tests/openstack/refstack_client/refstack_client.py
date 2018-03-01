@@ -20,8 +20,9 @@ import sys
 import subprocess
 import time
 
-from functest.core import testcase
-from functest.energy import energy
+from xtesting.core import testcase
+from xtesting.energy import energy
+
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.utils import config
