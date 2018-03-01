@@ -3,8 +3,9 @@
 # pylint: disable=missing-docstring
 
 import pkg_resources
+from xtesting.utils import constants
 
 CONFIG_FUNCTEST_YAML = pkg_resources.resource_filename(
     'functest', 'ci/config_functest.yaml')
 
-ENV_FILE = '/home/opnfv/functest/conf/env_file'
+ENV_FILE = constants.ENV_FILE

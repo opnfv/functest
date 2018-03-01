@@ -14,23 +14,20 @@ import logging
 import unittest
 
 import mock
-
 from snaps.config.keypair import KeypairConfig
 from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
 from snaps.config.router import RouterConfig
 from snaps.config.security_group import SecurityGroupConfig
 from snaps.config.vm_inst import VmInstanceConfig
-
 from snaps.openstack.create_image import OpenStackImage
 from snaps.openstack.create_instance import OpenStackVmInstance
 from snaps.openstack.create_keypairs import OpenStackKeypair
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
-
 from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
 
-from functest.core.testcase import TestCase
 from functest.opnfv_tests.openstack.vping import vping_userdata, vping_ssh
 
 
@@ -82,7 +79,8 @@ class VPingUserdataTesting(unittest.TestCase):
                 mock.patch('snaps.openstack.create_instance.'
                            'OpenStackVmInstance.get_console_output',
                            return_value='vPing OK'):
-            self.assertEquals(TestCase.EX_OK, self.vping_userdata.run())
+            self.assertEquals(
+                testcase.TestCase.EX_OK, self.vping_userdata.run())
 
 
 class VPingSSHTesting(unittest.TestCase):
@@ -117,7 +115,7 @@ class VPingSSHTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.'
                 'VPingSSH._transfer_ping_script', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.'
-                'VPingSSH._do_vping_ssh', return_value=TestCase.EX_OK)
+                'VPingSSH._do_vping_ssh', return_value=testcase.TestCase.EX_OK)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_ext_net_name', return_value='foo')
     def test_vping_ssh(self, *args):
@@ -166,7 +164,7 @@ class VPingSSHTesting(unittest.TestCase):
                 mock.patch('snaps.openstack.create_instance.'
                            'OpenStackVmInstance.'
                            'ssh_client', return_value=ssh_client):
-            self.assertEquals(TestCase.EX_OK, self.vping_ssh.run())
+            self.assertEquals(testcase.TestCase.EX_OK, self.vping_ssh.run())
 
 
 if __name__ == "__main__":

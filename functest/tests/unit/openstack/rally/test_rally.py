@@ -13,11 +13,10 @@ import os
 import unittest
 
 import mock
-
-from functest.core import testcase
-from functest.opnfv_tests.openstack.rally import rally
-
 from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
+
+from functest.opnfv_tests.openstack.rally import rally
 
 
 class OSRallyTesting(unittest.TestCase):

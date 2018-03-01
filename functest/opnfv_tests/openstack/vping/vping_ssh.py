@@ -14,18 +14,18 @@ import time
 from scp import SCPClient
 import pkg_resources
 
-from functest.core.testcase import TestCase
-from functest.energy import energy
-from functest.opnfv_tests.openstack.vping import vping_base
-from functest.utils import config
-
 from snaps.config.keypair import KeypairConfig
 from snaps.config.network import PortConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
 from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
-
 from snaps.openstack.utils import deploy_utils
+
+from xtesting.core import testcase
+from xtesting.energy import energy
+
+from functest.opnfv_tests.openstack.vping import vping_base
+from functest.utils import config
 
 
 class VPingSSH(vping_base.VPingBase):
@@ -122,7 +122,7 @@ class VPingSSH(vping_base.VPingBase):
             return self._execute()
         except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error running test - ' + exc.message)
-            return TestCase.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
         finally:
             self._cleanup()
 
@@ -135,10 +135,10 @@ class VPingSSH(vping_base.VPingBase):
         if vm_creator.vm_ssh_active(block=True):
             ssh = vm_creator.ssh_client()
             if not self._transfer_ping_script(ssh):
-                return TestCase.EX_RUN_ERROR
+                return testcase.TestCase.EX_RUN_ERROR
             return self._do_vping_ssh(ssh, test_ip)
         else:
-            return TestCase.EX_RUN_ERROR
+            return testcase.TestCase.EX_RUN_ERROR
 
     def _transfer_ping_script(self, ssh):
         """
@@ -175,7 +175,7 @@ class VPingSSH(vping_base.VPingBase):
         :param test_ip: the IP for the ping command to use
         :return: exit_code (int)
         """
-        exit_code = TestCase.EX_TESTCASE_FAILED
+        exit_code = testcase.TestCase.EX_TESTCASE_FAILED
         self.logger.info("Waiting for ping...")
 
         sec = 0
@@ -190,7 +190,7 @@ class VPingSSH(vping_base.VPingBase):
             for line in output:
                 if "vPing OK" in line:
                     self.logger.info("vPing detected!")
-                    exit_code = TestCase.EX_OK
+                    exit_code = testcase.TestCase.EX_OK
                     flag = True
                     break
 
