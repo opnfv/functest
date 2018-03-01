@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_50515e61",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 6745
+      },
+      "writtenOn": "2018-03-01T14:16:00Z",
+      "side": 1,
+      "message": "remove spaces",
+      "range": {
+        "startLine": 222,
+        "startChar": 70,
+        "endLine": 222,
+        "endChar": 71
+      },
+      "revId": "40beb7cf41f46ffa5e6ca1bd676ba82e07cf272c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_b04ee2bf",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 6745
+      },
+      "writtenOn": "2018-03-01T14:16:00Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 223,
+        "startChar": 69,
+        "endLine": 223,
+        "endChar": 70
+      },
+      "revId": "40beb7cf41f46ffa5e6ca1bd676ba82e07cf272c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_506afe1a",
         "filename": "functest/opnfv_tests/openstack/tempest/custom_tests/neutron_trunk_req.txt",
         "patchSetId": 8
