@@ -65,7 +65,7 @@ tiers:
                     the proper configuration and basic functionality of all the
                     collectd plugins as described in the Project Release Plan
                 dependencies:
-                    installer: 'apex'
+                    installer: '(apex)|(compass)'
                     scenario: 'bar'
                 run:
                     module: 'baro_tests.barometer'
