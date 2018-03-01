@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_d07e0ee4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-01T14:09:10Z",
+      "side": 1,
+      "message": "Please replace this line with \"JIRA: FUNCTEST-926\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 71
+      },
+      "revId": "40beb7cf41f46ffa5e6ca1bd676ba82e07cf272c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
