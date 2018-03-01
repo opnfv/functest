@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_1b0ff731",
+        "filename": "INFO.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-01T15:00:54Z",
+      "side": 1,
+      "message": "Hi, Cedric. Could you check your id is right?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "6068de80eb8872fb9b169594746497e45b33c87f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
