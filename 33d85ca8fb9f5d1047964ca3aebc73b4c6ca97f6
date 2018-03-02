@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_d631e6a3",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-03-02T08:26:49Z",
+      "side": 1,
+      "message": "case should be also added in the test DB (for reporting)\nhttp://testresults.opnfv.org/test/swagger/spec.html\n\nhttp://testresults.opnfv.org/test/api/v1/projects/functest/cases",
+      "revId": "33d85ca8fb9f5d1047964ca3aebc73b4c6ca97f6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
