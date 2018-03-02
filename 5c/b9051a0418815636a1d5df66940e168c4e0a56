@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Tomi Juvonen <tomi.juvonen@nokia.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: valentin boucher <valentin.boucher@kontron.com>
+Submitted-at: Fri, 02 Mar 2018 18:37:54 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/52939
+Project: functest
+Branch: refs/heads/master
