@@ -1,0 +1,7 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: valentin boucher <valentin.boucher@kontron.com>
+Submitted-at: Fri, 02 Mar 2018 18:41:27 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/52999
+Project: functest
+Branch: refs/heads/master
