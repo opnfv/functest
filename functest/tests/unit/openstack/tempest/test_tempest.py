@@ -12,12 +12,11 @@ import os
 import unittest
 
 import mock
+from snaps.openstack.os_credentials import OSCreds
+from xtesting.core import testcase
 
-from functest.core import testcase
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
-
-from snaps.openstack.os_credentials import OSCreds
 
 
 class OSTempestTesting(unittest.TestCase):
@@ -72,7 +71,8 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.generate_test_list('test_verifier_repo_dir')
             self.assertTrue(mock_copyfile.called)
 
-    def _test_gen_tl_mode_default(self, mode):
+    @mock.patch('functest.utils.functest_utils.execute_command')
+    def _test_gen_tl_mode_default(self, mode, mock_exec=None):
         self.tempestcommon.mode = mode
         if self.tempestcommon.mode == 'smoke':
             testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
@@ -82,14 +82,12 @@ class OSTempestTesting(unittest.TestCase):
             testr_mode = 'tempest.api.' + self.tempestcommon.mode
         conf_utils.TEMPEST_RAW_LIST = 'raw_list'
         verifier_repo_dir = 'test_verifier_repo_dir'
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'ft_utils.execute_command') as mock_exec:
-            cmd = ("cd {0};"
-                   "testr list-tests {1} > {2};"
-                   "cd -;".format(verifier_repo_dir, testr_mode,
-                                  conf_utils.TEMPEST_RAW_LIST))
-            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
-            mock_exec.assert_any_call(cmd)
+        cmd = ("cd {0};"
+               "testr list-tests {1} > {2};"
+               "cd -;".format(verifier_repo_dir, testr_mode,
+                              conf_utils.TEMPEST_RAW_LIST))
+        self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+        mock_exec.assert_any_call(cmd)
 
     def test_gen_tl_smoke_mode(self):
         self._test_gen_tl_mode_default('smoke')
@@ -221,9 +219,9 @@ class OSTempestTesting(unittest.TestCase):
 
     def test_run_apply_blacklist_ko(self):
         with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
-                    mock.patch.object(self.tempestcommon,
-                                      'apply_tempest_blacklist',
-                                      side_effect=Exception()):
+                mock.patch.object(
+                    self.tempestcommon, 'apply_tempest_blacklist',
+                    side_effect=Exception()):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
     def test_run_verifier_tests_ko(self):

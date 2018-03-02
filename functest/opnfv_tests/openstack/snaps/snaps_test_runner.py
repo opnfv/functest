@@ -12,12 +12,12 @@
 
 import logging
 
-from functest.core import unit
+from snaps.openstack import create_flavor
+from xtesting.core import unit
+
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
 from functest.utils import env
-
-from snaps.openstack import create_flavor
 
 
 class SnapsTestRunner(unit.Suite):

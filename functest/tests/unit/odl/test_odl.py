@@ -17,8 +17,8 @@ import mock
 from robot.errors import RobotError
 import six
 from six.moves import urllib
+from xtesting.core import testcase
 
-from functest.core import testcase
 from functest.opnfv_tests.sdn.odl import odl
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"

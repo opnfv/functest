@@ -19,7 +19,7 @@ class CliTestCasesTesting(unittest.TestCase):
 
     def setUp(self):
         self.testname = 'testname'
-        with mock.patch('functest.ci.tier_builder'):
+        with mock.patch('xtesting.ci.tier_builder'):
             self.cli_tests = cli_testcase.CliTestcase()
 
     @mock.patch('functest.utils.functest_utils.execute_command')

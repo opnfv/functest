@@ -20,7 +20,7 @@ class CliTierTesting(unittest.TestCase):
     def setUp(self):
         self.tiername = 'tiername'
         self.testnames = 'testnames'
-        with mock.patch('functest.ci.tier_builder'):
+        with mock.patch('xtesting.ci.tier_builder'):
             self.cli_tier = cli_tier.CliTier()
 
     @mock.patch('functest.cli.commands.cli_tier.click.echo')
