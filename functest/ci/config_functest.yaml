@@ -129,7 +129,7 @@ tempest:
     private_subnet_cidr: 192.168.150.0/24
     router_name: tempest-router
     use_custom_flavors: 'False'
-    volume_device_name: vdc
+    volume_device_name: vdb
 
 rally:
     deployment_name: opnfv-rally
