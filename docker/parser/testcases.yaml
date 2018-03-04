@@ -19,7 +19,7 @@ tiers:
                     installer: ''
                     scenario: '^((?!bgpvpn|noha).)*$'
                 run:
-                    module: 'functest.core.feature'
+                    module: 'xtesting.core.feature'
                     class: 'BashFeature'
                     args:
                         cmd: '/src/nfv-parser/tests/functest_run.sh'
