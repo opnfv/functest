@@ -334,7 +334,8 @@ class TempestResourcesManager(object):
                 name=getattr(
                     config.CONF, 'tempest_identity_tenant_name') + self.guid,
                 description=getattr(
-                    config.CONF, 'tempest_identity_tenant_description')))
+                    config.CONF, 'tempest_identity_tenant_description'),
+                domain=self.os_creds.project_domain_name))
         if project_creator is None or project_creator.get_project() is None:
             raise Exception("Failed to create tenant")
         self.creators.append(project_creator)
@@ -349,7 +350,8 @@ class TempestResourcesManager(object):
                 password=getattr(
                     config.CONF, 'tempest_identity_user_password'),
                 project_name=getattr(
-                    config.CONF, 'tempest_identity_tenant_name') + self.guid))
+                    config.CONF, 'tempest_identity_tenant_name') + self.guid,
+                domain_name=self.os_creds.user_domain_name))
         if user_creator is None or user_creator.get_user() is None:
             raise Exception("Failed to create user")
         self.creators.append(user_creator)
