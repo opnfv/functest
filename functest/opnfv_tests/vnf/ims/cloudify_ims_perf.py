@@ -38,6 +38,7 @@ from functest.opnfv_tests.vnf.ims.ixia.utils import IxChassisUtils
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxLoadUtils
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
 from functest.utils import config
+from functest.utils import env
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 
@@ -113,7 +114,8 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
 
         self.__logger.info("Creating full IXIA network ...")
         subnet_settings = SubnetConfig(name='ixia_management_subnet',
-                                       cidr='10.10.10.0/24')
+                                       cidr='10.10.10.0/24',
+                                       dns_nameservers=[env.get('NAMESERVER')])
         network_settings = NetworkConfig(name='ixia_management_network',
                                          subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)

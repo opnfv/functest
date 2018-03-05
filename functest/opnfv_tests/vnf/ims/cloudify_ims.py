@@ -39,6 +39,7 @@ from xtesting.energy import energy
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
 from functest.utils import config
+from functest.utils import env
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 
@@ -145,7 +146,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
             name='cloudify_ims_subnet-{}'.format(self.uuid),
-            cidr='10.67.79.0/24')
+            cidr='10.67.79.0/24',
+            dns_nameservers=[env.get('NAMESERVER')])
         network_settings = NetworkConfig(
             name='cloudify_ims_network-{}'.format(self.uuid),
             subnet_settings=[subnet_settings])

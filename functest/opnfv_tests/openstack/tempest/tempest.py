@@ -385,7 +385,8 @@ class TempestResourcesManager(object):
                         'tempest_private_subnet_name') + self.guid,
                     project_name=project_name,
                     cidr=getattr(
-                        config.CONF, 'tempest_private_subnet_cidr'))]))
+                        config.CONF, 'tempest_private_subnet_cidr'),
+                    dns_nameservers=[env.get('NAMESERVER')])]))
         if network_creator is None or network_creator.get_network() is None:
             raise Exception("Failed to create private network")
         self.creators.append(network_creator)

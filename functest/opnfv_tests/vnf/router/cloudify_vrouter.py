@@ -24,6 +24,7 @@ from functest.opnfv_tests.openstack.snaps import snaps_utils
 import functest.opnfv_tests.vnf.router.vrouter_base as vrouter_base
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 from functest.utils import config
+from functest.utils import env
 from functest.utils import functest_utils
 
 from git import Repo
@@ -168,7 +169,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
             name='cloudify_vrouter_subnet-{}'.format(self.uuid),
-            cidr='10.67.79.0/24')
+            cidr='10.67.79.0/24',
+            dns_nameservers=[env.get('NAMESERVER')])
         network_settings = NetworkConfig(
             name='cloudify_vrouter_network-{}'.format(self.uuid),
             subnet_settings=[subnet_settings])

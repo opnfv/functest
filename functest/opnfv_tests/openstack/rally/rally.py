@@ -464,7 +464,8 @@ class RallyBase(testcase.TestCase):
                 segmentation_id=rally_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=subnet_name,
-                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR)]))
+                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR,
+                    dns_nameservers=[env.get('NAMESERVER')])]))
         if network_creator is None:
             raise Exception("Failed to create private network")
         self.priv_net_id = network_creator.get_network().id

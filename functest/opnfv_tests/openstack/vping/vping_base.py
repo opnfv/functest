@@ -126,7 +126,8 @@ class VPingBase(testcase.TestCase):
                 segmentation_id=vping_segmentation_id,
                 subnet_settings=[SubnetConfig(
                     name=private_subnet_name,
-                    cidr=private_subnet_cidr)]))
+                    cidr=private_subnet_cidr,
+                    dns_nameservers=[env.get('NAMESERVER')])]))
         self.creators.append(self.network_creator)
 
         # Creating router to external network
