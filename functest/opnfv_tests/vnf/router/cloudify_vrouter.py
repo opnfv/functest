@@ -168,7 +168,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
             name='cloudify_vrouter_subnet-{}'.format(self.uuid),
-            cidr='10.67.79.0/24')
+            cidr='10.67.79.0/24',
+            dns_nameservers=['8.8.8.8'])
         network_settings = NetworkConfig(
             name='cloudify_vrouter_network-{}'.format(self.uuid),
             subnet_settings=[subnet_settings])
