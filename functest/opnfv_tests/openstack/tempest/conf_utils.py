@@ -236,6 +236,8 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     rconfig = ConfigParser.RawConfigParser()
     rconfig.read(tempest_conf_file)
     rconfig.set('compute', 'fixed_network_name', network_name)
+    if CI_INSTALLER_TYPE == 'fuel':
+        setattr(config.CONF, 'tempest_volume_device_name', 'vdc')
     rconfig.set('compute', 'volume_device_name',
                 getattr(config.CONF, 'tempest_volume_device_name'))
 
