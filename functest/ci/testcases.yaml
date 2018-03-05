@@ -262,10 +262,8 @@ tiers:
                     installer: ''
                     scenario: 'odl.*sfc'
                 run:
-                    module: 'xtesting.core.feature'
-                    class: 'BashFeature'
-                    args:
-                        cmd: 'run_sfc_tests.py'
+                    module: 'sfc.tests.functest.run_sfc_tests'
+                    class: 'SfcFunctest'
 
             -
                 case_name: barometercollectd
