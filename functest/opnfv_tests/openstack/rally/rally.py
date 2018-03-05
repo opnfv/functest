@@ -108,13 +108,13 @@ class RallyBase(testcase.TestCase):
     def _build_task_args(self, test_file_name):
         """Build arguments for the Rally task."""
         task_args = {'service_list': [test_file_name]}
-        task_args['image_name'] = self.image_name
-        task_args['flavor_name'] = self.flavor_name
-        task_args['flavor_alt_name'] = self.flavor_alt_name
-        task_args['glance_image_location'] = self.GLANCE_IMAGE_PATH
-        task_args['glance_image_format'] = self.GLANCE_IMAGE_FORMAT
-        task_args['tmpl_dir'] = self.TEMPLATE_DIR
-        task_args['sup_dir'] = self.SUPPORT_DIR
+        task_args['image_name'] = str(self.image_name)
+        task_args['flavor_name'] = str(self.flavor_name)
+        task_args['flavor_alt_name'] = str(self.flavor_alt_name)
+        task_args['glance_image_location'] = str(self.GLANCE_IMAGE_PATH)
+        task_args['glance_image_format'] = str(self.GLANCE_IMAGE_FORMAT)
+        task_args['tmpl_dir'] = str(self.TEMPLATE_DIR)
+        task_args['sup_dir'] = str(self.SUPPORT_DIR)
         task_args['users_amount'] = self.USERS_AMOUNT
         task_args['tenants_amount'] = self.TENANTS_AMOUNT
         task_args['use_existing_users'] = False
