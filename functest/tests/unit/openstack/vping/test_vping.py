@@ -29,6 +29,7 @@ from snaps.openstack.os_credentials import OSCreds
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.vping import vping_userdata, vping_ssh
+from functest.utils import env
 
 
 class VPingUserdataTesting(unittest.TestCase):
@@ -127,6 +128,11 @@ class VPingSSHTesting(unittest.TestCase):
         scp_client = mock.MagicMock(name='put')
         scp_client.put.return_value = None
 
+        subnet_config = SubnetConfig(
+            name='bar',
+            cidr='10.0.0.1/24',
+            dns_nameservers=[env.get('NAMESERVER')])
+
         with mock.patch('snaps.openstack.utils.deploy_utils.create_image',
                         return_value=OpenStackImage(self.os_creds, None)), \
                 mock.patch('snaps.openstack.utils.deploy_utils.create_network',
@@ -134,10 +140,7 @@ class VPingSSHTesting(unittest.TestCase):
                                self.os_creds,
                                NetworkConfig(
                                    name='foo',
-                                   subnet_settings=[
-                                       SubnetConfig(
-                                           name='bar',
-                                           cidr='10.0.0.1/24')]))), \
+                                   subnet_settings=[subnet_config]))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_vm_instance',
                            return_value=OpenStackVmInstance(

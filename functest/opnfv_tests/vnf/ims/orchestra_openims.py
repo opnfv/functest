@@ -19,6 +19,7 @@ import yaml
 
 from functest.core import vnf
 from functest.utils import config
+from functest.utils import env
 
 from org.openbaton.cli.errors.errors import NfvoException
 from org.openbaton.cli.agents.agents import MainAgent
@@ -300,7 +301,8 @@ class OpenImsVnf(vnf.VnfOnBoarding):
             "Creating network/subnet/router if they doen't exist yet...")
         subnet_settings = SubnetConfig(
             name='{}_subnet-{}'.format(self.case_name, self.uuid),
-            cidr="192.168.100.0/24")
+            cidr="192.168.100.0/24",
+            dns_nameservers=[env.get('NAMESERVER')])
         network_settings = NetworkConfig(
             name='{}_net-{}'.format(self.case_name, self.uuid),
             subnet_settings=[subnet_settings])
