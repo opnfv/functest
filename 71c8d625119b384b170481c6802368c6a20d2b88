@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_cf31400d",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-03-06T19:37:31Z",
+      "side": 1,
+      "message": "This is one \"neutron\" too much. Installation will fail because setup.py is one level higher.",
+      "range": {
+        "startLine": 48,
+        "startChar": 74,
+        "endLine": 48,
+        "endChar": 94
+      },
+      "revId": "71c8d625119b384b170481c6802368c6a20d2b88",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
