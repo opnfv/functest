@@ -31,6 +31,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
+    mkdir -p /etc/neutron /etc/glance && \
+    wget -q -O /etc/neutron/policy.json https://raw.githubusercontent.com/openstack/neutron/$OPENSTACK_TAG/etc/policy.json && \
+    wget -q -O /etc/glance/policy.json https://raw.githubusercontent.com/openstack/glance/$OPENSTACK_TAG/etc/policy.json && \
     rm -r upper-constraints.txt /src/os-faults /src/rally && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml

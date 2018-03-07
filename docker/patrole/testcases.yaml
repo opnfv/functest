@@ -10,7 +10,7 @@ tiers:
             -
                 case_name: patrole
                 project_name: functest
-                criteria: 100
+                criteria: 1
                 blocking: true
                 description: >-
                     Test suite from Patrole project.
@@ -20,3 +20,5 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.openstack.patrole.patrole'
                     class: 'Patrole'
+                    args:
+                        role: 'admin'

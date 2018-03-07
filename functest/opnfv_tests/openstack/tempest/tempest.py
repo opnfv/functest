@@ -56,6 +56,7 @@ class TempestCommon(testcase.TestCase):
         self.deployment_dir = conf_utils.get_verifier_deployment_dir(
             self.verifier_id, self.deployment_id)
         self.verification_id = None
+        self.res_dir = conf_utils.TEMPEST_RESULTS_DIR
 
     @staticmethod
     def read_file(filename):
@@ -160,9 +161,9 @@ class TempestCommon(testcase.TestCase):
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
         f_stdout = open(
-            os.path.join(conf_utils.TEMPEST_RESULTS_DIR, "tempest.log"), 'w+')
+            os.path.join(self.res_dir, "tempest.log"), 'w+')
         f_stderr = open(
-            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+            os.path.join(self.res_dir,
                          "tempest-error.log"), 'w+')
 
         proc = subprocess.Popen(
@@ -205,7 +206,7 @@ class TempestCommon(testcase.TestCase):
                     LOGGER.error("No test has been executed")
                     return
 
-            with open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+            with open(os.path.join(self.res_dir,
                                    "tempest.log"), 'r') as logfile:
                 output = logfile.read()
 
@@ -232,7 +233,7 @@ class TempestCommon(testcase.TestCase):
 
     def generate_report(self):
         """Generate verification report."""
-        html_file = os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+        html_file = os.path.join(self.res_dir,
                                  "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                self.verification_id, "--to", html_file]
@@ -243,8 +244,8 @@ class TempestCommon(testcase.TestCase):
 
         self.start_time = time.time()
         try:
-            if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
-                os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
+            if not os.path.exists(self.res_dir):
+                os.makedirs(self.res_dir)
             resources = self.resources.create()
             compute_cnt = snaps_utils.get_active_compute_cnt(
                 self.resources.os_creds)

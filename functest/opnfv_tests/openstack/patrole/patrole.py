@@ -13,10 +13,13 @@ import logging
 import os
 import time
 
+from xtesting.core import testcase
+
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.opnfv_tests.openstack.tempest import tempest
-from xtesting.core import testcase
+from functest.utils import config
+
 
 
 class Patrole(tempest.TempestCommon):
@@ -28,6 +31,8 @@ class Patrole(tempest.TempestCommon):
             kwargs["case_name"] = 'patrole'
         super(Patrole, self).__init__(**kwargs)
         self.mode = "^patrole_tempest_plugin."
+        self.res_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), 'tempest')
 
     def run(self, **kwargs):
         self.start_time = time.time()
@@ -42,7 +47,8 @@ class Patrole(tempest.TempestCommon):
                 network_name=resources.get("network_name"),
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
-                compute_cnt=compute_cnt)
+                compute_cnt=compute_cnt,
+                role=kwargs.get('role', 'admin'))
             self.generate_test_list(self.verifier_repo_dir)
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
@@ -59,7 +65,7 @@ class Patrole(tempest.TempestCommon):
 
     def configure_tempest_patrole(
             self, deployment_dir, network_name=None, image_id=None,
-            flavor_id=None, compute_cnt=None):
+            flavor_id=None, compute_cnt=None, role='admin'):
         # pylint: disable=too-many-arguments
         """
         Add/update needed parameters into tempest.conf file
@@ -74,6 +80,6 @@ class Patrole(tempest.TempestCommon):
         config.set('identity-feature-enabled', 'api_v2', False)
         config.add_section('rbac')
         config.set('rbac', 'enable_rbac', True)
-        config.set('rbac', 'rbac_test_role', 'admin')
+        config.set('rbac', 'rbac_test_role', role)
         with open(conf_file, 'wb') as config_file:
             config.write(config_file)
