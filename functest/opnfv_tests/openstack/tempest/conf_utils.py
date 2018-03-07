@@ -238,10 +238,11 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
     rconfig.read(tempest_conf_file)
     rconfig.set('compute', 'fixed_network_name', network_name)
     if CI_INSTALLER_TYPE == 'fuel':
-        setattr(config.CONF, 'tempest_volume_device_name', 'vdc')
-    rconfig.set('compute', 'volume_device_name',
-                getattr(config.CONF, 'tempest_volume_device_name'))
-
+        # backward compatibility till Fuel jobs set the right env var
+        rconfig.set('compute', 'volume_device_name', 'vdc')
+    else:
+        rconfig.set(
+            'compute', 'volume_device_name', env.get('VOLUME_DEVICE_NAME'))
     if image_id is not None:
         rconfig.set('compute', 'image_ref', image_id)
     if IMAGE_ID_ALT is not None:
