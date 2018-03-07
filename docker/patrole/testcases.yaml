@@ -20,3 +20,5 @@ tiers:
                 run:
                     module: 'functest.opnfv_tests.openstack.patrole.patrole'
                     class: 'Patrole'
+                    args:
+                        role: 'admin'
