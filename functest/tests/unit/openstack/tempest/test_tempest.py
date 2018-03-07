@@ -80,14 +80,13 @@ class OSTempestTesting(unittest.TestCase):
             testr_mode = r"'^tempest\.'"
         else:
             testr_mode = 'tempest.api.' + self.tempestcommon.mode
-        conf_utils.TEMPEST_RAW_LIST = 'raw_list'
         verifier_repo_dir = 'test_verifier_repo_dir'
         cmd = ("cd {0};"
                "testr list-tests {1} > {2};"
                "cd -;".format(verifier_repo_dir, testr_mode,
-                              conf_utils.TEMPEST_RAW_LIST))
+                              self.tempestcommon.raw_list))
         self.tempestcommon.generate_test_list('test_verifier_repo_dir')
-        mock_exec.assert_any_call(cmd)
+        mock_exec.assert_called_once_with(cmd)
 
     def test_gen_tl_smoke_mode(self):
         self._test_gen_tl_mode_default('smoke')
@@ -146,7 +145,7 @@ class OSTempestTesting(unittest.TestCase):
                 'subprocess.Popen')
     def test_generate_report(self, mock_popen):
         self.tempestcommon.verification_id = "1234"
-        html_file = os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+        html_file = os.path.join(tempest.TempestCommon.TEMPEST_RESULTS_DIR,
                                  "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                "1234", "--to", html_file]

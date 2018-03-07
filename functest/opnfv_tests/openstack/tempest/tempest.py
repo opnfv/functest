@@ -44,6 +44,9 @@ class TempestCommon(testcase.TestCase):
     # pylint: disable=too-many-instance-attributes
     """TempestCommon testcases implementation class."""
 
+    TEMPEST_RESULTS_DIR = os.path.join(
+        getattr(config.CONF, 'dir_results'), 'tempest')
+
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)
         self.resources = TempestResourcesManager(**kwargs)
@@ -56,6 +59,9 @@ class TempestCommon(testcase.TestCase):
         self.deployment_dir = conf_utils.get_verifier_deployment_dir(
             self.verifier_id, self.deployment_id)
         self.verification_id = None
+        self.res_dir = TempestCommon.TEMPEST_RESULTS_DIR
+        self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
+        self.list = os.path.join(self.res_dir, 'test_list.txt')
 
     @staticmethod
     def read_file(filename):
@@ -98,7 +104,7 @@ class TempestCommon(testcase.TestCase):
         if self.mode == 'custom':
             if os.path.isfile(conf_utils.TEMPEST_CUSTOM):
                 shutil.copyfile(
-                    conf_utils.TEMPEST_CUSTOM, conf_utils.TEMPEST_RAW_LIST)
+                    conf_utils.TEMPEST_CUSTOM, self.raw_list)
             else:
                 raise Exception("Tempest test list file %s NOT found."
                                 % conf_utils.TEMPEST_CUSTOM)
@@ -113,14 +119,14 @@ class TempestCommon(testcase.TestCase):
                    "testr list-tests {1} > {2};"
                    "cd -;".format(verifier_repo_dir,
                                   testr_mode,
-                                  conf_utils.TEMPEST_RAW_LIST))
+                                  self.raw_list))
             functest_utils.execute_command(cmd)
 
     def apply_tempest_blacklist(self):
         """Exclude blacklisted test cases."""
         LOGGER.debug("Applying tempest blacklist...")
-        cases_file = self.read_file(conf_utils.TEMPEST_RAW_LIST)
-        result_file = open(conf_utils.TEMPEST_LIST, 'w')
+        cases_file = self.read_file(self.raw_list)
+        result_file = open(self.list, 'w')
         black_tests = []
         try:
             installer_type = env.get('INSTALLER_TYPE')
@@ -155,14 +161,14 @@ class TempestCommon(testcase.TestCase):
     def run_verifier_tests(self):
         """Execute tempest test cases."""
         cmd = ["rally", "verify", "start", "--load-list",
-               conf_utils.TEMPEST_LIST]
+               self.list]
         cmd.extend(self.option)
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
         f_stdout = open(
-            os.path.join(conf_utils.TEMPEST_RESULTS_DIR, "tempest.log"), 'w+')
+            os.path.join(self.res_dir, "tempest.log"), 'w+')
         f_stderr = open(
-            os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+            os.path.join(self.res_dir,
                          "tempest-error.log"), 'w+')
 
         proc = subprocess.Popen(
@@ -205,7 +211,7 @@ class TempestCommon(testcase.TestCase):
                     LOGGER.error("No test has been executed")
                     return
 
-            with open(os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+            with open(os.path.join(self.res_dir,
                                    "tempest.log"), 'r') as logfile:
                 output = logfile.read()
 
@@ -232,7 +238,7 @@ class TempestCommon(testcase.TestCase):
 
     def generate_report(self):
         """Generate verification report."""
-        html_file = os.path.join(conf_utils.TEMPEST_RESULTS_DIR,
+        html_file = os.path.join(self.res_dir,
                                  "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                self.verification_id, "--to", html_file]
@@ -243,8 +249,8 @@ class TempestCommon(testcase.TestCase):
 
         self.start_time = time.time()
         try:
-            if not os.path.exists(conf_utils.TEMPEST_RESULTS_DIR):
-                os.makedirs(conf_utils.TEMPEST_RESULTS_DIR)
+            if not os.path.exists(self.res_dir):
+                os.makedirs(self.res_dir)
             resources = self.resources.create()
             compute_cnt = snaps_utils.get_active_compute_cnt(
                 self.resources.os_creds)
