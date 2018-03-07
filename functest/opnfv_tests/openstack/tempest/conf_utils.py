@@ -33,14 +33,10 @@ RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
 GLANCE_IMAGE_PATH = os.path.join(
     getattr(config.CONF, 'dir_functest_images'),
     getattr(config.CONF, 'openstack_image_file_name'))
-TEMPEST_RESULTS_DIR = os.path.join(
-    getattr(config.CONF, 'dir_results'), 'tempest')
 TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
-TEMPEST_RAW_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_raw_list.txt')
-TEMPEST_LIST = os.path.join(TEMPEST_RESULTS_DIR, 'test_list.txt')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
@@ -93,8 +89,7 @@ def create_verifier():
         getattr(config.CONF, 'tempest_verifier_name'))
     ft_utils.execute_command(cmd, error_msg=(
         "Verifier %s does not exist."
-        % getattr(config.CONF, 'tempest_verifier_name')),
-                             verbose=False)
+        % getattr(config.CONF, 'tempest_verifier_name')), verbose=False)
     cmd = ("rally verify create-verifier --source {0} "
            "--name {1} --type tempest --system-wide"
            .format(getattr(config.CONF, 'dir_repo_tempest'),
@@ -168,24 +163,25 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
                         'for-deployment-{}'.format(deployment_id))
 
 
-def backup_tempest_config(conf_file):
+def backup_tempest_config(conf_file, res_dir):
     """
     Copy config file to tempest results directory
     """
-    if not os.path.exists(TEMPEST_RESULTS_DIR):
-        os.makedirs(TEMPEST_RESULTS_DIR)
+    if not os.path.exists(res_dir):
+        os.makedirs(res_dir)
     shutil.copyfile(conf_file,
-                    os.path.join(TEMPEST_RESULTS_DIR, 'tempest.conf'))
+                    os.path.join(res_dir, 'tempest.conf'))
 
 
-def configure_tempest(deployment_dir, network_name=None, image_id=None,
-                      flavor_id=None, compute_cnt=None):
+def configure_tempest(deployment_dir, res_dir, network_name=None,
+                      image_id=None, flavor_id=None, compute_cnt=None):
+    # pylint: disable=too-many-arguments
     """
     Calls rally verify and updates the generated tempest.conf with
     given parameters
     """
     conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file, network_name, image_id,
+    configure_tempest_update_params(conf_file, res_dir, network_name, image_id,
                                     flavor_id, compute_cnt)
 
 
@@ -226,10 +222,10 @@ def update_tempest_conf_file(conf_file, rconfig):
         rconfig.write(config_file)
 
 
-def configure_tempest_update_params(tempest_conf_file, network_name=None,
-                                    image_id=None, flavor_id=None,
-                                    compute_cnt=1):
-    # pylint: disable=too-many-branches
+def configure_tempest_update_params(tempest_conf_file, res_dir,
+                                    network_name=None, image_id=None,
+                                    flavor_id=None, compute_cnt=1):
+    # pylint: disable=too-many-branches, too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
     """
@@ -290,7 +286,7 @@ def configure_tempest_update_params(tempest_conf_file, network_name=None,
                  'into tempest.conf file')
     update_tempest_conf_file(tempest_conf_file, rconfig)
 
-    backup_tempest_config(tempest_conf_file)
+    backup_tempest_config(tempest_conf_file, res_dir)
 
 
 def configure_verifier(deployment_dir):
