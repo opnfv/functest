@@ -29,7 +29,8 @@ class Patrole(tempest.TempestCommon):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'patrole'
         super(Patrole, self).__init__(**kwargs)
-        self.mode = "^patrole_tempest_plugin."
+        self.mode = ("'(?!.*test_networks_multiprovider_rbac)"
+                     "(?=patrole_tempest_plugin.tests.api.(image|network))'")
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'patrole')
         self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
