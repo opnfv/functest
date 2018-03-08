@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_a9c4ab92",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-08T15:02:11Z",
+      "side": 1,
+      "message": "we could keep it.",
+      "revId": "11d7672317629796327d897232204f9bc2df886d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
