@@ -1,7 +1,7 @@
 ---
 tenant_images:
     ubuntu_14.04:
-        /home/opnfv/functest/images/trusty-server-cloudimg-amd64-disk1.img
+        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
     cloudify_manager_4.0:
         /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
 orchestrator:

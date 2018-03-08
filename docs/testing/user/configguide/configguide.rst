@@ -72,7 +72,6 @@ Create a directory for the different images (attached as a Docker volume)::
   images/cirros-d161201-aarch64-kernel
   images/cloudify-manager-premium-4.0.1.qcow2
   images/img
-  images/trusty-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
