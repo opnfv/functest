@@ -48,9 +48,9 @@ class RefstackClient(testcase.TestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "refstack_defcore"
         super(RefstackClient, self).__init__(**kwargs)
-        self.resdir = os.path.join(
+        self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'refstack')
-        self.conf_path = os.path.join(self.resdir, 'refstack_tempest.conf')
+        self.conf_path = os.path.join(self.res_dir, 'refstack_tempest.conf')
 
     @staticmethod
     def run_defcore(conf, testlist):
@@ -74,14 +74,14 @@ class RefstackClient(testcase.TestCase):
         cmd = (["refstack-client", "test", "-c", self.conf_path] +
                options + ["--test-list", self.defcorelist])
         LOGGER.info("Starting Refstack_defcore test case: '%s'.", cmd)
-        with open(os.path.join(self.resdir, "refstack.log"), 'w+') as f_stdout:
-            subprocess.call(cmd, shell=False, stdout=f_stdout,
+        with open(os.path.join(self.res_dir, "refstack.log"), 'w+') as fstdout:
+            subprocess.call(cmd, shell=False, stdout=fstdout,
                             stderr=subprocess.STDOUT)
 
     def parse_refstack_result(self):
         """Parse Refstack results."""
         try:
-            with open(os.path.join(self.resdir,
+            with open(os.path.join(self.res_dir,
                                    "refstack.log"), 'r') as logfile:
                 for line in logfile.readlines():
                     if 'Tests' in line:
@@ -89,7 +89,7 @@ class RefstackClient(testcase.TestCase):
                     if re.search(r"\} tempest\.", line):
                         LOGGER.info(line.replace('\n', ''))
 
-            with open(os.path.join(self.resdir,
+            with open(os.path.join(self.res_dir,
                                    "refstack.log"), 'r') as logfile:
                 output = logfile.read()
 
@@ -147,7 +147,7 @@ class RefstackClient(testcase.TestCase):
             verifier_id, deployment_id)
         conf_file = conf_utils.configure_verifier(deployment_dir)
         conf_utils.configure_tempest_update_params(
-            conf_file, resources.get("network_name"),
+            conf_file, self.res_dir, resources.get("network_name"),
             resources.get("image_id"), resources.get("flavor_id"))
         LOGGER.debug(
             "Updating selected tempest.conf parameters for defcore...")
@@ -168,8 +168,8 @@ class RefstackClient(testcase.TestCase):
         rconfig.set('compute', 'flavor_ref', resources.get("flavor_id"))
         rconfig.set('compute', 'flavor_ref_alt',
                     resources.get("flavor_id_alt"))
-        if not os.path.exists(self.resdir):
-            os.makedirs(self.resdir)
+        if not os.path.exists(self.res_dir):
+            os.makedirs(self.res_dir)
         with open(self.conf_path, 'w') as config_fd:
             rconfig.write(config_fd)
 
