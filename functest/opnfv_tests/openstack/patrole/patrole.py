@@ -31,8 +31,7 @@ class Patrole(tempest.TempestCommon):
         super(Patrole, self).__init__(**kwargs)
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'patrole')
-        self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
-        self.list = os.path.join(self.res_dir, 'test_list.txt')
+        self.list = os.path.join(self.res_dir, 'tempest-list.txt')
 
     def run(self, **kwargs):
         self.start_time = time.time()
@@ -54,7 +53,6 @@ class Patrole(tempest.TempestCommon):
                 compute_cnt=compute_cnt,
                 role=kwargs.get('role', 'admin'))
             self.generate_test_list(self.verifier_repo_dir)
-            self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
             self.generate_report()
