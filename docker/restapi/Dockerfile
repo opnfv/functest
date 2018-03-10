@@ -9,6 +9,7 @@ ARG REFSTACK_TAG=a59189eaacda24b787ecb65e6634257beba361ec
 ARG REFSTACK_TARGET=2017.09
 ARG FDS_TAG=master
 ARG VIMS_TAG=stable
+ARG PATROLE_TAG=0.2.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass \
@@ -31,12 +32,15 @@ RUN apk --no-cache add --update python3 sshpass \
     git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
     (cd /src/refstack-client && git checkout $REFSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
+    git clone https://github.com/openstack/patrole.git /src/patrole && \
+    (cd /src/patrole && git checkout $PATROLE_TAG) && \
+    update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         tempest /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e/src/refstack-client /src/rally -rthirdparty-requirements.txt && \
+        -e/src/refstack-client oslotest /src/patrole /src/rally -rthirdparty-requirements.txt && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         doctor-tests && \
@@ -52,15 +56,18 @@ RUN apk --no-cache add --update python3 sshpass \
         juju-wait && \
     go get github.com/rogpeppe/godeps && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
-    rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
-        /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
+    mkdir -p /etc/neutron /etc/glance && \
+    wget -q -O /etc/neutron/policy.json https://raw.githubusercontent.com/openstack/neutron/$OPENSTACK_TAG/etc/policy.json && \
+    wget -q -O /etc/glance/policy.json https://raw.githubusercontent.com/openstack/glance/$OPENSTACK_TAG/etc/policy.json && \
     cp /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci && \
+    rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
+        /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
 EXPOSE 5000
 CMD ["functest_restapi"]
