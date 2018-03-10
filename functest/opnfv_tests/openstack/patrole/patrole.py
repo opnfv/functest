@@ -29,8 +29,6 @@ class Patrole(tempest.TempestCommon):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'patrole'
         super(Patrole, self).__init__(**kwargs)
-        self.mode = ("'(?!.*test_networks_multiprovider_rbac)"
-                     "(?=patrole_tempest_plugin.tests.api.(image|network))'")
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'patrole')
         self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
@@ -38,6 +36,10 @@ class Patrole(tempest.TempestCommon):
 
     def run(self, **kwargs):
         self.start_time = time.time()
+        for exclude in kwargs.get('exclude', []):
+            self.mode = "{}(?!.*{})".format(self.mode, exclude)
+        self.mode = "'{}(?=patrole_tempest_plugin.tests.api.({}))'".format(
+            self.mode, '|'.join(kwargs.get('services', [])))
         try:
             if not os.path.exists(self.res_dir):
                 os.makedirs(self.res_dir)
