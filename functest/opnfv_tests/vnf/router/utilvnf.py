@@ -20,7 +20,6 @@ import yaml
 
 from functest.utils import config
 from git import Repo
-from requests.auth import HTTPBasicAuth
 from snaps.openstack.utils import nova_utils
 
 
@@ -175,7 +174,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
         response = requests.get(
             url,
-            auth=HTTPBasicAuth('admin', 'admin'),
+            auth=requests.auth.HTTPBasicAuth('admin', 'admin'),
             headers={'Tenant': 'default_tenant'})
 
         resp_data = response.json()

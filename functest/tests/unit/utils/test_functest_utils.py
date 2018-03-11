@@ -20,6 +20,7 @@ from functest.utils import functest_utils
 
 
 class FunctestUtilsTesting(unittest.TestCase):
+    # pylint: disable=too-many-instance-attributes
 
     readline = 0
     test_ip = ['10.1.23.4', '10.1.14.15', '10.1.16.15']
@@ -90,8 +91,8 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.LOGGER.error')
     @mock.patch('functest.utils.functest_utils.LOGGER.info')
-    def test_execute_command_args_present_with_error(self, mock_logger_info,
-                                                     mock_logger_error):
+    def test_exec_cmd_args_present_ko(self, mock_logger_info,
+                                      mock_logger_error):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open, \
                 mock.patch('six.moves.builtins.open',
@@ -120,8 +121,7 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_logger_error.assert_called_once_with(self.error_msg)
 
     @mock.patch('functest.utils.functest_utils.LOGGER.info')
-    def test_execute_command_args_present_with_success(self, mock_logger_info,
-                                                       ):
+    def test_exec_cmd_args_present_ok(self, mock_logger_info):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open, \
                 mock.patch('six.moves.builtins.open',
@@ -149,7 +149,8 @@ class FunctestUtilsTesting(unittest.TestCase):
             mopen.assert_called_once_with(self.output_file, "w")
 
     @mock.patch('sys.stdout')
-    def test_execute_command_args_missing_with_success(self, stdout=None):
+    def test_exec_cmd_args_missing_ok(self, stdout=None):
+        # pylint: disable=unused-argument
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
 
@@ -172,7 +173,8 @@ class FunctestUtilsTesting(unittest.TestCase):
             self.assertEqual(resp, 0)
 
     @mock.patch('sys.stdout')
-    def test_execute_command_args_missing_with_error(self, stdout=None):
+    def test_exec_cmd_args_missing_ko(self, stdout=None):
+        # pylint: disable=unused-argument
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
 
@@ -193,7 +195,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                   output_file=None)
             self.assertEqual(resp, 1)
 
-    def test_get_parameter_from_yaml_failed(self):
+    def test_get_param_from_yaml_failed(self):
         self.file_yaml['general'] = None
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
@@ -206,7 +208,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                              " defined in config_functest.yaml" %
                              self.parameter) in excep.exception)
 
-    def test_get_parameter_from_yaml_default(self):
+    def test_get_param_from_yaml_def(self):
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
                 mock.patch('functest.utils.functest_utils.yaml.safe_load') \
                 as mock_yaml:

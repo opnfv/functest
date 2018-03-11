@@ -89,7 +89,7 @@ def init_db():
         except TypeError:
             pass
         return False
-    # pylint: disable=bad-builtin
+    # pylint: disable=bad-option-value,bad-builtin,
     subclses = filter(func, inspect.getmembers(models, inspect.isclass))
     LOGGER.debug('Import models: %s', [subcls[1] for subcls in subclses])
     BASE.metadata.create_all(bind=ENGINE)

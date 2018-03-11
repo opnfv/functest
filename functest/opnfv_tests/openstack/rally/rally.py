@@ -189,7 +189,7 @@ class RallyBase(testcase.TestCase):
                 return False
 
             for result in report.get('result'):
-                if result is None or len(result.get('error')) > 0:
+                if result is None or result.get('error'):
                     return False
 
         return True

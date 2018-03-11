@@ -7,10 +7,11 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-import requests
 import sys
 import time
 import logging
+
+import requests
 
 from functest.opnfv_tests.vnf.ims.ixia.utils import IxRestUtils
 

@@ -11,11 +11,11 @@
 Resources to handle tier related requests
 """
 
-import pkg_resources
 import re
 
 from flask import jsonify
 from flasgger.utils import swag_from
+import pkg_resources
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
