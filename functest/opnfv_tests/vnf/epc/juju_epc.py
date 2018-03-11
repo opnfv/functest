@@ -23,6 +23,7 @@ import yaml
 from functest.core import vnf
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
+from functest.utils import env
 
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
@@ -139,9 +140,16 @@ class JujuEpc(vnf.VnfOnBoarding):
     def _register_cloud(self):
         self.__logger.info("Creating Cloud for Abot-epc .....")
         clouds_yaml = os.path.join(self.res_dir, "clouds.yaml")
+        # It allows gating APEX and ensures this testcase is working till
+        # https://jira.opnfv.org/browse/APEX-570 is fixed in APEX.
+        # It must be removed as soon as possible to disable per installer
+        # processing in Functest.
+        region = self.snaps_creds.region_name
+        if not region and env.get('INSTALLER_TYPE') == 'apex':
+            region = "regionOne"
         cloud_data = {
             'url': self.public_auth_url,
-            'region': self.snaps_creds.region_name}
+            'region': region}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         if os.system(
