@@ -5,7 +5,6 @@ ARG OPENSTACK_TAG=stable/pike
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
-ARG REFSTACK_TAG=a59189eaacda24b787ecb65e6634257beba361ec
 ARG REFSTACK_TARGET=2017.09
 ARG FDS_TAG=master
 ARG VIMS_TAG=stable
@@ -29,9 +28,6 @@ RUN apk --no-cache add --update python3 sshpass \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd /src/refstack-client && git checkout $REFSTACK_TAG) && \
-    update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
     git clone https://github.com/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git checkout $PATROLE_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
@@ -40,7 +36,7 @@ RUN apk --no-cache add --update python3 sshpass \
         tempest /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e/src/refstack-client oslotest /src/patrole /src/rally -rthirdparty-requirements.txt && \
+        oslotest /src/patrole /src/rally -rthirdparty-requirements.txt && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         doctor-tests && \
@@ -48,7 +44,6 @@ RUN apk --no-cache add --update python3 sshpass \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
-    ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv --python=python2.7 && \
     git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
@@ -66,7 +61,7 @@ RUN apk --no-cache add --update python3 sshpass \
     wget -q -O /etc/neutron/policy.json https://raw.githubusercontent.com/openstack/neutron/$OPENSTACK_TAG/etc/policy.json && \
     wget -q -O /etc/glance/policy.json https://raw.githubusercontent.com/openstack/glance/$OPENSTACK_TAG/etc/policy.json && \
     cp /usr/lib/python2.7/site-packages/functest/ci/testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci && \
-    rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
+    rm -r upper-constraints.txt thirdparty-requirements.txt /src/odl_test/.git \
         /src/os-faults /src/rally /src/fds/.git /src/vims-test/.git /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
 EXPOSE 5000
