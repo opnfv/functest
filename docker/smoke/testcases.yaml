@@ -84,8 +84,8 @@ tiers:
                     scenario: ''
                 run:
                     module:
-                        'functest.opnfv_tests.openstack.refstack_client.refstack_client'
-                    class: 'RefstackClient'
+                        'functest.opnfv_tests.openstack.refstack_client.refstack'
+                    class: 'Refstack'
 
             -
                 case_name: odl
