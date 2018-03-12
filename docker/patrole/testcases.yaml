@@ -15,7 +15,7 @@ tiers:
                 description: >-
                     Test suite from Patrole project.
                 dependencies:
-                    installer: '^((?!netvirt).)*$'
+                    installer: ''
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.patrole.patrole'
