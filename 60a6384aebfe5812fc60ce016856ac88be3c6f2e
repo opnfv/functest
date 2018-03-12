@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_074e636f",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-12T22:37:57Z",
+      "side": 1,
+      "message": "refstack_client -\u003e refstack",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 71
+      },
+      "revId": "60a6384aebfe5812fc60ce016856ac88be3c6f2e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
