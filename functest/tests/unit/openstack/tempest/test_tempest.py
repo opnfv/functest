@@ -84,7 +84,7 @@ class OSTempestTesting(unittest.TestCase):
         cmd = ("cd {0};"
                "testr list-tests {1} > {2};"
                "cd -;".format(verifier_repo_dir, testr_mode,
-                              self.tempestcommon.raw_list))
+                              self.tempestcommon.list))
         self.tempestcommon.generate_test_list('test_verifier_repo_dir')
         mock_exec.assert_called_once_with(cmd)
 
@@ -99,7 +99,10 @@ class OSTempestTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.tempestcommon.parse_verifier_result()
 
-    def test_apply_missing_blacklist(self):
+    @mock.patch("os.rename")
+    @mock.patch("os.remove")
+    @mock.patch("os.path.exists", return_value=True)
+    def test_apply_missing_blacklist(self, *args):
         with mock.patch('__builtin__.open', mock.mock_open()) as mock_open, \
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']):
@@ -110,8 +113,15 @@ class OSTempestTesting(unittest.TestCase):
             obj = mock_open()
             obj.write.assert_any_call('test1\n')
             obj.write.assert_any_call('test2\n')
+            args[0].assert_called_once_with(self.tempestcommon.raw_list)
+            args[1].assert_called_once_with(self.tempestcommon.raw_list)
+            args[2].assert_called_once_with(
+                self.tempestcommon.list, self.tempestcommon.raw_list)
 
-    def test_apply_blacklist_default(self):
+    @mock.patch("os.rename")
+    @mock.patch("os.remove")
+    @mock.patch("os.path.exists", return_value=True)
+    def test_apply_blacklist_default(self, *args):
         item_dict = {'scenarios': ['deploy_scenario'],
                      'installers': ['installer_type'],
                      'tests': ['test2']}
@@ -126,6 +136,10 @@ class OSTempestTesting(unittest.TestCase):
             obj = mock_open()
             obj.write.assert_any_call('test1\n')
             self.assertFalse(obj.write.assert_any_call('test2\n'))
+            args[0].assert_called_once_with(self.tempestcommon.raw_list)
+            args[1].assert_called_once_with(self.tempestcommon.raw_list)
+            args[2].assert_called_once_with(
+                self.tempestcommon.list, self.tempestcommon.raw_list)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.info')
     def test_run_verifier_tests_default(self, mock_logger_info):

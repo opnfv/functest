@@ -31,8 +31,8 @@ class Patrole(tempest.TempestCommon):
         super(Patrole, self).__init__(**kwargs)
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'patrole')
-        self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
-        self.list = os.path.join(self.res_dir, 'test_list.txt')
+        self.list = os.path.join(self.res_dir, 'tempest-list.txt')
+        self.conf_file = None
 
     def run(self, **kwargs):
         self.start_time = time.time()
@@ -46,15 +46,15 @@ class Patrole(tempest.TempestCommon):
             resources = self.resources.create()
             compute_cnt = snaps_utils.get_active_compute_cnt(
                 self.resources.os_creds)
-            self.configure_tempest_patrole(
-                self.deployment_dir,
+            self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
+            conf_utils.configure_tempest_update_params(
+                self.conf_file, self.res_dir,
                 network_name=resources.get("network_name"),
                 image_id=resources.get("image_id"),
                 flavor_id=resources.get("flavor_id"),
-                compute_cnt=compute_cnt,
-                role=kwargs.get('role', 'admin'))
+                compute_cnt=compute_cnt)
+            self.configure_tempest_patrole(kwargs.get('role', 'admin'))
             self.generate_test_list(self.verifier_repo_dir)
-            self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
             self.generate_report()
@@ -67,24 +67,12 @@ class Patrole(tempest.TempestCommon):
         self.stop_time = time.time()
         return res
 
-    def configure_tempest_patrole(
-            self, deployment_dir, network_name=None, image_id=None,
-            flavor_id=None, compute_cnt=None, role='admin'):
-        # pylint: disable=too-many-arguments
-        """
-        Add/update needed parameters into tempest.conf file
-        """
-        self.__logger.debug(
-            "Updating selected tempest.conf parameters for Patrole")
-        conf_file = conf_utils.configure_verifier(deployment_dir)
-        conf_utils.configure_tempest_update_params(
-            conf_file, self.res_dir, network_name, image_id, flavor_id,
-            compute_cnt)
+    def configure_tempest_patrole(self, role='admin'):
         rconfig = conf_utils.ConfigParser.RawConfigParser()
-        rconfig.read(conf_file)
+        rconfig.read(self.conf_file)
         rconfig.set('identity-feature-enabled', 'api_v2', False)
         rconfig.add_section('rbac')
         rconfig.set('rbac', 'enable_rbac', True)
         rconfig.set('rbac', 'rbac_test_role', role)
-        with open(conf_file, 'wb') as config_file:
+        with open(self.conf_file, 'wb') as config_file:
             rconfig.write(config_file)

@@ -119,12 +119,15 @@ class TempestCommon(testcase.TestCase):
                    "testr list-tests {1} > {2};"
                    "cd -;".format(verifier_repo_dir,
                                   testr_mode,
-                                  self.raw_list))
+                                  self.list))
             functest_utils.execute_command(cmd)
 
     def apply_tempest_blacklist(self):
         """Exclude blacklisted test cases."""
         LOGGER.debug("Applying tempest blacklist...")
+        if os.path.exists(self.raw_list):
+            os.remove(self.raw_list)
+        os.rename(self.list, self.raw_list)
         cases_file = self.read_file(self.raw_list)
         result_file = open(self.list, 'w')
         black_tests = []
