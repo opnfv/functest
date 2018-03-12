@@ -5,7 +5,6 @@ ARG OPENSTACK_TAG=stable/pike
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
-ARG REFSTACK_TAG=a59189eaacda24b787ecb65e6634257beba361ec
 ARG REFSTACK_TARGET=2017.09
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
@@ -22,20 +21,16 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    git clone https://github.com/openstack/refstack-client.git /src/refstack-client && \
-    (cd /src/refstack-client && git checkout $REFSTACK_TAG) && \
-    update-requirements -s --source /src/openstack-requirements /src/refstack-client/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         tempest /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e/src/refstack-client /src/rally -rthirdparty-requirements.txt && \
+        /src/rally -rthirdparty-requirements.txt && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
-    ln -s /src/tempest /src/refstack-client/.tempest && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    rm -r upper-constraints.txt thirdparty-requirements.txt /src/refstack-client/.git /src/odl_test/.git \
+    rm -r upper-constraints.txt thirdparty-requirements.txt /src/odl_test/.git \
         /src/os-faults /src/rally && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \

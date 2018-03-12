@@ -26,9 +26,6 @@ LOGGER = logging.getLogger(__name__)
 class ApiResource(Resource):
     """ API Resource class"""
 
-    def __init__(self):
-        super(ApiResource, self).__init__()
-
     def _post_args(self):  # pylint: disable=no-self-use
         # pylint: disable=maybe-no-member
         """ Return action and args after parsing request """
