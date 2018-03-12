@@ -70,7 +70,6 @@ class Patrole(tempest.TempestCommon):
     def configure_tempest_patrole(self, role='admin'):
         rconfig = conf_utils.ConfigParser.RawConfigParser()
         rconfig.read(self.conf_file)
-        rconfig.set('identity-feature-enabled', 'api_v2', False)
         rconfig.add_section('rbac')
         rconfig.set('rbac', 'enable_rbac', True)
         rconfig.set('rbac', 'rbac_test_role', role)
