@@ -46,6 +46,53 @@
       "revId": "a999859a558b90e672406952ecc9f6a7020f69bd",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_477d0b6e",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 20
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-03-12T09:12:28Z",
+      "side": 1,
+      "message": "theoretically, it should be supported also on Fuel [1] and Compass [2] as already mentioned by Linda. Haven\u0027t verified this, though.\n\n[1] https://jira.opnfv.org/browse/FUEL-303\n[2] https://jira.opnfv.org/browse/COMPASS-571",
+      "parentUuid": "5a3f45e8_6c3c6c30",
+      "range": {
+        "startLine": 164,
+        "startChar": 30,
+        "endLine": 164,
+        "endChar": 37
+      },
+      "revId": "a999859a558b90e672406952ecc9f6a7020f69bd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_07eae30e",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 20
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-03-12T09:12:28Z",
+      "side": 1,
+      "message": "should this also include Compass and Fuel (see the other testcases file)?",
+      "range": {
+        "startLine": 226,
+        "startChar": 32,
+        "endLine": 226,
+        "endChar": 36
+      },
+      "revId": "a999859a558b90e672406952ecc9f6a7020f69bd",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
