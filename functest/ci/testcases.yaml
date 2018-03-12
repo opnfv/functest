@@ -398,37 +398,6 @@ tiers:
                     class: 'CloudifyVrouter'
 
             -
-                case_name: orchestra_openims
-                project_name: orchestra
-                enabled: false
-                criteria: 100
-                blocking: false
-                description: >-
-                    OpenIMS VNF deployment with Open Baton (Orchestra)
-                dependencies:
-                    installer: ''
-                    scenario: 'os-nosdn-nofeature-.*ha'
-                run:
-                    module: 'functest.opnfv_tests.vnf.ims.orchestra_openims'
-                    class: 'OpenImsVnf'
-
-            -
-                case_name: orchestra_clearwaterims
-                project_name: orchestra
-                enabled: false
-                criteria: 100
-                blocking: false
-                description: >-
-                    ClearwaterIMS VNF deployment with Open Baton (Orchestra)
-                dependencies:
-                    installer: ''
-                    scenario: 'os-nosdn-nofeature-.*ha'
-                run:
-                    module:
-                        'functest.opnfv_tests.vnf.ims.orchestra_clearwaterims'
-                    class: 'ClearwaterImsVnf'
-
-            -
                 case_name: juju_epc
                 project_name: functest
                 criteria: 100
