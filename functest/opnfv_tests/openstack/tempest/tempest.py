@@ -445,8 +445,7 @@ class TempestResourcesManager(object):
         self.creators.append(flavor_creator)
         return flavor.id
 
-    def create(self, use_custom_images=False, use_custom_flavors=False,
-               create_project=False):
+    def create(self, create_project=False):
         """Create resources for Tempest test suite."""
         result = {
             'tempest_net_name': None,
@@ -468,30 +467,20 @@ class TempestResourcesManager(object):
         LOGGER.debug("Creating private network for Tempest suite")
         result['tempest_net_name'] = self._create_network(project_name)
 
-        LOGGER.debug("Creating image for Tempest suite")
+        LOGGER.debug("Creating two images for Tempest suite")
         image_name = getattr(config.CONF, 'openstack_image_name') + self.guid
         result['image_id'] = self._create_image(image_name)
+        image_name = getattr(
+            config.CONF, 'openstack_image_name_alt') + self.guid
+        result['image_id_alt'] = self._create_image(image_name)
 
-        if use_custom_images:
-            LOGGER.debug("Creating 2nd image for Tempest suite")
-            image_name = getattr(
-                config.CONF, 'openstack_image_name_alt') + self.guid
-            result['image_id_alt'] = self._create_image(image_name)
+        LOGGER.info("Creating two flavors for Tempest suite")
+        name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
+        result['flavor_id'] = self._create_flavor(name)
 
-        if (getattr(config.CONF, 'tempest_use_custom_flavors') == 'True' or
-                use_custom_flavors):
-            LOGGER.info("Creating flavor for Tempest suite")
-            name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
-            result['flavor_id'] = self._create_flavor(name)
-
-        if use_custom_flavors:
-            LOGGER.info("Creating 2nd flavor for Tempest suite")
-            scenario = env.get('DEPLOY_SCENARIO')
-            if 'ovs' in scenario or 'fdio' in scenario:
-                setattr(config.CONF, 'openstack_flavor_ram', 1024)
-            name = getattr(
-                config.CONF, 'openstack_flavor_name_alt') + self.guid
-            result['flavor_id_alt'] = self._create_flavor(name)
+        name = getattr(
+            config.CONF, 'openstack_flavor_name_alt') + self.guid
+        result['flavor_id_alt'] = self._create_flavor(name)
 
         return result
 

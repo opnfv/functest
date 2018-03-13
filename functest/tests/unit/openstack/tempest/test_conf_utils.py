@@ -243,13 +243,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             conf_utils.configure_tempest('test_dep_dir', 'test_dir')
             self.assertTrue(mock_upd.called)
 
-    def test_gen_test_accounts_file_def(self):
-        with mock.patch("__builtin__.open", mock.mock_open()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                       'yaml.dump') as mock_dump:
-            conf_utils.generate_test_accounts_file('test_tenant_id')
-            self.assertTrue(mock_dump.called)
-
     def _test_missing_param(self, params, image_id, flavor_id):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.ConfigParser.RawConfigParser.'
