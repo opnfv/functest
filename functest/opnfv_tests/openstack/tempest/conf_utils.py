@@ -185,26 +185,6 @@ def configure_tempest(deployment_dir, res_dir, network_name=None,
                                     flavor_id, compute_cnt)
 
 
-def generate_test_accounts_file(tenant_id):
-    """
-    Add needed tenant and user params into test_accounts.yaml
-    """
-
-    LOGGER.debug("Add needed params into test_accounts.yaml...")
-    accounts_list = [
-        {
-            'tenant_name': getattr(
-                config.CONF, 'tempest_identity_tenant_name'),
-            'tenant_id': str(tenant_id),
-            'username': getattr(config.CONF, 'tempest_identity_user_name'),
-            'password': getattr(config.CONF, 'tempest_identity_user_password')
-        }
-    ]
-
-    with open(TEST_ACCOUNTS_FILE, "w") as tfile:
-        yaml.dump(accounts_list, tfile, default_flow_style=False)
-
-
 def update_tempest_conf_file(conf_file, rconfig):
     """Update defined paramters into tempest config file"""
     with open(TEMPEST_CONF_YAML) as yfile:
