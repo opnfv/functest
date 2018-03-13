@@ -76,16 +76,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         tempest_resources = tempest.TempestResourcesManager(
             os_creds=self.os_creds)
-
-        setattr(config.CONF, 'tempest_use_custom_flavors', 'True')
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
-        msg = 'Failed to create flavor'
-        self.assertTrue(msg in context.exception, msg=str(context.exception))
-
-        setattr(config.CONF, 'tempest_use_custom_flavors', 'False')
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create(use_custom_flavors=True)
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
