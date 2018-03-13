@@ -104,7 +104,7 @@ class TempestCommon(testcase.TestCase):
         if self.mode == 'custom':
             if os.path.isfile(conf_utils.TEMPEST_CUSTOM):
                 shutil.copyfile(
-                    conf_utils.TEMPEST_CUSTOM, self.raw_list)
+                    conf_utils.TEMPEST_CUSTOM, self.list)
             else:
                 raise Exception("Tempest test list file %s NOT found."
                                 % conf_utils.TEMPEST_CUSTOM)
