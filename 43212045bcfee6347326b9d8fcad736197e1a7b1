@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_188c017f",
+        "filename": "functest/opnfv_tests/openstack/tempest/conf_utils.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-13T03:10:51Z",
+      "side": 1,
+      "message": "The test results are the same with or without this api_extensions config on Compass.",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 67
+      },
+      "revId": "43212045bcfee6347326b9d8fcad736197e1a7b1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
