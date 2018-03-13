@@ -47,7 +47,7 @@ class Refstack(tempest.TempestCommon):
         try:
             if not os.path.exists(self.res_dir):
                 os.makedirs(self.res_dir)
-            resources = self.resources.create()
+            resources = self.resources.create(use_custom_images=True, use_custom_flavors=True)
             compute_cnt = snaps_utils.get_active_compute_cnt(
                 self.resources.os_creds)
             conf_file = conf_utils.configure_verifier(self.deployment_dir)
