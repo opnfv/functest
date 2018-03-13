@@ -12,12 +12,10 @@
 
 import logging
 
-from snaps.openstack import create_flavor
 from xtesting.core import unit
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
-from functest.utils import env
 
 
 class SnapsTestRunner(unit.Suite):
@@ -45,12 +43,8 @@ class SnapsTestRunner(unit.Suite):
             getattr(config.CONF, 'snaps_use_floating_ips') == 'True')
         self.use_keystone = (
             getattr(config.CONF, 'snaps_use_keystone') == 'True')
-        scenario = env.get('DEPLOY_SCENARIO')
 
-        self.flavor_metadata = None
-        if 'ovs' in scenario or 'fdio' in scenario:
-            self.flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
-
+        self.flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
         self.logger.info("Using flavor metadata '%s'", self.flavor_metadata)
 
         self.image_metadata = None

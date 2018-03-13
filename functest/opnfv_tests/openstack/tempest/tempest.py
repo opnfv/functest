@@ -24,7 +24,6 @@ from snaps.config.flavor import FlavorConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
 from snaps.config.project import ProjectConfig
 from snaps.config.user import UserConfig
-from snaps.openstack import create_flavor
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
@@ -435,10 +434,7 @@ class TempestResourcesManager(object):
 
     def _create_flavor(self, name):
         """Create flavor for tests."""
-        scenario = env.get('DEPLOY_SCENARIO')
-        flavor_metadata = None
-        if 'ovs' in scenario or 'fdio' in scenario:
-            flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
+        flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
         flavor_creator = OpenStackFlavor(
             self.os_creds, FlavorConfig(
                 name=name,
@@ -452,8 +448,7 @@ class TempestResourcesManager(object):
         self.creators.append(flavor_creator)
         return flavor.id
 
-    def create(self, use_custom_images=False, use_custom_flavors=False,
-               create_project=False):
+    def create(self, create_project=False):
         """Create resources for Tempest test suite."""
         result = {
             'tempest_net_name': None,
@@ -475,30 +470,20 @@ class TempestResourcesManager(object):
         LOGGER.debug("Creating private network for Tempest suite")
         result['tempest_net_name'] = self._create_network(project_name)
 
-        LOGGER.debug("Creating image for Tempest suite")
+        LOGGER.debug("Creating two images for Tempest suite")
         image_name = getattr(config.CONF, 'openstack_image_name') + self.guid
         result['image_id'] = self._create_image(image_name)
+        image_name = getattr(
+            config.CONF, 'openstack_image_name_alt') + self.guid
+        result['image_id_alt'] = self._create_image(image_name)
 
-        if use_custom_images:
-            LOGGER.debug("Creating 2nd image for Tempest suite")
-            image_name = getattr(
-                config.CONF, 'openstack_image_name_alt') + self.guid
-            result['image_id_alt'] = self._create_image(image_name)
+        LOGGER.info("Creating two flavors for Tempest suite")
+        name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
+        result['flavor_id'] = self._create_flavor(name)
 
-        if (getattr(config.CONF, 'tempest_use_custom_flavors') == 'True' or
-                use_custom_flavors):
-            LOGGER.info("Creating flavor for Tempest suite")
-            name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
-            result['flavor_id'] = self._create_flavor(name)
-
-        if use_custom_flavors:
-            LOGGER.info("Creating 2nd flavor for Tempest suite")
-            scenario = env.get('DEPLOY_SCENARIO')
-            if 'ovs' in scenario or 'fdio' in scenario:
-                setattr(config.CONF, 'openstack_flavor_ram', 1024)
-            name = getattr(
-                config.CONF, 'openstack_flavor_name_alt') + self.guid
-            result['flavor_id_alt'] = self._create_flavor(name)
+        name = getattr(
+            config.CONF, 'openstack_flavor_name_alt') + self.guid
+        result['flavor_id_alt'] = self._create_flavor(name)
 
         return result
 

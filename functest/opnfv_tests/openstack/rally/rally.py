@@ -53,7 +53,7 @@ class RallyBase(testcase.TestCase):
     GLANCE_IMAGE_FORMAT = getattr(config.CONF, 'openstack_image_disk_format')
     GLANCE_IMAGE_USERNAME = getattr(config.CONF, 'openstack_image_username')
     GLANCE_IMAGE_EXTRA_PROPERTIES = getattr(
-        config.CONF, 'openstack_extra_properties', {})
+        config.CONF, 'image_properties', {})
     FLAVOR_NAME = getattr(config.CONF, 'rally_flavor_name')
     FLAVOR_ALT_NAME = getattr(config.CONF, 'rally_flavor_alt_name')
     FLAVOR_RAM = 512
