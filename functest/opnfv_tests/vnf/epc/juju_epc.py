@@ -284,10 +284,17 @@ class JujuEpc(vnf.VnfOnBoarding):
                     name=image_name, image_user='cloud', img_format='qcow2',
                     image_file=image_file))
                 image_id = image_creator.create().id
+                # It allows gating APEX and ensures this testcase is working
+                # till https://jira.opnfv.org/browse/APEX-570 is fixed in APEX.
+                # It must be removed as soon as possible to disable per
+                # installer processing in Functest.
+                region = self.snaps_creds.region_name
+                if not region and env.get('INSTALLER_TYPE') == 'apex':
+                    region = "regionOne"
                 os.system(
                     'juju metadata generate-image -d ~ -i {} -s {} -r '
                     '{} -u {}'.format(
-                        image_id, image_name, self.snaps_creds.region_name,
+                        image_id, image_name, region,
                         self.public_auth_url))
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
