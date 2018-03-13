@@ -6,6 +6,7 @@ ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
 ARG REFSTACK_TARGET=2017.09
+ARG PATROLE_TAG=0.2.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -21,12 +22,15 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
+    git clone https://github.com/openstack/patrole.git /src/patrole && \
+    (cd /src/patrole && git checkout $PATROLE_TAG) && \
+    update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         tempest /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        /src/rally -rthirdparty-requirements.txt && \
+        /src/rally /src/patrole -rthirdparty-requirements.txt && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     virtualenv --system-site-packages /src/tempest/.venv && \

@@ -88,6 +88,28 @@ tiers:
                     class: 'Refstack'
 
             -
+                case_name: patrole
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    Test suite from Patrole project.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.patrole.patrole'
+                    class: 'Patrole'
+                    args:
+                        role: 'admin'
+                        services:
+                            - 'image'
+                            - 'network'
+                            - 'volume'
+                        exclude:
+                            - 'test_networks_multiprovider_rbac'
+
+            -
                 case_name: odl
                 project_name: functest
                 criteria: 100
