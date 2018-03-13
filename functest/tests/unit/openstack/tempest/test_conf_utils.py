@@ -76,16 +76,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         tempest_resources = tempest.TempestResourcesManager(
             os_creds=self.os_creds)
-
-        setattr(config.CONF, 'tempest_use_custom_flavors', 'True')
         with self.assertRaises(Exception) as context:
             tempest_resources.create()
-        msg = 'Failed to create flavor'
-        self.assertTrue(msg in context.exception, msg=str(context.exception))
-
-        setattr(config.CONF, 'tempest_use_custom_flavors', 'False')
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create(use_custom_flavors=True)
         msg = 'Failed to create flavor'
         self.assertTrue(msg in context.exception, msg=str(context.exception))
 
@@ -233,6 +225,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 'test_conf_file', res_dir='test_dir')
             self.assertTrue(mock_copyfile.called)
 
+<<<<<<< HEAD
     def test_gen_test_accounts_file_def(self):
         with mock.patch("__builtin__.open", mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'

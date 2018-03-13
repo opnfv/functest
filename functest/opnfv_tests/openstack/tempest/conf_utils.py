@@ -39,9 +39,6 @@ TEMPEST_BLACKLIST = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
-TEST_ACCOUNTS_FILE = pkg_resources.resource_filename(
-    'functest',
-    'opnfv_tests/openstack/tempest/custom_tests/test_accounts.yaml')
 
 CI_INSTALLER_TYPE = env.get('INSTALLER_TYPE')
 
@@ -171,26 +168,6 @@ def backup_tempest_config(conf_file, res_dir):
         os.makedirs(res_dir)
     shutil.copyfile(conf_file,
                     os.path.join(res_dir, 'tempest.conf'))
-
-
-def generate_test_accounts_file(tenant_id):
-    """
-    Add needed tenant and user params into test_accounts.yaml
-    """
-
-    LOGGER.debug("Add needed params into test_accounts.yaml...")
-    accounts_list = [
-        {
-            'tenant_name': getattr(
-                config.CONF, 'tempest_identity_tenant_name'),
-            'tenant_id': str(tenant_id),
-            'username': getattr(config.CONF, 'tempest_identity_user_name'),
-            'password': getattr(config.CONF, 'tempest_identity_user_password')
-        }
-    ]
-
-    with open(TEST_ACCOUNTS_FILE, "w") as tfile:
-        yaml.dump(accounts_list, tfile, default_flow_style=False)
 
 
 def update_tempest_conf_file(conf_file, rconfig):
