@@ -149,17 +149,11 @@ validate the scenario for the release.
 |             |               | cloudify_ims   | Based on cloudify_ims test case  |
 |             |               | perf           | cloudify_ims_perf substitutes    |
 |             |               |                | the signaling test suite by an   |
-|             |               |                | automatic deployment of an Ixia  |
-|             |               |                | loader and generic SIP stress    |
-|             |               |                | tests.                           |
-|             |               |                | This work has been initiated     |
-|             |               |                | during the plugfest and allows   |
-|             |               |                | realistic load tests on top of   |
-|             |               |                | cloudify_ims. Please note that   |
-|             |               |                | this test is available but not   |
-|             |               |                | declared in testcases.yaml as it |
-|             |               |                | requires access to proprietary   |
-|             |               |                | resources (Ixia loader)          |
+|             |               |                | automatic deployment of SIPp     |
+|             |               |                | and generic SIP stress tests.    |
+|             |               |                | Please note that this test       |
+|             |               |                | is available but not declared    |
+|             |               |                | in testcases.yaml.               |
 +-------------+---------------+----------------+----------------------------------+
 
 

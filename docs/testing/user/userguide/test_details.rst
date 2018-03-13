@@ -432,9 +432,7 @@ cloudify_ims_perf
 This testcase extends the cloudify_ims test case.
 The first part is similar but the testing part is different.
 The testing part consists in automating a realistic signaling load on the vIMS
-using an Ixia loader (proprietary tools)
- - You need to have access to an Ixia licence server defined in the configuration
-    file and have ixia image locally.
+using SIPp
 
 This test case is available but not declared in testcases.yaml. The declaration
 of the testcase is simple, connect to your functest-vnf docker, add the following
@@ -446,8 +444,7 @@ section in /usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
       criteria: 80
       blocking: false
       description: >-
-          Stress tests based on Cloudify. Ixia loader images and access to Ixia
-          server license.
+          Stress tests using SIPp to stress Clearwater IMS
       dependencies:
           installer: ''
           scenario: 'os-nosdn-nofeature-ha'
