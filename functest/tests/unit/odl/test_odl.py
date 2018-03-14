@@ -416,9 +416,10 @@ class ODLRunTesting(ODLTesting):
                        odlrestconfport='8081')
 
     def test_compass(self):
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         os.environ["INSTALLER_TYPE"] = "compass"
         self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=urllib.parse.urlparse(self._neutron_url).hostname,
+                       odlip=self._sdn_controller_ip,
                        odlrestconfport='8080')
 
     def test_daisy_no_controller_ip(self):
