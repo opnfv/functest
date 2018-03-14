@@ -173,18 +173,6 @@ def backup_tempest_config(conf_file, res_dir):
                     os.path.join(res_dir, 'tempest.conf'))
 
 
-def configure_tempest(deployment_dir, res_dir, network_name=None,
-                      image_id=None, flavor_id=None, compute_cnt=None):
-    # pylint: disable=too-many-arguments
-    """
-    Calls rally verify and updates the generated tempest.conf with
-    given parameters
-    """
-    conf_file = configure_verifier(deployment_dir)
-    configure_tempest_update_params(conf_file, res_dir, network_name, image_id,
-                                    flavor_id, compute_cnt)
-
-
 def generate_test_accounts_file(tenant_id):
     """
     Add needed tenant and user params into test_accounts.yaml
