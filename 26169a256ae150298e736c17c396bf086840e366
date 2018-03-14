@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_64d75c24",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-14T04:13:59Z",
+      "side": 1,
+      "message": "Could we also remove the process of _create_project and _create_user? They are not mandatory any more.",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 75
+      },
+      "revId": "26169a256ae150298e736c17c396bf086840e366",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_e4e24c00",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-14T04:13:59Z",
+      "side": 1,
+      "message": "Then we can create network hosted in \"admin\" project without a new created project. What do you think, @Cedric?",
+      "range": {
+        "startLine": 468,
+        "startChar": 37,
+        "endLine": 468,
+        "endChar": 71
+      },
+      "revId": "26169a256ae150298e736c17c396bf086840e366",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
