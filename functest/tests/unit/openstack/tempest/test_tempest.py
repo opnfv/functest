@@ -59,7 +59,7 @@ class OSTempestTesting(unittest.TestCase):
                         'os.path.isfile', return_value=False), \
                 self.assertRaises(Exception) as context:
             msg = "Tempest test list file %s NOT found."
-            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+            self.tempestcommon.generate_test_list()
             self.assertTrue(
                 (msg % conf_utils.TEMPEST_CUSTOM) in context.exception)
 
@@ -69,7 +69,7 @@ class OSTempestTesting(unittest.TestCase):
                         'shutil.copyfile') as mock_copyfile, \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'os.path.isfile', return_value=True):
-            self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+            self.tempestcommon.generate_test_list()
             self.assertTrue(mock_copyfile.called)
 
     @mock.patch('functest.utils.functest_utils.execute_command')
@@ -86,7 +86,7 @@ class OSTempestTesting(unittest.TestCase):
                "testr list-tests {1} > {2};"
                "cd -;".format(verifier_repo_dir, testr_mode,
                               self.tempestcommon.list))
-        self.tempestcommon.generate_test_list('test_verifier_repo_dir')
+        self.tempestcommon.generate_test_list()
         mock_exec.assert_called_once_with(cmd)
 
     def test_gen_tl_smoke_mode(self):
@@ -210,7 +210,7 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_active_compute_cnt', return_value=2)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'conf_utils.configure_tempest', side_effect=Exception)
+                'TempestCommon.configure', side_effect=Exception)
     def test_run_configure_tempest_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
@@ -224,7 +224,7 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
                 'get_active_compute_cnt', return_value=2)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'conf_utils.configure_tempest')
+                'TempestCommon.configure')
     def _test_run(self, status, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(), status)

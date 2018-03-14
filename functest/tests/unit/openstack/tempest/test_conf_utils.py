@@ -233,16 +233,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 'test_conf_file', res_dir='test_dir')
             self.assertTrue(mock_copyfile.called)
 
-    def test_conf_tempest_def(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.configure_verifier',
-                        return_value='test_conf_file'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.configure_tempest_update_params')\
-                as mock_upd:
-            conf_utils.configure_tempest('test_dep_dir', 'test_dir')
-            self.assertTrue(mock_upd.called)
-
     def test_gen_test_accounts_file_def(self):
         with mock.patch("__builtin__.open", mock.mock_open()), \
             mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
