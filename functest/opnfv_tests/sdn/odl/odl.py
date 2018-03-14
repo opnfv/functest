@@ -183,6 +183,7 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlwebport'] = '8081'
                 kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'compass':
+                kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
                 kwargs['odlrestconfport'] = '8080'
             elif installer_type == 'daisy':
                 kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
