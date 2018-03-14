@@ -98,7 +98,7 @@ class TempestCommon(testcase.TestCase):
                 result['num_failures'] = int(new_line[2])
         return result
 
-    def generate_test_list(self, verifier_repo_dir):
+    def generate_test_list(self):
         """Generate test list based on the test mode."""
         LOGGER.debug("Generating test case list...")
         if self.mode == 'custom':
@@ -117,7 +117,7 @@ class TempestCommon(testcase.TestCase):
                 testr_mode = self.mode
             cmd = ("cd {0};"
                    "testr list-tests {1} > {2};"
-                   "cd -;".format(verifier_repo_dir,
+                   "cd -;".format(self.verifier_repo_dir,
                                   testr_mode,
                                   self.list))
             functest_utils.execute_command(cmd)
@@ -248,22 +248,28 @@ class TempestCommon(testcase.TestCase):
         subprocess.Popen(cmd, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
 
-    def run(self, **kwargs):
+    def configure(self):
+        """
+        Create all openstack resources for tempest-based testcases and write
+        tempest.conf.
+        """
+        if not os.path.exists(self.res_dir):
+            os.makedirs(self.res_dir)
+        resources = self.resources.create()
+        compute_cnt = snaps_utils.get_active_compute_cnt(
+            self.resources.os_creds)
+        conf_utils.configure_tempest(
+            self.deployment_dir, self.res_dir,
+            network_name=resources.get("network_name"),
+            image_id=resources.get("image_id"),
+            flavor_id=resources.get("flavor_id"),
+            compute_cnt=compute_cnt)
 
+    def run(self, **kwargs):
         self.start_time = time.time()
         try:
-            if not os.path.exists(self.res_dir):
-                os.makedirs(self.res_dir)
-            resources = self.resources.create()
-            compute_cnt = snaps_utils.get_active_compute_cnt(
-                self.resources.os_creds)
-            conf_utils.configure_tempest(
-                self.deployment_dir, self.res_dir,
-                network_name=resources.get("network_name"),
-                image_id=resources.get("image_id"),
-                flavor_id=resources.get("flavor_id"),
-                compute_cnt=compute_cnt)
-            self.generate_test_list(self.verifier_repo_dir)
+            self.configure()
+            self.generate_test_list()
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
             self.parse_verifier_result()
@@ -274,7 +280,6 @@ class TempestCommon(testcase.TestCase):
             res = testcase.TestCase.EX_RUN_ERROR
         finally:
             self.resources.cleanup()
-
         self.stop_time = time.time()
         return res
 

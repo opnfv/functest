@@ -18,8 +18,6 @@ from refstack_client import list_parser
 from xtesting.core import testcase
 from xtesting.energy import energy
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.utils import config
 
@@ -45,19 +43,9 @@ class Refstack(tempest.TempestCommon):
         """Start Refstack testcase."""
         self.start_time = time.time()
         try:
-            if not os.path.exists(self.res_dir):
-                os.makedirs(self.res_dir)
-            resources = self.resources.create()
-            compute_cnt = snaps_utils.get_active_compute_cnt(
-                self.resources.os_creds)
-            conf_file = conf_utils.configure_verifier(self.deployment_dir)
-            conf_utils.configure_tempest_update_params(
-                conf_file, self.res_dir,
-                network_name=resources.get("network_name"),
-                image_id=resources.get("image_id"),
-                flavor_id=resources.get("flavor_id"),
-                compute_cnt=compute_cnt)
-            parser = list_parser.TestListParser('/src/tempest')
+            self.configure()
+            parser = list_parser.TestListParser(
+                getattr(config.CONF, 'dir_repo_tempest'))
             nfile = parser.get_normalized_test_list(Refstack.defcorelist)
             shutil.copyfile(nfile, self.list)
             self.run_verifier_tests()
