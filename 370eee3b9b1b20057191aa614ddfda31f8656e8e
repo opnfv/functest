@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_2a54fb1f",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-14T18:35:30Z",
+      "side": 0,
+      "message": "we shouldn\u0027t set config object. Instead we should rely on patch mechanism",
+      "revId": "370eee3b9b1b20057191aa614ddfda31f8656e8e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}

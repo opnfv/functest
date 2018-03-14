@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_aa3f6bd5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-14T18:35:30Z",
+      "side": 1,
+      "message": "It should be managed be patch mechanism instead.",
+      "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6a3563f6",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-14T18:35:30Z",
+      "side": 1,
+      "message": "one image",
+      "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ca3c77e5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-14T18:35:30Z",
+      "side": 1,
+      "message": "one flavor",
+      "range": {
+        "startLine": 484,
+        "startChar": 30,
+        "endLine": 484,
+        "endChar": 33
+      },
+      "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_8a326f0e",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-14T18:35:30Z",
+      "side": 1,
+      "message": "Here, cirros is registered both.\nInstead we should duplicate the same id as suggested by tempest\nhttps://docs.openstack.org/tempest/latest/sampleconf.html\n\n# Valid secondary image reference to be used in tests. This is a\n# required option, but if only one image is available duplicate the\n# value of image_ref above (string value)\n#image_ref_alt \u003d \u003cNone\u003e",
+      "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
