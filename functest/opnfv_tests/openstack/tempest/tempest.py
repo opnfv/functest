@@ -289,6 +289,19 @@ class TempestSmokeSerial(TempestCommon):
         self.option = ["--concurrency", "1"]
 
 
+class TempestNeutronTrunk(TempestCommon):
+    """Tempest neutron trunk testcase implementation."""
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'neutron_trunk'
+        TempestCommon.__init__(self, **kwargs)
+        self.mode = "'neutron.tests.tempest.(api|scenario).test_trunk'"
+        self.res_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), 'neutron_trunk')
+        self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
+        self.list = os.path.join(self.res_dir, 'test_list.txt')
+
+
 class TempestSmokeParallel(TempestCommon):
     """Tempest smoke parallel testcase implementation."""
     def __init__(self, **kwargs):
