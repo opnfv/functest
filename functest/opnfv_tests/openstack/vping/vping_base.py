@@ -18,7 +18,6 @@ import uuid
 from snaps.config.flavor import FlavorConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
 from snaps.config.router import RouterConfig
-from snaps.openstack import create_flavor
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.tests import openstack_tests
 from snaps.openstack.utils import deploy_utils
@@ -144,12 +143,9 @@ class VPingBase(testcase.TestCase):
 
         self.logger.info(
             "Creating flavor with name: '%s'", self.flavor_name)
-        scenario = env.get('DEPLOY_SCENARIO')
-        flavor_metadata = None
-        flavor_ram = 512
-        if 'ovs' in scenario or 'fdio' in scenario:
-            flavor_metadata = create_flavor.MEM_PAGE_SIZE_LARGE
-            flavor_ram = 1024
+        flavor_ram = getattr(config.CONF, 'openstack_flavor_ram')
+        flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
+
         flavor_creator = OpenStackFlavor(
             self.os_creds,
             FlavorConfig(name=self.flavor_name, ram=flavor_ram, disk=1,
