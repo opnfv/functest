@@ -91,7 +91,7 @@ tiers:
                 case_name: patrole
                 project_name: functest
                 criteria: 100
-                blocking: true
+                blocking: false
                 description: >-
                     Test suite from Patrole project.
                 dependencies:
