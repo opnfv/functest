@@ -73,6 +73,24 @@
       "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_5e4aecc5",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-15T02:49:34Z",
+      "side": 1,
+      "message": "I tried to duplicate the same id as you suggested via:\nresult[\u0027image_id_alt\u0027] \u003d result[\u0027image_id\u0027]\nresult[\u0027flavor_id_alt\u0027] \u003d result[\u0027flavor_id\u0027]\n\nHere is the result:\n2018-03-15 02:44:33.121 216 INFO opnfv-tempest [-] {1} tempest.api.compute.servers.test_list_server_filters.ListServerFiltersTestJSON.test_list_servers_detailed_filter_by_image ... skip [0.000s]: Need distinct images to run this test\n2018-03-15 02:44:33.122 216 INFO opnfv-tempest [-] {1} tempest.api.compute.servers.test_list_server_filters.ListServerFiltersTestJSON.test_list_servers_filter_by_image ... skip [0.000s]: Need distinct images to run this test",
+      "parentUuid": "5a3f45e8_8a326f0e",
+      "revId": "f06b081c32836f5dd45363be578b1411b847aa80",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
