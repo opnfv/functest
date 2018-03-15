@@ -17,7 +17,6 @@ http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
-http://marketplace.openbaton.org:8080/api/v1/images/52e2ccc0-1dce-4663-894d-28aab49323aa/img
 EOF
 
 xz --decompress --force --keep ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
