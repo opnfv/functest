@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_0d0f942f",
+        "filename": "upper-constraints.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-16T08:47:20Z",
+      "side": 1,
+      "message": "stor4nfv",
+      "range": {
+        "startLine": 8,
+        "startChar": 39,
+        "endLine": 8,
+        "endChar": 45
+      },
+      "revId": "14e5872d9b06ce3cd3f18662a47a1f65c7abfad0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
