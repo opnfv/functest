@@ -87,3 +87,19 @@ tiers:
                     args:
                         suites:
                             - /src/fds/testing/robot
+
+            -
+                case_name: stor4nfv
+                project_name: stor4nfv
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Stor4NFV project.
+                dependencies:
+                    installer: 'compass'
+                    scenario: 'stor4nfv'
+                run:
+                    module: 'xtesting.core.feature'
+                    class: 'BashFeature'
+                    args:
+                        cmd: 'stor4nfv-test'
