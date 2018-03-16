@@ -248,7 +248,7 @@ class TempestCommon(testcase.TestCase):
         subprocess.Popen(cmd, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
 
-    def configure(self):
+    def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
         tempest.conf.
@@ -306,6 +306,14 @@ class TempestNeutronTrunk(TempestCommon):
             getattr(config.CONF, 'dir_results'), 'neutron_trunk')
         self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
         self.list = os.path.join(self.res_dir, 'test_list.txt')
+
+    def configure(self, **kwargs):
+        super(TempestNeutronTrunk, self).configure(**kwargs)
+        rconfig = conf_utils.ConfigParser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        rconfig.set('network-feature-enabled', 'api_extensions', 'all')
+        with open(self.conf_file, 'wb') as config_file:
+            rconfig.write(config_file)
 
 
 class TempestSmokeParallel(TempestCommon):
