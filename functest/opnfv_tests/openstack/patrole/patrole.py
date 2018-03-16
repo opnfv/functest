@@ -11,9 +11,6 @@
 
 import logging
 import os
-import time
-
-from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.opnfv_tests.openstack.tempest import tempest
@@ -32,33 +29,22 @@ class Patrole(tempest.TempestCommon):
             getattr(config.CONF, 'dir_results'), 'patrole')
         self.list = os.path.join(self.res_dir, 'tempest-list.txt')
 
-    def run(self, **kwargs):
-        self.start_time = time.time()
-        for exclude in kwargs.get('exclude', []):
-            self.mode = "{}(?!.*{})".format(self.mode, exclude)
-        self.mode = "'{}(?=patrole_tempest_plugin.tests.api.({}))'".format(
-            self.mode, '|'.join(kwargs.get('services', [])))
-        try:
-            self.configure()
-            self.configure_tempest_patrole(kwargs.get('role', 'admin'))
-            self.generate_test_list()
-            self.run_verifier_tests()
-            self.parse_verifier_result()
-            self.generate_report()
-            res = testcase.TestCase.EX_OK
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.error('Error with run')
-            res = testcase.TestCase.EX_RUN_ERROR
-        finally:
-            self.resources.cleanup()
-        self.stop_time = time.time()
-        return res
+    def apply_tempest_blacklist(self):
+        pass
 
-    def configure_tempest_patrole(self, role='admin'):
+    def configure(self, **kwargs):
+        super(Patrole, self).configure(**kwargs)
         rconfig = conf_utils.ConfigParser.RawConfigParser()
         rconfig.read(self.conf_file)
         rconfig.add_section('rbac')
         rconfig.set('rbac', 'enable_rbac', True)
-        rconfig.set('rbac', 'rbac_test_role', role)
+        rconfig.set('rbac', 'rbac_test_role', kwargs.get('role', 'admin'))
         with open(self.conf_file, 'wb') as config_file:
             rconfig.write(config_file)
+
+    def run(self, **kwargs):
+        for exclude in kwargs.get('exclude', []):
+            self.mode = "{}(?!.*{})".format(self.mode, exclude)
+        self.mode = "'{}(?=patrole_tempest_plugin.tests.api.({}))'".format(
+            self.mode, '|'.join(kwargs.get('services', [])))
+        return super(Patrole, self).run(**kwargs)
