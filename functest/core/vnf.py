@@ -110,6 +110,7 @@ class VnfOnBoarding(vnf.VnfOnBoarding):
             user_creator.create()
             self.created_object.append(user_creator)
             self.snaps_creds = user_creator.get_os_creds(self.tenant_name)
+            self.__logger.debug("snaps creds: %s", self.snaps_creds)
 
             return vnf.VnfOnBoarding.EX_OK
         except Exception:  # pylint: disable=broad-except

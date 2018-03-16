@@ -329,11 +329,13 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         glance = glance_utils.glance_client(self.snaps_creds)
         image = glance_utils.get_image(glance, "vyos1.1.7")
 
+        self.__logger.debug("snaps creds: %s", self.snaps_creds)
         user_creator = OpenStackUser(
             self.snaps_creds,
             UserConfig(
                 name='cloudify_network_bug-{}'.format(self.uuid),
                 password=str(uuid.uuid4()),
+                project_name=self.tenant_name,
                 domain=self.snaps_creds.user_domain_name,
                 roles={'_member_': self.tenant_name}))
         user_creator.create()
