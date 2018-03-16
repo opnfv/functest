@@ -334,11 +334,13 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             UserConfig(
                 name='cloudify_network_bug-{}'.format(self.uuid),
                 password=str(uuid.uuid4()),
+                project_name=self.tenant_name,
                 domain=self.snaps_creds.user_domain_name,
                 roles={'_member_': self.tenant_name}))
         user_creator.create()
         self.created_object.append(user_creator)
         snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+        self.__logger.debug("snaps creds: %s", snaps_creds)
 
         self.vnf['inputs'].update(dict(target_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(reference_vnf_image_id=image.id))

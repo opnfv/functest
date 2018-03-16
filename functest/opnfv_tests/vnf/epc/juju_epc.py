@@ -130,7 +130,9 @@ class JujuEpc(vnf.VnfOnBoarding):
         user_creator = OpenStackUser(
             self.snaps_creds,
             UserConfig(
-                name=name, password=str(uuid.uuid4()),
+                name=name,
+                password=str(uuid.uuid4()),
+                project_name=self.tenant_name,
                 domain=self.snaps_creds.user_domain_name,
                 roles={'_member_': self.tenant_name}))
         user_creator.create()
@@ -161,6 +163,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         user_creator = self._bypass_juju_network_discovery_bug(
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+        self.__logger.debug("snaps creds: %s", snaps_creds)
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
         creds_data = {
             'pass': snaps_creds.password,
@@ -178,6 +181,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         user_creator = self._bypass_juju_network_discovery_bug(
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+        self.__logger.debug("snaps creds: %s", snaps_creds)
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
         creds_data = {
             'pass': snaps_creds.password,
