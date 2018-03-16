@@ -5,6 +5,7 @@ git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/promise#egg=promise
 -e git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-tests
+-e git+https://gerrit.opnfv.org/gerrit/stor4nfv#egg=stor4nfv-tests
 git+https://gerrit.opnfv.org/gerrit/domino#egg=domino
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
