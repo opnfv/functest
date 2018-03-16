@@ -17,7 +17,7 @@ tiers:
                     Test suite from Doctor project.
                 dependencies:
                     installer: 'apex'
-                    scenario: '^((?!fdio).)*$'
+                    scenario: '^((?!fdio|nofeature).)*$'
                 run:
                     module: 'xtesting.core.feature'
                     class: 'BashFeature'
