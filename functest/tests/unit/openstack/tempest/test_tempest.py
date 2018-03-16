@@ -76,7 +76,7 @@ class OSTempestTesting(unittest.TestCase):
     def _test_gen_tl_mode_default(self, mode, mock_exec=None):
         self.tempestcommon.mode = mode
         if self.tempestcommon.mode == 'smoke':
-            testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
+            testr_mode = r"'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'"
         elif self.tempestcommon.mode == 'full':
             testr_mode = r"'^tempest\.'"
         else:

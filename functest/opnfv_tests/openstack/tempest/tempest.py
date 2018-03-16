@@ -110,7 +110,7 @@ class TempestCommon(testcase.TestCase):
                                 % conf_utils.TEMPEST_CUSTOM)
         else:
             if self.mode == 'smoke':
-                testr_mode = r"'tempest\.(api|scenario).*\[.*\bsmoke\b.*\]'"
+                testr_mode = r"'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'"
             elif self.mode == 'full':
                 testr_mode = r"'^tempest\.'"
             else:
