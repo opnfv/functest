@@ -12,11 +12,8 @@
 import logging
 import os
 import shutil
-import time
 
 from refstack_client import list_parser
-from xtesting.core import testcase
-from xtesting.energy import energy
 
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.utils import config
@@ -38,24 +35,11 @@ class Refstack(tempest.TempestCommon):
             getattr(config.CONF, 'dir_results'), 'refstack')
         self.list = os.path.join(self.res_dir, 'tempest-list.txt')
 
-    @energy.enable_recording
-    def run(self, **kwargs):
-        """Start Refstack testcase."""
-        self.start_time = time.time()
-        try:
-            self.configure()
-            parser = list_parser.TestListParser(
-                getattr(config.CONF, 'dir_repo_tempest'))
-            nfile = parser.get_normalized_test_list(Refstack.defcorelist)
-            shutil.copyfile(nfile, self.list)
-            self.run_verifier_tests()
-            self.parse_verifier_result()
-            self.generate_report()
-            res = testcase.TestCase.EX_OK
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception('Error with run')
-            res = testcase.TestCase.EX_RUN_ERROR
-        finally:
-            self.resources.cleanup()
-        self.stop_time = time.time()
-        return res
+    def generate_test_list(self):
+        parser = list_parser.TestListParser(
+            getattr(config.CONF, 'dir_repo_tempest'))
+        nfile = parser.get_normalized_test_list(Refstack.defcorelist)
+        shutil.copyfile(nfile, self.list)
+
+    def apply_tempest_blacklist(self):
+        pass
