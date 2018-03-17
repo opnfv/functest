@@ -81,7 +81,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
             except Exception:  # pylint: disable=broad-except
                 if i == 1:
                     raise Exception("Unable to create a number")
-                self.logger.warn("Unable to create a number. Retry ..")
+                self.logger.info("Unable to create a number. Retry ..")
                 time.sleep(25)
             i = i - 1
         output_dict['number'] = number_res

@@ -263,10 +263,10 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         while str(cfy_status) != 'running' and retry:
             try:
                 cfy_status = cfy_client.manager.get_status()['status']
-                self.__logger.debug("The current manager status is %s",
-                                    cfy_status)
+                self.__logger.info(
+                    "The current manager status is %s", cfy_status)
             except Exception:  # pylint: disable=broad-except
-                self.__logger.exception(
+                self.__logger.info(
                     "Cloudify Manager isn't up and running. Retrying ...")
             retry = retry - 1
             time.sleep(30)
