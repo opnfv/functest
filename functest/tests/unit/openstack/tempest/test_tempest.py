@@ -72,7 +72,7 @@ class OSTempestTesting(unittest.TestCase):
             self.tempestcommon.generate_test_list()
             self.assertTrue(mock_copyfile.called)
 
-    @mock.patch('functest.utils.functest_utils.execute_command')
+    @mock.patch('subprocess.check_output')
     def _test_gen_tl_mode_default(self, mode, mock_exec=None):
         self.tempestcommon.mode = mode
         if self.tempestcommon.mode == 'smoke':
@@ -82,12 +82,10 @@ class OSTempestTesting(unittest.TestCase):
         else:
             testr_mode = self.tempestcommon.mode
         verifier_repo_dir = 'test_verifier_repo_dir'
-        cmd = ("cd {0};"
-               "testr list-tests {1} > {2};"
-               "cd -;".format(verifier_repo_dir, testr_mode,
-                              self.tempestcommon.list))
+        cmd = "(cd {0}; testr list-tests {1} >{2} 2>/dev/null)".format(
+            verifier_repo_dir, testr_mode, self.tempestcommon.list)
         self.tempestcommon.generate_test_list()
-        mock_exec.assert_called_once_with(cmd)
+        mock_exec.assert_called_once_with(cmd, shell=True)
 
     def test_gen_tl_smoke_mode(self):
         self._test_gen_tl_mode_default('smoke')

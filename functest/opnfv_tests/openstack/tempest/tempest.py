@@ -34,7 +34,6 @@ from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
-from functest.utils import functest_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -115,12 +114,10 @@ class TempestCommon(testcase.TestCase):
                 testr_mode = r"'^tempest\.'"
             else:
                 testr_mode = self.mode
-            cmd = ("cd {0};"
-                   "testr list-tests {1} > {2};"
-                   "cd -;".format(self.verifier_repo_dir,
-                                  testr_mode,
-                                  self.list))
-            functest_utils.execute_command(cmd)
+            cmd = "(cd {0}; testr list-tests {1} >{2} 2>/dev/null)".format(
+                self.verifier_repo_dir, testr_mode, self.list)
+            output = subprocess.check_output(cmd, shell=True)
+            LOGGER.info("%s\n%s", cmd, output)
 
     def apply_tempest_blacklist(self):
         """Exclude blacklisted test cases."""
