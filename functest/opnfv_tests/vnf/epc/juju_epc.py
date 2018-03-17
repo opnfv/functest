@@ -13,6 +13,7 @@ import logging
 import os
 import time
 import json
+import subprocess
 import sys
 import uuid
 from copy import deepcopy
@@ -154,9 +155,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             'region': region}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
-        if os.system(
-                'juju add-cloud abot-epc -f {} --replace'.format(clouds_yaml)):
-            raise vnf.VnfPreparationException
+        cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
+        output = subprocess.check_output(cmd)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _register_credentials_v2(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
@@ -171,10 +172,10 @@ class JujuEpc(vnf.VnfOnBoarding):
             'user_n': snaps_creds.username}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE2.format(**creds_data))
-        if os.system(
-                'juju add-credential abot-epc -f {} --replace'.format(
-                    credentials_yaml)):
-            raise vnf.VnfPreparationException
+        cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
+               '--replace']
+        output = subprocess.check_output(cmd)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _register_credentials_v3(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
@@ -191,10 +192,10 @@ class JujuEpc(vnf.VnfOnBoarding):
             'user_domain_n': snaps_creds.user_domain_name}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE3.format(**creds_data))
-        if os.system(
-                'juju add-credential abot-epc -f {} --replace'.format(
-                    credentials_yaml)):
-            raise vnf.VnfPreparationException
+        cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
+               '--replace']
+        output = subprocess.check_output(cmd)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _add_custom_rule(self, sec_grp_name):
         """ To add custom rule for SCTP Traffic """
@@ -254,7 +255,9 @@ class JujuEpc(vnf.VnfOnBoarding):
             self.uuid)
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
-            name=private_subnet_name, cidr=private_subnet_cidr)
+            name=private_subnet_name,
+            cidr=private_subnet_cidr,
+            dns_nameservers=[env.get('NAMESERVER')])
         network_settings = NetworkConfig(
             name=private_net_name, subnet_settings=[subnet_settings])
         network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
@@ -295,11 +298,11 @@ class JujuEpc(vnf.VnfOnBoarding):
                 region = self.snaps_creds.region_name
                 if not region and env.get('INSTALLER_TYPE') == 'apex':
                     region = "regionOne"
-                os.system(
-                    'juju metadata generate-image -d ~ -i {} -s {} -r '
-                    '{} -u {}'.format(
-                        image_id, image_name, region,
-                        self.public_auth_url))
+                cmd = ['juju', 'metadata', 'generate-image', '-d', '~', '-i',
+                       image_id, '-s', image_name, '-r', region, '-u',
+                       self.public_auth_url]
+                output = subprocess.check_output(cmd)
+                self.__logger.info("%s\n%s", " ".join(cmd), output)
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
         juju_bootstrap_command = (
@@ -308,7 +311,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             '--constraints mem=2G --bootstrap-series xenial '
             '--config use-floating-ip=true --debug '
             '--config use-default-secgroup=true'.format(net_id))
-        os.system(juju_bootstrap_command)
+        if os.system(juju_bootstrap_command) != 0:
+            return False
         return True
 
     def deploy_vnf(self):

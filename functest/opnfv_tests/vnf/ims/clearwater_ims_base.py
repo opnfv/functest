@@ -115,7 +115,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         self.logger.debug('Backup %s -> %s', dns_file, dns_file_bak)
         shutil.copy(dns_file, dns_file_bak)
         cmd = ("dnsmasq -d -u root --server=/clearwater.opnfv/{0} "
-               "-r /etc/resolv.conf.bak".format(dns_ip))
+               "-r /etc/resolv.conf.bak >/dev/null 2>&1".format(dns_ip))
         dnsmasq_process = subprocess.Popen(shlex.split(cmd))
         script = ('echo -e "nameserver {0}" > {1};'
                   'cd {2};'
