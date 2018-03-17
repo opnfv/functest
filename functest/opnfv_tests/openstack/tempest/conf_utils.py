@@ -22,7 +22,6 @@ import yaml
 
 from functest.utils import config
 from functest.utils import env
-import functest.utils.functest_utils as ft_utils
 
 
 IMAGE_ID_ALT = None
@@ -64,35 +63,40 @@ def create_rally_deployment():
 
     LOGGER.info("Creating Rally environment...")
 
-    cmd = "rally deployment destroy opnfv-rally"
-    ft_utils.execute_command(cmd, error_msg=(
-        "Deployment %s does not exist."
-        % getattr(config.CONF, 'rally_deployment_name')), verbose=False)
+    try:
+        cmd = ['rally', 'deployment', 'destroy',
+               '--deployment',
+               str(getattr(config.CONF, 'rally_deployment_name'))]
+        output = subprocess.check_output(cmd)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+    except subprocess.CalledProcessError:
+        pass
 
-    cmd = ("rally deployment create --fromenv --name={0}"
-           .format(getattr(config.CONF, 'rally_deployment_name')))
-    error_msg = "Problem while creating Rally deployment"
-    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
+    cmd = ['rally', 'deployment', 'create', '--fromenv',
+           '--name', str(getattr(config.CONF, 'rally_deployment_name'))]
+    output = subprocess.check_output(cmd)
+    LOGGER.info("%s\n%s", " ".join(cmd), output)
 
-    cmd = "rally deployment check"
-    error_msg = "OpenStack not responding or faulty Rally deployment."
-    ft_utils.execute_command_raise(cmd, error_msg=error_msg)
+    cmd = ['rally', 'deployment', 'check']
+    output = subprocess.check_output(cmd)
+    LOGGER.info("%s\n%s", " ".join(cmd), output)
 
 
 def create_verifier():
     """Create new verifier"""
     LOGGER.info("Create verifier from existing repo...")
-    cmd = ("rally verify delete-verifier --id '{0}' --force").format(
-        getattr(config.CONF, 'tempest_verifier_name'))
-    ft_utils.execute_command(cmd, error_msg=(
-        "Verifier %s does not exist."
-        % getattr(config.CONF, 'tempest_verifier_name')), verbose=False)
-    cmd = ("rally verify create-verifier --source {0} "
-           "--name {1} --type tempest --system-wide"
-           .format(getattr(config.CONF, 'dir_repo_tempest'),
-                   getattr(config.CONF, 'tempest_verifier_name')))
-    ft_utils.execute_command_raise(cmd,
-                                   error_msg='Problem while creating verifier')
+    cmd = ['rally', 'verify', 'delete-verifier',
+           '--id', str(getattr(config.CONF, 'tempest_verifier_name')),
+           '--force']
+    output = subprocess.check_output(cmd)
+    LOGGER.info("%s\n%s", " ".join(cmd), output)
+
+    cmd = ['rally', 'verify', 'create-verifier',
+           '--source', str(getattr(config.CONF, 'dir_repo_tempest')),
+           '--name', str(getattr(config.CONF, 'tempest_verifier_name')),
+           '--type', 'tempest', '--system-wide']
+    output = subprocess.check_output(cmd)
+    LOGGER.info("%s\n%s", " ".join(cmd), output)
 
 
 def get_verifier_id():
@@ -253,17 +257,13 @@ def configure_verifier(deployment_dir):
     """
     Execute rally verify configure-verifier, which generates tempest.conf
     """
-    tempest_conf_file = os.path.join(deployment_dir, "tempest.conf")
-    if os.path.isfile(tempest_conf_file):
-        LOGGER.debug("Verifier is already configured.")
-        LOGGER.debug("Reconfiguring the current verifier...")
-        cmd = "rally verify configure-verifier --reconfigure"
-    else:
-        LOGGER.info("Configuring the verifier...")
-        cmd = "rally verify configure-verifier"
-    ft_utils.execute_command(cmd)
+    cmd = ['rally', 'verify', 'configure-verifier', '--reconfigure',
+           '--id', str(getattr(config.CONF, 'tempest_verifier_name'))]
+    output = subprocess.check_output(cmd)
+    LOGGER.info("%s\n%s", " ".join(cmd), output)
 
     LOGGER.debug("Looking for tempest.conf file...")
+    tempest_conf_file = os.path.join(deployment_dir, "tempest.conf")
     if not os.path.isfile(tempest_conf_file):
         LOGGER.error("Tempest configuration file %s NOT found.",
                      tempest_conf_file)
