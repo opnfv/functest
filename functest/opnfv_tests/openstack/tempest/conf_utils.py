@@ -88,8 +88,11 @@ def create_verifier():
     cmd = ['rally', 'verify', 'delete-verifier',
            '--id', str(getattr(config.CONF, 'tempest_verifier_name')),
            '--force']
-    output = subprocess.check_output(cmd)
-    LOGGER.info("%s\n%s", " ".join(cmd), output)
+    try:
+        output = subprocess.check_output(cmd)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+    except subprocess.CalledProcessError:
+        pass
 
     cmd = ['rally', 'verify', 'create-verifier',
            '--source', str(getattr(config.CONF, 'dir_repo_tempest')),
