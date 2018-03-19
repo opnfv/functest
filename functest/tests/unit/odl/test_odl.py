@@ -171,6 +171,7 @@ class ODLMainTesting(ODLTesting):
                 'RESTCONFPORT:{}'.format(self._odl_restconfport)]
             args[1].assert_called_once_with(
                 odl.ODLTests.basic_suite_dir, odl.ODLTests.neutron_suite_dir,
+                include=[],
                 log='NONE',
                 output=os.path.join(self.test.res_dir, 'output.xml'),
                 report='NONE', stdout=mock.ANY, variable=variable,
