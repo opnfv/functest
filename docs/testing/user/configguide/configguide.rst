@@ -71,11 +71,42 @@ Create a directory for the different images (attached as a Docker volume)::
   images/cirros-d161201-aarch64-initramfs
   images/cirros-d161201-aarch64-kernel
   images/cloudify-manager-premium-4.0.1.qcow2
-  images/img
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
   images/vyos-1.1.7.img
+
+The specific images required by each test are listed below::
+
+  ## 1. Cirros 0.4.0 for healthcheck,components and smoke tests(exclude odl tests)
+  # 1.1 amd
+  http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+
+  # 1.2 arm or aarch64
+  http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-disk.img
+  http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-initramfs
+  http://download.cirros-cloud.net/daily/20161201/cirros-d161201-aarch64-kernel
+
+  # 1.3 for lxd scenario
+  http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-lxc.tar.gz
+
+
+  ## 2. additional images for snaps_smoke
+  # 2.1 amd (ubuntu-14.04 is also required by all vnf tests)
+  https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+  https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+
+  # 2.2 arm or aarch64
+  https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
+  http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
+
+  ## 3. for bgpvpn and juju_epc
+  https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+
+
+  # 4. for vnf tests
+  http://repository.cloudifysource.org/cloudify/4.0.1/sp-release/cloudify-manager-premium-4.0.1.qcow2
+  https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
 
 Testing healthcheck suite
 --------------------------
