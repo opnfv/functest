@@ -158,17 +158,22 @@ updates the appropriate parameters into the configuration file.
 When the Tempest suite is executed, each test duration is measured and the full
 console output is stored to a *log* file for further analysis.
 
-The Tempest testcases are distributed across two
+The Tempest testcases are distributed across three
 Tiers:
 
   * Smoke Tier - Test Case 'tempest_smoke_serial'
   * Components Tier - Test case 'tempest_full_parallel'
+  * Neutron Trunk Port - Test case 'neutron_trunk'
 
 NOTE: Test case 'tempest_smoke_serial' executes a defined set of tempest smoke
 tests with a single thread (i.e. serial mode). Test case 'tempest_full_parallel'
 executes all defined Tempest tests using several concurrent threads
 (i.e. parallel mode). The number of threads activated corresponds to the number
-of available logical CPUs.
+of available logical CPUs. 
+
+NOTE: The 'neutron_trunk' test set allows to connect a VM to multiple VLAN separated 
+networks using a single NIC. The feature neutron trunk ports have been supported
+by Apex, Fuel and Compass, so the tempest testcases have been integrated normally.
 
 The goal of the Tempest test suite is to check the basic functionalities of the
 different OpenStack components on an OPNFV fresh installation, using the
