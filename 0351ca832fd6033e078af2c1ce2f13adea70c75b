@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_c9ce3b83",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-03-19T12:40:26Z",
+      "side": 1,
+      "message": "For the name, it\u0027s better like \"VNF and Orchestrator\"",
+      "revId": "0351ca832fd6033e078af2c1ce2f13adea70c75b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
