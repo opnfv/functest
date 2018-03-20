@@ -219,17 +219,19 @@ class TempestCommon(testcase.TestCase):
             for match in re.findall(r'.*\{0\} (.*?)[. ]*success ', output):
                 success_testcases.append(match)
             failed_testcases = []
-            for match in re.findall(r'.*\{0\} (.*?)[. ]*fail ', output):
+            for match in re.findall(r'.*\{0\} (.*?)[. ]*fail', output):
                 failed_testcases.append(match)
             skipped_testcases = []
             for match in re.findall(r'.*\{0\} (.*?)[. ]*skip:', output):
                 skipped_testcases.append(match)
 
-            self.details = {"tests": stat['num_tests'],
-                            "failures": stat['num_failures'],
+            self.details = {"tests_number": stat['num_tests'],
+                            "success_number": stat['num_success'],
+                            "skipped_number": stat['num_skipped'],
+                            "failures_number": stat['num_failures'],
                             "success": success_testcases,
                             "skipped": skipped_testcases,
-                            "errors": failed_testcases}
+                            "failures": failed_testcases}
         except Exception:  # pylint: disable=broad-except
             self.result = 0
 
