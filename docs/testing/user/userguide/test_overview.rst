@@ -66,6 +66,11 @@ validate the scenario for the release.
 |             |               +----------------+----------------------------------+
 |             |               | refstack       | Reference RefStack suite         |
 |             |               | \_defcore      | tempest selection for NFV        |
+|             |               +----------------+----------------------------------+
+|             |               | neutron_trunk  | The neutron trunk port testcases |
+|             |               |                | have been introduced and they are|
+|             |               |                | supported by installers :        |
+|             |               |                | Apex, Fuel and Compass.          |
 |             +---------------+----------------+----------------------------------+
 |             | components    | tempest_full   | Generate and run a full set of   |
 |             |               | \_parallel     | the OpenStack Tempest Test Suite.|
