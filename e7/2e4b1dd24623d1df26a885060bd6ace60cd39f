@@ -1,0 +1,8 @@
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Hideyasu Hayashi <hideyasu.hayashi@okinawaopenlabs.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 20 Mar 2018 07:07:32 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/54127
+Project: functest
+Branch: refs/heads/master
