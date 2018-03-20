@@ -382,10 +382,10 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Getting results from Abot node....")
         os.system('juju scp abot-epc-basic/0:/var/lib/abot-'
                   'epc-basic/artifacts/TestResults.json {}/.'
-                  .format(self.case_dir))
+                  .format(self.res_dir))
         self.__logger.info("Parsing the Test results...")
-        res = (process_abot_test_result('{}/TestResults.'
-                                        'json'.format(self.case_dir)))
+        res = (process_abot_test_result('{}/TestResults.json'.format(
+            self.res_dir)))
         short_result = sig_test_format(res)
         self.__logger.info(short_result)
         self.details['test_vnf'].update(status='PASS',
@@ -402,10 +402,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         """Clean created objects/functions."""
         try:
             if not self.orchestrator['requirements']['preserve_setup']:
-                self.__logger.info("Removing deployment files...")
-                testresult = os.path.join(self.case_dir, 'TestResults.json')
-                if os.path.exists(testresult):
-                    os.remove(testresult)
                 self.__logger.info("Destroying Orchestrator...")
                 os.system('juju destroy-controller -y abot-controller '
                           '--destroy-all-models')
