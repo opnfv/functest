@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_6c71f5df",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-03-20T02:34:57Z",
+      "side": 1,
+      "message": "Redundant space",
+      "revId": "13208e172ceeba5324d0d127ea78794208f16bfc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
