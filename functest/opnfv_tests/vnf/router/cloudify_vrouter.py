@@ -75,7 +75,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             raise Exception("VNF config file not found")
 
         self.cfy_manager_ip = ''
-        self.util_info = {}
         self.deployment_name = ''
 
         config_file = os.path.join(self.case_dir, self.config)
@@ -390,11 +389,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
     def test_vnf(self):
         cfy_client = self.orchestrator['object']
-        credentials = {"snaps_creds": self.snaps_creds,
-                       "username": self.snaps_creds.username,
-                       "password": self.snaps_creds.password,
-                       "auth_url": self.snaps_creds.auth_url,
-                       "tenant_name": self.snaps_creds.project_name}
+        credentials = {"snaps_creds": self.snaps_creds}
 
         self.util_info = {"credentials": credentials,
                           "cfy": cfy_client,
