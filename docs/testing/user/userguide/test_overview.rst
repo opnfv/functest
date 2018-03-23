@@ -70,7 +70,14 @@ validate the scenario for the release.
 |             |               | neutron_trunk  | The neutron trunk port testcases |
 |             |               |                | have been introduced and they are|
 |             |               |                | supported by installers :        |
-|             |               |                | Apex, Fuel and Compass.          |
+|             |               |                | Apex, Fuel and Compass           |
+|             |               +----------------+----------------------------------+
+|             |               | patrole        | Patrole is a tempest plugin for  |
+|             |               |                | testing and verifying RBAC policy|
+|             |               |                | enforcement, which offers testing|
+|             |               |                | for the following OpenStack      |
+|             |               |                | services: Nova, Neutron, Glance, |
+|             |               |                | Cinder and Keystone              |
 |             +---------------+----------------+----------------------------------+
 |             | components    | tempest_full   | Generate and run a full set of   |
 |             |               | \_parallel     | the OpenStack Tempest Test Suite.|
@@ -143,13 +150,10 @@ validate the scenario for the release.
 |             |               |                | It provides a fully functional   |
 |             |               |                | VoIP System                      |
 |             |               +----------------+----------------------------------+
-|             |               | orchestra      | OpenIMS deployment using         |
-|             |               | \_openims      | Openbaton orchestrator           |
-|             |               +----------------+----------------------------------+
-|             |               | orchestra      | Cleawater IMS deployment using   |
-|             |               | \_cleawaterims | Openbaton orchestrator           |
-|             |               +----------------+----------------------------------+
 |             |               | vyos_vrouter   | vRouter testing                  |
+|             |               +----------------+----------------------------------+
+|             |               | juju_epc       | vEPC validation with Juju as VNF |
+|             |               |                | manager and ABoT as test executor|
 |             |               +----------------+----------------------------------+
 |             |               | cloudify_ims   | Based on cloudify_ims test case  |
 |             |               | perf           | cloudify_ims_perf substitutes    |
