@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_f9093bde",
+        "filename": "docs/testing/user/userguide/test_overview.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-03-24T16:22:36Z",
+      "side": 1,
+      "message": "We need to precise here that all are not enabled by default.",
+      "revId": "b1d423d59d7c9dbe11692028c9910e5dad20b81b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
