@@ -65,7 +65,9 @@ repositories
 
 ### proposals
 
-- ease integrating tempest plugins with a minimum effort (new tempest driver in Functest Framework and new opnfv/functest-tempest container)
+- ease integrating tempest plugins with a minimum effort (new tempest driver in
+Functest Framework and new opnfv/functest-tempest container)
+- add opnfv/functest-components in verify jobs
 - why not leveraging on OpenStack middlewares such as
   [oslo.config](https://docs.openstack.org/oslo.config/latest/) or
   [stevedore](https://docs.openstack.org/stevedore/latest/)?
