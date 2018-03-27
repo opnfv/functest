@@ -3,7 +3,7 @@ tiers:
     -
         name: healthcheck
         order: 0
-        ci_loop: '(daily)|(weekly)'
+        ci_loop: '(merge)|(verify)|(daily)|(weekly)'
         description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
