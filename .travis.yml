@@ -82,11 +82,6 @@ jobs:
     - script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs="docker/restapi"
-        - arm64_dirs=""
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/parser"
         - arm64_dirs=""
     - stage: publish all manifests
@@ -120,11 +115,6 @@ jobs:
           --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-vnf:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-vnf:fraser
-    - script: >
-        sudo manifest-tool push from-args \
-          --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-restapi:ARCH-fraser \
-          --target ${DOCKER_USERNAME}/functest-restapi:fraser
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm64 \
