@@ -35,55 +35,51 @@ class VPingUserdata(vping_base.VPingBase):
         validates.
         :return: the exit code from the super.execute() method
         """
-        try:
-            super(VPingUserdata, self).run()
+        super(VPingUserdata, self).run()
 
-            # Creating Instance 1
-            port1_settings = PortConfig(
-                name=self.vm1_name + '-vPingPort',
+        # Creating Instance 1
+        port1_settings = PortConfig(
+            name=self.vm1_name + '-vPingPort',
+            network_name=self.network_creator.network_settings.name)
+        instance1_settings = VmInstanceConfig(
+            name=self.vm1_name,
+            flavor=self.flavor_name,
+            vm_boot_timeout=self.vm_boot_timeout,
+            port_settings=[port1_settings])
+
+        self.logger.info(
+            "Creating VM 1 instance with name: '%s'",
+            instance1_settings.name)
+        self.vm1_creator = deploy_utils.create_vm_instance(
+            self.os_creds, instance1_settings,
+            self.image_creator.image_settings)
+        self.creators.append(self.vm1_creator)
+
+        userdata = _get_userdata(
+            self.vm1_creator.get_port_ip(port1_settings.name))
+        if userdata:
+            # Creating Instance 2
+            port2_settings = PortConfig(
+                name=self.vm2_name + '-vPingPort',
                 network_name=self.network_creator.network_settings.name)
-            instance1_settings = VmInstanceConfig(
-                name=self.vm1_name,
+            instance2_settings = VmInstanceConfig(
+                name=self.vm2_name,
                 flavor=self.flavor_name,
                 vm_boot_timeout=self.vm_boot_timeout,
-                port_settings=[port1_settings])
+                port_settings=[port2_settings],
+                userdata=userdata)
 
             self.logger.info(
-                "Creating VM 1 instance with name: '%s'",
-                instance1_settings.name)
-            self.vm1_creator = deploy_utils.create_vm_instance(
-                self.os_creds, instance1_settings,
+                "Creating VM 2 instance with name: '%s'",
+                instance2_settings.name)
+            self.vm2_creator = deploy_utils.create_vm_instance(
+                self.os_creds, instance2_settings,
                 self.image_creator.image_settings)
-            self.creators.append(self.vm1_creator)
+            self.creators.append(self.vm2_creator)
+        else:
+            raise Exception('Userdata is None')
 
-            userdata = _get_userdata(
-                self.vm1_creator.get_port_ip(port1_settings.name))
-            if userdata:
-                # Creating Instance 2
-                port2_settings = PortConfig(
-                    name=self.vm2_name + '-vPingPort',
-                    network_name=self.network_creator.network_settings.name)
-                instance2_settings = VmInstanceConfig(
-                    name=self.vm2_name,
-                    flavor=self.flavor_name,
-                    vm_boot_timeout=self.vm_boot_timeout,
-                    port_settings=[port2_settings],
-                    userdata=userdata)
-
-                self.logger.info(
-                    "Creating VM 2 instance with name: '%s'",
-                    instance2_settings.name)
-                self.vm2_creator = deploy_utils.create_vm_instance(
-                    self.os_creds, instance2_settings,
-                    self.image_creator.image_settings)
-                self.creators.append(self.vm2_creator)
-            else:
-                raise Exception('Userdata is None')
-
-            return self._execute()
-
-        finally:
-            self._cleanup()
+        return self._execute()
 
     def _do_vping(self, vm_creator, test_ip):
         """

@@ -178,7 +178,7 @@ class VPingBase(testcase.TestCase):
         self.result = 100
         return testcase.TestCase.EX_OK
 
-    def _cleanup(self):
+    def clean(self):
         """
         Cleanup all OpenStack objects. Should be called on completion
         :return:

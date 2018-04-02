@@ -123,8 +123,6 @@ class VPingSSH(vping_base.VPingBase):
         except Exception as exc:  # pylint: disable=broad-except
             self.logger.error('Unexpected error running test - ' + exc.message)
             return testcase.TestCase.EX_RUN_ERROR
-        finally:
-            self._cleanup()
 
     def _do_vping(self, vm_creator, test_ip):
         """
