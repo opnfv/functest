@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ARG BRANCH=master
+ARG BRANCH=stable/fraser
 ARG OPENSTACK_TAG=stable/pike
 
 RUN apk --no-cache add --update \
