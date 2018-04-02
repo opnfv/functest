@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:fraser
 
-ARG BRANCH=master
+ARG BRANCH=stable/fraser
 ARG OPENSTACK_TAG=stable/pike
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16

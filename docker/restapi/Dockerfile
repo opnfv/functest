@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:fraser
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/pike
