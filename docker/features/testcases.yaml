@@ -32,7 +32,7 @@ tiers:
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:
-                    installer: '(fuel)|(apex)|(netvirt)'
+                    installer: '(fuel)|(apex)'
                     scenario: 'bgpvpn'
                 run:
                     module: 'sdnvpn.test.functest.run_sdnvpn_tests'
