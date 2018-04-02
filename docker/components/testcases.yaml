@@ -17,7 +17,7 @@ tiers:
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
                 dependencies:
-                    installer: '^((?!netvirt).)*$'
+                    installer: ''
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
@@ -32,7 +32,7 @@ tiers:
                     This test case runs the full suite of scenarios of the
                     OpenStack Rally suite using several threads and iterations.
                 dependencies:
-                    installer: '^((?!netvirt).)*$'
+                    installer: ''
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.rally.rally'
