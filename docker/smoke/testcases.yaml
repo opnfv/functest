@@ -50,7 +50,7 @@ tiers:
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
                 dependencies:
-                    installer: '^((?!netvirt).)*$'
+                    installer: ''
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
@@ -166,7 +166,7 @@ tiers:
                     the cloud's private network.
 
                 dependencies:
-                    installer: '^((?!netvirt).)*$'
+                    installer: ''
                     scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
