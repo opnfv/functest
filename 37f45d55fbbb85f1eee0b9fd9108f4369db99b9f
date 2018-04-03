@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_189e9856",
+        "filename": "upper-constraints.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-04-03T01:48:07Z",
+      "side": 1,
+      "message": "1. some features could be romoved from F: domino, promise\n2. Why not wait a little bit for others features\u0027 stable/fraser is released?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "37f45d55fbbb85f1eee0b9fd9108f4369db99b9f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
