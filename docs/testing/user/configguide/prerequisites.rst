@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-4.0
+
 Prerequisites
 =============
 The OPNFV deployment is out of the scope of this document but it can be
@@ -13,10 +15,11 @@ Several prerequisites are needed for Functest:
     #. Connectivity from the Jumphost to the SUT public/external network
 
 Some specific SNAPS tests may require a connectivity from the Jumphost to the
-SUT admin/management network but most of the test cases do not. This requirement
-can be changed by overriding the 'interface' attribute (OS_INTERFACE) value
-to 'public' in the credentials file. Another means to circumvent this issue
-would be to change the 'snaps.use_keystone' value from True to False.
+SUT admin/management network but most of the test cases do not. This
+requirement can be changed by overriding the 'interface' attribute
+(OS_INTERFACE) value to 'public' in the credentials file. Another means to
+circumvent this issue would be to change the 'snaps.use_keystone' value from
+True to False.
 
 WARNING: Connectivity from Jumphost is essential and it is of paramount
 importance to make sure it is working before even considering to install
@@ -29,7 +32,7 @@ deployment has been triggered previously, but it could be any server
 with proper connectivity to the SUT.
 
 NOTE: If your Jumphost is operating behind a company http proxy and/or
-firewall, please consult first the section `Proxy Support`_, towards
+firewall, please consult first the section :ref:`Proxy support`, towards
 the end of this document. The section details some tips/tricks which
 *may* be of help in a proxified environment.
 
@@ -44,8 +47,8 @@ commands below are offered as a short reference.
 
 *Tip:* For running docker containers behind the proxy, you need first
 some extra configuration which is described in section
-`Docker Installation on CentOS behind http proxy`_. You should follow
-that section before installing the docker engine.
+:ref:`Docker Installation on CentOS behind http proxy`. You should follow that
+section before installing the docker engine.
 
 Docker installation needs to be done as root user. You may use other
 userid's to create and run the actual containers later if so desired.

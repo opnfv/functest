@@ -1,4 +1,3 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
 
 Installation and configuration
@@ -23,8 +22,9 @@ Docker images are available on the dockerhub:
   * opnfv/functest-parser
   * opnfv/functest-restapi
 
-The tag "opnfv-5.0.0" is the official release image in Euphrates, but you can also pull "euphrates"
-tag as it is being maintained by Functest team and might include bugfixes.
+The tag "opnfv-5.0.0" is the official release image in Euphrates, but you can
+also pull "euphrates" tag as it is being maintained by Functest team and might
+include bugfixes.
 
 The Functest docker container environment can -in principle- be also
 used with non-OPNFV official installers (e.g. 'devstack'), with the
@@ -173,10 +173,10 @@ Testing vnf suite
 
 Run vnf suite::
 
-sudo docker run --env-file env \
-    -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
-    -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-vnf
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/images:/home/opnfv/functest/images \
+      opnfv/functest-vnf
 
 Results shall be displayed as follows::
 
@@ -218,8 +218,8 @@ release note.
 
 **NOTE:** The scenario name is mainly used to automatically detect
 if a test suite is runnable or not (e.g. it will prevent ODL test suite to be
-run on 'nosdn' scenarios). If not set, Functest will try to run the default test
-cases that might not include SDN controller or a specific feature
+run on 'nosdn' scenarios). If not set, Functest will try to run the default
+test cases that might not include SDN controller or a specific feature.
 
 **NOTE:** An HA scenario means that 3 OpenStack controller nodes are
 deployed. It does not necessarily mean that the whole system is HA. See
@@ -478,6 +478,7 @@ We may distinguish several directories, the first level has 5 directories:
 
 Functest directory has 7 sub-directories, which is located under
 /usr/lib/python2.7/site-packages/functest:
+
   * **api**: This directory is dedicated for the internal Functest API.
   * **ci**: This directory contains test structure definition files
     (e.g <filename>.yaml) and bash shell/python scripts used to
@@ -605,6 +606,8 @@ If the OpenStack command still does not show anything or complains
 about connectivity issues, it could be due to an incorrect url given to
 the OS_AUTH_URL environment variable. Check the deployment settings.
 
+.. _`Proxy support`:
+
 Proxy support
 -------------
 If your Jumphost node is operating behind a http proxy, then there are
@@ -614,7 +617,7 @@ succeed:
   #. Initial installation of docker engine First, try following the
      official Docker documentation for Proxy settings. Some issues were
      experienced on CentOS 7 based Jumphost. Some tips are documented
-     in section: `Docker Installation on CentOS behind http proxy`_
+     in section: :ref:`Docker Installation on CentOS behind http proxy`
      below.
 
 If that is the case, make sure the resolv.conf and the needed
@@ -676,6 +679,8 @@ commands might not work. You can use the **curl** command instead.
 
   (Ignore the content. If command returns a valid HTML page, it proves
   the connection.)
+
+.. _`Docker Installation on CentOS behind http proxy`:
 
 Docker Installation on CentOS behind http proxy
 -----------------------------------------------
