@@ -1,14 +1,4 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
-
-=======
-License
-=======
-
-OPNFV Euphrates release note for Functest Docs
-are licensed under a Creative Commons Attribution 4.0 International License.
-You should have received a copy of the license along with this.
-If not, see <http://creativecommons.org/licenses/by/4.0/>.
 
 =============================================
 OPNFV Euphrates 5.1 release note for Functest
@@ -19,9 +9,8 @@ Abstract
 
 This document contains the release notes of the Functest project.
 
-
 OPNFV Euphrates Release
-======================
+=======================
 
 Functest deals with functional testing of the OPNFV solution.
 It includes test cases developed within the project, test cases developed in
@@ -58,7 +47,6 @@ The OPNFV projects integrated into Functest framework for automation are:
  * promise
  * orchestra_openims
  * orchestra_clearwaterims
-
 
 Release Data
 ============
@@ -116,47 +104,62 @@ Documents
 
  - Functest Framework presentation: http://testresults.opnfv.org/functest/framework/index.html
 
-
 Version change
 ==============
 
-Functest now delivers light-weigth Docker images based on Alpine 3.7. The test cases are grouped into several categories
-or tiers and must be run from the corresponding container. For example, to run the test case healthcheck, the image
-opnfv/functest-healthcheck shall be used. The tiers and the tests within them are explained in detail in the User Guide.
+Functest now delivers light-weigth Docker images based on Alpine 3.7. The test
+cases are grouped into several categories or tiers and must be run from the
+corresponding container. For example, to run the test case healthcheck, the
+image opnfv/functest-healthcheck shall be used. The tiers and the tests within
+them are explained in detail in the User Guide.
 
 The former Ubuntu image is not longer maintained.
 
-The Parser test case has its own dedicated Docker image since it requires libraries released for OpenStack Pike and
-Euphrates is based on Ocata.
+The Parser test case has its own dedicated Docker image since it requires
+libraries released for OpenStack Pike and Euphrates is based on Ocata.
 
-The Docker images do not contain OS images (Cirros, Ubuntu, Centos, ..) anymore. A script has been created under the
-ci directory (download_images.sh) which contains all the needed images for all the tests. This file can be modified by
-the user since not all the images might be used. It must be executed before starting Functest and attach the needed
-images as a Docker volume. See Configuration Guide for more information.
+The Docker images do not contain OS images (Cirros, Ubuntu, Centos, ..)
+anymore. A script has been created under the ci directory (download_images.sh)
+which contains all the needed images for all the tests. This file can be
+modified by the user since not all the images might be used. It must be
+executed before starting Functest and attach the needed images as a Docker
+volume. See Configuration Guide for more information.
 
 The requirements have been split into 3 files:
  * requirements.txt : lists all abstract dependencies of the OPNFV packages
- * test-requirements.txt : lists all abstract dependencies required by Functest Unit Tests
- * upper-constraints.txt : lists all concrete upstream dependencies required by Functest Docker container
+ * test-requirements.txt : lists all abstract dependencies required by Functest
+   Unit Tests
+ * upper-constraints.txt : lists all concrete upstream dependencies required by
+   Functest Docker container
 
-OPNFV (test-)requirements.txt have been updated according to stable/ocata global-requirements.txt.
-Functest uses (and completes) stable/ocata upper-constraints.txt in Dockerfiles and tox configuration.
-The project relies on pbr, which injects requirements into the install_requires, tests_require and/or dependency_links
-arguments to setup. It also supports conditional dependencies which can be added to the requirements (e.g. dnspython>=1.14.0;python_version=='2.7')
+OPNFV (test-)requirements.txt have been updated according to stable/ocata
+global-requirements.txt. Functest uses (and completes) stable/ocata
+upper-constraints.txt in Dockerfiles and tox configuration. The project relies
+on pbr, which injects requirements into the install_requires, tests_require
+and/or dependency_links arguments to setup. It also supports conditional
+dependencies which can be added to the requirements
+(e.g. dnspython>=1.14.0;python_version=='2.7')
 
-The way to manage logging has been centralized to a configuration file (logging.ini) which might be modified by the user.
-By default, the output of executing the test cases is redirected to log files and is not displayed on the console, only result
-messages and summary tables are displayed.
+The way to manage logging has been centralized to a configuration file
+(logging.ini) which might be modified by the user. By default, the output of
+executing the test cases is redirected to log files and is not displayed on the
+console, only result messages and summary tables are displayed.
 
-The framework has been refactored and all the test cases inherit from a core class TestCase. For Feature projects who develop
-test cases, 2 sub-classes have been created:
- - Feature: it implements all the needed functions and the developer must only overwrite the method "execute" (e.g. Barometer)
- - BashFeature: it is used if the third party test case is a shell script. This way, the execution command must be specified in
- testcases.yaml as the argument (e.g. Domino, Doctor)
+The framework has been refactored and all the test cases inherit from a core
+class TestCase. For Feature projects who develop test cases, 2 sub-classes
+have been created:
 
-An internal REST API has been introduced in Euphrates. The goal is to trigger Functest operations through an API in addition of the CLI.
-This could be considered as a first step towards a pseudo micro services approach where the different test projects could expose and
-consume APIs to the other test projects.
+ - Feature: it implements all the needed functions and the developer must only
+   overwrite the method "execute" (e.g. Barometer)
+ - BashFeature: it is used if the third party test case is a shell script. This
+   way, the execution command must be specified in testcases.yaml as the
+   argument (e.g. Domino, Doctor)
+
+An internal REST API has been introduced in Euphrates. The goal is to trigger
+Functest operations through an API in addition of the CLI. This could be
+considered as a first step towards a pseudo micro services approach where the
+different test projects could expose and consume APIs to the other test
+projects.
 
 Euphrates 5.1 improvements
 ==========================
@@ -168,23 +171,21 @@ Euphrates 5.1 improvements
 * Selection of a subset of SNAPS test cases.
 * Reorder VNF test cases and adjust timeouts in VNFs.
 
-
-
 Euphrates 5.1 known restrictions/issues
 =======================================
+
 +--------------+-----------+----------------------------------------------+
 | Installer    | Scenario  |  Issue                                       |
 +==============+===========+==============================================+
-| fuel@aarch64 |    any    |  VNF tier not supported yet.                 |
+| fuel@aarch64 | any       |  VNF tier not supported yet.                 |
 +--------------+-----------+----------------------------------------------+
 |              |           |  The test cases belonging to the VNF tier    |
-|     any      |    any    |  have been only tested on os-nosdn-nofeature |
+| any          | any       |  have been only tested on os-nosdn-nofeature |
 |              |           |  scenarios and baremetal deployments.        |
 +--------------+-----------+----------------------------------------------+
-|     Joid     |    k8     |  Functest does not offer test suites for     |
-|    Compass   |           |  Kubernetes scenarios yet.                   |
+| Joid         | k8        |  Functest does not offer test suites for     |
+| Compass      |           |  Kubernetes scenarios yet.                   |
 +--------------+-----------+----------------------------------------------+
-
 
 Test and installer/scenario dependencies
 ========================================
@@ -200,7 +201,6 @@ in the different testcases.yaml for each tier:
  * https://git.opnfv.org/functest/tree/docker/vnf/testcases.yaml?h=stable/euphrates
  * https://git.opnfv.org/functest/tree/docker/parser/testcases.yaml?h=stable/euphrates
 
-
 Test results
 ============
 
@@ -209,13 +209,12 @@ http://testresults.opnfv.org/functest/euphrates/
 
 Test logs are available in:
 
- - test results logs from CI: http://artifacts.opnfv.org (within different directories 'logs_functest_X')
+ - test results logs from CI: http://artifacts.opnfv.org (within different
+   directories 'logs_functest_X')
 
  - jenkins logs on CI: https://build.opnfv.org/ci/view/functest/
 
  - jenkins logs on ARM CI: https://build.opnfv.org/ci/view/armband/
-
-
 
 Open JIRA tickets
 =================
@@ -229,7 +228,6 @@ Open JIRA tickets
 
 All the tickets that are not blocking have been fixed or postponed
 the next release.
-
 
 Useful links
 ============
