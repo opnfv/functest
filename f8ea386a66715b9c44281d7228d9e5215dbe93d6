@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_3b6f0eff",
+        "filename": "docs/release/release-notes/functest-release.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-04-03T12:21:58Z",
+      "side": 1,
+      "message": "Maybe we have to switch to Fraser ?",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "f8ea386a66715b9c44281d7228d9e5215dbe93d6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
