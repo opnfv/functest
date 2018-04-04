@@ -1,11 +1,4 @@
-=======
-License
-=======
-
-Functest Docs are licensed under a Creative Commons Attribution 4.0
-International License.
-You should have received a copy of the license along with this.
-If not, see <http://creativecommons.org/licenses/by/4.0/>.
+.. SPDX-License-Identifier: CC-BY-4.0
 
 =======================
 Open Source VNF Catalog
@@ -68,57 +61,54 @@ Curation Phase
 This phase pertains to studying various Open Source VNFs available and
 classification of them based on certain parameters. The parameters that
 I currently have in mind are:
+
  * Developer Metrics: These pertain to repo characteristics of VNF under
- study
-  * Usage Statistics - Activity, Number of Commits, stars
-  * Maturity Statistics - For instance if an NFV community decides code
-  coverage is important for them, it shows the NFV community is serious
-  about taking the project forward
+   study
+ * Usage Statistics - Activity, Number of Commits, stars
+ * Maturity Statistics - For instance if an NFV community decides code
+   coverage is important for them, it shows the NFV community is serious
+   about taking the project forward
  * Technical Tagging: These are the tags that pertain to technical
- characteristics of a VNF
-  * Broad Use Cases - Whether the VNF fits strictly in IaaS, PaaS or
-  SaaS layer or is an hybrid of two/all.
-  * Generic Use Cases - This in my opinion is the broadest
-  classification category. For instance a VNF could be built with a
-  broad idea of powering IOT devices at home or from usage perspective
-  of Telco Operators (vFW, vEPC, vIMS, vCDN, vAAA, vCPE,...).`[2]`_
-  * Fields of Application
-  * Library Status - Whether APIs are standardized, support RESTful
-  services.
-  * Dependency Forwarding Graph - This is pretty complex tagging
-  mechanism. It essentially tries to establish a graph relationship
-  between the VNFs (elementary VNFs are used in Service Function
-  Chaining chains such as Firewall, DPI, content enrichment,..). In my
-  opinion this is useful immensely. This will allow users to go to
-  platform and ask a question like - “I have this X tech stack to
-  support, Y and Z are my use cases, which NFVs should I use to support
-  this.
-  * Visitor Score - Based on `[1]`_ I plan to evolve a visitor score for
-  the platform. This will allow users to score an NFV on certain
-  parameters, may be post comments.
+   characteristics of a VNF
+ * Broad Use Cases - Whether the VNF fits strictly in IaaS, PaaS or
+   SaaS layer or is an hybrid of two/all.
+ * Generic Use Cases - This in my opinion is the broadest
+   classification category. For instance a VNF could be built with a
+   broad idea of powering IOT devices at home or from usage perspective
+   of Telco Operators (vFW, vEPC, vIMS, vCDN, vAAA, vCPE,...).`[2]`_
+ * Fields of Application
+ * Library Status - Whether APIs are standardized, support RESTful
+   services.
+ * Dependency Forwarding Graph - This is pretty complex tagging
+   mechanism. It essentially tries to establish a graph relationship
+   between the VNFs (elementary VNFs are used in Service Function
+   Chaining chains such as Firewall, DPI, content enrichment,..). In my
+   opinion this is useful immensely. This will allow users to go to
+   platform and ask a question like - “I have this X tech stack to
+   support, Y and Z are my use cases, which NFVs should I use to support
+   this.
+ * Visitor Score - Based on `[1]`_ I plan to evolve a visitor score for
+   the platform. This will allow users to score an NFV on certain
+   parameters, may be post comments.
 
 **I plan to use the above three scores and evolve cumulative score which
 will be displayed next to each of the NFV on the platform.**
 
  * Platform building phase - This will involve erecting a Web Platform
- which will be similar to this  `[1]`_. I am decently familiar with
- Django and hence I will write the platform in Django. There are two
- action plans that I have in mind right now. Either I can start writing
- the platform simultaneously which will help keep track of my progress
- or I can write the platform after 1.5 - 2 months into the internship.
- Either way I aim to have the Web Platform ready by March 12.
-
+   which will be similar to this  `[1]`_. I am decently familiar with
+   Django and hence I will write the platform in Django. There are two
+   action plans that I have in mind right now. Either I can start writing
+   the platform simultaneously which will help keep track of my progress
+   or I can write the platform after 1.5 - 2 months into the internship.
+   Either way I aim to have the Web Platform ready by March 12.
  * Functest VNF implementation phase - This is the last phase that will
- involve writing a fully functional implementation of an Open Source VNF
- into Functest. I will undertake this after I am 3 months into the
- internship. I have a decent familiarity with python and hence I think
- it shouldn’t be too difficult. I need to decide how complex the VNFI
- should undertake this exercise for (e.g. AAA such as free radius sounds
- relatively easy, vCDN is much more challenging).
- This will be decided in consent with my mentors.
-
-
-
+   involve writing a fully functional implementation of an Open Source VNF
+   into Functest. I will undertake this after I am 3 months into the
+   internship. I have a decent familiarity with python and hence I think
+   it shouldn’t be too difficult. I need to decide how complex the VNFI
+   should undertake this exercise for (e.g. AAA such as free radius sounds
+   relatively easy, vCDN is much more challenging).
+   This will be decided in consent with my mentors.
 
 Schedule:
 =========
