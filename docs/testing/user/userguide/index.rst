@@ -1,7 +1,6 @@
-.. _functest-userguide:
-
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
+
+.. _functest-userguide:
 
 *******************
 Functest User Guide
@@ -10,32 +9,13 @@ Functest User Guide
 .. toctree::
    :maxdepth: 2
 
-
-
-Introduction
-============
-
-The goal of this document is to describe the OPNFV Functest test cases and to
-provide a procedure to execute them.
-
-**IMPORTANT**: It is assumed here that Functest has been properly deployed
-following the installation guide procedure  `[1]`_.
-
-.. include:: ./test_overview.rst
-
-.. include:: ./test_details.rst
-
-.. include:: ./runfunctest.rst
-
-.. include:: ./test_results.rst
-
-.. include:: ./reporting.rst
-
-.. figure:: ../../../images/functest-reporting-status.png
-   :align: center
-   :alt: Functest reporting portal Fuel status page
-
-.. include:: ./troubleshooting.rst
+   intro.rst
+   test_overview.rst
+   test_details.rst
+   runfunctest.rst
+   test_results.rst
+   reporting.rst
+   troubleshooting.rst
 
 
 References

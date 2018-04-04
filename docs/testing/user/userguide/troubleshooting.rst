@@ -1,5 +1,4 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
-.. http://creativecommons.org/licenses/by/4.0
+.. SPDX-License-Identifier: CC-BY-4.0
 
 Troubleshooting
 ===============
@@ -26,8 +25,8 @@ rally_full).
 
 vPing common
 ^^^^^^^^^^^^
-For both vPing test cases (**vPing_ssh**, and **vPing_userdata**), the first steps are
-similar:
+For both vPing test cases (**vPing_ssh**, and **vPing_userdata**), the first
+steps are similar:
 
     * Create Glance image
     * Create Network
@@ -37,15 +36,17 @@ similar:
 After these actions, the test cases differ and will be explained in their
 respective section.
 
-These test cases can be run inside the container, using new Functest CLI as follows::
+These test cases can be run inside the container, using new Functest CLI as
+follows::
 
     $ functest testcase run vping_ssh
     $ functest testcase run vping_userdata
 
 The Functest CLI is designed to route a call to the corresponding internal
-python scripts, located in paths
-/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_ssh.py
-and /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_userdata.py
+python scripts, located in paths::
+
+    /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_ssh.py
+    /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/vping/vping_userdata.py
 
 Notes:
 
@@ -73,10 +74,11 @@ Some of the common errors that can appear in this test case are::
 
     vPing_ssh- ERROR - There has been a problem when creating the neutron network....
 
-This means that there has been some problems with Neutron, even before creating the
-instances. Try to create manually a Neutron network and a Subnet to see if that works.
-The debug messages will also help to see when it failed (subnet and router creation).
-Example of Neutron commands (using 10.6.0.0/24 range for example)::
+This means that there has been some problems with Neutron, even before creating
+the instances. Try to create manually a Neutron network and a Subnet to see if
+that works. The debug messages will also help to see when it failed (subnet and
+router creation). Example of Neutron commands (using 10.6.0.0/24 range for
+example)::
 
     neutron net-create net-test
     neutron subnet-create --name subnet-test --allocation-pool start=10.6.0.2,end=10.6.0.100 \
@@ -85,7 +87,8 @@ Example of Neutron commands (using 10.6.0.0/24 range for example)::
     neutron router-interface-add <ROUTER_ID> test_subnet
     neutron router-gateway-set <ROUTER_ID> <EXT_NET_NAME>
 
-Another related error can occur while creating the Security Groups for the instances::
+Another related error can occur while creating the Security Groups for the
+instances::
 
     vPing_ssh- ERROR - Failed to create the security group...
 
@@ -100,9 +103,9 @@ In this case, proceed to create it manually. These are some hints::
     --protocol tcp --port-range-min 80 --port-range-max 80 --remote-ip-prefix 0.0.0.0/0
 
 The next step is to create the instances. The image used is located in
-*/home/opnfv/functest/data/cirros-0.4.0-x86_64-disk.img* and a Glance image is created
-with the name **functest-vping**. If booting the instances fails (i.e. the status
-is not **ACTIVE**), you can check why it failed by doing::
+*/home/opnfv/functest/data/cirros-0.4.0-x86_64-disk.img* and a Glance image is
+created with the name **functest-vping**. If booting the instances fails (i.e.
+the status is not **ACTIVE**), you can check why it failed by doing::
 
     nova list
     nova show <INSTANCE_ID>
@@ -113,7 +116,8 @@ It might show some messages about the booting failure. To try that manually::
 
 This will spawn a VM using the network created previously manually.
 In all the OPNFV tested scenarios from CI, it never has been a problem with the
-previous actions. Further possible problems are explained in the following sections.
+previous actions. Further possible problems are explained in the following
+sections.
 
 
 vPing_SSH
@@ -143,19 +147,21 @@ from the DHCP agent. It can be checked by doing::
     nova console-log opnfv-vping-2
 
 If the message *Sending discover* and *No lease, failing* is shown, it probably
-means that the Neutron dhcp-agent failed to assign an IP or even that it was not
-responding. At this point it does not make sense to try to ping the floating IP.
+means that the Neutron dhcp-agent failed to assign an IP or even that it was
+not responding. At this point it does not make sense to try to ping the
+floating IP.
 
-If the instance got an IP properly, try to ping manually the VM from the container::
+If the instance got an IP properly, try to ping manually the VM from the
+container::
 
     nova list
     <grab the public IP>
     ping <public IP>
 
-If the ping does not return anything, try to ping from the Host where the Docker
-container is running. If that solves the problem, check the iptable rules because
-there might be some rules rejecting ICMP or TCP traffic coming/going from/to the
-container.
+If the ping does not return anything, try to ping from the Host where the
+Docker container is running. If that solves the problem, check the iptable
+rules because there might be some rules rejecting ICMP or TCP traffic
+coming/going from/to the container.
 
 At this point, if the ping does not work either, try to reproduce the test
 manually with the steps described above in the vPing common section with the
@@ -176,7 +182,8 @@ vPing_userdata
 This test case does not create any floating IP neither establishes an SSH
 connection. Instead, it uses nova-metadata service when creating an instance
 to pass the same script as before (ping.sh) but as 1-line text. This script
-will be executed automatically when the second instance **opnfv-vping-2** is booted.
+will be executed automatically when the second instance **opnfv-vping-2** is
+booted.
 
 The only known problem here for this test to fail is mainly the lack of support
 of cloud-init (nova-metadata service). Check the console of the instance::
@@ -219,39 +226,41 @@ In the upstream OpenStack CI all the Tempest test cases are supposed to pass.
 If some test cases fail in an OPNFV deployment, the reason is very probably one
 of the following
 
-+-----------------------------+-----------------------------------------------------+
-| Error                       | Details                                             |
-+=============================+=====================================================+
-| Resources required for test | Such resources could be e.g. an external network    |
-| case execution are missing  | and access to the management subnet (adminURL) from |
-|                             | the Functest docker container.                      |
-+-----------------------------+-----------------------------------------------------+
-| OpenStack components or     | Check running services in the controller and compute|
-| services are missing or not | nodes (e.g. with "systemctl" or "service" commands).|
-| configured properly         | Configuration parameters can be verified from the   |
-|                             | related .conf files located under '/etc/<component>'|
-|                             | directories.                                        |
-+-----------------------------+-----------------------------------------------------+
-| Some resources required for | The tempest.conf file, automatically generated by   |
-| execution test cases are    | Rally in Functest, does not contain all the needed  |
-| missing                     | parameters or some parameters are not set properly. |
-|                             | The tempest.conf file is located in directory       |
-|                             | 'root/.rally/verification/verifier-<UUID>           |
-|                             | /for-deployment-<UUID>'                             |
-|                             | in the Functest Docker container. Use the "rally    |
-|                             | deployment list" command in order to check the UUID |
-|                             | the UUID of the current deployment.                 |
-+-----------------------------+-----------------------------------------------------+
++----------------------------+------------------------------------------------+
+| Error                      | Details                                        |
++============================+================================================+
+| Resources required for     | Such resources could be e.g. an external       |
+| testcase execution are     | network and access to the management subnet    |
+| missing                    | (adminURL) from the Functest docker container. |
++----------------------------+------------------------------------------------+
+| OpenStack components or    | Check running services in the controller and   |
+| services are missing or    | compute nodes (e.g. with "systemctl" or        |
+| not configured properly    | "service" commands).                           |
+|                            | Configuration parameters can be verified from  |
+|                            | the related .conf files located under          |
+|                            | '/etc/<component>' directories.                |
++----------------------------+------------------------------------------------+
+| Some resources required    | The tempest.conf file, automatically generated |
+| for execution test cases   | by Rally in Functest, does not contain all the |
+| are missing                | needed parameters or some parameters are not   |
+|                            | set properly.                                  |
+|                            | The tempest.conf file is located in directory  |
+|                            | 'root/.rally/verification/verifier-<UUID>      |
+|                            | /for-deployment-<UUID>'                        |
+|                            | in the Functest Docker container. Use the      |
+|                            | "rally deployment list" command in order to    |
+|                            | check the UUID of the current deployment.      |
++----------------------------+------------------------------------------------+
 
 
 When some Tempest test case fails, captured traceback and possibly also the
-related REST API requests/responses are output to the console. More detailed debug
-information can be found from tempest.log file stored into related Rally deployment
-folder.
+related REST API requests/responses are output to the console. More detailed
+debug information can be found from tempest.log file stored into related Rally
+deployment folder.
 
 Functest offers a possibility to test a customized list of Tempest test cases.
-To enable that, add a new entry in docker/components/testcases.yaml on the "components" container
-with the following content::
+To enable that, add a new entry in docker/components/testcases.yaml on the
+"components" container with the following content::
 
     -
         case_name: tempest_custom
@@ -268,8 +277,8 @@ with the following content::
             module: 'functest.opnfv_tests.openstack.tempest.tempest'
             class: 'TempestCustom'
 
-Also, a list of the Tempest test cases must be provided to the container or modify
-the existing one in
+Also, a list of the Tempest test cases must be provided to the container or
+modify the existing one in
 /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
 
 Example of custom list of tests 'my-custom-tempest-tests.txt'::
@@ -290,8 +299,8 @@ This is an example of running a customized list of Tempest tests in Functest::
 Rally
 ^^^^^
 
-The same error causes which were mentioned above for Tempest test cases, may also
-lead to errors in Rally as well.
+The same error causes which were mentioned above for Tempest test cases, may
+also lead to errors in Rally as well.
 
 Possible scenarios are:
  * authenticate
@@ -305,14 +314,16 @@ Possible scenarios are:
  * quotas
  * vm
 
-To know more about what those scenarios are doing, they are defined in directory:
+To know more about what those scenarios are doing, they are defined in
+directory:
 /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/rally/scenario
-For more info about Rally scenario definition please refer to the Rally official
-documentation. `[3]`_
+For more info about Rally scenario definition please refer to the Rally
+official documentation. `[3]`_
 
 To check any possible problems with Rally, the logs are stored under
 */home/opnfv/functest/results/rally/* in the Functest Docker container.
 
+.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 
 Controllers
 -----------
@@ -372,7 +383,7 @@ described in the following table:
 | the VM                            | the vIMS VNF installation fails    |
 +-----------------------------------+------------------------------------+
 
-Please note that this test case requires resources (8 VM (2Go) + 1 VM (4Go)), it
-is there fore not recommended to run it on a light configuration.
+Please note that this test case requires resources (8 VM (2Go) + 1 VM (4Go)),
+it is there fore not recommended to run it on a light configuration.
 
 .. _`OPNFV Functest Developer Guide`:  http://artifacts.opnfv.org/functest/docs/testing_developer_devguide/index.html#

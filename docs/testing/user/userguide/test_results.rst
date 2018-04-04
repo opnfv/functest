@@ -1,3 +1,5 @@
+.. SPDX-License-Identifier: CC-BY-4.0
+
 Test results
 ============
 
@@ -11,10 +13,10 @@ If you want additional logs, you may configure the logging.ini under
 /usr/lib/python2.7/site-packages/functest/ci.
 
 Automated testing
---------------
+-----------------
 
-In automated mode, test results are displayed in jenkins logs, a summary is provided
-at the end of the job and can be described as follow::
+In automated mode, test results are displayed in jenkins logs, a summary is
+provided at the end of the job and can be described as follow::
 
  +-------------------------+----------------------------------------------------------+
  |         ENV VAR         |                          VALUE                           |
@@ -24,6 +26,8 @@ at the end of the job and can be described as follow::
  |        BUILD_TAG        |     jenkins-functest-daisy-baremetal-daily-master-67     |
  |         CI_LOOP         |                          daily                           |
  +-------------------------+----------------------------------------------------------+
+
+::
 
  +------------------------------+------------------+---------------------+------------------+----------------+
  |          TEST CASE           |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
