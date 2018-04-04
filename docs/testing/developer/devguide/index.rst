@@ -1,4 +1,3 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. SPDX-License-Identifier: CC-BY-4.0
 
 ************************
@@ -109,11 +108,12 @@ The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases can be grouped by domain:
 
  * sdn: odl, odl_netvirt, odl_fds
- * openstack: api_check, connection_check, snaps_health_check, vping_ssh, vping_userdata, tempest_*, rally_*
+ * openstack: api_check, connection_check, snaps_health_check, vping_ssh,
+   vping_userdata, tempest_*, rally_*
  * vnf: cloudify_ims
 
-If you want to create a new test case you will have to create a new folder under
-the testcases directory (See next section for details).
+If you want to create a new test case you will have to create a new folder
+under the testcases directory (See next section for details).
 
 Functest external test cases
 ============================
@@ -157,10 +157,10 @@ Functest framework
 
 Functest is a framework.
 
-Historically Functest is released as a docker file, including tools, scripts and
-a CLI to prepare the environment and run tests.
-It simplifies the integration of external test suites in CI pipeline and provide
-commodity tools to collect and display results.
+Historically Functest is released as a docker file, including tools, scripts
+and a CLI to prepare the environment and run tests.
+It simplifies the integration of external test suites in CI pipeline and
+provide commodity tools to collect and display results.
 
 Since Colorado, test categories also known as **tiers** have been created to
 group similar tests, provide consistent sub-lists and at the end optimize
@@ -250,8 +250,8 @@ In order to simplify the creation of test cases, Functest develops also some
 functions that are used by internal test cases.
 Several features are supported such as logger, configuration management and
 Openstack capabilities (tacker,..).
-These functions can be found under <repo>/functest/utils and can be described as
-follows::
+These functions can be found under <repo>/functest/utils and can be described
+as follows::
 
  functest/utils/
  |-- config.py
@@ -262,8 +262,8 @@ follows::
  |-- openstack_tacker.py
  `-- openstack_utils.py
 
-It is recommended to use the SNAPS-OO library for deploying OpenStack instances.
-SNAPS `[4]`_ is an OPNFV project providing OpenStack utils.
+It is recommended to use the SNAPS-OO library for deploying OpenStack
+instances. SNAPS `[4]`_ is an OPNFV project providing OpenStack utils.
 
 
 TestAPI
