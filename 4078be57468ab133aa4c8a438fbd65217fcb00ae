@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_8c78a6c5",
+        "filename": "docs/testing/user/userguide/reporting.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-04T09:52:50Z",
+      "side": 1,
+      "message": "weight",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "4078be57468ab133aa4c8a438fbd65217fcb00ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6c739ae7",
+        "filename": "docs/testing/user/userguide/reporting.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-04T09:52:50Z",
+      "side": 1,
+      "message": "tempest",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "4078be57468ab133aa4c8a438fbd65217fcb00ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_8c5f0641",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-04T09:52:50Z",
+      "side": 1,
+      "message": "API",
+      "range": {
+        "startLine": 105,
+        "startChar": 55,
+        "endLine": 105,
+        "endChar": 58
+      },
+      "revId": "4078be57468ab133aa4c8a438fbd65217fcb00ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_cc074e1b",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-04T09:52:50Z",
+      "side": 1,
+      "message": "w",
+      "range": {
+        "startLine": 311,
+        "startChar": 17,
+        "endLine": 311,
+        "endChar": 18
+      },
+      "revId": "4078be57468ab133aa4c8a438fbd65217fcb00ae",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
