@@ -1,4 +1,3 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
 .. http://creativecommons.org/licenses/by/4.0
 
 Test reporting
@@ -42,7 +41,9 @@ and features) corresponding to this scenario.
    +---------------------+---------+---------+---------+---------+
    | copper              |    X    |         |         |    X    |
    +---------------------+---------+---------+---------+---------+
-   src:  os-odl_l2-nofeature-ha Colorado (see release note for the last matrix version)
+
+   src:  os-odl_l2-nofeature-ha Colorado (see release note for the last matrix
+   version)
 
 All the testcases (X) listed in the table are runnable on os-odl_l2-nofeature
 scenarios.
@@ -69,16 +70,20 @@ scoring. In fact the success criteria are not always easy to define and may
 require specific hardware configuration.
 
 Please also note that all the test cases have the same "weight" for the score
-calculation whatever the complexity of the test case. Concretely a vping has the
-same weith than the 200 tempst tests.
+calculation whatever the complexity of the test case. Concretely a vping has
+the same weith than the 200 tempst tests.
 Moreover some installers support more features than others. The more cases your
 scenario is dealing with, the most difficult to rich a good scoring.
 
 Therefore the scoring provides 3 types of indicators:
 
-  * the richness of the scenario: if the target scoring is high, it means that the scenario includes lots of features
-  * the maturity: if the percentage (scoring/target scoring * 100) is high, it means that all the tests are PASS
-  * the stability: as the number of iteration is included in the calculation, the pecentage can be high only if the scenario is run regularly (at least more than 4 iterations over the last 10 days in CI)
+  * the richness of the scenario: if the target scoring is high, it means that
+    the scenario includes lots of features
+  * the maturity: if the percentage (scoring/target scoring * 100) is high, it
+    means that all the tests are PASS
+  * the stability: as the number of iteration is included in the calculation,
+    the pecentage can be high only if the scenario is run regularly (at least
+    more than 4 iterations over the last 10 days in CI)
 
 In any case, the scoring is used to give feedback to the other projects and
 does not represent an absolute value of the scenario.
@@ -86,5 +91,8 @@ does not represent an absolute value of the scenario.
 See `reporting page`_ for details. For the status, click on the version,
 Functest then the Status menu.
 
-
 .. _`reporting page`: http://testresults.opnfv.org/reporting/
+
+.. figure:: ../../../images/functest-reporting-status.png
+   :align: center
+   :alt: Functest reporting portal Fuel status page

@@ -1,6 +1,4 @@
-.. This work is licensed under a Creative Commons Attribution 4.0 International License.
-.. http://creativecommons.org/licenses/by/4.0
-
+.. SPDX-License-Identifier: CC-BY-4.0
 
 Executing Functest suites
 =========================
@@ -38,8 +36,8 @@ The result tables show the results by test case, it can be::
 
 Manual run
 ==========
-If you want to run the test step by step, you may add docker option then run the
-different commands within the docker.
+If you want to run the test step by step, you may add docker option then run
+the different commands within the docker.
 
 Considering the healthcheck example, running functest manaully means::
 
