@@ -1,11 +1,4 @@
-=======
-License
-=======
-
-Functest Docs are licensed under a Creative Commons Attribution 4.0
-International License.
-You should have received a copy of the license along with this.
-If not, see <http://creativecommons.org/licenses/by/4.0/>.
+.. SPDX-License-Identifier: CC-BY-4.0
 
 ==================================
 Functest Security group test cases
@@ -57,9 +50,9 @@ Schedule:
 | **Date**                 | **Comment**                              |
 |                          |                                          |
 +--------------------------+------------------------------------------+
-| December  - January      | ........                                 |
+| December  - January      | '........'                               |
 +--------------------------+------------------------------------------+
-| January  - february      | ........                                 |
+| January  - february      | '........'                               |
 +--------------------------+------------------------------------------+
 
 
@@ -67,4 +60,3 @@ References:
 ===========
 
 .. _`[1]` : https://wiki.opnfv.org/display/DEV/Intern+Project%3A+Security+groups+test+case+in+Functest
-
