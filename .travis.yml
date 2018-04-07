@@ -43,11 +43,6 @@ jobs:
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
-        - arm64_dirs="docker/features"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
         - arm64_dirs="docker/components"
     - script: sudo -E bash build.sh
       env:
@@ -93,16 +88,11 @@ jobs:
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-fraser \
-          --target ${DOCKER_USERNAME}/functest-healthcheck:fraser
-    - script: >
-        sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-smoke:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-smoke:fraser
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-features:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-features:fraser
     - script: >
