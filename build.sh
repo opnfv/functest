@@ -10,9 +10,7 @@ docker/smoke \
 docker/features \
 docker/components \
 docker/vnf \
-docker/parser \
-docker/patrole \
-docker/restapi"}
+docker/parser"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=(--pull=true --no-cache --force-rm=true)
 
