@@ -1,14 +1,14 @@
 git+https://gerrit.opnfv.org/gerrit/releng@a2ffc4d1f172b81ec1bdf4ba7e8b00a199b97660#egg=opnfv&subdirectory=modules
-git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
-git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
+git+https://gerrit.opnfv.org/gerrit/snaps@stable/fraser#egg=snaps
+git+https://gerrit.opnfv.org/gerrit/barometer@stable/fraser#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/fraser#egg=sdnvpn
-git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
--e git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-tests
+git+https://gerrit.opnfv.org/gerrit/sfc@stable/fraser#egg=sfc
+-e git+https://gerrit.opnfv.org/gerrit/doctor@stable/fraser#egg=doctor-tests
 git+https://gerrit.opnfv.org/gerrit/stor4nfv#egg=stor4nfv-tests
-git+https://gerrit.opnfv.org/gerrit/clover#egg=clover
-git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
-git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
--e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
+git+https://gerrit.opnfv.org/gerrit/clover@stable/fraser#egg=clover
+git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
+git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
+-e git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-parser
 git+https://github.com/openstack/refstack-client@a59189eaacda24b787ecb65e6634257beba361ec#egg=refstack-client
 cloudify-rest-client===4.0
 openbaton-cli===2.2.1b7
