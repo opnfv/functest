@@ -176,7 +176,7 @@ class ODLTests(robotframework.RobotFramework):
             kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
             if installer_type == 'fuel':
-                kwargs['odlwebport'] = '8181'
+                kwargs['odlwebport'] = '8282'
                 kwargs['odlrestconfport'] = '8282'
             elif installer_type == 'apex' or installer_type == 'netvirt':
                 kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
