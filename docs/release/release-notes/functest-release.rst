@@ -134,6 +134,20 @@ Key changes
 .. _`OpenStack Pike`: https://raw.githubusercontent.com/openstack/requirements/stable/pike/upper-constraints.txt
 .. _Xtesting: http://xtesting.readthedocs.io/en/latest/
 
+Key benefits
+------------
+
+ * the enduser can run all tests by setting only one input (EXTERNAL_NETWORK)
+ * the developer can only work on the test suites without diving into CI/CD
+   integration
+ * both OpenStack and Kubernetes deployments can be verified
+ * Functest test cases are trustable as they meet the best coding rules (unit
+   tests, coverage, linters, etc.)
+ * Functest can be reused in other projects (e.g.
+   `ONS: Re-using OPNFV framework tests for LFN projects`_)
+
+.. _`ONS: Re-using OPNFV framework tests for LFN projects`: https://wiki.lfnetworking.org/display/LN/LFN+Developer+Forum+Schedule?preview=/328197/328329/ONS-OPNFV%20framework%20tests%20for%20LFN%20projects.pdf
+
 Code quality
 ------------
 
