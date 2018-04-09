@@ -12,59 +12,6 @@ scenario:
         installers:
             - '.+'  # all installers
         tests:
-            # Following tests currently fail due to required Gnocchi API:
-            # HTTP 410: "This telemetry installation is configured to use
-            #            Gnocchi. Please use the Gnocchi API available on the
-            #            metric endpoint to retrieve data."
-            # Issue: https://bugs.launchpad.net/rally/+bug/1704322
-            - CeilometerMeters.list_matched_meters
-            - CeilometerMeters.list_meters
-            - CeilometerQueries.create_and_query_samples
-            - CeilometerResource.get_tenant_resources
-            - CeilometerResource.list_matched_resources
-            - CeilometerResource.list_resources
-            - CeilometerSamples.list_matched_samples
-            - CeilometerSamples.list_samples
-            - CeilometerStats.create_meter_and_get_stats
-            - CeilometerStats.get_stats
-    -
-        scenarios:
-            - '^os-'  # all scenarios
-        installers:
-            - '.+'  # all installers
-        tests:
-            # Following test currently fails due to but in
-            # python-ceilometerclient during fetching of event_types
-            # Bug: https://bugs.launchpad.net/ubuntu/+bug/1704138
-            # Fix: https://review.openstack.org/#/c/483402/
-            - CeilometerEvents.create_user_and_list_event_types
-    -
-        scenarios:
-            - '^os-'  # all scenarios
-        installers:
-            - '.+'  # all installers
-        tests:
-            # Starting from ocata, following tests require the presence of
-            # panko in the deployment. This is not currently fulfilled
-            # Ref: https://docs.openstack.org/releasenotes/ceilometer/ocata.html
-            - 'CeilometerEvents..*'
-            - 'CeilometerTraits..*'
-    -
-        scenarios:
-            - '^os-'  # all scenarios
-        installers:
-            - '.+'  # all installers
-        tests:
-            # Rally is still utilizing Ceilometer API which is deprecated
-            # in Pike.
-            # Ref: https://docs.openstack.org/releasenotes/ceilometer/pike.html
-            - 'Ceilometer..*'
-    -
-        scenarios:
-            - '^os-'  # all scenarios
-        installers:
-            - '.+'  # all installers
-        tests:
             # Following test occasionally fails due to race condition issue on
             # quota manipulation in nova.
             # Ref: https://bugs.launchpad.net/nova/+bug/1552622
