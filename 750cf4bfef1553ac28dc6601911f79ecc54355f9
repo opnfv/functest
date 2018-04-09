@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_b0d4cf47",
+        "filename": "docs/release/release-notes/apex.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 335
+      },
+      "writtenOn": "2018-04-09T06:43:27Z",
+      "side": 1,
+      "message": "I like the details...\n\non the odl scenario, tempest scenario is FAIL, is a JIRA expected to cover any fail / scenario?\n\nyou planned to add the scenarios on the fly until the release date is reached? I assume there are more than 2 scenarios for Apex",
+      "revId": "750cf4bfef1553ac28dc6601911f79ecc54355f9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
