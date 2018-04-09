@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 09 Apr 2018 13:46:51 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/55213
+Project: functest
+Branch: refs/heads/master
