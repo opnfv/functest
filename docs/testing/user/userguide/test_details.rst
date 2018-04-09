@@ -202,7 +202,6 @@ scenarios:
  * neutron
  * nova
  * quotas
- * ceilometer
 
 A basic SLA (stop test on errors) has been implemented.
 

@@ -310,7 +310,6 @@ Possible scenarios are:
  * keystone
  * neutron
  * nova
- * ceilometer
  * quotas
  * vm
 
