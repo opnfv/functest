@@ -44,7 +44,7 @@ class RallyBase(testcase.TestCase):
     """Base class form Rally testcases implementation."""
 
     # pylint: disable=too-many-instance-attributes
-    TESTS = ['authenticate', 'glance', 'ceilometer', 'cinder', 'heat',
+    TESTS = ['authenticate', 'glance', 'cinder', 'heat',
              'keystone', 'neutron', 'nova', 'quotas', 'vm', 'all']
     GLANCE_IMAGE_NAME = getattr(config.CONF, 'openstack_image_name')
     GLANCE_IMAGE_FILENAME = getattr(config.CONF, 'openstack_image_file_name')
