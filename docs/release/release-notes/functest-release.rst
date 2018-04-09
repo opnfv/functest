@@ -112,7 +112,7 @@ New test cases
  * neutron_trunk
  * patrole
  * juju_epc
- * k8s_smoke,
+ * k8s_smoke
  * k8s_conformance
  * stor4nfv
  * clover
@@ -121,8 +121,8 @@ Key changes
 -----------
 
  * update test cases and containers to `OpenStack Pike`_
- * publish the framework in a separate project: Xtesting_
- * ease testing with default values
+ * move the framework into a separate project: Xtesting_
+ * ease running all containers thanks to default values
  * clean interfaces with OPNFV Installers and Features
  * rewrite all vnfs to allow multiple tests in parallel
  * fully support non-default region names and Keystone v3 domains
