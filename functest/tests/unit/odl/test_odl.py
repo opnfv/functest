@@ -391,7 +391,7 @@ class ODLRunTesting(ODLTesting):
         os.environ["INSTALLER_TYPE"] = "fuel"
         self._test_run(testcase.TestCase.EX_OK, None,
                        odlip=urllib.parse.urlparse(self._neutron_url).hostname,
-                       odlwebport='8181',
+                       odlwebport='8282',
                        odlrestconfport='8282')
 
     def test_apex_no_controller_ip(self):
