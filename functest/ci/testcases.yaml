@@ -395,7 +395,7 @@ tiers:
                     some signaling traffic.
                 dependencies:
                     installer: ''
-                    scenario: 'os-nosdn-nofeature-.*ha'
+                    scenario: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
@@ -409,7 +409,7 @@ tiers:
                     This test case is vRouter testing.
                 dependencies:
                     installer: ''
-                    scenario: 'os-nosdn-nofeature-.*ha'
+                    scenario: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
                     class: 'CloudifyVrouter'
@@ -424,7 +424,7 @@ tiers:
                     executor.
                 dependencies:
                     installer: ''
-                    scenario: 'os-nosdn-nofeature-.*ha'
+                    scenario: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.epc.juju_epc'
                     class: 'JujuEpc'
