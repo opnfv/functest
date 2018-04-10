@@ -4,18 +4,18 @@ fuel(arm64)
 os-nosdn-nofeature-ha
 ---------------------
 
-====================  ===================  ==========  ========  =========
-testcase              date                 pod_name    result    jira
-====================  ===================  ==========  ========  =========
-connection_check      2018-04-05 19:46:24  arm-pod6    PASS
-api_check             2018-04-05 20:23:40  arm-pod6    PASS
-snaps_health_check    2018-04-05 20:25:54  arm-pod6    PASS
-vping_ssh             2018-04-05 20:31:11  arm-pod6    PASS
-vping_userdata        2018-04-05 20:35:28  arm-pod6    PASS
-tempest_smoke_serial  2018-04-05 21:47:34  arm-pod6    PASS
-rally_sanity          2018-04-05 23:07:52  arm-pod6    PASS
-refstack_defcore      2018-04-05 23:32:04  arm-pod6    FAIL
-patrole               2018-04-05 23:47:59  arm-pod6    PASS
-snaps_smoke           2018-04-06 02:56:45  arm-pod6    FAIL      SNAPS-283
-neutron_trunk         2018-04-06 03:10:36  arm-pod6    PASS
-====================  ===================  ==========  ========  =========
+====================  ======  ==========  ========  ======
+testcase              date    pod_name    result    jira
+====================  ======  ==========  ========  ======
+connection_check              arm-pod6
+api_check                     arm-pod6
+snaps_health_check            arm-pod6
+vping_ssh                     arm-pod6
+vping_userdata                arm-pod6
+tempest_smoke_serial          arm-pod6
+rally_sanity                  arm-pod6
+refstack_defcore              arm-pod6
+patrole                       arm-pod6
+snaps_smoke                   arm-pod6
+neutron_trunk                 arm-pod6
+====================  ======  ==========  ========  ======
