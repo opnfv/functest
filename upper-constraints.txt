@@ -4,7 +4,7 @@ git+https://gerrit.opnfv.org/gerrit/barometer@stable/fraser#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/fraser#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc@stable/fraser#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/doctor@stable/fraser#egg=doctor-tests
-git+https://gerrit.opnfv.org/gerrit/stor4nfv#egg=stor4nfv-tests
+git+https://gerrit.opnfv.org/gerrit/stor4nfv@stable/fraser#egg=stor4nfv-tests
 git+https://gerrit.opnfv.org/gerrit/clover@stable/fraser#egg=clover
 git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
 git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
