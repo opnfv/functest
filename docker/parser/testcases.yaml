@@ -17,7 +17,7 @@ tiers:
                     Test suite from Parser project.
                 dependencies:
                     installer: ''
-                    scenario: '^((?!bgpvpn|nofeature).)*$'
+                    scenario: '^((?!bgpvpn).)*$'
                 run:
                     module: 'xtesting.core.feature'
                     class: 'BashFeature'
