@@ -149,7 +149,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
-        output = subprocess.check_output(cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _register_credentials_v2(self):
@@ -167,7 +167,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             yfile.write(CREDS_TEMPLATE2.format(**creds_data))
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
                '--replace']
-        output = subprocess.check_output(cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _register_credentials_v3(self):
@@ -187,7 +187,7 @@ class JujuEpc(vnf.VnfOnBoarding):
             yfile.write(CREDS_TEMPLATE3.format(**creds_data))
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
                '--replace']
-        output = subprocess.check_output(cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def _add_custom_rule(self, sec_grp_name):
@@ -284,22 +284,25 @@ class JujuEpc(vnf.VnfOnBoarding):
                     name=image_name, image_user='cloud', img_format='qcow2',
                     image_file=image_file))
                 image_id = image_creator.create().id
-                cmd = ['juju', 'metadata', 'generate-image', '-d', '~',
+                cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
                        '-i', image_id, '-s', image_name,
                        '-r', self.snaps_creds.region_name,
                        '-u', self.public_auth_url]
-                output = subprocess.check_output(cmd)
+                output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
-        juju_bootstrap_command = (
-            'juju bootstrap abot-epc abot-controller --config network={} '
-            '--metadata-source ~  --config ssl-hostname-verification=false '
-            '--constraints mem=2G --bootstrap-series xenial '
-            '--config use-floating-ip=true --debug '
-            '--config use-default-secgroup=true'.format(net_id))
-        if os.system(juju_bootstrap_command) != 0:
-            return False
+        cmd = ['juju', 'bootstrap', 'abot-epc', 'abot-controller',
+               '--metadata-source', '/root',
+               '--constraints', 'mem=2G',
+               '--bootstrap-series', 'xenial',
+               '--config', 'network={}'.format(net_id),
+               '--config', 'ssl-hostname-verification=false',
+               '--config', 'use-floating-ip=true',
+               '--config', 'use-default-secgroup=true',
+               '--debug']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
         return True
 
     def deploy_vnf(self):
@@ -316,73 +319,89 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         self.__logger.info("Deploying Abot-epc bundle file ...")
-        os.system('juju deploy {}'.format('/' + descriptor.get('file_name')))
+        cmd = ['juju', 'deploy', '/{}'.format(descriptor.get('file_name'))]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Waiting for instances .....")
-        status = os.system('juju-wait')
-        self.__logger.info("juju wait completed: %s", status)
+        cmd = ['juju-wait']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Deployed Abot-epc on Openstack")
         nova_client = nova_utils.nova_client(self.snaps_creds)
-        if status == 0:
-            instances = get_instances(nova_client)
-            self.__logger.info("List of Instance: %s", instances)
-            for items in instances:
-                metadata = get_instance_metadata(nova_client, items)
-                if 'juju-units-deployed' in metadata:
-                    sec_group = ('juju-' +
-                                 metadata['juju-controller-uuid'] +
-                                 '-' + metadata['juju-model-uuid'])
-                    self.__logger.info("Instance: %s", sec_group)
-                    break
-            self.__logger.info("Adding Security group rule....")
-            # This will add sctp rule to a common Security Group Created
-            # by juju and shared to all deployed units.
-            self._add_custom_rule(sec_group)
-            self.__logger.info("Copying the feature files to Abot_node ")
-            os.system('juju scp -- -r {}/featureFiles abot-'
-                      'epc-basic/0:~/'.format(self.case_dir))
-            self.__logger.info("Copying the feature files in Abot_node ")
-            os.system("juju ssh abot-epc-basic/0 'sudo rsync -azvv "
-                      "~/featureFiles /etc/rebaca-test-suite"
-                      "/featureFiles'")
-            count = 0
-            while count < 10:
-                epcstatus = os.system('juju status oai-epc | '
-                                      'grep {} | grep {} | grep {}'
-                                      .format('EPC', 'is', 'running'))
-                if epcstatus == 0:
-                    break
-                else:
-                    time.sleep(60)
-                    count = count + 1
-            os.system('juju-wait')
-            return True
-        return False
+        instances = get_instances(nova_client)
+        self.__logger.info("List of Instance: %s", instances)
+        for items in instances:
+            metadata = get_instance_metadata(nova_client, items)
+            if 'juju-units-deployed' in metadata:
+                sec_group = 'juju-{}-{}'.format(
+                    metadata['juju-controller-uuid'],
+                    metadata['juju-model-uuid'])
+                self.__logger.info("Instance: %s", sec_group)
+                break
+        self.__logger.info("Adding Security group rule....")
+        # This will add sctp rule to a common Security Group Created
+        # by juju and shared to all deployed units.
+        self._add_custom_rule(sec_group)
+        self.__logger.info("Copying the feature files to Abot_node ")
+        cmd = ['juju', 'scp', '--', '-r',
+               '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+        self.__logger.info("Copying the feature files in Abot_node ")
+        cmd = ['juju', 'ssh', 'abot-epc-basic/0',
+               'sudo', 'rsync', '-azvv', '~/featureFiles',
+               '/etc/rebaca-test-suite/featureFiles']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+        count = 0
+        epcstatus = 1
+        while count < 10:
+            epcstatus = os.system(
+                'juju status oai-epc | grep {} | grep {} | grep {}'.format(
+                    'EPC', 'is', 'running'))
+            if epcstatus == 0:
+                break
+            else:
+                time.sleep(60)
+                count = count + 1
+        if epcstatus != 0:
+            return False
+        cmd = ['juju-wait']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+        return True
 
     def test_vnf(self):
         """Run test on ABoT."""
         start_time = time.time()
         self.__logger.info("Running VNF Test cases....")
-        os.system('juju run-action abot-epc-basic/0 run '
-                  'tagnames={}'.format(self.details['test_vnf']['tag_name']))
-        os.system('juju-wait')
+        cmd = ['juju', 'run-action', 'abot-epc-basic/0', 'run',
+               'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+        cmd = ['juju-wait']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        os.system('juju scp abot-epc-basic/0:/var/lib/abot-'
-                  'epc-basic/artifacts/TestResults.json {}/.'
-                  .format(self.res_dir))
+        cmd = ['juju', 'scp',
+               'abot-epc-basic/0:'
+               '/var/lib/abot-epc-basic/artifacts/TestResults.json',
+               '{}/.'.format(self.res_dir)]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Parsing the Test results...")
         res = (process_abot_test_result('{}/TestResults.json'.format(
             self.res_dir)))
         short_result = sig_test_format(res)
         self.__logger.info(short_result)
-        self.details['test_vnf'].update(status='PASS',
-                                        result=short_result,
-                                        full_result=res,
-                                        duration=duration)
-
-        self.__logger.info("Test VNF result: Passed: %d, Failed:"
-                           "%d, Skipped: %d", short_result['passed'],
-                           short_result['failures'], short_result['skipped'])
+        self.details['test_vnf'].update(
+            status='PASS', result=short_result, full_result=res,
+            duration=duration)
+        self.__logger.info(
+            "Test VNF result: Passed: %d, Failed:%d, Skipped: %d",
+            short_result['passed'],
+            short_result['failures'], short_result['skipped'])
         return True
 
     def clean(self):
@@ -390,8 +409,10 @@ class JujuEpc(vnf.VnfOnBoarding):
         try:
             if not self.orchestrator['requirements']['preserve_setup']:
                 self.__logger.info("Destroying Orchestrator...")
-                os.system('juju destroy-controller -y abot-controller '
-                          '--destroy-all-models')
+                cmd = ['juju', 'destroy-controller', '-y', 'abot-controller',
+                       '--destroy-all-models']
+                output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+                self.__logger.info("%s\n%s", " ".join(cmd), output)
         except Exception:  # pylint: disable=broad-except
             self.__logger.warn("Some issue during the undeployment ..")
             self.__logger.warn("Tenant clean continue ..")
