@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 
 ======================================
-OPNFV master release note for Functest
+OPNFV Fraser release note for Functest
 ======================================
 
 Abstract
@@ -9,7 +9,7 @@ Abstract
 
 This document contains the release notes of the Functest project.
 
-OPNFV master Release
+OPNFV Fraser Release
 ====================
 
 Functest deals with functional testing of the OPNFV solution.
@@ -69,7 +69,13 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Release designation**              | Fraser                               |
++--------------------------------------+--------------------------------------+
+| **Repository branch**                | stable/fraser                        |
++--------------------------------------+--------------------------------------+
+| **Repository tag**                   | opnfv-6.0.0                          |
++--------------------------------------+--------------------------------------+
+| **Release date**                     | April 20th 2018                      |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -93,14 +99,15 @@ Software
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
  * https://hub.docker.com/r/opnfv/functest-kubernetes-features
 
-Docker tag for master: latest
+Docker tag for Fraser release: opnfv-6.0.0
+Docker tag for Fraser series: fraser
 
 Documents
 ---------
 
- * Config Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
- * User Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
- * Developer Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/developer/devguide/index.html
+ * Config Guide: http://docs.opnfv.org/en/stable-fraser/submodules/functest/docs/testing/user/configguide/index.html
+ * User Guide: http://docs.opnfv.org/en/stable-fraser/submodules/functest/docs/testing/user/userguide/index.html
+ * Developer Guide: http://docs.opnfv.org/en/stable-fraser/submodules/functest/docs/testing/developer/devguide/index.html
  * API Docs: http://functest.readthedocs.io/en/latest/
 
 Version change
@@ -162,4 +169,4 @@ Useful links
  * Functest CI dashboard: https://build.opnfv.org/ci/view/functest/
  * JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611
  * Functest IRC channel: #opnfv-functest
- * Reporting page: http://testresults.opnfv.org/reporting/master/functest/functest.html
+ * Reporting page: http://testresults.opnfv.org/reporting/fraser/functest/functest.html
