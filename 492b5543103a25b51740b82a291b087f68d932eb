@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_b5903944",
+        "filename": "functest/opnfv_tests/sdn/odl/odl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-04-11T09:46:06Z",
+      "side": 1,
+      "message": "I thought these two lines could be removed, but kwargs[\u0027neutronurl\u0027] is still required by robot, right?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "492b5543103a25b51740b82a291b087f68d932eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
