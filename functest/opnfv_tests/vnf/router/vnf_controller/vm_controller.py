@@ -85,12 +85,15 @@ class VmController(object):
         result = ssh.connect(self.ssh_connect_timeout,
                              self.ssh_connect_retry_count)
         if not result:
-            self.logger.debug("try to vm reboot.")
+            self.logger.warning("Reboot %s", vm_info["vnf_name"])
             self.util.reboot_vm(vm_info["vnf_name"])
             time.sleep(self.reboot_wait)
             result = ssh.connect(self.ssh_connect_timeout,
                                  self.ssh_connect_retry_count)
             if not result:
+                self.logger.error(
+                    "Cannot establish connection to IP '%s'. Aborting!",
+                    ssh.ip_address)
                 return None
 
         (result, _) = self.command_create_and_execute(

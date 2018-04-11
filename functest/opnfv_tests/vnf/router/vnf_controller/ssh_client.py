@@ -80,9 +80,8 @@ class SshClient(object):  # pylint: disable=too-many-instance-attributes
                 retrycount -= 1
 
         if retrycount == 0:
-            self.logger.error("Cannot establish connection to IP '%s'. " +
-                              "Aborting",
-                              self.ip_address)
+            self.logger.warning(
+                "Cannot establish connection to IP '%s'", self.ip_address)
             self.connected = False
             return self.connected
 
