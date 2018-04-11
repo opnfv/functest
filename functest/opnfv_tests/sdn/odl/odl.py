@@ -160,8 +160,7 @@ class ODLTests(robotframework.RobotFramework):
             snaps_creds = snaps_utils.get_credentials()
             kwargs = {'neutronurl': keystone_utils.get_endpoint(
                 snaps_creds, 'network')}
-            kwargs['odlip'] = urllib.parse.urlparse(
-                kwargs['neutronurl']).hostname
+            kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
             kwargs['odlwebport'] = '8080'
             kwargs['odlrestconfport'] = '8181'
             kwargs['odlusername'] = 'admin'
@@ -179,18 +178,13 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlwebport'] = '8282'
                 kwargs['odlrestconfport'] = '8282'
             elif installer_type == 'apex' or installer_type == 'netvirt':
-                kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
                 kwargs['odlwebport'] = '8081'
                 kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'compass':
-                kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
                 kwargs['odlrestconfport'] = '8080'
             elif installer_type == 'daisy':
-                kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
                 kwargs['odlwebport'] = '8181'
                 kwargs['odlrestconfport'] = '8087'
-            else:
-                kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
             assert kwargs['odlip']
         except KeyError as ex:
             self.__logger.error("Cannot run ODL testcases. "
