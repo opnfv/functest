@@ -67,6 +67,13 @@ validate the scenario for the release.
 |             |               | refstack   | Reference RefStack suite         |
 |             |               | \_defcore  | tempest selection for NFV        |
 |             |               +------------+----------------------------------+
+|             |               | patrole    | Patrole is a tempest plugin for  |
+|             |               |            | testing and verifying RBAC policy|
+|             |               |            | enforcement, which offers testing|
+|             |               |            | for the following OpenStack      |
+|             |               |            | services: Nova, Neutron, Glance, |
+|             |               |            | Cinder and Keystone              |
+|             +---------------+------------+----------------------------------+
 |             |               | neutron    | The neutron trunk port testcases |
 |             |               | \_trunk    | have been introduced and they are|
 |             |               |            | supported by installers :        |
@@ -145,6 +152,9 @@ validate the scenario for the release.
 |             |               +------------+----------------------------------+
 |             |               | vyos       | vRouter testing                  |
 |             |               | \_vrouter  |                                  |
+|             |               +------------+----------------------------------+
+|             |               | juju_epc   | vEPC validation with Juju as VNF |
+|             |               |            | manager and ABoT as test executor|
 |             |               +------------+----------------------------------+
 |             |               | cloudify   | Based on cloudify_ims test case  |
 |             |               | \_ims_perf | cloudify_ims_perf substitutes    |
