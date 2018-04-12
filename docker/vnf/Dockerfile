@@ -1,7 +1,7 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/pike
+ARG OPENSTACK_TAG=stable/queens
 ARG VIMS_TAG=stable
 ARG JUJU_TAG=tags/juju-2.2.5
 

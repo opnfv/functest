@@ -1,7 +1,7 @@
 FROM alpine:3.7
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/pike
+ARG OPENSTACK_TAG=stable/queens
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
