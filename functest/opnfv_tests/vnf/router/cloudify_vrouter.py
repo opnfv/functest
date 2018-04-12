@@ -434,8 +434,9 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             cfy_client.deployments.delete(self.vnf['descriptor'].get('name'))
             cfy_client.blueprints.delete(self.vnf['descriptor'].get('name'))
         except Exception:  # pylint: disable=broad-except
-            self.__logger.warn("Some issue during the undeployment ..")
-            self.__logger.warn("Tenant clean continue ..")
+            self.__logger.exception("Some issue during the undeployment ..")
+
+        self.__logger.warn("Tenant clean continue ..")
         super(CloudifyVrouter, self).clean()
 
     def get_vnf_info_list(self, target_vnf_name):
