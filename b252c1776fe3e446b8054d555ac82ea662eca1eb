@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_f06beeee",
+        "filename": "docs/com/pres/ons2018-functest-kubernetes/ons2018-functest-kubernetes.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-04-12T02:07:09Z",
+      "side": 1,
+      "message": "remaining space",
+      "revId": "b252c1776fe3e446b8054d555ac82ea662eca1eb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
