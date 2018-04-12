@@ -14,7 +14,6 @@ import ConfigParser
 import logging
 import fileinput
 import os
-import shutil
 import subprocess
 
 import pkg_resources
@@ -167,16 +166,6 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
                         'for-deployment-{}'.format(deployment_id))
 
 
-def backup_tempest_config(conf_file, res_dir):
-    """
-    Copy config file to tempest results directory
-    """
-    if not os.path.exists(res_dir):
-        os.makedirs(res_dir)
-    shutil.copyfile(conf_file,
-                    os.path.join(res_dir, 'tempest.conf'))
-
-
 def update_tempest_conf_file(conf_file, rconfig):
     """Update defined paramters into tempest config file"""
     with open(TEMPEST_CONF_YAML) as yfile:
@@ -194,7 +183,7 @@ def update_tempest_conf_file(conf_file, rconfig):
         rconfig.write(config_file)
 
 
-def configure_tempest_update_params(tempest_conf_file, res_dir,
+def configure_tempest_update_params(tempest_conf_file,
                                     network_name=None, image_id=None,
                                     flavor_id=None, compute_cnt=1):
     # pylint: disable=too-many-branches, too-many-arguments
@@ -252,8 +241,6 @@ def configure_tempest_update_params(tempest_conf_file, res_dir,
     LOGGER.debug('Add/Update required params defined in tempest_conf.yaml '
                  'into tempest.conf file')
     update_tempest_conf_file(tempest_conf_file, rconfig)
-
-    backup_tempest_config(tempest_conf_file, res_dir)
 
 
 def configure_verifier(deployment_dir):
