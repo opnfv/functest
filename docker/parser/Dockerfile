@@ -1,7 +1,7 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/pike
+ARG OPENSTACK_TAG=stable/queens
 ARG RALLY_TAG=stable/0.10
 ARG OS_FAULTS_TAG=0.1.16
 
