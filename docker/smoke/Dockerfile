@@ -3,8 +3,8 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
-ARG RALLY_TAG=stable/0.10
-ARG OS_FAULTS_TAG=0.1.16
+ARG RALLY_TAG=0.11.2
+ARG OS_FAULTS_TAG=0.1.17
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.2.0
 
@@ -27,7 +27,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        tempest /src/os-faults && \
+        tempest rally-openstack /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         /src/rally /src/patrole -rthirdparty-requirements.txt && \

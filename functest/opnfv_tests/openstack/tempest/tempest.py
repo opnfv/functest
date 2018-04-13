@@ -114,7 +114,7 @@ class TempestCommon(testcase.TestCase):
                 testr_mode = r"'^tempest\.'"
             else:
                 testr_mode = self.mode
-            cmd = "(cd {0}; testr list-tests {1} >{2} 2>/dev/null)".format(
+            cmd = "(cd {0}; stestr list {1} >{2} 2>/dev/null)".format(
                 self.verifier_repo_dir, testr_mode, self.list)
             output = subprocess.check_output(cmd, shell=True)
             LOGGER.info("%s\n%s", cmd, output)

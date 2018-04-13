@@ -3,8 +3,8 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG FDS_TAG=master
-ARG RALLY_TAG=stable/0.10
-ARG OS_FAULTS_TAG=0.1.16
+ARG RALLY_TAG=0.11.2
+ARG OS_FAULTS_TAG=0.1.17
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass && \
@@ -26,7 +26,7 @@ RUN apk --no-cache add --update python3 sshpass && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        tempest /src/os-faults && \
+        tempest rally-openstack /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         /src/rally -rthirdparty-requirements.txt && \
