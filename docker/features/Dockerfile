@@ -17,9 +17,6 @@ RUN apk --no-cache add --update python3 sshpass && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://github.com/openstack/os-faults.git -b $OS_FAULTS_TAG /src/os-faults && \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
