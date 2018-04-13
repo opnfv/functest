@@ -266,7 +266,7 @@ class TempestCommon(testcase.TestCase):
     def run(self, **kwargs):
         self.start_time = time.time()
         try:
-            self.configure()
+            self.configure(**kwargs)
             self.generate_test_list()
             self.apply_tempest_blacklist()
             self.run_verifier_tests()
