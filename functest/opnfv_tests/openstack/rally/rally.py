@@ -83,6 +83,7 @@ class RallyBase(testcase.TestCase):
     RALLY_PRIVATE_SUBNET_NAME = getattr(config.CONF, 'rally_subnet_name')
     RALLY_PRIVATE_SUBNET_CIDR = getattr(config.CONF, 'rally_subnet_cidr')
     RALLY_ROUTER_NAME = getattr(config.CONF, 'rally_router_name')
+    RALLY_NO_MIGRATION_TESTS = getattr(config.CONF, 'rally_no_migration_tests')
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -196,7 +197,7 @@ class RallyBase(testcase.TestCase):
 
     def _migration_supported(self):
         """Determine if migration is supported."""
-        if self.compute_cnt > 1:
+        if not self.RALLY_NO_MIGRATION_TESTS and self.compute_cnt > 1:
             return True
 
         return False
