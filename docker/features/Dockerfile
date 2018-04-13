@@ -3,7 +3,7 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG FDS_TAG=master
-ARG RALLY_TAG=stable/0.10
+ARG RALLY_TAG=0.11.2
 ARG OS_FAULTS_TAG=0.1.16
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
