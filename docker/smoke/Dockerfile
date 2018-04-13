@@ -18,7 +18,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         -e git+https://github.com/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
-    git clone --depth 1 https://github.com/openstack/os-faults.git -b $OS_FAULTS_TAG /src/os-faults && \
+    git clone https://github.com/openstack/os-faults.git /src/os-faults && \
+    (cd /src/os-faults && git checkout $OS_FAULTS_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
     git clone --depth 1 https://github.com/openstack/rally.git -b $RALLY_TAG /src/rally && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
