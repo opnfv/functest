@@ -8,11 +8,12 @@ In the Continuous Integration pipeline, it is launched after an OPNFV fresh
 installation to validate and verify the basic functions of the
 infrastructure.
 
-The current list of test suites can be distributed over 4 main domains:
+The current list of test suites can be distributed over 5 main domains:
   * VIM (Virtualised Infrastructure Manager)
   * Controllers (i.e. SDN Controllers)
   * Features
   * VNF (Virtual Network Functions)
+  * Kubernetes
 
 Functest test suites are also distributed in the OPNFV testing categories:
 healthcheck, smoke, features, components, performance, VNF, Stress tests.
@@ -170,6 +171,21 @@ validate the scenario for the release.
 |             |               |            | declared in testcases.yaml as it |
 |             |               |            | requires access to proprietary   |
 |             |               |            | resources (Ixia loader)          |
++-------------+---------------+------------+----------------------------------+
+| Kubernetes  | healthcheck   | k8s_smoke  | Test a running Kubernetes        |
+|             |               |            | cluster and ensure it satisfies  |
+|             |               |            | minimal functional requirements  |
+|             +---------------+------------+----------------------------------+
+|             | smoke         | k8s\_      | Run a subset of Kubernetes       |
+|             |               | conformance| End-to-End tests, expected to    |
+|             |               |            | pass on any Kubernetes cluster   |
+|             +---------------+------------+----------------------------------+
+|             | stor4nfv      | stor4nfv   | Run tests necessary to           |
+|             |               | \_k8s      | demonstrate conformance of the   |
+|             |               |            | K8s+Stor4NFV deployment          |
+|             +---------------+------------+----------------------------------+
+|             | clover        | clover_k8s | Test functionality of            |
+|             |               |            | K8s+Istio+Clover deployment.     |
 +-------------+---------------+------------+----------------------------------+
 
 
