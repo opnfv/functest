@@ -82,7 +82,7 @@ class OSTempestTesting(unittest.TestCase):
         else:
             testr_mode = self.tempestcommon.mode
         verifier_repo_dir = 'test_verifier_repo_dir'
-        cmd = "(cd {0}; testr list-tests {1} >{2} 2>/dev/null)".format(
+        cmd = "(cd {0}; stestr list {1} >{2} 2>/dev/null)".format(
             verifier_repo_dir, testr_mode, self.tempestcommon.list)
         self.tempestcommon.generate_test_list()
         mock_exec.assert_called_once_with(cmd, shell=True)
