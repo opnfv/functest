@@ -181,12 +181,10 @@ class TempestCommon(testcase.TestCase):
             for line in iter(proc.stdout.readline, b''):
                 if re.search(r"\} tempest\.", line):
                     LOGGER.info(line.replace('\n', ''))
-                elif re.search('Starting verification', line):
-                    LOGGER.info(line.replace('\n', ''))
-                    first_pos = line.index("UUID=") + len("UUID=")
-                    last_pos = line.index(") for deployment")
-                    self.verification_id = line[first_pos:last_pos]
-                    LOGGER.debug('Verification UUID: %s', self.verification_id)
+                elif re.search(r'(?=\(UUID=(.*)\))', line):
+                    self.verification_id = re.search(
+                        r'(?=\(UUID=(.*)\))', line).group(1)
+                    LOGGER.info('Verification UUID: %s', self.verification_id)
                 f_stdout.write(line)
         proc.wait()
 
