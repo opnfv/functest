@@ -188,28 +188,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             self.assertTrue(mock_get_vid.called)
             self.assertTrue(mock_get_did.called)
 
-    def test_backup_config_default(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.os.path.exists',
-                        return_value=False), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.os.makedirs') as mock_makedirs, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.shutil.copyfile') as mock_copyfile:
-            conf_utils.backup_tempest_config(
-                'test_conf_file', res_dir='test_dir')
-            self.assertTrue(mock_makedirs.called)
-            self.assertTrue(mock_copyfile.called)
-
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.os.path.exists',
-                        return_value=True), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.shutil.copyfile') as mock_copyfile:
-            conf_utils.backup_tempest_config(
-                'test_conf_file', res_dir='test_dir')
-            self.assertTrue(mock_copyfile.called)
-
     def _test_missing_param(self, params, image_id, flavor_id):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.ConfigParser.RawConfigParser.'
@@ -221,13 +199,11 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                        'conf_utils.ConfigParser.RawConfigParser.'
                        'write') as mwrite, \
             mock.patch('__builtin__.open', mock.mock_open()), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.backup_tempest_config'), \
             mock.patch('functest.utils.functest_utils.yaml.safe_load',
                        return_value={'validation': {'ssh_timeout': 300}}):
             os.environ['OS_ENDPOINT_TYPE'] = ''
             conf_utils.configure_tempest_update_params(
-                'test_conf_file', res_dir='test_dir', image_id=image_id,
+                'test_conf_file', image_id=image_id,
                 flavor_id=flavor_id)
             mset.assert_any_call(params[0], params[1], params[2])
             self.assertTrue(mread.called)
