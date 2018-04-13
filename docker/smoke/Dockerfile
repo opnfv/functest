@@ -6,7 +6,7 @@ ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 ARG RALLY_TAG=0.11.2
 ARG OS_FAULTS_TAG=0.1.17
 ARG REFSTACK_TARGET=2017.09
-ARG PATROLE_TAG=0.2.0
+ARG PATROLE_TAG=0.3.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
