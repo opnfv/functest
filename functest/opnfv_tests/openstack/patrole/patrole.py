@@ -41,6 +41,12 @@ class Patrole(tempest.TempestCommon):
         rconfig.set('rbac', 'rbac_test_role', kwargs.get('role', 'admin'))
         with open(self.conf_file, 'wb') as config_file:
             rconfig.write(config_file)
+        self.backup_tempest_config(self.conf_file, self.res_dir)
+
+    def generate_test_list(self):
+        self.backup_tempest_config(self.conf_file, '/etc')
+        super(Patrole, self).generate_test_list()
+        os.remove('/etc/tempest.conf')
 
     def run(self, **kwargs):
         for exclude in kwargs.get('exclude', []):

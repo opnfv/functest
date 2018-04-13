@@ -97,6 +97,16 @@ class TempestCommon(testcase.TestCase):
                 result['num_failures'] = int(new_line[2])
         return result
 
+    @staticmethod
+    def backup_tempest_config(conf_file, res_dir):
+        """
+        Copy config file to tempest results directory
+        """
+        if not os.path.exists(res_dir):
+            os.makedirs(res_dir)
+        shutil.copyfile(conf_file,
+                        os.path.join(res_dir, 'tempest.conf'))
+
     def generate_test_list(self):
         """Generate test list based on the test mode."""
         LOGGER.debug("Generating test case list...")
@@ -257,11 +267,11 @@ class TempestCommon(testcase.TestCase):
             self.resources.os_creds)
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(
-            self.conf_file, self.res_dir,
-            network_name=resources.get("network_name"),
+            self.conf_file, network_name=resources.get("network_name"),
             image_id=resources.get("image_id"),
             flavor_id=resources.get("flavor_id"),
             compute_cnt=compute_cnt)
+        self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
         self.start_time = time.time()

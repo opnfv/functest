@@ -20,6 +20,7 @@ from functest.opnfv_tests.openstack.tempest import conf_utils
 
 
 class OSTempestTesting(unittest.TestCase):
+    # pylint: disable=too-many-public-methods
 
     def setUp(self):
         os_creds = OSCreds(
@@ -100,6 +101,21 @@ class OSTempestTesting(unittest.TestCase):
         self.tempestcommon.verification_id = None
         with self.assertRaises(Exception):
             self.tempestcommon.parse_verifier_result()
+
+    def test_backup_config_default(self):
+        with mock.patch('os.path.exists', return_value=False), \
+                mock.patch('os.makedirs') as mock_makedirs, \
+                mock.patch('shutil.copyfile') as mock_copyfile:
+            self.tempestcommon.backup_tempest_config(
+                'test_conf_file', res_dir='test_dir')
+            self.assertTrue(mock_makedirs.called)
+            self.assertTrue(mock_copyfile.called)
+
+        with mock.patch('os.path.exists', return_value=True), \
+                mock.patch('shutil.copyfile') as mock_copyfile:
+            self.tempestcommon.backup_tempest_config(
+                'test_conf_file', res_dir='test_dir')
+            self.assertTrue(mock_copyfile.called)
 
     @mock.patch("os.rename")
     @mock.patch("os.remove")
