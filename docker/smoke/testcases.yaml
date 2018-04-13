@@ -105,7 +105,6 @@ tiers:
                         services:
                             - 'image'
                             - 'network'
-                            - 'volume'
                         exclude:
                             - 'test_networks_multiprovider_rbac'
 
