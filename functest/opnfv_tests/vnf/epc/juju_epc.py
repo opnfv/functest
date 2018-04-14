@@ -414,8 +414,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                 output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.warn("Some issue during the undeployment ..")
-            self.__logger.warn("Tenant clean continue ..")
+            self.__logger.exception("Some issue during the undeployment ..")
 
         if not self.orchestrator['requirements']['preserve_setup']:
             self.__logger.info('Remove the Abot_epc OS object ..')
