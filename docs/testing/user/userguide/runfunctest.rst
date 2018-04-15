@@ -83,7 +83,7 @@ Testcases can be listed, shown and run though the CLI::
   +-------------------+--------------------------------------------------+------------------+---------------------------+
   |     TEST CASE     |                   DESCRIPTION                    |     CRITERIA     |         DEPENDENCY        |
   +-------------------+--------------------------------------------------+------------------+---------------------------+
-  |     api_check     |     This test case verifies the retrieval of     |       100        |     ^((?!netvirt).)*$     |
+  |     api_check     |     This test case verifies the retrieval of     |       100        |       ^((?!lxd).)*$       |
   |                   |       OpenStack clients: Keystone, Glance,       |                  |                           |
   |                   |      Neutron and Nova and may perform some       |                  |                           |
   |                   |     simple queries. When the config value of     |                  |                           |

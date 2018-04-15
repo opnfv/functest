@@ -120,7 +120,6 @@ Results shall be displayed as follows::
   |       refstack_defcore       |     functest     |     smoke     |      14:37       |      FAIL      |
   |         snaps_smoke          |     functest     |     smoke     |      42:09       |      PASS      |
   |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
-  |         odl_netvirt          |     functest     |     smoke     |      00:00       |      SKIP      |
   +------------------------------+------------------+---------------+------------------+----------------+
   Note: if the scenario does not support some tests, they are indicated as SKIP.
   See User guide for details.
