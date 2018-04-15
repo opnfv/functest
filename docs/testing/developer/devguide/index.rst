@@ -89,7 +89,6 @@ The internal test cases in Euphrates are:
  * vping_ssh
  * vping_userdata
  * odl
- * odl_netvirt
  * rally_full
  * rally_sanity
  * tempest_smoke_serial
@@ -107,7 +106,7 @@ The structure of this repository is detailed in `[1]`_.
 The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases can be grouped by domain:
 
- * sdn: odl, odl_netvirt, odl_fds
+ * sdn: odl, odl_fds
  * openstack: api_check, connection_check, snaps_health_check, vping_ssh,
    vping_userdata, tempest_*, rally_*
  * vnf: cloudify_ims
