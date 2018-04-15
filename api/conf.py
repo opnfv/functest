@@ -51,8 +51,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'OPNFV Functest'
-copyright = u'2017, #opnfv-functest (chat.freenode.net)'
-author = u'#opnfv-functest (chat.freenode.net)'
+copyright = u'2017, Functest <opnfv-tech-discuss@lists.opnfv.org>'
+author = u'Functest <opnfv-tech-discuss@lists.opnfv.org>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -264,7 +264,7 @@ latex_documents = [
     (master_doc,
      'OPNFVFunctest.tex',
      u'OPNFV Functest Documentation',
-     u'\\#opnfv-functest (chat.freenode.net)',
+     u'Functest \\textless{}opnfv-tech-discuss@lists.opnfv.org\\textgreater{}',
      'manual'),
 ]
 

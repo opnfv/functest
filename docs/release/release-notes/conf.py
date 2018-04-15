@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Functest Release Notes'
-copyright = u'2018, Cédric Ollivier <cedric.ollivier@orange.com>'
-author = u'Cédric Ollivier <cedric.ollivier@orange.com>'
+copyright = u'2018, Functest <opnfv-tech-discuss@lists.opnfv.org>'
+author = u'Functest <opnfv-tech-discuss@lists.opnfv.org>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -150,7 +150,7 @@ latex_elements = {
 latex_documents = [
     (master_doc, 'FunctestReleaseNotes.tex',
      u'Functest Release Notes Documentation',
-     u'Cédric Ollivier \\textless{}cedric.ollivier@orange.com\\textgreater{}',
+     u'Functest \\textless{}opnfv-tech-discuss@lists.opnfv.org\\textgreater{}',
      'manual'),
 ]
 
