@@ -96,13 +96,6 @@ validate the scenario for the release.
 |             |               |            | operations mainly based on       |
 |             |               |            | upstream testcases. See below    |
 |             |               |            | for details                      |
-|             |               +------------+----------------------------------+
-|             |               | odl        | Test Suite for the OpenDaylight  |
-|             |               | \_netvirt  | SDN Controller when the NetVirt  |
-|             |               |            | features are installed. It       |
-|             |               |            | integrates some test suites from |
-|             |               |            | upstream using Robot as the test |
-|             |               |            | framework                        |
 +-------------+---------------+------------+----------------------------------+
 | Features    | features      | bgpvpn     | Implementation of the OpenStack  |
 |             |               |            | bgpvpn API from the SDNVPN       |
