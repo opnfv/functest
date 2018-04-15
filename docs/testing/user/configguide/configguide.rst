@@ -37,9 +37,9 @@ Preparing your environment
 
 cat env::
 
-  INSTALLER_TYPE=XXX
   EXTERNAL_NETWORK=XXX
-  DEPLOY_SCENARIO=XXX
+  DEPLOY_SCENARIO=XXX  # if not os-nosdn-nofeature-noha scenario
+  NAMESERVER=XXX  # if not 8.8.8.8
 
 See section on environment variables for details.
 
@@ -49,12 +49,9 @@ cat env_file::
   export OS_USER_DOMAIN_NAME=XXX
   export OS_PROJECT_DOMAIN_NAME=XXX
   export OS_USERNAME=XXX
-  export OS_TENANT_NAME=XXX
   export OS_PROJECT_NAME=XXX
   export OS_PASSWORD=XXX
-  export OS_VOLUME_API_VERSION=XXX
-  export OS_IDENTITY_API_VERSION=XXX
-  export OS_IMAGE_API_VERSION=XXX
+  export OS_IDENTITY_API_VERSION=3
 
 See section on OpenStack credentials for details.
 
@@ -71,7 +68,6 @@ Create a directory for the different images (attached as a Docker volume)::
   images/cirros-d161201-aarch64-initramfs
   images/cirros-d161201-aarch64-kernel
   images/cloudify-manager-premium-4.0.1.qcow2
-  images/img
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
@@ -92,9 +88,9 @@ Results shall be displayed as follows::
   +----------------------------+------------------+---------------------+------------------+----------------+
   |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +----------------------------+------------------+---------------------+------------------+----------------+
-  |      connection_check      |     functest     |     healthcheck     |      00:06       |      PASS      |
-  |         api_check          |     functest     |     healthcheck     |      06:52       |      PASS      |
-  |     snaps_health_check     |     functest     |     healthcheck     |      00:42       |      PASS      |
+  |      connection_check      |     functest     |     healthcheck     |      00:07       |      PASS      |
+  |         api_check          |     functest     |     healthcheck     |      07:46       |      PASS      |
+  |     snaps_health_check     |     functest     |     healthcheck     |      00:36       |      PASS      |
   +----------------------------+------------------+---------------------+------------------+----------------+
   NOTE: the duration is a reference and it might vary depending on your SUT.
 
@@ -113,13 +109,15 @@ Results shall be displayed as follows::
   +------------------------------+------------------+---------------+------------------+----------------+
   |          TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +------------------------------+------------------+---------------+------------------+----------------+
-  |          vping_ssh           |     functest     |     smoke     |      00:45       |      PASS      |
-  |        vping_userdata        |     functest     |     smoke     |      00:36       |      PASS      |
-  |     tempest_smoke_serial     |     functest     |     smoke     |      14:04       |      PASS      |
-  |         rally_sanity         |     functest     |     smoke     |      23:59       |      PASS      |
-  |       refstack_defcore       |     functest     |     smoke     |      14:37       |      FAIL      |
-  |         snaps_smoke          |     functest     |     smoke     |      42:09       |      PASS      |
+  |          vping_ssh           |     functest     |     smoke     |      00:57       |      PASS      |
+  |        vping_userdata        |     functest     |     smoke     |      00:33       |      PASS      |
+  |     tempest_smoke_serial     |     functest     |     smoke     |      13:22       |      PASS      |
+  |         rally_sanity         |     functest     |     smoke     |      24:07       |      PASS      |
+  |       refstack_defcore       |     functest     |     smoke     |      05:21       |      PASS      |
+  |           patrole            |     functest     |     smoke     |      04:29       |      PASS      |
+  |         snaps_smoke          |     functest     |     smoke     |      46:54       |      PASS      |
   |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
+  |        neutron_trunk         |     functest     |     smoke     |      00:00       |      SKIP      |
   +------------------------------+------------------+---------------+------------------+----------------+
   Note: if the scenario does not support some tests, they are indicated as SKIP.
   See User guide for details.
@@ -163,8 +161,8 @@ Results shall be displayed as follows::
   +-------------------------------+------------------+--------------------+------------------+----------------+
   |           TEST CASE           |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
   +-------------------------------+------------------+--------------------+------------------+----------------+
-  |     tempest_full_parallel     |     functest     |     components     |      52:42       |      PASS      |
-  |           rally_full          |     functest     |     components     |      114:22      |      PASS      |
+  |     tempest_full_parallel     |     functest     |     components     |      48:28       |      PASS      |
+  |           rally_full          |     functest     |     components     |      126:02      |      PASS      |
   +-------------------------------+------------------+--------------------+------------------+----------------+
 
 Testing vnf suite
@@ -179,15 +177,13 @@ Run vnf suite::
 
 Results shall be displayed as follows::
 
-  +---------------------------------+-------------------+--------------+------------------+----------------+
-  |            TEST CASE            |      PROJECT      |     TIER     |     DURATION     |     RESULT     |
-  +---------------------------------+-------------------+--------------+------------------+----------------+
-  |           cloudify_ims          |      functest     |     vnf      |      28:49       |      FAIL      |
-  |           vyos_vrouter          |      functest     |     vnf      |      27:57       |      FAIL      |
-  |             juju_epc            |      functest     |     vnf      |      55:03       |      PASS      |
-  |        orchestra_openims        |     orchestra     |     vnf      |      00:00       |      SKIP      |
-  |     orchestra_clearwaterims     |     orchestra     |     vnf      |      00:00       |      SKIP      |
-  +---------------------------------+-------------------+--------------+------------------+----------------+
+  +----------------------+------------------+--------------+------------------+----------------+
+  |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +----------------------+------------------+--------------+------------------+----------------+
+  |     cloudify_ims     |     functest     |     vnf      |      28:15       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      17:59       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      46:44       |      PASS      |
+  +----------------------+------------------+--------------+------------------+----------------+
 
 
 Environment variables
