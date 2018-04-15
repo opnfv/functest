@@ -32,7 +32,6 @@ The internal test cases are:
  * refstack_defcore
  * patrole
  * odl
- * odl-netvirt
  * snaps_smoke
  * neutron_trunk
  * tempest_full_parallel
