@@ -41,4 +41,7 @@ patrole               2018-04-07 14:24:48  lf-pod1     FAIL
 snaps_smoke           2018-04-07 15:05:15  lf-pod1     FAIL      SNAPS-283
 odl                   2018-04-07 14:25:10  lf-pod1     PASS
 neutron_trunk         2018-04-07 15:07:53  lf-pod1     FAIL
+cloudify_ims                               lf-pod1
+vyos_vrouter                               lf-pod1
+juju_epc                                   lf-pod1
 ====================  ===================  ==========  ========  =========
