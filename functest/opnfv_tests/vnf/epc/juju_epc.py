@@ -342,6 +342,9 @@ class JujuEpc(vnf.VnfOnBoarding):
         # This will add sctp rule to a common Security Group Created
         # by juju and shared to all deployed units.
         self._add_custom_rule(sec_group)
+        cmd = ['juju', 'status']
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.debug("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Copying the feature files to Abot_node ")
         cmd = ['juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
@@ -407,6 +410,9 @@ class JujuEpc(vnf.VnfOnBoarding):
     def clean(self):
         """Clean created objects/functions."""
         try:
+            cmd = ['juju', 'debug-log', '--replay', '--no-tail']
+            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+            self.__logger.debug("%s\n%s", " ".join(cmd), output)
             if not self.orchestrator['requirements']['preserve_setup']:
                 self.__logger.info("Destroying Orchestrator...")
                 cmd = ['juju', 'destroy-controller', '-y', 'abot-controller',
