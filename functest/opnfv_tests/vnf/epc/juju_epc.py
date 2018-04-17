@@ -13,6 +13,7 @@ import logging
 import os
 import time
 import json
+import re
 import subprocess
 import sys
 import uuid
@@ -305,6 +306,18 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         return True
 
+    def check_app(self, name='abot-epc-basic', status='active'):
+        """Check application status."""
+        cmd = ['juju', 'status', '--format', 'short', name]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+        ret = re.search(r'(?=workload:({})\))'.format(status), output)
+        if ret:
+            self.__logger.info("%s workload is %s", name, status)
+            return True
+        self.__logger.error("%s workload differs from %s", name, status)
+        return False
+
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
         self.__logger.info("Upload VNFD")
@@ -345,6 +358,9 @@ class JujuEpc(vnf.VnfOnBoarding):
         cmd = ['juju', 'status']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.debug("%s\n%s", " ".join(cmd), output)
+        for app in ['abot-epc-basic', 'oai-epc', 'oai-hss']:
+            if not self.check_app(app):
+                return False
         self.__logger.info("Copying the feature files to Abot_node ")
         cmd = ['juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
@@ -354,22 +370,6 @@ class JujuEpc(vnf.VnfOnBoarding):
         cmd = ['juju', 'ssh', 'abot-epc-basic/0',
                'sudo', 'rsync', '-azvv', '~/featureFiles',
                '/etc/rebaca-test-suite/featureFiles']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output)
-        count = 0
-        epcstatus = 1
-        while count < 10:
-            epcstatus = os.system(
-                'juju status oai-epc | grep {} | grep {} | grep {}'.format(
-                    'EPC', 'is', 'running'))
-            if epcstatus == 0:
-                break
-            else:
-                time.sleep(60)
-                count = count + 1
-        if epcstatus != 0:
-            return False
-        cmd = ['juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         return True
