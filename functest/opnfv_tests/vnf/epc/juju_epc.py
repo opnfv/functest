@@ -319,7 +319,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         self.__logger.info("Deploying Abot-epc bundle file ...")
-        cmd = ['juju', 'deploy', '/{}'.format(descriptor.get('file_name'))]
+        cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Waiting for instances .....")
@@ -343,7 +343,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         # by juju and shared to all deployed units.
         self._add_custom_rule(sec_group)
         self.__logger.info("Copying the feature files to Abot_node ")
-        cmd = ['juju', 'scp', '--', '-r',
+        cmd = ['juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
@@ -384,7 +384,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        cmd = ['juju', 'scp',
+        cmd = ['juju', 'scp', '--', '-v',
                'abot-epc-basic/0:'
                '/var/lib/abot-epc-basic/artifacts/TestResults.json',
                '{}/.'.format(self.res_dir)]
