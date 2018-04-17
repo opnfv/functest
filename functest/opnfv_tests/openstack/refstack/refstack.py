@@ -36,8 +36,7 @@ class Refstack(tempest.TempestCommon):
         self.list = os.path.join(self.res_dir, 'tempest-list.txt')
 
     def generate_test_list(self):
-        parser = list_parser.TestListParser(
-            getattr(config.CONF, 'dir_repo_tempest'))
+        parser = list_parser.TestListParser(self.verifier_repo_dir)
         nfile = parser.get_normalized_test_list(Refstack.defcorelist)
         shutil.copyfile(nfile, self.list)
 
