@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_c580a5c2",
+        "filename": "docs/testing/user/userguide/test_overview.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-04-17T01:28:56Z",
+      "side": 1,
+      "message": "This vertical line should be aligned with the top",
+      "range": {
+        "startLine": 175,
+        "startChar": 77,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "bb0486f2b62081da4941d2bc05af79b00ab6886b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
