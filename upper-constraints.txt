@@ -22,4 +22,3 @@ flasgger===0.6.6
 xtesting===0.41.0
 networking-bgpvpn===8.0.0
 sphinx-opnfv-theme===0.1.1
-rally-openstack===1.0.0

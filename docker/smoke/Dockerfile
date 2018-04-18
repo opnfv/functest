@@ -29,23 +29,19 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     git clone --depth 1 https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
+    git clone --depth 1 https://github.com/openstack/rally-openstack.git /src/rally-openstack && \
+    update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        tempest rally-openstack /src/os-faults && \
+        tempest /src/rally-openstack /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         /src/rally /src/patrole /src/neutron-tempest-plugin -rthirdparty-requirements.txt && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -e git+https://github.com/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        -r /src/neutron/test-requirements.txt && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/odl_test/.git \
-        /src/os-faults /src/rally /src/neutron-tempest-plugin && \
+        /src/os-faults /src/rally /src/rally-openstack /src/neutron-tempest-plugin && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
