@@ -4,6 +4,7 @@ ARG BRANCH=stable/fraser
 ARG OPENSTACK_TAG=stable/pike
 ARG VIMS_TAG=stable
 ARG JUJU_TAG=tags/juju-2.2.5
+ARG ABOT_TAG=opnfv-fraser
 
 ENV GOPATH /src/epc-requirements/go
 ENV GOBIN /src/epc-requirements/go/bin
@@ -19,6 +20,7 @@ RUN apk --no-cache add --update \
         > upper-constraints.txt && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/boucherv-orange/clearwater-live-test /src/vims-test && \
     git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
+    (cd /src/epc-requirements/abot_charm && git checkout $ABOT_TAG) && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         juju-wait && \
