@@ -9,8 +9,8 @@ the refactoring on dependency management should allow the creation of light and
 fully customized docker images.
 
 
-Functest Dockers
-----------------
+Functest Dockers for OpenStack deployment
+-----------------------------------------
 Docker images are available on the dockerhub:
 
   * opnfv/functest-core
@@ -20,10 +20,9 @@ Docker images are available on the dockerhub:
   * opnfv/functest-components
   * opnfv/functest-vnf
   * opnfv/functest-parser
-  * opnfv/functest-restapi
 
-The tag "opnfv-5.0.0" is the official release image in Euphrates, but you can
-also pull "euphrates" tag as it is being maintained by Functest team and might
+The tag "opnfv-6.0.0" is the official release image in Fraser, but you can
+also pull "fraser" tag as it is being maintained by Functest team and might
 include bugfixes.
 
 The Functest docker container environment can -in principle- be also
@@ -33,7 +32,7 @@ scope and responsibility of the OPNFV project.
 
 
 Preparing your environment
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 cat env::
 
@@ -57,7 +56,7 @@ See section on OpenStack credentials for details.
 
 Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/euphrates | bash -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/fraser | bash -s -- images && ls -1 images/*
 
   images/CentOS-7-aarch64-GenericCloud.qcow2
   images/CentOS-7-aarch64-GenericCloud.qcow2.xz
@@ -74,7 +73,7 @@ Create a directory for the different images (attached as a Docker volume)::
   images/vyos-1.1.7.img
 
 Testing healthcheck suite
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Run healthcheck suite::
 
@@ -95,7 +94,7 @@ Results shall be displayed as follows::
   NOTE: the duration is a reference and it might vary depending on your SUT.
 
 Testing smoke suite
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Run smoke suite::
 
@@ -123,7 +122,7 @@ Results shall be displayed as follows::
   See User guide for details.
 
 Testing features suite
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 Run features suite::
 
@@ -147,7 +146,7 @@ Results shall be displayed as follows::
   See User guide for details.
 
 Testing components suite
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Run components suite::
 
@@ -166,7 +165,7 @@ Results shall be displayed as follows::
   +-------------------------------+------------------+--------------------+------------------+----------------+
 
 Testing vnf suite
------------------
+^^^^^^^^^^^^^^^^^
 
 Run vnf suite::
 
@@ -185,6 +184,87 @@ Results shall be displayed as follows::
   |       juju_epc       |     functest     |     vnf      |      46:44       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
+
+Functest Dockers for Kubernetes deployment
+------------------------------------------
+Docker images are available on the dockerhub:
+
+  * opnfv/functest-kubernetes-core
+  * opnfv/functest-kubernetest-healthcheck
+  * opnfv/functest-kubernetest-smoke
+  * opnfv/functest-kubernetest-features
+
+Preparing your environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+cat env::
+
+  INSTALLER_TYPE=XXX
+  DEPLOY_SCENARIO=XXX
+
+cat k8s.creds::
+
+  export KUBERNETES_PROVIDER=local
+  export KUBE_MASTER_URL=XXX
+  export KUBE_MASTER_IP=XXX
+
+Testing healthcheck suite
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run healthcheck suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-healthcheck
+
+A config file in the current dir 'config' is also required, which should be
+volume mapped to ~/.kube/config inside kubernetes container.
+
+Results shall be displayed as follows::
+
+  +-------------------------+------------------+-----------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |       TIER      |     DURATION     |     RESULT     |
+  +-------------------------+------------------+-----------------+------------------+----------------+
+  |        k8s_smoke        |     functest     |   healthcheck   |      01:54       |      PASS      |
+  +-------------------------+------------------+-----------------+------------------+----------------+
+
+Testing smoke suite
+^^^^^^^^^^^^^^^^^^^
+
+Run smoke suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-smoke
+
+Results shall be displayed as follows::
+
+  +-------------------------+------------------+---------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +-------------------------+------------------+---------------+------------------+----------------+
+  |     k8s_conformance     |     functest     |     smoke     |      57:47       |      PASS      |
+  +-------------------------+------------------+---------------+------------------+----------------+
+
+Testing features suite
+^^^^^^^^^^^^^^^^^^^^^^
+
+Run features suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-features
+
+Results shall be displayed as follows::
+
+  +----------------------+------------------+------------------+------------------+----------------+
+  |      TEST CASE       |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +----------------------+------------------+------------------+------------------+----------------+
+  |     stor4nfv_k8s     |     stor4nfv     |     stor4nfv     |      00:00       |      SKIP      |
+  |      clover_k8s      |      clover      |      clover      |      00:00       |      SKIP      |
+  +----------------------+------------------+------------------+------------------+----------------+
 
 Environment variables
 =====================
@@ -303,195 +383,6 @@ be::
 
   export OS_INSECURE=true
 
-Functest docker container directory structure
-=============================================
-Inside the Functest docker container, the following directory structure
-should now be in place::
-
-  `--
-    |- home
-    |   |-- opnfv
-    |   |     `- functest
-    |   |          |-- conf
-    |   |          `-- results
-    |    `-- repos
-    |       `-- vnfs
-    |- src
-    |   |-- tempest
-    |   |-- vims-test
-    |   |-- odl_test
-    |   `-- fds
-    `- usr
-        `- lib
-           `- python2.7
-              `- site-packages
-                 `- functest
-                      |-- ...
-
-Underneath the '/home/opnfv/functest' directory, the Functest docker container
-includes two main directories:
-
-  * The **conf** directory stores configuration files (e.g. the
-    OpenStack creds are stored in path '/home/opnfv/functest/conf/env_file'),
-  * the **results** directory stores some temporary result log files
-
-src and repos directories are used to host third party code used for the tests.
-
-The structure of functest repo can be described as follows::
-
-  |-- INFO
-  |-- LICENSE
-  |-- api
-  |  `-- apidoc
-  |-- build.sh
-  |-- commons
-  |-- docker
-  |  |-- components
-  |  |-- core
-  |  |-- features
-  |  |-- healthcheck
-  |  |-- smoke
-  |  |-- vnf
-  |  |-- parser
-  |  |-- restapi
-  |  |-- thirdparty-requirements.txt
-  |-- docs
-  |  |-- com
-  |  |-- images
-  |  |-- release
-  |  |  `-- release-notes
-  |  |-- results
-  |  | testing
-  |  |  |-- developer
-  |  |    `-- user
-  |  |      |-- configguide
-  |  |      `-- userguide
-  `-- functest
-    |-- api
-    |  |-- base.py
-    |  |-- server.py
-    |  |-- urls.py
-    |  |-- common
-    |  |  |-- api_utils.py
-    |  |  |-- thread.py
-    |  `-- resources
-    |     `-- v1
-    |        |-- creds.py
-    |        |-- envs.py
-    |        |-- testcases.py
-    |        |-- tiers.py
-    |        |-- tasks.py
-    |  `-- database
-    |     |-- db.py
-    |     `-- v1
-    |        |-- handlers.py
-    |        |-- models.py
-    |  `-- swagger
-    |-- ci
-    │   |-- check_deployment.py
-    │   |-- config_aarch64_patch.yaml
-    │   |-- config_functest.yaml
-    │   |-- config_patch.yaml
-    │   |-- download_images.sh
-    │   |-- logging.ini
-    │   |-- rally_aarch64_patch.conf
-    │   |-- run_tests.py
-    │   |-- testcases.yaml
-    │   |-- tier_builder.py
-    │   |-- tier_handler.py
-    |-- cli
-    │   |-- cli_base.py
-    │   |-- commands
-    │   │   |-- cli_env.py
-    │   │   |-- cli_os.py
-    │   │   |-- cli_testcase.py
-    │   │   |-- cli_tier.py
-    │   |-- functest-complete.sh
-    |-- core
-    │   |-- feature.py
-    │   |-- robotframework.py
-    │   |-- testcase.py
-    │   |-- unit.py
-    │   |-- vnf.py
-    |-- energy
-    │   |-- energy.py
-    |-- opnfv_tests
-    │   `-- openstack
-    │       |-- rally
-    │       |-- refstack_client
-    │       |-- snaps
-    │       |-- tempest
-    │       |-- vping
-    │   `-- sdn
-    │   │    `-- odl
-    │   `-- vnf
-    │       |-- ims
-    │       `-- router
-    |-- tests
-    │   `-- unit
-    │       |-- ci
-    │       |-- cli
-    │       |-- core
-    │       |-- energy
-    │       |-- features
-    │       |-- odl
-    │       |-- openstack
-    │       |-- opnfv_tests
-    │       |-- test_utils.py
-    │       |-- utils
-    │       `-- vnf
-    |-- utils
-    |    |-- config.py
-    |    |-- constants.py
-    |    |-- decorators.py
-    |    |-- env.py
-    |    |-- functest_utils.py
-    |    |-- functest_vacation.py
-    |    |-- openstack_clean.py
-    |    |-- openstack_tacker.py
-    |    `-- openstack_utils.py
-  |-- requirements.txt
-  |-- setup.cfg
-  |-- setup.py
-  |-- test-requirements.txt
-  |-- tox.ini
-  |-- upper-constraints.txt
-
-  (Note: All *.pyc files removed from above list for brevity...)
-
-We may distinguish several directories, the first level has 5 directories:
-
-* **api**: This directory is dedicated to the API (framework) documentations.
-* **commons**: This directory is dedicated for storage of traffic profile or
-  any other test inputs that could be reused by any test project.
-* **docker**: This directory includes the needed files and tools to
-  build the Functest Docker images.
-* **docs**: This directory includes documentation: Release Notes,
-  User Guide, Configuration Guide and Developer Guide.
-* **functest**: This directory contains all the code needed to run
-  functest internal cases and OPNFV onboarded feature or VNF test cases.
-
-Functest directory has 7 sub-directories, which is located under
-/usr/lib/python2.7/site-packages/functest:
-
-  * **api**: This directory is dedicated for the internal Functest API.
-  * **ci**: This directory contains test structure definition files
-    (e.g <filename>.yaml) and bash shell/python scripts used to
-    configure and execute Functional tests. The test execution script
-    can be executed under the control of Jenkins CI jobs.
-  * **cli**: This directory holds the python based Functest CLI utility
-    source code, which is based on the Python 'click' framework.
-  * **core**: This directory holds the python based Functest core
-      source code. Three abstraction classes have been created to ease
-      the integration of internal, feature or vnf cases.
-  * **opnfv_tests**: This directory includes the scripts required by
-    Functest internal test cases and other feature projects test cases.
-  * **tests**: This directory includes the functest unit tests.
-  * **utils**: this directory holds Python source code for some general
-    purpose helper utilities, which testers can also re-use in their
-    own test code. See for an example the Openstack helper utility:
-    'openstack_utils.py'.
-
 
 Logs
 ====
@@ -499,7 +390,7 @@ By default all the logs are put un /home/opnfv/functest/results/functest.log.
 If you want to have more logs in console, you may edit the logging.ini file
 manually.
 Connect on the docker then edit the file located in
-/usr/lib/python2.7/site-packages/functest/ci/logging.ini
+/usr/lib/python2.7/site-packages/xtesting/ci/logging.ini
 
 Change wconsole to console in the desired module to get more traces.
 
@@ -509,6 +400,7 @@ Configuration
 
 You may also directly modify the python code or the configuration file (e.g.
 testcases.yaml used to declare test constraints) under
+/usr/lib/python2.7/site-packages/xtesting and
 /usr/lib/python2.7/site-packages/functest
 
 
