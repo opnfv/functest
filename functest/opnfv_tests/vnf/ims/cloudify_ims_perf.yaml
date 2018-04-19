@@ -25,7 +25,7 @@ vnf:
         file_name: openstack-blueprint-with-numbers.yaml
         name: clearwater-opnfv
         url:
-            https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/archive/master.zip
+            https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/archive/fraser.zip
         version: '122'
     requirements:
         flavor:
