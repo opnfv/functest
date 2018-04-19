@@ -419,6 +419,31 @@ The vyos-vrouter architecture is described in `[14]`_
 juju_epc
 ^^^^^^^^
 
+
+Kubernetes (K8s)
+----------------
+
+Kubernetes testing relies on sets of tests, which are part of the  Kubernetes source tree, such as the Kubernetes End-to-End (e2e) tests `[15]`_.
+
+The kubernetes testcases are distributed across various Tiers:
+
+ * Healthcheck Tier
+
+   * k8s_smoke Test Case: Creates a Guestbook application that contains redis server, 2 instances of redis slave, frontend application, frontend service and redis master service and redis slave service. Using frontend service, the test will write an entry into the guestbook application which will store the entry into the backend redis database. Application flow MUST work as expected and the data written MUST be available to read.
+
+ * Smoke Tier
+
+   * k8s_conformance Test Case: Runs a series of k8s e2e tests expected to pass on any Kubernetes cluster. It is a subset of tests necessary to demonstrate conformance grows with each release. Conformance is thus considered versioned, with backwards compatibility guarantees and are designed to be run with no cloud provider configured.
+
+ * Stor4nfv Tier
+
+   * stor4nfv _k8s Test Case
+
+ * Clover Tier
+
+   * clover_k8s Test Case
+
+
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
@@ -429,3 +454,4 @@ juju_epc
 .. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
+.. _`[15]`: https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
