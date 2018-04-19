@@ -82,6 +82,8 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     __logger = logging.getLogger(__name__)
 
+    juju_wait_timeout = '3600'
+
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "juju_epc"
@@ -336,7 +338,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Waiting for instances .....")
-        cmd = ['juju-wait']
+        cmd = ['timeout', '-t', JujuEpc.juju_wait_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Deployed Abot-epc on Openstack")
@@ -382,7 +384,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        cmd = ['juju-wait']
+        cmd = ['timeout', '-t', JujuEpc.juju_wait_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         duration = time.time() - start_time
