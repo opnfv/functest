@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_0ae1f1fd",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-19T12:54:20Z",
+      "side": 1,
+      "message": "OpenStack",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_0ab8d1e3",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-04-19T12:54:20Z",
+      "side": 1,
+      "message": "official release tag same as maintained tag?",
+      "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
