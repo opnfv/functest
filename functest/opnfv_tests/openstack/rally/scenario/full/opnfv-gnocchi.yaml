@@ -1,0 +1,163 @@
+  Gnocchi.list_capabilities:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  Gnocchi.get_status:
+    -
+      args:
+        detailed: false
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicyRule.list_archive_policy_rule:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicyRule.create_archive_policy_rule:
+    -
+      args:
+        metric_pattern: "cpu_*"
+        archive_policy_name: "low"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicyRule.create_delete_archive_policy_rule:
+    -
+      args:
+        metric_pattern: "cpu_*"
+        archive_policy_name: "low"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicy.list_archive_policy:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicy.create_archive_policy:
+    -
+      args:
+        definition:
+          - granularity: "0:00:01"
+            timespan: "1:00:00"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiArchivePolicy.create_delete_archive_policy:
+    -
+      args:
+        definition:
+          - granularity: "0:00:01"
+            timespan: "1:00:00"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiResourceType.list_resource_type:
+    -
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiResourceType.create_resource_type:
+    -
+      args:
+        attributes:
+          foo:
+            required: false
+            type: "string"
+          bar:
+            required: true
+            type: "number"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiResourceType.create_delete_resource_type:
+    -
+      args:
+        attributes:
+          foo:
+            required: false
+            type: "string"
+          bar:
+            required: true
+            type: "number"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiMetric.list_metric:
+    -
+      args:
+        limit: 10000
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiMetric.create_metric:
+    -
+      args:
+        archive_policy_name: "low"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  GnocchiMetric.create_delete_metric:
+    -
+      args:
+        archive_policy_name: "low"
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}

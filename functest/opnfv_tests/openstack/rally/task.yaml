@@ -15,6 +15,10 @@
 {%- include "var/opnfv-cinder.yaml"-%}
 {% endif %}
 
+{% if "gnocchi" in service_list %}
+{%- include "var/opnfv-gnocchi.yaml"-%}
+{% endif %}
+
 {% if "keystone" in service_list %}
 {%- include "var/opnfv-keystone.yaml"-%}
 {% endif %}
