@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_90bff4a9",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-04-20T08:07:03Z",
+      "side": 1,
+      "message": "Functest Dockers for Kubernetes deployment\n------------------------------------------",
+      "revId": "687b9732ebead57eba2ce2e693bea9786efea08b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_50d0ccf5",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-04-20T08:07:03Z",
+      "side": 1,
+      "message": "I would start by Docker images are available like the OpenStack section.\n\nI think we should decrease the next title, no?\nPreparing\n^^^^^^^^^",
+      "revId": "687b9732ebead57eba2ce2e693bea9786efea08b",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
