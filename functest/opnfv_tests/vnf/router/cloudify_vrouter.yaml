@@ -5,7 +5,7 @@ tenant_images:
     vyos1.1.7: /home/opnfv/functest/images/vyos-1.1.7.img
 test_data:
     url: 'https://github.com/oolorg/opnfv-vnf-data.git'
-    branch: 'master'
+    branch: 'fraser'
 orchestrator:
     name: cloudify
     version: '4.0'
@@ -20,7 +20,7 @@ vnf:
     descriptor:
         url: https://github.com/oolorg/opnfv-vnf-vyos-blueprint/
         name: vrouter-opnfv
-        version: 'master'
+        version: 'fraser'
     requirements:
         flavor:
             name: m1.medium
