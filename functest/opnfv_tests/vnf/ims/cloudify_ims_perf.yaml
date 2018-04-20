@@ -1,9 +1,9 @@
 ---
 tenant_images:
     ubuntu_14.04:
-        http://cloud-images.ubuntu.com/trusty/current/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
     cloudify_manager_4.0:
-        http://repository.cloudifysource.org/cloudify/4.0.1/sp-release/cloudify-manager-premium-4.0.1.qcow2
+        /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
     # PATH of the virtual chassis image.
     IXIA_CHASSIS:  # Ixia_Virtual_Chassis_8.30_EA_KVM.qcow2
     # PATH of the virtual card image.
