@@ -57,6 +57,24 @@
       "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_951b66c9",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5441
+      },
+      "writtenOn": "2018-04-20T02:12:31Z",
+      "side": 1,
+      "message": "So opnfv-6.0.0 will be the official release image, When will it be tagged? We could use opnfv-6.0.0 for the release one and fraser tag for the maintained one, OK?",
+      "parentUuid": "5a3f45e8_b518221f",
+      "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
