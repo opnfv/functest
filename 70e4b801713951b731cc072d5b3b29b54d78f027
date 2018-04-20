@@ -75,6 +75,24 @@
       "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_b575c2fb",
+        "filename": "docs/testing/user/configguide/configguide.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-04-20T02:45:19Z",
+      "side": 1,
+      "message": "I think we could conform with the release notes: \n\nDocker tag for Fraser release: opnfv-6.0.0\nDocker tag for Fraser series: fraser",
+      "parentUuid": "5a3f45e8_951b66c9",
+      "revId": "70e4b801713951b731cc072d5b3b29b54d78f027",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
