@@ -146,12 +146,12 @@ class V1Testcase(ApiResource):
         """ Update the log file for each task"""
         rconfig = ConfigParser.RawConfigParser()
         rconfig.read(
-            pkg_resources.resource_filename('functest', 'ci/logging.ini'))
+            pkg_resources.resource_filename('xtesting', 'ci/logging.ini'))
         log_path = os.path.join(getattr(config.CONF, 'dir_results'),
                                 '{}.log'.format(task_id))
         rconfig.set('handler_file', 'args', '("{}",)'.format(log_path))
 
         with open(
             pkg_resources.resource_filename(
-                'functest', 'ci/logging.ini'), 'wb') as configfile:
+                'xtesting', 'ci/logging.ini'), 'wb') as configfile:
             rconfig.write(configfile)
