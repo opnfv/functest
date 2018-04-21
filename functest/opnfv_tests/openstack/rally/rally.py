@@ -80,7 +80,7 @@ class RallyBase(testcase.TestCase):
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
     RALLY_PRIVATE_NET_NAME = getattr(config.CONF, 'rally_network_name')
-    RALLY_PRIVATE_SUBNET_NAME = getattr(config.CONF, 'rally_subnet_name')
+    RALLY_PRIVATE_SUBNET_NAME = str(getattr(config.CONF, 'rally_subnet_name'))
     RALLY_PRIVATE_SUBNET_CIDR = getattr(config.CONF, 'rally_subnet_cidr')
     RALLY_ROUTER_NAME = getattr(config.CONF, 'rally_router_name')
 
