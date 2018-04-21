@@ -23,7 +23,7 @@ class Tier(object):
         self.tiers = tier_builder.TierBuilder(
             env.get('INSTALLER_TYPE'),
             env.get('DEPLOY_SCENARIO'),
-            pkg_resources.resource_filename('functest', 'ci/testcases.yaml'))
+            pkg_resources.resource_filename('xtesting', 'ci/testcases.yaml'))
 
     def list(self):
         summary = ""
