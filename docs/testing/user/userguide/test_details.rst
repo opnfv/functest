@@ -366,7 +366,7 @@ The goal of this test suite consists of:
 
 The Clearwater architecture is described as follows:
 
-.. figure:: ../../../images/clearwater-architecture.png
+.. figure:: ../../../images/clearwater-architecture-v2.png
    :align: center
    :alt: vIMS architecture
 
