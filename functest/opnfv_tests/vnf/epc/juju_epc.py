@@ -82,7 +82,7 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     __logger = logging.getLogger(__name__)
 
-    juju_wait_timeout = '3600'
+    juju_timeout = '3600'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -287,7 +287,8 @@ class JujuEpc(vnf.VnfOnBoarding):
                     name=image_name, image_user='cloud', img_format='qcow2',
                     image_file=image_file))
                 image_id = image_creator.create().id
-                cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
+                cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+                       'juju', 'metadata', 'generate-image', '-d', '/root',
                        '-i', image_id, '-s', image_name,
                        '-r', self.snaps_creds.region_name,
                        '-u', self.public_auth_url]
@@ -295,7 +296,8 @@ class JujuEpc(vnf.VnfOnBoarding):
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
-        cmd = ['juju', 'bootstrap', 'abot-epc', 'abot-controller',
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'bootstrap', 'abot-epc', 'abot-controller',
                '--metadata-source', '/root',
                '--constraints', 'mem=2G',
                '--bootstrap-series', 'xenial',
@@ -334,11 +336,12 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         self.__logger.info("Deploying Abot-epc bundle file ...")
-        cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Waiting for instances .....")
-        cmd = ['timeout', '-t', JujuEpc.juju_wait_timeout, 'juju-wait']
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Deployed Abot-epc on Openstack")
@@ -364,12 +367,14 @@ class JujuEpc(vnf.VnfOnBoarding):
             if not self.check_app(app):
                 return False
         self.__logger.info("Copying the feature files to Abot_node ")
-        cmd = ['juju', 'scp', '--', '-r', '-v',
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Copying the feature files in Abot_node ")
-        cmd = ['juju', 'ssh', 'abot-epc-basic/0',
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'ssh', 'abot-epc-basic/0',
                'sudo', 'rsync', '-azvv', '~/featureFiles',
                '/etc/rebaca-test-suite/featureFiles']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
@@ -380,16 +385,18 @@ class JujuEpc(vnf.VnfOnBoarding):
         """Run test on ABoT."""
         start_time = time.time()
         self.__logger.info("Running VNF Test cases....")
-        cmd = ['juju', 'run-action', 'abot-epc-basic/0', 'run',
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'run-action', 'abot-epc-basic/0', 'run',
                'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        cmd = ['timeout', '-t', JujuEpc.juju_wait_timeout, 'juju-wait']
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        cmd = ['juju', 'scp', '--', '-v',
+        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+               'juju', 'scp', '--', '-v',
                'abot-epc-basic/0:'
                '/var/lib/abot-epc-basic/artifacts/TestResults.json',
                '{}/.'.format(self.res_dir)]
@@ -417,7 +424,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             self.__logger.debug("%s\n%s", " ".join(cmd), output)
             if not self.orchestrator['requirements']['preserve_setup']:
                 self.__logger.info("Destroying Orchestrator...")
-                cmd = ['juju', 'destroy-controller', '-y', 'abot-controller',
+                cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+                       'juju', 'destroy-controller', '-y', 'abot-controller',
                        '--destroy-all-models']
                 output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
