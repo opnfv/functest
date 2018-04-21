@@ -97,8 +97,8 @@ class VPingBase(testcase.TestCase):
 
         private_net_name = getattr(
             config.CONF, 'vping_private_net_name') + self.guid
-        private_subnet_name = getattr(
-            config.CONF, 'vping_private_subnet_name') + self.guid
+        private_subnet_name = str(getattr(
+            config.CONF, 'vping_private_subnet_name') + self.guid)
         private_subnet_cidr = getattr(config.CONF, 'vping_private_subnet_cidr')
 
         vping_network_type = None
