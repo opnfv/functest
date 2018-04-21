@@ -187,8 +187,8 @@ class VPingBase(testcase.TestCase):
             for creator in reversed(self.creators):
                 try:
                     creator.clean()
-                except Exception as error:  # pylint: disable=broad-except
-                    self.logger.error('Unexpected error cleaning - %s', error)
+                except Exception:  # pylint: disable=broad-except
+                    self.logger.exception('Unexpected error cleaning')
 
     def _do_vping(self, vm_creator, test_ip):
         """
