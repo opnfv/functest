@@ -195,7 +195,7 @@ In Danube, we merged smoke and sdn controller tiers in smoke tier.
 
 An overview of the Functest Structural Concept is depicted graphically below:
 
-.. figure:: ../../../images/concepts_mapping_final.png
+.. figure:: ../../../images/concepts_mapping_fraser.png
    :align: center
    :alt: Functest Concepts Structure
 
