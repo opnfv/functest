@@ -60,14 +60,16 @@ class VPingUserdataTesting(unittest.TestCase):
                 'get_ext_net_name', return_value='foo')
     def test_vping_userdata(self, *args):
         # pylint: disable=unused-argument
-        with mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+        with mock.patch('snaps.openstack.create_image.OpenStackImage.create',
                         return_value=OpenStackImage(self.os_creds, None)), \
-                mock.patch('snaps.openstack.utils.deploy_utils.create_network',
-                           return_value=OpenStackNetwork(
-                               self.os_creds, NetworkConfig(name='foo'))), \
-                mock.patch('snaps.openstack.utils.deploy_utils.create_router',
-                           return_value=OpenStackRouter(
-                               self.os_creds, RouterConfig(name='foo'))), \
+                mock.patch(
+                    'snaps.openstack.create_network.OpenStackNetwork.create',
+                    return_value=OpenStackNetwork(
+                        self.os_creds, NetworkConfig(name='foo'))), \
+                mock.patch(
+                    'snaps.openstack.create_router.OpenStackRouter.create',
+                    return_value=OpenStackRouter(
+                        self.os_creds, RouterConfig(name='foo'))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_vm_instance',
                            return_value=OpenStackVmInstance(
@@ -133,14 +135,15 @@ class VPingSSHTesting(unittest.TestCase):
             cidr='10.0.0.1/24',
             dns_nameservers=[env.get('NAMESERVER')])
 
-        with mock.patch('snaps.openstack.utils.deploy_utils.create_image',
+        with mock.patch('snaps.openstack.create_image.OpenStackImage.create',
                         return_value=OpenStackImage(self.os_creds, None)), \
-                mock.patch('snaps.openstack.utils.deploy_utils.create_network',
-                           return_value=OpenStackNetwork(
-                               self.os_creds,
-                               NetworkConfig(
-                                   name='foo',
-                                   subnet_settings=[subnet_config]))), \
+                mock.patch(
+                    'snaps.openstack.create_network.OpenStackNetwork.create',
+                    return_value=OpenStackNetwork(
+                        self.os_creds,
+                        NetworkConfig(
+                            name='foo',
+                            subnet_settings=[subnet_config]))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_vm_instance',
                            return_value=OpenStackVmInstance(
@@ -153,9 +156,10 @@ class VPingSSHTesting(unittest.TestCase):
                 mock.patch('snaps.openstack.utils.deploy_utils.create_keypair',
                            return_value=OpenStackKeypair(
                                self.os_creds, KeypairConfig(name='foo'))), \
-                mock.patch('snaps.openstack.utils.deploy_utils.create_router',
-                           return_value=OpenStackRouter(
-                               self.os_creds, RouterConfig(name='foo'))), \
+                mock.patch(
+                    'snaps.openstack.create_router.OpenStackRouter.create',
+                    return_value=OpenStackRouter(
+                        self.os_creds, RouterConfig(name='foo'))), \
                 mock.patch('snaps.openstack.utils.deploy_utils.'
                            'create_security_group',
                            return_value=OpenStackSecurityGroup(

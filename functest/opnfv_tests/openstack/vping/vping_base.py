@@ -16,11 +16,14 @@ import time
 import uuid
 
 from snaps.config.flavor import FlavorConfig
-from snaps.config.network import NetworkConfig, SubnetConfig
+from snaps.config.network import NetworkConfig
+from snaps.config.network import SubnetConfig
 from snaps.config.router import RouterConfig
 from snaps.openstack.create_flavor import OpenStackFlavor
+from snaps.openstack.create_image import OpenStackImage
+from snaps.openstack.create_network import OpenStackNetwork
+from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.tests import openstack_tests
-from snaps.openstack.utils import deploy_utils
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
@@ -85,14 +88,14 @@ class VPingBase(testcase.TestCase):
                 '%Y-%m-%d %H:%M:%S'))
 
         image_base_name = '{}-{}'.format(
-            getattr(config.CONF, 'vping_image_name'),
-            str(self.guid))
+            getattr(config.CONF, 'vping_image_name'), self.guid)
         os_image_settings = openstack_tests.cirros_image_settings(
             image_base_name, image_metadata=self.cirros_image_config)
         self.logger.info("Creating image with name: '%s'", image_base_name)
 
-        self.image_creator = deploy_utils.create_image(
+        self.image_creator = OpenStackImage(
             self.os_creds, os_image_settings)
+        self.image_creator.create()
         self.creators.append(self.image_creator)
 
         private_net_name = getattr(
@@ -116,29 +119,31 @@ class VPingBase(testcase.TestCase):
 
         self.logger.info(
             "Creating network with name: '%s'", private_net_name)
-        self.network_creator = deploy_utils.create_network(
+        subnet_settings = SubnetConfig(
+            name=private_subnet_name,
+            cidr=private_subnet_cidr,
+            dns_nameservers=[env.get('NAMESERVER')])
+        self.network_creator = OpenStackNetwork(
             self.os_creds,
             NetworkConfig(
                 name=private_net_name,
                 network_type=vping_network_type,
                 physical_network=vping_physical_network,
                 segmentation_id=vping_segmentation_id,
-                subnet_settings=[SubnetConfig(
-                    name=private_subnet_name,
-                    cidr=private_subnet_cidr,
-                    dns_nameservers=[env.get('NAMESERVER')])]))
+                subnet_settings=[subnet_settings]))
+        self.network_creator.create()
         self.creators.append(self.network_creator)
 
         # Creating router to external network
-        log = "Creating router with name: '%s'" % self.router_name
-        self.logger.info(log)
+        self.logger.info("Creating router with name: '%s'", self.router_name)
         ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
-        self.router_creator = deploy_utils.create_router(
+        self.router_creator = OpenStackRouter(
             self.os_creds,
             RouterConfig(
                 name=self.router_name,
                 external_gateway=ext_net_name,
-                internal_subnets=[private_subnet_name]))
+                internal_subnets=[subnet_settings.name]))
+        self.router_creator.create()
         self.creators.append(self.router_creator)
 
         self.logger.info(
@@ -187,8 +192,8 @@ class VPingBase(testcase.TestCase):
             for creator in reversed(self.creators):
                 try:
                     creator.clean()
-                except Exception as error:  # pylint: disable=broad-except
-                    self.logger.error('Unexpected error cleaning - %s', error)
+                except Exception:  # pylint: disable=broad-except
+                    self.logger.exception('Unexpected error cleaning')
 
     def _do_vping(self, vm_creator, test_ip):
         """
