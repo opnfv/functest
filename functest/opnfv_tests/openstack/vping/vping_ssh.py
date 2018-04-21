@@ -9,6 +9,7 @@
 
 """vPingSSH testcase."""
 
+import logging
 import time
 
 from scp import SCPClient
@@ -41,6 +42,7 @@ class VPingSSH(vping_base.VPingBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
+        self.logger = logging.getLogger(__name__)
 
         self.kp_name = getattr(config.CONF, 'vping_keypair_name') + self.guid
         self.kp_priv_file = getattr(config.CONF, 'vping_keypair_priv_file')
@@ -120,8 +122,8 @@ class VPingSSH(vping_base.VPingBase):
             self.creators.append(self.vm2_creator)
 
             return self._execute()
-        except Exception as exc:  # pylint: disable=broad-except
-            self.logger.error('Unexpected error running test - ' + exc.message)
+        except Exception:  # pylint: disable=broad-except
+            self.logger.exception('Unexpected error running test')
             return testcase.TestCase.EX_RUN_ERROR
 
     def _do_vping(self, vm_creator, test_ip):
