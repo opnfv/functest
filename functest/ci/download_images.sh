@@ -19,4 +19,5 @@ http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.q
 https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
 EOF
 
-xz --decompress --force --keep ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
+xz --decompress --force --keep \
+    ${1:-/home/opnfv/functest/images}/CentOS-7-aarch64-GenericCloud.qcow2.xz
