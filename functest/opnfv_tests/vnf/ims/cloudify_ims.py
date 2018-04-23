@@ -126,6 +126,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                 self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
+        # pylint: disable=too-many-locals,too-many-statements
         """
         Deploy Cloudify Manager.
 
