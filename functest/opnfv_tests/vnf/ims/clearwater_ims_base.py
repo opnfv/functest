@@ -52,11 +52,14 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
                   "full_name": "opnfv functest user",
                   "email": "functest@opnfv.org",
                   "signup_code": signup_code}
-        rq = requests.post(account_url, data=params)
+        req = requests.post(account_url, data=params)
         output_dict['login'] = params
-        if rq.status_code != 201 and rq.status_code != 409:
-            raise Exception("Unable to create an account for number provision")
-        self.logger.debug('Account is created on Ellis: %s', params)
+        if req.status_code != 201 and req.status_code != 409:
+            raise Exception(
+                "Unable to create an account {}\n{}".format(
+                    params, req.text))
+        self.logger.debug(
+            'Account %s is created on Ellis\n%s', params, req.json())
 
         session_url = 'http://{0}/session'.format(ellis_ip)
         session_data = {
@@ -64,22 +67,24 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
             'password': params['password'],
             'email': params['email']
         }
-        rq = requests.post(session_url, data=session_data)
-        if rq.status_code != 201:
-            raise Exception('Failed to get cookie for Ellis')
-        cookies = rq.cookies
+        req = requests.post(session_url, data=session_data)
+        if req.status_code != 201:
+            raise Exception('Failed to get cookie for Ellis\n{}'.format(
+                req.text))
+        cookies = req.cookies
         self.logger.debug('Cookies: %s', cookies)
 
         number_url = 'http://{0}/accounts/{1}/numbers'.format(
             ellis_ip, params['email'])
         self.logger.debug('Create 1st calling number on Ellis')
         i = 30
-        while rq.status_code != 200 and i > 0:
+        while req.status_code != 200 and i > 0:
             try:
                 number_res = self.create_ellis_number(number_url, cookies)
                 break
             except Exception:  # pylint: disable=broad-except
                 if i == 1:
+                    self.logger.exception("Unable to create a number")
                     raise Exception("Unable to create a number")
                 self.logger.info("Unable to create a number. Retry ..")
                 time.sleep(25)
@@ -94,15 +99,15 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         return output_dict
 
     def create_ellis_number(self, number_url, cookies):
-        rq = requests.post(number_url, cookies=cookies)
+        req = requests.post(number_url, cookies=cookies)
 
-        if rq.status_code != 200:
-            if rq and rq.json():
-                reason = rq.json()['reason']
+        if req.status_code != 200:
+            if req and req.json():
+                reason = req.json()['reason']
             else:
-                reason = rq
+                reason = req
             raise Exception("Unable to create a number: %s" % reason)
-        number_res = rq.json()
+        number_res = req.json()
         self.logger.info('Calling number is created: %s', number_res)
         return number_res
 
