@@ -9,6 +9,7 @@
 
 """vping_userdata testcase."""
 
+import logging
 import time
 
 from snaps.config.network import PortConfig
@@ -28,6 +29,7 @@ class VPingUserdata(vping_base.VPingBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_userdata"
         super(VPingUserdata, self).__init__(**kwargs)
+        self.logger = logging.getLogger(__name__)
 
     def run(self, **kwargs):
         """
