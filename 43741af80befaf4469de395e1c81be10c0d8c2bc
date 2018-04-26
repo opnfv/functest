@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_3a398ca4",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-04-26T18:19:11Z",
+      "side": 1,
+      "message": "not within the scope of this patch, but this should be changed to 0.4.0 cirros image",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 60
+      },
+      "revId": "43741af80befaf4469de395e1c81be10c0d8c2bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
