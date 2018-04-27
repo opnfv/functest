@@ -104,6 +104,29 @@ vping:
     vm_ssh_connect_timeout: 60
     cleanup_objects: 'True'
 
+cinder_test:
+    write_data_timeout: 60
+    vm_flavor: m1.tiny   # adapt to your environment
+    vm_name_1: opnfv-volume-test-1
+    vm_name_2: opnfv-volume-test-2
+    image_name: functest-volume-test
+    private_net_name: volume-test-net
+    # network_type: vlan
+    # physical_network: physnet2
+    # segmentation_id: 2366
+    private_subnet_name: vping-subnet
+    private_subnet_cidr: 192.168.130.0/24
+    router_name: volume-test-router
+    sg_name: volume-test-sg
+    sg_desc: Security group for volume_check test case
+    keypair_name: volume-keypair
+    keypair_priv_file: /tmp/volume-keypair
+    keypair_pub_file: /tmp/volume-keypair.pub
+    vm_boot_timeout: 180
+    vm_delete_timeout: 100
+    vm_ssh_connect_timeout: 60
+    cleanup_objects: 'True'
+
 odl_sfc:
     image_base_url: "http://artifacts.opnfv.org/sfc/images"
     image_name: sfc_nsh_danube

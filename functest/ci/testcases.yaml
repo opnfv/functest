@@ -70,6 +70,23 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
+                case_name: volume_check
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    This test case verifies: 1) SSH to a new instance using
+                    floating IPs over the public network and write data
+                    to a new data volume, attached. 2) Remove first instance and 
+                    attach volume to a new instance 3) SSH to the second instance
+                    using floating IPs and check if volume has any data
+                dependencies:
+                    installer: ''
+                    scenario: '^((?!lxd).)*$'
+                run:
+                    module: 'functest.opnfv_tests.openstack.cinder_test.cinder_test'
+                    class: 'VolumeCheck'
+            -
                 case_name: vping_ssh
                 project_name: functest
                 criteria: 100
