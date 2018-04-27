@@ -9,6 +9,8 @@ os:
                 hw_firmware_type: 'uefi'
                 hw_video_model: 'vga'
                 short_id: 'ubuntu16.04'
+                hw_disk_bus: 'scsi'
+                hw_scsi_model: 'virtio-scsi'
     snaps:
         images:
             glance_tests:
@@ -18,6 +20,8 @@ os:
                     hw_firmware_type: 'uefi'
                     short_id: 'ubuntu16.04'
                     hw_video_model: 'vga'
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
             cirros:
                 disk_file:
                     /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
@@ -25,12 +29,16 @@ os:
                     hw_firmware_type: 'uefi'
                     short_id: 'ubuntu16.04'
                     hw_video_model: 'vga'
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
             ubuntu:
                 disk_file:
                     /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
                 extra_properties:
                     hw_firmware_type: 'uefi'
                     hw_video_model: 'vga'
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
             centos:
                 disk_file:
                     /home/opnfv/functest/images/CentOS-7-aarch64-GenericCloud.qcow2
