@@ -15,18 +15,10 @@ import logging
 import time
 import uuid
 
-from snaps.config.flavor import FlavorConfig
-from snaps.config.network import NetworkConfig
-from snaps.config.network import SubnetConfig
-from snaps.config.router import RouterConfig
-from snaps.openstack.create_flavor import OpenStackFlavor
-from snaps.openstack.create_image import OpenStackImage
-from snaps.openstack.create_network import OpenStackNetwork
-from snaps.openstack.create_router import OpenStackRouter
-from snaps.openstack.tests import openstack_tests
+import os_client_config
+import shade
 from xtesting.core import testcase
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
 from functest.utils import env
 
@@ -43,42 +35,24 @@ class VPingBase(testcase.TestCase):
     def __init__(self, **kwargs):
         super(VPingBase, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
-        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
-        self.creators = list()
-        self.image_creator = None
-        self.network_creator = None
-        self.vm1_creator = None
-        self.vm2_creator = None
-        self.router_creator = None
-
-        # Shared metadata
+        self.cloud = shade.OperatorCloud(
+            cloud_config=os_client_config.get_config())
+        self.ext_net = self.cloud.get_network("ext-net")
+        self.logger.debug("ext_net: %s", self.ext_net)
         self.guid = '-' + str(uuid.uuid4())
-
-        self.router_name = getattr(
-            config.CONF, 'vping_router_name') + self.guid
-        self.vm1_name = getattr(
-            config.CONF, 'vping_vm_name_1') + self.guid
-        self.vm2_name = getattr(config.CONF, 'vping_vm_name_2') + self.guid
-
-        self.vm_boot_timeout = getattr(config.CONF, 'vping_vm_boot_timeout')
-        self.vm_delete_timeout = getattr(
-            config.CONF, 'vping_vm_delete_timeout')
-        self.vm_ssh_connect_timeout = getattr(
-            config.CONF, 'vping_vm_ssh_connect_timeout')
-        self.ping_timeout = getattr(config.CONF, 'vping_ping_timeout')
-        self.flavor_name = 'vping-flavor' + self.guid
-
-        # Move this configuration option up for all tests to leverage
-        if hasattr(config.CONF, 'snaps_images_cirros'):
-            self.cirros_image_config = getattr(
-                config.CONF, 'snaps_images_cirros')
-        else:
-            self.cirros_image_config = None
+        self.network = None
+        self.subnet = None
+        self.router = None
+        self.image = None
+        self.flavor = None
+        self.vm1 = None
 
     def run(self, **kwargs):  # pylint: disable=too-many-locals
         """
         Begins the test execution which should originate from the subclass
         """
+        assert self.cloud
+        assert self.ext_net
         self.logger.info('Begin virtual environment setup')
 
         self.start_time = time.time()
@@ -89,14 +63,11 @@ class VPingBase(testcase.TestCase):
 
         image_base_name = '{}-{}'.format(
             getattr(config.CONF, 'vping_image_name'), self.guid)
-        os_image_settings = openstack_tests.cirros_image_settings(
-            image_base_name, image_metadata=self.cirros_image_config)
         self.logger.info("Creating image with name: '%s'", image_base_name)
-
-        self.image_creator = OpenStackImage(
-            self.os_creds, os_image_settings)
-        self.image_creator.create()
-        self.creators.append(self.image_creator)
+        self.image = self.cloud.create_image(
+            image_base_name,
+            filename=getattr(config.CONF, 'openstack_image_url'))
+        self.logger.debug("image: %s", self.image)
 
         private_net_name = getattr(
             config.CONF, 'vping_private_net_name') + self.guid
@@ -104,59 +75,61 @@ class VPingBase(testcase.TestCase):
             config.CONF, 'vping_private_subnet_name') + self.guid)
         private_subnet_cidr = getattr(config.CONF, 'vping_private_subnet_cidr')
 
-        vping_network_type = None
-        vping_physical_network = None
-        vping_segmentation_id = None
-
+        provider = {}
         if hasattr(config.CONF, 'vping_network_type'):
-            vping_network_type = getattr(config.CONF, 'vping_network_type')
+            provider["network_type"] = getattr(
+                config.CONF, 'vping_network_type')
         if hasattr(config.CONF, 'vping_physical_network'):
-            vping_physical_network = getattr(
+            provider["physical_network"] = getattr(
                 config.CONF, 'vping_physical_network')
         if hasattr(config.CONF, 'vping_segmentation_id'):
-            vping_segmentation_id = getattr(
+            provider["segmentation_id"] = getattr(
                 config.CONF, 'vping_segmentation_id')
-
         self.logger.info(
             "Creating network with name: '%s'", private_net_name)
-        subnet_settings = SubnetConfig(
-            name=private_subnet_name,
+        self.network = self.cloud.create_network(
+            private_net_name,
+            provider=provider)
+        self.logger.debug("network: %s", self.network)
+
+        self.subnet = self.cloud.create_subnet(
+            self.network.id,
+            subnet_name=private_subnet_name,
             cidr=private_subnet_cidr,
+            enable_dhcp=True,
             dns_nameservers=[env.get('NAMESERVER')])
-        self.network_creator = OpenStackNetwork(
-            self.os_creds,
-            NetworkConfig(
-                name=private_net_name,
-                network_type=vping_network_type,
-                physical_network=vping_physical_network,
-                segmentation_id=vping_segmentation_id,
-                subnet_settings=[subnet_settings]))
-        self.network_creator.create()
-        self.creators.append(self.network_creator)
+        self.logger.debug("subnet: %s", self.subnet)
 
-        # Creating router to external network
-        self.logger.info("Creating router with name: '%s'", self.router_name)
-        ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
-        self.router_creator = OpenStackRouter(
-            self.os_creds,
-            RouterConfig(
-                name=self.router_name,
-                external_gateway=ext_net_name,
-                internal_subnets=[subnet_settings.name]))
-        self.router_creator.create()
-        self.creators.append(self.router_creator)
+        router_name = getattr(config.CONF, 'vping_router_name') + self.guid
+        self.logger.info("Creating router with name: '%s'", router_name)
+        self.router = self.cloud.create_router(
+            name=router_name,
+            ext_gateway_net_id=self.ext_net.id)
+        self.logger.debug("router: %s", self.router)
+        self.cloud.add_router_interface(self.router, subnet_id=self.subnet.id)
 
+        flavor_name = 'vping-flavor' + self.guid
         self.logger.info(
-            "Creating flavor with name: '%s'", self.flavor_name)
-        flavor_ram = getattr(config.CONF, 'openstack_flavor_ram')
-        flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
+            "Creating flavor with name: '%s'", flavor_name)
+        self.flavor = self.cloud.create_flavor(
+            flavor_name, getattr(config.CONF, 'openstack_flavor_ram'),
+            getattr(config.CONF, 'openstack_flavor_vcpus'),
+            getattr(config.CONF, 'openstack_flavor_disk'))
+        self.logger.debug("flavor: %s", self.flavor)
+        self.cloud.set_flavor_specs(
+            self.flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
 
-        flavor_creator = OpenStackFlavor(
-            self.os_creds,
-            FlavorConfig(name=self.flavor_name, ram=flavor_ram, disk=1,
-                         vcpus=1, metadata=flavor_metadata))
-        flavor_creator.create()
-        self.creators.append(flavor_creator)
+        vm1_name = getattr(config.CONF, 'vping_vm_name_1') + self.guid
+        self.logger.info(
+            "Creating VM 1 instance with name: '%s'", vm1_name)
+        self.vm1 = self.cloud.create_server(
+            vm1_name, image=self.image.id,
+            flavor=self.flavor.id,
+            auto_ip=False, wait=True,
+            timeout=getattr(config.CONF, 'vping_vm_boot_timeout'),
+            network=self.network.id)
+        self.logger.debug("vm1: %s", self.vm1)
+        self.vm1 = self.cloud.wait_for_server(self.vm1, auto_ip=False)
 
     def _execute(self):
         """
@@ -164,22 +137,11 @@ class VPingBase(testcase.TestCase):
         :return: the exit code
         """
         self.logger.info('Begin test execution')
-
-        test_ip = self.vm1_creator.get_port_ip(
-            self.vm1_creator.instance_settings.port_settings[0].name)
-
-        if self.vm1_creator.vm_active(
-                block=True) and self.vm2_creator.vm_active(block=True):
-            result = self._do_vping(self.vm2_creator, test_ip)
-        else:
-            raise Exception('VMs never became active')
-
+        result = self._do_vping()
         self.stop_time = time.time()
-
         if result != testcase.TestCase.EX_OK:
             self.result = 0
             return testcase.TestCase.EX_RUN_ERROR
-
         self.result = 100
         return testcase.TestCase.EX_OK
 
@@ -188,19 +150,18 @@ class VPingBase(testcase.TestCase):
         Cleanup all OpenStack objects. Should be called on completion
         :return:
         """
-        if getattr(config.CONF, 'vping_cleanup_objects') == 'True':
-            for creator in reversed(self.creators):
-                try:
-                    creator.clean()
-                except Exception:  # pylint: disable=broad-except
-                    self.logger.exception('Unexpected error cleaning')
+        assert self.cloud
+        self.cloud.delete_server(self.vm1, wait=True)
+        self.cloud.delete_image(self.image)
+        self.cloud.remove_router_interface(self.router, self.subnet.id)
+        self.cloud.delete_router(self.router.id)
+        self.cloud.delete_network(self.network.id)
+        self.cloud.delete_flavor(self.flavor.id)
 
-    def _do_vping(self, vm_creator, test_ip):
+    def _do_vping(self):
         """
         Method to be implemented by subclasses
         Begins the real test after the OpenStack environment has been setup
-        :param vm_creator: the SNAPS VM instance creator object
-        :param test_ip: the IP to which the VM needs to issue the ping
         :return: T/F
         """
         raise NotImplementedError('vping execution is not implemented')
