@@ -12,12 +12,10 @@
 import logging
 import time
 
-from snaps.config.network import PortConfig
-from snaps.config.vm_inst import VmInstanceConfig
-from snaps.openstack.utils import deploy_utils
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.vping import vping_base
+from functest.utils import config
 
 
 class VPingUserdata(vping_base.VPingBase):
@@ -30,6 +28,7 @@ class VPingUserdata(vping_base.VPingBase):
             kwargs["case_name"] = "vping_userdata"
         super(VPingUserdata, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
+        self.vm2 = None
 
     def run(self, **kwargs):
         """
@@ -37,53 +36,28 @@ class VPingUserdata(vping_base.VPingBase):
         validates.
         :return: the exit code from the super.execute() method
         """
-        super(VPingUserdata, self).run()
+        try:
+            super(VPingUserdata, self).run()
 
-        # Creating Instance 1
-        port1_settings = PortConfig(
-            name=self.vm1_name + '-vPingPort',
-            network_name=self.network_creator.network_settings.name)
-        instance1_settings = VmInstanceConfig(
-            name=self.vm1_name,
-            flavor=self.flavor_name,
-            vm_boot_timeout=self.vm_boot_timeout,
-            port_settings=[port1_settings])
-
-        self.logger.info(
-            "Creating VM 1 instance with name: '%s'",
-            instance1_settings.name)
-        self.vm1_creator = deploy_utils.create_vm_instance(
-            self.os_creds, instance1_settings,
-            self.image_creator.image_settings)
-        self.creators.append(self.vm1_creator)
-
-        userdata = _get_userdata(
-            self.vm1_creator.get_port_ip(port1_settings.name))
-        if userdata:
-            # Creating Instance 2
-            port2_settings = PortConfig(
-                name=self.vm2_name + '-vPingPort',
-                network_name=self.network_creator.network_settings.name)
-            instance2_settings = VmInstanceConfig(
-                name=self.vm2_name,
-                flavor=self.flavor_name,
-                vm_boot_timeout=self.vm_boot_timeout,
-                port_settings=[port2_settings],
-                userdata=userdata)
-
+            vm2_name = "{}-{}-{}".format(
+                getattr(config.CONF, 'vping_vm_name_2'), "userdata", self.guid)
             self.logger.info(
-                "Creating VM 2 instance with name: '%s'",
-                instance2_settings.name)
-            self.vm2_creator = deploy_utils.create_vm_instance(
-                self.os_creds, instance2_settings,
-                self.image_creator.image_settings)
-            self.creators.append(self.vm2_creator)
-        else:
-            raise Exception('Userdata is None')
+                "Creating VM 2 instance with name: '%s'", vm2_name)
+            self.vm2 = self.cloud.create_server(
+                vm2_name, image=self.image.id, flavor=self.flavor.id,
+                auto_ip=False, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_boot_timeout'),
+                network=self.network.id,
+                userdata=self._get_userdata())
+            self.logger.debug("vm2: %s", self.vm2)
+            self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
 
-        return self._execute()
+            return self._execute()
+        except Exception:  # pylint: disable=broad-except
+            self.logger.exception('Unexpected error running vping_userdata')
+            return testcase.TestCase.EX_RUN_ERROR
 
-    def _do_vping(self, vm_creator, test_ip):
+    def _do_vping(self):
         """
         Override from super
         """
@@ -94,7 +68,8 @@ class VPingUserdata(vping_base.VPingBase):
 
         while True:
             time.sleep(1)
-            p_console = vm_creator.get_console_output()
+            p_console = self.cloud.get_server_console(self.vm2.id)
+            self.logger.debug("console: \n%s", p_console)
             if "vPing OK" in p_console:
                 self.logger.info("vPing detected!")
                 exit_code = testcase.TestCase.EX_OK
@@ -102,7 +77,7 @@ class VPingUserdata(vping_base.VPingBase):
             elif "failed to read iid from metadata" in p_console or tries > 5:
                 self.logger.info("Failed to read iid from metadata")
                 break
-            elif sec == self.ping_timeout:
+            elif sec == getattr(config.CONF, 'vping_ping_timeout'):
                 self.logger.info("Timeout reached.")
                 break
             elif sec % 10 == 0:
@@ -113,29 +88,36 @@ class VPingUserdata(vping_base.VPingBase):
                     tries += 1
                 else:
                     self.logger.debug(
-                        "Pinging %s. Waiting for response...", test_ip)
+                        "Pinging %s. Waiting for response...",
+                        self.vm1.private_v4)
             sec += 1
 
         return exit_code
 
+    def _get_userdata(self):
+        """
+        Returns the post VM creation script to be added into the VM's userdata
+        :param test_ip: the IP value to substitute into the script
+        :return: the bash script contents
+        """
+        if self.vm1.private_v4:
+            return ("#!/bin/sh\n\n"
+                    "while true; do\n"
+                    " ping -c 1 %s 2>&1 >/dev/null\n"
+                    " RES=$?\n"
+                    " if [ \"Z$RES\" = \"Z0\" ] ; then\n"
+                    "  echo 'vPing OK'\n"
+                    "  break\n"
+                    " else\n"
+                    "  echo 'vPing KO'\n"
+                    " fi\n"
+                    " sleep 1\n"
+                    "done\n" % str(self.vm1.private_v4))
+        return None
 
-def _get_userdata(test_ip):
-    """
-    Returns the post VM creation script to be added into the VM's userdata
-    :param test_ip: the IP value to substitute into the script
-    :return: the bash script contents
-    """
-    if test_ip:
-        return ("#!/bin/sh\n\n"
-                "while true; do\n"
-                " ping -c 1 %s 2>&1 >/dev/null\n"
-                " RES=$?\n"
-                " if [ \"Z$RES\" = \"Z0\" ] ; then\n"
-                "  echo 'vPing OK'\n"
-                "  break\n"
-                " else\n"
-                "  echo 'vPing KO'\n"
-                " fi\n"
-                " sleep 1\n"
-                "done\n" % str(test_ip))
-    return None
+    def clean(self):
+        self.cloud.delete_server(
+            self.vm2, wait=True,
+            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        self.cloud.delete_server(self.vm2, wait=True)
+        super(VPingUserdata, self).clean()

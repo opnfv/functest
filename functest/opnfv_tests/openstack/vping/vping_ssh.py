@@ -10,18 +10,13 @@
 """vPingSSH testcase."""
 
 import logging
+import os
+import tempfile
 import time
 
-from scp import SCPClient
+import paramiko
 import pkg_resources
-
-from snaps.config.keypair import KeypairConfig
-from snaps.config.network import PortConfig
-from snaps.config.security_group import (
-    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
-from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
-from snaps.openstack.utils import deploy_utils
-
+from scp import SCPClient
 from xtesting.core import testcase
 from xtesting.energy import energy
 
@@ -30,7 +25,6 @@ from functest.utils import config
 
 
 class VPingSSH(vping_base.VPingBase):
-    # pylint: disable=too-many-instance-attributes
     """
     VPingSSH testcase implementation.
 
@@ -44,12 +38,12 @@ class VPingSSH(vping_base.VPingBase):
             kwargs["case_name"] = "vping_ssh"
         super(VPingSSH, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
-
-        self.kp_name = getattr(config.CONF, 'vping_keypair_name') + self.guid
-        self.kp_priv_file = getattr(config.CONF, 'vping_keypair_priv_file')
-        self.kp_pub_file = getattr(config.CONF, 'vping_keypair_pub_file')
-        self.sg_name = getattr(config.CONF, 'vping_sg_name') + self.guid
-        self.sg_desc = getattr(config.CONF, 'vping_sg_desc')
+        self.vm2 = None
+        self.sec = None
+        self.fip = None
+        self.keypair = None
+        self.ssh = paramiko.SSHClient()
+        (_, self.key_filename) = tempfile.mkstemp()
 
     @energy.enable_recording
     def run(self, **kwargs):
@@ -63,85 +57,64 @@ class VPingSSH(vping_base.VPingBase):
         try:
             super(VPingSSH, self).run()
 
-            log = "Creating keypair with name: '%s'" % self.kp_name
-            self.logger.info(log)
-            kp_creator = deploy_utils.create_keypair(
-                self.os_creds,
-                KeypairConfig(
-                    name=self.kp_name, private_filepath=self.kp_priv_file,
-                    public_filepath=self.kp_pub_file))
-            self.creators.append(kp_creator)
+            kp_name = getattr(config.CONF, 'vping_keypair_name') + self.guid
+            self.logger.info("Creating keypair with name: '%s'", kp_name)
+            self.keypair = self.cloud.create_keypair(kp_name)
+            self.logger.debug("keypair: %s", self.keypair)
+            self.logger.debug("private_key: %s", self.keypair.private_key)
+            with open(self.key_filename, 'w') as private_key_file:
+                private_key_file.write(self.keypair.private_key)
 
-            # Creating Instance 1
-            port1_settings = PortConfig(
-                name=self.vm1_name + '-vPingPort',
-                network_name=self.network_creator.network_settings.name)
-            instance1_settings = VmInstanceConfig(
-                name=self.vm1_name, flavor=self.flavor_name,
-                vm_boot_timeout=self.vm_boot_timeout,
-                vm_delete_timeout=self.vm_delete_timeout,
-                ssh_connect_timeout=self.vm_ssh_connect_timeout,
-                port_settings=[port1_settings])
+            self.sec = self.cloud.create_security_group(
+                getattr(config.CONF, 'vping_sg_name') + self.guid,
+                getattr(config.CONF, 'vping_sg_desc'))
+            self.cloud.create_security_group_rule(
+                self.sec.id, port_range_min='22', port_range_max='22',
+                protocol='tcp', direction='ingress')
+            self.cloud.create_security_group_rule(
+                self.sec.id, protocol='icmp', direction='ingress')
 
-            log = ("Creating VM 1 instance with name: '%s'"
-                   % instance1_settings.name)
-            self.logger.info(log)
-            self.vm1_creator = deploy_utils.create_vm_instance(
-                self.os_creds,
-                instance1_settings,
-                self.image_creator.image_settings,
-                keypair_creator=kp_creator)
-            self.creators.append(self.vm1_creator)
-
-            # Creating Instance 2
-            sg_creator = self.__create_security_group()
-            self.creators.append(sg_creator)
-
-            port2_settings = PortConfig(
-                name=self.vm2_name + '-vPingPort',
-                network_name=self.network_creator.network_settings.name)
-            instance2_settings = VmInstanceConfig(
-                name=self.vm2_name, flavor=self.flavor_name,
-                vm_boot_timeout=self.vm_boot_timeout,
-                vm_delete_timeout=self.vm_delete_timeout,
-                ssh_connect_timeout=self.vm_ssh_connect_timeout,
-                port_settings=[port2_settings],
-                security_group_names=[sg_creator.sec_grp_settings.name],
-                floating_ip_settings=[FloatingIpConfig(
-                    name=self.vm2_name + '-FIPName',
-                    port_name=port2_settings.name,
-                    router_name=self.router_creator.router_settings.name)])
-
-            log = ("Creating VM 2 instance with name: '%s'"
-                   % instance2_settings.name)
-            self.logger.info(log)
-            self.vm2_creator = deploy_utils.create_vm_instance(
-                self.os_creds,
-                instance2_settings,
-                self.image_creator.image_settings,
-                keypair_creator=kp_creator)
-            self.creators.append(self.vm2_creator)
+            vm2_name = "{}-{}-{}".format(
+                getattr(config.CONF, 'vping_vm_name_2'), "ssh", self.guid)
+            self.logger.info(
+                "Creating VM 2 instance with name: '%s'", vm2_name)
+            self.vm2 = self.cloud.create_server(
+                vm2_name, image=self.image.id, flavor=self.flavor.id,
+                key_name=self.keypair.id,
+                auto_ip=False, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_boot_timeout'),
+                network=self.network.id,
+                security_groups=[self.sec.id])
+            self.logger.debug("vm2: %s", self.vm2)
+            self.fip = self.cloud.create_floating_ip(
+                network=self.ext_net.id, server=self.vm2)
+            self.logger.debug("floating_ip2: %s", self.fip)
+            self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
 
             return self._execute()
         except Exception:  # pylint: disable=broad-except
-            self.logger.exception('Unexpected error running test')
+            self.logger.exception('Unexpected error running vping_ssh')
             return testcase.TestCase.EX_RUN_ERROR
 
-    def _do_vping(self, vm_creator, test_ip):
+    def _do_vping(self):
         """
         Execute ping command.
 
         Override from super
         """
-        if vm_creator.vm_ssh_active(block=True):
-            ssh = vm_creator.ssh_client()
-            if not self._transfer_ping_script(ssh):
-                return testcase.TestCase.EX_RUN_ERROR
-            return self._do_vping_ssh(ssh, test_ip)
-        else:
+        time.sleep(10)
+        self.ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
+        self.ssh.connect(
+            self.vm2.public_v4,
+            username=getattr(config.CONF, 'openstack_image_user'),
+            key_filename=self.key_filename,
+            timeout=getattr(config.CONF, 'vping_vm_ssh_connect_timeout'))
+        self.logger.debug("ssh: %s", self.ssh)
+        if not self._transfer_ping_script():
             return testcase.TestCase.EX_RUN_ERROR
+        return self._do_vping_ssh()
 
-    def _transfer_ping_script(self, ssh):
+    def _transfer_ping_script(self):
         """
         Transfert vping script to VM.
 
@@ -150,7 +123,7 @@ class VPingSSH(vping_base.VPingBase):
         :return:
         """
         self.logger.info("Trying to transfer ping.sh")
-        scp = SCPClient(ssh.get_transport())
+        scp = SCPClient(self.ssh.get_transport())
         ping_script = pkg_resources.resource_filename(
             'functest.opnfv_tests.openstack.vping', 'ping.sh')
         try:
@@ -160,14 +133,13 @@ class VPingSSH(vping_base.VPingBase):
             return False
 
         cmd = 'chmod 755 ~/ping.sh'
-        # pylint: disable=unused-variable
-        (stdin, stdout, stderr) = ssh.exec_command(cmd)
+        (_, stdout, _) = self.ssh.exec_command(cmd)
         for line in stdout.readlines():
             print line
 
         return True
 
-    def _do_vping_ssh(self, ssh, test_ip):
+    def _do_vping_ssh(self):
         """
         Execute ping command via SSH.
 
@@ -180,12 +152,12 @@ class VPingSSH(vping_base.VPingBase):
         self.logger.info("Waiting for ping...")
 
         sec = 0
-        cmd = '~/ping.sh ' + test_ip
+        cmd = '~/ping.sh ' + self.vm1.private_v4
         flag = False
 
         while True:
             time.sleep(1)
-            (_, stdout, _) = ssh.exec_command(cmd)
+            (_, stdout, _) = self.ssh.exec_command(cmd)
             output = stdout.readlines()
 
             for line in output:
@@ -194,43 +166,23 @@ class VPingSSH(vping_base.VPingBase):
                     exit_code = testcase.TestCase.EX_OK
                     flag = True
                     break
-
-                elif sec == self.ping_timeout:
+                elif sec == getattr(config.CONF, 'vping_ping_timeout'):
                     self.logger.info("Timeout reached.")
                     flag = True
                     break
             if flag:
                 break
-            log = "Pinging %s. Waiting for response..." % test_ip
+            log = "Pinging %s. Waiting for response..." % self.vm1.private_v4
             self.logger.debug(log)
             sec += 1
         return exit_code
 
-    def __create_security_group(self):
-        """
-        Configure OpenStack security groups.
-
-        Configures and deploys an OpenStack security group object
-        :return: the creator object
-        """
-        sg_rules = list()
-        sg_rules.append(
-            SecurityGroupRuleConfig(
-                sec_grp_name=self.sg_name, direction=Direction.ingress,
-                protocol=Protocol.icmp))
-        sg_rules.append(
-            SecurityGroupRuleConfig(
-                sec_grp_name=self.sg_name, direction=Direction.ingress,
-                protocol=Protocol.tcp, port_range_min=22, port_range_max=22))
-        sg_rules.append(
-            SecurityGroupRuleConfig(
-                sec_grp_name=self.sg_name, direction=Direction.egress,
-                protocol=Protocol.tcp, port_range_min=22, port_range_max=22))
-
-        log = "Security group with name: '%s'" % self.sg_name
-        self.logger.info(log)
-        return deploy_utils.create_security_group(self.os_creds,
-                                                  SecurityGroupConfig(
-                                                      name=self.sg_name,
-                                                      description=self.sg_desc,
-                                                      rule_settings=sg_rules))
+    def clean(self):
+        os.remove(self.key_filename)
+        self.cloud.delete_server(
+            self.vm2, wait=True,
+            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        self.cloud.delete_security_group(self.sec.id)
+        self.cloud.delete_keypair(self.keypair.id)
+        self.cloud.delete_floating_ip(self.fip.id)
+        super(VPingSSH, self).clean()
