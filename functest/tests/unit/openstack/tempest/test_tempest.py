@@ -12,7 +12,6 @@ import os
 import unittest
 
 import mock
-from snaps.openstack.os_credentials import OSCreds
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.tempest import tempest
@@ -23,25 +22,19 @@ class OSTempestTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
 
     def setUp(self):
-        os_creds = OSCreds(
-            username='user', password='pass',
-            auth_url='http://foo.com:5000/v3', project_name='bar')
-
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'conf_utils.get_verifier_id',
                         return_value='test_deploy_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.get_verifier_deployment_id',
-                       return_value='test_deploy_id'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.get_verifier_repo_dir',
-                       return_value='test_verifier_repo_dir'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'conf_utils.get_verifier_deployment_dir',
-                       return_value='test_verifier_deploy_dir'), \
-            mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                       'get_credentials',
-                       return_value=os_creds):
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.get_verifier_deployment_id',
+                           return_value='test_deploy_id'), \
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.get_verifier_repo_dir',
+                           return_value='test_verifier_repo_dir'), \
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.get_verifier_deployment_dir',
+                           return_value='test_verifier_deploy_dir'), \
+                mock.patch('os_client_config.make_shade'):
             self.tempestcommon = tempest.TempestCommon()
             self.tempestsmoke_serial = tempest.TempestSmokeSerial()
             self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
@@ -189,6 +182,8 @@ class OSTempestTesting(unittest.TestCase):
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs',
                 side_effect=Exception)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'TempestResourcesManager.cleanup')
     def test_run_makedirs_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
@@ -199,6 +194,8 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestResourcesManager.create', side_effect=Exception)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'TempestResourcesManager.cleanup')
     def test_run_create_resources_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
@@ -209,20 +206,8 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestResourcesManager.create', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_active_compute_cnt', side_effect=Exception)
-    def test_run_get_active_comp_cnt_ko(self, *args):
-        # pylint: disable=unused-argument
-        self.assertEqual(self.tempestcommon.run(),
-                         testcase.TestCase.EX_RUN_ERROR)
-
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'os.path.exists', return_value=False)
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.create', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_active_compute_cnt', return_value=2)
+                'TempestResourcesManager.cleanup')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestCommon.configure', side_effect=Exception)
     def test_run_configure_tempest_ko(self, *args):
@@ -235,8 +220,8 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestResourcesManager.create', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_active_compute_cnt', return_value=2)
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'TempestResourcesManager.cleanup')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestCommon.configure')
     def _test_run(self, status, *args):
