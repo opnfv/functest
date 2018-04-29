@@ -20,17 +20,11 @@ import subprocess
 import time
 import uuid
 
-from snaps.config.flavor import FlavorConfig
-from snaps.config.network import NetworkConfig, SubnetConfig
-from snaps.config.project import ProjectConfig
-from snaps.config.user import UserConfig
-from snaps.openstack.create_flavor import OpenStackFlavor
-from snaps.openstack.tests import openstack_tests
-from snaps.openstack.utils import deploy_utils
+import os_client_config
+import shade
 from xtesting.core import testcase
 import yaml
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
@@ -47,7 +41,7 @@ class TempestCommon(testcase.TestCase):
 
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)
-        self.resources = TempestResourcesManager(**kwargs)
+        self.resources = TempestResourcesManager()
         self.mode = ""
         self.option = []
         self.verifier_id = conf_utils.get_verifier_id()
@@ -267,15 +261,16 @@ class TempestCommon(testcase.TestCase):
         """
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
-        resources = self.resources.create()
-        compute_cnt = snaps_utils.get_active_compute_cnt(
-            self.resources.os_creds)
+        self.resources.create()
+        compute_cnt = len(self.resources.cloud.list_hypervisors())
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(
-            self.conf_file, network_name=resources.get("network_name"),
-            image_id=resources.get("image_id"),
-            flavor_id=resources.get("flavor_id"),
-            compute_cnt=compute_cnt)
+            self.conf_file, network_name=self.resources.network.id,
+            image_id=self.resources.image.id,
+            flavor_id=self.resources.flavor.id,
+            compute_cnt=compute_cnt,
+            image_alt_id=self.resources.image_alt.id,
+            flavor_alt_id=self.resources.flavor_alt.id)
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
@@ -367,152 +362,119 @@ class TempestDefcore(TempestCommon):
 
 
 class TempestResourcesManager(object):
+    # pylint: disable=too-many-instance-attributes
     """Tempest resource manager."""
-    def __init__(self, **kwargs):
-        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
+    def __init__(self):
         self.guid = '-' + str(uuid.uuid4())
-        self.creators = list()
-        self.cirros_image_config = getattr(
-            config.CONF, 'snaps_images_cirros', None)
+        self.cloud = shade.OperatorCloud(
+            cloud_config=os_client_config.get_config())
+        self.domain_id = self.cloud.auth["project_domain_id"]
+        self.project = None
+        self.user = None
+        self.network = None
+        self.subnet = None
+        self.image = None
+        self.image_alt = None
+        self.flavor = None
+        self.flavor_alt = None
 
     def _create_project(self):
         """Create project for tests."""
-        project_creator = deploy_utils.create_project(
-            self.os_creds, ProjectConfig(
-                name=getattr(
-                    config.CONF, 'tempest_identity_tenant_name') + self.guid,
-                description=getattr(
-                    config.CONF, 'tempest_identity_tenant_description'),
-                domain=self.os_creds.project_domain_name))
-        if project_creator is None or project_creator.get_project() is None:
-            raise Exception("Failed to create tenant")
-        self.creators.append(project_creator)
-        return project_creator.get_project().id
+        self.project = self.cloud.create_project(
+            getattr(config.CONF, 'tempest_identity_tenant_name') + self.guid,
+            description=getattr(
+                config.CONF, 'tempest_identity_tenant_description'),
+            domain_id=self.domain_id)
+        LOGGER.debug("project: %s", self.project)
 
     def _create_user(self):
         """Create user for tests."""
-        user_creator = deploy_utils.create_user(
-            self.os_creds, UserConfig(
-                name=getattr(
-                    config.CONF, 'tempest_identity_user_name') + self.guid,
-                password=getattr(
-                    config.CONF, 'tempest_identity_user_password'),
-                project_name=getattr(
-                    config.CONF, 'tempest_identity_tenant_name') + self.guid,
-                domain_name=self.os_creds.user_domain_name))
-        if user_creator is None or user_creator.get_user() is None:
-            raise Exception("Failed to create user")
-        self.creators.append(user_creator)
-        return user_creator.get_user().id
+        self.user = self.cloud.create_user(
+            name=getattr(
+                config.CONF, 'tempest_identity_user_name') + self.guid,
+            password=getattr(config.CONF, 'tempest_identity_user_password'),
+            default_project=getattr(
+                config.CONF, 'tempest_identity_tenant_name') + self.guid,
+            domain_id=self.domain_id)
+        LOGGER.debug("user: %s", self.user)
 
-    def _create_network(self, project_name):
+    def _create_network(self):
         """Create network for tests."""
-        tempest_network_type = None
-        tempest_physical_network = None
-        tempest_segmentation_id = None
-
-        tempest_network_type = getattr(
-            config.CONF, 'tempest_network_type', None)
-        tempest_physical_network = getattr(
-            config.CONF, 'tempest_physical_network', None)
-        tempest_segmentation_id = getattr(
-            config.CONF, 'tempest_segmentation_id', None)
         tempest_net_name = getattr(
             config.CONF, 'tempest_private_net_name') + self.guid
+        provider = {}
+        if hasattr(config.CONF, 'tempest_network_type'):
+            provider["network_type"] = getattr(
+                config.CONF, 'tempest_network_type')
+        if hasattr(config.CONF, 'tempest_physical_network'):
+            provider["physical_network"] = getattr(
+                config.CONF, 'tempest_physical_network')
+        if hasattr(config.CONF, 'tempest_segmentation_id'):
+            provider["segmentation_id"] = getattr(
+                config.CONF, 'tempest_segmentation_id')
+        LOGGER.info(
+            "Creating network with name: '%s'", tempest_net_name)
+        self.network = self.cloud.create_network(
+            tempest_net_name, provider=provider)
+        LOGGER.debug("network: %s", self.network)
 
-        network_creator = deploy_utils.create_network(
-            self.os_creds, NetworkConfig(
-                name=tempest_net_name,
-                project_name=project_name,
-                network_type=tempest_network_type,
-                physical_network=tempest_physical_network,
-                segmentation_id=tempest_segmentation_id,
-                subnet_settings=[SubnetConfig(
-                    name=getattr(
-                        config.CONF,
-                        'tempest_private_subnet_name') + self.guid,
-                    project_name=project_name,
-                    cidr=getattr(
-                        config.CONF, 'tempest_private_subnet_cidr'),
-                    dns_nameservers=[env.get('NAMESERVER')])]))
-        if network_creator is None or network_creator.get_network() is None:
-            raise Exception("Failed to create private network")
-        self.creators.append(network_creator)
-        return tempest_net_name
+        self.subnet = self.cloud.create_subnet(
+            self.network.id,
+            subnet_name=getattr(
+                config.CONF, 'tempest_private_subnet_name') + self.guid,
+            cidr=getattr(config.CONF, 'tempest_private_subnet_cidr'),
+            enable_dhcp=True,
+            dns_nameservers=[env.get('NAMESERVER')])
+        LOGGER.debug("subnet: %s", self.subnet)
 
     def _create_image(self, name):
         """Create image for tests"""
-        os_image_settings = openstack_tests.cirros_image_settings(
-            name, public=True,
-            image_metadata=self.cirros_image_config)
-        image_creator = deploy_utils.create_image(
-            self.os_creds, os_image_settings)
-        if image_creator is None:
-            raise Exception('Failed to create image')
-        self.creators.append(image_creator)
-        return image_creator.get_image().id
+        LOGGER.info("Creating image with name: '%s'", name)
+        image = self.cloud.create_image(
+            name, filename=getattr(config.CONF, 'openstack_image_url'),
+            is_public=True)
+        LOGGER.debug("image: %s", image)
+        return image
 
     def _create_flavor(self, name):
         """Create flavor for tests."""
-        flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
-        flavor_creator = OpenStackFlavor(
-            self.os_creds, FlavorConfig(
-                name=name,
-                ram=getattr(config.CONF, 'openstack_flavor_ram'),
-                disk=getattr(config.CONF, 'openstack_flavor_disk'),
-                vcpus=getattr(config.CONF, 'openstack_flavor_vcpus'),
-                metadata=flavor_metadata))
-        flavor = flavor_creator.create()
-        if flavor is None:
-            raise Exception('Failed to create flavor')
-        self.creators.append(flavor_creator)
-        return flavor.id
+        flavor = self.cloud.create_flavor(
+            name, getattr(config.CONF, 'openstack_flavor_ram'),
+            getattr(config.CONF, 'openstack_flavor_vcpus'),
+            getattr(config.CONF, 'openstack_flavor_disk'))
+        self.cloud.set_flavor_specs(
+            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+        LOGGER.debug("flavor: %s", flavor)
+        return flavor
 
     def create(self, create_project=False):
         """Create resources for Tempest test suite."""
-        result = {
-            'tempest_net_name': None,
-            'image_id': None,
-            'image_id_alt': None,
-            'flavor_id': None,
-            'flavor_id_alt': None
-        }
-        project_name = None
-
         if create_project:
-            LOGGER.debug("Creating project and user for Tempest suite")
-            project_name = getattr(
-                config.CONF, 'tempest_identity_tenant_name') + self.guid
-            result['project_id'] = self._create_project()
-            result['user_id'] = self._create_user()
-            result['tenant_id'] = result['project_id']  # for compatibility
-
-        LOGGER.debug("Creating private network for Tempest suite")
-        result['tempest_net_name'] = self._create_network(project_name)
+            self._create_project()
+            self._create_user()
+        self._create_network()
 
         LOGGER.debug("Creating two images for Tempest suite")
-        image_name = getattr(config.CONF, 'openstack_image_name') + self.guid
-        result['image_id'] = self._create_image(image_name)
-        image_name = getattr(
-            config.CONF, 'openstack_image_name_alt') + self.guid
-        result['image_id_alt'] = self._create_image(image_name)
+        self.image = self._create_image(
+            getattr(config.CONF, 'openstack_image_name') + self.guid)
+        self.image_alt = self._create_image(
+            getattr(config.CONF, 'openstack_image_name_alt') + self.guid)
 
         LOGGER.info("Creating two flavors for Tempest suite")
-        name = getattr(config.CONF, 'openstack_flavor_name') + self.guid
-        result['flavor_id'] = self._create_flavor(name)
-
-        name = getattr(
-            config.CONF, 'openstack_flavor_name_alt') + self.guid
-        result['flavor_id_alt'] = self._create_flavor(name)
-
-        return result
+        self.flavor = self._create_flavor(
+            getattr(config.CONF, 'openstack_flavor_name') + self.guid)
+        self.flavor_alt = self._create_flavor(
+            getattr(config.CONF, 'openstack_flavor_name_alt') + self.guid)
 
     def cleanup(self):
         """
         Cleanup all OpenStack objects. Should be called on completion.
         """
-        for creator in reversed(self.creators):
-            try:
-                creator.clean()
-            except Exception as err:  # pylint: disable=broad-except
-                LOGGER.error('Unexpected error cleaning - %s', err)
+        self.cloud.delete_image(self.image)
+        self.cloud.delete_image(self.image_alt)
+        self.cloud.delete_network(self.network.id)
+        self.cloud.delete_flavor(self.flavor.id)
+        self.cloud.delete_flavor(self.flavor_alt.id)
+        if self.project:
+            self.cloud.delete_user(self.user.id)
+            self.cloud.delete_project(self.project.id)
