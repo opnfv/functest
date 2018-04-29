@@ -23,8 +23,6 @@ from functest.utils import config
 from functest.utils import env
 
 
-IMAGE_ID_ALT = None
-FLAVOR_ID_ALT = None
 RALLY_CONF_PATH = "/etc/rally/rally.conf"
 RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
     'functest', 'ci/rally_aarch64_patch.conf')
@@ -183,9 +181,9 @@ def update_tempest_conf_file(conf_file, rconfig):
         rconfig.write(config_file)
 
 
-def configure_tempest_update_params(tempest_conf_file,
-                                    network_name=None, image_id=None,
-                                    flavor_id=None, compute_cnt=1):
+def configure_tempest_update_params(
+        tempest_conf_file, network_name=None, image_id=None, flavor_id=None,
+        compute_cnt=1, image_alt_id=None, flavor_alt_id=None):
     # pylint: disable=too-many-branches, too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
@@ -197,13 +195,12 @@ def configure_tempest_update_params(tempest_conf_file,
     rconfig.set('compute', 'volume_device_name', env.get('VOLUME_DEVICE_NAME'))
     if image_id is not None:
         rconfig.set('compute', 'image_ref', image_id)
-    if IMAGE_ID_ALT is not None:
-        rconfig.set('compute', 'image_ref_alt', IMAGE_ID_ALT)
-    if getattr(config.CONF, 'tempest_use_custom_flavors'):
-        if flavor_id is not None:
-            rconfig.set('compute', 'flavor_ref', flavor_id)
-        if FLAVOR_ID_ALT is not None:
-            rconfig.set('compute', 'flavor_ref_alt', FLAVOR_ID_ALT)
+    if image_alt_id is not None:
+        rconfig.set('compute', 'image_ref_alt', image_alt_id)
+    if flavor_id is not None:
+        rconfig.set('compute', 'flavor_ref', flavor_id)
+    if flavor_alt_id is not None:
+        rconfig.set('compute', 'flavor_ref_alt', flavor_alt_id)
     if compute_cnt > 1:
         # enable multinode tests
         rconfig.set('compute', 'min_compute_nodes', compute_cnt)
