@@ -20,21 +20,16 @@ import subprocess
 import time
 import uuid
 
+import os_client_config
 import pkg_resources
 import prettytable
-from snaps.config.flavor import FlavorConfig
-from snaps.config.image import ImageConfig
-from snaps.config.network import NetworkConfig, SubnetConfig
-from snaps.config.router import RouterConfig
-from snaps.openstack.create_flavor import OpenStackFlavor
-from snaps.openstack.utils import deploy_utils
 from xtesting.core import testcase
 from xtesting.energy import energy
 import yaml
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
+from functest.utils import functest_utils
 from functest.utils import env
 
 LOGGER = logging.getLogger(__name__)
@@ -51,14 +46,13 @@ class RallyBase(testcase.TestCase):
     GLANCE_IMAGE_PATH = os.path.join(getattr(
         config.CONF, 'dir_functest_images'), GLANCE_IMAGE_FILENAME)
     GLANCE_IMAGE_FORMAT = getattr(config.CONF, 'openstack_image_disk_format')
-    GLANCE_IMAGE_USERNAME = getattr(config.CONF, 'openstack_image_username')
     GLANCE_IMAGE_EXTRA_PROPERTIES = getattr(
         config.CONF, 'image_properties', {})
     FLAVOR_NAME = getattr(config.CONF, 'rally_flavor_name')
     FLAVOR_ALT_NAME = getattr(config.CONF, 'rally_flavor_alt_name')
     FLAVOR_RAM = 512
     FLAVOR_RAM_ALT = 1024
-    FLAVOR_EXTRA_SPECS = getattr(config.CONF, 'flavor_extra_specs', None)
+    FLAVOR_EXTRA_SPECS = getattr(config.CONF, 'flavor_extra_specs', {})
     if FLAVOR_EXTRA_SPECS:
         FLAVOR_RAM = 1024
         FLAVOR_RAM_ALT = 2048
@@ -87,15 +81,14 @@ class RallyBase(testcase.TestCase):
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
         super(RallyBase, self).__init__(**kwargs)
-        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
+        self.cloud = os_client_config.make_shade()
         self.guid = '-' + str(uuid.uuid4())
         self.creators = []
         self.mode = ''
         self.summary = []
         self.scenario_dir = ''
         self.image_name = None
-        self.ext_net_name = None
-        self.priv_net_id = None
+        self.ext_net = None
         self.flavor_name = None
         self.flavor_alt_name = None
         self.smoke = None
@@ -104,6 +97,12 @@ class RallyBase(testcase.TestCase):
         self.result = None
         self.details = None
         self.compute_cnt = 0
+        self.image = None
+        self.flavor = None
+        self.flavor_alt = None
+        self.network = None
+        self.subnet = None
+        self.router = None
 
     def _build_task_args(self, test_file_name):
         """Build arguments for the Rally task."""
@@ -122,15 +121,13 @@ class RallyBase(testcase.TestCase):
         task_args['concurrency'] = self.CONCURRENCY
         task_args['smoke'] = self.smoke
 
-        ext_net = self.ext_net_name
-        if ext_net:
-            task_args['floating_network'] = str(ext_net)
+        if self.ext_net:
+            task_args['floating_network'] = str(self.ext_net.name)
         else:
             task_args['floating_network'] = ''
 
-        net_id = self.priv_net_id
-        if net_id:
-            task_args['netid'] = str(net_id)
+        if self.network:
+            task_args['netid'] = str(self.network.id)
         else:
             task_args['netid'] = ''
 
@@ -421,6 +418,7 @@ class RallyBase(testcase.TestCase):
 
     def _prepare_env(self):
         """Create resources needed by test scenarios."""
+        assert self.cloud
         LOGGER.debug('Validating the test name...')
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
@@ -431,73 +429,69 @@ class RallyBase(testcase.TestCase):
         self.image_name = self.GLANCE_IMAGE_NAME + self.guid
         self.flavor_name = self.FLAVOR_NAME + self.guid
         self.flavor_alt_name = self.FLAVOR_ALT_NAME + self.guid
-        self.ext_net_name = snaps_utils.get_ext_net_name(self.os_creds)
-        self.compute_cnt = snaps_utils.get_active_compute_cnt(self.os_creds)
+        self.compute_cnt = len(self.cloud.list_hypervisors())
+        self.ext_net = functest_utils.get_external_network(self.cloud)
+        if self.ext_net is None:
+            raise Exception("No external network found")
 
         LOGGER.debug("Creating image '%s'...", self.image_name)
-        image_creator = deploy_utils.create_image(
-            self.os_creds, ImageConfig(
-                name=self.image_name,
-                image_file=self.GLANCE_IMAGE_PATH,
-                img_format=self.GLANCE_IMAGE_FORMAT,
-                image_user=self.GLANCE_IMAGE_USERNAME,
-                public=True,
-                extra_properties=self.GLANCE_IMAGE_EXTRA_PROPERTIES))
-        if image_creator is None:
+        self.image = self.cloud.create_image(
+            self.image_name,
+            filename=self.GLANCE_IMAGE_PATH,
+            disk_format=self.GLANCE_IMAGE_FORMAT,
+            meta=self.GLANCE_IMAGE_EXTRA_PROPERTIES,
+            is_public=True)
+        if self.image is None:
             raise Exception("Failed to create image")
-        self.creators.append(image_creator)
 
         LOGGER.debug("Creating network '%s'...", network_name)
+        provider = {}
+        if hasattr(config.CONF, 'rally_network_type'):
+            provider["network_type"] = getattr(
+                config.CONF, 'rally_network_type')
+        if hasattr(config.CONF, 'rally_physical_network'):
+            provider["physical_network"] = getattr(
+                config.CONF, 'rally_physical_network')
+        if hasattr(config.CONF, 'rally_segmentation_id'):
+            provider["segmentation_id"] = getattr(
+                config.CONF, 'rally_segmentation_id')
 
-        rally_network_type = getattr(config.CONF, 'rally_network_type', None)
-        rally_physical_network = getattr(
-            config.CONF, 'rally_physical_network', None)
-        rally_segmentation_id = getattr(
-            config.CONF, 'rally_segmentation_id', None)
-
-        network_creator = deploy_utils.create_network(
-            self.os_creds, NetworkConfig(
-                name=network_name,
-                shared=True,
-                network_type=rally_network_type,
-                physical_network=rally_physical_network,
-                segmentation_id=rally_segmentation_id,
-                subnet_settings=[SubnetConfig(
-                    name=subnet_name,
-                    cidr=self.RALLY_PRIVATE_SUBNET_CIDR,
-                    dns_nameservers=[env.get('NAMESERVER')])]))
-        if network_creator is None:
+        self.network = self.cloud.create_network(
+            network_name, shared=True, provider=provider)
+        if self.network is None:
             raise Exception("Failed to create private network")
-        self.priv_net_id = network_creator.get_network().id
-        self.creators.append(network_creator)
+
+        self.subnet = self.cloud.create_subnet(
+            self.network.id,
+            subnet_name=subnet_name,
+            cidr=self.RALLY_PRIVATE_SUBNET_CIDR,
+            enable_dhcp=True,
+            dns_nameservers=[env.get('NAMESERVER')])
+        if self.subnet is None:
+            raise Exception("Failed to create private subnet")
 
         LOGGER.debug("Creating router '%s'...", router_name)
-        router_creator = deploy_utils.create_router(
-            self.os_creds, RouterConfig(
-                name=router_name,
-                external_gateway=self.ext_net_name,
-                internal_subnets=[subnet_name]))
-        if router_creator is None:
+        self.router = self.cloud.create_router(
+            router_name, ext_gateway_net_id=self.ext_net.id)
+        if self.router is None:
             raise Exception("Failed to create router")
-        self.creators.append(router_creator)
+        self.cloud.add_router_interface(self.router, subnet_id=self.subnet.id)
 
         LOGGER.debug("Creating flavor '%s'...", self.flavor_name)
-        flavor_creator = OpenStackFlavor(
-            self.os_creds, FlavorConfig(
-                name=self.flavor_name, ram=self.FLAVOR_RAM, disk=1, vcpus=1,
-                metadata=self.FLAVOR_EXTRA_SPECS))
-        if flavor_creator is None or flavor_creator.create() is None:
+        self.flavor = self.cloud.create_flavor(
+            self.flavor_name, self.FLAVOR_RAM, 1, 1)
+        if self.flavor is None:
             raise Exception("Failed to create flavor")
-        self.creators.append(flavor_creator)
+        self.cloud.set_flavor_specs(
+            self.flavor.id, self.FLAVOR_EXTRA_SPECS)
 
         LOGGER.debug("Creating flavor '%s'...", self.flavor_alt_name)
-        flavor_alt_creator = OpenStackFlavor(
-            self.os_creds, FlavorConfig(
-                name=self.flavor_alt_name, ram=self.FLAVOR_RAM_ALT, disk=1,
-                vcpus=1, metadata=self.FLAVOR_EXTRA_SPECS))
-        if flavor_alt_creator is None or flavor_alt_creator.create() is None:
+        self.flavor_alt = self.cloud.create_flavor(
+            self.flavor_alt_name, self.FLAVOR_RAM_ALT, 1, 1)
+        if self.flavor_alt is None:
             raise Exception("Failed to create flavor")
-        self.creators.append(flavor_alt_creator)
+        self.cloud.set_flavor_specs(
+            self.flavor_alt.id, self.FLAVOR_EXTRA_SPECS)
 
     def _run_tests(self):
         """Execute tests."""
@@ -563,12 +557,21 @@ class RallyBase(testcase.TestCase):
         self.details = payload
 
     def _clean_up(self):
-        """Cleanup all OpenStack objects. Should be called on completion."""
-        for creator in reversed(self.creators):
-            try:
-                creator.clean()
-            except Exception as exc:  # pylint: disable=broad-except
-                LOGGER.error('Unexpected error cleaning - %s', exc)
+        """Cleanup of OpenStack resources. Should be called on completion."""
+        if self.flavor_alt:
+            self.cloud.delete_flavor(self.flavor_alt.id)
+        if self.flavor:
+            self.cloud.delete_flavor(self.flavor.id)
+        if self.router and self.subnet:
+            self.cloud.remove_router_interface(self.router, self.subnet.id)
+        if self.router:
+            self.cloud.delete_router(self.router.id)
+        if self.subnet:
+            self.cloud.delete_subnet(self.subnet.id)
+        if self.network:
+            self.cloud.delete_network(self.network.id)
+        if self.image:
+            self.cloud.delete_image(self.image.id)
 
     @energy.enable_recording
     def run(self, **kwargs):
