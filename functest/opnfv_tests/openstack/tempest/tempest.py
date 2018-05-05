@@ -217,13 +217,16 @@ class TempestCommon(testcase.TestCase):
                 output = logfile.read()
 
             success_testcases = []
-            for match in re.findall(r'.*\{0\} (.*?)[. ]*success ', output):
+            for match in re.findall(r'.*\{\d{1,2}\} (.*?) \.{3} success ',
+                                    output):
                 success_testcases.append(match)
             failed_testcases = []
-            for match in re.findall(r'.*\{0\} (.*?)[. ]*fail', output):
+            for match in re.findall(r'.*\{\d{1,2}\} (.*?) \.{3} fail',
+                                    output):
                 failed_testcases.append(match)
             skipped_testcases = []
-            for match in re.findall(r'.*\{0\} (.*?)[. ]*skip:', output):
+            for match in re.findall(r'.*\{\d{1,2}\} (.*?) \.{3} skip:',
+                                    output):
                 skipped_testcases.append(match)
 
             self.details = {"tests_number": stat['num_tests'],
