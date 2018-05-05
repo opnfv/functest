@@ -20,6 +20,7 @@ from xtesting.core import testcase
 
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 class VPingBase(testcase.TestCase):
@@ -35,7 +36,7 @@ class VPingBase(testcase.TestCase):
         super(VPingBase, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
         self.cloud = os_client_config.make_shade()
-        self.ext_net = self.cloud.get_network("ext-net")
+        self.ext_net = functest_utils.get_external_network(self.cloud)
         self.logger.debug("ext_net: %s", self.ext_net)
         self.guid = '-' + str(uuid.uuid4())
         self.network = None
