@@ -93,9 +93,9 @@ vping:
     private_subnet_name: vping-subnet
     private_subnet_cidr: 192.168.130.0/24
     router_name: vping-router
-    sg_name: vPing-sg
+    sg_name: vping-sg
     sg_desc: Security group for vPing test case
-    keypair_name: vPing-keypair
+    keypair_name: vping-keypair
     keypair_priv_file: /tmp/vPing-keypair
     keypair_pub_file: /tmp/vPing-keypair.pub
     vm_boot_timeout: 180

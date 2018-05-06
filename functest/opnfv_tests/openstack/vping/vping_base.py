@@ -47,6 +47,7 @@ class VPingBase(testcase.TestCase):
         self.image = None
         self.flavor = None
         self.vm1 = None
+        self.sec1 = None
 
     def run(self, **kwargs):  # pylint: disable=too-many-locals
         """
@@ -120,6 +121,12 @@ class VPingBase(testcase.TestCase):
         self.cloud.set_flavor_specs(
             self.flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
 
+        self.sec1 = self.cloud.create_security_group(
+            getattr(config.CONF, 'vping_sg_name') + self.guid,
+            getattr(config.CONF, 'vping_sg_desc'))
+        self.cloud.create_security_group_rule(
+            self.sec1.id, protocol='icmp', direction='ingress')
+
         vm1_name = getattr(config.CONF, 'vping_vm_name_1') + self.guid
         self.logger.info(
             "Creating VM 1 instance with name: '%s'", vm1_name)
@@ -128,9 +135,12 @@ class VPingBase(testcase.TestCase):
             flavor=self.flavor.id,
             auto_ip=False, wait=True,
             timeout=getattr(config.CONF, 'vping_vm_boot_timeout'),
-            network=self.network.id)
+            network=self.network.id,
+            security_groups=[self.sec1.id])
         self.logger.debug("vm1: %s", self.vm1)
         self.vm1 = self.cloud.wait_for_server(self.vm1, auto_ip=False)
+        p_console = self.cloud.get_server_console(self.vm1.id)
+        self.logger.debug("vm1 console: \n%s", p_console)
 
     def _execute(self):
         """
@@ -153,6 +163,7 @@ class VPingBase(testcase.TestCase):
         """
         assert self.cloud
         self.cloud.delete_server(self.vm1, wait=True)
+        self.cloud.delete_security_group(self.sec1.id)
         self.cloud.delete_image(self.image)
         self.cloud.remove_router_interface(self.router, self.subnet.id)
         self.cloud.delete_router(self.router.id)

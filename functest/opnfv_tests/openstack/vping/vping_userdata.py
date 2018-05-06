@@ -52,6 +52,8 @@ class VPingUserdata(vping_base.VPingBase):
                 userdata=self._get_userdata())
             self.logger.debug("vm2: %s", self.vm2)
             self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
+            p_console = self.cloud.get_server_console(self.vm1.id)
+            self.logger.debug("vm2 console: \n%s", p_console)
 
             return self._execute()
         except Exception:  # pylint: disable=broad-except
