@@ -11,7 +11,7 @@ tiers:
                 case_name: vping_ssh
                 project_name: functest
                 criteria: 100
-                blocking: true
+                blocking: false
                 description: >-
                     This test case verifies: 1) SSH to an instance using
                     floating IPs over the public network. 2) Connectivity
@@ -27,7 +27,7 @@ tiers:
                 case_name: vping_userdata
                 project_name: functest
                 criteria: 100
-                blocking: true
+                blocking: false
                 description: >-
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
