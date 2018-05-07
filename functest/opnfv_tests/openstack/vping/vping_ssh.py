@@ -97,13 +97,25 @@ class VPingSSH(vping_base.VPingBase):
             return testcase.TestCase.EX_RUN_ERROR
 
     def _do_vping(self):
-        time.sleep(10)
         self.ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
-        self.ssh.connect(
-            self.vm2.public_v4,
-            username=getattr(config.CONF, 'openstack_image_user'),
-            key_filename=self.key_filename,
-            timeout=getattr(config.CONF, 'vping_vm_ssh_connect_timeout'))
+        for loop in range(6):
+            try:
+                self.ssh.connect(
+                    self.vm2.public_v4,
+                    username=getattr(config.CONF, 'openstack_image_user'),
+                    key_filename=self.key_filename,
+                    timeout=getattr(
+                        config.CONF, 'vping_vm_ssh_connect_timeout'))
+                break
+            except Exception:  # pylint: disable=broad-except
+                self.logger.info(
+                    "try %s: cannot connect to %s", loop + 1,
+                    self.vm2.public_v4)
+                time.sleep(10)
+        else:
+            self.logger.error("cannot connect to %s", self.vm2.public_v4)
+            return False
+
         self.logger.debug("ssh: %s", self.ssh)
         (_, stdout, _) = self.ssh.exec_command(
             'ping -c 1 ' + self.vm1.private_v4)
