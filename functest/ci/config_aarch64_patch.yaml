@@ -5,6 +5,8 @@ os:
             image_name: TestVM
             image_file_name: cirros-0.4.0-aarch64-disk.img
             image_password: gocubsgo
+            image_url:
+                /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
             extra_properties:
                 hw_firmware_type: 'uefi'
                 hw_video_model: 'vga'

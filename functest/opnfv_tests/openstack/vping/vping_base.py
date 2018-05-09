@@ -66,9 +66,12 @@ class VPingBase(testcase.TestCase):
         image_base_name = '{}-{}'.format(
             getattr(config.CONF, 'vping_image_name'), self.guid)
         self.logger.info("Creating image with name: '%s'", image_base_name)
+        meta = getattr(config.CONF, 'openstack_extra_properties', None)
+        self.logger.info("Image metadata: %s", meta)
         self.image = self.cloud.create_image(
             image_base_name,
-            filename=getattr(config.CONF, 'openstack_image_url'))
+            filename=getattr(config.CONF, 'openstack_image_url'),
+            meta=meta)
         self.logger.debug("image: %s", self.image)
 
         private_net_name = getattr(
