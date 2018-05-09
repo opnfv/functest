@@ -16,6 +16,24 @@
       "revId": "891bfa5ea50147c2772641f0a506768ee829097c",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_52d70b4b",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-09T17:55:04Z",
+      "side": 1,
+      "message": "Could you please simply list the downloaded file instead?",
+      "parentUuid": "5a3f45e8_b7ae417f",
+      "revId": "891bfa5ea50147c2772641f0a506768ee829097c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
