@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_2d8e5e79",
+        "filename": "functest/opnfv_tests/openstack/vping/vping_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-10T12:04:05Z",
+      "side": 1,
+      "message": "I think it could be simpler:\n\nmeta \u003d getattr(config.CONF, \u0027openstack_extra_properties\u0027, None)",
+      "revId": "0a206624ce972cb7d1f60f8c0b976b7076dd83b9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
