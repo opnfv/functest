@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_2dc2de33",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2018-05-10T15:09:25Z",
+      "side": 1,
+      "message": "This needs to be parametrized , for ARM is sdc",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 51
+      },
+      "revId": "710efba13cf90fd59b6207a539862e9f2c77ab59",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
