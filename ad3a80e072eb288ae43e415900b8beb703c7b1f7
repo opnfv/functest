@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_8d7fb265",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-10T12:00:55Z",
+      "side": 1,
+      "message": "2018 Armband",
+      "revId": "ad3a80e072eb288ae43e415900b8beb703c7b1f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ed97568e",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-10T12:00:55Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "ad3a80e072eb288ae43e415900b8beb703c7b1f7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
