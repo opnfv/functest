@@ -46,6 +46,9 @@ os:
                     hw_firmware_type: 'uefi'
                     hw_video_model: 'vga'
 
+    cinder:
+        volume_device_name: sdc
+
     vping:
         image_name: TestVM
 

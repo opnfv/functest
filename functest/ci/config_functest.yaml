@@ -80,6 +80,25 @@ snaps:
 #        port: {proxy_port}
 #        ssh_proxy_cmd: {OpenSSH -o ProxyCommand value}
 
+cinder:
+    vm_name_1: opnfv-cinder-1
+    vm_name_2: opnfv-cinder-2
+    image_name: functest-cinder
+    private_net_name: cinder-net
+    private_subnet_name: cinder-subnet
+    private_subnet_cidr: 192.168.130.0/24
+    router_name: cinder-router
+    sg_name: cinder-sg
+    sg_desc: Security group for CinderCheck test case
+    keypair_name: cinder-keypair
+    keypair_priv_file: /tmp/CinderCheck-keypair
+    keypair_pub_file: /tmp/CinderCheck-keypair.pub
+    vm_boot_timeout: 180
+    vm_delete_timeout: 100
+    vm_ssh_connect_timeout: 60
+    cleanup_objects: 'True'
+    volume_device_name: vdc
+
 vping:
     ping_timeout: 200
     vm_flavor: m1.tiny   # adapt to your environment
