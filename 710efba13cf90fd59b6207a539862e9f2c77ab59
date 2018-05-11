@@ -22,6 +22,30 @@
       "revId": "710efba13cf90fd59b6207a539862e9f2c77ab59",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_05125a08",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-11T05:11:48Z",
+      "side": 1,
+      "message": "Yes. See https://git.opnfv.org/functest/tree/functest/utils/env.py#n30\n\nI would prefer to send all commands one after the others. Or the script has to be external.",
+      "parentUuid": "5a3f45e8_2dc2de33",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 51
+      },
+      "revId": "710efba13cf90fd59b6207a539862e9f2c77ab59",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
