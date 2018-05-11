@@ -16,10 +16,8 @@ vnf:
     name: clearwater
     version: '107'
     descriptor:
-        file_name: openstack-blueprint.yaml
+        file_name: /src/vims/openstack-blueprint.yaml
         name: clearwater-opnfv
-        url:
-            https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/archive/master.zip
         version: '122'
     requirements:
         flavor:

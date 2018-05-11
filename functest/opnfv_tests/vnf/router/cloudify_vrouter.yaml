@@ -18,9 +18,10 @@ vnf:
     name: vyos1.1.7
     version: '1.1.7'
     descriptor:
-        url: https://github.com/oolorg/opnfv-vnf-vyos-blueprint/
+        file_name:
+            /src/opnfv-vnf-vyos-blueprint/function-test-openstack-blueprint.yaml
         name: vrouter-opnfv
-        version: 'master'
+        version: fraser
     requirements:
         flavor:
             name: m1.medium
