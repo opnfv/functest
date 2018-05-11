@@ -218,8 +218,12 @@ class JujuEpc(vnf.VnfOnBoarding):
             if ex.errno != errno.EEXIST:
                 self.__logger.exception("Cannot create %s", self.res_dir)
                 raise vnf.VnfPreparationException
+
+        self.__logger.info("ENV:%s", env.string())
+
         self.public_auth_url = keystone_utils.get_endpoint(
             self.snaps_creds, 'identity')
+
         # it enforces a versioned public identity endpoint as juju simply
         # adds /auth/tokens wich fails vs an unversioned endpoint.
         if not self.public_auth_url.endswith(('v3', 'v3/', 'v2.0', 'v2.0/')):
@@ -236,7 +240,7 @@ class JujuEpc(vnf.VnfOnBoarding):
 
         Bootstrap juju
         """
-        self.__logger.info("Deployed Orchestrator")
+        self.__logger.info("Deploying Juju Orchestrator")
         private_net_name = getattr(
             config.CONF, 'vnf_{}_private_net_name'.format(self.case_name))
         private_subnet_name = '{}-{}'.format(
@@ -249,7 +253,8 @@ class JujuEpc(vnf.VnfOnBoarding):
             getattr(config.CONF,
                     'vnf_{}_external_router'.format(self.case_name)),
             self.uuid)
-        self.__logger.info("Creating full network ...")
+        self.__logger.info("Creating full network with nameserver:%s",
+                           env.get('NAMESERVER'))
         subnet_settings = SubnetConfig(
             name=private_subnet_name,
             cidr=private_subnet_cidr,
@@ -277,6 +282,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
         flavor_creator.create()
         self.created_object.append(flavor_creator)
+
         self.__logger.info("Upload some OS images if it doesn't exist")
         images = get_config("tenant_images", self.config_file)
         self.__logger.info("Images needed for vEPC: %s", images)
@@ -287,8 +293,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                     name=image_name, image_user='cloud', img_format='qcow2',
                     image_file=image_file))
                 image_id = image_creator.create().id
-                cmd = ['timeout', '-t', JujuEpc.juju_timeout,
-                       'juju', 'metadata', 'generate-image', '-d', '/root',
+                cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
                        '-i', image_id, '-s', image_name,
                        '-r', self.snaps_creds.region_name,
                        '-u', self.public_auth_url]
@@ -296,18 +301,30 @@ class JujuEpc(vnf.VnfOnBoarding):
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
                 self.created_object.append(image_creator)
         self.__logger.info("Network ID  : %s", net_id)
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
-               'juju', 'bootstrap', 'abot-epc', 'abot-controller',
-               '--metadata-source', '/root',
-               '--constraints', 'mem=2G',
-               '--bootstrap-series', 'xenial',
-               '--config', 'network={}'.format(net_id),
-               '--config', 'ssl-hostname-verification=false',
-               '--config', 'use-floating-ip=true',
-               '--config', 'use-default-secgroup=true',
-               '--debug']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output)
+
+        self.__logger.info("Starting Juju Bootstrap process...")
+        try:
+            cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+                   'juju', 'bootstrap', 'abot-epc', 'abot-controller',
+                   '--metadata-source', '/root',
+                   '--constraints', 'mem=2G',
+                   '--bootstrap-series', 'xenial',
+                   '--config', 'network={}'.format(net_id),
+                   '--config', 'ssl-hostname-verification=false',
+                   '--config', 'use-floating-ip=true',
+                   '--config', 'use-default-secgroup=true',
+                   '--debug']
+            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+            self.__logger.info("%s\n%s", " ".join(cmd), output)
+        except subprocess.CalledProcessError as cpe:
+            self.__logger.error(
+                "Exception with Juju Bootstrap: %s\n%s",
+                cpe.cmd, cpe.output)
+            return False
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Some issue with Juju Bootstrap ...")
+            return False
+
         return True
 
     def check_app(self, name='abot-epc-basic', status='active'):
@@ -336,15 +353,32 @@ class JujuEpc(vnf.VnfOnBoarding):
         flavor_creator.create()
         self.created_object.append(flavor_creator)
         self.__logger.info("Deploying Abot-epc bundle file ...")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
-               'juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
+        cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         self.__logger.info("Waiting for instances .....")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
+        try:
+            cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
+            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+            self.__logger.info("%s\n%s", " ".join(cmd), output)
+            self.__logger.info("Deployed Abot-epc on Openstack")
+        except subprocess.CalledProcessError as cpe:
+            self.__logger.error(
+                "Exception with Juju VNF Deployment: %s\n%s",
+                cpe.cmd, cpe.output)
+            return False
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Some issue with the VNF Deployment ..")
+            return False
+
+        self.__logger.info("Checking status of ABot and EPC units ...")
+        cmd = ['juju', 'status']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output)
-        self.__logger.info("Deployed Abot-epc on Openstack")
+        self.__logger.debug("%s\n%s", " ".join(cmd), output)
+        for app in ['abot-epc-basic', 'oai-epc', 'oai-hss']:
+            if not self.check_app(app):
+                return False
+
         nova_client = nova_utils.nova_client(self.snaps_creds)
         instances = get_instances(nova_client)
         self.__logger.info("List of Instance: %s", instances)
@@ -360,22 +394,18 @@ class JujuEpc(vnf.VnfOnBoarding):
         # This will add sctp rule to a common Security Group Created
         # by juju and shared to all deployed units.
         self._add_custom_rule(sec_group)
-        cmd = ['juju', 'status']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.debug("%s\n%s", " ".join(cmd), output)
-        for app in ['abot-epc-basic', 'oai-epc', 'oai-hss']:
-            if not self.check_app(app):
-                return False
-        self.__logger.info("Copying the feature files to Abot_node ")
+
+        self.__logger.info("Transferring the feature files to Abot_node ...")
         cmd = ['timeout', '-t', JujuEpc.juju_timeout,
                'juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        self.__logger.info("Copying the feature files in Abot_node ")
+
+        self.__logger.info("Copying the feature files within Abot_node ")
         cmd = ['timeout', '-t', JujuEpc.juju_timeout,
                'juju', 'ssh', 'abot-epc-basic/0',
-               'sudo', 'rsync', '-azvv', '~/featureFiles',
+               'sudo', 'cp', '-vfR', '~/featureFiles/*',
                '/etc/rebaca-test-suite/featureFiles']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
@@ -385,14 +415,15 @@ class JujuEpc(vnf.VnfOnBoarding):
         """Run test on ABoT."""
         start_time = time.time()
         self.__logger.info("Running VNF Test cases....")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
-               'juju', 'run-action', 'abot-epc-basic/0', 'run',
+        cmd = ['juju', 'run-action', 'abot-epc-basic/0', 'run',
                'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
+
         cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
+
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
         cmd = ['timeout', '-t', JujuEpc.juju_timeout,
@@ -429,8 +460,12 @@ class JujuEpc(vnf.VnfOnBoarding):
                        '--destroy-all-models']
                 output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
+        except subprocess.CalledProcessError as cpe:
+            self.__logger.error(
+                "Exception with Juju Cleanup: %s\n%s",
+                cpe.cmd, cpe.output)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Some issue during the undeployment ..")
+            self.__logger.exception("General issue during the undeployment ..")
 
         if not self.orchestrator['requirements']['preserve_setup']:
             self.__logger.info('Remove the Abot_epc OS object ..')
