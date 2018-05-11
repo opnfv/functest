@@ -27,8 +27,6 @@ from functest.utils import config
 from functest.utils import env
 from functest.utils import functest_utils
 
-from git import Repo
-
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.keypair import KeypairConfig
@@ -304,16 +302,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         descriptor = self.vnf['descriptor']
         self.deployment_name = descriptor.get('name')
 
-        vrouter_blueprint_dir = os.path.join(
-            self.data_dir, self.util.blueprint_dir)
-        if not os.path.exists(vrouter_blueprint_dir):
-            Repo.clone_from(
-                descriptor.get('url'), vrouter_blueprint_dir,
-                branch=descriptor.get('version'))
-
         cfy_client.blueprints.upload(
-            vrouter_blueprint_dir + self.util.blueprint_file_name,
-            descriptor.get('name'))
+            descriptor.get('file_name'), descriptor.get('name'))
 
         self.__logger.info("Get or create flavor for vrouter")
         flavor_settings = FlavorConfig(

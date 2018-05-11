@@ -250,6 +250,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         retry = 10
         while str(cfy_status) != 'running' and retry:
             try:
+                self.__logger.debug(
+                    "status %s", cfy_client.manager.get_status())
                 cfy_status = cfy_client.manager.get_status()['status']
                 self.__logger.info(
                     "The current manager status is %s", cfy_status)
@@ -286,6 +288,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             cmd = "sudo yum install -y gcc python-devel"
             self.run_blocking_ssh_command(
                 ssh, cmd, "Unable to install packages on manager")
+            self.run_blocking_ssh_command(ssh, 'cfy status')
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
@@ -304,10 +307,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         self.__logger.info("Upload VNFD")
         cfy_client = self.orchestrator['object']
         descriptor = self.vnf['descriptor']
-        cfy_client.blueprints.publish_archive(descriptor.get('url'),
-                                              descriptor.get('name'),
-                                              descriptor.get('file_name'))
-
+        cfy_client.blueprints.upload(
+            descriptor.get('file_name'), descriptor.get('name'))
         self.__logger.info("Get or create flavor for all clearwater vm")
         flavor_settings = FlavorConfig(
             name=self.vnf['requirements']['flavor']['name'],
