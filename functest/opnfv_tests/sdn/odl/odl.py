@@ -25,10 +25,10 @@ import os
 import re
 import sys
 
+import os_client_config
+import shade
 from six.moves import urllib
-from snaps.openstack.utils import keystone_utils
 
-from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
 from functest.utils import env
 from xtesting.core import robotframework
@@ -157,9 +157,13 @@ class ODLTests(robotframework.RobotFramework):
                 suites = kwargs["suites"]
             except KeyError:
                 pass
-            snaps_creds = snaps_utils.get_credentials()
-            kwargs = {'neutronurl': keystone_utils.get_endpoint(
-                snaps_creds, 'network')}
+            cloud = shade.OperatorCloud(
+                cloud_config=os_client_config.get_config())
+            neutron_id = cloud.search_services('neutron')[0].id
+            endpoint = cloud.search_endpoints(
+                filters={'interface': os.environ.get('OS_INTERFACE', 'public'),
+                         'service_id': neutron_id})[0].url
+            kwargs = {'neutronurl': endpoint}
             kwargs['odlip'] = env.get('SDN_CONTROLLER_IP')
             kwargs['odlwebport'] = '8080'
             kwargs['odlrestconfport'] = '8181'
