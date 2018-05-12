@@ -14,6 +14,7 @@ import os
 import unittest
 
 import mock
+import munch
 from robot.errors import RobotError
 import six
 from six.moves import urllib
@@ -33,6 +34,7 @@ class ODLTesting(unittest.TestCase):
 
     _keystone_ip = "127.0.0.1"
     _neutron_url = u"https://127.0.0.1:9696"
+    _neutron_id = u"dummy"
     _sdn_controller_ip = "127.0.0.3"
     _os_auth_url = "http://{}:5000/v3".format(_keystone_ip)
     _os_projectname = "admin"
@@ -44,6 +46,7 @@ class ODLTesting(unittest.TestCase):
     _odl_password = "admin"
     _os_userdomainname = 'Default'
     _os_projectdomainname = 'Default'
+    _os_interface = "public"
 
     def setUp(self):
         for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
@@ -56,6 +59,7 @@ class ODLTesting(unittest.TestCase):
         os.environ["OS_PROJECT_NAME"] = self._os_projectname
         os.environ["OS_PROJECT_DOMAIN_NAME"] = self._os_projectdomainname
         os.environ["OS_PASSWORD"] = self._os_password
+        os.environ["OS_INTERFACE"] = self._os_interface
         self.test = odl.ODLTests(case_name='odl', project_name='functest')
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
@@ -265,35 +269,109 @@ class ODLMainTesting(ODLTesting):
 
 
 class ODLRunTesting(ODLTesting):
-
     """The class testing ODLTests.run()."""
-    # pylint: disable=missing-docstring
+    # pylint: disable=too-many-public-methods,missing-docstring
 
-    @mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
-                return_value=ODLTesting._neutron_url)
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_credentials')
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud', side_effect=Exception)
+    def test_no_cloud(self, *args):
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].assert_called_once_with(cloud_config=mock.ANY)
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_service1(self, *args):
+        args[0].return_value.search_services.return_value = None
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_not_called()
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_service2(self, *args):
+        args[0].return_value.search_services.return_value = []
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_not_called()
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_service3(self, *args):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch()]
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_not_called()
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_endpoint1(self, *args):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
+        args[0].return_value.search_endpoints.return_value = None
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': self._os_interface,
+                     'service_id': self._neutron_id})
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_endpoint2(self, *args):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
+        args[0].return_value.search_endpoints.return_value = []
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': self._os_interface,
+                     'service_id': self._neutron_id})
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_no_endpoint3(self, *args):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
+        args[0].return_value.search_endpoints.return_value = [munch.Munch()]
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': self._os_interface,
+                     'service_id': self._neutron_id})
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
+    def test_endpoint_interface(self, *args):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
+        args[0].return_value.search_endpoints.return_value = [munch.Munch()]
+        self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': self._os_interface,
+                     'service_id': self._neutron_id})
+
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
     def _test_no_env_var(self, var, *args):
         del os.environ[var]
         self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
-        args[0].assert_called_once_with()
-        args[1].assert_called_once_with(mock.ANY, 'network')
+        args[0].assert_called_once_with(cloud_config=mock.ANY)
 
-    @mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
-                return_value=ODLTesting._neutron_url)
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_credentials')
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
     def _test_missing_value(self, *args):
         self.assertEqual(self.test.run(), testcase.TestCase.EX_RUN_ERROR)
-        args[0].assert_called_once_with()
-        args[1].assert_called_once_with(mock.ANY, 'network')
+        args[0].assert_called_once_with(cloud_config=mock.ANY)
 
-    @mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
-                return_value=ODLTesting._neutron_url)
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_credentials')
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
     def _test_run(self, status=testcase.TestCase.EX_OK,
                   exception=None, *args, **kwargs):
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
+        args[0].return_value.search_endpoints.return_value = [
+            munch.Munch(url=self._neutron_url)]
         odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
         odlwebport = kwargs['odlwebport'] if 'odlwebport' in kwargs else '8080'
         odlrestconfport = (kwargs['odlrestconfport']
@@ -312,15 +390,20 @@ class ODLRunTesting(ODLTesting):
             osusername=self._os_username,
             osprojectdomainname=self._os_projectdomainname,
             osuserdomainname=self._os_userdomainname)
-        args[0].assert_called_once_with()
-        args[1].assert_called_once_with(mock.ANY, 'network')
+        args[0].assert_called_once_with(cloud_config=mock.ANY)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': os.environ.get("OS_INTERFACE", "public"),
+                     'service_id': self._neutron_id})
 
-    @mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
-                return_value=ODLTesting._neutron_url)
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_utils.'
-                'get_credentials')
+    @mock.patch('os_client_config.get_config')
+    @mock.patch('shade.OperatorCloud')
     def _test_multiple_suites(self, suites,
                               status=testcase.TestCase.EX_OK, *args, **kwargs):
+        args[0].return_value.search_endpoints.return_value = [
+            munch.Munch(url=self._neutron_url)]
+        args[0].return_value.search_services.return_value = [
+            munch.Munch(id=self._neutron_id)]
         odlip = kwargs['odlip'] if 'odlip' in kwargs else '127.0.0.3'
         odlwebport = kwargs['odlwebport'] if 'odlwebport' in kwargs else '8080'
         odlrestconfport = (kwargs['odlrestconfport']
@@ -335,14 +418,19 @@ class ODLRunTesting(ODLTesting):
             osprojectname=self._os_projectname, osusername=self._os_username,
             osprojectdomainname=self._os_projectdomainname,
             osuserdomainname=self._os_userdomainname)
-        args[0].assert_called_once_with()
-        args[1].assert_called_once_with(mock.ANY, 'network')
+        args[0].assert_called_once_with(cloud_config=mock.ANY)
+        args[0].return_value.search_services.assert_called_once_with('neutron')
+        args[0].return_value.search_endpoints.assert_called_once_with(
+            filters={'interface': os.environ.get("OS_INTERFACE", "public"),
+                     'service_id': self._neutron_id})
 
-    def test_exc(self):
-        with mock.patch('snaps.openstack.utils.keystone_utils.get_endpoint',
+    @mock.patch('os_client_config.get_config')
+    def test_exc(self, *args):
+        with mock.patch('shade.OperatorCloud',
                         side_effect=Exception()):
             self.assertEqual(self.test.run(),
                              testcase.TestCase.EX_RUN_ERROR)
+            args[0].assert_called_once_with()
 
     def test_no_os_auth_url(self):
         self._test_no_env_var("OS_AUTH_URL")
@@ -374,6 +462,34 @@ class ODLRunTesting(ODLTesting):
         self._test_missing_value()
 
     def test_without_installer_type(self):
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run(testcase.TestCase.EX_OK, None,
+                       odlip=self._sdn_controller_ip,
+                       odlwebport=self._odl_webport)
+
+    def test_without_os_interface(self):
+        del os.environ["OS_INTERFACE"]
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run(testcase.TestCase.EX_OK, None,
+                       odlip=self._sdn_controller_ip,
+                       odlwebport=self._odl_webport)
+
+    def test_os_interface_public(self):
+        os.environ["OS_INTERFACE"] = "public"
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run(testcase.TestCase.EX_OK, None,
+                       odlip=self._sdn_controller_ip,
+                       odlwebport=self._odl_webport)
+
+    def test_os_interface_internal(self):
+        os.environ["OS_INTERFACE"] = "internal"
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run(testcase.TestCase.EX_OK, None,
+                       odlip=self._sdn_controller_ip,
+                       odlwebport=self._odl_webport)
+
+    def test_os_interface_admin(self):
+        os.environ["OS_INTERFACE"] = "admin"
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase.TestCase.EX_OK, None,
                        odlip=self._sdn_controller_ip,
