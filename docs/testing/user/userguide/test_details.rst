@@ -422,13 +422,41 @@ The vyos-vrouter architecture is described in `[14]`_
 
 juju_epc
 ^^^^^^^^
+The Evolved Packet Core (EPC) is the main component of the System Architecture
+Evolution (SAE) which forms the core of the 3GPP LTE specification.
 
+vEPC has been integrated in Functest to demonstrate the capability to deploy a
+complex mobility-specific NFV scenario on the OPNFV platform. The OAI EPC
+supports most of the essential functions defined by the 3GPP Technical Specs;
+hence the successful execution of functional tests on the OAI EPC provides a
+good endorsement of the underlying NFV platform.
+
+This integration also includes ABot, a Test Orchestration system that enables
+test scenarios to be defined in high-level DSL. ABot is also deployed as a
+VM on the OPNFV platform; and this provides an example of the automation
+driver and the Test VNF being both deployed as separate VNFs on the underlying
+OPNFV platform.
+
+The Workflow is as follows:
+ * Deploy Orchestrator
+    Deploy Juju controller using Bootstrap command.
+ * Deploy VNF
+    Deploy ABot orchestrator and OAI EPC as Juju charms.
+    Configuration of ABot and OAI EPC components is handled through
+    built-in Juju relations.
+ * Test VNF
+    Execution of ABot feature files triggered by Juju actions.
+    This executes a suite of LTE signalling tests on the OAI EPC.
+ * Reporting
+    ABot test results are parsed accordingly and pushed to Functest Db.
+
+Details of the ABot test orchestration tool may be found in `[15]`_
 
 Kubernetes (K8s)
 ----------------
 
 Kubernetes testing relies on sets of tests, which are part of the  Kubernetes
-source tree, such as the Kubernetes End-to-End (e2e) tests `[15]`_.
+source tree, such as the Kubernetes End-to-End (e2e) tests `[16]`_.
 
 The kubernetes testcases are distributed across various Tiers:
 
@@ -460,4 +488,5 @@ The kubernetes testcases are distributed across various Tiers:
 .. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
-.. _`[15]`: https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
+.. _`[15]`: https://www.rebaca.com/abot-test-orchestration-tool/
+.. _`[16]`: https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
