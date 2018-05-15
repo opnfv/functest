@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_be8895c7",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-15T07:52:12Z",
+      "side": 1,
+      "message": "Could you please remove the blank chars at the end.\nElse it cannot be merged.",
+      "revId": "119afbc72b109391516f8e2d89efa9e483971efb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_1ec1c9e4",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-15T07:52:12Z",
+      "side": 1,
+      "message": "I would say as a virtual machine instead of as a VNF, no?",
+      "revId": "119afbc72b109391516f8e2d89efa9e483971efb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_7eb60d8c",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-15T07:52:12Z",
+      "side": 1,
+      "message": "DB",
+      "revId": "119afbc72b109391516f8e2d89efa9e483971efb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
