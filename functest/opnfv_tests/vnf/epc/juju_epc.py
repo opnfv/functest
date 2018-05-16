@@ -137,7 +137,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                 name=name,
                 password=str(uuid.uuid4()),
                 project_name=self.tenant_name,
-                domain=self.snaps_creds.user_domain_name,
+                domain_name=self.snaps_creds.user_domain_name,
                 roles={'_member_': self.tenant_name}))
         user_creator.create()
         self.created_object.append(user_creator)
