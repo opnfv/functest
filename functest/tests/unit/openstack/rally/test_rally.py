@@ -90,15 +90,16 @@ class OSRallyTesting(unittest.TestCase):
                          None)
 
     def test_task_succeed_fail(self):
-        json_raw = json.dumps([None])
+        json_raw = json.dumps({})
         self.assertEqual(self.rally_base.task_succeed(json_raw),
                          False)
-        json_raw = json.dumps([{'result': [{'error': ['test_error']}]}])
+        json_raw = json.dumps({'tasks': [{'status': 'crashed'}]})
         self.assertEqual(self.rally_base.task_succeed(json_raw),
                          False)
 
     def test_task_succeed_success(self):
-        json_raw = json.dumps('')
+        json_raw = json.dumps({'tasks': [{'status': 'finished',
+                                          'pass_sla': True}]})
         self.assertEqual(self.rally_base.task_succeed(json_raw),
                          True)
 
@@ -219,8 +220,6 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_append_summary')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value=None)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_cmd_output', return_value='')
@@ -230,7 +229,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
     def test_run_task_taskid_missing(self, mock_logger_error, *args):
         # pylint: disable=unused-argument
-        self.rally_base._run_task('test_name')
+        with self.assertRaises(Exception):
+            self.rally_base._run_task('test_name')
         text = 'Failed to retrieve task_id, validating task...'
         mock_logger_error.assert_any_call(text)
 
@@ -241,8 +241,6 @@ class OSRallyTesting(unittest.TestCase):
                 'file_is_empty', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_build_task_args', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_append_summary')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value='1')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -255,13 +253,30 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.error')
-    def test_run_task_default(self, mock_logger_error, mock_logger_info,
-                              *args):
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                '_save_results')
+    def test_run_task_default(self, mock_save_res, *args):
         # pylint: disable=unused-argument
         self.rally_base._run_task('test_name')
-        text = 'Test scenario: "test_name" OK.\n'
-        mock_logger_info.assert_any_call(text)
-        mock_logger_error.assert_not_called()
+        mock_save_res.assert_called()
+
+    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'task_succeed', return_value=True)
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'get_cmd_output', return_value='')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
+                return_value=True)
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.debug')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                '_append_summary')
+    def test_save_results(self, mock_summary, *args):
+        # pylint: disable=unused-argument
+        self.rally_base._save_results('test_name', '1234')
+        mock_summary.assert_called()
 
     def test_prepare_env_testname_invalid(self):
         self.rally_base.TESTS = ['test1', 'test2']
@@ -341,14 +356,30 @@ class OSRallyTesting(unittest.TestCase):
         mock_prep_env.assert_called()
 
     def test_append_summary(self):
-        text = '[{"result":[{"error":[]},{"error":["err"]}],' \
-               '"full_duration": 17.312026}]'
+        text = '{"tasks": [{"subtasks": [{"workloads": [{"full_duration": ' \
+               '1.23,"data": [{"error": []}]}]},{"workloads": ' \
+               '[{"full_duration": 2.78, "data": [{"error": ["err"]}]}]}]}]}'
         self.rally_base._append_summary(text, "foo_test")
         self.assertEqual(self.rally_base.summary[0]['test_name'], "foo_test")
-        self.assertEqual(self.rally_base.summary[0]['overall_duration'],
-                         17.312026)
+        self.assertEqual(self.rally_base.summary[0]['overall_duration'], 4.01)
         self.assertEqual(self.rally_base.summary[0]['nb_tests'], 2)
         self.assertEqual(self.rally_base.summary[0]['nb_success'], 1)
+
+    def test_is_successful_false(self):
+        with mock.patch('__builtin__.super') as mock_super:
+            self.rally_base.summary = [{"task_status": True},
+                                       {"task_status": False}]
+            self.assertEqual(self.rally_base.is_successful(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
+            mock_super(rally.RallyBase, self).is_successful.assert_not_called()
+
+    def test_is_successful_true(self):
+        with mock.patch('__builtin__.super') as mock_super:
+            mock_super(rally.RallyBase, self).is_successful.return_value = 424
+            self.rally_base.summary = [{"task_status": True},
+                                       {"task_status": True}]
+            self.assertEqual(self.rally_base.is_successful(), 424)
+            mock_super(rally.RallyBase, self).is_successful.assert_called()
 
 
 if __name__ == "__main__":
