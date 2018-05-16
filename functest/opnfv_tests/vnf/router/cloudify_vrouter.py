@@ -324,7 +324,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                 name='cloudify_network_bug-{}'.format(self.uuid),
                 password=str(uuid.uuid4()),
                 project_name=self.tenant_name,
-                domain=self.snaps_creds.user_domain_name,
+                domain_name=self.snaps_creds.user_domain_name,
                 roles={'_member_': self.tenant_name}))
         user_creator.create()
         self.created_object.append(user_creator)

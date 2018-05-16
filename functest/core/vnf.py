@@ -83,7 +83,7 @@ class VnfOnBoarding(vnf.VnfOnBoarding):
                 ProjectConfig(
                     name=self.tenant_name,
                     description=self.tenant_description,
-                    domain=snaps_creds.project_domain_name
+                    domain_name=snaps_creds.project_domain_name
                 ))
             self.os_project.create()
             self.created_object.append(self.os_project)
