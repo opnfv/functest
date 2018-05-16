@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_0a6223d8",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-16T14:37:45Z",
+      "side": 1,
+      "message": "I don\u0027t like returning a modified input but here it seems safe and simple.",
+      "revId": "9fab471012b98a6a5f9afa926dad152dcc90c1e6",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
