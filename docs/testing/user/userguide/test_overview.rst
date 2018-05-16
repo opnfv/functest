@@ -147,8 +147,15 @@ validate the scenario for the release.
 |             |               | vyos       | vRouter testing                  |
 |             |               | \_vrouter  |                                  |
 |             |               +------------+----------------------------------+
-|             |               | juju_epc   | vEPC validation with Juju as VNF |
-|             |               |            | manager and ABoT as test executor|
+|             |               | juju_epc   | Validates deployment of a complex|
+|             |               |            | mobility VNF on OPNFV Platform.  |
+|             |               |            | Uses Juju for deploying the OAI  |
+|             |               |            | EPC  and ABot for defining test  |
+|             |               |            | scenarios using high-level DSL.  |
+|             |               |            | VNF tests reference 3GPP         |
+|             |               |            | Technical Specs and are executed |
+|             |               |            | through protocol drivers provided|
+|             |               |            | by ABot.                         |
 |             |               +------------+----------------------------------+
 |             |               | cloudify   | Based on cloudify_ims test case  |
 |             |               | \_ims_perf | cloudify_ims_perf substitutes    |
