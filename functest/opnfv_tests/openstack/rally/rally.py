@@ -151,14 +151,14 @@ class RallyBase(singlevm.VmReady1):
         :return: Bool
         """
         rally_report = json.loads(json_raw)
-        for report in rally_report:
-            if report is None or report.get('result') is None:
-                return False
-
-            for result in report.get('result'):
-                if result is None or result.get('error'):
+        tasks = rally_report.get('tasks')
+        if tasks:
+            for task in tasks:
+                if task.get('status') != 'finished' or \
+                   task.get('pass_sla') is not True:
                     return False
-
+        else:
+            return False
         return True
 
     def _migration_supported(self):
@@ -286,6 +286,52 @@ class RallyBase(singlevm.VmReady1):
 
         return True
 
+    def _save_results(self, test_name, task_id):
+        """ Generate and save task execution results"""
+        # check for result directory and create it otherwise
+        if not os.path.exists(self.RESULTS_DIR):
+            LOGGER.debug('%s does not exist, we create it.',
+                         self.RESULTS_DIR)
+            os.makedirs(self.RESULTS_DIR)
+
+        # put detailed result to log
+        cmd = (["rally", "task", "detailed", "--uuid", task_id])
+        LOGGER.debug('running command: %s', cmd)
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        json_detailed = self.get_cmd_output(proc)
+        LOGGER.info('%s', json_detailed)
+
+        # save report as JSON
+        cmd = (["rally", "task", "report", "--json", "--uuid", task_id])
+        LOGGER.debug('running command: %s', cmd)
+        with open(os.devnull, 'w') as devnull:
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+                                    stderr=devnull)
+        json_results = self.get_cmd_output(proc)
+        report_json_name = 'opnfv-{}.json'.format(test_name)
+        report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
+        with open(report_json_dir, 'w') as r_file:
+            LOGGER.debug('saving json file')
+            r_file.write(json_results)
+
+        # save report as HTML
+        report_html_name = 'opnfv-{}.html'.format(test_name)
+        report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
+        cmd = (["rally", "task", "report", "--html", "--uuid", task_id,
+                "--out", report_html_dir])
+        LOGGER.debug('running command: %s', cmd)
+        with open(os.devnull, 'w') as devnull:
+            subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=devnull)
+
+        self._append_summary(json_results, test_name)
+
+        # parse JSON operation result
+        if self.task_succeed(json_results):
+            LOGGER.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
+        else:
+            LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+
     def _run_task(self, test_name):
         """Run a task."""
         LOGGER.info('Starting test scenario "%s" ...', test_name)
@@ -321,47 +367,9 @@ class RallyBase(singlevm.VmReady1):
                                     stderr=subprocess.STDOUT)
             output = self.get_cmd_output(proc)
             LOGGER.error("Task validation result:" + "\n" + output)
-            return
+            raise Exception("Failed to retrieve task id")
 
-        # check for result directory and create it otherwise
-        if not os.path.exists(self.RESULTS_DIR):
-            LOGGER.debug('%s does not exist, we create it.',
-                         self.RESULTS_DIR)
-            os.makedirs(self.RESULTS_DIR)
-
-        # get and save rally operation JSON result
-        cmd = (["rally", "task", "detailed", task_id])
-        LOGGER.debug('running command: %s', cmd)
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        json_detailed = self.get_cmd_output(proc)
-        LOGGER.info('%s', json_detailed)
-
-        cmd = (["rally", "task", "results", task_id])
-        LOGGER.debug('running command: %s', cmd)
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        json_results = self.get_cmd_output(proc)
-        self._append_summary(json_results, test_name)
-        report_json_name = 'opnfv-{}.json'.format(test_name)
-        report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
-        with open(report_json_dir, 'w') as r_file:
-            LOGGER.debug('saving json file')
-            r_file.write(json_results)
-
-        # write html report file
-        report_html_name = 'opnfv-{}.html'.format(test_name)
-        report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
-        cmd = (["rally", "task", "report", task_id, "--out", report_html_dir])
-        LOGGER.debug('running command: %s', cmd)
-        subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
-
-        # parse JSON operation result
-        if self.task_succeed(json_results):
-            LOGGER.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
-        else:
-            LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+        self._save_results(test_name, task_id)
 
     def _append_summary(self, json_raw, test_name):
         """Update statistics summary info."""
@@ -370,20 +378,24 @@ class RallyBase(singlevm.VmReady1):
         overall_duration = 0.0
 
         rally_report = json.loads(json_raw)
-        for report in rally_report:
-            if report.get('full_duration'):
-                overall_duration += report.get('full_duration')
+        for task in rally_report.get('tasks'):
+            for subtask in task.get('subtasks'):
+                for workload in subtask.get('workloads'):
+                    if workload.get('full_duration'):
+                        overall_duration += workload.get('full_duration')
 
-            if report.get('result'):
-                for result in report.get('result'):
-                    nb_tests += 1
-                    if not result.get('error'):
-                        nb_success += 1
+                    if workload.get('data'):
+                        nb_tests += len(workload.get('data'))
+
+                    for result in workload.get('data'):
+                        if not result.get('error'):
+                            nb_success += 1
 
         scenario_summary = {'test_name': test_name,
                             'overall_duration': overall_duration,
                             'nb_tests': nb_tests,
-                            'nb_success': nb_success}
+                            'nb_success': nb_success,
+                            'task_status': self.task_succeed(json_raw)}
         self.summary.append(scenario_summary)
 
     def _prepare_env(self):
@@ -412,6 +424,7 @@ class RallyBase(singlevm.VmReady1):
         total_duration = 0.0
         total_nb_tests = 0
         total_nb_success = 0
+        nb_modules = 0
         payload = []
 
         res_table = prettytable.PrettyTable(
@@ -423,6 +436,8 @@ class RallyBase(singlevm.VmReady1):
 
         # for each scenario we draw a row for the table
         for item in self.summary:
+            if item['task_status'] is True:
+                nb_modules += 1
             total_duration += item['overall_duration']
             total_nb_tests += item['nb_tests']
             total_nb_success += item['nb_success']
@@ -453,8 +468,9 @@ class RallyBase(singlevm.VmReady1):
                            success_rate_str])
 
         LOGGER.info("Rally Summary Report:\n\n%s\n", res_table.get_string())
-        LOGGER.info("Rally '%s' success_rate is %s%%",
-                    self.case_name, success_rate)
+        LOGGER.info("Rally '%s' success_rate is %s%% in %s/%s modules",
+                    self.case_name, success_rate, nb_modules,
+                    len(self.summary))
         payload.append({'summary': {'duration': total_duration,
                                     'nb tests': total_nb_tests,
                                     'nb success': success_rate}})
@@ -465,6 +481,14 @@ class RallyBase(singlevm.VmReady1):
         super(RallyBase, self).clean()
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
+
+    def is_successful(self):
+        """The overall result of the test."""
+        for item in self.summary:
+            if item['task_status'] is False:
+                return testcase.TestCase.EX_TESTCASE_FAILED
+
+        return super(RallyBase, self).is_successful()
 
     @energy.enable_recording
     def run(self, **kwargs):
