@@ -316,8 +316,18 @@ class RallyBase(testcase.TestCase):
 
         return True
 
+    @staticmethod
+    def decode_as_json(raw):
+        """Decode string as valid JSON."""
+        try:
+            json.loads(raw)
+        except ValueError:
+            raw = "[]"
+        return raw
+
     def _run_task(self, test_name):
         """Run a task."""
+        # pylint: disable=too-many-locals
         LOGGER.info('Starting test scenario "%s" ...', test_name)
 
         task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
@@ -371,13 +381,14 @@ class RallyBase(testcase.TestCase):
         LOGGER.debug('running command: %s', cmd)
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
-        json_results = self.get_cmd_output(proc)
-        self._append_summary(json_results, test_name)
+        raw_results = self.get_cmd_output(proc)
+        json_raw_results = self.decode_as_json(raw_results)
+        self._append_summary(json_raw_results, test_name)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
         with open(report_json_dir, 'w') as r_file:
             LOGGER.debug('saving json file')
-            r_file.write(json_results)
+            r_file.write(json_raw_results)
 
         # write html report file
         report_html_name = 'opnfv-{}.html'.format(test_name)
@@ -388,7 +399,7 @@ class RallyBase(testcase.TestCase):
                          stderr=subprocess.STDOUT)
 
         # parse JSON operation result
-        if self.task_succeed(json_results):
+        if self.task_succeed(json_raw_results):
             LOGGER.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
         else:
             LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")

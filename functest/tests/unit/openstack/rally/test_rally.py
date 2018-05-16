@@ -482,6 +482,16 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.summary[0]['nb_tests'], 2)
         self.assertEqual(self.rally_base.summary[0]['nb_success'], 1)
 
+    def test_decode_as_json_valid(self):
+        text = '[{"result":[{"error":[]},{"error":["err"]}],' \
+               '"full_duration": 17.312026}]'
+        self.rally_base.decode_as_json(text)
+        self.assertEqual(self.rally_base.decode_as_json(text), text)
+
+    def test_decode_as_json_invalid(self):
+        text = 'foobar'
+        self.rally_base.decode_as_json(text)
+        self.assertEqual(self.rally_base.decode_as_json(text), '[]')
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
