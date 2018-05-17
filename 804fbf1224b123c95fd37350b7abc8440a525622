@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_d01f4a08",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2018-05-17T11:50:31Z",
+      "side": 1,
+      "message": "echo",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "804fbf1224b123c95fd37350b7abc8440a525622",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
