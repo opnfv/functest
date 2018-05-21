@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_d822cc00",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "we usually use \u0027Enea AB\u0027 or \u0027Enea Software AB\u0027",
+      "range": {
+        "startLine": 3,
+        "startChar": 21,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_b88380cb",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_test.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "extra line",
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_988844e9",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "license",
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_f86ce838",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "please run shellcheck on all sh files.\nfor example, using [[ ]] with sh is not always working ...",
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_d8692c27",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "this is very fragile",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 50
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_38777004",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "no need for \u0027;\u0027 unless you have more statements on the same line",
+      "range": {
+        "startLine": 6,
+        "startChar": 42,
+        "endLine": 6,
+        "endChar": 43
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_7860d835",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "I think this will only work if the sh is executed as root, since the writer uses `sudo something ~`.\nTo avoid any issues, I think it\u0027d be better to use absolute paths, e.g. /volume.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_187434fc",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "-n",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_58651c44",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "if mountpoint -q /volume; then\n(if you go with /volume, otherwise sudo mountpoint -q ~/volume)\n... or enable exit on any non-0 return code via `#!/bin/sh -e` and you can drop the check",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_b85a6081",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "misleading, this actually means it failed to mount the volume",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_985fa472",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2997
+      },
+      "writtenOn": "2018-05-21T17:36:42Z",
+      "side": 1,
+      "message": "since read_data and write_data share some code, I think they could be compacted into a single sh and pass different args to choose the action to perform",
+      "revId": "9934a17b63b27eda952534d9c5c6a20358f3ceee",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
