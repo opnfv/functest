@@ -9,7 +9,7 @@ orchestrator:
     version: '4.0'
     requirements:
         flavor:
-            name: m1.medium
+            name: cloudify.medium
             ram_min: 4096
         os_image: 'cloudify_manager_4.0'
 vnf:
@@ -21,7 +21,7 @@ vnf:
         version: '122'
     requirements:
         flavor:
-            name: m1.small
+            name: cloudify.small
             ram_min: 2048
         compute_quotas:
             cores: 50
@@ -32,7 +32,7 @@ vnf:
             port: 50
     inputs:
         image_id: 'ubuntu_14.04'
-        flavor_id: 'm1.small'
+        flavor_id: 'cloudify.small'
         agent_user: ubuntu
         key_pair_name: cloudify_ims_kp
         private_key_path: '/etc/cloudify/cloudify_ims.pem'
