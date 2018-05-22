@@ -12,6 +12,7 @@
 import logging
 import os
 import time
+import uuid
 
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
@@ -25,6 +26,7 @@ from snaps.config.network import NetworkConfig, PortConfig, SubnetConfig
 from snaps.config.router import RouterConfig
 from snaps.config.security_group import (
     Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
+from snaps.config.user import UserConfig
 from snaps.config.vm_inst import FloatingIpConfig, VmInstanceConfig
 from snaps.openstack.create_flavor import OpenStackFlavor
 from snaps.openstack.create_image import OpenStackImage
@@ -33,6 +35,7 @@ from snaps.openstack.create_keypairs import OpenStackKeypair
 from snaps.openstack.create_network import OpenStackNetwork
 from snaps.openstack.create_router import OpenStackRouter
 from snaps.openstack.create_security_group import OpenStackSecurityGroup
+from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.utils import keystone_utils
 from xtesting.energy import energy
 
@@ -112,19 +115,6 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         compute_quotas = self.os_project.update_compute_quotas(compute_quotas)
         network_quotas = self.os_project.update_network_quotas(network_quotas)
 
-        # needs some images
-        self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_file in self.images.iteritems():
-            self.__logger.info("image: %s, file: %s", image_name, image_file)
-            if image_file and image_name:
-                image_creator = OpenStackImage(
-                    self.snaps_creds,
-                    ImageConfig(
-                        name=image_name, image_user='cloud',
-                        img_format='qcow2', image_file=image_file))
-                image_creator.create()
-                self.created_object.append(image_creator)
-
     def deploy_orchestrator(self):
         # pylint: disable=too-many-locals,too-many-statements
         """
@@ -132,18 +122,56 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         network, security group, fip, VM creation
         """
-        # network creation
-
         start_time = time.time()
+
+        # orchestrator VM flavor
+        self.__logger.info("Get or create flavor for cloudify manager vm ...")
+        flavor_settings = FlavorConfig(
+            name=self.orchestrator['requirements']['flavor']['name'],
+            ram=self.orchestrator['requirements']['flavor']['ram_min'],
+            disk=50,
+            vcpus=2)
+        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
+        flavor_creator.create()
+        self.created_object.append(flavor_creator)
+
+        self.__logger.info("Creating a second user to bypass issues ...")
+        user_creator = OpenStackUser(
+            self.snaps_creds,
+            UserConfig(
+                name='cloudify_network_bug-{}'.format(self.uuid),
+                password=str(uuid.uuid4()),
+                project_name=self.tenant_name,
+                domain_name=self.snaps_creds.user_domain_name,
+                roles={'_member_': self.tenant_name}))
+        user_creator.create()
+        self.created_object.append(user_creator)
+        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+        self.__logger.debug("snaps creds: %s", snaps_creds)
+
         self.__logger.info("Creating keypair ...")
         kp_file = os.path.join(self.data_dir, "cloudify_ims.pem")
         keypair_settings = KeypairConfig(
             name='cloudify_ims_kp-{}'.format(self.uuid),
             private_filepath=kp_file)
-        keypair_creator = OpenStackKeypair(self.snaps_creds, keypair_settings)
+        keypair_creator = OpenStackKeypair(snaps_creds, keypair_settings)
         keypair_creator.create()
         self.created_object.append(keypair_creator)
 
+        # needs some images
+        self.__logger.info("Upload some OS images if it doesn't exist")
+        for image_name, image_file in self.images.iteritems():
+            self.__logger.info("image: %s, file: %s", image_name, image_file)
+            if image_file and image_name:
+                image_creator = OpenStackImage(
+                    snaps_creds,
+                    ImageConfig(
+                        name=image_name, image_user='cloud',
+                        img_format='qcow2', image_file=image_file))
+                image_creator.create()
+                self.created_object.append(image_creator)
+
+        # network creation
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
             name='cloudify_ims_subnet-{}'.format(self.uuid),
@@ -152,12 +180,12 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         network_settings = NetworkConfig(
             name='cloudify_ims_network-{}'.format(self.uuid),
             subnet_settings=[subnet_settings])
-        network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
+        network_creator = OpenStackNetwork(snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
-        ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
+        ext_net_name = snaps_utils.get_ext_net_name(snaps_creds)
         router_creator = OpenStackRouter(
-            self.snaps_creds,
+            snaps_creds,
             RouterConfig(
                 name='cloudify_ims_router-{}'.format(self.uuid),
                 external_gateway=ext_net_name,
@@ -178,36 +206,21 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                 sec_grp_name="sg-cloudify-manager-{}".format(self.uuid),
                 direction=Direction.ingress, protocol=Protocol.udp,
                 port_range_min=1, port_range_max=65535))
-
         security_group_creator = OpenStackSecurityGroup(
-            self.snaps_creds,
+            snaps_creds,
             SecurityGroupConfig(
                 name="sg-cloudify-manager-{}".format(self.uuid),
                 rule_settings=sg_rules))
-
         security_group_creator.create()
         self.created_object.append(security_group_creator)
 
-        # orchestrator VM flavor
-        self.__logger.info("Get or create flavor for cloudify manager vm ...")
-
-        flavor_settings = FlavorConfig(
-            name=self.orchestrator['requirements']['flavor']['name'],
-            ram=self.orchestrator['requirements']['flavor']['ram_min'],
-            disk=50,
-            vcpus=2)
-        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        flavor_creator.create()
-        self.created_object.append(flavor_creator)
         image_settings = ImageConfig(
             name=self.orchestrator['requirements']['os_image'],
             image_user='centos',
             exists=True)
-
         port_settings = PortConfig(
             name='cloudify_manager_port-{}'.format(self.uuid),
             network_name=network_settings.name)
-
         manager_settings = VmInstanceConfig(
             name='cloudify_manager-{}'.format(self.uuid),
             flavor=flavor_settings.name,
@@ -218,26 +231,23 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                 name='cloudify_manager_fip-{}'.format(self.uuid),
                 port_name=port_settings.name,
                 router_name=router_creator.router_settings.name)])
-
         manager_creator = OpenStackVmInstance(
-            self.snaps_creds, manager_settings, image_settings,
+            snaps_creds, manager_settings, image_settings,
             keypair_settings)
-
         self.__logger.info("Creating cloudify manager VM")
         manager_creator.create()
         self.created_object.append(manager_creator)
 
-        public_auth_url = keystone_utils.get_endpoint(
-            self.snaps_creds, 'identity')
+        public_auth_url = keystone_utils.get_endpoint(snaps_creds, 'identity')
 
         cfy_creds = dict(
-            keystone_username=self.snaps_creds.username,
-            keystone_password=self.snaps_creds.password,
-            keystone_tenant_name=self.snaps_creds.project_name,
+            keystone_username=snaps_creds.username,
+            keystone_password=snaps_creds.password,
+            keystone_tenant_name=snaps_creds.project_name,
             keystone_url=public_auth_url,
-            region=self.snaps_creds.region_name,
-            user_domain_name=self.snaps_creds.user_domain_name,
-            project_domain_name=self.snaps_creds.project_domain_name)
+            region=snaps_creds.region_name,
+            user_domain_name=snaps_creds.user_domain_name,
+            project_domain_name=snaps_creds.project_domain_name)
         self.__logger.info("Set creds for cloudify manager %s", cfy_creds)
 
         cfy_client = CloudifyClient(
@@ -277,8 +287,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         duration = time.time() - start_time
 
-        self.__logger.info("Put private keypair in manager")
         if manager_creator.vm_ssh_active(block=True):
+            self.__logger.info("Put private keypair in manager")
             ssh = manager_creator.ssh_client()
             scp = SCPClient(ssh.get_transport(), socket_timeout=15.0)
             scp.put(kp_file, '~/')
@@ -290,6 +300,9 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             self.run_blocking_ssh_command(
                 ssh, cmd, "Unable to install packages on manager")
             self.run_blocking_ssh_command(ssh, 'cfy status')
+        else:
+            self.__logger.error("Cannot connect to manager")
+            return False
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
