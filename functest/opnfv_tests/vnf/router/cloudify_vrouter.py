@@ -134,17 +134,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         super(CloudifyVrouter, self).prepare()
         self.__logger.info("Additional pre-configuration steps")
         self.util.set_credentials(self.snaps_creds)
-        self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_file in self.images.iteritems():
-            self.__logger.info("image: %s, file: %s", image_name, image_file)
-            if image_file and image_name:
-                image_creator = OpenStackImage(
-                    self.snaps_creds,
-                    ImageConfig(
-                        name=image_name, image_user='cloud',
-                        img_format='qcow2', image_file=image_file))
-                image_creator.create()
-                self.created_object.append(image_creator)
 
     def deploy_orchestrator(self):
         # pylint: disable=too-many-locals,too-many-statements
@@ -154,14 +143,53 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         """
         # network creation
         start_time = time.time()
+
+        # orchestrator VM flavor
+        self.__logger.info("Get or create flavor for cloudify manager vm ...")
+        flavor_settings = FlavorConfig(
+            name="{}-{}".format(
+                self.orchestrator['requirements']['flavor']['name'],
+                self.uuid),
+            ram=self.orchestrator['requirements']['flavor']['ram_min'],
+            disk=50, vcpus=2)
+        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
+        flavor_creator.create()
+        self.created_object.append(flavor_creator)
+
+        user_creator = OpenStackUser(
+            self.snaps_creds,
+            UserConfig(
+                name='cloudify_network_bug-{}'.format(self.uuid),
+                password=str(uuid.uuid4()),
+                project_name=self.tenant_name,
+                domain_name=self.snaps_creds.user_domain_name,
+                roles={'_member_': self.tenant_name}))
+        user_creator.create()
+        self.created_object.append(user_creator)
+
+        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
+        self.__logger.debug("snaps creds: %s", snaps_creds)
+
         self.__logger.info("Creating keypair ...")
         kp_file = os.path.join(self.data_dir, "cloudify_vrouter.pem")
         keypair_settings = KeypairConfig(
             name='cloudify_vrouter_kp-{}'.format(self.uuid),
             private_filepath=kp_file)
-        keypair_creator = OpenStackKeypair(self.snaps_creds, keypair_settings)
+        keypair_creator = OpenStackKeypair(snaps_creds, keypair_settings)
         keypair_creator.create()
         self.created_object.append(keypair_creator)
+
+        self.__logger.info("Upload some OS images if it doesn't exist")
+        for image_name, image_file in self.images.iteritems():
+            self.__logger.info("image: %s, file: %s", image_name, image_file)
+            if image_file and image_name:
+                image_creator = OpenStackImage(
+                    snaps_creds,
+                    ImageConfig(
+                        name=image_name, image_user='cloud',
+                        img_format='qcow2', image_file=image_file))
+                image_creator.create()
+                self.created_object.append(image_creator)
 
         self.__logger.info("Creating full network ...")
         subnet_settings = SubnetConfig(
@@ -171,12 +199,12 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         network_settings = NetworkConfig(
             name='cloudify_vrouter_network-{}'.format(self.uuid),
             subnet_settings=[subnet_settings])
-        network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
+        network_creator = OpenStackNetwork(snaps_creds, network_settings)
         network_creator.create()
         self.created_object.append(network_creator)
-        ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
+        ext_net_name = snaps_utils.get_ext_net_name(snaps_creds)
         router_creator = OpenStackRouter(
-            self.snaps_creds,
+            snaps_creds,
             RouterConfig(
                 name='cloudify_vrouter_router-{}'.format(self.uuid),
                 external_gateway=ext_net_name,
@@ -199,34 +227,20 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                 direction=Direction.ingress,
                 protocol=Protocol.udp, port_range_min=1,
                 port_range_max=65535))
-
         security_group_creator = OpenStackSecurityGroup(
-            self.snaps_creds,
+            snaps_creds,
             SecurityGroupConfig(
                 name="sg-cloudify-manager-{}".format(self.uuid),
                 rule_settings=sg_rules))
-
         security_group_creator.create()
         self.created_object.append(security_group_creator)
 
-        # orchestrator VM flavor
-        self.__logger.info("Get or create flavor for cloudify manager vm ...")
-
-        flavor_settings = FlavorConfig(
-            name=self.orchestrator['requirements']['flavor']['name'],
-            ram=self.orchestrator['requirements']['flavor']['ram_min'],
-            disk=50, vcpus=2)
-        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        flavor_creator.create()
-        self.created_object.append(flavor_creator)
         image_settings = ImageConfig(
             name=self.orchestrator['requirements']['os_image'],
             image_user='centos', exists=True)
-
         port_settings = PortConfig(
             name='cloudify_manager_port-{}'.format(self.uuid),
             network_name=network_settings.name)
-
         manager_settings = VmInstanceConfig(
             name='cloudify_manager-{}'.format(self.uuid),
             flavor=flavor_settings.name,
@@ -237,9 +251,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                 name='cloudify_manager_fip-{}'.format(self.uuid),
                 port_name=port_settings.name,
                 router_name=router_creator.router_settings.name)])
-
         manager_creator = OpenStackVmInstance(
-            self.snaps_creds, manager_settings, image_settings,
+            snaps_creds, manager_settings, image_settings,
             keypair_settings)
 
         self.__logger.info("Creating cloudify manager VM")
@@ -255,23 +268,23 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.cfy_manager_ip = manager_creator.get_floating_ip().ip
 
         self.__logger.info("Attemps running status of the Manager")
-        cfy_status = None
-        retry = 10
-        while str(cfy_status) != 'running' and retry:
+        for loop in range(10):
             try:
+                self.__logger.debug(
+                    "status %s", cfy_client.manager.get_status())
                 cfy_status = cfy_client.manager.get_status()['status']
                 self.__logger.info(
                     "The current manager status is %s", cfy_status)
+                if str(cfy_status) != 'running':
+                    raise Exception("Cloudify Manager isn't up and running")
+                break
             except Exception:  # pylint: disable=broad-except
-                self.__logger.info(
-                    "Cloudify Manager isn't up and running. Retrying ...")
-            retry = retry - 1
-            time.sleep(30)
-
-        if str(cfy_status) == 'running':
-            self.__logger.info("Cloudify Manager is up and running")
+                self.logger.info(
+                    "try %s: Cloudify Manager isn't up and running", loop + 1)
+                time.sleep(30)
         else:
-            raise Exception("Cloudify Manager isn't up and running")
+            self.logger.error("Cloudify Manager isn't up and running")
+            return False
 
         duration = time.time() - start_time
 
@@ -287,27 +300,17 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             cmd = "sudo yum install -y gcc python-devel"
             self.run_blocking_ssh_command(
                 ssh, cmd, "Unable to install packages on manager")
+        else:
+            self.__logger.error("Cannot connect to manager")
+            return False
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
-        self.vnf['inputs'].update(dict(external_network_name=ext_net_name))
-
-        return True
-
-    def deploy_vnf(self):
-        start_time = time.time()
-
-        self.__logger.info("Upload VNFD")
-        cfy_client = self.orchestrator['object']
-        descriptor = self.vnf['descriptor']
-        self.deployment_name = descriptor.get('name')
-
-        cfy_client.blueprints.upload(
-            descriptor.get('file_name'), descriptor.get('name'))
-
         self.__logger.info("Get or create flavor for vrouter")
         flavor_settings = FlavorConfig(
-            name=self.vnf['requirements']['flavor']['name'],
+            name="{}-{}".format(
+                self.vnf['requirements']['flavor']['name'],
+                self.uuid),
             ram=self.vnf['requirements']['flavor']['ram_min'],
             disk=25, vcpus=1)
         flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
@@ -315,22 +318,9 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.created_object.append(flavor_creator)
 
         # set image name
-        glance = glance_utils.glance_client(self.snaps_creds)
+        glance = glance_utils.glance_client(snaps_creds)
         image = glance_utils.get_image(glance, "vyos1.1.7")
-
-        user_creator = OpenStackUser(
-            self.snaps_creds,
-            UserConfig(
-                name='cloudify_network_bug-{}'.format(self.uuid),
-                password=str(uuid.uuid4()),
-                project_name=self.tenant_name,
-                domain_name=self.snaps_creds.user_domain_name,
-                roles={'_member_': self.tenant_name}))
-        user_creator.create()
-        self.created_object.append(user_creator)
-        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
-        self.__logger.debug("snaps creds: %s", snaps_creds)
-
+        self.vnf['inputs'].update(dict(external_network_name=ext_net_name))
         self.vnf['inputs'].update(dict(target_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(reference_vnf_image_id=image.id))
         self.vnf['inputs'].update(dict(target_vnf_flavor_id=flavor.id))
@@ -350,6 +340,24 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.vnf['inputs'].update(dict(
             keystone_url=keystone_utils.get_endpoint(
                 snaps_creds, 'identity')))
+
+        credentials = {"snaps_creds": snaps_creds}
+        self.util_info = {"credentials": credentials,
+                          "cfy": cfy_client,
+                          "vnf_data_dir": self.util.vnf_data_dir}
+
+        return True
+
+    def deploy_vnf(self):
+        start_time = time.time()
+
+        self.__logger.info("Upload VNFD")
+        cfy_client = self.orchestrator['object']
+        descriptor = self.vnf['descriptor']
+        self.deployment_name = descriptor.get('name')
+
+        cfy_client.blueprints.upload(
+            descriptor.get('file_name'), descriptor.get('name'))
 
         self.__logger.info("Create VNF Instance")
         cfy_client.deployments.create(
@@ -378,19 +386,9 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         return result
 
     def test_vnf(self):
-        cfy_client = self.orchestrator['object']
-        credentials = {"snaps_creds": self.snaps_creds}
-
-        self.util_info = {"credentials": credentials,
-                          "cfy": cfy_client,
-                          "vnf_data_dir": self.util.vnf_data_dir}
-
         start_time = time.time()
-
         result, test_result_data = super(CloudifyVrouter, self).test_vnf()
-
         duration = time.time() - start_time
-
         if result:
             self.details['test_vnf'].update(
                 status='PASS', result='OK', full_result=test_result_data,
@@ -399,7 +397,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
             self.details['test_vnf'].update(
                 status='FAIL', result='NG', full_result=test_result_data,
                 duration=duration)
-
         return True
 
     def clean(self):
@@ -451,7 +448,7 @@ def wait_for_execution(client, execution, logger, timeout=7200, ):
     while True:
         event_list = client.events.list(
             execution_id=execution.id, _offset=offset, _size=batch_size,
-            include_logs=False, sort='@timestamp').items
+            include_logs=True, sort='@timestamp').items
 
         offset = offset + len(event_list)
         for event in event_list:
