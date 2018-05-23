@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_50b9702d",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "second time is useless (logging)",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_30b6643e",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "I think we could keep one config section for vping, cinder and tempest but it can be updated in another patch.",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_d07c6075",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "execute()",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_9082d850",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "I would remove the falsy _",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_70874c62",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_b081d44c",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_test.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-23T22:55:53Z",
+      "side": 1,
+      "message": "wrong import order (we try to follow OpenStack rules).",
+      "revId": "3882c5c4d4742d48301398bb2bd057ce4d64242e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
