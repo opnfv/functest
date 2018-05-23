@@ -11,7 +11,7 @@ orchestrator:
     version: '4.0'
     requirements:
         flavor:
-            name: m1.medium
+            name: cloudify.medium
             ram_min: 4096
         os_image: 'cloudify_manager_4.0'
 vnf:
@@ -24,7 +24,7 @@ vnf:
         version: fraser
     requirements:
         flavor:
-            name: m1.medium
+            name: cloudify.medium
             ram_min: 2048
     inputs:
         external_network_name: admin_floating_net
