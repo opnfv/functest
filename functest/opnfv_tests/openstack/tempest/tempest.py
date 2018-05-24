@@ -432,9 +432,10 @@ class TempestResourcesManager(object):
     def _create_image(self, name):
         """Create image for tests"""
         LOGGER.info("Creating image with name: '%s'", name)
+        meta = getattr(config.CONF, 'openstack_extra_properties', None)
         image = self.cloud.create_image(
             name, filename=getattr(config.CONF, 'openstack_image_url'),
-            is_public=True)
+            is_public=True, meta=meta)
         LOGGER.debug("image: %s", image)
         return image
 
