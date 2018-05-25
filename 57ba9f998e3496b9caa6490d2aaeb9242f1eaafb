@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a494da4_362c9cab",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6819
+      },
+      "writtenOn": "2018-05-25T12:00:24Z",
+      "side": 1,
+      "message": "lsblk can also output a particular column:\nlsblk -l -o NAME | grep -o \"vdc\\|sdc\\b\"",
+      "parentUuid": "1a494da4_53fcda3e",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "57ba9f998e3496b9caa6490d2aaeb9242f1eaafb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a494da4_73659644",
         "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
         "patchSetId": 14
