@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_215f3810",
+        "filename": "functest/ci/logging.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-25T13:09:38Z",
+      "side": 1,
+      "message": "1 logger is enough here. We are forced to split in Functest because key classes are allowed to print info in console",
+      "revId": "bad0e48b44e47822ac9216f00448ed9ccf3bd298",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
