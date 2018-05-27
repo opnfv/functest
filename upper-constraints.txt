@@ -1,5 +1,5 @@
 git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
-git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
+git+https://gerrit.opnfv.org/gerrit/snaps@d3be4ce4c62700ec6a84abb160d9f59e7a5c4b0d#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
