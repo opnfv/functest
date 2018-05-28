@@ -119,7 +119,7 @@ class VPingSSH(vping_base.VPingBase):
         self.logger.debug("ssh: %s", self.ssh)
         (_, stdout, _) = self.ssh.exec_command(
             'ping -c 1 ' + self.vm1.private_v4)
-        self.logger.debug("ping output: %s", stdout)
+        self.logger.debug("ping output:\n%s", stdout.read())
         return stdout.channel.recv_exit_status()
 
     def clean(self):
