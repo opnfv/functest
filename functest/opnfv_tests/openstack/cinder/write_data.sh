@@ -8,14 +8,18 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-VOL_DEV_NAME="$(lsblk -l | grep -Po '^[vs]dc\W')"
+VOL_DEV_NAME="$(lsblk -l -o NAME | grep -o "vdc\|sdc\b")"
+echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 
-if [ -n $VOL_DEV_NAME ]; then
-    sudo mkdir -p /home/cirros/volume
+if [ ! -z $VOL_DEV_NAME ]; then
+    sudo mkdir -p ./volume
     sudo /usr/sbin/mkfs.ext4 -F /dev/$VOL_DEV_NAME
-    sudo mount /dev/$VOL_DEV_NAME /home/cirros/volume
-    sudo touch /home/cirros/volume/new_data
-    echo "New data added to the volume!"
+    sudo mount /dev/$VOL_DEV_NAME ./volume/
+    sudo touch ./volume/new_data
+    if [ -f ./volume/new_data ]; then
+        echo "New data added to the volume!"
+        sudo umount ./volume/
+    fi
 else
     echo "Failed to write data!"
     exit 1

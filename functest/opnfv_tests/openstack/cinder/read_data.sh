@@ -8,14 +8,16 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-VOL_DEV_NAME="$(lsblk -l | grep -Po '^[vs]dc\W')"
+VOL_DEV_NAME="$(lsblk -l -o NAME | grep -o "vdc\|sdc\b")"
+echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 
-if [ -n "$VOL_DEV_NAME" ]; then
-    sudo mount /dev/$VOL_DEV_NAME /home/cirros/volume;
-    if [ -f /home/cirros/volume/new_data ]; then
-        echo "Found existing data!";
+if [ ! -z $VOL_DEV_NAME ]; then
+    sudo mkdir -p ./volume
+    sudo mount /dev/$VOL_DEV_NAME ./volume
+    if [ -f ./volume/new_data ]; then
+        echo "Found new data!"
     else
-        echo "No data found on the volume!";
-        exit 1
+        echo "Failed to find data!"
+    exit 1
     fi
 fi
