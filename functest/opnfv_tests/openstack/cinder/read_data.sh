@@ -11,8 +11,9 @@
 VOL_DEV_NAME="$(lsblk -l | grep -Po '^[vs]dc\W')"
 
 if [ -n "$VOL_DEV_NAME" ]; then
-    sudo mount /dev/$VOL_DEV_NAME /home/cirros/volume;
-    if [ -f /home/cirros/volume/new_data ]; then
+    sudo mkdir ~/volume
+    sudo mount /dev/$VOL_DEV_NAME ~/volume;
+    if [ -f ~/volume/new_data ]; then
         echo "Found existing data!";
     else
         echo "No data found on the volume!";
