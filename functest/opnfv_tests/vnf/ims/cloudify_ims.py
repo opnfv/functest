@@ -296,7 +296,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             self.run_blocking_ssh_command(ssh, cmd)
             cmd = "sudo chmod 444 /etc/cloudify/cloudify_ims.pem"
             self.run_blocking_ssh_command(ssh, cmd)
-            cmd = "sudo yum install -y gcc python-devel"
+            # cmd2 is badly unpinned by Cloudify
+            cmd = "sudo yum install -y gcc python-devel python-cmd2"
             self.run_blocking_ssh_command(
                 ssh, cmd, "Unable to install packages on manager")
             self.run_blocking_ssh_command(ssh, 'cfy status')
