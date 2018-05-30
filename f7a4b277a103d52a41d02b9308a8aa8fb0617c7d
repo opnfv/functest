@@ -51,6 +51,24 @@
       "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_99315ca5",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-30T09:12:58Z",
+      "side": 1,
+      "message": "It can saved in a variable. I don\u0027t see the point.",
+      "parentUuid": "1a494da4_f95860fc",
+      "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
