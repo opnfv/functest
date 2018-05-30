@@ -114,7 +114,7 @@ class VPingSSH(vping_base.VPingBase):
                 time.sleep(10)
         else:
             self.logger.error("cannot connect to %s", self.vm2.public_v4)
-            return False
+            return testcase.TestCase.EX_RUN_ERROR
 
         self.logger.debug("ssh: %s", self.ssh)
         (_, stdout, _) = self.ssh.exec_command(
