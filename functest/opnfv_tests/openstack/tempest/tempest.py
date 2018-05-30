@@ -213,7 +213,7 @@ class TempestCommon(testcase.TestCase):
                     return
 
             with open(os.path.join(self.res_dir,
-                                   "tempest.log"), 'r') as logfile:
+                                   "tempest-error.log"), 'r') as logfile:
                 output = logfile.read()
 
             success_testcases = []
