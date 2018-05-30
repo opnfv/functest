@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_f98220ff",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-30T11:30:10Z",
+      "side": 1,
+      "message": "DEST\u003d$(mktemp -d)",
+      "revId": "ed3f719d79ec63e94ccdb6e478ec3ce6da6fecad",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
