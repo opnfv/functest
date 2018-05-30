@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_b9e9b81c",
+        "filename": "functest/opnfv_tests/openstack/cinder/read_data.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-30T08:23:51Z",
+      "side": 1,
+      "message": "mktemp instead?\nhttps://www.gnu.org/software/autogen/mktemp.html",
+      "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_99ee7c21",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-05-30T08:23:51Z",
+      "side": 1,
+      "message": "https://www.gnu.org/software/autogen/mktemp.html",
+      "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
