@@ -33,6 +33,24 @@
       "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_f95860fc",
+        "filename": "functest/opnfv_tests/openstack/cinder/write_data.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2018-05-30T09:08:43Z",
+      "side": 1,
+      "message": "mktemp forces a XXX to the end of file/directory name. I can only use mktemp to create the directory ( case I want persistent file). The XXX will generate 3 random characters, so my dir will have a different name ( any last three characters). I can use the solution provided, but I think it will just complicate things...",
+      "parentUuid": "1a494da4_99ee7c21",
+      "revId": "f7a4b277a103d52a41d02b9308a8aa8fb0617c7d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
