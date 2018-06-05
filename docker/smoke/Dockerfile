@@ -7,11 +7,13 @@ ARG RALLY_TAG=0.11.2
 ARG OS_FAULTS_TAG=0.1.17
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.3.0
+ARG VMTP_TAG=2.4.7
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN apk --no-cache add --virtual .build-deps --update \
+RUN apk --no-cache add --update libxml2 libxslt && \
+    apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
@@ -27,6 +29,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     git clone https://github.com/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git checkout $PATROLE_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
+    git clone https://github.com/openstack/vmtp.git /src/vmtp && \
+    (cd /src/vmtp && git checkout $VMTP_TAG) && \
+    update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     git clone --depth 1 https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
     git clone --depth 1 https://github.com/openstack/rally-openstack.git /src/rally-openstack && \
@@ -36,12 +41,12 @@ RUN apk --no-cache add --virtual .build-deps --update \
         tempest /src/rally-openstack /src/os-faults && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        /src/rally /src/patrole /src/neutron-tempest-plugin -rthirdparty-requirements.txt && \
+        /src/rally /src/patrole /src/vmtp /src/neutron-tempest-plugin -rthirdparty-requirements.txt && \
     git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
     (cd /src/odl_test && git checkout $ODL_TAG) && \
     virtualenv --system-site-packages /src/tempest/.venv && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/odl_test/.git \
-        /src/os-faults /src/rally /src/rally-openstack /src/neutron-tempest-plugin && \
+        /src/os-faults /src/rally /src/rally-openstack /src/neutron-tempest-plugin /src/vmtp && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
