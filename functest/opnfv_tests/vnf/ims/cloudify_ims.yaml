@@ -38,7 +38,7 @@ vnf:
         private_key_path: '/etc/cloudify/cloudify_ims.pem'
         external_network_name: ''
         public_domain: clearwater.opnfv
-        release: repo129
+        release: repo122
         bono_cluster_size: 1
         sprout_cluster_size: 1
         vellum_cluster_size: 1
