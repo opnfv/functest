@@ -159,6 +159,10 @@ rally:
     flavor_name: rally-tiny
     flavor_alt_name: rally-mini
 
+vmtp:
+    image:
+        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+
 vnf:
     juju_epc:
         config: juju_epc.yaml
