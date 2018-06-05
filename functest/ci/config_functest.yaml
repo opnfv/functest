@@ -152,6 +152,10 @@ rally:
     deployment_name: opnfv-rally
     network_name: rally-net
 
+vmtp:
+    image:
+        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+
 vnf:
     juju_epc:
         config: juju_epc.yaml
