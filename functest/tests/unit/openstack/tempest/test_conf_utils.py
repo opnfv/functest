@@ -139,7 +139,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.patch('__builtin__.open', mock.mock_open()), \
             mock.patch('functest.utils.functest_utils.yaml.safe_load',
                        return_value={'validation': {'ssh_timeout': 300}}):
-            os.environ['OS_ENDPOINT_TYPE'] = ''
+            os.environ['OS_INTERFACE'] = ''
             if not alt:
                 conf_utils.configure_tempest_update_params(
                     'test_conf_file', image_id=image_id,
