@@ -54,6 +54,10 @@ fdio:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
+    vmtp:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 2048
     shaker:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
@@ -127,6 +131,10 @@ ovs:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
+    vmtp:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 2048
     shaker:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
