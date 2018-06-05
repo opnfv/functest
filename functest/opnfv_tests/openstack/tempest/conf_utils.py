@@ -220,20 +220,19 @@ def configure_tempest_update_params(
     rconfig.set('object-storage', 'operator_role',
                 getattr(config.CONF, 'tempest_object_storage_operator_role'))
 
-    if os.environ.get('OS_ENDPOINT_TYPE') is not None:
-        rconfig.set('identity', 'v3_endpoint_type',
-                    os.environ.get('OS_ENDPOINT_TYPE'))
+    rconfig.set(
+        'identity', 'v3_endpoint_type',
+        os.environ.get('OS_INTERFACE', 'public'))
 
-    if os.environ.get('OS_ENDPOINT_TYPE') is not None:
-        sections = rconfig.sections()
-        services_list = [
-            'compute', 'volume', 'image', 'network', 'data-processing',
-            'object-storage', 'orchestration']
-        for service in services_list:
-            if service not in sections:
-                rconfig.add_section(service)
-            rconfig.set(service, 'endpoint_type',
-                        os.environ.get('OS_ENDPOINT_TYPE'))
+    sections = rconfig.sections()
+    services_list = [
+        'compute', 'volume', 'image', 'network', 'data-processing',
+        'object-storage', 'orchestration']
+    for service in services_list:
+        if service not in sections:
+            rconfig.add_section(service)
+        rconfig.set(
+            service, 'endpoint_type', os.environ.get('OS_INTERFACE', 'public'))
 
     LOGGER.debug('Add/Update required params defined in tempest_conf.yaml '
                  'into tempest.conf file')
