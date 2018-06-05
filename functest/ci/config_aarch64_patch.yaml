@@ -94,6 +94,15 @@ os:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
+    vmtp:
+        image:
+            /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
+        extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
     shaker:
         image: /home/opnfv/functest/images/shaker-image-arm64.qcow2
         extra_properties:

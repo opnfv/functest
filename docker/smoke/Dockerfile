@@ -4,10 +4,12 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.3.0
+ARG VMTP_TAG=refs/changes/14/580914/4
 
-RUN apk --no-cache add --virtual .build-deps --update \
+RUN apk --no-cache add --update libxml2 libxslt && \
+    apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
@@ -16,15 +18,18 @@ RUN apk --no-cache add --virtual .build-deps --update \
     git clone https://github.com/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git checkout $PATROLE_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
+    git clone https://github.com/openstack/vmtp.git /src/vmtp && \
+    (cd /src/vmtp && git fetch origin $VMTP_TAG && git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     git clone --depth 1 https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
     git clone --depth 1 https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
+        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
     virtualenv --system-site-packages /src/tempest/.venv && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
+        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
