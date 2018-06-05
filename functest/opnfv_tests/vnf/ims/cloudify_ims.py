@@ -403,7 +403,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             self.details['test_vnf'].update(status='FAIL')
             return False
 
-        return True
+        return True if vnf_test_rate > 0 else False
 
     def clean(self):
         """Clean created objects/functions."""
