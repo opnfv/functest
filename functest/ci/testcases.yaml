@@ -303,6 +303,23 @@ tiers:
                             - 'test_networks_multiprovider_rbac'
 
             -
+                case_name: vmtp
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    VMTP is a small python application that will automatically
+                    perform ping connectivity, round trip time measurement
+                    (latency) and TCP/UDP throughput
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module:
+                        'functest.opnfv_tests.openstack.vmtp.vmtp'
+                    class: 'Vmtp'
+
+            -
                 case_name: shaker
                 project_name: functest
                 criteria: 100
