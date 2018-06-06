@@ -9,6 +9,8 @@
 
 """CloudifyIms testcase implementation."""
 
+from __future__ import division
+
 import logging
 import os
 import time
