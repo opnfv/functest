@@ -44,7 +44,8 @@ class SnapsTestRunner(unit.Suite):
         self.use_keystone = (
             getattr(config.CONF, 'snaps_use_keystone') == 'True')
 
-        self.flavor_metadata = getattr(config.CONF, 'flavor_extra_specs', None)
+        self.flavor_metadata = getattr(config.CONF, 'snaps_flavor_extra_specs',
+                                       None)
         self.logger.info("Using flavor metadata '%s'", self.flavor_metadata)
 
         self.image_metadata = None
