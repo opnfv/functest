@@ -44,6 +44,7 @@ general:
 snaps:
     use_keystone: 'True'
     use_floating_ips: 'True'
+    flavor_extra_specs: {}
     images:
         glance_tests:
             disk_file: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img
