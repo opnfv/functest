@@ -176,7 +176,7 @@ class HealthCheckTesting(unittest.TestCase):
             testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            mock.ANY, ext_net_name='foo', flavor_metadata=None,
+            mock.ANY, ext_net_name='foo', flavor_metadata=mock.ANY,
             image_metadata=mock.ANY, netconf_override=None,
             os_creds=self.os_creds, use_keystone=True)
 
@@ -194,7 +194,7 @@ class HealthCheckTesting(unittest.TestCase):
             self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            mock.ANY, ext_net_name='foo', flavor_metadata=None,
+            mock.ANY, ext_net_name='foo', flavor_metadata=mock.ANY,
             image_metadata=mock.ANY, netconf_override=None,
             os_creds=self.os_creds, use_keystone=True)
 
@@ -212,7 +212,7 @@ class HealthCheckTesting(unittest.TestCase):
             testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            mock.ANY, ext_net_name='foo', flavor_metadata=None,
+            mock.ANY, ext_net_name='foo', flavor_metadata=mock.ANY,
             image_metadata=mock.ANY, netconf_override=None,
             os_creds=self.os_creds, use_keystone=True)
 
@@ -243,9 +243,10 @@ class SmokeTesting(unittest.TestCase):
         self.assertEquals(testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,
-            netconf_override=None, os_creds=self.os_creds,
-            suite=mock.ANY, use_floating_ips=True, use_keystone=True)
+            ext_net_name='foo', flavor_metadata=mock.ANY,
+            image_metadata=mock.ANY, netconf_override=None,
+            os_creds=self.os_creds, suite=mock.ANY, use_floating_ips=True,
+            use_keystone=True)
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
@@ -260,9 +261,10 @@ class SmokeTesting(unittest.TestCase):
             testcase.TestCase.EX_TESTCASE_FAILED, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,
-            netconf_override=mock.ANY, os_creds=self.os_creds,
-            suite=mock.ANY, use_floating_ips=True, use_keystone=True)
+            ext_net_name='foo', flavor_metadata=mock.ANY,
+            image_metadata=mock.ANY, netconf_override=mock.ANY,
+            os_creds=self.os_creds, suite=mock.ANY, use_floating_ips=True,
+            use_keystone=True)
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
@@ -278,9 +280,10 @@ class SmokeTesting(unittest.TestCase):
             testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
-            ext_net_name='foo', flavor_metadata=None, image_metadata=mock.ANY,
-            netconf_override=None, os_creds=self.os_creds,
-            suite=mock.ANY, use_floating_ips=True, use_keystone=True)
+            ext_net_name='foo', flavor_metadata=mock.ANY,
+            image_metadata=mock.ANY, netconf_override=None,
+            os_creds=self.os_creds, suite=mock.ANY, use_floating_ips=True,
+            use_keystone=True)
 
 
 if __name__ == "__main__":
