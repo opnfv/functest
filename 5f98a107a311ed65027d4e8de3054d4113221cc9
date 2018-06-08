@@ -33,6 +33,23 @@
       "revId": "5f98a107a311ed65027d4e8de3054d4113221cc9",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_ae3d0bbe",
+        "filename": "functest/opnfv_tests/openstack/snaps/snaps_test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-06-08T11:56:40Z",
+      "side": 1,
+      "message": "Please keep none anyway as it overprotects vs a missing conf.\nIt may work in that case too..",
+      "revId": "5f98a107a311ed65027d4e8de3054d4113221cc9",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
