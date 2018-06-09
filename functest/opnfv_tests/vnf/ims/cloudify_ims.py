@@ -387,24 +387,26 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
         if not dns_ip:
             return False
 
-        vims_test_result = self.run_clearwater_live_test(
+        short_result = self.run_clearwater_live_test(
             dns_ip=dns_ip,
             public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time
-        short_result, nb_test = sig_test_format(vims_test_result)
         self.__logger.info(short_result)
         self.details['test_vnf'].update(result=short_result,
-                                        full_result=vims_test_result,
                                         duration=duration)
         try:
-            vnf_test_rate = short_result['passed'] / nb_test
+            vnf_test_rate = short_result['passed'] / (
+                short_result['total'] - short_result['skipped'])
             # orchestrator + vnf + test_vnf
             self.result += vnf_test_rate / 3 * 100
         except ZeroDivisionError:
             self.__logger.error("No test has been executed")
             self.details['test_vnf'].update(status='FAIL')
             return False
-
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Cannot calculate results")
+            self.details['test_vnf'].update(status='FAIL')
+            return False
         return True if vnf_test_rate > 0 else False
 
     def clean(self):
@@ -540,23 +542,3 @@ def _get_deployment_environment_creation_execution(client, deployment_id):
     raise RuntimeError('Failed to get create_deployment_environment '
                        'workflow execution.'
                        'Available executions: {0}'.format(executions))
-
-
-def sig_test_format(sig_test):
-    """Process the signaling result to have a short result."""
-    nb_passed = 0
-    nb_failures = 0
-    nb_skipped = 0
-    for data_test in sig_test:
-        if data_test['result'] == "Passed":
-            nb_passed += 1
-        elif data_test['result'] == "Failed":
-            nb_failures += 1
-        elif data_test['result'] == "Skipped":
-            nb_skipped += 1
-    short_sig_test_result = {}
-    short_sig_test_result['passed'] = nb_passed
-    short_sig_test_result['failures'] = nb_failures
-    short_sig_test_result['skipped'] = nb_skipped
-    nb_test = nb_passed + nb_skipped
-    return (short_sig_test_result, nb_test)

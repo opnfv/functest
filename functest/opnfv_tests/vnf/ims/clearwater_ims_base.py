@@ -6,9 +6,9 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
-import json
 import logging
 import os
+import re
 import shlex
 import shutil
 import subprocess
@@ -151,19 +151,18 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         if result != "":
             self.logger.debug(result)
 
-        vims_test_result = ""
-        tempFile = os.path.join(self.test_dir, "temp.json")
+        vims_test_result = {}
         try:
-            self.logger.debug("Trying to load test results")
-            with open(tempFile) as f:
-                vims_test_result = json.load(f)
-            f.close()
+            grp = re.search(
+                '(\d+) failures out of (\d+) tests run\n.*?'
+                '(\d+) tests skipped', result)
+            assert grp
+            vims_test_result["failures"] = int(grp.group(1))
+            vims_test_result["total"] = int(grp.group(2))
+            vims_test_result["skipped"] = int(grp.group(3))
+            vims_test_result['passed'] = (
+                int(grp.group(2)) - int(grp.group(3)) - int(grp.group(1)))
         except Exception:  # pylint: disable=broad-except
-            self.logger.error("Unable to retrieve test results")
-
-        try:
-            os.remove(tempFile)
-        except Exception:  # pylint: disable=broad-except
-            self.logger.error("Deleting file failed")
-
+            self.logger.exception("Cannot parse live tests results")
+            return None
         return vims_test_result
