@@ -3,7 +3,7 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG VIMS_TEST_TAG=release-129
-ARG QUAFF_TAG=a6d9a184f03af5d8831ca4631c98dee0de60441c
+ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG VIMS_TAG=fraser
 ARG VROUTER_TAG=fraser
 ARG JUJU_TAG=tags/juju-2.2.5
@@ -22,7 +22,7 @@ RUN apk --no-cache add --update \
         > upper-constraints.txt && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
     sed -i s/unf_ext\ \(.*\)/unf_ext\ \(0.0.7.4\)/g /src/vims-test/Gemfile.lock && \
-    git clone https://github.com/rkd91/quaff /src/vims-test/quaff && \
+    git clone https://github.com/Metaswitch/quaff /src/vims-test/quaff && \
     (cd /src/vims-test/quaff && git checkout $QUAFF_TAG) && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-build-infra /src/vims-test/build-infra && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/vims && \
