@@ -2,7 +2,8 @@ FROM opnfv/functest-core:fraser
 
 ARG BRANCH=stable/fraser
 ARG OPENSTACK_TAG=stable/pike
-ARG VIMS_TEST_TAG=stable
+ARG VIMS_TEST_TAG=release-129
+ARG QUAFF_TAG=a6d9a184f03af5d8831ca4631c98dee0de60441c
 ARG VIMS_TAG=fraser
 ARG VROUTER_TAG=fraser
 ARG JUJU_TAG=tags/juju-2.2.5
@@ -16,11 +17,14 @@ RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
         procps libxslt libxml2 zlib libffi python3 go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
-        ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev && \
+        ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
         > upper-constraints.txt && \
-    git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/boucherv-orange/clearwater-live-test.git /src/vims-test && \
+    git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
+    git clone https://github.com/rkd91/quaff /src/vims-test/quaff && \
+    (cd /src/vims-test/quaff && git checkout $QUAFF_TAG) && \
+    git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-build-infra /src/vims-test/build-infra && \
     git clone --depth 1 -b $VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/vims && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
     git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
@@ -34,7 +38,8 @@ RUN apk --no-cache add --update \
     go install -v github.com/juju/juju/... && \
     rm -rf $GOPATH/go/src/ $GOPATH/pkg && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
-    rm -r upper-constraints.txt /src/vims-test/.git /src/vims/.git /src/opnfv-vnf-vyos-blueprint/.git \
+    rm -r upper-constraints.txt /src/vims-test/.git /src/vims/.git /src/vims-test/quaff/.git \
+        /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
