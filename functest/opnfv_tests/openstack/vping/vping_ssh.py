@@ -41,8 +41,6 @@ class VPingSSH(singlevm.SingleVm2):
     def execute(self):
         """Ping the second VM
 
-        It can be overriden to execute any command.
-
         Returns: ping exit codes
         """
         assert self.ssh
