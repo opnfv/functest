@@ -261,7 +261,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
 
         cfy_client = CloudifyClient(
             host=manager_creator.get_floating_ip().ip,
-            username='admin', password='admin', tenant='default_tenant')
+            username='admin', password='admin', tenant='default_tenant',
+            api_version='v3')
 
         self.orchestrator['object'] = cfy_client
 

@@ -10,7 +10,7 @@ git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-heattranslator&
 git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
 -e git+https://gerrit.opnfv.org/gerrit/parser@stable/fraser#egg=nfv-parser
 git+https://github.com/openstack/refstack-client@a59189eaacda24b787ecb65e6634257beba361ec#egg=refstack-client
-cloudify-rest-client===4.0
+cloudify-rest-client===4.3.2
 openbaton-cli===2.2.1b7
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
