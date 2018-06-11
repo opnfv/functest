@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_22774f04",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-06-11T09:43:19Z",
+      "side": 1,
+      "message": "for my understanding: does this mean that systems have to support identity V3 in order to run this test? I want to understand the requirements.",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 28
+      },
+      "revId": "322d7512499754868b9080d5fa9233806e2edb6a",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
