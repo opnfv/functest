@@ -41,6 +41,7 @@ class CinderCheck(cinder_base.CinderBase):
             kwargs["case_name"] = "cinder_test"
         super(CinderCheck, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
+        logging.disable(logging.DEBUG)
         self.vm1 = None
         self.vm2 = None
         self.sec = None
@@ -70,8 +71,8 @@ class CinderCheck(cinder_base.CinderBase):
                 config.CONF, 'cinder_keypair_name') + '_1' + self.guid
             self.logger.info("Creating keypair with name: '%s'", kp_name1)
             self.keypair1 = self.cloud.create_keypair(kp_name1)
-            self.logger.debug("keypair: %s", self.keypair1)
-            self.logger.debug("private_key: %s", self.keypair1.private_key)
+            self.logger.info("keypair: %s", self.keypair1)
+            self.logger.info("private_key: %s", self.keypair1.private_key)
             with open(self.key1_filename, 'w') as private_key1_file:
                 private_key1_file.write(self.keypair1.private_key)
             # Creating key pair 2
@@ -79,8 +80,8 @@ class CinderCheck(cinder_base.CinderBase):
                 config.CONF, 'cinder_keypair_name') + '_2' + self.guid
             self.logger.info("Creating keypair with name: '%s'", kp_name2)
             self.keypair2 = self.cloud.create_keypair(kp_name2)
-            self.logger.debug("keypair: %s", self.keypair2)
-            self.logger.debug("private_key: %s", self.keypair2.private_key)
+            self.logger.info("keypair: %s", self.keypair2)
+            self.logger.info("private_key: %s", self.keypair2.private_key)
             with open(self.key2_filename, 'w') as private_key2_file:
                 private_key2_file.write(self.keypair2.private_key)
 
@@ -109,10 +110,10 @@ class CinderCheck(cinder_base.CinderBase):
                 timeout=getattr(config.CONF, 'cinder_vm_boot_timeout'),
                 network=self.network.id,
                 security_groups=[self.sec.id])
-            self.logger.debug("vm1: %s", self.vm2)
+            self.logger.info("vm1: %s", self.vm2)
             self.fip1 = self.cloud.create_floating_ip(
                 network=self.ext_net.id, server=self.vm1)
-            self.logger.debug("floating_ip1: %s", self.fip1)
+            self.logger.info("floating_ip1: %s", self.fip1)
             self.vm1 = self.cloud.wait_for_server(self.vm1, auto_ip=False)
             self.cloud.attach_volume(self.vm1, self.volume)
 
@@ -128,10 +129,10 @@ class CinderCheck(cinder_base.CinderBase):
                 timeout=getattr(config.CONF, 'cinder_vm_boot_timeout'),
                 network=self.network.id,
                 security_groups=[self.sec.id])
-            self.logger.debug("vm2: %s", self.vm2)
+            self.logger.info("vm2: %s", self.vm2)
             self.fip2 = self.cloud.create_floating_ip(
                 network=self.ext_net.id, server=self.vm2)
-            self.logger.debug("floating_ip2: %s", self.fip2)
+            self.logger.info("floating_ip2: %s", self.fip2)
             self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
 
             return self.execute()
@@ -159,10 +160,10 @@ class CinderCheck(cinder_base.CinderBase):
             self.logger.error("File not transfered!")
             return testcase.TestCase.EX_RUN_ERROR
 
-        self.logger.debug("ssh: %s", self.ssh)
+        self.logger.info("ssh: %s", self.ssh)
         self.ssh.exec_command('chmod +x ~/write_data.sh')
         (_, stdout, _) = self.ssh.exec_command(cmd)
-        self.logger.debug("volume_write output: %s", stdout.read())
+        self.logger.info("volume_write output: %s", stdout.read())
 
         return stdout.channel.recv_exit_status()
 
@@ -193,10 +194,10 @@ class CinderCheck(cinder_base.CinderBase):
         except Exception:  # pylint: disable=broad-except
             self.logger.error("File not transfered!")
             return testcase.TestCase.EX_RUN_ERROR
-        self.logger.debug("ssh: %s", self.ssh)
+        self.logger.info("ssh: %s", self.ssh)
         self.ssh.exec_command('chmod +x ~/read_data.sh')
         (_, stdout, _) = self.ssh.exec_command(cmd)
-        self.logger.debug("read volume output: %s", stdout.read())
+        self.logger.info("read volume output: %s", stdout.read())
 
         return stdout.channel.recv_exit_status()
 

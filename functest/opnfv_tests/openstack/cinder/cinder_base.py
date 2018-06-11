@@ -36,9 +36,10 @@ class CinderBase(testcase.TestCase):
     def __init__(self, **kwargs):
         super(CinderBase, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
+        logging.disable(logging.DEBUG)
         self.cloud = os_client_config.make_shade()
         self.ext_net = functest_utils.get_external_network(self.cloud)
-        self.logger.debug("ext_net: %s", self.ext_net)
+        self.logger.info("ext_net: %s", self.ext_net)
         self.guid = '-' + str(uuid.uuid4())
         self.network = None
         self.subnet = None
@@ -71,7 +72,7 @@ class CinderBase(testcase.TestCase):
             image_base_name,
             filename=getattr(config.CONF, 'openstack_image_url'),
             meta=meta)
-        self.logger.debug("image: %s", self.image)
+        self.logger.info("image: %s", self.image)
 
         private_net_name = getattr(
             config.CONF, 'cinder_private_net_name') + self.guid
@@ -95,7 +96,7 @@ class CinderBase(testcase.TestCase):
         self.network = self.cloud.create_network(
             private_net_name,
             provider=provider)
-        self.logger.debug("network: %s", self.network)
+        self.logger.info("network: %s", self.network)
 
         self.subnet = self.cloud.create_subnet(
             self.network.id,
@@ -103,14 +104,14 @@ class CinderBase(testcase.TestCase):
             cidr=private_subnet_cidr,
             enable_dhcp=True,
             dns_nameservers=[env.get('NAMESERVER')])
-        self.logger.debug("subnet: %s", self.subnet)
+        self.logger.info("subnet: %s", self.subnet)
 
         router_name = getattr(config.CONF, 'cinder_router_name') + self.guid
         self.logger.info("Creating router with name: '%s'", router_name)
         self.router = self.cloud.create_router(
             name=router_name,
             ext_gateway_net_id=self.ext_net.id)
-        self.logger.debug("router: %s", self.router)
+        self.logger.info("router: %s", self.router)
         self.cloud.add_router_interface(self.router, subnet_id=self.subnet.id)
 
         flavor_name = 'cinder-flavor' + self.guid
@@ -120,7 +121,7 @@ class CinderBase(testcase.TestCase):
             flavor_name, getattr(config.CONF, 'openstack_flavor_ram'),
             getattr(config.CONF, 'openstack_flavor_vcpus'),
             getattr(config.CONF, 'openstack_flavor_disk'))
-        self.logger.debug("flavor: %s", self.flavor)
+        self.logger.info("flavor: %s", self.flavor)
         self.cloud.set_flavor_specs(
             self.flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
         volume_name = 'cinder-volume' + self.guid
