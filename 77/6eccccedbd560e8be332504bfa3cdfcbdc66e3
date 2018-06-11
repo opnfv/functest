@@ -1,0 +1,8 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Delia Popescu <delia.popescu@enea.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: valentin boucher <valentin.boucher@kontron.com>
+Submitted-at: Mon, 11 Jun 2018 12:40:36 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/58397
+Project: functest
+Branch: refs/heads/master
