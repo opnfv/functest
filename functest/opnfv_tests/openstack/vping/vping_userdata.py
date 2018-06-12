@@ -64,6 +64,10 @@ class VPingUserdata(vping_base.VPingBase):
         """
         Override from super
         """
+        if not self.vm1.private_v4:
+            self.logger.error("vm1: IP addr missing")
+            return testcase.TestCase.EX_TESTCASE_FAILED
+
         self.logger.info("Waiting for ping...")
         exit_code = testcase.TestCase.EX_TESTCASE_FAILED
         sec = 0
