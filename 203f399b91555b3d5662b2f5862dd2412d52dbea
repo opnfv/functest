@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da5c1566_f83068ea",
+        "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2018-06-12T08:31:24Z",
+      "side": 1,
+      "message": "ok then, I propose to try to split the log files. Maybe have a separate debug file? the output is just to long..",
+      "parentUuid": "da5c1566_458d2d31",
+      "revId": "203f399b91555b3d5662b2f5862dd2412d52dbea",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da5c1566_a58249fe",
         "filename": "functest/opnfv_tests/openstack/cinder/cinder_base.py",
         "patchSetId": 1
