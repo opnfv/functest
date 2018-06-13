@@ -127,6 +127,24 @@ tiers:
                             - 'test_networks_multiprovider_rbac'
 
             -
+                case_name: shaker
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Shaker wraps around popular system network testing tools
+                    like iperf, iperf3 and netperf (with help of flent). Shaker
+                    is able to deploy OpenStack instances and networks in
+                    different topologies.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module:
+                        'functest.opnfv_tests.openstack.shaker.shaker'
+                    class: 'Shaker'
+
+            -
                 case_name: odl
                 project_name: functest
                 criteria: 100
