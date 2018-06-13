@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_564fa592",
+        "filename": "docs/testing/user/userguide/runfunctest.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-06-13T15:51:18Z",
+      "side": 1,
+      "message": "I think this should mention where to find that dict -\u003e config file.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 65
+      },
+      "revId": "b2b8f5ec1b31a0b701bdb1a107b78ef00993a5bf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_b6444175",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-06-13T15:51:18Z",
+      "side": 1,
+      "message": "dito",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "b2b8f5ec1b31a0b701bdb1a107b78ef00993a5bf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_96493d8e",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 585
+      },
+      "writtenOn": "2018-06-13T15:51:18Z",
+      "side": 1,
+      "message": "dito",
+      "range": {
+        "startLine": 246,
+        "startChar": 40,
+        "endLine": 247,
+        "endChar": 25
+      },
+      "revId": "b2b8f5ec1b31a0b701bdb1a107b78ef00993a5bf",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
