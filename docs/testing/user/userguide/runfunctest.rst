@@ -99,6 +99,11 @@ You can also type run_tests -t all to run all the tests.
 
 Note the list of test cases depend on the installer and the scenario.
 
+Note that the flavors for the SNAPS test cases are able to be configured giving
+new metadata values as well as new values for the basic elements of flavor
+(i.e. ram, vcpu, disk, ephemeral, swap etc).
+The snaps.flavor_extra_specs dict in the config_functest.yaml file could be
+used for this purpose.
 
 Reporting results to the test Database
 ======================================

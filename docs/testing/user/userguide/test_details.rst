@@ -38,6 +38,11 @@ network. This suite consists in 49 tests (test duration < 2 minutes).
 Snaps_health_check creates a VM with a single port with an IPv4 address that
 is assigned by DHCP and then validates the expected IP with the actual.
 
+The flavors for the SNAPS test cases are able to be configured giving new
+metadata values as well as new values for the basic elements of flavor (i.e.
+ram, vcpu, disk, ephemeral, swap etc). The snaps.flavor_extra_specs dict in the
+config_functest.yaml file could be used for this purpose.
+
 Self-obviously, successful completion of the 'healthcheck' testcase is a
 necessary pre-requisite for the execution of all other test Tiers.
 
@@ -236,6 +241,10 @@ Please note that When the configuration value of snaps.use_keystone is True,
 Functest must have access the cloud's private network.
 This suite consists in 120 tests (test duration ~= 50 minutes)
 
+The flavors for the SNAPS test cases are able to be configured giving new
+metadata values as well as new values for the basic elements of flavor (i.e.
+ram, vcpu, disk, ephemeral, swap etc). The snaps.flavor_extra_specs dict in
+the config_functest.yaml file could be used for this purpose.
 
 SDN Controllers
 ---------------
