@@ -50,6 +50,9 @@ import snaps.openstack.utils.glance_utils as glance_utils
 from snaps.openstack.utils import keystone_utils
 
 
+import six
+
+
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
 
@@ -180,7 +183,7 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.created_object.append(keypair_creator)
 
         self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_file in self.images.iteritems():
+        for image_name, image_file in six.iteritems(self.images):
             self.__logger.info("image: %s, file: %s", image_name, image_file)
             if image_file and image_name:
                 image_creator = OpenStackImage(

@@ -55,7 +55,7 @@ class ChassisRestAPI:
                                                 headers=urlHeadersJson)
                 logger.debug(response)
                 logger.debug(content)
-        except Exception, e:
+        except Exception as e:
             raise Exception('Got an error code: ', e)
         return content
 
@@ -74,7 +74,7 @@ class ChassisRestAPI:
                 (response, content) = h.request(loginUrl, 'POST',
                                                 body=payload,
                                                 headers=urlHeadersJson)
-        except Exception, e:
+        except Exception as e:
             raise Exception('Got an error code: ', e)
         return content
 
@@ -95,7 +95,7 @@ class ChassisRestAPI:
                 (response, content) = h.request(url, 'POST',
                                                 json.dumps(payload),
                                                 headers=urlHeadersJson)
-        except Exception, e:
+        except Exception as e:
             raise Exception('Got an error code: ', e)
         return content
 
@@ -111,9 +111,9 @@ class ChassisRestAPI:
             (response, content) = h.request(url, 'PATCH',
                                             json.dumps(payload),
                                             urlHeadersJson)
-        except Exception, e:
+        except Exception as e:
 
-            # print (response, content)
+            # print((response, content))
 
             raise Exception('Got an error code: ', e)
         return content
@@ -127,7 +127,7 @@ class ChassisRestAPI:
                               disable_ssl_certificate_validation=True)
             (response, content) = h.request(url, 'DELETE', '', urlHeadersJson)
             logger.debug('DELETE: ' + url)
-        except Exception, e:
+        except Exception as e:
             raise Exception('Got an error code: ', e)
         if response.status not in okStates:
             raise TestFailedError(json.loads(content)['error'])
@@ -142,7 +142,7 @@ class ChassisRestAPI:
                               disable_ssl_certificate_validation=True)
             logger.debug('GET: ' + url)
             (response, content) = h.request(url, 'GET', '', urlHeadersJson)
-        except Exception, e:
+        except Exception as e:
             raise Exception('Got an error code: ', e)
         if response.status not in okStates:
             raise TestFailedError(json.loads(content)['error'])
