@@ -70,7 +70,7 @@ def waitForActionToFinish(connection, replyObj, actionUrl):
                     if actionStatusObj.status == kActionStatusError:
                         errorMsg += actionStatusObj.error
 
-                    print errorMsg
+                    print(errorMsg)
 
                     sys.exit(1)
             else:
@@ -172,13 +172,13 @@ def uploadFile(connection, url, fileName, uploadPath, overwrite=True):
         with open(fileName, 'rb') as f:
             resp = requests.post(url, data=f, params=params,
                                  headers=headers)
-    except requests.exceptions.ConnectionError, e:
+    except requests.exceptions.ConnectionError as e:
         raise Exception('Upload file failed. Received connection error. \
                         One common cause for this error is the size of the \
                         file to be uploaded.The web server sets a limit of 1GB\
                         for the uploaded file size. \
                         Received the following error: %s' % str(e))
-    except IOError, e:
+    except IOError as e:
         raise Exception('Upload file failed. Received IO error: %s'
                         % str(e))
     except Exception:

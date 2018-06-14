@@ -358,7 +358,7 @@ class CloudifyImsPerf(cloudify_ims.CloudifyIms):
         i = 0
         for rdata in result:
             i = i + 1
-            print rdata.address
+            print(rdata.address)
             iplistims += str(rdata.address)
             if i != len(result):
                 iplistims += ';'

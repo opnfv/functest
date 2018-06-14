@@ -7,8 +7,11 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-from urlparse import urljoin
 import requests
+
+
+import six
+from six.moves.urllib.parse import urljoin
 
 
 def getConnection(server, port):
@@ -180,7 +183,7 @@ class WebObject(object):
         """
 
         self.jsonOptions = {}
-        for (key, value) in entries.iteritems():
+        for (key, value) in six.iteritems(entries):
             webObj = _WebObject(value)
             self.jsonOptions[key] = webObj
             self.__dict__[key] = webObj
