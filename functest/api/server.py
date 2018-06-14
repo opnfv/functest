@@ -15,12 +15,12 @@ Used to launch Functest RestApi
 import inspect
 import logging
 import socket
-from urlparse import urljoin
 import pkg_resources
 
 from flask import Flask
 from flask_restful import Api
 from flasgger import Swagger
+import six
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils
@@ -57,7 +57,8 @@ def get_resource(resource_name):
 def get_endpoint(url):
     """ Obtain the endpoint of url """
     address = socket.gethostbyname(socket.gethostname())
-    return urljoin('http://{}:5000'.format(address), url)
+    return six.moves.urllib.parse.urljoin(
+        'http://{}:5000'.format(address), url)
 
 
 def api_add_resource():
