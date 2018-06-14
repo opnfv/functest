@@ -104,7 +104,7 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.get_cmd_output(proc),
                          'line1line2')
 
-    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'scenario': [
                     {'scenarios': ['test_scenario'],
@@ -119,7 +119,7 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.excl_scenario(), ['test'])
         mock_func.assert_called()
 
-    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'scenario': [
                     {'scenarios': ['^os-[^-]+-featT-modeT$'],
@@ -147,12 +147,12 @@ class OSRallyTesting(unittest.TestCase):
                          ['test1', 'test2', 'test3', 'test4'])
         mock_func.assert_called()
 
-    @mock.patch('__builtin__.open', side_effect=Exception)
+    @mock.patch('six.moves.builtins.open', side_effect=Exception)
     def test_excl_scenario_exception(self, mock_open):
         self.assertEqual(self.rally_base.excl_scenario(), [])
         mock_open.assert_called()
 
-    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'functionality': [
                     {'functions': ['no_migration'], 'tests': ['test']}]})
@@ -165,7 +165,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_func.assert_called()
         mock_yaml_load.assert_called()
 
-    @mock.patch('__builtin__.open', side_effect=Exception)
+    @mock.patch('six.moves.builtins.open', side_effect=Exception)
     def test_excl_func_exception(self, mock_open):
         self.assertEqual(self.rally_base.excl_func(), [])
         mock_open.assert_called()
@@ -229,7 +229,7 @@ class OSRallyTesting(unittest.TestCase):
         text = 'Failed to retrieve task_id, validating task...'
         mock_logger_error.assert_any_call(text)
 
-    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_prepare_test_list', return_value='test_file_name')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -255,7 +255,7 @@ class OSRallyTesting(unittest.TestCase):
         self.rally_base._run_task('test_name')
         mock_save_res.assert_called()
 
-    @mock.patch('__builtin__.open', mock.mock_open())
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'task_succeed', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -498,7 +498,7 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.summary[0]['nb_success'], 1)
 
     def test_is_successful_false(self):
-        with mock.patch('__builtin__.super') as mock_super:
+        with mock.patch('six.moves.builtins.super') as mock_super:
             self.rally_base.summary = [{"task_status": True},
                                        {"task_status": False}]
             self.assertEqual(self.rally_base.is_successful(),
@@ -506,7 +506,7 @@ class OSRallyTesting(unittest.TestCase):
             mock_super(rally.RallyBase, self).is_successful.assert_not_called()
 
     def test_is_successful_true(self):
-        with mock.patch('__builtin__.super') as mock_super:
+        with mock.patch('six.moves.builtins.super') as mock_super:
             mock_super(rally.RallyBase, self).is_successful.return_value = 424
             self.rally_base.summary = [{"task_status": True},
                                        {"task_status": True}]

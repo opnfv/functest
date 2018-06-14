@@ -21,6 +21,7 @@ import time
 import uuid
 
 import os_client_config
+from six.moves import configparser
 from xtesting.core import testcase
 import yaml
 
@@ -313,7 +314,7 @@ class TempestNeutronTrunk(TempestCommon):
 
     def configure(self, **kwargs):
         super(TempestNeutronTrunk, self).configure(**kwargs)
-        rconfig = conf_utils.ConfigParser.RawConfigParser()
+        rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         rconfig.set('network-feature-enabled', 'api_extensions', 'all')
         with open(self.conf_file, 'wb') as config_file:
