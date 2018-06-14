@@ -11,7 +11,8 @@
 
 import logging
 
-from functest.opnfv_tests.openstack.tempest import conf_utils
+from six.moves import configparser
+
 from functest.opnfv_tests.openstack.tempest import tempest
 
 
@@ -21,7 +22,7 @@ class Patrole(tempest.TempestCommon):
 
     def configure(self, **kwargs):
         super(Patrole, self).configure(**kwargs)
-        rconfig = conf_utils.ConfigParser.RawConfigParser()
+        rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         rconfig.add_section('rbac')
         rconfig.set('rbac', 'enable_rbac', True)

@@ -127,16 +127,13 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             self.assertTrue(mock_get_did.called)
 
     def _test_missing_param(self, params, image_id, flavor_id, alt=False):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.ConfigParser.RawConfigParser.'
+        with mock.patch('six.moves.configparser.RawConfigParser.'
                         'set') as mset, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
+            mock.patch('six.moves.configparser.RawConfigParser.'
                        'read') as mread, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.ConfigParser.RawConfigParser.'
+            mock.patch('six.moves.configparser.RawConfigParser.'
                        'write') as mwrite, \
-            mock.patch('__builtin__.open', mock.mock_open()), \
+            mock.patch('six.moves.builtins.open', mock.mock_open()), \
             mock.patch('functest.utils.functest_utils.yaml.safe_load',
                        return_value={'validation': {'ssh_timeout': 300}}):
             os.environ['OS_INTERFACE'] = ''

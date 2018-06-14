@@ -10,13 +10,15 @@
 
 """Tempest configuration utilities."""
 
-import ConfigParser
+from __future__ import print_function
+
 import logging
 import fileinput
 import os
 import subprocess
 
 import pkg_resources
+from six.moves import configparser
 import yaml
 
 from functest.utils import config
@@ -54,9 +56,9 @@ def create_rally_deployment():
             rally_patch_conf = pfile.read()
 
         for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
-            print line,
+            print(line, end=' ')
             if "cirros|testvm" in line:
-                print rally_patch_conf
+                print(rally_patch_conf)
 
     LOGGER.info("Creating Rally environment...")
 
@@ -189,7 +191,7 @@ def configure_tempest_update_params(
     Add/update needed parameters into tempest.conf file
     """
     LOGGER.debug("Updating selected tempest.conf parameters...")
-    rconfig = ConfigParser.RawConfigParser()
+    rconfig = configparser.RawConfigParser()
     rconfig.read(tempest_conf_file)
     rconfig.set('compute', 'fixed_network_name', network_name)
     rconfig.set('compute', 'volume_device_name', env.get('VOLUME_DEVICE_NAME'))
