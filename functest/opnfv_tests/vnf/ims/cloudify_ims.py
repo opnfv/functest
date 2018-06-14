@@ -19,8 +19,7 @@ import uuid
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
 from scp import SCPClient
-import yaml
-
+import six
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.keypair import KeypairConfig
@@ -40,9 +39,10 @@ from snaps.openstack.create_security_group import OpenStackSecurityGroup
 from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.utils import keystone_utils
 from xtesting.energy import energy
+import yaml
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-import functest.opnfv_tests.vnf.ims.clearwater_ims_base as clearwater_ims_base
+from functest.opnfv_tests.vnf.ims import clearwater_ims_base
 from functest.utils import config
 from functest.utils import env
 
@@ -165,7 +165,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
 
         # needs some images
         self.__logger.info("Upload some OS images if it doesn't exist")
-        for image_name, image_file in self.images.iteritems():
+        for image_name, image_file in six.iteritems(self.images):
             self.__logger.info("image: %s, file: %s", image_name, image_file)
             if image_file and image_name:
                 image_creator = OpenStackImage(
@@ -275,7 +275,7 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                     raise Exception("Cloudify Manager isn't up and running")
                 self.__logger.info("Put OpenStack creds in manager")
                 secrets_list = cfy_client.secrets.list()
-                for k, val in cfy_creds.iteritems():
+                for k, val in six.iteritems(cfy_creds):
                     if not any(d.get('key', None) == k for d in secrets_list):
                         cfy_client.secrets.create(k, val)
                     else:

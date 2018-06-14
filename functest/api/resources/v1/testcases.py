@@ -11,7 +11,6 @@
 Resources to handle testcase related requests
 """
 
-import ConfigParser
 import logging
 import os
 import re
@@ -21,6 +20,7 @@ import uuid
 from flask import jsonify
 from flasgger.utils import swag_from
 import pkg_resources
+from six.moves import configparser
 
 from functest.api.base import ApiResource
 from functest.api.common import api_utils, thread
@@ -144,7 +144,7 @@ class V1Testcase(ApiResource):
 
     def _update_logging_ini(self, task_id):  # pylint: disable=no-self-use
         """ Update the log file for each task"""
-        rconfig = ConfigParser.RawConfigParser()
+        rconfig = configparser.RawConfigParser()
         rconfig.read(
             pkg_resources.resource_filename('functest', 'ci/logging.ini'))
         log_path = os.path.join(getattr(config.CONF, 'dir_results'),

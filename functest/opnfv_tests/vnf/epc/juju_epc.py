@@ -18,15 +18,10 @@ import subprocess
 import sys
 import uuid
 from copy import deepcopy
-from urlparse import urljoin
 import pkg_resources
 import yaml
 
-from functest.core import vnf
-from functest.opnfv_tests.openstack.snaps import snaps_utils
-from functest.utils import config
-from functest.utils import env
-
+import six
 from snaps.config.flavor import FlavorConfig
 from snaps.config.image import ImageConfig
 from snaps.config.network import NetworkConfig, SubnetConfig
@@ -42,6 +37,11 @@ from snaps.openstack.create_security_group import OpenStackSecurityGroup
 from snaps.openstack.create_user import OpenStackUser
 from snaps.openstack.utils import keystone_utils
 from snaps.openstack.utils import nova_utils
+
+from functest.core import vnf
+from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.utils import config
+from functest.utils import env
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
 __author__ = "Soumaya K Nayek <soumaya.nayek@rebaca.com>"
@@ -228,7 +228,8 @@ class JujuEpc(vnf.VnfOnBoarding):
         # it enforces a versioned public identity endpoint as juju simply
         # adds /auth/tokens wich fails vs an unversioned endpoint.
         if not self.public_auth_url.endswith(('v3', 'v3/', 'v2.0', 'v2.0/')):
-            self.public_auth_url = urljoin(self.public_auth_url, 'v3')
+            self.public_auth_url = six.moves.urllib.parse.urljoin(
+                self.public_auth_url, 'v3')
         self._register_cloud()
         if self.snaps_creds.identity_api_version == 3:
             self._register_credentials_v3()
@@ -287,7 +288,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.__logger.info("Upload some OS images if it doesn't exist")
         images = get_config("tenant_images", self.config_file)
         self.__logger.info("Images needed for vEPC: %s", images)
-        for image_name, image_file in images.iteritems():
+        for image_name, image_file in six.iteritems(images):
             self.__logger.info("image: %s, file: %s", image_name, image_file)
             if image_file and image_name:
                 image_creator = OpenStackImage(self.snaps_creds, ImageConfig(
