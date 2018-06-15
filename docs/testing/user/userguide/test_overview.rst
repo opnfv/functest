@@ -155,21 +155,6 @@ validate the scenario for the release.
 |             |               |            | Technical Specs and are executed |
 |             |               |            | through protocol drivers provided|
 |             |               |            | by ABot.                         |
-|             |               +------------+----------------------------------+
-|             |               | cloudify   | Based on cloudify_ims test case  |
-|             |               | \_ims_perf | cloudify_ims_perf substitutes    |
-|             |               |            | the signaling test suite by an   |
-|             |               |            | automatic deployment of an Ixia  |
-|             |               |            | loader and generic SIP stress    |
-|             |               |            | tests.                           |
-|             |               |            | This work has been initiated     |
-|             |               |            | during the plugfest and allows   |
-|             |               |            | realistic load tests on top of   |
-|             |               |            | cloudify_ims. Please note that   |
-|             |               |            | this test is available but not   |
-|             |               |            | declared in testcases.yaml as it |
-|             |               |            | requires access to proprietary   |
-|             |               |            | resources (Ixia loader)          |
 +-------------+---------------+------------+----------------------------------+
 
 

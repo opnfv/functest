@@ -380,36 +380,6 @@ The Clearwater architecture is described as follows:
    :alt: vIMS architecture
 
 
-cloudify_ims_perf
-^^^^^^^^^^^^^^^^^
-This testcase extends the cloudify_ims test case.
-The first part is similar but the testing part is different.
-The testing part consists in automating a realistic signaling load on the vIMS
-using an Ixia loader (proprietary tools)
-
- - You need to have access to an Ixia licence server defined in the
-   configuration file and have ixia image locally.
-
-This test case is available but not declared in testcases.yaml. The declaration
-of the testcase is simple, connect to your functest-vnf docker, add the
-following section in
-/usr/lib/python2.7/site-packacges/functest/ci/testcases.yaml::
-
-  -
-      case_name: cloudify_ims_perf
-      project_name: functest
-      criteria: 80
-      blocking: false
-      description: >-
-          Stress tests based on Cloudify. Ixia loader images and access to Ixia
-          server license.
-      dependencies:
-          installer: ''
-          scenario: 'os-nosdn-nofeature-ha'
-      run:
-          module: 'functest.opnfv_tests.vnf.ims.cloudify_ims_perf'
-          class: 'CloudifyImsPerf'
-
 vyos-vrouter
 ^^^^^^^^^^^^
 This test case deals with the deployment and the test of vyos vrouter with
