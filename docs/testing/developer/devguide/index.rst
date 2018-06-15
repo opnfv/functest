@@ -56,7 +56,6 @@ to the different tiers:
   * functest-features: https://hub.docker.com/r/opnfv/functest-features/
   * functest-components: https://hub.docker.com/r/opnfv/functest-components/
   * functest-vnf: https://hub.docker.com/r/opnfv/functest-vnf/
-  * functest-parser: https://hub.docker.com/r/opnfv/functest-parser/
   * functest-restapi: https://hub.docker.com/r/opnfv/functest-restapi/
 
 Standalone functest dockers are maintained for Euphrates but Alpine containers
@@ -126,7 +125,6 @@ The external test cases are:
  * doctor
  * domino
  * fds
- * parser
  * promise
  * refstack_defcore
  * snaps_smoke

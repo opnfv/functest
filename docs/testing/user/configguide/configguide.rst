@@ -19,7 +19,6 @@ Docker images are available on the dockerhub:
   * opnfv/functest-features
   * opnfv/functest-components
   * opnfv/functest-vnf
-  * opnfv/functest-parser
 
 The tag "opnfv-6.0.0" is the official release image in Fraser, but you can
 also pull "fraser" tag as it is being maintained by Functest team and might
