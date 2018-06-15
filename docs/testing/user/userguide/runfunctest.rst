@@ -105,34 +105,6 @@ Reporting results to the test Database
 In OPNFV CI we collect all the results from CI. A test API shall be available
 as well as a test database `[17]`_.
 
-Functest internal API
-=====================
-
-An internal API has been introduced in Euphrates. The goal is to trigger
-Functest operations through an API in addition of the CLI.
-This could be considered as a first step towards a pseudo micro services
-approach where the different test projects could expose and consume APIs to the
-other test projects.
-
-In Euphrates the main method of the APIs are:
-
-  * Show credentials
-  * Update openrc file
-  * Show environment
-  * Update hosts info for domain name
-  * Prepare environment
-  * List all testcases
-  * Show a testcase
-  * Run a testcase
-  * List all tiers
-  * Show a tier
-  * List all testcases within given tier
-  * Get the result of the specified task
-  * Get the log of the specified task
-
-See `[16]`_ to get examples on how to use the API.
-
 
 .. _`[1]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
-.. _`[16]`: https://wiki.opnfv.org/display/functest/Running+test+cases+via+new+Functest+REST+API
-.. _`[17]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+.. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
