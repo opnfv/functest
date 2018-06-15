@@ -51,9 +51,7 @@ References
 
 `[15]`_: Testing OpenStack Tempest part 1
 
-`[16]`_: Running Functest through internal REST API
-
-`[17]`_: OPNFV Test API
+`[16]`_: OPNFV Test API
 
 `OPNFV main site`_: OPNFV official web site
 
@@ -76,8 +74,7 @@ IRC support chan: #opnfv-functest
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
-.. _`[16]`: https://wiki.opnfv.org/display/functest/Running+test+cases+via+new+Functest+REST+API
-.. _`[17]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+.. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 .. _`OPNFV main site`: http://www.opnfv.org
 .. _`Functest page`: https://wiki.opnfv.org/functest
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
