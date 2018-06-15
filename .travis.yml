@@ -47,11 +47,6 @@ jobs:
     - script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/parser"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/healthcheck"
         - arm64_dirs=""
     - script: sudo -E bash build.sh
@@ -73,11 +68,6 @@ jobs:
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/vnf"
-        - arm64_dirs=""
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs="docker/parser"
         - arm64_dirs=""
     - stage: publish all manifests
       script: >
