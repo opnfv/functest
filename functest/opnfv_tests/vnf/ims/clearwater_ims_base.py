@@ -80,7 +80,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         i = 30
         while req.status_code != 200 and i > 0:
             try:
-                number_res = self.create_ellis_number(number_url, cookies)
+                number_res = self._create_ellis_number(number_url, cookies)
                 break
             except Exception:  # pylint: disable=broad-except
                 if i == 1:
@@ -93,12 +93,12 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
 
         if two_numbers:
             self.logger.debug('Create 2nd calling number on Ellis')
-            number_res = self.create_ellis_number(number_url, cookies)
+            number_res = self._create_ellis_number(number_url, cookies)
             output_dict['number2'] = number_res
 
         return output_dict
 
-    def create_ellis_number(self, number_url, cookies):
+    def _create_ellis_number(self, number_url, cookies):
         req = requests.post(number_url, cookies=cookies)
 
         if req.status_code != 200:
@@ -114,6 +114,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
     def run_clearwater_live_test(self, dns_ip, public_domain,
                                  bono_ip=None, ellis_ip=None,
                                  signup_code='secret'):
+        # pylint: disable=too-many-locals,too-many-arguments
         self.logger.info('Run Clearwater live test')
         dns_file = '/etc/resolv.conf'
         dns_file_bak = '/etc/resolv.conf.bak'
@@ -143,11 +144,12 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
         dnsmasq_process.kill()
         with open(dns_file_bak, 'r') as bak_file:
             result = bak_file.read()
-            with open(dns_file, 'w') as f:
-                f.write(result)
+            with open(dns_file, 'w') as dfile:
+                dfile.write(result)
 
-        f = open(output_file, 'r')
-        result = f.read()
+        with open(output_file, 'r') as ofile:
+            result = ofile.read()
+
         if result != "":
             self.logger.debug(result)
 
