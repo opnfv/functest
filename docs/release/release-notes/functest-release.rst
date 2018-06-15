@@ -47,7 +47,6 @@ The OPNFV projects integrated into Functest framework for automation are:
  * odl-sfc
  * barometer
  * fds
- * parser
 
 Kubernetes
 ----------
@@ -84,7 +83,6 @@ Software
  * https://hub.docker.com/r/opnfv/functest-features
  * https://hub.docker.com/r/opnfv/functest-components
  * https://hub.docker.com/r/opnfv/functest-vnf
- * https://hub.docker.com/r/opnfv/functest-parser
 
  Functest Docker images (Kubernetes):
 

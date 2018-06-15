@@ -1,3 +1,0 @@
-nfv-heattranslator
-nfv-toscaparser
-nfv-parser
