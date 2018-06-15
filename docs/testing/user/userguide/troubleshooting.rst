@@ -39,8 +39,8 @@ respective section.
 These test cases can be run inside the container, using new Functest CLI as
 follows::
 
-    $ functest testcase run vping_ssh
-    $ functest testcase run vping_userdata
+    $ run_tests -t vping_ssh
+    $ run_tests -t vping_userdata
 
 The Functest CLI is designed to route a call to the corresponding internal
 python scripts, located in paths::
