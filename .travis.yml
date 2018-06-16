@@ -15,41 +15,16 @@ jobs:
       script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/core"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/core"
         - arm64_dirs=""
     - stage: publish functest-core manifests
       script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-core:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-core:fraser
     - stage: build all functest images
       script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/healthcheck"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/smoke"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/components"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/parser"
-    - script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/healthcheck"
@@ -82,12 +57,12 @@ jobs:
     - stage: publish all manifests
       script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-healthcheck:fraser
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-smoke:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-smoke:fraser
     - script: >
@@ -97,7 +72,7 @@ jobs:
           --target ${DOCKER_USERNAME}/functest-features:fraser
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-components:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-components:fraser
     - script: >
@@ -107,6 +82,6 @@ jobs:
           --target ${DOCKER_USERNAME}/functest-vnf:fraser
     - script: >
         sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm64 \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-parser:ARCH-fraser \
           --target ${DOCKER_USERNAME}/functest-parser:fraser
