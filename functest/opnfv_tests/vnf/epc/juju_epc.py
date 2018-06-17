@@ -130,7 +130,7 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
 
-    def _bypass_juju_network_discovery_bug(self, name):
+    def _bypass_juju_netdiscovery_bug(self, name):
         user_creator = OpenStackUser(
             self.snaps_creds,
             UserConfig(
@@ -157,7 +157,7 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def _register_credentials_v2(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
-        user_creator = self._bypass_juju_network_discovery_bug(
+        user_creator = self._bypass_juju_netdiscovery_bug(
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
         self.__logger.debug("snaps creds: %s", snaps_creds)
@@ -175,7 +175,7 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def _register_credentials_v3(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
-        user_creator = self._bypass_juju_network_discovery_bug(
+        user_creator = self._bypass_juju_netdiscovery_bug(
             'juju_network_discovery_bug')
         snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
         self.__logger.debug("snaps creds: %s", snaps_creds)
