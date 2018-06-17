@@ -348,11 +348,10 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
                                       descriptor.get('name'),
                                       self.vnf.get('inputs'))
 
-        wait_for_execution(cfy_client,
-                           _get_deployment_environment_creation_execution(
-                               cfy_client, descriptor.get('name')),
-                           self.__logger,
-                           timeout=300)
+        wait_for_execution(
+            cfy_client,
+            get_execution_id(cfy_client, descriptor.get('name')),
+            self.__logger, timeout=300)
 
         self.__logger.info("Start the VNF Instance deployment")
         execution = cfy_client.executions.start(descriptor.get('name'),
@@ -530,7 +529,7 @@ def wait_for_execution(client, execution, logger, timeout=3600, ):
     return execution
 
 
-def _get_deployment_environment_creation_execution(client, deployment_id):
+def get_execution_id(client, deployment_id):
     """
     Get the execution id of a env preparation.
 
