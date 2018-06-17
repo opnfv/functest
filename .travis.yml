@@ -23,6 +23,18 @@ jobs:
           --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-core:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-core:latest
+    - stage: build functest-tempest images
+      script: sudo -E bash build.sh
+      env:
+        - REPO="${DOCKER_USERNAME}"
+        - amd64_dirs="docker/tempest"
+        - arm64_dirs=""
+    - stage: publish functest-tempest manifests
+      script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64 \
+          --template ${DOCKER_USERNAME}/functest-tempest:ARCH-latest \
+          --target ${DOCKER_USERNAME}/functest-tempest:latest
     - stage: build all functest images
       script: sudo -E bash build.sh
       env:
