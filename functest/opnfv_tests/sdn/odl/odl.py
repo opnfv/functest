@@ -191,9 +191,8 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlrestconfport'] = '8087'
             assert kwargs['odlip']
         except KeyError as ex:
-            self.__logger.error("Cannot run ODL testcases. "
-                                "Please check env var: "
-                                "%s", str(ex))
+            self.__logger.error(
+                "Cannot run ODL testcases. Please check env var: %s", str(ex))
             return self.EX_RUN_ERROR
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot run ODL testcases.")
