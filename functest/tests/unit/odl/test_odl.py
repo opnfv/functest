@@ -225,6 +225,7 @@ class ODLMainTesting(ODLTesting):
                 self._odl_username, self._odl_password)
         args[0].assert_called_once_with(self.test.odl_variables_file)
 
+    @mock.patch('os.makedirs')
     @mock.patch('robot.run', side_effect=RobotError)
     @mock.patch('os.path.isfile', return_value=True)
     def test_run_ko(self, *args):
@@ -233,6 +234,7 @@ class ODLMainTesting(ODLTesting):
                 self.assertRaises(RobotError):
             self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
+    @mock.patch('os.makedirs')
     @mock.patch('robot.run')
     @mock.patch('os.path.isfile', return_value=True)
     def test_parse_results_ko(self, *args):
@@ -242,6 +244,7 @@ class ODLMainTesting(ODLTesting):
                                   side_effect=RobotError):
             self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
 
+    @mock.patch('os.makedirs')
     @mock.patch('robot.run')
     @mock.patch('os.path.isfile', return_value=True)
     def test_ok(self, *args):
@@ -250,6 +253,7 @@ class ODLMainTesting(ODLTesting):
                 mock.patch.object(self.test, 'parse_results'):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
+    @mock.patch('os.makedirs')
     @mock.patch('robot.run')
     @mock.patch('os.path.isfile', return_value=False)
     def test_ok_no_creds(self, *args):
@@ -259,6 +263,7 @@ class ODLMainTesting(ODLTesting):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
             mock_method.assert_not_called()
 
+    @mock.patch('os.makedirs')
     @mock.patch('robot.run', return_value=1)
     @mock.patch('os.path.isfile', return_value=True)
     def test_testcases_in_failure(self, *args):
