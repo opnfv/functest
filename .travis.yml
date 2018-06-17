@@ -5,12 +5,15 @@ language: generic
 
 before_script:
   - sudo apt-get -y install qemu-user-static
+  - sudo pip install tox
   - sudo -E docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - (cd .. && git clone https://github.com/estesp/manifest-tool)
   - (cd ../manifest-tool && sudo -E make && sudo -E make install)
 
 jobs:
   include:
+    - stage: run unit tests
+      script: tox -e docs,pep8,pylint,yamllint,bashate,py27,cover
     - stage: build functest-core images
       script: sudo -E bash build.sh
       env:
