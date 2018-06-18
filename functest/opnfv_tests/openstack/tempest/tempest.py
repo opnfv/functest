@@ -369,7 +369,9 @@ class TempestResourcesManager(object):
         self.cloud = shade.OperatorCloud(
             cloud_config=os_client_config.get_config())
         LOGGER.debug("cloud: %s", self.cloud)
-        self.domain = self.cloud.auth.get("project_domain_name", "Default")
+        self.domain = self.cloud.get_domain(
+            name_or_id=self.cloud.auth.get(
+                "project_domain_name", "Default"))
         LOGGER.debug("domain: %s", self.domain)
         self.project = None
         self.user = None
@@ -386,7 +388,7 @@ class TempestResourcesManager(object):
             getattr(config.CONF, 'tempest_identity_tenant_name') + self.guid,
             description=getattr(
                 config.CONF, 'tempest_identity_tenant_description'),
-            domain_id=self.domain)
+            domain_id=self.domain.id)
         LOGGER.debug("project: %s", self.project)
 
     def _create_user(self):
@@ -397,7 +399,7 @@ class TempestResourcesManager(object):
             password=getattr(config.CONF, 'tempest_identity_user_password'),
             default_project=getattr(
                 config.CONF, 'tempest_identity_tenant_name') + self.guid,
-            domain_id=self.domain)
+            domain_id=self.domain.id)
         LOGGER.debug("user: %s", self.user)
 
     def _create_network(self):
