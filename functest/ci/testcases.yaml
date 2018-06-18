@@ -62,6 +62,38 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.snaps.health_check'
                     class: 'HealthCheck'
 
+            -
+                case_name: tenantnetwork1
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    It creates and configures all tenant network ressources
+                    required by advanced testcases (subnet, network and
+                    router).
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.core.tenantnetwork'
+                    class: 'TenantNetwork1'
+
+            -
+                case_name: tenantnetwork2
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    It creates new user/project before creating and configuring
+                    all tenant network ressources required by a testcase
+                    (subnet, network and router).
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.core.tenantnetwork'
+                    class: 'TenantNetwork2'
+
     -
         name: smoke
         order: 1
