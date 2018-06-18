@@ -188,6 +188,7 @@ class TenantNetwork2(TenantNetwork1):
     def clean(self):
         try:
             assert self.cloud
+            assert self.orig_cloud
             super(TenantNetwork2, self).clean()
             assert self.user.id
             assert self.project.id
