@@ -6,6 +6,9 @@
 # which accompanies this distribution, and is available at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
+
+"""Ease testing any Clearwater deployment"""
+
 import logging
 import os
 import re
@@ -26,7 +29,7 @@ __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
 
 
 class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
-    """ vIMS clearwater base usable by several orchestrators"""
+    """vIMS clearwater base usable by several orchestrators"""
 
     def __init__(self, **kwargs):
         self.logger = logging.getLogger(__name__)
@@ -44,6 +47,7 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
             os.makedirs(self.result_dir)
 
     def config_ellis(self, ellis_ip, signup_code='secret', two_numbers=False):
+        """Create one or two numbers"""
         output_dict = {}
         self.logger.debug('Configure Ellis: %s', ellis_ip)
         output_dict['ellis_ip'] = ellis_ip
@@ -114,6 +118,15 @@ class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
     def run_clearwater_live_test(self, dns_ip, public_domain,
                                  bono_ip=None, ellis_ip=None,
                                  signup_code='secret'):
+        """Run the Clearwater live tests
+
+        It first runs dnsmasq to reach clearwater services by FQDN and then the
+        Clearwater live tests. All results are saved in ims_test_output.txt.
+
+        Returns:
+            - a dict containing the overall results
+            - None on error
+        """
         # pylint: disable=too-many-locals,too-many-arguments
         self.logger.info('Run Clearwater live test')
         dns_file = '/etc/resolv.conf'
