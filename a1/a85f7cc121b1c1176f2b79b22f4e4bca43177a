@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Delia Popescu <delia.popescu@enea.com>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 19 Jun 2018 09:08:27 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/58703
+Project: functest
+Branch: refs/heads/master
