@@ -11,14 +11,11 @@ git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosc
 -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
 git+https://github.com/openstack/refstack-client@a59189eaacda24b787ecb65e6634257beba361ec#egg=refstack-client
 cloudify-rest-client===4.3.2
-openbaton-cli===2.2.1b7
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
 robotframework-requests===0.4.7
 robotframework-sshlibrary===2.1.3;python_version=='2.7'
-IPy===0.83
 ansible===2.3.2.0
-flasgger===0.6.6
 xtesting===0.42.0
 networking-bgpvpn===8.0.0
 sphinx-opnfv-theme===0.1.1
