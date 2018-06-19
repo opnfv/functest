@@ -9,12 +9,12 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
-    wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
-        > upper-constraints.txt && \
+    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
+        sed -E /#egg=functest/d > upper-constraints.txt && \
     git clone https://gerrit.opnfv.org/gerrit/functest /src/functest && \
     (cd /src/functest && git fetch origin $BRANCH && git checkout FETCH_HEAD) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
-        -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
+        -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         /src/functest && \
     rm -r upper-constraints.txt /src/functest && \
     cp /usr/lib/python2.7/site-packages/functest/ci/logging.ini /usr/lib/python2.7/site-packages/xtesting/ci/ && \
