@@ -1,3 +1,4 @@
+git+https://gerrit.opnfv.org/gerrit/functest#egg=functest
 git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
 git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
