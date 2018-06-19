@@ -27,10 +27,10 @@ import sys
 
 import os_client_config
 from six.moves import urllib
+from xtesting.core import robotframework
 
 from functest.utils import config
 from functest.utils import env
-from xtesting.core import robotframework
 
 __author__ = "Cedric Ollivier <cedric.ollivier@orange.com>"
 

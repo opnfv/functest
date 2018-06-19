@@ -7,14 +7,15 @@
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""Some common utils wrapping snaps functions """
+"""Some common utils wrapping snaps functions"""
+
+from snaps.openstack.tests import openstack_tests
+from snaps.openstack.utils import neutron_utils
+from snaps.openstack.utils import nova_utils
 
 from functest.utils import config
 from functest.utils import constants
 from functest.utils import env
-
-from snaps.openstack.tests import openstack_tests
-from snaps.openstack.utils import neutron_utils, nova_utils
 
 
 def get_ext_net_name(os_creds):

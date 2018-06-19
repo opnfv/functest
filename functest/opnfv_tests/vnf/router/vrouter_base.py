@@ -65,9 +65,9 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
                     test_list = function_test["test_list"]
                     target_vnf_name = function_test["target_vnf_name"]
                     for test_info in test_list:
-                        self.logger.info(test_info["protocol"] + " " +
-                                         test_info["test_kind"] +
-                                         " test.")
+                        self.logger.info(
+                            "%s %s test.", test_info["protocol"],
+                            test_info["test_kind"])
                         (result, result_data) = self.function_test_vrouter(
                             target_vnf_name, test_info)
                         test_result_data_list.append(result_data)

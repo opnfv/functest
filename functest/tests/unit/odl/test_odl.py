@@ -362,6 +362,7 @@ class ODLRunTesting(ODLTesting):
     @mock.patch('os_client_config.make_shade')
     def _test_run(self, status=testcase.TestCase.EX_OK,
                   exception=None, *args, **kwargs):
+        # pylint: disable=keyword-arg-before-vararg
         args[0].return_value.search_services.return_value = [
             munch.Munch(id=self._neutron_id)]
         args[0].return_value.search_endpoints.return_value = [
@@ -393,6 +394,7 @@ class ODLRunTesting(ODLTesting):
     @mock.patch('os_client_config.make_shade')
     def _test_multiple_suites(self, suites,
                               status=testcase.TestCase.EX_OK, *args, **kwargs):
+        # pylint: disable=keyword-arg-before-vararg
         args[0].return_value.search_endpoints.return_value = [
             munch.Munch(url=self._neutron_url)]
         args[0].return_value.search_services.return_value = [

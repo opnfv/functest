@@ -12,11 +12,11 @@
 
 import unittest
 
+from snaps.openstack.tests.create_instance_tests import SimpleHealthCheck
+from snaps.openstack.tests.os_source_file_test import OSIntegrationTestCase
+
 from functest.opnfv_tests.openstack.snaps.snaps_test_runner import (
     SnapsTestRunner)
-
-from snaps.openstack.tests.os_source_file_test import OSIntegrationTestCase
-from snaps.openstack.tests.create_instance_tests import SimpleHealthCheck
 
 
 class HealthCheck(SnapsTestRunner):

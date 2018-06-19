@@ -286,7 +286,7 @@ class RallyBase(testcase.TestCase):
                                self.excl_scenario()))
 
         if black_tests:
-            LOGGER.debug("Blacklisted tests: " + str(black_tests))
+            LOGGER.debug("Blacklisted tests: %s", str(black_tests))
 
         include = True
         for cases_line in cases_file:
@@ -358,9 +358,9 @@ class RallyBase(testcase.TestCase):
 
         # parse JSON operation result
         if self.task_succeed(json_results):
-            LOGGER.info('Test scenario: "{}" OK.'.format(test_name) + "\n")
+            LOGGER.info('Test scenario: "%s" OK.', test_name)
         else:
-            LOGGER.info('Test scenario: "{}" Failed.'.format(test_name) + "\n")
+            LOGGER.info('Test scenario: "%s" Failed.', test_name)
 
     def _run_task(self, test_name):
         """Run a task."""
@@ -369,7 +369,7 @@ class RallyBase(testcase.TestCase):
         task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
         if not os.path.exists(task_file):
             LOGGER.error("Task file '%s' does not exist.", task_file)
-            raise Exception("Task file '%s' does not exist.", task_file)
+            raise Exception("Task file '{}' does not exist.".format(task_file))
 
         file_name = self._prepare_test_list(test_name)
         if self.file_is_empty(file_name):

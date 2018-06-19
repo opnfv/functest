@@ -18,10 +18,10 @@ import pkg_resources
 import requests
 import yaml
 
-from functest.utils import config
 from git import Repo
 from snaps.openstack.utils import nova_utils
 
+from functest.utils import config
 
 RESULT_SPRIT_INDEX = {
     "transfer": 8,
@@ -202,12 +202,12 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
     def request_vnf_reboot(self, vnf_info_list):
         for vnf in vnf_info_list:
-            self.logger.debug("reboot the " + vnf["vnf_name"])
+            self.logger.debug("reboot the %s", vnf["vnf_name"])
             self.reboot_vm(vnf["vnf_name"])
 
     def request_vm_delete(self, vnf_info_list):
         for vnf in vnf_info_list:
-            self.logger.debug("delete the " + vnf["vnf_name"])
+            self.logger.debug("delete the %s", vnf["vnf_name"])
             self.delete_vm(vnf["vnf_name"])
 
     def get_vnf_info_list(self, cfy_manager_ip, topology_deploy_name,
@@ -225,7 +225,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
             vnf["target_vnf_flag"] = bool(vnf_name == target_vnf_name)
 
-            self.logger.debug("vnf name : " + vnf_name)
+            self.logger.debug("vnf name : %s", vnf_name)
             self.logger.debug(vnf_name + " floating ip address : " +
                               vnf["floating_ip"])
 

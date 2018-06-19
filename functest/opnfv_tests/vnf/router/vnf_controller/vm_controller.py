@@ -124,11 +124,11 @@ class VmController(object):
     def command_list_execute(self, ssh, command_list, prompt):
         res_data_list = []
         for command in command_list:
-            self.logger.debug("Command : " + command)
+            self.logger.debug("Command : %s", command)
             (res, res_data) = self.command_execute(ssh,
                                                    command,
                                                    prompt)
-            self.logger.debug("Response : " + res_data)
+            self.logger.debug("Response : %s", res_data)
             res_data_list.append(res_data)
             if not res:
                 return res, res_data_list
@@ -140,7 +140,7 @@ class VmController(object):
     def command_execute(self, ssh, command, prompt):
         res_data = ssh.send(command, prompt)
         if res_data is None:
-            self.logger.info("retry send command : " + command)
+            self.logger.info("retry send command : %s", command)
             res_data = ssh.send(command,
                                 prompt)
             if not ssh.error_check(res_data):
