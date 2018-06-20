@@ -22,6 +22,24 @@
       "revId": "8076b566cca9d2bb5368cc485c084a2ee6685581",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_10da4778",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-06-20T18:32:28Z",
+      "side": 1,
+      "message": "that\u0027s the default value to allow no config.",
+      "parentUuid": "da5c1566_9c9e7355",
+      "revId": "8076b566cca9d2bb5368cc485c084a2ee6685581",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
