@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_9c9e7355",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-06-20T14:20:37Z",
+      "side": 1,
+      "message": "The image filename can be a parameter in config file ?",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "8076b566cca9d2bb5368cc485c084a2ee6685581",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
