@@ -60,6 +60,38 @@ tiers:
                     class: 'TenantNetwork2'
 
             -
+                case_name: vmready1
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    It inherits from TenantNetwork1 which creates all network
+                    resources and prepares a future VM attached to that
+                    network.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.core.singlevm'
+                    class: 'VmReady1'
+
+            -
+                case_name: vmready2
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    It creates new user/project before creating and configuring
+                    all tenant network ressources, flavors, images, etc.
+                    required by advanced testcases.
+                dependencies:
+                    installer: ''
+                    scenario: ''
+                run:
+                    module: 'functest.core.singlevm'
+                    class: 'VmReady2'
+
+            -
                 case_name: singlevm1
                 project_name: functest
                 criteria: 100

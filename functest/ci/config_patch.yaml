@@ -12,6 +12,12 @@ fdio:
         image_properties: {'hw_mem_page_size':'large'}
         openstack:
             flavor_ram: 1024
+    vmready1:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    vmready2:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
     singlevm1:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
@@ -25,6 +31,12 @@ ovs:
         image_properties: {'hw_mem_page_size':'large'}
         openstack:
             flavor_ram: 1024
+    vmready1:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    vmready2:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
     singlevm1:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
