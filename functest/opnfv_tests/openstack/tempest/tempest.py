@@ -321,6 +321,24 @@ class TempestNeutronTrunk(TempestCommon):
             rconfig.write(config_file)
 
 
+class TempestBarbican(TempestCommon):
+    """Tempest Barbican testcase implementation."""
+    def __init__(self, **kwargs):
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = 'barbican'
+        TempestCommon.__init__(self, **kwargs)
+        self.mode = "'barbican_tempest_plugin.tests.(api|scenario)'"
+        self.res_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), 'barbican')
+        self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
+        self.list = os.path.join(self.res_dir, 'test_list.txt')
+
+    def generate_test_list(self):
+        self.backup_tempest_config(self.conf_file, '/etc')
+        super(TempestBarbican, self).generate_test_list()
+        os.remove('/etc/tempest.conf')
+
+
 class TempestSmokeParallel(TempestCommon):
     """Tempest smoke parallel testcase implementation."""
     def __init__(self, **kwargs):
