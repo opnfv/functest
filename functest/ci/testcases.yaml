@@ -329,6 +329,21 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestNeutronTrunk'
 
+            -
+                case_name: barbican
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    It leverages on the tempest plugin containing tests used to
+                    verify the functionality of a barbican installation
+                dependencies:
+                    installer: '^((?!fuel|apex|compass|daisy).)*$'
+                    scenario: ''
+                run:
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestBarbican'
+
     -
         name: features
         order: 2
