@@ -14,6 +14,22 @@ os:
                 hw_disk_bus: 'scsi'
                 hw_scsi_model: 'virtio-scsi'
 
+    vmready1:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vmready2:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
     singlevm1:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:

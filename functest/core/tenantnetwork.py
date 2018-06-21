@@ -31,6 +31,59 @@ from functest.utils import env
 from functest.utils import functest_utils
 
 
+class NewProject(object):
+    """Ease creating new projects/users"""
+    # pylint: disable=too-many-instance-attributes
+
+    __logger = logging.getLogger(__name__)
+
+    def __init__(self, cloud, case_name, guid):
+        self.orig_cloud = cloud
+        self.cloud = None
+        self.case_name = case_name
+        self.guid = guid
+        self.project = None
+        self.user = None
+
+    def create(self):
+        """Create projects/users"""
+        assert self.orig_cloud
+        assert self.case_name
+        password = str(uuid.uuid4())
+        domain = self.orig_cloud.get_domain(
+            name_or_id=self.orig_cloud.auth.get(
+                "project_domain_name", "Default"))
+        self.project = self.orig_cloud.create_project(
+            name='{}-project_{}'.format(self.case_name, self.guid),
+            description="Created by OPNFV Functest: {}".format(
+                self.case_name),
+            domain_id=domain.id)
+        self.__logger.debug("project: %s", self.project)
+        self.user = self.orig_cloud.create_user(
+            name='{}-user_{}'.format(self.case_name, self.guid),
+            password=password,
+            default_project=self.project.id,
+            domain_id=domain.id)
+        self.__logger.debug("user: %s", self.user)
+        os.environ["OS_USERNAME"] = self.user.name
+        os.environ["OS_PROJECT_NAME"] = self.user.default_project_id
+        cloud_config = os_client_config.get_config()
+        self.cloud = shade.OpenStackCloud(cloud_config=cloud_config)
+        os.environ["OS_USERNAME"] = self.orig_cloud.auth["username"]
+        os.environ["OS_PROJECT_NAME"] = self.orig_cloud.auth["project_name"]
+
+    def clean(self):
+        """Remove projects/users"""
+        try:
+            assert self.orig_cloud
+            assert self.user.id
+            assert self.project.id
+            self.orig_cloud.delete_user(self.user.id)
+            self.orig_cloud.delete_project(self.project.id)
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("cannot clean all ressources")
+
+
 class TenantNetwork1(testcase.TestCase):
     # pylint: disable=too-many-instance-attributes
     """Create a tenant network (scenario1)
@@ -145,54 +198,19 @@ class TenantNetwork2(TenantNetwork1):
         super(TenantNetwork2, self).__init__(**kwargs)
         try:
             assert self.cloud
-            self.domain = self.cloud.get_domain(
-                name_or_id=self.cloud.auth.get(
-                    "project_domain_name", "Default"))
-        except Exception:  # pylint: disable=broad-except
-            self.domain = None
-            self.__logger.exception("Cannot connect to Cloud")
-        self.project = None
-        self.user = None
-        self.orig_cloud = None
-        self.password = str(uuid.uuid4())
-
-    def run(self, **kwargs):
-        assert self.cloud
-        assert self.domain
-        try:
-            self.project = self.cloud.create_project(
-                name='{}-project_{}'.format(self.case_name, self.guid),
-                description="Created by OPNFV Functest: {}".format(
-                    self.case_name),
-                domain_id=self.domain.id)
-            self.__logger.debug("project: %s", self.project)
-            self.user = self.cloud.create_user(
-                name='{}-user_{}'.format(self.case_name, self.guid),
-                password=self.password,
-                default_project=self.project.id,
-                domain_id=self.domain.id)
-            self.__logger.debug("user: %s", self.user)
-            self.orig_cloud = self.cloud
-            os.environ["OS_USERNAME"] = self.user.name
-            os.environ["OS_PROJECT_NAME"] = self.user.default_project_id
-            cloud_config = os_client_config.get_config()
-            self.cloud = shade.OpenStackCloud(cloud_config=cloud_config)
-            os.environ["OS_USERNAME"] = self.orig_cloud.auth["username"]
-            os.environ["OS_PROJECT_NAME"] = self.orig_cloud.auth[
-                "project_name"]
+            self.project = NewProject(
+                self.cloud, self.case_name, self.guid)
+            self.project.create()
+            self.cloud = self.project.cloud
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot create user or project")
-            return testcase.TestCase.EX_RUN_ERROR
-        return super(TenantNetwork2, self).run(**kwargs)
+            self.cloud = None
+            self.project = None
 
     def clean(self):
         try:
-            assert self.cloud
-            assert self.orig_cloud
             super(TenantNetwork2, self).clean()
-            assert self.user.id
-            assert self.project.id
-            self.orig_cloud.delete_user(self.user.id)
-            self.orig_cloud.delete_project(self.project.id)
+            assert self.project
+            self.project.clean()
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("cannot clean all ressources")
