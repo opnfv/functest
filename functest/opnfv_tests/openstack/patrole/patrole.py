@@ -43,11 +43,6 @@ class Patrole(tempest.TempestCommon):
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
-    def generate_test_list(self):
-        self.backup_tempest_config(self.conf_file, '/etc')
-        super(Patrole, self).generate_test_list()
-        os.remove('/etc/tempest.conf')
-
     def run(self, **kwargs):
         for exclude in kwargs.get('exclude', []):
             self.mode = "{}(?!.*{})".format(self.mode, exclude)

@@ -58,7 +58,8 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(
                 (msg % conf_utils.TEMPEST_CUSTOM) in context.exception)
 
-    def test_gen_tl_cm_default(self):
+    @mock.patch('os.remove')
+    def test_gen_tl_cm_default(self, *args):
         self.tempestcommon.mode = 'custom'
         with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                         'shutil.copyfile') as mock_copyfile, \
@@ -66,9 +67,12 @@ class OSTempestTesting(unittest.TestCase):
                        'os.path.isfile', return_value=True):
             self.tempestcommon.generate_test_list()
             self.assertTrue(mock_copyfile.called)
+        args[0].assert_called_once_with('/etc/tempest.conf')
 
+    @mock.patch('os.remove')
+    @mock.patch('shutil.copyfile')
     @mock.patch('subprocess.check_output')
-    def _test_gen_tl_mode_default(self, mode, mock_exec=None):
+    def _test_gen_tl_mode_default(self, mode, *args):
         self.tempestcommon.mode = mode
         if self.tempestcommon.mode == 'smoke':
             testr_mode = r"'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'"
@@ -80,7 +84,8 @@ class OSTempestTesting(unittest.TestCase):
         cmd = "(cd {0}; testr list-tests {1} >{2} 2>/dev/null)".format(
             verifier_repo_dir, testr_mode, self.tempestcommon.list)
         self.tempestcommon.generate_test_list()
-        mock_exec.assert_called_once_with(cmd, shell=True)
+        args[0].assert_called_once_with(cmd, shell=True)
+        args[2].assert_called_once_with('/etc/tempest.conf')
 
     def test_gen_tl_smoke_mode(self):
         self._test_gen_tl_mode_default('smoke')
@@ -183,8 +188,6 @@ class OSTempestTesting(unittest.TestCase):
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs',
                 side_effect=Exception)
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.cleanup')
     def test_run_makedirs_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
@@ -193,10 +196,6 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.create', side_effect=Exception)
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.cleanup')
     def test_run_create_resources_ko(self, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.tempestcommon.run(),
@@ -205,10 +204,6 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.create', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.cleanup')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestCommon.configure', side_effect=Exception)
     def test_run_configure_tempest_ko(self, *args):
@@ -219,10 +214,6 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs')
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.create', return_value={})
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'TempestResourcesManager.cleanup')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'TempestCommon.configure')
     def _test_run(self, status, *args):
