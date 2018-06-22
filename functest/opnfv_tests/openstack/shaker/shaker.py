@@ -25,6 +25,7 @@ from functest.core import singlevm
 
 
 class Shaker(singlevm.SingleVm2):
+    """Run shaker full+perf l2 and l3"""
     # pylint: disable=too-many-instance-attributes
 
     __logger = logging.getLogger(__name__)
