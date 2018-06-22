@@ -18,13 +18,12 @@ import re
 import shutil
 import subprocess
 import time
-import uuid
 
-import os_client_config
 from six.moves import configparser
 from xtesting.core import testcase
 import yaml
 
+from functest.core import singlevm
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
@@ -32,7 +31,7 @@ from functest.utils import env
 LOGGER = logging.getLogger(__name__)
 
 
-class TempestCommon(testcase.TestCase):
+class TempestCommon(singlevm.VmReady1):
     # pylint: disable=too-many-instance-attributes
     """TempestCommon testcases implementation class."""
 
@@ -41,7 +40,6 @@ class TempestCommon(testcase.TestCase):
 
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)
-        self.resources = TempestResourcesManager()
         self.mode = ""
         self.option = []
         self.verifier_id = conf_utils.get_verifier_id()
@@ -55,6 +53,8 @@ class TempestCommon(testcase.TestCase):
         self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
         self.list = os.path.join(self.res_dir, 'test_list.txt')
         self.conf_file = None
+        self.image_alt = None
+        self.flavor_alt = None
 
     @staticmethod
     def read_file(filename):
@@ -104,6 +104,7 @@ class TempestCommon(testcase.TestCase):
     def generate_test_list(self):
         """Generate test list based on the test mode."""
         LOGGER.debug("Generating test case list...")
+        self.backup_tempest_config(self.conf_file, '/etc')
         if self.mode == 'custom':
             if os.path.isfile(conf_utils.TEMPEST_CUSTOM):
                 shutil.copyfile(
@@ -122,6 +123,7 @@ class TempestCommon(testcase.TestCase):
                 self.verifier_repo_dir, testr_mode, self.list)
             output = subprocess.check_output(cmd, shell=True)
             LOGGER.info("%s\n%s", cmd, output)
+        os.remove('/etc/tempest.conf')
 
     def apply_tempest_blacklist(self):
         """Exclude blacklisted test cases."""
@@ -259,21 +261,46 @@ class TempestCommon(testcase.TestCase):
         """
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
-        self.resources.create()
-        compute_cnt = len(self.resources.cloud.list_hypervisors())
+        compute_cnt = len(self.cloud.list_hypervisors())
+
+        LOGGER.info("Creating two images for Tempest suite")
+
+        meta = getattr(
+            config.CONF, '{}_extra_properties'.format(self.case_name), None)
+        self.image_alt = self.cloud.create_image(
+            '{}-img_alt_{}'.format(self.case_name, self.guid),
+            filename=getattr(
+                config.CONF, '{}_image'.format(self.case_name),
+                self.filename),
+            meta=meta)
+        LOGGER.debug("image_alt: %s", self.image_alt)
+
+        self.flavor_alt = self.orig_cloud.create_flavor(
+            '{}-flavor_alt_{}'.format(self.case_name, self.guid),
+            getattr(config.CONF, '{}_flavor_ram'.format(self.case_name),
+                    self.flavor_ram),
+            getattr(config.CONF, '{}_flavor_vcpus'.format(self.case_name),
+                    self.flavor_vcpus),
+            getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
+                    self.flavor_disk))
+        LOGGER.debug("flavor: %s", self.flavor_alt)
+        self.orig_cloud.set_flavor_specs(
+            self.flavor_alt.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(
-            self.conf_file, network_name=self.resources.network.id,
-            image_id=self.resources.image.id,
-            flavor_id=self.resources.flavor.id,
+            self.conf_file, network_name=self.network.id,
+            image_id=self.image.id,
+            flavor_id=self.flavor.id,
             compute_cnt=compute_cnt,
-            image_alt_id=self.resources.image_alt.id,
-            flavor_alt_id=self.resources.flavor_alt.id)
+            image_alt_id=self.image_alt.id,
+            flavor_alt_id=self.flavor_alt.id)
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
         self.start_time = time.time()
         try:
+            super(TempestCommon, self).run(**kwargs)
             self.configure(**kwargs)
             self.generate_test_list()
             self.apply_tempest_blacklist()
@@ -284,10 +311,16 @@ class TempestCommon(testcase.TestCase):
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception('Error with run')
             res = testcase.TestCase.EX_RUN_ERROR
-        finally:
-            self.resources.cleanup()
         self.stop_time = time.time()
         return res
+
+    def clean(self):
+        """
+        Cleanup all OpenStack objects. Should be called on completion.
+        """
+        super(TempestCommon, self).clean()
+        self.cloud.delete_image(self.image_alt)
+        self.orig_cloud.delete_flavor(self.flavor_alt.id)
 
 
 class TempestSmokeSerial(TempestCommon):
@@ -333,11 +366,6 @@ class TempestBarbican(TempestCommon):
         self.raw_list = os.path.join(self.res_dir, 'test_raw_list.txt')
         self.list = os.path.join(self.res_dir, 'test_list.txt')
 
-    def generate_test_list(self):
-        self.backup_tempest_config(self.conf_file, '/etc')
-        super(TempestBarbican, self).generate_test_list()
-        os.remove('/etc/tempest.conf')
-
 
 class TempestSmokeParallel(TempestCommon):
     """Tempest smoke parallel testcase implementation."""
@@ -375,126 +403,3 @@ class TempestDefcore(TempestCommon):
         TempestCommon.__init__(self, **kwargs)
         self.mode = "defcore"
         self.option = ["--concurrency", "1"]
-
-
-class TempestResourcesManager(object):
-    # pylint: disable=too-many-instance-attributes
-    """Tempest resource manager."""
-    def __init__(self):
-        self.guid = '-' + str(uuid.uuid4())
-        self.cloud = os_client_config.make_shade()
-        LOGGER.debug("cloud: %s", self.cloud)
-        self.domain = self.cloud.get_domain(
-            name_or_id=self.cloud.auth.get(
-                "project_domain_name", "Default"))
-        LOGGER.debug("domain: %s", self.domain)
-        self.project = None
-        self.user = None
-        self.network = None
-        self.subnet = None
-        self.image = None
-        self.image_alt = None
-        self.flavor = None
-        self.flavor_alt = None
-
-    def _create_project(self):
-        """Create project for tests."""
-        self.project = self.cloud.create_project(
-            getattr(config.CONF, 'tempest_identity_tenant_name') + self.guid,
-            description=getattr(
-                config.CONF, 'tempest_identity_tenant_description'),
-            domain_id=self.domain.id)
-        LOGGER.debug("project: %s", self.project)
-
-    def _create_user(self):
-        """Create user for tests."""
-        self.user = self.cloud.create_user(
-            name=getattr(
-                config.CONF, 'tempest_identity_user_name') + self.guid,
-            password=getattr(config.CONF, 'tempest_identity_user_password'),
-            default_project=getattr(
-                config.CONF, 'tempest_identity_tenant_name') + self.guid,
-            domain_id=self.domain.id)
-        LOGGER.debug("user: %s", self.user)
-
-    def _create_network(self):
-        """Create network for tests."""
-        tempest_net_name = getattr(
-            config.CONF, 'tempest_private_net_name') + self.guid
-        provider = {}
-        if hasattr(config.CONF, 'tempest_network_type'):
-            provider["network_type"] = getattr(
-                config.CONF, 'tempest_network_type')
-        if hasattr(config.CONF, 'tempest_physical_network'):
-            provider["physical_network"] = getattr(
-                config.CONF, 'tempest_physical_network')
-        if hasattr(config.CONF, 'tempest_segmentation_id'):
-            provider["segmentation_id"] = getattr(
-                config.CONF, 'tempest_segmentation_id')
-        LOGGER.info(
-            "Creating network with name: '%s'", tempest_net_name)
-        self.network = self.cloud.create_network(
-            tempest_net_name, provider=provider)
-        LOGGER.debug("network: %s", self.network)
-
-        self.subnet = self.cloud.create_subnet(
-            self.network.id,
-            subnet_name=getattr(
-                config.CONF, 'tempest_private_subnet_name') + self.guid,
-            cidr=getattr(config.CONF, 'tempest_private_subnet_cidr'),
-            enable_dhcp=True,
-            dns_nameservers=[env.get('NAMESERVER')])
-        LOGGER.debug("subnet: %s", self.subnet)
-
-    def _create_image(self, name):
-        """Create image for tests"""
-        LOGGER.info("Creating image with name: '%s'", name)
-        meta = getattr(config.CONF, 'openstack_extra_properties', None)
-        image = self.cloud.create_image(
-            name, filename=getattr(config.CONF, 'openstack_image_url'),
-            is_public=True, meta=meta)
-        LOGGER.debug("image: %s", image)
-        return image
-
-    def _create_flavor(self, name):
-        """Create flavor for tests."""
-        flavor = self.cloud.create_flavor(
-            name, getattr(config.CONF, 'openstack_flavor_ram'),
-            getattr(config.CONF, 'openstack_flavor_vcpus'),
-            getattr(config.CONF, 'openstack_flavor_disk'))
-        self.cloud.set_flavor_specs(
-            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
-        LOGGER.debug("flavor: %s", flavor)
-        return flavor
-
-    def create(self, create_project=False):
-        """Create resources for Tempest test suite."""
-        if create_project:
-            self._create_project()
-            self._create_user()
-        self._create_network()
-
-        LOGGER.debug("Creating two images for Tempest suite")
-        self.image = self._create_image(
-            getattr(config.CONF, 'openstack_image_name') + self.guid)
-        self.image_alt = self._create_image(
-            getattr(config.CONF, 'openstack_image_name_alt') + self.guid)
-
-        LOGGER.info("Creating two flavors for Tempest suite")
-        self.flavor = self._create_flavor(
-            getattr(config.CONF, 'openstack_flavor_name') + self.guid)
-        self.flavor_alt = self._create_flavor(
-            getattr(config.CONF, 'openstack_flavor_name_alt') + self.guid)
-
-    def cleanup(self):
-        """
-        Cleanup all OpenStack objects. Should be called on completion.
-        """
-        self.cloud.delete_image(self.image)
-        self.cloud.delete_image(self.image_alt)
-        self.cloud.delete_network(self.network.id)
-        self.cloud.delete_flavor(self.flavor.id)
-        self.cloud.delete_flavor(self.flavor_alt.id)
-        if self.project:
-            self.cloud.delete_user(self.user.id)
-            self.cloud.delete_project(self.project.id)

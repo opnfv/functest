@@ -40,8 +40,9 @@ from snaps.openstack.create_user import OpenStackUser
 import snaps.openstack.utils.glance_utils as glance_utils
 from snaps.openstack.utils import keystone_utils
 
+from functest.core import singlevm
 from functest.opnfv_tests.openstack.snaps import snaps_utils
-import functest.opnfv_tests.vnf.router.vrouter_base as vrouter_base
+from functest.opnfv_tests.vnf.router import vrouter_base
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 from functest.utils import config
 from functest.utils import env
@@ -50,17 +51,23 @@ from functest.utils import functest_utils
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
 
-class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
+class CloudifyVrouter(singlevm.SingleVm2):
     # pylint: disable=too-many-instance-attributes
     """vrouter testcase deployed with Cloudify Orchestrator."""
 
     __logger = logging.getLogger(__name__)
     name = __name__
 
+    filename = '/home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2'
+    flavor_ram = 4096
+    flavor_vcpus = 2
+    flavor_disk = 50
+
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vyos_vrouter"
         super(CloudifyVrouter, self).__init__(**kwargs)
+        vyos = vrouter_base.VrouterOnBoardingBase(case_name)
 
         # Retrieve the configuration
         try:
@@ -127,6 +134,21 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                 "SSH %s stderr: %s", cmd, stderr.read())
             raise Exception(error_msg)
 
+    def create_sg_rules(self):
+        """
+        It adds one security group rule allowing ingress 9000/tcp
+
+        Raises: Exception on error.
+        """
+        assert self.orig_cloud
+        super(Shaker, self).create_sg_rules()
+        self.orig_cloud.create_security_group_rule(
+            self.sec.id, port_range_min=1, port_range_max=65535,
+            protocol='tcp', direction='ingress')
+        self.orig_cloud.create_security_group_rule(
+            self.sec.id, port_range_min=1, port_range_max=65535,
+            protocol='udp', direction='ingress')
+
     def prepare(self):
         super(CloudifyVrouter, self).prepare()
         self.__logger.info("Additional pre-configuration steps")
@@ -141,41 +163,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         # network creation
         start_time = time.time()
 
-        # orchestrator VM flavor
-        self.__logger.info("Get or create flavor for cloudify manager vm ...")
-        flavor_settings = FlavorConfig(
-            name="{}-{}".format(
-                self.orchestrator['requirements']['flavor']['name'],
-                self.uuid),
-            ram=self.orchestrator['requirements']['flavor']['ram_min'],
-            disk=50, vcpus=2)
-        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        flavor_creator.create()
-        self.created_object.append(flavor_creator)
-
-        user_creator = OpenStackUser(
-            self.snaps_creds,
-            UserConfig(
-                name='cloudify_network_bug-{}'.format(self.uuid),
-                password=str(uuid.uuid4()),
-                project_name=self.tenant_name,
-                domain_name=self.snaps_creds.user_domain_name,
-                roles={'_member_': self.tenant_name}))
-        user_creator.create()
-        self.created_object.append(user_creator)
-
-        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
-        self.__logger.debug("snaps creds: %s", snaps_creds)
-
-        self.__logger.info("Creating keypair ...")
-        kp_file = os.path.join(self.data_dir, "cloudify_vrouter.pem")
-        keypair_settings = KeypairConfig(
-            name='cloudify_vrouter_kp-{}'.format(self.uuid),
-            private_filepath=kp_file)
-        keypair_creator = OpenStackKeypair(snaps_creds, keypair_settings)
-        keypair_creator.create()
-        self.created_object.append(keypair_creator)
-
         self.__logger.info("Upload some OS images if it doesn't exist")
         for image_name, image_file in six.iteritems(self.images):
             self.__logger.info("image: %s, file: %s", image_name, image_file)
@@ -187,74 +174,6 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
                         img_format='qcow2', image_file=image_file))
                 image_creator.create()
                 self.created_object.append(image_creator)
-
-        self.__logger.info("Creating full network ...")
-        subnet_settings = SubnetConfig(
-            name='cloudify_vrouter_subnet-{}'.format(self.uuid),
-            cidr='10.67.79.0/24',
-            dns_nameservers=[env.get('NAMESERVER')])
-        network_settings = NetworkConfig(
-            name='cloudify_vrouter_network-{}'.format(self.uuid),
-            subnet_settings=[subnet_settings])
-        network_creator = OpenStackNetwork(snaps_creds, network_settings)
-        network_creator.create()
-        self.created_object.append(network_creator)
-        ext_net_name = snaps_utils.get_ext_net_name(snaps_creds)
-        router_creator = OpenStackRouter(
-            snaps_creds,
-            RouterConfig(
-                name='cloudify_vrouter_router-{}'.format(self.uuid),
-                external_gateway=ext_net_name,
-                internal_subnets=[subnet_settings.name]))
-        router_creator.create()
-        self.created_object.append(router_creator)
-
-        # security group creation
-        self.__logger.info("Creating security group for cloudify manager vm")
-        sg_rules = list()
-        sg_rules.append(
-            SecurityGroupRuleConfig(
-                sec_grp_name="sg-cloudify-manager-{}".format(self.uuid),
-                direction=Direction.ingress,
-                protocol=Protocol.tcp, port_range_min=1,
-                port_range_max=65535))
-        sg_rules.append(
-            SecurityGroupRuleConfig(
-                sec_grp_name="sg-cloudify-manager-{}".format(self.uuid),
-                direction=Direction.ingress,
-                protocol=Protocol.udp, port_range_min=1,
-                port_range_max=65535))
-        security_group_creator = OpenStackSecurityGroup(
-            snaps_creds,
-            SecurityGroupConfig(
-                name="sg-cloudify-manager-{}".format(self.uuid),
-                rule_settings=sg_rules))
-        security_group_creator.create()
-        self.created_object.append(security_group_creator)
-
-        image_settings = ImageConfig(
-            name=self.orchestrator['requirements']['os_image'],
-            image_user='centos', exists=True)
-        port_settings = PortConfig(
-            name='cloudify_manager_port-{}'.format(self.uuid),
-            network_name=network_settings.name)
-        manager_settings = VmInstanceConfig(
-            name='cloudify_manager-{}'.format(self.uuid),
-            flavor=flavor_settings.name,
-            port_settings=[port_settings],
-            security_group_names=[
-                security_group_creator.sec_grp_settings.name],
-            floating_ip_settings=[FloatingIpConfig(
-                name='cloudify_manager_fip-{}'.format(self.uuid),
-                port_name=port_settings.name,
-                router_name=router_creator.router_settings.name)])
-        manager_creator = OpenStackVmInstance(
-            snaps_creds, manager_settings, image_settings,
-            keypair_settings)
-
-        self.__logger.info("Creating cloudify manager VM")
-        manager_creator.create()
-        self.created_object.append(manager_creator)
 
         cfy_client = CloudifyClient(
             host=manager_creator.get_floating_ip().ip,

@@ -14,40 +14,11 @@ import unittest
 import mock
 
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.opnfv_tests.openstack.tempest import tempest
 from functest.utils import config
 
 
 class OSTempestConfUtilsTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
-
-    @mock.Mock('os_client_config.make_shade')
-    def test_create_res_missing_net_dic(self, *mock_args):
-        # pylint: disable=unused-argument
-        tempest_resources = tempest.TempestResourcesManager()
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create()
-        msg = 'Failed to create private network'
-        self.assertTrue(msg in context.exception)
-
-    @mock.Mock('os_client_config.make_shade')
-    def test_create_res_missing_image(self, *mock_args):
-        # pylint: disable=unused-argument
-        tempest_resources = tempest.TempestResourcesManager()
-
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create()
-        msg = 'Failed to create image'
-        self.assertTrue(msg in context.exception, msg=str(context.exception))
-
-    @mock.Mock('os_client_config.make_shade')
-    def test_create_res_missing_flavor(self, *mock_args):
-        # pylint: disable=unused-argument
-        tempest_resources = tempest.TempestResourcesManager()
-        with self.assertRaises(Exception) as context:
-            tempest_resources.create()
-        msg = 'Failed to create flavor'
-        self.assertTrue(msg in context.exception, msg=str(context.exception))
 
     @mock.patch('subprocess.check_output')
     def test_create_rally_deployment(self, mock_exec):
