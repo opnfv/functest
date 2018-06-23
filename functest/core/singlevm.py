@@ -237,7 +237,7 @@ class SingleVm1(VmReady1):
                         self.ssh_connect_timeout))
                 break
             except Exception:  # pylint: disable=broad-except
-                self.__logger.info(
+                self.__logger.debug(
                     "try %s: cannot connect to %s", loop + 1,
                     self.sshvm.public_v4)
                 time.sleep(10)
@@ -254,7 +254,7 @@ class SingleVm1(VmReady1):
         Returns: echo exit codes
         """
         (_, stdout, _) = self.ssh.exec_command('echo Hello World')
-        self.__logger.info("output:\n%s", stdout.read())
+        self.__logger.debug("output:\n%s", stdout.read())
         return stdout.channel.recv_exit_status()
 
     def run(self, **kwargs):
