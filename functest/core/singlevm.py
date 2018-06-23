@@ -37,6 +37,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
 
     __logger = logging.getLogger(__name__)
     filename = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
+    visibility = 'private'
+    extra_properties = None
     flavor_ram = 1024
     flavor_vcpus = 1
     flavor_disk = 1
@@ -51,14 +53,17 @@ class VmReady1(tenantnetwork.TenantNetwork1):
 
     def _publish_image(self):
         assert self.cloud
-        meta = getattr(
-            config.CONF, '{}_extra_properties'.format(self.case_name), None)
         self.image = self.cloud.create_image(
             '{}-img_{}'.format(self.case_name, self.guid),
             filename=getattr(
                 config.CONF, '{}_image'.format(self.case_name),
                 self.filename),
-            meta=meta)
+            meta=getattr(
+                config.CONF, '{}_extra_properties'.format(self.case_name),
+                self.extra_properties),
+            visibility=getattr(
+                config.CONF, '{}_visibility'.format(self.case_name),
+                self.visibility))
         self.__logger.debug("image: %s", self.image)
 
     def _create_flavor(self):
@@ -104,11 +109,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         try:
             assert self.orig_cloud
             assert self.cloud
-            self.cloud.delete_image(self.image)
+            super(VmReady1, self).clean()
+            self.cloud.delete_image(self.image.id)
             self.orig_cloud.delete_flavor(self.flavor.id)
-            self.cloud.delete_image(self.image)
         except Exception:  # pylint: disable=broad-except
-            pass
+            self.__logger.exception("Cannot clean all ressources")
 
 
 class VmReady2(VmReady1):
@@ -144,7 +149,7 @@ class VmReady2(VmReady1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("cannot clean all ressources")
+            self.__logger.exception("Cannot clean all ressources")
 
 
 class SingleVm1(VmReady1):
@@ -286,15 +291,13 @@ class SingleVm1(VmReady1):
         try:
             assert self.orig_cloud
             assert self.cloud
+            self.cloud.delete_floating_ip(self.fip.id)
             self.cloud.delete_server(self.sshvm, wait=True)
             self.cloud.delete_security_group(self.sec.id)
-            self.cloud.delete_image(self.image)
-            self.orig_cloud.delete_flavor(self.flavor.id)
             self.cloud.delete_keypair(self.keypair.id)
-            self.cloud.delete_floating_ip(self.fip.id)
-            self.cloud.delete_image(self.image)
+            super(SingleVm1, self).clean()
         except Exception:  # pylint: disable=broad-except
-            pass
+            self.__logger.exception("Cannot clean all ressources")
 
 
 class SingleVm2(SingleVm1):
@@ -330,4 +333,4 @@ class SingleVm2(SingleVm1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("cannot clean all ressources")
+            self.__logger.exception("Cannot clean all ressources")

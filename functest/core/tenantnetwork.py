@@ -38,8 +38,8 @@ class NewProject(object):
     __logger = logging.getLogger(__name__)
 
     def __init__(self, cloud, case_name, guid):
-        self.orig_cloud = cloud
         self.cloud = None
+        self.orig_cloud = cloud
         self.case_name = case_name
         self.guid = guid
         self.project = None
@@ -51,8 +51,7 @@ class NewProject(object):
         assert self.case_name
         password = str(uuid.uuid4())
         domain = self.orig_cloud.get_domain(
-            name_or_id=self.orig_cloud.auth.get(
-                "project_domain_name", "Default"))
+            name_or_id="functest")
         self.project = self.orig_cloud.create_project(
             name='{}-project_{}'.format(self.case_name, self.guid),
             description="Created by OPNFV Functest: {}".format(
@@ -62,15 +61,18 @@ class NewProject(object):
         self.user = self.orig_cloud.create_user(
             name='{}-user_{}'.format(self.case_name, self.guid),
             password=password,
-            default_project=self.project.id,
             domain_id=domain.id)
         self.__logger.debug("user: %s", self.user)
-        os.environ["OS_USERNAME"] = self.user.name
-        os.environ["OS_PROJECT_NAME"] = self.user.default_project_id
-        cloud_config = os_client_config.get_config()
-        self.cloud = shade.OpenStackCloud(cloud_config=cloud_config)
-        os.environ["OS_USERNAME"] = self.orig_cloud.auth["username"]
-        os.environ["OS_PROJECT_NAME"] = self.orig_cloud.auth["project_name"]
+        self.orig_cloud.grant_role(
+            "_member_", user=self.user.id, project=self.project.id,
+            domain=domain.id)
+        osconfig = os_client_config.config.OpenStackConfig()
+        osconfig.cloud_config[
+            'clouds']['envvars']['project_name'] = self.project.name
+        osconfig.cloud_config['clouds']['envvars']['username'] = self.user.name
+        osconfig.cloud_config['clouds']['envvars']['password'] = password
+        self.cloud = shade.OpenStackCloud(
+            cloud_config=osconfig.get_one_cloud())
 
     def clean(self):
         """Remove projects/users"""
@@ -81,7 +83,7 @@ class NewProject(object):
             self.orig_cloud.delete_user(self.user.id)
             self.orig_cloud.delete_project(self.project.id)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("cannot clean all ressources")
+            self.__logger.exception("Cannot clean all ressources")
 
 
 class TenantNetwork1(testcase.TestCase):
@@ -174,6 +176,7 @@ class TenantNetwork1(testcase.TestCase):
             assert self.cloud
             self.cloud.remove_router_interface(self.router, self.subnet.id)
             self.cloud.delete_router(self.router.id)
+            self.cloud.delete_subnet(self.subnet.id)
             self.cloud.delete_network(self.network.id)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("cannot clean all ressources")
@@ -213,4 +216,4 @@ class TenantNetwork2(TenantNetwork1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("cannot clean all ressources")
+            self.__logger.exception("Cannot clean all ressources")
