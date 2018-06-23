@@ -37,6 +37,8 @@ class TempestCommon(singlevm.VmReady1):
     TEMPEST_RESULTS_DIR = os.path.join(
         getattr(config.CONF, 'dir_results'), 'tempest')
 
+    visibility = 'public'
+
     def __init__(self, **kwargs):
         super(TempestCommon, self).__init__(**kwargs)
         self.mode = ""
@@ -266,14 +268,17 @@ class TempestCommon(singlevm.VmReady1):
 
         LOGGER.info("Creating two images for Tempest suite")
 
-        meta = getattr(
-            config.CONF, '{}_extra_properties'.format(self.case_name), None)
         self.image_alt = self.cloud.create_image(
             '{}-img_alt_{}'.format(self.case_name, self.guid),
             filename=getattr(
                 config.CONF, '{}_image'.format(self.case_name),
                 self.filename),
-            meta=meta)
+            meta=getattr(
+                config.CONF, '{}_extra_properties'.format(self.case_name),
+                self.extra_properties),
+            visibility=getattr(
+                config.CONF, '{}_visibility'.format(self.case_name),
+                self.visibility))
         LOGGER.debug("image_alt: %s", self.image_alt)
 
         self.flavor_alt = self.orig_cloud.create_flavor(
