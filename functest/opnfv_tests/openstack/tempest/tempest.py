@@ -267,31 +267,12 @@ class TempestCommon(singlevm.VmReady1):
         compute_cnt = len(self.cloud.list_hypervisors())
 
         LOGGER.info("Creating two images for Tempest suite")
-
-        self.image_alt = self.cloud.create_image(
-            '{}-img_alt_{}'.format(self.case_name, self.guid),
-            filename=getattr(
-                config.CONF, '{}_image'.format(self.case_name),
-                self.filename),
-            meta=getattr(
-                config.CONF, '{}_extra_properties'.format(self.case_name),
-                self.extra_properties),
-            visibility=getattr(
-                config.CONF, '{}_visibility'.format(self.case_name),
-                self.visibility))
+        self.image_alt = self.publish_image(
+            '{}-img_alt_{}'.format(self.case_name, self.guid))
         LOGGER.debug("image_alt: %s", self.image_alt)
-
-        self.flavor_alt = self.orig_cloud.create_flavor(
-            '{}-flavor_alt_{}'.format(self.case_name, self.guid),
-            getattr(config.CONF, '{}_flavor_ram'.format(self.case_name),
-                    self.flavor_ram),
-            getattr(config.CONF, '{}_flavor_vcpus'.format(self.case_name),
-                    self.flavor_vcpus),
-            getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
-                    self.flavor_disk))
+        self.flavor_alt = self.create_flavor(
+            '{}-flavor_alt_{}'.format(self.case_name, self.guid))
         LOGGER.debug("flavor: %s", self.flavor_alt)
-        self.orig_cloud.set_flavor_specs(
-            self.flavor_alt.id, getattr(config.CONF, 'flavor_extra_specs', {}))
 
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(

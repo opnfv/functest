@@ -14,11 +14,11 @@ import time
 
 from xtesting.core import testcase
 
-from functest.opnfv_tests.openstack.vping import vping_base
+from functest.core import singlevm
 from functest.utils import config
 
 
-class VPingUserdata(vping_base.VPingBase):
+class VPingUserdata(singlevm.VmReady2):
     """
     Class to execute the vPing test using userdata and the VM's console
     """
@@ -28,6 +28,7 @@ class VPingUserdata(vping_base.VPingBase):
             kwargs["case_name"] = "vping_userdata"
         super(VPingUserdata, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
+        self.vm1 = None
         self.vm2 = None
 
     def run(self, **kwargs):
@@ -39,23 +40,19 @@ class VPingUserdata(vping_base.VPingBase):
         try:
             assert self.cloud
             super(VPingUserdata, self).run()
-
-            vm2_name = "{}-{}-{}".format(
-                getattr(config.CONF, 'vping_vm_name_2'), "userdata", self.guid)
-            self.logger.info(
-                "Creating VM 2 instance with name: '%s'", vm2_name)
-            self.vm2 = self.cloud.create_server(
-                vm2_name, image=self.image.id, flavor=self.flavor.id,
-                auto_ip=False, wait=True,
-                timeout=getattr(config.CONF, 'vping_vm_boot_timeout'),
-                network=self.network.id,
+            self.result = 0
+            self.vm1 = self.boot_vm()
+            self.vm2 = self.boot_vm(
+                '{}-vm2_{}'.format(self.case_name, self.guid),
                 userdata=self._get_userdata())
-            self.logger.debug("vm2: %s", self.vm2)
             self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
-            p_console = self.cloud.get_server_console(self.vm1.id)
-            self.logger.debug("vm2 console: \n%s", p_console)
 
-            return self._execute()
+            result = self._do_vping()
+            self.stop_time = time.time()
+            if result != testcase.TestCase.EX_OK:
+                return testcase.TestCase.EX_RUN_ERROR
+            self.result = 100
+            return testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.logger.exception('Unexpected error running vping_userdata')
             return testcase.TestCase.EX_RUN_ERROR
@@ -121,7 +118,9 @@ class VPingUserdata(vping_base.VPingBase):
     def clean(self):
         assert self.cloud
         self.cloud.delete_server(
+            self.vm1, wait=True,
+            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        self.cloud.delete_server(
             self.vm2, wait=True,
             timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        self.cloud.delete_server(self.vm2, wait=True)
         super(VPingUserdata, self).clean()
