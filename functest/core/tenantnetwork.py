@@ -44,34 +44,36 @@ class NewProject(object):
         self.guid = guid
         self.project = None
         self.user = None
+        self.password = None
+        self.domain = None
 
     def create(self):
         """Create projects/users"""
         assert self.orig_cloud
         assert self.case_name
-        password = str(uuid.uuid4())
-        domain = self.orig_cloud.get_domain(
+        self.password = str(uuid.uuid4())
+        self.domain = self.orig_cloud.get_domain(
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
         self.project = self.orig_cloud.create_project(
             name='{}-project_{}'.format(self.case_name, self.guid),
             description="Created by OPNFV Functest: {}".format(
                 self.case_name),
-            domain_id=domain.id)
+            domain_id=self.domain.id)
         self.__logger.debug("project: %s", self.project)
         self.user = self.orig_cloud.create_user(
             name='{}-user_{}'.format(self.case_name, self.guid),
-            password=password,
-            domain_id=domain.id)
+            password=self.password,
+            domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
         self.orig_cloud.grant_role(
             "_member_", user=self.user.id, project=self.project.id,
-            domain=domain.id)
+            domain=self.domain.id)
         osconfig = os_client_config.config.OpenStackConfig()
         osconfig.cloud_config[
             'clouds']['envvars']['project_name'] = self.project.name
         osconfig.cloud_config['clouds']['envvars']['username'] = self.user.name
-        osconfig.cloud_config['clouds']['envvars']['password'] = password
+        osconfig.cloud_config['clouds']['envvars']['password'] = self.password
         self.cloud = shade.OpenStackCloud(
             cloud_config=osconfig.get_one_cloud())
 
