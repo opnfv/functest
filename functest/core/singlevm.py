@@ -25,7 +25,7 @@ from functest.utils import config
 
 
 class VmReady1(tenantnetwork.TenantNetwork1):
-    """Deploy a single VM reachable via ssh (scenario1)
+    """Prepare a single VM (scenario1)
 
     It inherits from TenantNetwork1 which creates all network resources and
     prepares a future VM attached to that network.
@@ -51,10 +51,19 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         self.image = None
         self.flavor = None
 
-    def _publish_image(self):
+    def publish_image(self, name=None):
+        """Publish image
+
+        It allows publishing multiple images for the child testcases. It forces
+        the same configuration for all subtestcases.
+
+        Returns: image
+
+        Raises: expection on error
+        """
         assert self.cloud
-        self.image = self.cloud.create_image(
-            '{}-img_{}'.format(self.case_name, self.guid),
+        image = self.cloud.create_image(
+            name if name else '{}-img_{}'.format(self.case_name, self.guid),
             filename=getattr(
                 config.CONF, '{}_image'.format(self.case_name),
                 self.filename),
@@ -64,21 +73,53 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
                 self.visibility))
-        self.__logger.debug("image: %s", self.image)
+        self.__logger.debug("image: %s", image)
+        return image
 
-    def _create_flavor(self):
+    def create_flavor(self, name=None):
+        """Create flavor
+
+        It allows creating multiple flavors for the child testcases. It forces
+        the same configuration for all subtestcases.
+
+        Returns: flavor
+
+        Raises: expection on error
+        """
         assert self.orig_cloud
-        self.flavor = self.orig_cloud.create_flavor(
-            '{}-flavor_{}'.format(self.case_name, self.guid),
+        flavor = self.orig_cloud.create_flavor(
+            name if name else '{}-flavor_{}'.format(self.case_name, self.guid),
             getattr(config.CONF, '{}_flavor_ram'.format(self.case_name),
                     self.flavor_ram),
             getattr(config.CONF, '{}_flavor_vcpus'.format(self.case_name),
                     self.flavor_vcpus),
             getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
                     self.flavor_disk))
-        self.__logger.debug("flavor: %s", self.flavor)
+        self.__logger.debug("flavor: %s", flavor)
         self.orig_cloud.set_flavor_specs(
-            self.flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+        return flavor
+
+    def boot_vm(self, name=None, **kwargs):
+        """Boot the virtual machine
+
+        It allows booting multiple machines for the child testcases. It forces
+        the same configuration for all subtestcases.
+
+        Returns: vm
+
+        Raises: expection on error
+        """
+        assert self.cloud
+        vm1 = self.cloud.create_server(
+            name if name else '{}-vm_{}'.format(self.case_name, self.guid),
+            image=self.image.id, flavor=self.flavor.id,
+            auto_ip=False, wait=True,
+            network=self.network.id,
+            **kwargs)
+        vm1 = self.cloud.wait_for_server(vm1, auto_ip=False)
+        self.__logger.debug("vm: %s", vm1)
+        return vm1
 
     def run(self, **kwargs):
         """Boot the new VM
@@ -95,8 +136,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         try:
             assert self.cloud
             super(VmReady1, self).run(**kwargs)
-            self._publish_image()
-            self._create_flavor()
+            self.image = self.publish_image()
+            self.flavor = self.create_flavor()
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
@@ -175,11 +216,11 @@ class SingleVm1(VmReady1):
         self.sec = None
         self.fip = None
         self.keypair = None
-        self.ssh = paramiko.SSHClient()
+        self.ssh = None
         (_, self.key_filename) = tempfile.mkstemp()
 
-    def create_sg_rules(self):
-        """Create the security group
+    def prepare(self):
+        """Create the security group and the keypair
 
         It can be overriden to set other rules according to the services
         running in the VM
@@ -187,6 +228,12 @@ class SingleVm1(VmReady1):
         Raises: Exception on error
         """
         assert self.cloud
+        self.keypair = self.cloud.create_keypair(
+            '{}-kp_{}'.format(self.case_name, self.guid))
+        self.__logger.debug("keypair: %s", self.keypair)
+        self.__logger.debug("private_key: %s", self.keypair.private_key)
+        with open(self.key_filename, 'w') as private_key_file:
+            private_key_file.write(self.keypair.private_key)
         self.sec = self.cloud.create_security_group(
             '{}-sg_{}'.format(self.case_name, self.guid),
             'created by OPNFV Functest ({})'.format(self.case_name))
@@ -196,37 +243,28 @@ class SingleVm1(VmReady1):
         self.cloud.create_security_group_rule(
             self.sec.id, protocol='icmp', direction='ingress')
 
-    def _boot_vm(self):
-        assert self.cloud
-        self.keypair = self.cloud.create_keypair(
-            '{}-kp_{}'.format(self.case_name, self.guid))
-        self.__logger.debug("keypair: %s", self.keypair)
-        self.__logger.debug("private_key: %s", self.keypair.private_key)
-        with open(self.key_filename, 'w') as private_key_file:
-            private_key_file.write(self.keypair.private_key)
+    def connect(self, vm1):
+        """Connect to a virtual machine via ssh
 
-        self.sshvm = self.cloud.create_server(
-            '{}-vm_{}'.format(self.case_name, self.guid),
-            image=self.image.id, flavor=self.flavor.id,
-            key_name=self.keypair.id,
-            auto_ip=False, wait=True,
-            network=self.network.id,
-            security_groups=[self.sec.id])
-        self.__logger.debug("vm: %s", self.sshvm)
-        self.fip = self.cloud.create_floating_ip(
-            network=self.ext_net.id, server=self.sshvm)
-        self.__logger.debug("floating_ip: %s", self.fip)
-        self.sshvm = self.cloud.wait_for_server(self.sshvm, auto_ip=False)
+        It first adds a floating ip to the virtual machine and then establishes
+        the ssh connection.
 
-    def _connect(self):
-        assert self.cloud
-        p_console = self.cloud.get_server_console(self.sshvm.id)
+        Returns:
+        - (fip, ssh)
+        - None on error
+        """
+        assert vm1
+        fip = self.cloud.create_floating_ip(
+            network=self.ext_net.id, server=vm1)
+        self.__logger.debug("floating_ip: %s", fip)
+        p_console = self.cloud.get_server_console(vm1)
         self.__logger.debug("vm console: \n%s", p_console)
-        self.ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
         for loop in range(6):
             try:
-                self.ssh.connect(
-                    self.sshvm.public_v4,
+                ssh.connect(
+                    fip.floating_ip_address,
                     username=getattr(
                         config.CONF,
                         '{}_image_user'.format(self.case_name), self.username),
@@ -239,12 +277,13 @@ class SingleVm1(VmReady1):
             except Exception:  # pylint: disable=broad-except
                 self.__logger.debug(
                     "try %s: cannot connect to %s", loop + 1,
-                    self.sshvm.public_v4)
+                    fip.floating_ip_address)
                 time.sleep(10)
         else:
-            self.__logger.error("cannot connect to %s", self.sshvm.public_v4)
-            return False
-        return True
+            self.__logger.error(
+                "cannot connect to %s", fip.floating_ip_address)
+            return None
+        return (fip, ssh)
 
     def execute(self):
         """Say hello world via ssh
@@ -275,9 +314,10 @@ class SingleVm1(VmReady1):
             assert self.cloud
             super(SingleVm1, self).run(**kwargs)
             self.result = 0
-            self.create_sg_rules()
-            self._boot_vm()
-            assert self._connect()
+            self.prepare()
+            self.sshvm = self.boot_vm(
+                key_name=self.keypair.id, security_groups=[self.sec.id])
+            (self.fip, self.ssh) = self.connect(self.sshvm)
             if not self.execute():
                 self.result = 100
                 status = testcase.TestCase.EX_OK

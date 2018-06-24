@@ -37,15 +37,9 @@ class Shaker(singlevm.SingleVm2):
     username = 'ubuntu'
     port = 9000
 
-    def create_sg_rules(self):
-        """
-        It adds one security group rule allowing ingress 9000/tcp
-
-        Raises: Exception on error.
-        """
-        assert self.orig_cloud
-        super(Shaker, self).create_sg_rules()
-        self.orig_cloud.create_security_group_rule(
+    def prepare(self):
+        super(Shaker, self).prepare()
+        self.cloud.create_security_group_rule(
             self.sec.id, port_range_min=self.port, port_range_max=self.port,
             protocol='tcp', direction='ingress')
 
@@ -57,14 +51,14 @@ class Shaker(singlevm.SingleVm2):
         """
         assert self.ssh
         scpc = scp.SCPClient(self.ssh.get_transport())
-        scpc.put('/home/opnfv/functest/conf/env_file', '~/')
+        scpc.put('/home/opnfv/functest/conf/env_file', '~/env_file')
         (_, stdout, stderr) = self.ssh.exec_command(
             'source ~/env_file && export OS_INTERFACE=public &&'
             'shaker --server-endpoint {}:9000 --scenario '
             'openstack/full_l2,openstack/full_l3_east_west,'
             'openstack/full_l3_north_south,openstack/perf_l2,'
             'openstack/perf_l3_east_west,openstack/perf_l3_north_south '
-            '--report report.html --output report.json ; echo $?'.format(
+            '--report report.html --output report.json'.format(
                 self.sshvm.public_v4))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
