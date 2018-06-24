@@ -9,9 +9,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 DEST=$(mktemp -d)
-VOL_DEV_NAME="$(lsblk -l -o NAME | grep -o "vdc\|sdc\b")"
+VOL_DEV_NAME=${1:-vdb}
 echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 
+echo "$(lsblk -l -o NAME)"
 if [ ! -z $VOL_DEV_NAME ]; then
     sudo mount /dev/$VOL_DEV_NAME $DEST
     if [ -f $DEST/new_data ]; then
@@ -21,3 +22,5 @@ if [ ! -z $VOL_DEV_NAME ]; then
     exit 1
     fi
 fi
+
+exit 0

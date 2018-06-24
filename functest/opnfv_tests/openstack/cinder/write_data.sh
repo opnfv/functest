@@ -9,9 +9,10 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 DEST=$(mktemp -d)
-VOL_DEV_NAME="$(lsblk -l -o NAME | grep -o "vdc\|sdc\b")"
-
+VOL_DEV_NAME=${1:-vdb}
 echo "VOL_DEV_NAME: $VOL_DEV_NAME"
+
+echo "$(lsblk -l -o NAME)"
 
 if [ ! -z $VOL_DEV_NAME ]; then
     sudo /usr/sbin/mkfs.ext4 -F /dev/$VOL_DEV_NAME
@@ -25,3 +26,5 @@ else
     echo "Failed to write data!"
     exit 1
 fi
+
+exit 0
