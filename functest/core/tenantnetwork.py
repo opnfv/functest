@@ -51,7 +51,8 @@ class NewProject(object):
         assert self.case_name
         password = str(uuid.uuid4())
         domain = self.orig_cloud.get_domain(
-            name_or_id="functest")
+            name_or_id=self.orig_cloud.auth.get(
+                "project_domain_name", "Default"))
         self.project = self.orig_cloud.create_project(
             name='{}-project_{}'.format(self.case_name, self.guid),
             description="Created by OPNFV Functest: {}".format(
