@@ -16,15 +16,13 @@ tiers:
                 description: >-
                     This test case verifies the retrieval of OpenStack clients:
                     Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
+                    simple queries.
                 dependencies:
                     installer: ''
                     scenario: ''
                 run:
                     module:
-                        'functest.opnfv_tests.openstack.snaps.connection_check'
+                        'functest.opnfv_tests.openstack.api.connection_check'
                     class: 'ConnectionCheck'
 
             -

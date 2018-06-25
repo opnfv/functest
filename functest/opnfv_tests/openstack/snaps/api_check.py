@@ -36,6 +36,11 @@ class ApiCheck(SnapsTestRunner):
         :param kwargs: the arguments to pass on
         :return:
         """
+        snaps_suite_builder.add_openstack_client_tests(
+            suite=self.suite,
+            os_creds=self.os_creds,
+            ext_net_name=self.ext_net_name,
+            use_keystone=self.use_keystone)
         snaps_suite_builder.add_openstack_api_tests(
             suite=self.suite,
             os_creds=self.os_creds,
