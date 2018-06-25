@@ -15,73 +15,9 @@ import mock
 from snaps.openstack.os_credentials import OSCreds
 from xtesting.core import testcase
 
-from functest.opnfv_tests.openstack.snaps import (
-    connection_check, api_check, health_check, smoke)
-
-
-class ConnectionCheckTesting(unittest.TestCase):
-    """
-    Ensures the VPingUserdata class can run in Functest. This test does not
-    actually connect with an OpenStack pod.
-    """
-
-    def setUp(self):
-        self.os_creds = OSCreds(
-            username='user', password='pass',
-            auth_url='http://foo.com:5000/v3', project_name='bar')
-
-        self.connection_check = connection_check.ConnectionCheck(
-            os_creds=self.os_creds, ext_net_name='foo')
-
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
-                'add_openstack_client_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
-    def test_run_success(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = []
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
-        self.assertEquals(
-            testcase.TestCase.EX_OK, self.connection_check.is_successful())
-        args[0].assert_called_with(mock.ANY)
-        args[1].assert_called_with(
-            ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
-            use_keystone=True)
-
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
-                'add_openstack_client_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
-    def test_run_1_of_100_ko(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
-        self.assertEquals(
-            testcase.TestCase.EX_TESTCASE_FAILED,
-            self.connection_check.is_successful())
-        args[0].assert_called_with(mock.ANY)
-        args[1].assert_called_with(
-            ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
-            use_keystone=True)
-
-    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
-                'add_openstack_client_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
-    def test_run_1_of_100_ko_criteria(self, *args):
-        self.connection_check.criteria = 90
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.connection_check.run())
-        self.assertEquals(
-            testcase.TestCase.EX_OK, self.connection_check.is_successful())
-        args[0].assert_called_with(mock.ANY)
-        args[1].assert_called_with(
-            ext_net_name='foo', os_creds=self.os_creds, suite=mock.ANY,
-            use_keystone=True)
+from functest.opnfv_tests.openstack.snaps import api_check
+from functest.opnfv_tests.openstack.snaps import health_check
+from functest.opnfv_tests.openstack.snaps import smoke
 
 
 class APICheckTesting(unittest.TestCase):
@@ -99,6 +35,8 @@ class APICheckTesting(unittest.TestCase):
             os_creds=self.os_creds, ext_net_name='foo')
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
     @mock.patch('unittest.TextTestRunner.run',
                 return_value=mock.MagicMock(name='unittest.TextTestResult'))
@@ -114,6 +52,8 @@ class APICheckTesting(unittest.TestCase):
             ext_net_name='foo', image_metadata=mock.ANY,
             os_creds=self.os_creds, suite=mock.ANY, use_keystone=True)
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
     @mock.patch('unittest.TextTestRunner.run',
@@ -131,6 +71,8 @@ class APICheckTesting(unittest.TestCase):
             ext_net_name='foo', image_metadata=mock.ANY,
             os_creds=self.os_creds, suite=mock.ANY, use_keystone=True)
 
+    @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
+                'add_openstack_client_tests')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
     @mock.patch('unittest.TextTestRunner.run',
