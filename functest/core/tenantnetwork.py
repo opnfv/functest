@@ -74,8 +74,10 @@ class NewProject(object):
             'clouds']['envvars']['project_name'] = self.project.name
         osconfig.cloud_config['clouds']['envvars']['username'] = self.user.name
         osconfig.cloud_config['clouds']['envvars']['password'] = self.password
+        self.__logger.debug("cloud_config %s", osconfig.cloud_config)
         self.cloud = shade.OpenStackCloud(
             cloud_config=osconfig.get_one_cloud())
+        self.__logger.debug("new cloud %s", self.cloud.auth)
 
     def clean(self):
         """Remove projects/users"""
