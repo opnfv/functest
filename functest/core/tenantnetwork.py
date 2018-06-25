@@ -67,7 +67,7 @@ class NewProject(object):
             domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
         self.orig_cloud.grant_role(
-            "_member_", user=self.user.id, project=self.project.id,
+            "Member", user=self.user.id, project=self.project.id,
             domain=self.domain.id)
         osconfig = os_client_config.config.OpenStackConfig()
         osconfig.cloud_config[
