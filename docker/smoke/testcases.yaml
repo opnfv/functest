@@ -8,55 +8,6 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                case_name: vping_ssh
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    This test case verifies: 1) SSH to an instance using
-                    floating IPs over the public network. 2) Connectivity
-                    between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
-                run:
-                    module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
-                    class: 'VPingSSH'
-
-            -
-                case_name: vping_userdata
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    This test case verifies:  1) Boot a VM with given userdata.
-                    2) Connectivity between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
-                run:
-                    module:
-                        'functest.opnfv_tests.openstack.vping.vping_userdata'
-                    class: 'VPingUserdata'
-
-            -
-                case_name: cinder_test
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    This test case verifies: 1) Attach volume and to 1
-                    instance; 2) Write data on volume 3) Detach volume
-                    from instance 1, attach it on instance 2 3) Read volume
-                    data
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
-                run:
-                    module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
-                    class: 'CinderCheck'
-
-            -
                 case_name: tempest_smoke_serial
                 project_name: functest
                 criteria: 100
