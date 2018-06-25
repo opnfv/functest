@@ -96,26 +96,6 @@ tiers:
                     class: 'Shaker'
 
             -
-                case_name: odl
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test Suite for the OpenDaylight SDN Controller. It
-                    integrates some test suites from upstream using
-                    Robot as the test framework.
-                dependencies:
-                    installer: ''
-                    scenario: 'odl'
-                run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
-                    args:
-                        suites:
-                            - /src/odl_test/csit/suites/integration/basic
-                            - /src/odl_test/csit/suites/openstack/neutron
-
-            -
                 case_name: snaps_smoke
                 project_name: functest
                 criteria: 100
