@@ -42,7 +42,7 @@ class ConnectionCheck(testcase.TestCase):
                          "list_hypervisors", "list_keypairs", "list_networks",
                          "list_ports", "list_role_assignments", "list_roles",
                          "list_routers", "list_servers", "list_services",
-                         "list_subnets", "list_zones"]:
+                         "list_subnets"]:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
             self.result = 100
