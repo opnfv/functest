@@ -2,7 +2,6 @@ FROM opnfv/functest-tempest
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
-ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.3.0
 
@@ -24,10 +23,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin -rthirdparty-requirements.txt && \
-    git clone https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    (cd /src/odl_test && git checkout $ODL_TAG) && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt /src/odl_test/.git \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
