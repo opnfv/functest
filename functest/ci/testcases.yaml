@@ -30,6 +30,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It creates and configures all tenant network ressources
                     required by advanced testcases (subnet, network and
@@ -46,6 +47,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It creates new user/project before creating and configuring
                     all tenant network ressources required by a testcase
@@ -62,6 +64,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It inherits from TenantNetwork1 which creates all network
                     resources and prepares a future VM attached to that
@@ -78,6 +81,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It creates new user/project before creating and configuring
                     all tenant network ressources, flavors, images, etc.
@@ -94,6 +98,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It inherits from TenantNetwork1 which creates all network
                     resources and completes it by booting a VM attached to that
@@ -110,6 +115,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     It creates new user/project before creating and configuring
                     all tenant network ressources and vms required by advanced
@@ -126,12 +132,13 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     This test case verifies: 1) SSH to an instance using
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
@@ -142,11 +149,12 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy).)*'
                     scenario: '^((?!lxd).)*$'
                 run:
                     module:
@@ -158,6 +166,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     This test case verifies: 1) Attach volume and to 1
                     instance; 2) Write data on volume 3) Detach volume
@@ -175,6 +184,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: true
+                enabled: false
                 description: >-
                     Test Suite for the OpenDaylight SDN Controller. It
                     integrates some test suites from upstream using
