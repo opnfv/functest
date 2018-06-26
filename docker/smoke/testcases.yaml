@@ -142,7 +142,7 @@ tiers:
                     It leverages on the tempest plugin containing tests used to
                     verify the functionality of a barbican installation
                 dependencies:
-                    installer: '^((?!fuel|apex|compass|daisy).)*$'
+                    installer: '^((?!fuel|apex|compass|daisy|osa).)*$'
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
