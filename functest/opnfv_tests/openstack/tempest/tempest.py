@@ -265,12 +265,9 @@ class TempestCommon(singlevm.VmReady1):
             os.makedirs(self.res_dir)
         compute_cnt = len(self.cloud.list_hypervisors())
 
-        LOGGER.info("Creating two images for Tempest suite")
         self.image_alt = self.publish_image(
             '{}-img_alt_{}'.format(self.case_name, self.guid))
-        LOGGER.debug("image_alt: %s", self.image_alt)
-        self.flavor_alt = self.create_flavor(
-            '{}-flavor_alt_{}'.format(self.case_name, self.guid))
+        self.flavor_alt = self.create_flavor_alt()
         LOGGER.debug("flavor: %s", self.flavor_alt)
 
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
