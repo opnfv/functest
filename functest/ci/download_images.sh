@@ -16,6 +16,7 @@ https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloud
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
 http://testresults.opnfv.org/functest/shaker-image.qcow2
+http://testresults.opnfv.org/functest/shaker-image-arm64.qcow2
 EOF
 
 xz --decompress --force --keep \
