@@ -35,7 +35,7 @@ tiers:
                     required by advanced testcases (subnet, network and
                     router).
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
@@ -51,7 +51,7 @@ tiers:
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
@@ -67,7 +67,7 @@ tiers:
                     resources and prepares a future VM attached to that
                     network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.singlevm'
@@ -83,7 +83,7 @@ tiers:
                     all tenant network ressources, flavors, images, etc.
                     required by advanced testcases.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.singlevm'
@@ -99,7 +99,7 @@ tiers:
                     resources and completes it by booting a VM attached to that
                     network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.singlevm'
@@ -115,7 +115,7 @@ tiers:
                     all tenant network ressources and vms required by advanced
                     testcases.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: ''
                 run:
                     module: 'functest.core.singlevm'
@@ -131,7 +131,7 @@ tiers:
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
@@ -146,7 +146,7 @@ tiers:
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy).)*'
                     scenario: '^((?!lxd).)*$'
                 run:
                     module:
@@ -164,7 +164,7 @@ tiers:
                     from instance 1, attach it on instance 2 3) Read volume
                     data
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
@@ -180,7 +180,7 @@ tiers:
                     integrates some test suites from upstream using
                     Robot as the test framework.
                 dependencies:
-                    installer: ''
+                    installer: '^((?!fuel|apex|compass|daisy|xci).)*'
                     scenario: 'odl'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
