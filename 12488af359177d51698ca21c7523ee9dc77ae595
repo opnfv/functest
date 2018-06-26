@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_78d8c11d",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2018-06-26T14:37:50Z",
+      "side": 1,
+      "message": "not sure why these 2 cant be part of healthcheck, since they run in daily before healthcheck",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 148,
+        "endChar": 41
+      },
+      "revId": "12488af359177d51698ca21c7523ee9dc77ae595",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
