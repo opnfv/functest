@@ -151,14 +151,6 @@ tempest:
 rally:
     deployment_name: opnfv-rally
     network_name: rally-net
-    # network_type: vlan
-    # physical_network: physnet2
-    # segmentation_id: 2366
-    subnet_name: rally-subnet
-    subnet_cidr: 192.168.140.0/24
-    router_name: rally-router
-    flavor_name: rally-tiny
-    flavor_alt_name: rally-mini
 
 vnf:
     juju_epc:
