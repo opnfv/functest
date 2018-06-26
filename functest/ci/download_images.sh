@@ -14,7 +14,7 @@ http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-lxc.tar.gz
 http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-aarch64-disk.img
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
-https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
+http://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
 http://testresults.opnfv.org/functest/shaker-image.qcow2
 EOF
 
