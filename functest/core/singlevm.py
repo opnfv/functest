@@ -42,6 +42,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_ram = 1024
     flavor_vcpus = 1
     flavor_disk = 1
+    image_format = 'qcow2'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -70,6 +71,9 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             meta=getattr(
                 config.CONF, '{}_extra_properties'.format(self.case_name),
                 self.extra_properties),
+            disk_format=getattr(
+                config.CONF, '{}_image_format'.format(self.case_name),
+                self.image_format),
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
                 self.visibility))

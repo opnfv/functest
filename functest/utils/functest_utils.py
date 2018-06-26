@@ -15,8 +15,6 @@ import subprocess
 import sys
 import yaml
 
-from functest.utils import env
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -74,20 +72,3 @@ def get_parameter_from_yaml(parameter, yfile):
             raise ValueError("The parameter %s is not defined in"
                              " %s" % (parameter, yfile))
     return value
-
-
-def get_external_network(cloud):
-    """
-    Returns the configured external network name or
-    the first retrieved external network name
-    """
-    assert cloud
-    if env.get("EXTERNAL_NETWORK"):
-        network = cloud.get_network(
-            env.get("EXTERNAL_NETWORK"), {"router:external": True})
-        if network:
-            return network
-    networks = cloud.list_networks({"router:external": True})
-    if networks:
-        return networks[0]
-    return None

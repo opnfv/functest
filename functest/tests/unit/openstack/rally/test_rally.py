@@ -13,6 +13,7 @@ import os
 import unittest
 
 import mock
+import munch
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.rally import rally
@@ -21,19 +22,24 @@ from functest.opnfv_tests.openstack.rally import rally
 class OSRallyTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
     def setUp(self):
-        with mock.patch('os_client_config.make_shade') as mock_make_shade:
+        with mock.patch('os_client_config.get_config') as mock_get_config, \
+                mock.patch('shade.OpenStackCloud') as mock_shade:
             self.rally_base = rally.RallyBase()
-        self.assertTrue(mock_make_shade.called)
+            self.rally_base.image = munch.Munch(name='foo')
+            self.rally_base.flavor = munch.Munch(name='foo')
+            self.rally_base.flavor_alt = munch.Munch(name='bar')
+        self.assertTrue(mock_get_config.called)
+        self.assertTrue(mock_shade.called)
 
     def test_build_task_args_missing_floating_network(self):
         os.environ['OS_AUTH_URL'] = ''
-        self.rally_base.ext_net_name = ''
+        self.rally_base.ext_net = None
         task_args = self.rally_base._build_task_args('test_file_name')
         self.assertEqual(task_args['floating_network'], '')
 
     def test_build_task_args_missing_net_id(self):
         os.environ['OS_AUTH_URL'] = ''
-        self.rally_base.priv_net_id = ''
+        self.rally_base.network = None
         task_args = self.rally_base._build_task_args('test_file_name')
         self.assertEqual(task_args['netid'], '')
 
@@ -279,107 +285,8 @@ class OSRallyTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.rally_base._prepare_env()
 
-    @mock.patch('functest.utils.functest_utils.get_external_network')
-    def test_prepare_env_image_missing(self, *args):
-        # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with mock.patch.object(self.rally_base.cloud, 'list_hypervisors'), \
-            mock.patch.object(self.rally_base.cloud, 'create_image',
-                              return_value=None):
-            with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
-
-    @mock.patch('functest.utils.functest_utils.get_external_network')
-    def test_prepare_env_network_creation_failed(self, *args):
-        # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with mock.patch.object(self.rally_base.cloud,
-                               'list_hypervisors') as mock_list_hyperv, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_image') as mock_create_img, \
-            mock.patch.object(self.rally_base.cloud, 'create_network',
-                              return_value=None) as mock_create_net:
-            with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
-            mock_create_net.assert_called()
-            mock_create_img.assert_called()
-            mock_list_hyperv.assert_called()
-
-    @mock.patch('functest.utils.functest_utils.get_external_network')
-    def test_prepare_env_subnet_creation_failed(self, *args):
-        # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with mock.patch.object(self.rally_base.cloud,
-                               'list_hypervisors') as mock_list_hyperv, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_image') as mock_create_img, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_network') as mock_create_net, \
-            mock.patch.object(self.rally_base.cloud, 'create_subnet',
-                              return_value=None) as mock_create_subnet:
-            with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
-            mock_create_subnet.assert_called()
-            mock_create_net.assert_called()
-            mock_create_img.assert_called()
-            mock_list_hyperv.assert_called()
-
-    @mock.patch('functest.utils.functest_utils.get_external_network')
-    def test_prepare_env_router_creation_failed(self, *args):
-        # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with mock.patch.object(self.rally_base.cloud,
-                               'list_hypervisors') as mock_list_hyperv, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_image') as mock_create_img, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_network') as mock_create_net, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_subnet') as mock_create_subnet, \
-            mock.patch.object(self.rally_base.cloud, 'create_router',
-                              return_value=None) as mock_create_router:
-            with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
-            mock_create_router.assert_called()
-            mock_create_subnet.assert_called()
-            mock_create_net.assert_called()
-            mock_create_img.assert_called()
-            mock_list_hyperv.assert_called()
-
-    @mock.patch('functest.utils.functest_utils.get_external_network')
-    def test_prepare_env_flavor_creation_failed(self, *args):
-        # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
-        with mock.patch.object(self.rally_base.cloud,
-                               'list_hypervisors') as mock_list_hyperv, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_image') as mock_create_img, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_network') as mock_create_net, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_subnet') as mock_create_subnet, \
-            mock.patch.object(self.rally_base.cloud,
-                              'add_router_interface') as mock_add_router_if, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_router') as mock_create_router, \
-            mock.patch.object(self.rally_base.cloud, 'create_flavor',
-                              return_value=None) as mock_create_flavor:
-            with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
-            mock_create_flavor.assert_called_once()
-            mock_add_router_if.assert_called()
-            mock_create_router.assert_called()
-            mock_create_subnet.assert_called()
-            mock_create_net.assert_called()
-            mock_create_img.assert_called()
-            mock_list_hyperv.assert_called()
-
-    @mock.patch('functest.utils.functest_utils.get_external_network')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'get_external_network')
     def test_prepare_env_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.TESTS = ['test1', 'test2']
@@ -387,30 +294,15 @@ class OSRallyTesting(unittest.TestCase):
         with mock.patch.object(self.rally_base.cloud,
                                'list_hypervisors') as mock_list_hyperv, \
             mock.patch.object(self.rally_base.cloud,
-                              'create_image') as mock_create_img, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_network') as mock_create_net, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_subnet') as mock_create_subnet, \
-            mock.patch.object(self.rally_base.cloud,
-                              'add_router_interface') as mock_add_router_if, \
-            mock.patch.object(self.rally_base.cloud,
-                              'create_router') as mock_create_router, \
-            mock.patch.object(self.rally_base.cloud,
                               'set_flavor_specs') as mock_set_flavor_specs, \
             mock.patch.object(self.rally_base.cloud, 'create_flavor',
-                              side_effect=[mock.Mock(), None]) \
+                              side_effect=Exception) \
                 as mock_create_flavor:
             with self.assertRaises(Exception):
                 self.rally_base._prepare_env()
-            self.assertEqual(mock_create_flavor.call_count, 2)
-            mock_set_flavor_specs.assert_called_once()
-            mock_add_router_if.assert_called()
-            mock_create_router.assert_called()
-            mock_create_subnet.assert_called()
-            mock_create_net.assert_called()
-            mock_create_img.assert_called()
-            mock_list_hyperv.assert_called()
+            mock_list_hyperv.assert_called_once()
+            mock_create_flavor.assert_called_once()
+            mock_set_flavor_specs.assert_not_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task')
@@ -431,31 +323,10 @@ class OSRallyTesting(unittest.TestCase):
 
     def test_clean_up_default(self):
         with mock.patch.object(self.rally_base.cloud,
-                               'delete_flavor') as mock_delete_flavor, \
-            mock.patch.object(self.rally_base.cloud,
-                              'remove_router_interface') \
-            as mock_remove_router_if, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_router') as mock_delete_router, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_subnet') as mock_delete_subnet, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_network') as mock_delete_net, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_image') as mock_delete_img:
+                               'delete_flavor') as mock_delete_flavor:
             self.rally_base.flavor_alt = mock.Mock()
-            self.rally_base.flavor = mock.Mock()
-            self.rally_base.router = mock.Mock()
-            self.rally_base.subnet = mock.Mock()
-            self.rally_base.network = mock.Mock()
-            self.rally_base.image = mock.Mock()
-            self.rally_base._clean_up()
-            self.assertEqual(mock_delete_flavor.call_count, 2)
-            mock_remove_router_if.assert_called()
-            mock_delete_router.assert_called()
-            mock_delete_subnet.assert_called()
-            mock_delete_net.assert_called()
-            mock_delete_img.assert_called()
+            self.rally_base.clean()
+            self.assertEqual(mock_delete_flavor.call_count, 1)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment')
@@ -465,8 +336,6 @@ class OSRallyTesting(unittest.TestCase):
                 '_run_tests')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_generate_report')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_clean_up')
     def test_run_default(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
         for func in args:
