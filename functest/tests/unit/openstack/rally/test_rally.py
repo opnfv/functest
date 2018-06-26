@@ -431,31 +431,10 @@ class OSRallyTesting(unittest.TestCase):
 
     def test_clean_up_default(self):
         with mock.patch.object(self.rally_base.cloud,
-                               'delete_flavor') as mock_delete_flavor, \
-            mock.patch.object(self.rally_base.cloud,
-                              'remove_router_interface') \
-            as mock_remove_router_if, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_router') as mock_delete_router, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_subnet') as mock_delete_subnet, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_network') as mock_delete_net, \
-            mock.patch.object(self.rally_base.cloud,
-                              'delete_image') as mock_delete_img:
+                               'delete_flavor') as mock_delete_flavor:
             self.rally_base.flavor_alt = mock.Mock()
-            self.rally_base.flavor = mock.Mock()
-            self.rally_base.router = mock.Mock()
-            self.rally_base.subnet = mock.Mock()
-            self.rally_base.network = mock.Mock()
-            self.rally_base.image = mock.Mock()
-            self.rally_base._clean_up()
-            self.assertEqual(mock_delete_flavor.call_count, 2)
-            mock_remove_router_if.assert_called()
-            mock_delete_router.assert_called()
-            mock_delete_subnet.assert_called()
-            mock_delete_net.assert_called()
-            mock_delete_img.assert_called()
+            self.rally_base.clean()
+            self.assertEqual(mock_delete_flavor.call_count, 1)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment')
@@ -465,8 +444,6 @@ class OSRallyTesting(unittest.TestCase):
                 '_run_tests')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_generate_report')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_clean_up')
     def test_run_default(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
         for func in args:
