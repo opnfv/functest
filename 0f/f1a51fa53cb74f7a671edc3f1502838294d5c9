@@ -1,0 +1,9 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Code-Review+1: David McBride <dmcbride@linuxfoundation.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 26 Jun 2018 17:58:05 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/59041
+Project: functest
+Branch: refs/heads/master
