@@ -39,9 +39,14 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     filename = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
     visibility = 'private'
     extra_properties = None
-    flavor_ram = 1024
+    flavor_ram = 512
     flavor_vcpus = 1
     flavor_disk = 1
+    flavor_alt_ram = 1024
+    flavor_alt_vcpus = 1
+    flavor_alt_disk = 1
+
+    image_format = 'qcow2'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -70,6 +75,9 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             meta=getattr(
                 config.CONF, '{}_extra_properties'.format(self.case_name),
                 self.extra_properties),
+            disk_format=getattr(
+                config.CONF, '{}_image_format'.format(self.case_name),
+                self.image_format),
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
                 self.visibility))
@@ -95,6 +103,31 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     self.flavor_vcpus),
             getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
                     self.flavor_disk))
+        self.__logger.debug("flavor: %s", flavor)
+        self.orig_cloud.set_flavor_specs(
+            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+        return flavor
+
+    def create_flavor_alt(self, name=None):
+        """Create flavor
+
+        It allows creating multiple alt flavors for the child testcases. It
+        forces the same configuration for all subtestcases.
+
+        Returns: flavor
+
+        Raises: expection on error
+        """
+        assert self.orig_cloud
+        flavor = self.orig_cloud.create_flavor(
+            name if name else '{}-flavor_alt_{}'.format(
+                self.case_name, self.guid),
+            getattr(config.CONF, '{}_flavor_alt_ram'.format(self.case_name),
+                    self.flavor_alt_ram),
+            getattr(config.CONF, '{}_flavor_alt_vcpus'.format(self.case_name),
+                    self.flavor_alt_vcpus),
+            getattr(config.CONF, '{}_flavor_alt_disk'.format(self.case_name),
+                    self.flavor_alt_disk))
         self.__logger.debug("flavor: %s", flavor)
         self.orig_cloud.set_flavor_specs(
             flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))

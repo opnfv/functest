@@ -28,7 +28,6 @@ from xtesting.core import testcase
 
 from functest.utils import config
 from functest.utils import env
-from functest.utils import functest_utils
 
 
 class NewProject(object):
@@ -105,6 +104,7 @@ class TenantNetwork1(testcase.TestCase):
 
     __logger = logging.getLogger(__name__)
     cidr = '192.168.0.0/24'
+    shared_network = False
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -120,13 +120,30 @@ class TenantNetwork1(testcase.TestCase):
             self.ext_net = None
             self.__logger.exception("Cannot connect to Cloud")
         try:
-            self.ext_net = functest_utils.get_external_network(self.cloud)
+            self.ext_net = self.get_external_network(self.cloud)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot get the external network")
         self.guid = str(uuid.uuid4())
         self.network = None
         self.subnet = None
         self.router = None
+
+    @staticmethod
+    def get_external_network(cloud):
+        """
+        Returns the configured external network name or
+        the first retrieved external network name
+        """
+        assert cloud
+        if env.get("EXTERNAL_NETWORK"):
+            network = cloud.get_network(
+                env.get("EXTERNAL_NETWORK"), {"router:external": True})
+            if network:
+                return network
+        networks = cloud.list_networks({"router:external": True})
+        if networks:
+            return networks[0]
+        return None
 
     def _create_network_ressources(self):
         assert self.cloud
@@ -143,7 +160,8 @@ class TenantNetwork1(testcase.TestCase):
                 config.CONF, '{}_segmentation_id'.format(self.case_name))
         self.network = self.cloud.create_network(
             '{}-net_{}'.format(self.case_name, self.guid),
-            provider=provider)
+            provider=provider,
+            shared=self.shared_network)
         self.__logger.debug("network: %s", self.network)
 
         self.subnet = self.cloud.create_subnet(
