@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_c9d5bd44",
+        "filename": "functest/ci/config_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 7167
+      },
+      "writtenOn": "2018-06-27T14:17:58Z",
+      "side": 1,
+      "message": "For the fdio feature, the snaps scenarios will be run using the {\u0027hw:mem_page_size\u0027:\u0027large\u0027} as flavor metadata even if this is not hardcoded by the testcase itself. Is this the case? If so, I\u0027ll give a +1",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "06caf7c89f3a49185e9b9c1cfe40720b25ee2bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_e937e1ae",
+        "filename": "functest/ci/config_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 7167
+      },
+      "writtenOn": "2018-06-27T14:17:58Z",
+      "side": 1,
+      "message": "For the ovs feature, the snaps scenarios will be run using the {\u0027hw:mem_page_size\u0027:\u0027large\u0027} as flavor metadata even if this is not hardcoded by the testcase itself. Is this the case? If so, I\u0027ll give also a +1",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "06caf7c89f3a49185e9b9c1cfe40720b25ee2bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
