@@ -12,9 +12,13 @@ fdio:
         image_properties: {'hw_mem_page_size':'large'}
         openstack:
             flavor_ram: 1024
+    snaps:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
 ovs:
     general:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         image_properties: {'hw_mem_page_size':'large'}
         openstack:
             flavor_ram: 1024
+    snaps:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
