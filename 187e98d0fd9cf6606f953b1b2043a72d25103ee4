@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_fe0e7933",
+        "filename": "functest/ci/download_images.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4291
+      },
+      "writtenOn": "2018-06-27T07:21:01Z",
+      "side": 1,
+      "message": "I guess it worth to remove \"tries\" option as The default value of 20 looks reasonable.\nAlso have a look at \"waitretry\" option.",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "187e98d0fd9cf6606f953b1b2043a72d25103ee4",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
