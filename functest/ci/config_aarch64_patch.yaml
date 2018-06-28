@@ -6,13 +6,29 @@ os:
             image_file_name: cirros-0.4.0-aarch64-disk.img
             image_password: gocubsgo
             image_url:
-                /home/opnfv/functest/images/cirros-d161201-aarch64-disk.img
+                /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
             extra_properties:
                 hw_firmware_type: 'uefi'
                 hw_video_model: 'vga'
                 short_id: 'ubuntu16.04'
                 hw_disk_bus: 'scsi'
                 hw_scsi_model: 'virtio-scsi'
+
+    vping_ssh:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vping_userdata:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
 
     functest_smoke_serial:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
