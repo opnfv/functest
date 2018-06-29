@@ -72,9 +72,9 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Repository branch**                | stable/fraser                        |
 +--------------------------------------+--------------------------------------+
-| **Repository tag**                   | opnfv-6.1.0                          |
+| **Repository tag**                   | opnfv-6.2.0                          |
 +--------------------------------------+--------------------------------------+
-| **Release date**                     | May 25th 2018                        |
+| **Release date**                     | June 29th 2018                       |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -98,7 +98,7 @@ Software
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
  * https://hub.docker.com/r/opnfv/functest-kubernetes-features
 
-Docker tag for Fraser release: opnfv-6.1.0
+Docker tag for Fraser release: opnfv-6.2.0
 Docker tag for Fraser series: fraser
 
 Documents
