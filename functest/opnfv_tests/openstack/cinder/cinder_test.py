@@ -109,6 +109,6 @@ class CinderCheck(singlevm.SingleVm2):
         self.cloud.delete_server(
             self.vm2, wait=True,
             timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        self.cloud.delete_floating_ip(self.fip.id)
+        self.cloud.delete_floating_ip(self.fip2.id)
         self.cloud.delete_volume(self.volume.id)
         super(CinderCheck, self).clean()
