@@ -26,6 +26,36 @@ fdio:
     singlevm2:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+    vping_ssh:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    vping_userdata:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    cinder_test:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    tempest_smoke_serial:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    refstack_defcore:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    patrole:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    shaker:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    neutron_trunk:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    barbican:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    tempest_full_parallel:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
 
 ovs:
     general:
@@ -45,5 +75,35 @@ ovs:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
     singlevm2:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    vping_ssh:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    vping_userdata:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    cinder_test:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    tempest_smoke_serial:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    refstack_defcore:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    patrole:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    shaker:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    neutron_trunk:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    barbican:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+    tempest_full_parallel:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
