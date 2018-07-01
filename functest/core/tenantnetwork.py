@@ -36,6 +36,7 @@ class NewProject(object):
     # pylint: disable=too-many-instance-attributes
 
     __logger = logging.getLogger(__name__)
+    default_member = "Member"
 
     def __init__(self, cloud, case_name, guid):
         self.cloud = None
@@ -46,6 +47,7 @@ class NewProject(object):
         self.user = None
         self.password = None
         self.domain = None
+        self.role = None
 
     def create(self):
         """Create projects/users"""
@@ -66,8 +68,14 @@ class NewProject(object):
             password=self.password,
             domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
+        try:
+            assert self.orig_cloud.get_role(self.default_member)
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.info("Creating default role %s", self.default_member)
+            self.role = self.orig_cloud.create_role(self.default_member)
+            self.__logger.debug("role: %s", self.role)
         self.orig_cloud.grant_role(
-            "Member", user=self.user.id, project=self.project.id,
+            self.default_member, user=self.user.id, project=self.project.id,
             domain=self.domain.id)
         osconfig = os_client_config.config.OpenStackConfig()
         osconfig.cloud_config[
@@ -87,6 +95,8 @@ class NewProject(object):
             assert self.project.id
             self.orig_cloud.delete_user(self.user.id)
             self.orig_cloud.delete_project(self.project.id)
+            if self.role:
+                self.orig_cloud.delete_role(self.role.id)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all ressources")
 
