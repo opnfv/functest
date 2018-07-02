@@ -1,0 +1,10 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+1: David Blaisonneau <david.blaisonneau@orange.com>
+Code-Review+2: Morgan Richomme <morgan.richomme@orange.com>
+Code-Review+1: Delia Popescu <delia.popescu@enea.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 02 Jul 2018 08:31:52 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/59407
+Project: functest
+Branch: refs/heads/master
