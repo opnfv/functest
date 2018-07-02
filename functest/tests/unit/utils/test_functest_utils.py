@@ -11,11 +11,9 @@
 
 import logging
 import time
-import os
 import unittest
 
 import mock
-import munch
 import pkg_resources
 
 from functest.utils import functest_utils
@@ -220,70 +218,6 @@ class FunctestUtilsTesting(unittest.TestCase):
                                                      self.test_file),
                              'test_image_name')
 
-    def test_get_extnetwork_nocloud(self):
-        with self.assertRaises(AssertionError):
-            functest_utils.get_external_network(None)
-
-    def test_get_extnetwork_env_ok1(self):
-        cloud = mock.Mock()
-        cloud.get_network.return_value = munch.Munch(name="dummy")
-        os.environ["EXTERNAL_NETWORK"] = 'dummy'
-        self.assertEqual(
-            functest_utils.get_external_network(cloud),
-            cloud.get_network.return_value)
-        cloud.get_network.assert_called_once_with(
-            'dummy', {'router:external': True})
-        cloud.list_networks.assert_not_called()
-
-    def test_get_extnetwork_env_ok2(self):
-        cloud = mock.Mock()
-        cloud.get_network.return_value = None
-        cloud.list_networks.return_value = None
-        os.environ["EXTERNAL_NETWORK"] = 'dummy'
-        self.assertEqual(functest_utils.get_external_network(cloud), None)
-        cloud.get_network.assert_called_once_with(
-            'dummy', {'router:external': True})
-        cloud.list_networks.assert_called_once_with(
-            {'router:external': True})
-
-    def test_get_extnetwork_env_ko(self):
-        cloud = mock.Mock()
-        cloud.get_network.return_value = None
-        cloud.list_networks.return_value = [munch.Munch(name="dummy")]
-        os.environ["EXTERNAL_NETWORK"] = 'dummy'
-        self.assertEqual(
-            functest_utils.get_external_network(cloud),
-            cloud.list_networks.return_value[0])
-        cloud.get_network.assert_called_once_with(
-            'dummy', {'router:external': True})
-        cloud.list_networks.assert_called_once_with(
-            {'router:external': True})
-
-    def test_get_extnetwork_noenv_ko(self):
-        try:
-            del os.environ["EXTERNAL_NETWORK"]
-        except Exception:  # pylint: disable=broad-except
-            pass
-        cloud = mock.Mock()
-        cloud.list_networks.return_value = None
-        self.assertEqual(functest_utils.get_external_network(cloud), None)
-        cloud.get_network.assert_not_called()
-        cloud.list_networks.assert_called_once_with(
-            {'router:external': True})
-
-    def test_get_extnetwork_noenv_ok(self):
-        try:
-            del os.environ["EXTERNAL_NETWORK"]
-        except Exception:  # pylint: disable=broad-except
-            pass
-        cloud = mock.Mock()
-        cloud.list_networks.return_value = [munch.Munch(name="dummy")]
-        self.assertEqual(
-            functest_utils.get_external_network(cloud),
-            cloud.list_networks.return_value[0])
-        cloud.get_network.assert_not_called()
-        cloud.list_networks.assert_called_once_with(
-            {'router:external': True})
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
