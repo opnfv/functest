@@ -20,7 +20,7 @@ VIM
 ---
 
 This section covers the test cases related to the VIM (healthcheck, vping_ssh,
-vping_userdata, tempest_smoke_serial, tempest_full_parallel, rally_sanity,
+vping_userdata, tempest_smoke, tempest_full_parallel, rally_sanity,
 rally_full).
 
 vPing common

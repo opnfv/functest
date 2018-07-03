@@ -16,6 +16,7 @@ from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
+from functest.utils import config
 
 
 class OSTempestTesting(unittest.TestCase):
@@ -36,12 +37,6 @@ class OSTempestTesting(unittest.TestCase):
                            return_value='test_verifier_deploy_dir'), \
                 mock.patch('os_client_config.make_shade'):
             self.tempestcommon = tempest.TempestCommon()
-            self.tempestsmoke_serial = tempest.TempestSmokeSerial()
-            self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
-            self.tempestfull_parallel = tempest.TempestFullParallel()
-            self.tempestcustom = tempest.TempestCustom()
-            self.tempestdefcore = tempest.TempestDefcore()
-            self.tempestneutrontrunk = tempest.TempestNeutronTrunk()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
@@ -57,6 +52,7 @@ class OSTempestTesting(unittest.TestCase):
             self.assertTrue(
                 (msg % conf_utils.TEMPEST_CUSTOM) in context.exception)
 
+    @mock.patch('subprocess.check_output')
     @mock.patch('os.remove')
     def test_gen_tl_cm_default(self, *args):
         self.tempestcommon.mode = 'custom'
@@ -72,17 +68,16 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch('shutil.copyfile')
     @mock.patch('subprocess.check_output')
     def _test_gen_tl_mode_default(self, mode, *args):
-        self.tempestcommon.mode = mode
-        if self.tempestcommon.mode == 'smoke':
-            testr_mode = r"'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'"
-        elif self.tempestcommon.mode == 'full':
-            testr_mode = r"'^tempest\.'"
+        if mode == 'smoke':
+            testr_mode = r'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'
+        elif mode == 'full':
+            testr_mode = r'^tempest\.'
         else:
             testr_mode = self.tempestcommon.mode
         verifier_repo_dir = 'test_verifier_repo_dir'
-        cmd = "(cd {0}; stestr list {1} >{2} 2>/dev/null)".format(
+        cmd = "(cd {0}; stestr list '{1}' >{2} 2>/dev/null)".format(
             verifier_repo_dir, testr_mode, self.tempestcommon.list)
-        self.tempestcommon.generate_test_list()
+        self.tempestcommon.generate_test_list(mode=testr_mode)
         args[0].assert_called_once_with(cmd, shell=True)
         args[2].assert_called_once_with('/etc/tempest.conf')
 
@@ -91,9 +86,6 @@ class OSTempestTesting(unittest.TestCase):
 
     def test_gen_tl_full_mode(self):
         self._test_gen_tl_mode_default('full')
-
-    def test_gen_tl_neutron_trunk_mode(self):
-        self._test_gen_tl_mode_default('neutron_trunk')
 
     def test_verif_res_missing_verif_id(self):
         self.tempestcommon.verification_id = None
@@ -178,8 +170,11 @@ class OSTempestTesting(unittest.TestCase):
                 'subprocess.Popen')
     def test_generate_report(self, mock_popen):
         self.tempestcommon.verification_id = "1234"
-        html_file = os.path.join(tempest.TempestCommon.TEMPEST_RESULTS_DIR,
-                                 "tempest-report.html")
+        html_file = os.path.join(
+            os.path.join(
+                getattr(config.CONF, 'dir_results'),
+                self.tempestcommon.case_name),
+            "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                "1234", "--to", html_file]
         self.tempestcommon.generate_report()
