@@ -16,7 +16,7 @@ from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
-
+from functest.utils import config
 
 class OSTempestTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
@@ -36,12 +36,6 @@ class OSTempestTesting(unittest.TestCase):
                            return_value='test_verifier_deploy_dir'), \
                 mock.patch('os_client_config.make_shade'):
             self.tempestcommon = tempest.TempestCommon()
-            self.tempestsmoke_serial = tempest.TempestSmokeSerial()
-            self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
-            self.tempestfull_parallel = tempest.TempestFullParallel()
-            self.tempestcustom = tempest.TempestCustom()
-            self.tempestdefcore = tempest.TempestDefcore()
-            self.tempestneutrontrunk = tempest.TempestNeutronTrunk()
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.error')
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.debug')
@@ -178,8 +172,11 @@ class OSTempestTesting(unittest.TestCase):
                 'subprocess.Popen')
     def test_generate_report(self, mock_popen):
         self.tempestcommon.verification_id = "1234"
-        html_file = os.path.join(tempest.TempestCommon.TEMPEST_RESULTS_DIR,
-                                 "tempest-report.html")
+        html_file = os.path.join(
+            os.path.join(
+                getattr(config.CONF, 'dir_results'),
+                self.tempestcommon.case_name),
+            "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                "1234", "--to", html_file]
         self.tempestcommon.generate_report()
