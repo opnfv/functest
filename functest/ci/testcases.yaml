@@ -116,7 +116,11 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestSmokeSerial'
+                    class: 'TempestCommon'
+                    args:
+                        mode: '^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'
+                        option:
+                            - '--concurrency=1'
 
             -
                 case_name: rally_sanity
@@ -226,8 +230,10 @@ tiers:
                     installer: '(fuel)|(apex)|(compass)'
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    module: 'functest.opnfv_tests.openstack.trunk.trunk'
                     class: 'TempestNeutronTrunk'
+                    args:
+                        mode: 'neutron.tests.tempest.(api|scenario).test_trunk'
 
     -
         name: features
@@ -338,7 +344,9 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestFullParallel'
+                    class: 'TempestCommon'
+                    args:
+                        mode: '^tempest\.'
 
             -
                 case_name: rally_full
