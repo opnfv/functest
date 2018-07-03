@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_a8bf9acf",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-07-03T14:13:23Z",
+      "side": 1,
+      "message": "Both cases uses concurrent threads.",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 32
+      },
+      "revId": "e285047a568e90db710a486853790529553665c3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da5c1566_88f1f6cf",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-07-03T14:13:23Z",
+      "side": 1,
+      "message": "This could be removed since it\u0027s now in practice same as TempestSmoke?",
+      "revId": "e285047a568e90db710a486853790529553665c3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
