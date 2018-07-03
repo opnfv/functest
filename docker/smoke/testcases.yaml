@@ -8,7 +8,7 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                case_name: tempest_smoke_serial
+                case_name: tempest_smoke
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -22,7 +22,7 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestSmokeSerial'
+                    class: 'TempestSmoke'
 
             -
                 case_name: rally_sanity
