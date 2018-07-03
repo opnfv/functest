@@ -36,7 +36,7 @@ class OSTempestTesting(unittest.TestCase):
                            return_value='test_verifier_deploy_dir'), \
                 mock.patch('os_client_config.make_shade'):
             self.tempestcommon = tempest.TempestCommon()
-            self.tempestsmoke_serial = tempest.TempestSmokeSerial()
+            self.tempestsmoke_serial = tempest.TempestSmoke()
             self.tempestsmoke_parallel = tempest.TempestSmokeParallel()
             self.tempestfull_parallel = tempest.TempestFullParallel()
             self.tempestcustom = tempest.TempestCustom()

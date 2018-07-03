@@ -306,14 +306,13 @@ class TempestCommon(singlevm.VmReady1):
         self.orig_cloud.delete_flavor(self.flavor_alt.id)
 
 
-class TempestSmokeSerial(TempestCommon):
-    """Tempest smoke serial testcase implementation."""
+class TempestSmoke(TempestCommon):
+    """Tempest smoke testcase implementation."""
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
-            kwargs["case_name"] = 'tempest_smoke_serial'
+            kwargs["case_name"] = 'tempest_smoke'
         TempestCommon.__init__(self, **kwargs)
         self.mode = "smoke"
-        self.option = ["--concurrency", "1"]
 
 
 class TempestNeutronTrunk(TempestCommon):
