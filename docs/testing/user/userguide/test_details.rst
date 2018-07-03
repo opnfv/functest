@@ -166,17 +166,14 @@ console output is stored to a *log* file for further analysis.
 The Tempest testcases are distributed across three
 Tiers:
 
-  * Smoke Tier - Test Case 'tempest_smoke_serial'
-  * Components Tier - Test case 'tempest_full_parallel'
+  * Smoke Tier - Test Case 'tempest_smoke'
+  * Components Tier - Test case 'tempest_full'
   * Neutron Trunk Port - Test case 'neutron_trunk'
   * OpenStack interop testcases - Test case 'refstack_defcore'
   * Testing and verifying RBAC policy enforcement - Test case 'patrole'
 
-NOTE: Test case 'tempest_smoke_serial' executes a defined set of tempest smoke
-tests with a single thread (i.e. serial mode). Test case
-'tempest_full_parallel' executes all defined Tempest tests using several
-concurrent threads (i.e. parallel mode). The number of threads activated
-corresponds to the number of available logical CPUs.
+NOTE: Test case 'tempest_smoke' executes a defined set of tempest smoke
+tests. Test case 'tempest_full' executes all defined Tempest tests.
 
 NOTE: The 'neutron_trunk' test set allows to connect a VM to multiple VLAN
 separated networks using a single NIC. The feature neutron trunk ports have

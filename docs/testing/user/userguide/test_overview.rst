@@ -55,7 +55,7 @@ validate the scenario for the release.
 |             |               +------------+----------------------------------+
 |             |               | tempest    | Generate and run a relevant      |
 |             |               | \_smoke    | Tempest Test Suite in smoke mode.|
-|             |               | \_serial   | The generated test set is        |
+|             |               |            | The generated test set is        |
 |             |               |            | dependent on the OpenStack       |
 |             |               |            | deployment environment           |
 |             |               +------------+----------------------------------+

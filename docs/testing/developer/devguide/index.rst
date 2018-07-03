@@ -90,8 +90,8 @@ The internal test cases in Euphrates are:
  * odl
  * rally_full
  * rally_sanity
- * tempest_smoke_serial
- * tempest_full_parallel
+ * tempest_smoke
+ * tempest_full
  * cloudify_ims
 
 By internal, we mean that this particular test cases have been developed and/or
