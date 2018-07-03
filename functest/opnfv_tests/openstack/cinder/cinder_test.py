@@ -81,7 +81,8 @@ class CinderCheck(singlevm.SingleVm2):
         self.logger.debug("volume_write stderr: %s", stderr.read())
         # Detach volume from VM 1
         self.logger.info("Detach volume from VM 1")
-        self.cloud.detach_volume(self.sshvm, self.volume)
+        self.cloud.detach_volume(
+            self.sshvm, self.volume, timeout=self.volume_timeout)
         return stdout.channel.recv_exit_status()
 
     def _read_data(self):
@@ -105,8 +106,8 @@ class CinderCheck(singlevm.SingleVm2):
         self.logger.debug("read volume stdout: %s", stdout.read())
         self.logger.debug("read volume stderr: %s", stderr.read())
         self.logger.info("Detach volume from VM 2")
-        self.cloud.detach_volume(self.vm2, self.volume,
-                                 timeout=self.volume_timeout)
+        self.cloud.detach_volume(
+            self.vm2, self.volume, timeout=self.volume_timeout)
         return stdout.channel.recv_exit_status()
 
     def clean(self):
