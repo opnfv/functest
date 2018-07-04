@@ -29,6 +29,7 @@ class CinderCheck(singlevm.SingleVm2):
     to connect to the VMs and one data volume
     """
     # pylint: disable=too-many-instance-attributes
+    volume_timeout = 60
 
     def __init__(self, **kwargs):
         """Initialize testcase."""
@@ -58,11 +59,13 @@ class CinderCheck(singlevm.SingleVm2):
             security_groups=[self.sec.id])
         (self.fip2, self.ssh2) = self.connect(self.vm2)
         self.volume = self.cloud.create_volume(
-            name='{}-volume_{}'.format(self.case_name, self.guid), size='2')
+            name='{}-volume_{}'.format(self.case_name, self.guid), size='2',
+            timeout=self.volume_timeout)
 
     def _write_data(self):
         assert self.cloud
-        self.cloud.attach_volume(self.sshvm, self.volume)
+        self.cloud.attach_volume(self.sshvm, self.volume,
+                                 timeout=self.volume_timeout)
         write_data_script = pkg_resources.resource_filename(
             'functest.opnfv_tests.openstack.cinder', 'write_data.sh')
         try:
@@ -85,7 +88,8 @@ class CinderCheck(singlevm.SingleVm2):
         assert self.cloud
         # Attach volume to VM 2
         self.logger.info("Attach volume to VM 2")
-        self.cloud.attach_volume(self.vm2, self.volume)
+        self.cloud.attach_volume(self.vm2, self.volume,
+                                 timeout=self.volume_timeout)
         # Check volume data
         read_data_script = pkg_resources.resource_filename(
             'functest.opnfv_tests.openstack.cinder', 'read_data.sh')
@@ -101,7 +105,8 @@ class CinderCheck(singlevm.SingleVm2):
         self.logger.debug("read volume stdout: %s", stdout.read())
         self.logger.debug("read volume stderr: %s", stderr.read())
         self.logger.info("Detach volume from VM 2")
-        self.cloud.detach_volume(self.vm2, self.volume)
+        self.cloud.detach_volume(self.vm2, self.volume,
+                                 timeout=self.volume_timeout)
         return stdout.channel.recv_exit_status()
 
     def clean(self):
