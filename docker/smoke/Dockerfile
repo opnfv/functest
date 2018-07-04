@@ -5,7 +5,6 @@ ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.3.0
 
-COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
@@ -22,9 +21,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     git clone --depth 1 https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin -rthirdparty-requirements.txt && \
+        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     virtualenv --system-site-packages /src/tempest/.venv && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
