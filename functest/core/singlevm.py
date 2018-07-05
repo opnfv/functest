@@ -294,7 +294,7 @@ class SingleVm1(VmReady1):
         self.__logger.debug("vm console: \n%s", p_console)
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
-        for loop in range(6):
+        for loop in range(60):
             try:
                 ssh.connect(
                     fip.floating_ip_address,
