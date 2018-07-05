@@ -1,0 +1,9 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Cristina Pauna <cristina.pauna@enea.com>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 05 Jul 2018 17:45:34 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/59549
+Project: functest
+Branch: refs/heads/master
