@@ -274,7 +274,7 @@ class SingleVm1(VmReady1):
     __logger = logging.getLogger(__name__)
     username = 'cirros'
     ssh_connect_timeout = 60
-    ssh_connect_loops = 6
+    ssh_connect_loops = 12
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
