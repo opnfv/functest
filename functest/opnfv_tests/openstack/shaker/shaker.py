@@ -36,6 +36,7 @@ class Shaker(singlevm.SingleVm2):
     flavor_disk = 3
     username = 'ubuntu'
     port = 9000
+    ssh_connect_loops = 12
 
     def prepare(self):
         super(Shaker, self).prepare()

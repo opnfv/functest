@@ -240,6 +240,7 @@ class SingleVm1(VmReady1):
     __logger = logging.getLogger(__name__)
     username = 'cirros'
     ssh_connect_timeout = 60
+    ssh_connect_loops = 6
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -294,7 +295,7 @@ class SingleVm1(VmReady1):
         self.__logger.debug("vm console: \n%s", p_console)
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
-        for loop in range(6):
+        for loop in range(self.ssh_connect_loops):
             try:
                 ssh.connect(
                     fip.floating_ip_address,
@@ -367,7 +368,7 @@ class SingleVm1(VmReady1):
             self.cloud.delete_floating_ip(self.fip.id)
             self.cloud.delete_server(self.sshvm, wait=True)
             self.cloud.delete_security_group(self.sec.id)
-            self.cloud.delete_keypair(self.keypair.id)
+            self.cloud.delete_keypair(self.keypair.name)
             super(SingleVm1, self).clean()
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all ressources")
