@@ -27,19 +27,8 @@ class Refstack(tempest.TempestCommon):
     defcorelist = os.path.join(
         getattr(config.CONF, 'dir_refstack_data'), 'defcore.txt')
 
-    def __init__(self, **kwargs):
-        if "case_name" not in kwargs:
-            kwargs["case_name"] = 'refstack'
-        super(Refstack, self).__init__(**kwargs)
-        self.res_dir = os.path.join(
-            getattr(config.CONF, 'dir_results'), 'refstack')
-        self.list = os.path.join(self.res_dir, 'tempest-list.txt')
-
-    def generate_test_list(self):
+    def generate_test_list(self, **kwargs):
         parser = list_parser.TestListParser(
             getattr(config.CONF, 'dir_repo_tempest'))
         nfile = parser.get_normalized_test_list(Refstack.defcorelist)
         shutil.copyfile(nfile, self.list)
-
-    def apply_tempest_blacklist(self):
-        pass

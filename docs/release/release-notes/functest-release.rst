@@ -34,7 +34,7 @@ The internal test cases are:
  * odl
  * snaps_smoke
  * neutron_trunk
- * tempest_full_parallel
+ * tempest_full
  * rally_full
  * cloudify_ims
  * vyos_vrouter

@@ -8,7 +8,7 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                case_name: tempest_smoke_serial
+                case_name: tempest_smoke
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -22,7 +22,9 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestSmokeSerial'
+                    class: 'TempestCommon'
+                    args:
+                        mode: '^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'
 
             -
                 case_name: rally_sanity
@@ -147,8 +149,10 @@ tiers:
                     installer: '(fuel)|(apex)|(compass)'
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    module: 'functest.opnfv_tests.openstack.trunk.trunk'
                     class: 'TempestNeutronTrunk'
+                    args:
+                        mode: 'neutron_tempest_plugin.(api|scenario).test_trunk'
 
             -
                 case_name: barbican
@@ -163,4 +167,6 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestBarbican'
+                    class: 'TempestCommon'
+                    args:
+                        mode: 'barbican_tempest_plugin.tests.(api|scenario)'

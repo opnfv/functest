@@ -8,7 +8,7 @@ tiers:
             Extensive testing of OpenStack API.
         testcases:
             -
-                case_name: tempest_full_parallel
+                case_name: tempest_full
                 project_name: functest
                 criteria: 80
                 blocking: false
@@ -21,7 +21,9 @@ tiers:
                     scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestFullParallel'
+                    class: 'TempestCommon'
+                    args:
+                        mode: '^tempest\.'
 
             -
                 case_name: rally_full
