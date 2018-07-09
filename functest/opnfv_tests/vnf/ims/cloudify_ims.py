@@ -250,7 +250,8 @@ class CloudifyIms(clearwater_ims_base.ClearwaterOnBoardingBase):
             keystone_password=snaps_creds.password,
             keystone_tenant_name=snaps_creds.project_name,
             keystone_url=public_auth_url,
-            region=snaps_creds.region_name,
+            region=snaps_creds.region_name if snaps_creds.region_name else (
+                'RegionOne'),
             user_domain_name=snaps_creds.user_domain_name,
             project_domain_name=snaps_creds.project_domain_name)
         self.__logger.info("Set creds for cloudify manager %s", cfy_creds)
