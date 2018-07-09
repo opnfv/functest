@@ -338,7 +338,8 @@ class CloudifyVrouter(vrouter_base.VrouterOnBoardingBase):
         self.vnf['inputs'].update(dict(
             keystone_project_domain_name=snaps_creds.project_domain_name))
         self.vnf['inputs'].update(dict(
-            region=snaps_creds.region_name))
+            region=snaps_creds.region_name if snaps_creds.region_name else (
+                'RegionOne')))
         self.vnf['inputs'].update(dict(
             keystone_url=keystone_utils.get_endpoint(
                 snaps_creds, 'identity')))

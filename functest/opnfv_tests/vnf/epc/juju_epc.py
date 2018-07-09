@@ -148,7 +148,8 @@ class JujuEpc(vnf.VnfOnBoarding):
         clouds_yaml = os.path.join(self.res_dir, "clouds.yaml")
         cloud_data = {
             'url': self.public_auth_url,
-            'region': self.snaps_creds.region_name}
+            'region': self.snaps_creds.region_name if (
+                self.snaps_creds.region_name) else 'RegionOne'}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
@@ -294,8 +295,9 @@ class JujuEpc(vnf.VnfOnBoarding):
                     image_file=image_file))
                 image_id = image_creator.create().id
                 cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
-                       '-i', image_id, '-s', image_name,
-                       '-r', self.snaps_creds.region_name,
+                       '-i', image_id, '-s', image_name, '-r',
+                       self.snaps_creds.region_name if (
+                           self.snaps_creds.region_name) else 'RegionOne',
                        '-u', self.public_auth_url]
                 output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
                 self.__logger.info("%s\n%s", " ".join(cmd), output)
