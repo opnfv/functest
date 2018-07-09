@@ -54,7 +54,7 @@ class Shaker(singlevm.SingleVm2):
         keystone_id = self.orig_cloud.search_services('keystone')[0].id
         self.__logger.debug("keystone id: %s", keystone_id)
         endpoint = self.orig_cloud.search_endpoints(
-            filters={'interface': os.environ.get('OS_INTERFACE', 'public'),
+            filters={'interface': 'public',
                      'service_id': keystone_id})[0].url
         self.__logger.debug("keystone endpoint: %s", endpoint)
         self.orig_cloud.grant_role(
