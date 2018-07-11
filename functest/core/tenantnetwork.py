@@ -68,7 +68,10 @@ class NewProject(object):
             domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
         try:
-            assert self.orig_cloud.get_role(self.default_member)
+            if not self.orig_cloud.get_role(
+                    self.default_member) and not self.orig_cloud.get_role(
+                        self.default_member.lower()):
+                raise Exception("Cannot detect {}".format(self.default_member))
         except Exception:  # pylint: disable=broad-except
             self.__logger.info("Creating default role %s", self.default_member)
             self.role = self.orig_cloud.create_role(self.default_member)
