@@ -168,13 +168,15 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            super(VmReady1, self).run(**kwargs)
+            assert super(VmReady1, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             self.image = self.publish_image()
             self.flavor = self.create_flavor()
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception('Cannot run %s', self.case_name)
+            self.result = 0
         finally:
             self.stop_time = time.time()
         return status
@@ -345,7 +347,8 @@ class SingleVm1(VmReady1):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            super(SingleVm1, self).run(**kwargs)
+            assert super(SingleVm1, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             self.prepare()
             self.sshvm = self.boot_vm(

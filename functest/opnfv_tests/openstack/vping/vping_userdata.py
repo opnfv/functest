@@ -39,7 +39,8 @@ class VPingUserdata(singlevm.VmReady2):
         """
         try:
             assert self.cloud
-            super(VPingUserdata, self).run()
+            assert super(VPingUserdata, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             self.vm1 = self.boot_vm()
             self.vm2 = self.boot_vm(

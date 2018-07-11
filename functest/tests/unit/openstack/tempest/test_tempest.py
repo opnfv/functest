@@ -251,7 +251,9 @@ class OSTempestTesting(unittest.TestCase):
                                   side_effect=Exception):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
-    def test_run(self):
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.TempestCommon.'
+                'run', return_value=testcase.TestCase.EX_OK)
+    def test_run(self, *args):
         with mock.patch.object(self.tempestcommon, 'update_rally_regex'), \
                 mock.patch.object(self.tempestcommon, 'generate_test_list'), \
                 mock.patch.object(self.tempestcommon,
@@ -261,6 +263,7 @@ class OSTempestTesting(unittest.TestCase):
                                   'parse_verifier_result'), \
                 mock.patch.object(self.tempestcommon, 'generate_report'):
             self._test_run(testcase.TestCase.EX_OK)
+            args[0].assert_called_once_with()
 
 
 if __name__ == "__main__":

@@ -470,7 +470,8 @@ class RallyBase(singlevm.VmReady1):
         """Run testcase."""
         self.start_time = time.time()
         try:
-            super(RallyBase, self).run(**kwargs)
+            assert super(RallyBase, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             conf_utils.create_rally_deployment()
             self._prepare_env()
             self._run_tests()
