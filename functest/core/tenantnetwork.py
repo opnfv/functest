@@ -47,6 +47,7 @@ class NewProject(object):
         self.password = None
         self.domain = None
         self.role = None
+        self.role_name = None
 
     def create(self):
         """Create projects/users"""
@@ -68,16 +69,19 @@ class NewProject(object):
             domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
         try:
-            if not self.orig_cloud.get_role(
-                    self.default_member) and not self.orig_cloud.get_role(
-                        self.default_member.lower()):
+            if self.orig_cloud.get_role(self.default_member):
+                self.role_name = self.default_member
+            elif self.orig_cloud.get_role(self.default_member.lower()):
+                self.role_name = self.default_member.lower()
+            else:
                 raise Exception("Cannot detect {}".format(self.default_member))
         except Exception:  # pylint: disable=broad-except
             self.__logger.info("Creating default role %s", self.default_member)
             self.role = self.orig_cloud.create_role(self.default_member)
+            self.role_name = self.role.name
             self.__logger.debug("role: %s", self.role)
         self.orig_cloud.grant_role(
-            self.default_member, user=self.user.id, project=self.project.id,
+            self.role_name, user=self.user.id, project=self.project.id,
             domain=self.domain.id)
         osconfig = os_client_config.config.OpenStackConfig()
         osconfig.cloud_config[
