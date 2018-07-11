@@ -186,8 +186,10 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             assert self.orig_cloud
             assert self.cloud
             super(VmReady1, self).clean()
-            self.cloud.delete_image(self.image.id)
-            self.orig_cloud.delete_flavor(self.flavor.id)
+            if self.image:
+                self.cloud.delete_image(self.image.id)
+            if self.flavor:
+                self.orig_cloud.delete_flavor(self.flavor.id)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all ressources")
 
@@ -368,10 +370,14 @@ class SingleVm1(VmReady1):
         try:
             assert self.orig_cloud
             assert self.cloud
-            self.cloud.delete_floating_ip(self.fip.id)
-            self.cloud.delete_server(self.sshvm, wait=True)
-            self.cloud.delete_security_group(self.sec.id)
-            self.cloud.delete_keypair(self.keypair.name)
+            if self.fip:
+                self.cloud.delete_floating_ip(self.fip.id)
+            if self.sshvm:
+                self.cloud.delete_server(self.sshvm, wait=True)
+            if self.sec:
+                self.cloud.delete_security_group(self.sec.id)
+            if self.keypair:
+                self.cloud.delete_keypair(self.keypair.name)
             super(SingleVm1, self).clean()
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all ressources")

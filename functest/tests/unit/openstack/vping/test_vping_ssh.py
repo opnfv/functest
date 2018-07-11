@@ -92,6 +92,7 @@ class VpingSSHTesting(unittest.TestCase):
             self.vping.clean()
 
     def test_clean_exc2(self):
+        self.vping.vm2 = munch.Munch(id='vm2')
         mdelete_server = self.vping.cloud.delete_server
         mdelete_server.side_effect = shade.OpenStackCloudException(None)
         with self.assertRaises(shade.OpenStackCloudException):
@@ -100,7 +101,7 @@ class VpingSSHTesting(unittest.TestCase):
     @mock.patch('functest.core.singlevm.SingleVm2.clean',
                 side_effect=Exception)
     def test_clean_exc3(self, *args):
-        self.vping.vm2 = munch.Munch()
+        self.vping.vm2 = munch.Munch(id='vm2')
         with self.assertRaises(Exception):
             self.vping.clean()
         self.vping.cloud.delete_server.assert_called_once_with(
@@ -109,8 +110,15 @@ class VpingSSHTesting(unittest.TestCase):
         args[0].assert_called_once_with()
 
     @mock.patch('functest.core.singlevm.SingleVm2.clean')
-    def test_clean(self, *args):
-        self.vping.vm2 = munch.Munch()
+    def test_clean1(self, *args):
+        self.vping.vm2 = None
+        self.vping.clean()
+        self.vping.cloud.delete_server.assert_not_called()
+        args[0].assert_called_once_with()
+
+    @mock.patch('functest.core.singlevm.SingleVm2.clean')
+    def test_clean2(self, *args):
+        self.vping.vm2 = munch.Munch(id='vm2')
         self.vping.clean()
         self.vping.cloud.delete_server.assert_called_once_with(
             self.vping.vm2, wait=True,
