@@ -252,7 +252,8 @@ class OSTempestTesting(unittest.TestCase):
             self._test_run(testcase.TestCase.EX_RUN_ERROR)
 
     def test_run(self):
-        with mock.patch.object(self.tempestcommon, 'generate_test_list'), \
+        with mock.patch.object(self.tempestcommon, 'update_rally_regex'), \
+                mock.patch.object(self.tempestcommon, 'generate_test_list'), \
                 mock.patch.object(self.tempestcommon,
                                   'apply_tempest_blacklist'), \
                 mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
