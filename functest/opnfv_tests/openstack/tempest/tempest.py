@@ -286,7 +286,8 @@ class TempestCommon(singlevm.VmReady1):
     def run(self, **kwargs):
         self.start_time = time.time()
         try:
-            super(TempestCommon, self).run(**kwargs)
+            assert super(TempestCommon, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             self.update_rally_regex()
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
