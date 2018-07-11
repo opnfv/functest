@@ -19,6 +19,7 @@ import shutil
 import subprocess
 import time
 
+from six.moves import configparser
 from xtesting.core import testcase
 import yaml
 
@@ -249,6 +250,15 @@ class TempestCommon(singlevm.VmReady1):
         subprocess.Popen(cmd, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT)
 
+    def update_rally_regex(self, rally_conf='/etc/rally/rally.conf'):
+        """Set image name as tempest img_name_regex"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        rconfig.set('tempest', 'img_name_regex', '^{}$'.format(
+            self.image.name))
+        with open(rally_conf, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -277,6 +287,7 @@ class TempestCommon(singlevm.VmReady1):
         self.start_time = time.time()
         try:
             super(TempestCommon, self).run(**kwargs)
+            self.update_rally_regex()
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
             self.apply_tempest_blacklist()
