@@ -51,7 +51,8 @@ class VPingSSH(singlevm.SingleVm2):
 
     def clean(self):
         assert self.cloud
-        self.cloud.delete_server(
-            self.vm2, wait=True,
-            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        if self.vm2:
+            self.cloud.delete_server(
+                self.vm2, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
         super(VPingSSH, self).clean()

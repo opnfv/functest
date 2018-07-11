@@ -111,9 +111,12 @@ class CinderCheck(singlevm.SingleVm2):
 
     def clean(self):
         assert self.cloud
-        self.cloud.delete_server(
-            self.vm2, wait=True,
-            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        self.cloud.delete_floating_ip(self.fip2.id)
-        self.cloud.delete_volume(self.volume.id)
+        if self.vm2:
+            self.cloud.delete_server(
+                self.vm2, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        if self.fip2:
+            self.cloud.delete_floating_ip(self.fip2.id)
+        if self.volume:
+            self.cloud.delete_volume(self.volume.id)
         super(CinderCheck, self).clean()

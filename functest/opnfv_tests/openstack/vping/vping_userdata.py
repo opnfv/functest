@@ -122,10 +122,12 @@ class VPingUserdata(singlevm.VmReady2):
 
     def clean(self):
         assert self.cloud
-        self.cloud.delete_server(
-            self.vm1, wait=True,
-            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        self.cloud.delete_server(
-            self.vm2, wait=True,
-            timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        if self.vm1:
+            self.cloud.delete_server(
+                self.vm1, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
+        if self.vm2:
+            self.cloud.delete_server(
+                self.vm2, wait=True,
+                timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
         super(VPingUserdata, self).clean()

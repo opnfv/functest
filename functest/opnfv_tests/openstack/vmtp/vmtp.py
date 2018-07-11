@@ -146,7 +146,8 @@ class Vmtp(singlevm.VmReady1):
             assert self.cloud
             os.remove(self.privkey_filename)
             os.remove(self.pubkey_filename)
-            self.cloud.delete_image(self.image)
+            if self.image:
+                self.cloud.delete_image(self.image)
             self.cloud.delete_network("pns-internal-net_{}".format(self.guid))
             self.cloud.delete_network("pns-internal-net2_{}".format(self.guid))
         except Exception:  # pylint: disable=broad-except
