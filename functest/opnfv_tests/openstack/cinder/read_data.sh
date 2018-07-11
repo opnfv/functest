@@ -13,7 +13,7 @@ VOL_DEV_NAME=${1:-vdb}
 echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 
 echo "$(lsblk -l -o NAME)"
-if [ ! -z $VOL_DEV_NAME ]; then
+if [ ! -z $(lsblk -l -o NAME | grep $VOL_DEV_NAME) ]; then
     sudo mount /dev/$VOL_DEV_NAME $DEST
     if [ -f $DEST/new_data ]; then
         echo "Found new data!"
