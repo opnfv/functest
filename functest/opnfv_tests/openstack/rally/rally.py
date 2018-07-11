@@ -495,6 +495,7 @@ class RallyBase(singlevm.VmReady1):
         self.start_time = time.time()
         try:
             super(RallyBase, self).run(**kwargs)
+            self.update_rally_regex()
             conf_utils.create_rally_deployment()
             self._prepare_env()
             self._run_tests()

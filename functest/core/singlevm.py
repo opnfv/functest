@@ -18,6 +18,7 @@ import tempfile
 import time
 
 import paramiko
+from six.moves import configparser
 from xtesting.core import testcase
 
 from functest.core import tenantnetwork
@@ -83,6 +84,15 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.visibility))
         self.__logger.debug("image: %s", image)
         return image
+
+    def update_rally_regex(self, rally_conf='/etc/rally/rally.conf'):
+        """Set image name as tempest img_name_regex"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        rconfig.set('tempest', 'img_name_regex', '^{}$'.format(
+            self.image.name))
+        with open(rally_conf, 'wb') as config_file:
+            rconfig.write(config_file)
 
     def create_flavor(self, name=None):
         """Create flavor

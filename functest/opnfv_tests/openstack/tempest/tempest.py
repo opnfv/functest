@@ -277,6 +277,7 @@ class TempestCommon(singlevm.VmReady1):
         self.start_time = time.time()
         try:
             super(TempestCommon, self).run(**kwargs)
+            self.update_rally_regex()
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
             self.apply_tempest_blacklist()
