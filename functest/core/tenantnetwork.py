@@ -93,10 +93,10 @@ class NewProject(object):
         """Remove projects/users"""
         try:
             assert self.orig_cloud
-            assert self.user.id
-            assert self.project.id
-            self.orig_cloud.delete_user(self.user.id)
-            self.orig_cloud.delete_project(self.project.id)
+            if self.user:
+                self.orig_cloud.delete_user(self.user.id)
+            if self.project:
+                self.orig_cloud.delete_project(self.project.id)
             if self.role:
                 self.orig_cloud.delete_role(self.role.id)
         except Exception:  # pylint: disable=broad-except
@@ -210,10 +210,15 @@ class TenantNetwork1(testcase.TestCase):
     def clean(self):
         try:
             assert self.cloud
-            self.cloud.remove_router_interface(self.router, self.subnet.id)
-            self.cloud.delete_router(self.router.id)
-            self.cloud.delete_subnet(self.subnet.id)
-            self.cloud.delete_network(self.network.id)
+            if self.router:
+                if self.subnet:
+                    self.cloud.remove_router_interface(
+                        self.router, self.subnet.id)
+                self.cloud.delete_router(self.router.id)
+            if self.subnet:
+                self.cloud.delete_subnet(self.subnet.id)
+            if self.network:
+                self.cloud.delete_network(self.network.id)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("cannot clean all ressources")
 
