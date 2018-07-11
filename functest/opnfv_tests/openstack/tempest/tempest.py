@@ -297,6 +297,7 @@ class TempestCommon(singlevm.VmReady1):
             res = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception('Error with run')
+            self.result = 0
             res = testcase.TestCase.EX_RUN_ERROR
         self.stop_time = time.time()
         return res

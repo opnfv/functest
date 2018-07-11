@@ -502,6 +502,7 @@ class RallyBase(singlevm.VmReady1):
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
+            self.result = 0
             res = testcase.TestCase.EX_RUN_ERROR
         self.stop_time = time.time()
         return res
