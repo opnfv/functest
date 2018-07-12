@@ -254,7 +254,8 @@ class TempestCommon(singlevm.VmReady1):
         """Set image name as tempest img_name_regex"""
         rconfig = configparser.RawConfigParser()
         rconfig.read(rally_conf)
-        rconfig.add_section('tempest')
+        if not rconfig.has_section('tempest'):
+            rconfig.add_section('tempest')
         rconfig.set('tempest', 'img_name_regex', '^{}$'.format(
             self.image.name))
         with open(rally_conf, 'wb') as config_file:
