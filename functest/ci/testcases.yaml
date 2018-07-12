@@ -3,7 +3,6 @@ tiers:
     -
         name: healthcheck
         order: 0
-        ci_loop: '(merge)|(verify)|(daily)|(weekly)'
         description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
@@ -17,9 +16,6 @@ tiers:
                     This test case verifies the retrieval of OpenStack clients:
                     Keystone, Glance, Neutron and Nova and may perform some
                     simple queries.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module:
                         'functest.opnfv_tests.openstack.api.connection_check'
@@ -34,9 +30,6 @@ tiers:
                     It creates and configures all tenant network ressources
                     required by advanced testcases (subnet, network and
                     router).
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
                     class: 'TenantNetwork1'
@@ -50,9 +43,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
                     class: 'TenantNetwork2'
@@ -66,9 +56,6 @@ tiers:
                     It inherits from TenantNetwork1 which creates all network
                     resources and prepares a future VM attached to that
                     network.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'VmReady1'
@@ -82,9 +69,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources, flavors, images, etc.
                     required by advanced testcases.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'VmReady2'
@@ -98,9 +82,6 @@ tiers:
                     It inherits from TenantNetwork1 which creates all network
                     resources and completes it by booting a VM attached to that
                     network.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'SingleVm1'
@@ -114,9 +95,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources and vms required by advanced
                     testcases.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'SingleVm2'
@@ -130,9 +108,6 @@ tiers:
                     This test case verifies: 1) SSH to an instance using
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
                     class: 'VPingSSH'
@@ -145,9 +120,6 @@ tiers:
                 description: >-
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module:
                         'functest.opnfv_tests.openstack.vping.vping_userdata'
@@ -163,9 +135,6 @@ tiers:
                     instance; 2) Write data on volume 3) Detach volume
                     from instance 1, attach it on instance 2 3) Read volume
                     data
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
                     class: 'CinderCheck'
@@ -180,8 +149,7 @@ tiers:
                     integrates some test suites from upstream using
                     Robot as the test framework.
                 dependencies:
-                    installer: ''
-                    scenario: 'odl'
+                    DEPLOY_SCENARIO: 'odl'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
@@ -202,8 +170,7 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
+                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
                     class: 'ApiCheck'
@@ -219,8 +186,7 @@ tiers:
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
                 dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
+                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.health_check'
                     class: 'HealthCheck'
@@ -228,7 +194,6 @@ tiers:
     -
         name: smoke
         order: 1
-        ci_loop: '(daily)|(weekly)'
         description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
@@ -242,9 +207,6 @@ tiers:
                     Tempest suite. The list of test cases is generated by
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
@@ -259,9 +221,6 @@ tiers:
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Rally suite in smoke mode.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.rally.rally'
                     class: 'RallySanity'
@@ -275,9 +234,6 @@ tiers:
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Defcore testcases.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module:
                         'functest.opnfv_tests.openstack.refstack.refstack'
@@ -290,9 +246,6 @@ tiers:
                 blocking: false
                 description: >-
                     Test suite from Patrole project.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.patrole.patrole'
                     class: 'Patrole'
@@ -313,9 +266,6 @@ tiers:
                     VMTP is a small python application that will automatically
                     perform ping connectivity, round trip time measurement
                     (latency) and TCP/UDP throughput
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module:
                         'functest.opnfv_tests.openstack.vmtp.vmtp'
@@ -331,9 +281,6 @@ tiers:
                     like iperf, iperf3 and netperf (with help of flent). Shaker
                     is able to deploy OpenStack instances and networks in
                     different topologies.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module:
                         'functest.opnfv_tests.openstack.shaker.shaker'
@@ -352,10 +299,8 @@ tiers:
                     this functionality. When the config value of
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
-
                 dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
+                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
                     class: 'SnapsSmoke'
@@ -371,8 +316,7 @@ tiers:
                     generated by Tempest having as input the relevant
                     testcase list file.
                 dependencies:
-                    installer: '(fuel)|(apex)|(compass)'
-                    scenario: ''
+                    - INSTALLER_TYPE: '(fuel)|(apex)|(compass)'
                 run:
                     module: 'functest.opnfv_tests.openstack.trunk.trunk'
                     class: 'TempestNeutronTrunk'
@@ -388,8 +332,7 @@ tiers:
                     It leverages on the tempest plugin containing tests used to
                     verify the functionality of a barbican installation
                 dependencies:
-                    installer: '^((?!fuel|apex|compass|daisy|osa).)*$'
-                    scenario: ''
+                    - INSTALLER_TYPE: '^((?!fuel|apex|compass|daisy|osa).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
@@ -399,7 +342,6 @@ tiers:
     -
         name: features
         order: 2
-        ci_loop: '(daily)|(weekly)'
         description: >-
             Test suites from feature projects
             integrated in functest
@@ -412,8 +354,8 @@ tiers:
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
-                    installer: '(apex)|(fuel)|(daisy)'
-                    scenario: '^((?!fdio|nofeature).)*$'
+                    - INSTALLER_TYPE: '(apex)|(fuel)|(daisy)'
+                    - DEPLOY_SCENARIO: '^((?!fdio|nofeature).)*$'
                 run:
                     module: 'xtesting.core.feature'
                     class: 'BashFeature'
@@ -428,8 +370,7 @@ tiers:
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:
-                    installer: ''
-                    scenario: 'bgpvpn'
+                    - DEPLOY_SCENARIO: 'bgpvpn'
                 run:
                     module: 'sdnvpn.test.functest.run_sdnvpn_tests'
                     class: 'SdnvpnFunctest'
@@ -443,8 +384,7 @@ tiers:
                     Test suite for odl-sfc to test two chains with one SF and
                     one chain with two SFs
                 dependencies:
-                    installer: ''
-                    scenario: 'odl.*sfc'
+                    - DEPLOY_SCENARIO: 'odl.*sfc'
                 run:
                     module: 'sfc.tests.functest.run_sfc_tests'
                     class: 'SfcFunctest'
@@ -459,8 +399,7 @@ tiers:
                     the proper configuration and basic functionality of all the
                     collectd plugins as described in the Project Release Plan
                 dependencies:
-                    installer: ''
-                    scenario: 'bar'
+                    - DEPLOY_SCENARIO: 'bar'
                 run:
                     module: 'baro_tests.barometer'
                     class: 'BarometerCollectd'
@@ -475,8 +414,7 @@ tiers:
                     features are installed. It integrates some test suites from
                     upstream using Robot as the test framework.
                 dependencies:
-                    installer: ''
-                    scenario: 'odl.*-fdio'
+                    - DEPLOY_SCENARIO: 'odl.*-fdio'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
@@ -487,7 +425,6 @@ tiers:
     -
         name: components
         order: 3
-        ci_loop: 'weekly'
         description: >-
             Extensive testing of OpenStack API.
         testcases:
@@ -500,9 +437,6 @@ tiers:
                     The list of test cases is generated by
                     Tempest automatically and depends on the parameters of
                     the OpenStack deplopyment.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
@@ -517,9 +451,6 @@ tiers:
                 description: >-
                     This test case runs the full suite of scenarios of the
                     OpenStack Rally suite using several threads and iterations.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.opnfv_tests.openstack.rally.rally'
                     class: 'RallyFull'
@@ -527,7 +458,6 @@ tiers:
     -
         name: vnf
         order: 4
-        ci_loop: '(daily)|(weekly)'
         description: >-
             Collection of VNF test cases.
         testcases:
@@ -539,8 +469,7 @@ tiers:
                 description: >-
                     This test case deploys the Cloudify orchestrator.
                 dependencies:
-                    installer: ''
-                    scenario: 'os-.*-nofeature-.*ha'
+                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.core.cloudify'
                     class: 'Cloudify'
@@ -554,8 +483,7 @@ tiers:
                     Clearwater using the Cloudify orchestrator. It also runs
                     some signaling traffic.
                 dependencies:
-                    installer: ''
-                    scenario: 'os-.*-nofeature-.*ha'
+                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
                     class: 'CloudifyIms'
@@ -568,8 +496,7 @@ tiers:
                 description: >-
                     This test case is vRouter testing.
                 dependencies:
-                    installer: ''
-                    scenario: 'os-.*-nofeature-.*ha'
+                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
                     class: 'CloudifyVrouter'
@@ -583,8 +510,7 @@ tiers:
                     vEPC validation with Juju as VNF manager and ABoT as test
                     executor.
                 dependencies:
-                    installer: ''
-                    scenario: 'os-.*-nofeature-.*ha'
+                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     module: 'functest.opnfv_tests.vnf.epc.juju_epc'
                     class: 'JujuEpc'
