@@ -388,8 +388,10 @@ class ODLRunTesting(ODLTesting):
         args[0].assert_called_once_with()
         args[0].return_value.search_services.assert_called_once_with('neutron')
         args[0].return_value.search_endpoints.assert_called_once_with(
-            filters={'interface': os.environ.get("OS_INTERFACE", "public"),
-                     'service_id': self._neutron_id})
+            filters={
+                'interface': os.environ.get(
+                    "OS_INTERFACE", "public").replace('URL', ''),
+                'service_id': self._neutron_id})
 
     @mock.patch('os_client_config.make_shade')
     def _test_multiple_suites(self, suites,
@@ -469,6 +471,13 @@ class ODLRunTesting(ODLTesting):
 
     def test_os_interface_public(self):
         os.environ["OS_INTERFACE"] = "public"
+        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
+        self._test_run(testcase.TestCase.EX_OK, None,
+                       odlip=self._sdn_controller_ip,
+                       odlwebport=self._odl_webport)
+
+    def test_os_interface_publicurl(self):
+        os.environ["OS_INTERFACE"] = "publicURL"
         os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
         self._test_run(testcase.TestCase.EX_OK, None,
                        odlip=self._sdn_controller_ip,
