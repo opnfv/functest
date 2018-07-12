@@ -67,6 +67,8 @@ class Shaker(singlevm.SingleVm2):
             domain=self.project.domain.id)
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put('/home/opnfv/functest/conf/env_file', remote_path='~/')
+        if os.environ.get('OS_CACERT'):
+            scpc.put(os.environ.get('OS_CACERT'), remote_path='~/os_cacert')
         (_, stdout, stderr) = self.ssh.exec_command(
             'source ~/env_file && '
             'export OS_INTERFACE=public && '
@@ -74,6 +76,7 @@ class Shaker(singlevm.SingleVm2):
             'export OS_USERNAME={} && '
             'export OS_PROJECT_NAME={} && '
             'export OS_PASSWORD={} && '
+            '{}'
             'env && '
             'shaker --image-name {} --flavor-name {} '
             '--server-endpoint {}:9000 --scenario '
@@ -83,7 +86,10 @@ class Shaker(singlevm.SingleVm2):
             'openstack/perf_l3_north_south '
             '--report report.html --output report.json'.format(
                 endpoint, self.project.user.name, self.project.project.name,
-                self.project.password, self.image.name, self.flavor.name,
+                self.project.password,
+                'export OS_CACERT=~/os_cacert && ' if os.environ.get(
+                    'OS_CACERT') else '',
+                self.image.name, self.flavor.name,
                 self.fip.floating_ip_address))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
