@@ -3,7 +3,6 @@ tiers:
     -
         name: features
         order: 2
-        ci_loop: '(daily)|(weekly)'
         description: >-
             Test suites from feature projects
             integrated in functest
@@ -16,8 +15,8 @@ tiers:
                 description: >-
                     Test suite from Doctor project.
                 dependencies:
-                    installer: '(apex)|(fuel)|(daisy)'
-                    scenario: '^((?!fdio|nofeature).)*$'
+                    - INSTALLER_TYPE: '(apex)|(fuel)|(daisy)'
+                    - DEPLOY_SCENARIO: '^((?!fdio|nofeature).)*$'
                 run:
                     module: 'xtesting.core.feature'
                     class: 'BashFeature'
@@ -32,8 +31,7 @@ tiers:
                 description: >-
                     Test suite from SDNVPN project.
                 dependencies:
-                    installer: ''
-                    scenario: 'bgpvpn'
+                    - DEPLOY_SCENARIO: 'bgpvpn'
                 run:
                     module: 'sdnvpn.test.functest.run_sdnvpn_tests'
                     class: 'SdnvpnFunctest'
@@ -47,8 +45,7 @@ tiers:
                     Test suite for odl-sfc to test two chains with one SF and
                     one chain with two SFs
                 dependencies:
-                    installer: ''
-                    scenario: 'odl.*sfc'
+                    - DEPLOY_SCENARIO: 'odl.*sfc'
                 run:
                     module: 'sfc.tests.functest.run_sfc_tests'
                     class: 'SfcFunctest'
@@ -63,8 +60,7 @@ tiers:
                     the proper configuration and basic functionality of all the
                     collectd plugins as described in the Project Release Plan
                 dependencies:
-                    installer: ''
-                    scenario: 'bar'
+                    - DEPLOY_SCENARIO: 'bar'
                 run:
                     module: 'baro_tests.barometer'
                     class: 'BarometerCollectd'
@@ -79,8 +75,7 @@ tiers:
                     features are installed. It integrates some test suites from
                     upstream using Robot as the test framework.
                 dependencies:
-                    installer: ''
-                    scenario: 'odl.*-fdio'
+                    - DEPLOY_SCENARIO: 'odl.*-fdio'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'

@@ -3,7 +3,6 @@ tiers:
     -
         name: healthcheck
         order: 0
-        ci_loop: '(merge)|(verify)|(daily)|(weekly)'
         description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
@@ -17,9 +16,6 @@ tiers:
                     This test case verifies the retrieval of OpenStack clients:
                     Keystone, Glance, Neutron and Nova and may perform some
                     simple queries.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module:
                         'functest.opnfv_tests.openstack.api.connection_check'
@@ -34,9 +30,6 @@ tiers:
                     It creates and configures all tenant network ressources
                     required by advanced testcases (subnet, network and
                     router).
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
                     class: 'TenantNetwork1'
@@ -50,9 +43,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.tenantnetwork'
                     class: 'TenantNetwork2'
@@ -66,9 +56,6 @@ tiers:
                     It inherits from TenantNetwork1 which creates all network
                     resources and prepares a future VM attached to that
                     network.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'VmReady1'
@@ -82,9 +69,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources, flavors, images, etc.
                     required by advanced testcases.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'VmReady2'
@@ -98,9 +82,6 @@ tiers:
                     It inherits from TenantNetwork1 which creates all network
                     resources and completes it by booting a VM attached to that
                     network.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'SingleVm1'
@@ -114,9 +95,6 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources and vms required by advanced
                     testcases.
-                dependencies:
-                    installer: ''
-                    scenario: ''
                 run:
                     module: 'functest.core.singlevm'
                     class: 'SingleVm2'
@@ -130,9 +108,6 @@ tiers:
                     This test case verifies: 1) SSH to an instance using
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
                     class: 'VPingSSH'
@@ -145,9 +120,6 @@ tiers:
                 description: >-
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module:
                         'functest.opnfv_tests.openstack.vping.vping_userdata'
@@ -163,9 +135,6 @@ tiers:
                     instance; 2) Write data on volume 3) Detach volume
                     from instance 1, attach it on instance 2 3) Read volume
                     data
-                dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
                     class: 'CinderCheck'
@@ -202,8 +171,7 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
+                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
                     class: 'ApiCheck'
@@ -219,8 +187,7 @@ tiers:
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
                 dependencies:
-                    installer: ''
-                    scenario: '^((?!lxd).)*$'
+                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.health_check'
                     class: 'HealthCheck'
