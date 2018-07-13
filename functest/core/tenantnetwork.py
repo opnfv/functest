@@ -86,6 +86,8 @@ class NewProject(object):
         osconfig = os_client_config.config.OpenStackConfig()
         osconfig.cloud_config[
             'clouds']['envvars']['project_name'] = self.project.name
+        osconfig.cloud_config[
+            'clouds']['envvars']['project_id'] = self.project.id
         osconfig.cloud_config['clouds']['envvars']['username'] = self.user.name
         osconfig.cloud_config['clouds']['envvars']['password'] = self.password
         self.__logger.debug("cloud_config %s", osconfig.cloud_config)
