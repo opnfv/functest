@@ -150,7 +150,7 @@ class TenantNetwork1(testcase.TestCase):
     @staticmethod
     def get_external_network(cloud):
         """
-        Returns the configured external network name or
+        Return the configured external network name or
         the first retrieved external network name
         """
         assert cloud
@@ -163,6 +163,17 @@ class TenantNetwork1(testcase.TestCase):
         if networks:
             return networks[0]
         return None
+
+    @staticmethod
+    def get_default_role(cloud, member="Member"):
+        """Get the default role
+
+        It also tests the role in lowercase to avoid possible conflicts.
+        """
+        role = cloud.get_role(member)
+        if not role:
+            role = cloud.get_role(member.lower())
+        return role
 
     def _create_network_ressources(self):
         assert self.cloud
