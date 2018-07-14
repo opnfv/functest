@@ -269,6 +269,19 @@ class TempestCommon(singlevm.VmReady1):
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
+    def update_default_role(self, rally_conf='/etc/rally/rally.conf'):
+        """Detect and update the default role if required"""
+        role = self.get_default_role(self.cloud)
+        if not role:
+            return
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        if not rconfig.has_section('tempest'):
+            rconfig.add_section('tempest')
+        rconfig.set('tempest', 'swift_operator_role', '^{}$'.format(role.name))
+        with open(rally_conf, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -299,6 +312,7 @@ class TempestCommon(singlevm.VmReady1):
             assert super(TempestCommon, self).run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.update_rally_regex()
+            self.update_default_role()
             self.configure(**kwargs)
             self.generate_test_list()
             self.apply_tempest_blacklist()
