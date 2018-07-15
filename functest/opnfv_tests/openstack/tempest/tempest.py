@@ -55,6 +55,40 @@ class TempestCommon(singlevm.VmReady1):
         self.conf_file = None
         self.image_alt = None
         self.flavor_alt = None
+        self.services = []
+        try:
+            self.services = kwargs['run']['args']['services']
+        except Exception:  # pylint: disable=broad-except
+            pass
+        self.neutron_extensions = []
+        try:
+            self.neutron_extensions = kwargs['run']['args'][
+                'neutron_extensions']
+        except Exception:  # pylint: disable=broad-except
+            pass
+
+    def check_services(self):
+        """Check the mandatory services."""
+        for service in self.services:
+            try:
+                self.cloud.search_services(service)[0]
+            except Exception:  # pylint: disable=broad-except
+                self.is_skipped = True
+                break
+
+    def check_extensions(self):
+        """Check the mandatory network extensions."""
+        extensions = self.cloud.get_network_extensions()
+        for network_extension in self.neutron_extensions:
+            if not network_extension in extensions:
+                LOGGER.warning(
+                    "Cannot find Neutron extension: %s", network_extension)
+                self.is_skipped = True
+                break
+
+    def check_requirements(self):
+        self.check_services()
+        self.check_extensions()
 
     @staticmethod
     def read_file(filename):
