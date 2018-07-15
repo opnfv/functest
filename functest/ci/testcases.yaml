@@ -149,7 +149,7 @@ tiers:
                     integrates some test suites from upstream using
                     Robot as the test framework.
                 dependencies:
-                    DEPLOY_SCENARIO: 'odl'
+                    - DEPLOY_SCENARIO: 'odl'
                 run:
                     module: 'functest.opnfv_tests.sdn.odl.odl'
                     class: 'ODLTests'
