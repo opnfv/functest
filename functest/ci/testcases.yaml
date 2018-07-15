@@ -211,7 +211,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
                     args:
-                        mode: '^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$'
+                        mode:
+                            '^(tempest|neutron_tempest_plugin)\.(api|scenario).*\[.*\bsmoke\b.*\]$'
 
             -
                 case_name: rally_sanity
@@ -330,7 +331,7 @@ tiers:
                 blocking: false
                 description: >-
                     It leverages on the tempest plugin containing tests used to
-                    verify the functionality of a barbican installation
+                    verify the functionality of a barbican installation.
                 dependencies:
                     - INSTALLER_TYPE: '^((?!fuel|apex|compass|daisy|osa).)*$'
                 run:
@@ -441,7 +442,7 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
                     args:
-                        mode: '^tempest\.'
+                        mode: '^(tempest|neutron_tempest_plugin)\.'
 
             -
                 case_name: rally_full

@@ -19,7 +19,7 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
                     args:
-                        mode: '^tempest\.'
+                        mode: '^(tempest|neutron_tempest_plugin)\.'
 
             -
                 case_name: rally_full
