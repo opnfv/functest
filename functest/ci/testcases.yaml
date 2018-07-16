@@ -252,10 +252,10 @@ tiers:
                     class: 'Patrole'
                     args:
                         role: 'admin'
-                        services:
+                        includes:
                             - 'image'
                             - 'network'
-                        exclude:
+                        excludes:
                             - 'test_networks_multiprovider_rbac'
 
             -

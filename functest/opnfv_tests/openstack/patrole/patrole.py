@@ -32,9 +32,9 @@ class Patrole(tempest.TempestCommon):
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
-        for exclude in kwargs.get('exclude', []):
+        for exclude in kwargs.get('excludes', []):
             kwargs['mode'] = "{}(?!.*{})".format(
                 kwargs.get('mode', ''), exclude)
         kwargs['mode'] = '{}(?=patrole_tempest_plugin.tests.api.({}))'.format(
-            kwargs['mode'], '|'.join(kwargs.get('services', [])))
+            kwargs['mode'], '|'.join(kwargs.get('includes', [])))
         return super(Patrole, self).run(**kwargs)
