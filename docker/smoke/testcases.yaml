@@ -132,7 +132,7 @@ tiers:
                         mode: 'neutron_tempest_plugin.(api|scenario).test_trunk'
                         neutron_extensions:
                             - trunk
-                            - trunk_details
+                            - trunk-details
 
             -
                 case_name: barbican
