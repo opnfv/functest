@@ -20,7 +20,7 @@ class ClearwaterOnBoardingBaseTesting(unittest.TestCase):
     def setUp(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                         'os.makedirs'):
-            self.ims_vnf = ims_base.ClearwaterOnBoardingBase()
+            self.ims_vnf = ims_base.ClearwaterOnBoardingBase("foo")
 
         self.mock_post = mock.Mock()
         attrs = {'status_code': 201,

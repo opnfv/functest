@@ -38,6 +38,9 @@ class VmReady1(tenantnetwork.TenantNetwork1):
 
     __logger = logging.getLogger(__name__)
     filename = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
+    image_format = 'qcow2'
+    filename_alt = None
+    image_alt_format = image_format
     visibility = 'private'
     extra_properties = None
     flavor_ram = 512
@@ -47,8 +50,6 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_alt_vcpus = 1
     flavor_alt_disk = 1
     create_server_timeout = 60
-
-    image_format = 'qcow2'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -79,6 +80,35 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.extra_properties),
             disk_format=getattr(
                 config.CONF, '{}_image_format'.format(self.case_name),
+                self.image_format),
+            visibility=getattr(
+                config.CONF, '{}_visibility'.format(self.case_name),
+                self.visibility))
+        self.__logger.debug("image: %s", image)
+        return image
+
+    def publish_image_alt(self, name=None):
+        """Publish alternative image
+
+        It allows publishing multiple images for the child testcases. It forces
+        the same configuration for all subtestcases.
+
+        Returns: image
+
+        Raises: expection on error
+        """
+        assert self.cloud
+        image = self.cloud.create_image(
+            name if name else '{}-img_alt_{}'.format(
+                self.case_name, self.guid),
+            filename=getattr(
+                config.CONF, '{}_image_alt'.format(self.case_name),
+                self.filename_alt),
+            meta=getattr(
+                config.CONF, '{}_extra_properties'.format(self.case_name),
+                self.extra_properties),
+            disk_format=getattr(
+                config.CONF, '{}_image_alt_format'.format(self.case_name),
                 self.image_format),
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
