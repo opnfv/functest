@@ -19,7 +19,6 @@ import time
 
 import pkg_resources
 
-import functest.core.vnf as vnf
 from functest.utils import config
 from functest.opnfv_tests.vnf.router.test_controller import function_test_exec
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
@@ -29,17 +28,16 @@ __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 REBOOT_WAIT = 30
 
 
-class VrouterOnBoardingBase(vnf.VnfOnBoarding):
+class VrouterOnBoardingBase(object):
     """vrouter testing base class"""
 
-    def __init__(self, **kwargs):
+    def __init__(self, case_name):
         self.logger = logging.getLogger(__name__)
-        super(VrouterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
         self.data_dir = getattr(config.CONF, 'dir_router_data')
-        self.result_dir = os.path.join(getattr(config.CONF, 'dir_results'),
-                                       self.case_name)
+        self.result_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), case_name)
         self.util = Utilvnf()
         self.util_info = {}
 

@@ -19,7 +19,6 @@ import requests
 import yaml
 
 from git import Repo
-from snaps.openstack.utils import nova_utils
 
 from functest.utils import config
 
@@ -53,7 +52,6 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
     logger = logging.getLogger(__name__)
 
     def __init__(self):
-        self.snaps_creds = ""
         self.vnf_data_dir = getattr(config.CONF, 'dir_router_data')
         self.opnfv_vnf_data_dir = "opnfv-vnf-data/"
         self.command_template_dir = "command_template/"
@@ -107,17 +105,13 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
             os.remove(self.test_result_json_file)
             self.logger.debug("removed %s", self.test_result_json_file)
 
-    def get_nova_client(self):
-        nova_client = nova_utils.nova_client(self.snaps_creds)
+        self.cloud = None
 
-        return nova_client
-
-    def set_credentials(self, snaps_creds):
-        self.snaps_creds = snaps_creds
+    def set_credentials(self, cloud):
+        self.cloud = cloud
 
     def get_address(self, server_name, network_name):
-        nova_client = self.get_nova_client()
-        servers_list = nova_client.servers.list()
+        servers_list = self.cloud.list_servers()
         server = None
 
         for server in servers_list:
@@ -130,8 +124,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
         return address
 
     def get_mac_address(self, server_name, network_name):
-        nova_client = self.get_nova_client()
-        servers_list = nova_client.servers.list()
+        servers_list = self.cloud.list_servers()
         server = None
 
         for server in servers_list:
@@ -144,8 +137,7 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
         return mac_address
 
     def reboot_vm(self, server_name):
-        nova_client = self.get_nova_client()
-        servers_list = nova_client.servers.list()
+        servers_list = self.cloud.list_servers()
         server = None
 
         for server in servers_list:
@@ -157,13 +149,12 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
         return
 
     def delete_vm(self, server_name):
-        nova_client = self.get_nova_client()
-        servers_list = nova_client.servers.list()
+        servers_list = self.cloud.list_servers()
         server = None
 
         for server in servers_list:
             if server.name == server_name:
-                nova_client.servers.delete(server)
+                self.cloud.delete_server(server_name)
                 break
 
         return
