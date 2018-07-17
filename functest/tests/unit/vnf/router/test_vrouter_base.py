@@ -12,17 +12,9 @@
 import logging
 import unittest
 
-import mock
-
-from functest.opnfv_tests.vnf.router import vrouter_base
-
 
 class VrouterOnBoardingBaseTesting(unittest.TestCase):
-
-    def setUp(self):
-        with mock.patch('functest.opnfv_tests.vnf.router.cloudify_vrouter.'
-                        'os.makedirs'):
-            self.vrouter_vnf = vrouter_base.VrouterOnBoardingBase()
+    pass
 
 
 if __name__ == "__main__":

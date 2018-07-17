@@ -34,14 +34,12 @@ class VmController(object):
         credentials = util_info["credentials"]
 
         self.util = Utilvnf()
-        self.util.set_credentials(credentials["snaps_creds"])
+        self.util.set_credentials(credentials["cloud"])
 
         with open(self.util.test_env_config_yaml) as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 
-        self.reboot_wait = test_env_config_yaml.get("general").get(
-            "reboot_wait")
         self.command_wait = test_env_config_yaml.get("general").get(
             "command_wait")
         self.ssh_connect_timeout = test_env_config_yaml.get("general").get(
@@ -85,16 +83,10 @@ class VmController(object):
         result = ssh.connect(self.ssh_connect_timeout,
                              self.ssh_connect_retry_count)
         if not result:
-            self.logger.warn("Reboot %s", vm_info["vnf_name"])
-            self.util.reboot_vm(vm_info["vnf_name"])
-            time.sleep(self.reboot_wait)
-            result = ssh.connect(self.ssh_connect_timeout,
-                                 self.ssh_connect_retry_count)
-            if not result:
-                self.logger.error(
-                    "Cannot establish connection to IP '%s'. Aborting!",
-                    ssh.ip_address)
-                return None
+            self.logger.error(
+                "Cannot establish connection to IP '%s'. Aborting!",
+                ssh.ip_address)
+            return None
 
         (result, _) = self.command_create_and_execute(
             ssh,
@@ -124,11 +116,11 @@ class VmController(object):
     def command_list_execute(self, ssh, command_list, prompt):
         res_data_list = []
         for command in command_list:
-            self.logger.debug("Command : " + command)
+            self.logger.debug("Command : %s", command)
             (res, res_data) = self.command_execute(ssh,
                                                    command,
                                                    prompt)
-            self.logger.debug("Response : " + res_data)
+            self.logger.debug("Response : %s", res_data)
             res_data_list.append(res_data)
             if not res:
                 return res, res_data_list
@@ -140,7 +132,7 @@ class VmController(object):
     def command_execute(self, ssh, command, prompt):
         res_data = ssh.send(command, prompt)
         if res_data is None:
-            self.logger.info("retry send command : " + command)
+            self.logger.info("retry send command : %s", command)
             res_data = ssh.send(command,
                                 prompt)
             if not ssh.error_check(res_data):
