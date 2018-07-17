@@ -36,6 +36,7 @@ class TempestCommon(singlevm.VmReady1):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
+    filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
