@@ -91,13 +91,12 @@ class CloudifyIms(cloudify.Cloudify):
         self.flavor_alt = None
 
     def execute(self):
-        assert super(CloudifyIms, self).execute() == 0
-        # pylint: disable=too-many-locals,too-many-statements
         """
         Deploy Cloudify Manager.
 
         network, security group, fip, VM creation
         """
+        assert super(CloudifyIms, self).execute() == 0
         start_time = time.time()
         self.orig_cloud.set_network_quotas(
             self.project.project.name,
@@ -123,8 +122,6 @@ class CloudifyIms(cloudify.Cloudify):
             else:
                 self.cfy_client.secrets.update(k, val)
 
-        duration = time.time() - start_time
-
         self.__logger.info("Put private keypair in manager")
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
@@ -136,6 +133,7 @@ class CloudifyIms(cloudify.Cloudify):
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
 
+        duration = time.time() - start_time
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
         self.vnf['inputs'].update(dict(
@@ -143,7 +141,7 @@ class CloudifyIms(cloudify.Cloudify):
             network_name=self.network.name,
             key_pair_name=self.keypair.name
         ))
-        if (self.deploy_vnf() or self.test_vnf()):
+        if (self.deploy_vnf() and self.test_vnf()):
             self.result = 100
             return 0
         self.result = 1/3 * 100
