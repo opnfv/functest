@@ -22,6 +22,30 @@
       "revId": "24754ed130dc832c9fcaccd36afad879e648a7c2",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_fd57bf24",
+        "filename": "functest/opnfv_tests/vnf/router/cloudify_vrouter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-17T16:29:40Z",
+      "side": 1,
+      "message": "Exact! Holidays!",
+      "parentUuid": "9a561d44_dd7d9bb3",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 48
+      },
+      "revId": "24754ed130dc832c9fcaccd36afad879e648a7c2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
