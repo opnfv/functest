@@ -19,30 +19,24 @@ import time
 
 import pkg_resources
 
-import functest.core.vnf as vnf
 from functest.utils import config
 from functest.opnfv_tests.vnf.router.test_controller import function_test_exec
-from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
-REBOOT_WAIT = 30
 
-
-class VrouterOnBoardingBase(vnf.VnfOnBoarding):
+class VrouterOnBoardingBase(object):
     """vrouter testing base class"""
 
-    def __init__(self, **kwargs):
+    def __init__(self, case_name, util, util_info):
         self.logger = logging.getLogger(__name__)
-        super(VrouterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
         self.data_dir = getattr(config.CONF, 'dir_router_data')
-        self.result_dir = os.path.join(getattr(config.CONF, 'dir_results'),
-                                       self.case_name)
-        self.util = Utilvnf()
-        self.util_info = {}
-
+        self.result_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), case_name)
+        self.util = util
+        self.util_info = util_info
         self.vnf_list = []
 
         if not os.path.exists(self.data_dir):
@@ -89,10 +83,6 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
         vnf_info_list = self.get_vnf_info_list(target_vnf_name)
         self.vnf_list = vnf_info_list
 
-        self.logger.debug("request vnf's reboot.")
-        self.util.request_vnf_reboot(vnf_info_list)
-        time.sleep(REBOOT_WAIT)
-
         target_vnf = self.util.get_target_vnf(vnf_info_list)
 
         reference_vnf_list = self.util.get_reference_vnf_list(vnf_info_list)
@@ -117,6 +107,7 @@ class VrouterOnBoardingBase(vnf.VnfOnBoarding):
         return result, test_result_data
 
     def get_vnf_info_list(self, target_vnf_name):
-        # pylint: disable=unused-argument,no-self-use
-        vnf_info_list = []
-        return vnf_info_list
+        return self.util.get_vnf_info_list(
+            self.util_info["cfy_manager_ip"],
+            self.util_info["deployment_name"],
+            target_vnf_name)
