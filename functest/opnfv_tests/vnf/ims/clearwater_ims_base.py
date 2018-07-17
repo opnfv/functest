@@ -20,7 +20,6 @@ import time
 import pkg_resources
 import requests
 
-import functest.core.vnf as vnf
 from functest.utils import config
 import functest.utils.functest_utils as ft_utils
 
@@ -28,17 +27,16 @@ __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
               "Helen Yao <helanyao@gmail.com>")
 
 
-class ClearwaterOnBoardingBase(vnf.VnfOnBoarding):
+class ClearwaterOnBoardingBase(object):
     """vIMS clearwater base usable by several orchestrators"""
 
-    def __init__(self, **kwargs):
+    def __init__(self, case_name):
         self.logger = logging.getLogger(__name__)
-        super(ClearwaterOnBoardingBase, self).__init__(**kwargs)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
         self.data_dir = getattr(config.CONF, 'dir_ims_data')
-        self.result_dir = os.path.join(getattr(config.CONF, 'dir_results'),
-                                       self.case_name)
+        self.result_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), case_name)
         self.test_dir = getattr(config.CONF, 'dir_repo_vims_test')
 
         if not os.path.exists(self.data_dir):

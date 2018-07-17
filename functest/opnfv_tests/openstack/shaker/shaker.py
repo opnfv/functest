@@ -51,11 +51,7 @@ class Shaker(singlevm.SingleVm2):
             - 1 on operation error
         """
         assert self.ssh
-        keystone_id = self.orig_cloud.search_services('keystone')[0].id
-        self.__logger.debug("keystone id: %s", keystone_id)
-        endpoint = self.orig_cloud.search_endpoints(
-            filters={'interface': 'public',
-                     'service_id': keystone_id})[0].url
+        endpoint = self.get_public_auth_url(self.orig_cloud)
         self.__logger.debug("keystone endpoint: %s", endpoint)
         self.orig_cloud.grant_role(
             "admin", user=self.project.user.id,

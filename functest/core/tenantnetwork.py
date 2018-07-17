@@ -175,6 +175,15 @@ class TenantNetwork1(testcase.TestCase):
             role = cloud.get_role(member.lower())
         return role
 
+    @staticmethod
+    def get_public_auth_url(cloud):
+        """Get Keystone public endpoint"""
+        keystone_id = cloud.search_services('keystone')[0].id
+        endpoint = cloud.search_endpoints(
+            filters={'interface': 'public',
+                     'service_id': keystone_id})[0].url
+        return endpoint
+
     def _create_network_ressources(self):
         assert self.cloud
         assert self.ext_net
