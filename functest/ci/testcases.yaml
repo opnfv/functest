@@ -337,7 +337,8 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.tempest.tempest'
                     class: 'TempestCommon'
                     args:
-                        mode: 'barbican_tempest_plugin.tests.(api|scenario)'
+                        mode:
+                            'barbican_tempest_plugin.tests.(api|scenario).(?!test_image_signing)'
                         services:
                             - barbican
 
