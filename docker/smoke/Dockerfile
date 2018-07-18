@@ -4,7 +4,7 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2017.09
 ARG PATROLE_TAG=0.3.0
-ARG VMTP_TAG=refs/changes/14/580914/4
+ARG VMTP_TAG=9c016e3f9683ae557e8271ef358d9c1b59126cdf
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
