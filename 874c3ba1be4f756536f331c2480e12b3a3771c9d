@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_abcd0160",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-18T13:29:06Z",
+      "side": 1,
+      "message": "Only Healthcheck is passing. Functest is much more than Healthcheck.\n\nI would say the opposite: XCI is passing Healthcheck...",
+      "revId": "874c3ba1be4f756536f331c2480e12b3a3771c9d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
