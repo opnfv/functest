@@ -45,6 +45,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_alt_ram = 1024
     flavor_alt_vcpus = 1
     flavor_alt_disk = 1
+    create_server_timeout = 60
 
     image_format = 'qcow2'
 
@@ -147,9 +148,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         vm1 = self.cloud.create_server(
             name if name else '{}-vm_{}'.format(self.case_name, self.guid),
             image=self.image.id, flavor=self.flavor.id,
-            auto_ip=False, wait=True,
-            network=self.network.id,
-            **kwargs)
+            auto_ip=False, wait=True, network=self.network.id,
+            timeout=self.create_server_timeout, **kwargs)
         vm1 = self.cloud.wait_for_server(vm1, auto_ip=False)
         self.__logger.debug("vm: %s", vm1)
         return vm1
