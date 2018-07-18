@@ -143,7 +143,7 @@ class CloudifyIms(cloudify.Cloudify):
             network_name=self.network.name,
             key_pair_name=self.keypair.name
         ))
-        if (self.deploy_vnf() or self.test_vnf()):
+        if (self.deploy_vnf() and self.test_vnf()):
             self.result = 100
             return 0
         self.result = 1/3 * 100
