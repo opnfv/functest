@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_abe34104",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-18T11:54:31Z",
+      "side": 1,
+      "message": "double nested.",
+      "revId": "2e3bb63967045f1675caa1bb57238c10c31091bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2bbf31d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-18T11:54:31Z",
+      "side": 1,
+      "message": "\"better chance\" is inappropriate in case of Functional tests.",
+      "revId": "2e3bb63967045f1675caa1bb57238c10c31091bb",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
