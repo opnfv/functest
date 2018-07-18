@@ -65,6 +65,8 @@ class Cloudify(singlevm.SingleVm2):
                     "The current manager status is %s", cfy_status)
                 if str(cfy_status) != 'running':
                     raise Exception("Cloudify Manager isn't up and running")
+                self.cfy_client.secrets.list()
+                self.__logger.debug("Secrets API successfully reached")
                 break
             except Exception:  # pylint: disable=broad-except
                 self.__logger.info(
