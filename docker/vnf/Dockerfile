@@ -37,7 +37,7 @@ RUN apk --no-cache add --update \
     go get -d -v github.com/juju/juju/... || true && \
     (cd $GOPATH/src/github.com/juju/juju && git checkout $JUJU_TAG && godeps -u dependencies.tsv) && \
     go install -v github.com/juju/juju/... && \
-    rm -rf $GOPATH/go/src/ $GOPATH/pkg && \
+    rm -r $GOPATH/src/ $GOPATH/pkg && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     rm -r upper-constraints.txt /src/vims-test/.git /src/vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
