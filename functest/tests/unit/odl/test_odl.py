@@ -546,16 +546,9 @@ class ODLRunTesting(ODLTesting):
                        odlip=self._sdn_controller_ip,
                        odlrestconfport='8080')
 
-    def test_daisy_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "daisy"
+    def test_compass_no_controller_ip(self):
+        os.environ["INSTALLER_TYPE"] = "compass"
         self._test_missing_value()
-
-    def test_daisy(self):
-        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "daisy"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip, odlwebport='8181',
-                       odlrestconfport='8087')
 
 
 class ODLArgParserTesting(ODLTesting):

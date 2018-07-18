@@ -186,9 +186,6 @@ class ODLTests(robotframework.RobotFramework):
                 kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'compass':
                 kwargs['odlrestconfport'] = '8080'
-            elif installer_type == 'daisy':
-                kwargs['odlwebport'] = '8181'
-                kwargs['odlrestconfport'] = '8087'
             assert kwargs['odlip']
         except KeyError as ex:
             self.__logger.error(
