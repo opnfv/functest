@@ -165,10 +165,8 @@ vnf:
         tenant_name: cloudify_ims
         tenant_description: vIMS
         config: cloudify_ims.yaml
-    cloudify_ims_perf:
-        tenant_name: cloudify_ims_perf
-        tenant_description: vIMS
-        config: cloudify_ims_perf.yaml
+    heat_ims:
+        config: heat_ims.yaml
     orchestra_openims:
         tenant_name: orchestra_openims
         tenant_description: OpenIMS deployed with Open Baton
