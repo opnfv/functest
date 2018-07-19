@@ -4,7 +4,7 @@ ARG BRANCH=stable/fraser
 ARG OPENSTACK_TAG=stable/pike
 ARG VIMS_TEST_TAG=release-129
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
-ARG VIMS_TAG=fraser
+ARG CLOUDIFY_VIMS_TAG=fraser
 ARG VROUTER_TAG=fraser
 ARG JUJU_TAG=tags/juju-2.2.5
 ARG ABOT_TAG=opnfv-fraser
@@ -26,7 +26,7 @@ RUN apk --no-cache add --update \
     git clone https://github.com/Metaswitch/quaff /src/vims-test/quaff && \
     (cd /src/vims-test/quaff && git checkout $QUAFF_TAG) && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-build-infra /src/vims-test/build-infra && \
-    git clone --depth 1 -b $VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/vims && \
+    git clone --depth 1 -b $CLOUDIFY_VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/cloudify_vims && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
     git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     (cd /src/epc-requirements/abot_charm && git checkout $ABOT_TAG) && \
@@ -39,7 +39,7 @@ RUN apk --no-cache add --update \
     go install -v github.com/juju/juju/... && \
     rm -r $GOPATH/src/ $GOPATH/pkg && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
-    rm -r upper-constraints.txt /src/vims-test/.git /src/vims/.git /src/vims-test/quaff/.git \
+    rm -r upper-constraints.txt /src/vims-test/.git /src/cloudify_vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /src/epc-requirements/abot_charm/.git && \
     apk del .build-deps
