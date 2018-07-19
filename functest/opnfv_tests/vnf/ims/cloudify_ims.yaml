@@ -1,35 +1,14 @@
 ---
-tenant_images:
-    ubuntu_14.04:
-        /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-    cloudify_manager_4.0:
-        /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
 orchestrator:
     name: cloudify
     version: '4.0'
-    requirements:
-        flavor:
-            name: cloudify.medium
-            ram_min: 4096
-        os_image: 'cloudify_manager_4.0'
 vnf:
     name: clearwater
-    version: '107'
+    version: '129'
     descriptor:
-        file_name: /src/vims/openstack-blueprint.yaml
+        file_name: /src/cloudify_vims/openstack-blueprint.yaml
         name: clearwater-opnfv
-        version: '122'
-    requirements:
-        flavor:
-            name: cloudify.small
-            ram_min: 2048
-        compute_quotas:
-            cores: 50
-            instances: 15
-        network_quotas:
-            security_group: 20
-            security_group_rule: 100
-            port: 50
+        version: '129'
     inputs:
         image_id: 'ubuntu_14.04'
         flavor_id: 'cloudify.small'
@@ -46,4 +25,4 @@ vnf:
         homer_cluster_size: 1
 vnf_test_suite:
     name: clearwater-live-test
-    version: "1.0"
+    version: '1.0'
