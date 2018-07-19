@@ -492,6 +492,21 @@ tiers:
                     class: 'CloudifyIms'
 
             -
+                case_name: heat_ims
+                project_name: functest
+                criteria: 80
+                blocking: false
+                description: >-
+                    This test case deploys an OpenSource vIMS solution from
+                    Clearwater using the OpenStack Heat orchestrator. It also runs
+                    some signaling traffic.
+                dependencies:
+                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
+                run:
+                    module: 'functest.opnfv_tests.vnf.ims.heat_ims'
+                    class: 'HeatIms'
+
+            -
                 case_name: vyos_vrouter
                 project_name: functest
                 criteria: 100

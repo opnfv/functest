@@ -22,7 +22,7 @@ import scp
 import six
 
 from functest.core import cloudify
-from functest.opnfv_tests.vnf.ims import clearwater_ims_base
+from functest.opnfv_tests.vnf.ims import clearwater
 from functest.utils import config
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
@@ -89,6 +89,7 @@ class CloudifyIms(cloudify.Cloudify):
 
         self.image_alt = None
         self.flavor_alt = None
+        self.clearwater = None
 
     def execute(self):
         assert super(CloudifyIms, self).execute() == 0
@@ -186,33 +187,32 @@ class CloudifyIms(cloudify.Cloudify):
         execution = wait_for_execution(
             self.cfy_client, execution, self.__logger, timeout=3600)
 
-        duration = time.time() - start_time
-
         self.__logger.info(execution)
-        if execution.status == 'terminated':
-            self.details['vnf'].update(status='PASS', duration=duration)
-            self.result += 1/3 * 100
-            result = True
-        else:
-            self.details['vnf'].update(status='FAIL', duration=duration)
-            result = False
-        return result
+        if execution.status != 'terminated':
+            self.details['vnf'].update(status='FAIL', duration=time.time() - start_time)
+            return False
+
+        ellis_ip = self.cfy_client.deployments.outputs.get(
+                self.vnf['descriptor'].get('name'))['outputs']['ellis_ip']
+        self.clearwater = clearwater.ClearwaterTesting(self.case_name, ellis_ip)
+        self.clearwater.availability_check_by_creating_numbers()
+
+        self.details['vnf'].update(status='PASS', duration=time.time() - start_time)
+        self.result += 1/3 * 100
+        return True
+
 
     def test_vnf(self):
         """Run test on clearwater ims instance."""
         start_time = time.time()
 
-        testing = clearwater_ims_base.ClearwaterOnBoardingBase(self.case_name)
-        outputs = self.cfy_client.deployments.outputs.get(
-            self.vnf['descriptor'].get('name'))['outputs']
-        dns_ip = outputs['dns_ip']
-        ellis_ip = outputs['ellis_ip']
-        testing.config_ellis(ellis_ip)
+        dns_ip = self.cfy_client.deployments.outputs.get(
+            self.vnf['descriptor'].get('name'))['outputs']['dns_ip']
 
         if not dns_ip:
             return False
 
-        short_result = testing.run_clearwater_live_test(
+        short_result = self.clearwater.run_clearwater_live_test(
             dns_ip=dns_ip,
             public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time

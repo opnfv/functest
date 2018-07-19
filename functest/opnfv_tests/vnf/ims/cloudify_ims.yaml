@@ -14,14 +14,14 @@ orchestrator:
         os_image: 'cloudify_manager_4.0'
 vnf:
     name: clearwater
-    version: '107'
+    version: '129'
     descriptor:
-        file_name: /src/vims/openstack-blueprint.yaml
+        file_name: /src/cloudify_vims/openstack-blueprint.yaml
         name: clearwater-opnfv
-        version: '122'
+        version: '129'
     requirements:
         flavor:
-            name: cloudify.small
+            name: clearwater.small
             ram_min: 2048
         compute_quotas:
             cores: 50
