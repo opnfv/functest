@@ -376,6 +376,27 @@ The Clearwater architecture is described as follows:
    :align: center
    :alt: vIMS architecture
 
+heat_ims
+^^^^^^^^^^^^
+The IP Multimedia Subsystem or IP Multimedia Core Network Subsystem (IMS) is an
+architectural framework for delivering IP multimedia services.
+
+vIMS has been integrated in Functest to demonstrate the capability to deploy a
+relatively complex NFV scenario on the OPNFV platform. The deployment of a
+complete functional VNF allows the test of most of the essential functions
+needed for a NFV platform.
+
+The goal of this test suite consists of:
+
+* deploy a Clearwater vIMS (IP Multimedia Subsystem) VNF using
+  OpenStack Heat orchestrator based on a HOT template defined in `[17]`_
+* run suite of signaling tests on top of this VNF
+
+The Clearwater architecture is described as follows:
+
+.. figure:: ../../../images/clearwater-architecture-v2.png
+  :align: center
+  :alt: vIMS architecture
 
 vyos-vrouter
 ^^^^^^^^^^^^
@@ -466,3 +487,4 @@ The kubernetes testcases are distributed across various Tiers:
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://www.rebaca.com/abot-test-orchestration-tool/
 .. _`[16]`: https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
+.. _`[17]`: https://github.com/Metaswitch/clearwater-heat/blob/release-129/clearwater.yaml
