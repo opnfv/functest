@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_d1f7448b",
+        "filename": "docker/vnf/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-19T16:02:10Z",
+      "side": 1,
+      "message": "100?",
+      "revId": "40e11ba1cc2324c6c9fc11a96692a91ed2476992",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_11f25c9a",
+        "filename": "docs/testing/user/userguide/test_details.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-19T16:02:10Z",
+      "side": 1,
+      "message": "I think you could remove several ^^^",
+      "revId": "40e11ba1cc2324c6c9fc11a96692a91ed2476992",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_512b34eb",
+        "filename": "functest/opnfv_tests/vnf/ims/cloudify_ims.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-19T16:02:10Z",
+      "side": 1,
+      "message": "useless now.",
+      "revId": "40e11ba1cc2324c6c9fc11a96692a91ed2476992",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
