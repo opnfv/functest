@@ -505,18 +505,6 @@ class ODLRunTesting(ODLTesting):
             odlip=self._sdn_controller_ip,
             odlwebport=self._odl_webport)
 
-    def test_fuel_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "fuel"
-        self._test_missing_value()
-
-    def test_fuel(self):
-        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "fuel"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip,
-                       odlwebport='8282',
-                       odlrestconfport='8282')
-
     def test_apex_no_controller_ip(self):
         os.environ["INSTALLER_TYPE"] = "apex"
         self._test_missing_value()

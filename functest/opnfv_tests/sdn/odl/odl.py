@@ -178,10 +178,7 @@ class ODLTests(robotframework.RobotFramework):
                 'OS_PROJECT_DOMAIN_NAME', 'Default')
             kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
-            if installer_type == 'fuel':
-                kwargs['odlwebport'] = '8282'
-                kwargs['odlrestconfport'] = '8282'
-            elif installer_type == 'apex' or installer_type == 'netvirt':
+            if installer_type == 'apex' or installer_type == 'netvirt':
                 kwargs['odlwebport'] = '8081'
                 kwargs['odlrestconfport'] = '8081'
             elif installer_type == 'compass':
