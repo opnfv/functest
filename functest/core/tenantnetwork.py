@@ -35,7 +35,6 @@ class NewProject(object):
     # pylint: disable=too-many-instance-attributes
 
     __logger = logging.getLogger(__name__)
-    default_member = "Member"
 
     def __init__(self, cloud, case_name, guid):
         self.cloud = None
@@ -48,6 +47,7 @@ class NewProject(object):
         self.domain = None
         self.role = None
         self.role_name = None
+        self.default_member = env.get('NEW_USER_ROLE')
 
     def create(self):
         """Create projects/users"""
