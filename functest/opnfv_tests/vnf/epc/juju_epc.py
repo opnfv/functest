@@ -130,6 +130,13 @@ class JujuEpc(vnf.VnfOnBoarding):
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
 
+    def check_requirements(self):
+        if env.get('NEW_USER_ROLE').lower() == "admin":
+            self.__logger.warn(
+                "Defining NEW_USER_ROLE=admin will easily break the testcase "
+                "because Juju doesn't manage tenancy (e.g. subnet  "
+                "overlapping)")
+
     def _bypass_juju_netdiscovery_bug(self, name):
         user_creator = OpenStackUser(
             self.snaps_creds,
