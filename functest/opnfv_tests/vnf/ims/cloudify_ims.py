@@ -24,6 +24,7 @@ import six
 from functest.core import cloudify
 from functest.opnfv_tests.vnf.ims import clearwater_ims_base
 from functest.utils import config
+from functest.utils import env
 
 __author__ = "Valentin Boucher <valentin.boucher@orange.com>"
 
@@ -89,6 +90,13 @@ class CloudifyIms(cloudify.Cloudify):
 
         self.image_alt = None
         self.flavor_alt = None
+
+    def check_requirements(self):
+        if env.get('NEW_USER_ROLE').lower() == "admin":
+            self.__logger.warn(
+                "Defining NEW_USER_ROLE=admin will easily break the testcase "
+                "because Cloudify doesn't manage tenancy (e.g. subnet  "
+                "overlapping)")
 
     def execute(self):
         assert super(CloudifyIms, self).execute() == 0
