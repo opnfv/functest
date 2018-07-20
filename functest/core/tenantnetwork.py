@@ -122,7 +122,7 @@ class TenantNetwork1(testcase.TestCase):
     """
 
     __logger = logging.getLogger(__name__)
-    cidr = '192.168.0.0/24'
+    cidr = '192.168.120.0/24'
     shared_network = False
 
     def __init__(self, **kwargs):
