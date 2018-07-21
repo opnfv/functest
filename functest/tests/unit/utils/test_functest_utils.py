@@ -20,7 +20,7 @@ from functest.utils import functest_utils
 
 
 class FunctestUtilsTesting(unittest.TestCase):
-    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-instance-attributes,too-many-public-methods
 
     readline = 0
     test_ip = ['10.1.23.4', '10.1.14.15', '10.1.16.15']
@@ -217,6 +217,126 @@ class FunctestUtilsTesting(unittest.TestCase):
                              get_parameter_from_yaml(self.parameter,
                                                      self.test_file),
                              'test_image_name')
+
+    def test_nova_version_exc1(self):
+        # pylint: disable=protected-access
+        cloud = mock.Mock()
+        cloud._compute_client.request.return_value = None
+        self.assertEqual(functest_utils.get_nova_version(cloud), None)
+        cloud._compute_client.request.assert_called_once_with('/', 'GET')
+
+    def test_nova_version_exc2(self):
+        # pylint: disable=protected-access
+        cloud = mock.Mock()
+        cloud._compute_client.request.return_value = {"version": None}
+        self.assertEqual(functest_utils.get_nova_version(cloud), None)
+        cloud._compute_client.request.assert_called_once_with('/', 'GET')
+
+    def test_nova_version_exc3(self):
+        # pylint: disable=protected-access
+        cloud = mock.Mock()
+        cloud._compute_client.request.return_value = {
+            "version": {"version": None}}
+        self.assertEqual(functest_utils.get_nova_version(cloud), None)
+        cloud._compute_client.request.assert_called_once_with('/', 'GET')
+
+    def test_nova_version_exc4(self):
+        # pylint: disable=protected-access
+        cloud = mock.Mock()
+        cloud._compute_client.request.return_value = {
+            "version": {"version": "a.b"}}
+        self.assertEqual(functest_utils.get_nova_version(cloud), None)
+        cloud._compute_client.request.assert_called_once_with('/', 'GET')
+
+    def test_nova_version(self):
+        # pylint: disable=protected-access
+        cloud = mock.Mock()
+        cloud._compute_client.request.return_value = {
+            "version": {"version": "2.1"}}
+        self.assertEqual(functest_utils.get_nova_version(cloud), (2, 1))
+        cloud._compute_client.request.assert_called_once_with('/', 'GET')
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 61))
+    def test_openstack_version1(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(
+            cloud), "Rocky or newer")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 60))
+    def test_openstack_version2(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Queens")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 43))
+    def test_openstack_version3(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Pike")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 39))
+    def test_openstack_version4(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Ocata")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 26))
+    def test_openstack_version5(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Newton")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 13))
+    def test_openstack_version6(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Mitaka")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 4))
+    def test_openstack_version7(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(
+            functest_utils.get_openstack_version(cloud), "Liberty")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 1))
+    def test_openstack_version8(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(cloud), "Kilo")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(1, 9))
+    def test_openstack_version9(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(
+            functest_utils.get_openstack_version(cloud), "Unknown")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(3, 1))
+    def test_openstack_version10(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(
+            functest_utils.get_openstack_version(cloud), "Rocky or newer")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=None)
+    def test_openstack_version_exc(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(
+            functest_utils.get_openstack_version(cloud), "Unknown")
+        args[0].assert_called_once_with(cloud)
 
 
 if __name__ == "__main__":
