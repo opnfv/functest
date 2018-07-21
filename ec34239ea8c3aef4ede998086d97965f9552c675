@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_6031430b",
+        "filename": "functest/opnfv_tests/vnf/ims/heat_ims.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-21T10:12:56Z",
+      "side": 1,
+      "message": "VmReady is better here",
+      "revId": "ec34239ea8c3aef4ede998086d97965f9552c675",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_0055e71c",
+        "filename": "functest/opnfv_tests/vnf/ims/heat_ims.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-07-21T10:12:56Z",
+      "side": 1,
+      "message": "That\u0027s incompatible with Heat param.\nWe could also have generate it.\n\nPassing yamllint raises side effects :)",
+      "revId": "ec34239ea8c3aef4ede998086d97965f9552c675",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
