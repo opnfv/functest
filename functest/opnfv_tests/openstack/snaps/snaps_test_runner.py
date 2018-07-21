@@ -12,10 +12,13 @@
 
 import logging
 
+import os_client_config
+import shade
 from xtesting.core import unit
 
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
+from functest.utils import functest_utils
 
 
 class SnapsTestRunner(unit.Suite):
@@ -51,3 +54,13 @@ class SnapsTestRunner(unit.Suite):
         self.image_metadata = None
         if hasattr(config.CONF, 'snaps_images'):
             self.image_metadata = getattr(config.CONF, 'snaps_images')
+
+    def check_requirements(self):
+        """Skip if OpenStack Rocky or newer."""
+        try:
+            cloud_config = os_client_config.get_config()
+            cloud = shade.OpenStackCloud(cloud_config=cloud_config)
+            if functest_utils.get_nova_version(cloud) > (2, 60):
+                self.is_skipped = True
+        except Exception:  # pylint: disable=broad-except
+            pass
