@@ -37,9 +37,8 @@ from snaps.openstack.tests.create_project_tests import (
     CreateProjectSuccessTests, CreateProjectUserTests)
 from snaps.openstack.tests.create_qos_tests import (
     CreateQoSTests)
-# from snaps.openstack.tests.create_router_tests import
-# CreateRouterSuccessTests
-from snaps.openstack.tests.create_router_tests import CreateRouterNegativeTests
+from snaps.openstack.tests.create_router_tests import (
+    CreateRouterSuccessTests, CreateRouterNegativeTests)
 from snaps.openstack.tests.create_security_group_tests import (
     CreateSecurityGroupTests)
 from snaps.openstack.tests.create_stack_tests import (
@@ -311,13 +310,11 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
         flavor_metadata=flavor_metadata, image_metadata=image_metadata,
         log_level=log_level))
-    # https://jira.opnfv.org/browse/SNAPS-320
-    # suite.addTest(OSIntegrationTestCase.parameterize(
-    #     CreateRouterSuccessTests, os_creds=os_creds,
-    #     ext_net_name=ext_net_name,
-    #     use_keystone=use_keystone,
-    #     flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-    #     log_level=log_level))
+    suite.addTest(OSIntegrationTestCase.parameterize(
+        CreateRouterSuccessTests, os_creds=os_creds, ext_net_name=ext_net_name,
+        use_keystone=use_keystone,
+        flavor_metadata=flavor_metadata, image_metadata=image_metadata,
+        log_level=log_level))
     suite.addTest(OSIntegrationTestCase.parameterize(
         CreateRouterNegativeTests, os_creds=os_creds,
         ext_net_name=ext_net_name, use_keystone=use_keystone,
