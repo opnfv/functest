@@ -44,7 +44,7 @@ from snaps.openstack.tests.create_security_group_tests import (
     CreateSecurityGroupTests)
 from snaps.openstack.tests.create_stack_tests import (
     CreateStackSuccessTests, CreateStackNegativeTests,
-    CreateStackFlavorTests,
+    CreateStackFlavorTests, CreateStackFloatingIpTests,
     CreateStackKeypairTests, CreateStackVolumeTests,
     CreateStackSecurityGroupTests)
 from snaps.openstack.tests.create_user_tests import (
@@ -66,7 +66,7 @@ from snaps.openstack.utils.tests.glance_utils_tests import (
     GlanceSmokeTests, GlanceUtilsTests)
 from snaps.openstack.utils.tests.heat_utils_tests import (
     HeatSmokeTests, HeatUtilsCreateSimpleStackTests,
-    HeatUtilsFlavorTests,
+    HeatUtilsCreateComplexStackTests, HeatUtilsFlavorTests,
     HeatUtilsKeypairTests, HeatUtilsSecurityGroupTests)
 from snaps.openstack.utils.tests.keystone_utils_tests import (
     KeystoneSmokeTests, KeystoneUtilsTests)
@@ -201,11 +201,10 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
         HeatUtilsCreateSimpleStackTests, os_creds=os_creds,
         ext_net_name=ext_net_name, log_level=log_level,
         image_metadata=image_metadata))
-    # https://gerrit.opnfv.org/gerrit/#/c/59801/
-    # suite.addTest(OSComponentTestCase.parameterize(
-    #     HeatUtilsCreateComplexStackTests, os_creds=os_creds,
-    #     ext_net_name=ext_net_name, log_level=log_level,
-    #     image_metadata=image_metadata))
+    suite.addTest(OSComponentTestCase.parameterize(
+        HeatUtilsCreateComplexStackTests, os_creds=os_creds,
+        ext_net_name=ext_net_name, log_level=log_level,
+        image_metadata=image_metadata))
     suite.addTest(OSComponentTestCase.parameterize(
         HeatUtilsFlavorTests, os_creds=os_creds,
         ext_net_name=ext_net_name, log_level=log_level,
@@ -438,12 +437,11 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
             ext_net_name=ext_net_name, use_keystone=use_keystone,
             flavor_metadata=flavor_metadata, image_metadata=image_metadata,
             log_level=log_level))
-        # https://gerrit.opnfv.org/gerrit/#/c/59801/
-        # suite.addTest(OSIntegrationTestCase.parameterize(
-        #     CreateStackFloatingIpTests, os_creds=os_creds,
-        #     ext_net_name=ext_net_name, use_keystone=use_keystone,
-        #     flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-        #     log_level=log_level))
+        suite.addTest(OSIntegrationTestCase.parameterize(
+            CreateStackFloatingIpTests, os_creds=os_creds,
+            ext_net_name=ext_net_name, use_keystone=use_keystone,
+            flavor_metadata=flavor_metadata, image_metadata=image_metadata,
+            log_level=log_level))
         suite.addTest(OSIntegrationTestCase.parameterize(
             AnsibleProvisioningTests, os_creds=os_creds,
             ext_net_name=ext_net_name, use_keystone=use_keystone,
