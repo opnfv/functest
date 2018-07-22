@@ -14,6 +14,7 @@ advanced testcases (e.g. deploying an orchestrator).
 """
 
 import logging
+import re
 import tempfile
 import time
 
@@ -153,6 +154,26 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         vm1 = self.cloud.wait_for_server(vm1, auto_ip=False)
         self.__logger.debug("vm: %s", vm1)
         return vm1
+
+    def check_regex_in_console(self, name, regex=' login: ', loop=1):
+        """Wait for specific message in console
+
+        Returns: True or False on errors
+        """
+        assert self.cloud
+        for iloop in range(loop):
+            console = self.cloud.get_server_console(name)
+            self.__logger.debug("console: \n%s", console)
+            if re.search(regex, console):
+                self.__logger.debug("regex found: ''%s' in console", regex)
+                return True
+            else:
+                self.__logger.debug(
+                    "try %s: cannot find regex '%s' in console",
+                    iloop + 1, regex)
+                time.sleep(10)
+        self.__logger.error("cannot find regex '%s' in console", regex)
+        return False
 
     def run(self, **kwargs):
         """Boot the new VM
