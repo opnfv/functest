@@ -16,31 +16,13 @@ import json
 import re
 import subprocess
 import sys
-import uuid
+
 from copy import deepcopy
 import pkg_resources
+import six
 import yaml
 
-import six
-from snaps.config.flavor import FlavorConfig
-from snaps.config.image import ImageConfig
-from snaps.config.network import NetworkConfig, SubnetConfig
-from snaps.config.router import RouterConfig
-from snaps.config.security_group import (
-    Direction, Protocol, SecurityGroupConfig, SecurityGroupRuleConfig)
-from snaps.config.user import UserConfig
-from snaps.openstack.create_flavor import OpenStackFlavor
-from snaps.openstack.create_image import OpenStackImage
-from snaps.openstack.create_network import OpenStackNetwork
-from snaps.openstack.create_router import OpenStackRouter
-from snaps.openstack.create_security_group import OpenStackSecurityGroup
-from snaps.openstack.create_user import OpenStackUser
-from snaps.openstack.utils import keystone_utils
-from snaps.openstack.utils import nova_utils
-from snaps.openstack.utils import neutron_utils
-
-from functest.core import vnf
-from functest.opnfv_tests.openstack.snaps import snaps_utils
+from functest.core import singlevm
 from functest.utils import config
 from functest.utils import env
 
@@ -77,11 +59,24 @@ CREDS_TEMPLATE3 = """credentials:
       username: {user_n}"""
 
 
-class JujuEpc(vnf.VnfOnBoarding):
+class JujuEpc(singlevm.VmReady2):
     # pylint:disable=too-many-instance-attributes
     """Abot EPC deployed with JUJU Orchestrator Case"""
 
     __logger = logging.getLogger(__name__)
+
+    filename = ('/home/opnfv/functest/images/'
+                'ubuntu-16.04-server-cloudimg-amd64-disk1.img')
+    filename_alt = ('/home/opnfv/functest/images/'
+                    'ubuntu-14.04-server-cloudimg-amd64-disk1.img')
+
+    flavor_ram = 2048
+    flavor_vcpus = 1
+    flavor_disk = 10
+
+    flavor_alt_ram = 4096
+    flavor_alt_vcpus = 1
+    flavor_alt_disk = 1
 
     juju_timeout = '3600'
 
@@ -126,10 +121,17 @@ class JujuEpc(vnf.VnfOnBoarding):
             version=get_config("vnf_test_suite.version", self.config_file),
             tag_name=get_config("vnf_test_suite.tag_name", self.config_file)
         )
-        self.public_auth_url = None
 
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
+
+        try:
+            self.public_auth_url = self.get_public_auth_url(self.cloud)
+        except Exception:  # pylint: disable=broad-except
+            self.public_auth_url = None
+        self.sec = None
+        self.image_alt = None
+        self.flavor_alt = None
 
     def check_requirements(self):
         if env.get('NEW_USER_ROLE').lower() == "admin":
@@ -138,26 +140,13 @@ class JujuEpc(vnf.VnfOnBoarding):
                 "because Juju doesn't manage tenancy (e.g. subnet  "
                 "overlapping)")
 
-    def _bypass_juju_netdiscovery_bug(self, name):
-        user_creator = OpenStackUser(
-            self.snaps_creds,
-            UserConfig(
-                name=name,
-                password=str(uuid.uuid4()),
-                project_name=self.tenant_name,
-                domain_name=self.snaps_creds.user_domain_name,
-                roles={'_member_': self.tenant_name}))
-        user_creator.create()
-        self.created_object.append(user_creator)
-        return user_creator
-
     def _register_cloud(self):
+        assert self.public_auth_url
         self.__logger.info("Creating Cloud for Abot-epc .....")
         clouds_yaml = os.path.join(self.res_dir, "clouds.yaml")
         cloud_data = {
             'url': self.public_auth_url,
-            'region': self.snaps_creds.region_name if (
-                self.snaps_creds.region_name) else 'RegionOne'}
+            'region': os.environ.get('OS_REGION_NAME', 'RegionOne')}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
@@ -166,15 +155,11 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def _register_credentials_v2(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
-        user_creator = self._bypass_juju_netdiscovery_bug(
-            'juju_network_discovery_bug')
-        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
-        self.__logger.debug("snaps creds: %s", snaps_creds)
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
         creds_data = {
-            'pass': snaps_creds.password,
-            'tenant_n': snaps_creds.project_name,
-            'user_n': snaps_creds.username}
+            'pass': self.project.password,
+            'tenant_n': self.project.project.name,
+            'user_n': self.project.user.name}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE2.format(**creds_data))
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
@@ -184,17 +169,15 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def _register_credentials_v3(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
-        user_creator = self._bypass_juju_netdiscovery_bug(
-            'juju_network_discovery_bug')
-        snaps_creds = user_creator.get_os_creds(self.snaps_creds.project_name)
-        self.__logger.debug("snaps creds: %s", snaps_creds)
         credentials_yaml = os.path.join(self.res_dir, "credentials.yaml")
         creds_data = {
-            'pass': snaps_creds.password,
-            'tenant_n': snaps_creds.project_name,
-            'user_n': snaps_creds.username,
-            'project_domain_n': snaps_creds.project_domain_name,
-            'user_domain_n': snaps_creds.user_domain_name}
+            'pass': self.project.password,
+            'tenant_n': self.project.project.name,
+            'user_n': self.project.user.name,
+            'project_domain_n': self.cloud.auth.get(
+                "project_domain_name", "Default"),
+            'user_domain_n': self.cloud.auth.get(
+                "user_domain_name", "Default")}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE3.format(**creds_data))
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
@@ -202,43 +185,29 @@ class JujuEpc(vnf.VnfOnBoarding):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
 
-    def _add_custom_rule(self, sec_grp_name):
+    def _add_custom_rule(self):
         """ To add custom rule for SCTP Traffic """
-
-        security_group = OpenStackSecurityGroup(
-            self.snaps_creds,
-            SecurityGroupConfig(
-                name=sec_grp_name))
-
-        security_group.create()
-
-        # Add custom security rule to the obtained Security Group
-        self.__logger.info("Adding SCTP ingress rule to SG:%s",
-                           security_group.sec_grp_settings.name)
-
-        try:
-            security_group.add_rule(SecurityGroupRuleConfig(
-                sec_grp_name=sec_grp_name, direction=Direction.ingress,
-                protocol=Protocol.sctp))
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception(
-                "Some issue encountered with adding SCTP security rule ...")
+        self.sec = self.cloud.create_security_group(
+            '{}-sg_{}'.format(self.case_name, self.guid),
+            'created by OPNFV Functest ({})'.format(self.case_name))
+        self.cloud.create_security_group_rule(
+            self.sec.id, port_range_min='22', port_range_max='22',
+            protocol='tcp', direction='ingress')
+        self.cloud.create_security_group_rule(
+            self.sec.id, protocol='icmp', direction='ingress')
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
+        assert self.public_auth_url
         self.__logger.info("Additional pre-configuration steps")
-        super(JujuEpc, self).prepare()
         try:
             os.makedirs(self.res_dir)
         except OSError as ex:
             if ex.errno != errno.EEXIST:
                 self.__logger.exception("Cannot create %s", self.res_dir)
-                raise vnf.VnfPreparationException
+                raise Exception
 
         self.__logger.info("ENV:\n%s", env.string())
-
-        self.public_auth_url = keystone_utils.get_endpoint(
-            self.snaps_creds, 'identity')
 
         # it enforces a versioned public identity endpoint as juju simply
         # adds /auth/tokens wich fails vs an unversioned endpoint.
@@ -246,10 +215,28 @@ class JujuEpc(vnf.VnfOnBoarding):
             self.public_auth_url = six.moves.urllib.parse.urljoin(
                 self.public_auth_url, 'v3')
         self._register_cloud()
-        if self.snaps_creds.identity_api_version == 3:
-            self._register_credentials_v3()
-        else:
-            self._register_credentials_v2()
+        # if self.snaps_creds.identity_api_version == 3:
+        self._register_credentials_v3()
+        # else:
+        #     self._register_credentials_v2()
+
+    def publish_image(self, name=None):
+        self.image = super(JujuEpc, self).publish_image(name)
+        cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
+               '-i', self.image.id, '-s', self.image.name,
+               '-r', os.environ.get('OS_REGION_NAME', 'RegionOne'),
+               '-u', self.public_auth_url]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
+
+    def publish_image_alt(self, name=None):
+        self.image_alt = super(JujuEpc, self).publish_image(name)
+        cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
+               '-i', self.image_alt.id, '-s', self.image_alt.name,
+               '-r', os.environ.get('OS_REGION_NAME', 'RegionOne'),
+               '-u', self.public_auth_url]
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        self.__logger.info("%s\n%s", " ".join(cmd), output)
 
     def deploy_orchestrator(self):  # pylint: disable=too-many-locals
         """
@@ -257,69 +244,7 @@ class JujuEpc(vnf.VnfOnBoarding):
 
         Bootstrap juju
         """
-        self.__logger.info("Deploying Juju Orchestrator")
-        private_net_name = getattr(
-            config.CONF, 'vnf_{}_private_net_name'.format(self.case_name))
-        private_subnet_name = '{}-{}'.format(
-            getattr(config.CONF,
-                    'vnf_{}_private_subnet_name'.format(self.case_name)),
-            self.uuid)
-        private_subnet_cidr = getattr(
-            config.CONF, 'vnf_{}_private_subnet_cidr'.format(self.case_name))
-        abot_router = '{}-{}'.format(
-            getattr(config.CONF,
-                    'vnf_{}_external_router'.format(self.case_name)),
-            self.uuid)
-        self.__logger.info("Creating full network with nameserver: %s",
-                           env.get('NAMESERVER'))
-        subnet_settings = SubnetConfig(
-            name=private_subnet_name,
-            cidr=private_subnet_cidr,
-            dns_nameservers=[env.get('NAMESERVER')])
-        network_settings = NetworkConfig(
-            name=private_net_name, subnet_settings=[subnet_settings])
-        network_creator = OpenStackNetwork(self.snaps_creds, network_settings)
-        net_id = network_creator.create().id
-        self.created_object.append(network_creator)
-
-        ext_net_name = snaps_utils.get_ext_net_name(self.snaps_creds)
-        self.__logger.info("Creating network Router ....")
-        router_creator = OpenStackRouter(
-            self.snaps_creds, RouterConfig(
-                name=abot_router,
-                external_gateway=ext_net_name,
-                internal_subnets=[subnet_settings.name]))
-        router_creator.create()
-        self.created_object.append(router_creator)
-        self.__logger.info("Creating Flavor ....")
-        flavor_settings = FlavorConfig(
-            name=self.orchestrator['requirements']['flavor']['name'],
-            ram=self.orchestrator['requirements']['flavor']['ram_min'],
-            disk=10, vcpus=1)
-        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        flavor_creator.create()
-        self.created_object.append(flavor_creator)
-
-        self.__logger.info("Upload some OS images if it doesn't exist")
-        images = get_config("tenant_images", self.config_file)
-        self.__logger.info("Images needed for vEPC: %s", images)
-        for image_name, image_file in six.iteritems(images):
-            self.__logger.info("image: %s, file: %s", image_name, image_file)
-            if image_file and image_name:
-                image_creator = OpenStackImage(self.snaps_creds, ImageConfig(
-                    name=image_name, image_user='cloud', img_format='qcow2',
-                    image_file=image_file))
-                image_id = image_creator.create().id
-                cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
-                       '-i', image_id, '-s', image_name, '-r',
-                       self.snaps_creds.region_name if (
-                           self.snaps_creds.region_name) else 'RegionOne',
-                       '-u', self.public_auth_url]
-                output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-                self.__logger.info("%s\n%s", " ".join(cmd), output)
-                self.created_object.append(image_creator)
-        self.__logger.info("Network ID  : %s", net_id)
-
+        self.__logger.info("Network ID  : %s", self.network.id)
         self.__logger.info("Starting Juju Bootstrap process...")
         try:
             cmd = ['timeout', '-t', JujuEpc.juju_timeout,
@@ -327,7 +252,7 @@ class JujuEpc(vnf.VnfOnBoarding):
                    '--metadata-source', '/root',
                    '--constraints', 'mem=2G',
                    '--bootstrap-series', 'xenial',
-                   '--config', 'network={}'.format(net_id),
+                   '--config', 'network={}'.format(self.network.id),
                    '--config', 'ssl-hostname-verification=false',
                    '--config', 'use-floating-ip=true',
                    '--config', 'use-default-secgroup=true',
@@ -359,18 +284,11 @@ class JujuEpc(vnf.VnfOnBoarding):
 
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
+        self.image_alt = self.publish_image_alt()
+        self.flavor_alt = self.create_flavor_alt()
+
         self.__logger.info("Upload VNFD")
         descriptor = self.vnf['descriptor']
-        self.__logger.info("Get or create flavor for all Abot-EPC")
-        flavor_settings = FlavorConfig(
-            name=self.vnf['requirements']['flavor']['name'],
-            ram=self.vnf['requirements']['flavor']['ram_min'],
-            disk=10,
-            vcpus=1)
-        flavor_creator = OpenStackFlavor(self.snaps_creds, flavor_settings)
-        flavor_creator.create()
-        self.created_object.append(flavor_creator)
-
         self.__logger.info("Deploying Abot-epc bundle file ...")
         cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
@@ -398,21 +316,19 @@ class JujuEpc(vnf.VnfOnBoarding):
             if not self.check_app(app):
                 return False
 
-        nova_client = nova_utils.nova_client(self.snaps_creds)
-        instances = get_instances(nova_client)
-        self.__logger.info("List of Instance: %s", instances)
-        for items in instances:
-            metadata = get_instance_metadata(nova_client, items)
-            if 'juju-units-deployed' in metadata:
-                sec_group = 'juju-{}-{}'.format(
-                    metadata['juju-controller-uuid'],
-                    metadata['juju-model-uuid'])
-                self.__logger.info("Instance: %s", sec_group)
-                break
+        # self.__logger.info("List of Instance: %s", instances)
+        # for items in instances:
+        #     metadata = get_instance_metadata(nova_client, items)
+        #     if 'juju-units-deployed' in metadata:
+        #         sec_group = 'juju-{}-{}'.format(
+        #             metadata['juju-controller-uuid'],
+        #             metadata['juju-model-uuid'])
+        #         self.__logger.info("Instance: %s", sec_group)
+        #         break
         self.__logger.info("Adding Security group rule....")
         # This will add sctp rule to a common Security Group Created
         # by juju and shared to all deployed units.
-        self._add_custom_rule(sec_group)
+        self._add_custom_rule()
 
         self.__logger.info("Transferring the feature files to Abot_node ...")
         cmd = ['timeout', '-t', JujuEpc.juju_timeout,
@@ -466,76 +382,25 @@ class JujuEpc(vnf.VnfOnBoarding):
             short_result['failures'], short_result['skipped'])
         return True
 
-    def _get_floating_ips(self):
-        """Get the list of floating IPs associated with the current project"""
-
-        project_id = self.os_project.get_project().id
-
-        neutron_client = neutron_utils.neutron_client(self.snaps_creds)
-        floating_ips = neutron_utils.get_floating_ips(neutron_client)
-
-        project_floating_ip_list = list()
-        for floating_ip in floating_ips:
-            if project_id and project_id == floating_ip.project_id:
-                project_floating_ip_list.append(floating_ip)
-
-        return project_floating_ip_list
-
-    def _release_floating_ips(self, fip_list):
-        """
-        Responsible for deleting a list of floating IPs
-        :param fip_list: A list of SNAPS FloatingIp objects
-        :return:
-        """
-        if not fip_list:
-            return
-
-        neutron_client = neutron_utils.neutron_client(self.snaps_creds)
-
-        for floating_ip in fip_list:
-            neutron_utils.delete_floating_ip(neutron_client, floating_ip)
-
     def clean(self):
         """Clean created objects/functions."""
-
-        # Store Floating IPs of instances created by Juju
-        fip_list = self._get_floating_ips()
-        self.__logger.info("Floating IPs assigned to project:%s",
-                           self.os_project.get_project().name)
-        for floating_ip in fip_list:
-            self.__logger.debug("%s:%s", floating_ip.ip,
-                                floating_ip.description)
-
         try:
             cmd = ['juju', 'debug-log', '--replay', '--no-tail']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
             self.__logger.debug("%s\n%s", " ".join(cmd), output)
-            if not self.orchestrator['requirements']['preserve_setup']:
-                self.__logger.info("Destroying Orchestrator...")
-                cmd = ['timeout', '-t', JujuEpc.juju_timeout,
-                       'juju', 'destroy-controller', '-y', 'abot-controller',
-                       '--destroy-all-models']
-                output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-                self.__logger.info("%s\n%s", " ".join(cmd), output)
+            self.__logger.info("Destroying Orchestrator...")
+            cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+                   'juju', 'destroy-controller', '-y', 'abot-controller',
+                   '--destroy-all-models']
+            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+            self.__logger.info("%s\n%s", " ".join(cmd), output)
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception with Juju Cleanup: %s\n%s",
                 cpe.cmd, cpe.output)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("General issue during the undeployment ..")
-
-        if not self.orchestrator['requirements']['preserve_setup']:
-            try:
-                self.__logger.info('Release floating IPs assigned by Juju...')
-                self._release_floating_ips(fip_list)
-            except Exception:  # pylint: disable=broad-except
-                self.__logger.exception(
-                    "Exception while releasing floating IPs ...")
-
-            self.__logger.info('Remove the Abot_epc OS objects ..')
-            super(JujuEpc, self).clean()
-
-        return True
+        super(JujuEpc, self).clean()
 
 
 # ----------------------------------------------------------
