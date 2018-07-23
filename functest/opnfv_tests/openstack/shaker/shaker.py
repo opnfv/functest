@@ -39,6 +39,10 @@ class Shaker(singlevm.SingleVm2):
     ssh_connect_loops = 12
     create_server_timeout = 360
 
+    def __init__(self, **kwargs):
+        super(Shaker, self).__init__(**kwargs)
+        self.role = None
+
     def prepare(self):
         super(Shaker, self).prepare()
         self.cloud.create_security_group_rule(
@@ -58,6 +62,8 @@ class Shaker(singlevm.SingleVm2):
             "admin", user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
+        if not self.orig_cloud.get_role("heat_stack_owner"):
+            self.role = self.orig_cloud.create_role("heat_stack_owner")
         self.orig_cloud.grant_role(
             "heat_stack_owner", user=self.project.user.id,
             project=self.project.project.id,
@@ -99,3 +105,8 @@ class Shaker(singlevm.SingleVm2):
             self.__logger.exception("cannot get report files")
             return 1
         return stdout.channel.recv_exit_status()
+
+    def clean(self):
+        super(Shaker, self).clean()
+        if self.role:
+            self.orig_cloud.delete_role(self.role.id)
