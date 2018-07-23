@@ -58,8 +58,14 @@ class Shaker(singlevm.SingleVm2):
         assert self.ssh
         endpoint = self.get_public_auth_url(self.orig_cloud)
         self.__logger.debug("keystone endpoint: %s", endpoint)
+        if self.orig_cloud.get_role("admin"):
+            role_name = "admin"
+        elif self.orig_cloud.get_role("Admin"):
+            role_name = "Admin"
+        else:
+            raise Exception("Cannot detect neither admin nor Admin")
         self.orig_cloud.grant_role(
-            "admin", user=self.project.user.id,
+            role_name, user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
         if not self.orig_cloud.get_role("heat_stack_owner"):
