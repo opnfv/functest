@@ -84,6 +84,9 @@ class Shaker(singlevm.SingleVm2):
             'export OS_AUTH_URL={} && '
             'export OS_USERNAME={} && '
             'export OS_PROJECT_NAME={} && '
+            'export OS_PROJECT_ID={} && '
+            'unset OS_TENANT_NAME && '
+            'unset OS_TENANT_ID && '
             'export OS_PASSWORD={} && '
             '{}'
             'env && '
@@ -95,7 +98,7 @@ class Shaker(singlevm.SingleVm2):
             'openstack/perf_l3_north_south '
             '--report report.html --output report.json'.format(
                 endpoint, self.project.user.name, self.project.project.name,
-                self.project.password,
+                self.project.project.id, self.project.password,
                 'export OS_CACERT=~/os_cacert && ' if os.environ.get(
                     'OS_CACERT') else '',
                 self.image.name, self.flavor.name,
