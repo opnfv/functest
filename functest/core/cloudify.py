@@ -28,7 +28,7 @@ class Cloudify(singlevm.SingleVm2):
                 'cloudify-manager-premium-4.0.1.qcow2')
     flavor_ram = 4096
     flavor_vcpus = 2
-    flavor_disk = 50
+    flavor_disk = 40
     username = 'centos'
     ssh_connect_loops = 12
     ports = [80, 443, 5671, 53333]
