@@ -1,0 +1,22 @@
+---
+orchestrator:
+    name: heat
+    version: '4.0'
+vnf:
+    name: clearwater
+    version: '129'
+    descriptor:
+        file_name: /src/heat_vims/clearwater.yaml
+        name: clearwater-opnfv
+        version: '129'
+    inputs:
+        zone: clearwater.opnfv
+        dn_range_start: "6505550000"
+        dn_range_length: "1000"
+        bono_cluster_size: 1
+        sprout_cluster_size: 1
+        vellum_cluster_size: 1
+        dime_cluster_size: 1
+        homer_cluster_size: 1
+        dnssec_key:
+            GkBraPnditvP2Em4oXV5wUTawmZaGGuO+Jt3ZnFkznGV3zFoQ+Ak13nuuOnO0JV5FqAr/KitdW6siqjXSjROXg==

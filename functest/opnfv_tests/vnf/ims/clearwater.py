@@ -27,10 +27,10 @@ __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
               "Helen Yao <helanyao@gmail.com>")
 
 
-class ClearwaterOnBoardingBase(object):
+class ClearwaterTesting(object):
     """vIMS clearwater base usable by several orchestrators"""
 
-    def __init__(self, case_name):
+    def __init__(self, case_name, ellis_ip):
         self.logger = logging.getLogger(__name__)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
@@ -44,54 +44,38 @@ class ClearwaterOnBoardingBase(object):
         if not os.path.exists(self.result_dir):
             os.makedirs(self.result_dir)
 
-    def config_ellis(self, ellis_ip, signup_code='secret', two_numbers=False):
+        self.ellis_ip = ellis_ip
+
+    def availability_check_by_creating_numbers(self,
+                                               signup_code='secret',
+                                               two_numbers=False):
         """Create one or two numbers"""
+        assert self.ellis_ip
         output_dict = {}
-        self.logger.debug('Configure Ellis: %s', ellis_ip)
-        output_dict['ellis_ip'] = ellis_ip
-        account_url = 'http://{0}/accounts'.format(ellis_ip)
+        self.logger.debug('Ellis IP: %s', self.ellis_ip)
+        output_dict['ellis_ip'] = self.ellis_ip
+        account_url = 'http://{0}/accounts'.format(self.ellis_ip)
         params = {"password": "functest",
                   "full_name": "opnfv functest user",
                   "email": "functest@opnfv.org",
                   "signup_code": signup_code}
-        req = requests.post(account_url, data=params)
         output_dict['login'] = params
-        if req.status_code != 201 and req.status_code != 409:
-            raise Exception(
-                "Unable to create an account {}\n{}".format(
-                    params, req.text))
-        self.logger.debug(
-            'Account %s is created on Ellis\n%s', params, req.json())
 
-        session_url = 'http://{0}/session'.format(ellis_ip)
+        number_res = self._create_ellis_account(account_url, params)
+        output_dict['number'] = number_res
+
+        session_url = 'http://{0}/session'.format(self.ellis_ip)
         session_data = {
             'username': params['email'],
             'password': params['password'],
             'email': params['email']
         }
-        req = requests.post(session_url, data=session_data)
-        if req.status_code != 201:
-            raise Exception('Failed to get cookie for Ellis\n{}'.format(
-                req.text))
-        cookies = req.cookies
-        self.logger.debug('Cookies: %s', cookies)
+        cookies = self._get_ellis_session_cookies(session_url, session_data)
 
         number_url = 'http://{0}/accounts/{1}/numbers'.format(
-            ellis_ip, params['email'])
+            self.ellis_ip, params['email'])
         self.logger.debug('Create 1st calling number on Ellis')
-        i = 30
-        while req.status_code != 200 and i > 0:
-            try:
-                number_res = self._create_ellis_number(number_url, cookies)
-                break
-            except Exception:  # pylint: disable=broad-except
-                if i == 1:
-                    self.logger.exception("Unable to create a number")
-                    raise Exception("Unable to create a number")
-                self.logger.info("Unable to create a number. Retry ..")
-                time.sleep(25)
-            i = i - 1
-        output_dict['number'] = number_res
+        number_res = self._create_ellis_number(number_url, cookies)
 
         if two_numbers:
             self.logger.debug('Create 2nd calling number on Ellis')
@@ -100,18 +84,66 @@ class ClearwaterOnBoardingBase(object):
 
         return output_dict
 
-    def _create_ellis_number(self, number_url, cookies):
-        req = requests.post(number_url, cookies=cookies)
+    def _create_ellis_account(self, account_url, params):
+        i = 50
+        for iloop in range(i):
+            try:
+                req = requests.post(account_url, data=params)
+                if req.status_code == 201:
+                    account_res = req.json()
+                    self.logger.info(
+                        'Account %s is created on Ellis\n%s',
+                        params.get('full_name'), account_res)
+                    return account_res
+                else:
+                    raise Exception("Cannot create ellis account")
+            except Exception:  # pylint: disable=broad-except
+                self.logger.info(
+                    "try %s: cannot create ellis account", iloop + 1)
+                time.sleep(25)
+        raise Exception(
+            "Unable to create an account {}".format(
+                params.get('full_name')))
 
-        if req.status_code != 200:
-            if req and req.json():
-                reason = req.json()['reason']
-            else:
-                reason = req
-            raise Exception("Unable to create a number: %s" % reason)
-        number_res = req.json()
-        self.logger.info('Calling number is created: %s', number_res)
-        return number_res
+    def _get_ellis_session_cookies(self, session_url, params):
+        i = 15
+        for iloop in range(i):
+            try:
+                req = requests.post(session_url, data=params)
+                if req.status_code == 201:
+                    cookies = req.cookies
+                    self.logger.debug('cookies: %s', cookies)
+                    return cookies
+                else:
+                    raise Exception('Failed to get cookies for Ellis')
+            except Exception:  # pylint: disable=broad-except
+                self.logger.info(
+                    "try %s: cannot get cookies for Ellis", iloop + 1)
+                time.sleep(10)
+        raise Exception('Failed to get cookies for Ellis')
+
+    def _create_ellis_number(self, number_url, cookies):
+        i = 30
+        for iloop in range(i):
+            try:
+                req = requests.post(number_url, cookies=cookies)
+                if req.status_code == 200:
+                    number_res = req.json()
+                    self.logger.info(
+                        'Calling number is created: %s', number_res)
+                    return number_res
+                else:
+                    if req and req.json():
+                        reason = req.json()['reason']
+                    else:
+                        reason = req
+                    self.logger.info("cannot create a number: %s", reason)
+                    raise Exception('Failed to create a number')
+            except Exception:  # pylint: disable=broad-except
+                self.logger.info(
+                    "try %s: cannot create a number", iloop + 1)
+                time.sleep(25)
+        raise Exception('Failed to create a number')
 
     def run_clearwater_live_test(self, dns_ip, public_domain,
                                  bono_ip=None, ellis_ip=None,
