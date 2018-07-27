@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Submitted-by: valentin boucher <valentin.boucher@kontron.com>
+Submitted-at: Fri, 27 Jul 2018 15:08:15 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/60233
+Project: functest
+Branch: refs/heads/stable/fraser
