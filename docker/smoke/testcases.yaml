@@ -168,7 +168,7 @@ tiers:
                     installer: '(fuel)|(apex)|(compass)'
                     scenario: ''
                 run:
-                    module: 'functest.opnfv_tests.openstack.trunk.trunk'
-                    class: 'TempestNeutronTrunk'
+                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
+                    class: 'TempestCommon'
                     args:
                         mode: 'neutron.tests.tempest.(api|scenario).test_trunk'
