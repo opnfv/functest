@@ -267,6 +267,7 @@ class OSRallyTesting(unittest.TestCase):
                 'get_cmd_output', return_value='')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
                 return_value=True)
+    @mock.patch('subprocess.check_output')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
