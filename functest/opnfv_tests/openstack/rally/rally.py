@@ -297,23 +297,17 @@ class RallyBase(singlevm.VmReady1):
         # put detailed result to log
         cmd = (["rally", "task", "detailed", "--uuid", task_id])
         LOGGER.debug('running command: %s', cmd)
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        json_detailed = self.get_cmd_output(proc)
-        LOGGER.info('%s', json_detailed)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
 
         # save report as JSON
-        cmd = (["rally", "task", "report", "--json", "--uuid", task_id])
-        LOGGER.debug('running command: %s', cmd)
-        with open(os.devnull, 'w') as devnull:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                    stderr=devnull)
-        json_results = self.get_cmd_output(proc)
         report_json_name = 'opnfv-{}.json'.format(test_name)
         report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
-        with open(report_json_dir, 'w') as r_file:
-            LOGGER.debug('saving json file')
-            r_file.write(json_results)
+        cmd = (["rally", "task", "report", "--json", "--uuid", task_id,
+                "--out", report_json_dir])
+        LOGGER.debug('running command: %s', cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
 
         # save report as HTML
         report_html_name = 'opnfv-{}.html'.format(test_name)
@@ -321,9 +315,10 @@ class RallyBase(singlevm.VmReady1):
         cmd = (["rally", "task", "report", "--html", "--uuid", task_id,
                 "--out", report_html_dir])
         LOGGER.debug('running command: %s', cmd)
-        with open(os.devnull, 'w') as devnull:
-            subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=devnull)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
 
+        json_results = open(report_json_dir).read()
         self._append_summary(json_results, test_name)
 
         # parse JSON operation result
