@@ -382,7 +382,13 @@ class JujuEpc(singlevm.VmReady2):
                 cpe.cmd, cpe.output)
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("General issue during the undeployment ..")
+        for fip in self.cloud.list_floating_ips():
+            self.cloud.delete_floating_ip(fip.id)
         super(JujuEpc, self).clean()
+        if self.image_alt:
+            self.cloud.delete_image(self.image_alt)
+        if self.flavor_alt:
+            self.orig_cloud.delete_flavor(self.flavor_alt.id)
 
 
 # ----------------------------------------------------------
