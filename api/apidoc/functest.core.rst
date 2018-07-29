@@ -11,5 +11,3 @@ Submodules
 
 .. toctree::
 
-   functest.core.vnf
-
