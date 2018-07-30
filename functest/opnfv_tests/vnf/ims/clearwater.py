@@ -199,8 +199,8 @@ class ClearwaterTesting(object):
         vims_test_result = {}
         try:
             grp = re.search(
-                r'(\d+) failures out of (\d+) tests run.*'
-                r'(\d+) tests skipped', result, re.MULTILINE | re.DOTALL)
+                r'^(\d+) failures out of (\d+) tests run.*\n'
+                r'(\d+) tests skipped$', result, re.MULTILINE | re.DOTALL)
             assert grp
             vims_test_result["failures"] = int(grp.group(1))
             vims_test_result["total"] = int(grp.group(2))
