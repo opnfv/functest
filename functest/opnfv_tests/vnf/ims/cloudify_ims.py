@@ -121,12 +121,23 @@ class CloudifyIms(cloudify.Cloudify):
             project_domain_name=os.environ.get(
                 'OS_PROJECT_DOMAIN_NAME', 'Default'))
         self.__logger.info("Set creds for cloudify manager %s", cfy_creds)
-        secrets_list = self.cfy_client.secrets.list()
-        for k, val in six.iteritems(cfy_creds):
-            if not any(d.get('key', None) == k for d in secrets_list):
-                self.cfy_client.secrets.create(k, val)
-            else:
-                self.cfy_client.secrets.update(k, val)
+
+        for loop in range(10):
+            try:
+                secrets_list = self.cfy_client.secrets.list()
+                for k, val in six.iteritems(cfy_creds):
+                    if not any(d.get('key', None) == k for d in secrets_list):
+                        self.cfy_client.secrets.create(k, val)
+                    else:
+                        self.cfy_client.secrets.update(k, val)
+                break
+            except Exception:  # pylint: disable=broad-except
+                self.__logger.info(
+                    "try %s: Cannot create secrets", loop + 1)
+                time.sleep(30)
+        else:
+            self.__logger.error("Cannot create secrets")
+            return 1
 
         duration = time.time() - start_time
 
