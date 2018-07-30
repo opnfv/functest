@@ -159,7 +159,7 @@ class CloudifyVrouter(cloudify.Cloudify):
         self.vnf['inputs'].update(dict(
             keystone_url=self.get_public_auth_url(self.orig_cloud)))
 
-        if (self.deploy_vnf() and self.test_vnf()):
+        if self.deploy_vnf() and self.test_vnf():
             self.result = 100
             return 0
         self.result = 1/3 * 100
