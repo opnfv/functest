@@ -249,13 +249,11 @@ class CloudifyVrouter(cloudify.Cloudify):
                 self.vnf['descriptor'].get('name'))
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Some issue during the undeployment ..")
-
-        super(CloudifyVrouter, self).clean()
         if self.image_alt:
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-
+        super(CloudifyVrouter, self).clean()
 
 def wait_for_execution(client, execution, logger, timeout=7200, ):
     """Wait for a workflow execution on Cloudify Manager."""

@@ -473,9 +473,9 @@ class RallyBase(singlevm.VmReady1):
 
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
-        super(RallyBase, self).clean()
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
+        super(RallyBase, self).clean()
 
     def is_successful(self):
         """The overall result of the test."""
