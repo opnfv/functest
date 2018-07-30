@@ -357,8 +357,8 @@ class TempestCommon(singlevm.VmReady1):
         """
         Cleanup all OpenStack objects. Should be called on completion.
         """
-        super(TempestCommon, self).clean()
         if self.image_alt:
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
+        super(TempestCommon, self).clean()
