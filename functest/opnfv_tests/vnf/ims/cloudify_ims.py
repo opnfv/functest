@@ -97,13 +97,12 @@ class CloudifyIms(cloudify.Cloudify):
                 "overlapping)")
 
     def execute(self):
-        assert super(CloudifyIms, self).execute() == 0
-        # pylint: disable=too-many-locals,too-many-statements
         """
         Deploy Cloudify Manager.
 
         network, security group, fip, VM creation
         """
+        assert super(CloudifyIms, self).execute() == 0
         start_time = time.time()
         self.orig_cloud.set_network_quotas(
             self.project.project.name,
@@ -199,7 +198,7 @@ class CloudifyIms(cloudify.Cloudify):
             return False
 
         ellis_ip = self.cfy_client.deployments.outputs.get(
-                self.vnf['descriptor'].get('name'))['outputs']['ellis_ip']
+            self.vnf['descriptor'].get('name'))['outputs']['ellis_ip']
         self.clearwater = clearwater.ClearwaterTesting(self.case_name,
                                                        ellis_ip)
         self.clearwater.availability_check_by_creating_numbers()
@@ -247,7 +246,7 @@ class CloudifyIms(cloudify.Cloudify):
             dep_name = self.vnf['descriptor'].get('name')
             # kill existing execution
             self.__logger.info('Deleting the current deployment')
-            exec_list = self.cfy_client.executions.list(dep_name)
+            exec_list = self.cfy_client.executions.list()
             for execution in exec_list:
                 if execution['status'] == "started":
                     try:
@@ -271,6 +270,10 @@ class CloudifyIms(cloudify.Cloudify):
             self.__logger.exception("Some issue during the undeployment ..")
 
         super(CloudifyIms, self).clean()
+        if self.image_alt:
+            self.cloud.delete_image(self.image_alt)
+        if self.flavor_alt:
+            self.orig_cloud.delete_flavor(self.flavor_alt.id)
 
 
 # ----------------------------------------------------------
