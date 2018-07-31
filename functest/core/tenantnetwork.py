@@ -184,7 +184,14 @@ class TenantNetwork1(testcase.TestCase):
                      'service_id': keystone_id})[0].url
         return endpoint
 
-    def _create_network_resources(self):
+    def create_network_resources(self):
+        """Create all tenant network resources
+
+        It creates a router which gateway is the external network detected.
+        The new subnet is attached to that router.
+
+        Raises: expection on error
+        """
         assert self.cloud
         assert self.ext_net
         provider = {}
@@ -224,7 +231,7 @@ class TenantNetwork1(testcase.TestCase):
         try:
             assert self.cloud
             self.start_time = time.time()
-            self._create_network_resources()
+            self.create_network_resources()
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
