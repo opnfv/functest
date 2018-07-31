@@ -35,7 +35,7 @@ from functest.core import singlevm
 from functest.utils import env
 
 
-class Vmtp(singlevm.VmReady1):
+class Vmtp(singlevm.VmReady2):
     """Class to run Vmtp_ as an OPNFV Functest testcase
 
     .. _Vmtp: http://vmtp.readthedocs.io/en/latest/
@@ -108,9 +108,21 @@ class Vmtp(singlevm.VmReady1):
         Raises: Exception on error
         """
         assert self.cloud
+        new_env = dict(
+            os.environ,
+            OS_USERNAME=self.project.user.name,
+            OS_PROJECT_NAME=self.project.project.name,
+            OS_PROJECT_ID=self.project.project.id,
+            OS_PASSWORD=self.project.password)
+        try:
+            del new_env['OS_TENANT_NAME']
+            del new_env['OS_TENANT_ID']
+        except Exception:  # pylint: disable=broad-except
+            pass
         cmd = ['vmtp', '-d', '--json', '{}/vmtp.json'.format(self.res_dir),
                '-c', self.config]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        output = subprocess.check_output(
+            cmd, stderr=subprocess.STDOUT, env=new_env)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         cmd = ['vmtp_genchart', '-c', '{}/vmtp.html'.format(self.res_dir),
                '{}/vmtp.json'.format(self.res_dir)]
@@ -121,11 +133,20 @@ class Vmtp(singlevm.VmReady1):
 
     def run(self, **kwargs):
         self.start_time = time.time()
-        status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            self.image = self.publish_image()
-            self.flavor = self.create_flavor()
+            assert super(Vmtp, self).run(**kwargs) == self.EX_OK
+            status = testcase.TestCase.EX_RUN_ERROR
+            if self.orig_cloud.get_role("admin"):
+                role_name = "admin"
+            elif self.orig_cloud.get_role("Admin"):
+                role_name = "Admin"
+            else:
+                raise Exception("Cannot detect neither admin nor Admin")
+            self.orig_cloud.grant_role(
+                role_name, user=self.project.user.id,
+                project=self.project.project.id,
+                domain=self.project.domain.id)
             self.generate_keys()
             self.write_config()
             self.run_vmtp()
