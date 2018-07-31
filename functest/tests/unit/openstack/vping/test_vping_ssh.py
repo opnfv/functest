@@ -75,7 +75,7 @@ class VpingSSHTesting(unittest.TestCase):
         self.vping.ssh = mock.Mock()
         stdout = mock.Mock()
         stdout.channel.recv_exit_status.return_value = ret
-        self.vping.ssh.exec_command.return_value = (None, stdout, None)
+        self.vping.ssh.exec_command.return_value = (None, stdout, mock.Mock())
         self.assertEqual(self.vping.execute(), ret)
         self.vping.ssh.exec_command.assert_called_once_with(
             'ping -c 1 {}'.format(self.vping.vm2.private_v4))
