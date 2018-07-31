@@ -35,7 +35,7 @@ from functest.core import singlevm
 from functest.utils import env
 
 
-class Vmtp(singlevm.VmReady1):
+class Vmtp(singlevm.VmReady2):
     """Class to run Vmtp_ as an OPNFV Functest testcase
 
     .. _Vmtp: http://vmtp.readthedocs.io/en/latest/
@@ -57,6 +57,20 @@ class Vmtp(singlevm.VmReady1):
         self.config = "{}/vmtp.conf".format(self.res_dir)
         (_, self.privkey_filename) = tempfile.mkstemp()
         (_, self.pubkey_filename) = tempfile.mkstemp()
+
+    def create_network_ressources(self):
+        """Create router
+
+        It creates a router which gateway is the external network detected.
+
+        Raises: expection on error
+        """
+        assert self.cloud
+        assert self.ext_net
+        self.router = self.cloud.create_router(
+            name='{}-router_{}'.format(self.case_name, self.guid),
+            ext_gateway_net_id=self.ext_net.id)
+        self.__logger.debug("router: %s", self.router)
 
     def generate_keys(self):
         """Generate Keys
@@ -90,7 +104,7 @@ class Vmtp(singlevm.VmReady1):
             vmtp_conf["private_key_file"] = self.privkey_filename
             vmtp_conf["public_key_file"] = self.pubkey_filename
             vmtp_conf["image_name"] = str(self.image.name)
-            vmtp_conf["router_name"] = "pns_router_{}".format(self.guid)
+            vmtp_conf["router_name"] = str(self.router.name)
             vmtp_conf["flavor_type"] = str(self.flavor.name)
             vmtp_conf["internal_network_name"] = [
                 "pns-internal-net_{}".format(self.guid),
@@ -108,9 +122,21 @@ class Vmtp(singlevm.VmReady1):
         Raises: Exception on error
         """
         assert self.cloud
+        new_env = dict(
+            os.environ,
+            OS_USERNAME=self.project.user.name,
+            OS_PROJECT_NAME=self.project.project.name,
+            OS_PROJECT_ID=self.project.project.id,
+            OS_PASSWORD=self.project.password)
+        try:
+            del new_env['OS_TENANT_NAME']
+            del new_env['OS_TENANT_ID']
+        except Exception:  # pylint: disable=broad-except
+            pass
         cmd = ['vmtp', '-d', '--json', '{}/vmtp.json'.format(self.res_dir),
                '-c', self.config]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        output = subprocess.check_output(
+            cmd, stderr=subprocess.STDOUT, env=new_env)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         cmd = ['vmtp_genchart', '-c', '{}/vmtp.html'.format(self.res_dir),
                '{}/vmtp.json'.format(self.res_dir)]
@@ -124,8 +150,18 @@ class Vmtp(singlevm.VmReady1):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            self.image = self.publish_image()
-            self.flavor = self.create_flavor()
+            assert super(Vmtp, self).run(**kwargs) == self.EX_OK
+            status = testcase.TestCase.EX_RUN_ERROR
+            if self.orig_cloud.get_role("admin"):
+                role_name = "admin"
+            elif self.orig_cloud.get_role("Admin"):
+                role_name = "Admin"
+            else:
+                raise Exception("Cannot detect neither admin nor Admin")
+            self.orig_cloud.grant_role(
+                role_name, user=self.project.user.id,
+                project=self.project.project.id,
+                domain=self.project.domain.id)
             self.generate_keys()
             self.write_config()
             self.run_vmtp()
@@ -144,10 +180,9 @@ class Vmtp(singlevm.VmReady1):
     def clean(self):
         try:
             assert self.cloud
+            super(Vmtp, self).clean()
             os.remove(self.privkey_filename)
             os.remove(self.pubkey_filename)
-            if self.image:
-                self.cloud.delete_image(self.image)
             self.cloud.delete_network("pns-internal-net_{}".format(self.guid))
             self.cloud.delete_network("pns-internal-net2_{}".format(self.guid))
         except Exception:  # pylint: disable=broad-except

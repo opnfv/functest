@@ -83,6 +83,7 @@ class VmtpTesting(unittest.TestCase):
         mock_obj.assert_called_once_with('vmtp_{}'.format(self.testcase.guid))
         args[0].assert_not_called()
 
+
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
