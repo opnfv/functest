@@ -62,7 +62,8 @@ class VPingUserdata(singlevm.VmReady2):
         """
         Override from super
         """
-        if not self.vm1.private_v4:
+        if not (self.vm1.private_v4 or self.vm1.addresses[
+                self.network.name][0].addr):
             self.logger.error("vm1: IP addr missing")
             return testcase.TestCase.EX_TESTCASE_FAILED
 
@@ -94,7 +95,8 @@ class VPingUserdata(singlevm.VmReady2):
                 else:
                     self.logger.debug(
                         "Pinging %s. Waiting for response...",
-                        self.vm1.private_v4)
+                        self.vm1.private_v4 or self.vm1.addresses[
+                            self.network.name][0].addr)
             sec += 1
 
         return exit_code
@@ -105,7 +107,8 @@ class VPingUserdata(singlevm.VmReady2):
         :param test_ip: the IP value to substitute into the script
         :return: the bash script contents
         """
-        if self.vm1.private_v4:
+        if self.vm1.private_v4 or self.vm1.addresses[
+                self.network.name][0].addr:
             return ("#!/bin/sh\n\n"
                     "while true; do\n"
                     " ping -c 1 %s 2>&1 >/dev/null\n"
@@ -117,7 +120,9 @@ class VPingUserdata(singlevm.VmReady2):
                     "  echo 'vPing KO'\n"
                     " fi\n"
                     " sleep 1\n"
-                    "done\n" % str(self.vm1.private_v4))
+                    "done\n" % str(
+                        self.vm1.private_v4 or self.vm1.addresses[
+                            self.network.name][0].addr))
         return None
 
     def clean(self):

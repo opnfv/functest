@@ -45,7 +45,9 @@ class VPingSSH(singlevm.SingleVm2):
         """
         assert self.ssh
         (_, stdout, stderr) = self.ssh.exec_command(
-            'ping -c 1 ' + self.vm2.private_v4)
+            'ping -c 1 {}'.format(
+                self.vm2.private_v4 or self.vm2.addresses[
+                    self.network.name][0].addr))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
         return stdout.channel.recv_exit_status()
