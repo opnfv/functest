@@ -37,7 +37,6 @@ class Shaker(singlevm.SingleVm2):
     username = 'ubuntu'
     port = 9000
     ssh_connect_loops = 12
-    create_server_timeout = 360
 
     def __init__(self, **kwargs):
         super(Shaker, self).__init__(**kwargs)
