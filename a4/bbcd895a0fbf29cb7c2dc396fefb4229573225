@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Code-Review+1: Dan Xu <xudan16@huawei.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Wed, 01 Aug 2018 11:01:33 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/60471
+Project: functest
+Branch: refs/heads/stable/fraser
