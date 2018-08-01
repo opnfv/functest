@@ -8,8 +8,6 @@ os:
             image_url:
                 /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
             extra_properties:
-                hw_firmware_type: 'uefi'
-                hw_video_model: 'vga'
                 short_id: 'ubuntu16.04'
                 hw_disk_bus: 'scsi'
                 hw_scsi_model: 'virtio-scsi'
@@ -17,80 +15,60 @@ os:
     vmready1:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     vmready2:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     singlevm1:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     singlevm2:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     vping_ssh:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     vping_userdata:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     cinder_test:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     functest_smoke_serial:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     refstack_defcore:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     patrole:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
@@ -98,56 +76,42 @@ os:
         image:
             /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     shaker:
         image: /home/opnfv/functest/images/shaker-image-arm64.qcow2
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     neutron_trunk:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     barbican:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     tempest_full_parallel:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     rally_sanity:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     rally_full:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
-            hw_firmware_type: 'uefi'
-            hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
@@ -157,34 +121,25 @@ os:
                 disk_file:
                     /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
                 extra_properties:
-                    hw_firmware_type: 'uefi'
                     short_id: 'ubuntu16.04'
-                    hw_video_model: 'vga'
                     hw_disk_bus: 'scsi'
                     hw_scsi_model: 'virtio-scsi'
             cirros:
                 disk_file:
                     /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
                 extra_properties:
-                    hw_firmware_type: 'uefi'
                     short_id: 'ubuntu16.04'
-                    hw_video_model: 'vga'
                     hw_disk_bus: 'scsi'
                     hw_scsi_model: 'virtio-scsi'
             ubuntu:
                 disk_file:
                     /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
                 extra_properties:
-                    hw_firmware_type: 'uefi'
-                    hw_video_model: 'vga'
                     hw_disk_bus: 'scsi'
                     hw_scsi_model: 'virtio-scsi'
             centos:
                 disk_file:
                     /home/opnfv/functest/images/CentOS-7-aarch64-GenericCloud.qcow2
-                extra_properties:
-                    hw_firmware_type: 'uefi'
-                    hw_video_model: 'vga'
 
     vping:
         image_name: TestVM
