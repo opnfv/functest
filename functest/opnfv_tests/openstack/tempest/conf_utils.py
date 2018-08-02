@@ -55,7 +55,7 @@ def create_rally_deployment():
         with open(RALLY_AARCH64_PATCH_PATH, "r") as pfile:
             rally_patch_conf = pfile.read()
 
-        for line in fileinput.input(RALLY_CONF_PATH, inplace=1):
+        for line in fileinput.input(RALLY_CONF_PATH):
             print(line, end=' ')
             if "cirros|testvm" in line:
                 print(rally_patch_conf)
