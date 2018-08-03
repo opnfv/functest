@@ -180,8 +180,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             name if name else '{}-vm_{}'.format(self.case_name, self.guid),
             image=self.image.id, flavor=self.flavor.id,
             auto_ip=False, network=self.network.id,
-            timeout=self.create_server_timeout, **kwargs)
-        vm1 = self.cloud.wait_for_server(vm1, auto_ip=False)
+            timeout=self.create_server_timeout, wait=True, **kwargs)
         self.__logger.debug("vm: %s", vm1)
         return vm1
 
