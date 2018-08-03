@@ -46,7 +46,6 @@ class VPingUserdata(singlevm.VmReady2):
             self.vm2 = self.boot_vm(
                 '{}-vm2_{}'.format(self.case_name, self.guid),
                 userdata=self._get_userdata())
-            self.vm2 = self.cloud.wait_for_server(self.vm2, auto_ip=False)
 
             result = self._do_vping()
             self.stop_time = time.time()
