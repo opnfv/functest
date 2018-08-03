@@ -31,7 +31,7 @@ class Cloudify(singlevm.SingleVm2):
     flavor_disk = 40
     username = 'centos'
     ssh_connect_loops = 12
-    create_server_timeout = 300
+    create_server_timeout = 600
     ports = [80, 443, 5671, 53333]
 
     def __init__(self, **kwargs):
