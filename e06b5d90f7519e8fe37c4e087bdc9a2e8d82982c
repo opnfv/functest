@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_92877b61",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-03T12:01:12Z",
+      "side": 1,
+      "message": "could you please remove this one too? Thank you in advance",
+      "revId": "e06b5d90f7519e8fe37c4e087bdc9a2e8d82982c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_12936ba4",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-03T12:01:12Z",
+      "side": 1,
+      "message": "tempest_full",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 22
+      },
+      "revId": "e06b5d90f7519e8fe37c4e087bdc9a2e8d82982c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
