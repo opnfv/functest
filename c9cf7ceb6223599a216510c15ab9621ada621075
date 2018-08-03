@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_121d2b10",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-03T13:26:42Z",
+      "side": 1,
+      "message": "Could you please add image_alt in tempest full too?\nElse the patch is fine.",
+      "revId": "c9cf7ceb6223599a216510c15ab9621ada621075",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
