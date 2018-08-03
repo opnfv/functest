@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_92313ba5",
+        "filename": "functest/ci/config_aarch64_patch.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6883
+      },
+      "writtenOn": "2018-08-03T13:31:32Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "9a561d44_92877b61",
+      "revId": "e06b5d90f7519e8fe37c4e087bdc9a2e8d82982c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_12936ba4",
         "filename": "functest/ci/config_aarch64_patch.yaml",
         "patchSetId": 1
