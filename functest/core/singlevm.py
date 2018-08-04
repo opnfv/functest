@@ -83,7 +83,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.image_format),
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
-                self.visibility))
+                self.visibility),
+            wait=True)
         self.__logger.debug("image: %s", image)
         return image
 
@@ -112,7 +113,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.image_format),
             visibility=getattr(
                 config.CONF, '{}_visibility'.format(self.case_name),
-                self.visibility))
+                self.visibility),
+            wait=True)
         self.__logger.debug("image: %s", image)
         return image
 
@@ -293,8 +295,9 @@ class SingleVm1(VmReady1):
 
     __logger = logging.getLogger(__name__)
     username = 'cirros'
-    ssh_connect_timeout = 60
+    ssh_connect_timeout = 1
     ssh_connect_loops = 6
+    create_floating_ip_timeout = 120
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -343,14 +346,15 @@ class SingleVm1(VmReady1):
         """
         assert vm1
         fip = self.cloud.create_floating_ip(
-            network=self.ext_net.id, server=vm1)
+            network=self.ext_net.id, server=vm1, wait=True,
+            timeout=self.create_floating_ip_timeout)
         self.__logger.debug("floating_ip: %s", fip)
-        p_console = self.cloud.get_server_console(vm1)
-        self.__logger.debug("vm console: \n%s", p_console)
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
         for loop in range(self.ssh_connect_loops):
             try:
+                p_console = self.cloud.get_server_console(vm1)
+                self.__logger.debug("vm console: \n%s", p_console)
                 ssh.connect(
                     fip.floating_ip_address,
                     username=getattr(
@@ -362,11 +366,11 @@ class SingleVm1(VmReady1):
                         '{}_vm_ssh_connect_timeout'.format(self.case_name),
                         self.ssh_connect_timeout))
                 break
-            except Exception:  # pylint: disable=broad-except
+            except Exception as exc:  # pylint: disable=broad-except
                 self.__logger.debug(
-                    "try %s: cannot connect to %s", loop + 1,
-                    fip.floating_ip_address)
-                time.sleep(10)
+                    "try %s: cannot connect to %s: %s", loop + 1,
+                    fip.floating_ip_address, exc)
+                time.sleep(9)
         else:
             self.__logger.error(
                 "cannot connect to %s", fip.floating_ip_address)
