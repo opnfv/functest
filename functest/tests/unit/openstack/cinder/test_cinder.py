@@ -88,7 +88,7 @@ class CinderTesting(unittest.TestCase):
         self.cinder.cloud.create_volume.assert_called_once_with(
             name='{}-volume_{}'.format(
                 self.cinder.case_name, self.cinder.guid),
-            size='2', timeout=self.cinder.volume_timeout)
+            size='2', timeout=self.cinder.volume_timeout, wait=True)
 
     @mock.patch('scp.SCPClient.put')
     def test_write(self, *args):

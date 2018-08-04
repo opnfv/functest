@@ -60,7 +60,7 @@ class CinderCheck(singlevm.SingleVm2):
         (self.fip2, self.ssh2) = self.connect(self.vm2)
         self.volume = self.cloud.create_volume(
             name='{}-volume_{}'.format(self.case_name, self.guid), size='2',
-            timeout=self.volume_timeout)
+            timeout=self.volume_timeout, wait=True)
 
     def _write_data(self):
         assert self.cloud
