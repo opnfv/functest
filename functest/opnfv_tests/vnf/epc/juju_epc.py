@@ -65,6 +65,8 @@ class JujuEpc(singlevm.VmReady2):
 
     __logger = logging.getLogger(__name__)
 
+    cidr = '192.168.121.0/24'
+
     filename = ('/home/opnfv/functest/images/'
                 'ubuntu-16.04-server-cloudimg-amd64-disk1.img')
     filename_alt = ('/home/opnfv/functest/images/'
