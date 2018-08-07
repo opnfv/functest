@@ -305,7 +305,7 @@ class TempestCommon(singlevm.VmReady1):
         rconfig.read(rally_conf)
         if not rconfig.has_section('tempest'):
             rconfig.add_section('tempest')
-        rconfig.set('tempest', 'swift_operator_role', '^{}$'.format(role.name))
+        rconfig.set('tempest', 'swift_operator_role', role.name)
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
