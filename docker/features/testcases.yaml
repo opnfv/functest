@@ -82,3 +82,15 @@ tiers:
                     args:
                         suites:
                             - /src/fds/testing/robot
+            -
+                case_name: vgpu
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite for the OpenStack vGPU feature
+                dependencies:
+                    - DEPLOY_SCENARIO: 'vgpu'
+                run:
+                    module: 'functest.opnfv_tests.openstack.vgpu.vgpu'
+                    class: 'vGPU'
