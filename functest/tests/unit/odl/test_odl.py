@@ -247,10 +247,34 @@ class ODLMainTesting(ODLTesting):
     @mock.patch('os.makedirs')
     @mock.patch('robot.run')
     @mock.patch('os.path.isfile', return_value=True)
+    def test_generate_report_ko(self, *args):
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=True), \
+                mock.patch.object(self.test, 'parse_results'), \
+                mock.patch.object(self.test, 'generate_report',
+                                  return_value=1):
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
+
+    @mock.patch('os.makedirs')
+    @mock.patch('robot.run')
+    @mock.patch('os.path.isfile', return_value=True)
+    def test_generate_report_exc(self, *args):
+        with mock.patch.object(self.test, 'set_robotframework_vars',
+                               return_value=True), \
+                mock.patch.object(self.test, 'parse_results'), \
+                mock.patch.object(self.test, 'generate_report',
+                                  side_effect=Exception):
+            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
+
+    @mock.patch('os.makedirs')
+    @mock.patch('robot.run')
+    @mock.patch('os.path.isfile', return_value=True)
     def test_ok(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results'):
+                mock.patch.object(self.test, 'parse_results'), \
+                mock.patch.object(self.test, 'generate_report',
+                                  return_value=0):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
     @mock.patch('os.makedirs')
@@ -259,7 +283,9 @@ class ODLMainTesting(ODLTesting):
     def test_ok_no_creds(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True) as mock_method, \
-                mock.patch.object(self.test, 'parse_results'):
+                mock.patch.object(self.test, 'parse_results'), \
+                mock.patch.object(self.test, 'generate_report',
+                                  return_value=0):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
             mock_method.assert_not_called()
 
@@ -269,7 +295,9 @@ class ODLMainTesting(ODLTesting):
     def test_testcases_in_failure(self, *args):
         with mock.patch.object(self.test, 'set_robotframework_vars',
                                return_value=True), \
-                mock.patch.object(self.test, 'parse_results'):
+                mock.patch.object(self.test, 'parse_results'), \
+                mock.patch.object(self.test, 'generate_report',
+                                  return_value=0):
             self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
 
