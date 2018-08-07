@@ -46,9 +46,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_ram = 512
     flavor_vcpus = 1
     flavor_disk = 1
+    flavor_extra_specs = {}
     flavor_alt_ram = 1024
     flavor_alt_vcpus = 1
     flavor_alt_disk = 1
+    flavor_alt_extra_specs = {}
     create_server_timeout = 180
 
     def __init__(self, **kwargs):
@@ -138,8 +140,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
                     self.flavor_disk))
         self.__logger.debug("flavor: %s", flavor)
-        self.orig_cloud.set_flavor_specs(
-            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+        flavor_extra_specs_updated = self.flavor_extra_specs.copy()
+        flavor_extra_specs_updated.update(
+            getattr(config.CONF,
+                    '{}_flavor_extra_specs'.format(self.case_name), {}))
+        self.orig_cloud.set_flavor_specs(flavor.id, flavor_extra_specs_updated)
         return flavor
 
     def create_flavor_alt(self, name=None):
@@ -163,8 +168,12 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             getattr(config.CONF, '{}_flavor_alt_disk'.format(self.case_name),
                     self.flavor_alt_disk))
         self.__logger.debug("flavor: %s", flavor)
+        flavor_alt_extra_specs_updated = self.flavor_alt_extra_specs.copy()
+        flavor_alt_extra_specs_updated.update(
+            getattr(config.CONF,
+                    '{}_flavor_alt_extra_specs'.format(self.case_name), {}))
         self.orig_cloud.set_flavor_specs(
-            flavor.id, getattr(config.CONF, 'flavor_extra_specs', {}))
+            flavor.id, flavor_alt_extra_specs_updated)
         return flavor
 
     def boot_vm(self, name=None, **kwargs):
