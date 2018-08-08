@@ -38,6 +38,7 @@ class Shaker(singlevm.SingleVm2):
     port = 9000
     ssh_connect_loops = 12
     create_server_timeout = 300
+    shaker_timeout = '3600'
 
     def __init__(self, **kwargs):
         super(Shaker, self).__init__(**kwargs)
@@ -90,7 +91,7 @@ class Shaker(singlevm.SingleVm2):
             'export OS_PASSWORD={} && '
             '{}'
             'env && '
-            'shaker --image-name {} --flavor-name {} '
+            'timeout {} shaker --image-name {} --flavor-name {} '
             '--server-endpoint {}:9000 --scenario '
             'openstack/full_l2,'
             'openstack/full_l3_east_west,'
@@ -101,7 +102,7 @@ class Shaker(singlevm.SingleVm2):
                 self.project.project.id, self.project.password,
                 'export OS_CACERT=~/os_cacert && ' if os.environ.get(
                     'OS_CACERT') else '',
-                self.image.name, self.flavor.name,
+                self.shaker_timeout, self.image.name, self.flavor.name,
                 self.fip.floating_ip_address))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
