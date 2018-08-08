@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_a1d34b37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "Could you please give more details by comments? As far as I know XCI only deploys OpenStack in nested virtualisation.",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4117cfed",
+        "filename": "docker/features/testcases.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "I think it\u0027s not an official scenario, isn\u0027t?\nIt would have been simpler that we can simply detect if the support is available.",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_21729b7c",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "flavor_alt_extra_specs \u003d {}",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_016f9793",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "self.flavor_alt_extra_specs",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_01f677d7",
+        "filename": "functest/opnfv_tests/openstack/vgpu/vgpu.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "Orchestrator?",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_a1050bc4",
+        "filename": "functest/opnfv_tests/openstack/vgpu/vgpu.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-08T08:24:03Z",
+      "side": 1,
+      "message": "Could you please use parenthesis intead of \\ (see pep8 rules)?",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
