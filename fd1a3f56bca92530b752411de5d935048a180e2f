@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_371db9be",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2018-08-09T15:08:30Z",
+      "side": 1,
+      "message": "Does this mean multiple tests run simultaneously? If so, could we not use concurrency?",
+      "range": {
+        "startLine": 365,
+        "startChar": 27,
+        "endLine": 365,
+        "endChar": 47
+      },
+      "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
