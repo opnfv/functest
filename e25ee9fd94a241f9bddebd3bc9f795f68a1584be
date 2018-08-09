@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_d7827dff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1681
+      },
+      "writtenOn": "2018-08-09T13:25:39Z",
+      "side": 1,
+      "message": "XCI team work on baremetal deployment - https://gerrit.opnfv.org/gerrit/#/c/58591/",
+      "parentUuid": "9a561d44_a1d34b37",
+      "revId": "e25ee9fd94a241f9bddebd3bc9f795f68a1584be",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_4117cfed",
         "filename": "docker/features/testcases.yaml",
         "patchSetId": 4
