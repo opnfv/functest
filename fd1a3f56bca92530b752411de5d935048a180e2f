@@ -22,6 +22,30 @@
       "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_f7fea137",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 2159
+      },
+      "writtenOn": "2018-08-09T15:37:10Z",
+      "side": 1,
+      "message": "A few things:\n- using concurrency (with same level, 4) is what is is done in Openstack CI\n- it can help run the test faster\n- it can prove useful to uncover cases where things that should be independent/isolated (like VPNs) aren\u0027t because of a bug.",
+      "parentUuid": "9a561d44_371db9be",
+      "range": {
+        "startLine": 365,
+        "startChar": 27,
+        "endLine": 365,
+        "endChar": 47
+      },
+      "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
