@@ -27,7 +27,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
-        networking-bgpvpn /src/vmtp && \
+        networking-bgpvpn networking-sfc /src/vmtp && \
     virtualenv --system-site-packages /src/tempest/.venv && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
