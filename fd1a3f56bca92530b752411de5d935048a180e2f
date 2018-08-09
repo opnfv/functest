@@ -46,6 +46,30 @@
       "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_f78501ae",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-09T15:57:58Z",
+      "side": 1,
+      "message": "@Thomas: I fully agree. I\u0027m currently running all the tempest-based testcases in parallel as well (3 OPNFV branches!) in Orange Openlab. Then I\u0027m not clear yet if I have set a constraints. At least it conforms with OpenStack CI till the first results. We ran refstack and tempest_smoke without any concurrency limit (and they work well). \n\n@Tim: Here we only run all bgpvpn subtests in //.\nI will publish my new Functest-centric jjbs soon. But from the time being, Releng simply forbids them (see patch proposed by Delia). Only one executors is dedicated to test frameworks.",
+      "parentUuid": "9a561d44_f7fea137",
+      "range": {
+        "startLine": 365,
+        "startChar": 27,
+        "endLine": 365,
+        "endChar": 47
+      },
+      "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
