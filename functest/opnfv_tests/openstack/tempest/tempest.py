@@ -112,10 +112,10 @@ class TempestCommon(singlevm.VmReady1):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         for line in proc.stdout:
+            LOGGER.info(line.rstrip())
             new_line = line.replace(' ', '').split('|')
             if 'Tests' in new_line:
                 break
-            LOGGER.info(line)
             if 'Testscount' in new_line:
                 result['num_tests'] = int(new_line[2])
             elif 'Success' in new_line:
@@ -204,32 +204,27 @@ class TempestCommon(singlevm.VmReady1):
 
         f_stdout = open(
             os.path.join(self.res_dir, "tempest.log"), 'w+')
-        f_stderr = open(
-            os.path.join(self.res_dir,
-                         "tempest-error.log"), 'w+')
 
         proc = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
-            stderr=f_stderr,
+            stderr=subprocess.STDOUT,
             bufsize=1)
 
         with proc.stdout:
             for line in iter(proc.stdout.readline, b''):
                 if re.search(r"\} tempest\.", line):
-                    LOGGER.info(line.replace('\n', ''))
+                    LOGGER.info(line.rstrip())
                 elif re.search(r'(?=\(UUID=(.*)\))', line):
                     self.verification_id = re.search(
                         r'(?=\(UUID=(.*)\))', line).group(1)
-                    LOGGER.info('Verification UUID: %s', self.verification_id)
                 f_stdout.write(line)
         proc.wait()
-
         f_stdout.close()
-        f_stderr.close()
 
         if self.verification_id is None:
             raise Exception('Verification UUID not found')
+        LOGGER.info('Verification UUID: %s', self.verification_id)
 
     def parse_verifier_result(self):
         """Parse and save test results."""
@@ -247,7 +242,7 @@ class TempestCommon(singlevm.VmReady1):
                     return
 
             with open(os.path.join(self.res_dir,
-                                   "tempest-error.log"), 'r') as logfile:
+                                   "tempest.log"), 'r') as logfile:
                 output = logfile.read()
 
             success_testcases = []
@@ -309,6 +304,17 @@ class TempestCommon(singlevm.VmReady1):
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
+    def update_rally_logs(self, rally_conf='/etc/rally/rally.conf'):
+        """Print rally logs in res dir"""
+        if not os.path.exists(self.res_dir):
+            os.makedirs(self.res_dir)
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        rconfig.set('DEFAULT', 'log-file', 'rally.log')
+        rconfig.set('DEFAULT', 'log_dir', self.res_dir)
+        with open(rally_conf, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -339,6 +345,7 @@ class TempestCommon(singlevm.VmReady1):
                 **kwargs) == testcase.TestCase.EX_OK
             self.update_rally_regex()
             self.update_default_role()
+            self.update_rally_logs()
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
             self.apply_tempest_blacklist()
