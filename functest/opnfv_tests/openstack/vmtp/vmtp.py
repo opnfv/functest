@@ -58,7 +58,7 @@ class Vmtp(singlevm.VmReady2):
         (_, self.privkey_filename) = tempfile.mkstemp()
         (_, self.pubkey_filename) = tempfile.mkstemp()
 
-    def create_network_ressources(self):
+    def create_network_resources(self):
         """Create router
 
         It creates a router which gateway is the external network detected.
