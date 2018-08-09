@@ -70,6 +70,30 @@
       "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7348e45b",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 334
+      },
+      "writtenOn": "2018-08-09T19:30:09Z",
+      "side": 1,
+      "message": "OK I\u0027m good with running the same as what is being ran upstream. I just recall issues when we ran tempest tests in parallel instead of serially.",
+      "parentUuid": "9a561d44_f78501ae",
+      "range": {
+        "startLine": 365,
+        "startChar": 27,
+        "endLine": 365,
+        "endChar": 47
+      },
+      "revId": "fd1a3f56bca92530b752411de5d935048a180e2f",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
