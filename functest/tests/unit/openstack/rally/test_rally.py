@@ -104,12 +104,6 @@ class OSRallyTesting(unittest.TestCase):
         self.assertEqual(self.rally_base.task_succeed(json_raw),
                          True)
 
-    def test_get_cmd_output(self):
-        proc = mock.Mock()
-        proc.stdout.__iter__ = mock.Mock(return_value=iter(['line1', 'line2']))
-        self.assertEqual(self.rally_base.get_cmd_output(proc),
-                         'line1line2')
-
     @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'scenario': [
@@ -222,8 +216,6 @@ class OSRallyTesting(unittest.TestCase):
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value=None)
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'get_cmd_output', return_value='')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
                 return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
@@ -232,7 +224,7 @@ class OSRallyTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         with self.assertRaises(Exception):
             self.rally_base._run_task('test_name')
-        text = 'Failed to retrieve task_id, validating task...'
+        text = 'Failed to retrieve task_id'
         mock_logger_error.assert_any_call(text)
 
     @mock.patch('six.moves.builtins.open', mock.mock_open())
@@ -244,8 +236,6 @@ class OSRallyTesting(unittest.TestCase):
                 '_build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value='1')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'get_cmd_output', return_value='')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'task_succeed', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
@@ -264,12 +254,9 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'task_succeed', return_value=True)
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'get_cmd_output', return_value='')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
                 return_value=True)
     @mock.patch('subprocess.check_output')
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.subprocess.Popen')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.debug')

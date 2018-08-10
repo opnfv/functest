@@ -169,14 +169,6 @@ class RallyBase(singlevm.VmReady1):
         return False
 
     @staticmethod
-    def get_cmd_output(proc):
-        """Get command stdout."""
-        result = ""
-        for line in proc.stdout:
-            result += line
-        return result
-
-    @staticmethod
     def excl_scenario():
         """Exclude scenario."""
         black_tests = []
@@ -345,23 +337,15 @@ class RallyBase(singlevm.VmReady1):
                 task_file, "--task-args",
                 str(self._build_task_args(test_name))])
         LOGGER.debug('running command: %s', cmd)
-
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
-        output = self.get_cmd_output(proc)
+        output = proc.communicate()[0]
+
         task_id = self.get_task_id(output)
-
         LOGGER.debug('task_id : %s', task_id)
-
         if task_id is None:
-            LOGGER.error('Failed to retrieve task_id, validating task...')
-            cmd = (["rally", "task", "validate", "--task", task_file,
-                    "--task-args", str(self._build_task_args(test_name))])
-            LOGGER.debug('running command: %s', cmd)
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT)
-            output = self.get_cmd_output(proc)
-            LOGGER.error("Task validation result:" + "\n" + output)
+            LOGGER.error("Failed to retrieve task_id")
+            LOGGER.error("Result:\n%s", output)
             raise Exception("Failed to retrieve task id")
 
         self._save_results(test_name, task_id)
