@@ -40,7 +40,7 @@ tiers:
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.scenario)'
                         option:
-                            - '--serial'
+                            - '--concurrency=1'
 
             -
                 case_name: rally_full
