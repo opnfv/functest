@@ -60,16 +60,37 @@ os:
         extra_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    neutron-tempest-plugin-api:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
 
     refstack_defcore:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     patrole:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
@@ -88,13 +109,41 @@ os:
 
     neutron_trunk:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    networking-bgpvpn:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    networking-sfc:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
     barbican:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 
@@ -102,6 +151,19 @@ os:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    tempest_scenario:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_disk_bus: 'scsi'
             hw_scsi_model: 'virtio-scsi'
 

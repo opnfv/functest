@@ -39,10 +39,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     __logger = logging.getLogger(__name__)
     filename = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
     image_format = 'qcow2'
-    filename_alt = None
-    image_alt_format = image_format
-    visibility = 'private'
     extra_properties = None
+    filename_alt = filename
+    image_alt_format = image_format
+    extra_alt_properties = extra_properties
+    visibility = 'private'
     flavor_ram = 512
     flavor_vcpus = 1
     flavor_disk = 1
@@ -50,7 +51,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_alt_ram = 1024
     flavor_alt_vcpus = 1
     flavor_alt_disk = 1
-    flavor_alt_extra_specs = {}
+    flavor_alt_extra_specs = flavor_extra_specs
     create_server_timeout = 180
 
     def __init__(self, **kwargs):
@@ -108,7 +109,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 config.CONF, '{}_image_alt'.format(self.case_name),
                 self.filename_alt),
             meta=getattr(
-                config.CONF, '{}_extra_properties'.format(self.case_name),
+                config.CONF, '{}_extra_alt_properties'.format(self.case_name),
                 self.extra_properties),
             disk_format=getattr(
                 config.CONF, '{}_image_alt_format'.format(self.case_name),

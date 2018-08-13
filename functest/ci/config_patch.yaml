@@ -42,17 +42,29 @@ fdio:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
-    tempest_smoke_serial:
+    tempest_smoke:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    neutron-tempest-plugin-api:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     refstack_defcore:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     patrole:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     vmtp:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
@@ -64,24 +76,75 @@ fdio:
         flavor_ram: 1024
     neutron_trunk:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    networking-bgpvpn:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    networking-sfc:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     barbican:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
-    tempest_full_parallel:
+    tempest_full:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    tempest_scenario:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     rally_sanity:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     rally_full:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
+    cloudify:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    cloudify_ims:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    heat_ims:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    vyos_vrouter:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    juju_epc:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
 
 ovs:
     general:
@@ -119,17 +182,29 @@ ovs:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
-    tempest_smoke_serial:
+    tempest_smoke:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    neutron-tempest-plugin-api:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     refstack_defcore:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     patrole:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     vmtp:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
@@ -141,15 +216,39 @@ ovs:
         flavor_ram: 1024
     neutron_trunk:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    networking-bgpvpn:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    networking-sfc:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     barbican:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
-    tempest_full_parallel:
+    tempest_full:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+        flavor_ram: 1024
+    tempest_scenario:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
     rally_sanity:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
@@ -159,3 +258,28 @@ ovs:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         flavor_ram: 1024
+    cloudify:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    cloudify_ims:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    heat_ims:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    vyos_vrouter:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
+    juju_epc:
+        flavor_extra_specs: {'hw:mem_page_size':'large'}
+        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
+        extra_properties: {'hw_mem_page_size':'large'}
+        extra_alt_properties: {'hw_mem_page_size':'large'}
