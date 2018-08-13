@@ -32,7 +32,13 @@ os:
 
     functest_smoke_serial:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_firmware_type: 'uefi'
             hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
@@ -40,7 +46,13 @@ os:
 
     refstack_defcore:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_firmware_type: 'uefi'
             hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
@@ -48,7 +60,13 @@ os:
 
     patrole:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_firmware_type: 'uefi'
             hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
@@ -56,7 +74,13 @@ os:
 
     neutron_trunk:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_firmware_type: 'uefi'
             hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
@@ -64,7 +88,13 @@ os:
 
     tempest_full_parallel:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         extra_properties:
+            hw_firmware_type: 'uefi'
+            hw_video_model: 'vga'
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
             hw_firmware_type: 'uefi'
             hw_video_model: 'vga'
             hw_disk_bus: 'scsi'
