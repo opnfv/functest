@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_a2906496",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-14T15:46:28Z",
+      "side": 1,
+      "message": "Could we protect vs obsolete env vars by adding the next lines (issues detected when running vmtp)?\n        try:\n            del environ[\u0027OS_TENANT_NAME\u0027]\n            del environ[\u0027OS_TENANT_ID\u0027]\n        except Exception:  # pylint: disable\u003dbroad-except\n            pass",
+      "revId": "4b7d89de42fe9a3867b12ea39721ad92aff96340",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
