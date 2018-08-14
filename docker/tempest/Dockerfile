@@ -2,7 +2,8 @@ FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
-ARG RALLY_TAG=0.11.2
+ARG RALLY_TAG=1.1.0
+ARG RALLY_OPENSTACK_TAG=1.2.0
 ARG OS_FAULTS_TAG=0.1.17
 
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -28,7 +29,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     git clone https://github.com/openstack/rally.git /src/rally && \
     (cd /src/rally && git checkout $RALLY_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    git clone --depth 1 https://github.com/openstack/rally-openstack.git /src/rally-openstack && \
+    git clone https://github.com/openstack/rally-openstack.git /src/rally-openstack && \
+    (cd /src/rally-openstack && git checkout $RALLY_OPENSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         tempest /src/rally-openstack /src/os-faults && \
