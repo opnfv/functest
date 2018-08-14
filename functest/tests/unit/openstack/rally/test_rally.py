@@ -23,13 +23,16 @@ class OSRallyTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
     def setUp(self):
         with mock.patch('os_client_config.get_config') as mock_get_config, \
-                mock.patch('shade.OpenStackCloud') as mock_shade:
+                mock.patch('shade.OpenStackCloud') as mock_shade, \
+                mock.patch('functest.core.tenantnetwork.NewProject') \
+                        as mock_new_project:
             self.rally_base = rally.RallyBase()
             self.rally_base.image = munch.Munch(name='foo')
             self.rally_base.flavor = munch.Munch(name='foo')
             self.rally_base.flavor_alt = munch.Munch(name='bar')
         self.assertTrue(mock_get_config.called)
         self.assertTrue(mock_shade.called)
+        self.assertTrue(mock_new_project.called)
 
     def test_build_task_args_missing_floating_network(self):
         os.environ['OS_AUTH_URL'] = ''
@@ -281,16 +284,13 @@ class OSRallyTesting(unittest.TestCase):
         self.rally_base.test_name = 'test1'
         with mock.patch.object(self.rally_base.cloud,
                                'list_hypervisors') as mock_list_hyperv, \
-            mock.patch.object(self.rally_base.cloud,
-                              'set_flavor_specs') as mock_set_flavor_specs, \
-            mock.patch.object(self.rally_base.cloud, 'create_flavor',
+            mock.patch.object(self.rally_base, 'create_flavor_alt',
                               side_effect=Exception) \
                 as mock_create_flavor:
             with self.assertRaises(Exception):
                 self.rally_base._prepare_env()
             mock_list_hyperv.assert_called_once()
             mock_create_flavor.assert_called_once()
-            mock_set_flavor_specs.assert_not_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task')
@@ -310,7 +310,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_run_task.assert_any_call('test1')
 
     def test_clean_up_default(self):
-        with mock.patch.object(self.rally_base.cloud,
+        with mock.patch.object(self.rally_base.orig_cloud,
                                'delete_flavor') as mock_delete_flavor:
             self.rally_base.flavor_alt = mock.Mock()
             self.rally_base.clean()
