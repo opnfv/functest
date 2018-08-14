@@ -287,6 +287,8 @@ tiers:
                     VMTP is a small python application that will automatically
                     perform ping connectivity, round trip time measurement
                     (latency) and TCP/UDP throughput
+                dependencies:
+                    - POD_ARCH: '^(?!aarch64$)'
                 run:
                     module:
                         'functest.opnfv_tests.openstack.vmtp.vmtp'
