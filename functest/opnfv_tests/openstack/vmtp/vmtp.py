@@ -114,6 +114,7 @@ class Vmtp(singlevm.VmReady2):
             vmtp_conf["security_group_name"] = "pns-security{}".format(
                 self.guid)
             vmtp_conf["dns_nameservers"] = [env.get('NAMESERVER')]
+            vmtp_conf["generic_retry_count"] = self.create_server_timeout // 2
             conf.write(yaml.dump(vmtp_conf))
 
     def run_vmtp(self):
