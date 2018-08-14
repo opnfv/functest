@@ -1,0 +1,8 @@
+Code-Review+2: valentin boucher <valentin.boucher@kontron.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Submitted-by: Juha Kosonen <juha.kosonen@nokia.com>
+Submitted-at: Tue, 14 Aug 2018 05:33:00 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/60911
+Project: functest
+Branch: refs/heads/master
