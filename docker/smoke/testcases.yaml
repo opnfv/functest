@@ -131,8 +131,6 @@ tiers:
                     this functionality. When the config value of
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
-                dependencies:
-                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
                     class: 'SnapsSmoke'

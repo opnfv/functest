@@ -169,8 +169,6 @@ tiers:
                     simple queries. When the config value of
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
-                dependencies:
-                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.api_check'
                     class: 'ApiCheck'
@@ -185,8 +183,6 @@ tiers:
                     Python test class which creates an, image, flavor, network,
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
-                dependencies:
-                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.health_check'
                     class: 'HealthCheck'
@@ -322,8 +318,6 @@ tiers:
                     this functionality. When the config value of
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
-                dependencies:
-                    - DEPLOY_SCENARIO: '^((?!lxd).)*$'
                 run:
                     module: 'functest.opnfv_tests.openstack.snaps.smoke'
                     class: 'SnapsSmoke'

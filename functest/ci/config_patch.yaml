@@ -1,11 +1,4 @@
 ---
-lxd:
-    general:
-        openstack:
-            image_name: Cirros-0.4.0
-            image_file_name: cirros-0.4.0-x86_64-lxc.tar.gz
-            image_disk_format: raw
-
 fdio:
     general:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
