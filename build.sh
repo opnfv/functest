@@ -13,7 +13,8 @@ docker/components \
 docker/vnf"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=(--pull=true --no-cache --force-rm=true \
-    --build-arg OPENSTACK_TAG="${OPENSTACK_TAG:-stable/queens}")
+    --build-arg OPENSTACK_TAG="${OPENSTACK_TAG:-stable/queens}" \
+    --build-arg RALLY_OPENSTACK_TAG="${RALLY_OPENSTACK_TAG:-1.2.0}")
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
