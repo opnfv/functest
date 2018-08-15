@@ -27,7 +27,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock.call(['rally', 'deployment', 'destroy', '--deployment',
                        str(getattr(config.CONF, 'rally_deployment_name'))]),
             mock.call(['rally', 'deployment', 'create', '--fromenv', '--name',
-                       str(getattr(config.CONF, 'rally_deployment_name'))]),
+                       str(getattr(config.CONF, 'rally_deployment_name'))],
+                      env=None),
             mock.call(['rally', 'deployment', 'check'])]
         mock_exec.assert_has_calls(calls)
 
