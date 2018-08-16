@@ -58,7 +58,6 @@ tiers:
             -
                 case_name: refstack_defcore
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-

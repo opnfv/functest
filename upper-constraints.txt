@@ -10,7 +10,6 @@ git+https://gerrit.opnfv.org/gerrit/clover#egg=clover
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
 -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
-git+https://github.com/openstack/refstack-client@a59189eaacda24b787ecb65e6634257beba361ec#egg=refstack-client
 cloudify-rest-client===4.3.2
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
