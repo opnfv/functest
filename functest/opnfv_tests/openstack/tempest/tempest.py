@@ -315,6 +315,22 @@ class TempestCommon(singlevm.VmReady1):
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
+    @staticmethod
+    def clean_rally_conf(rally_conf='/etc/rally/rally.conf'):
+        """Clean Rally config"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        if rconfig.has_option('tempest', 'img_name_regex'):
+            rconfig.remove_option('tempest', 'img_name_regex')
+        if rconfig.has_option('tempest', 'swift_operator_role'):
+            rconfig.remove_option('tempest', 'swift_operator_role')
+        if rconfig.has_option('DEFAULT', 'log-file'):
+            rconfig.remove_option('DEFAULT', 'log-file')
+        if rconfig.has_option('DEFAULT', 'log_dir'):
+            rconfig.remove_option('DEFAULT', 'log_dir')
+        with open(rally_conf, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -364,6 +380,7 @@ class TempestCommon(singlevm.VmReady1):
         """
         Cleanup all OpenStack objects. Should be called on completion.
         """
+        self.clean_rally_conf()
         if self.image_alt:
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
