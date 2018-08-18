@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.vmtp package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.vmtp.vmtp module
-------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.vmtp.vmtp
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.vmtp.vmtp
 
 Module contents
 ---------------

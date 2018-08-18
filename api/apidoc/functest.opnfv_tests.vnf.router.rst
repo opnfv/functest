@@ -12,30 +12,11 @@ Subpackages
 Submodules
 ----------
 
-functest.opnfv\_tests.vnf.router.cloudify\_vrouter module
----------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.vnf.router.cloudify_vrouter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-functest.opnfv\_tests.vnf.router.utilvnf module
------------------------------------------------
-
-.. automodule:: functest.opnfv_tests.vnf.router.utilvnf
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-functest.opnfv\_tests.vnf.router.vrouter\_base module
------------------------------------------------------
-
-.. automodule:: functest.opnfv_tests.vnf.router.vrouter_base
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.vnf.router.cloudify_vrouter
+   functest.opnfv_tests.vnf.router.utilvnf
+   functest.opnfv_tests.vnf.router.vrouter_base
 
 Module contents
 ---------------

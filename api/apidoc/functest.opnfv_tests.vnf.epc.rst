@@ -4,14 +4,9 @@ functest.opnfv\_tests.vnf.epc package
 Submodules
 ----------
 
-functest.opnfv\_tests.vnf.epc.juju\_epc module
-----------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.vnf.epc.juju_epc
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.vnf.epc.juju_epc
 
 Module contents
 ---------------

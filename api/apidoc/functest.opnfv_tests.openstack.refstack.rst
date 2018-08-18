@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.refstack package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.refstack.refstack module
---------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.refstack.refstack
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.refstack.refstack
 
 Module contents
 ---------------

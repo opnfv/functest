@@ -4,14 +4,9 @@ functest.opnfv\_tests.sdn.odl package
 Submodules
 ----------
 
-functest.opnfv\_tests.sdn.odl.odl module
-----------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.sdn.odl.odl
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.sdn.odl.odl
 
 Module contents
 ---------------

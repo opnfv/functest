@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.cinder package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.cinder.cinder\_test module
-----------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.cinder.cinder_test
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.cinder.cinder_test
 
 Module contents
 ---------------

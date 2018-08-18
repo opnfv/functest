@@ -4,14 +4,9 @@ functest.ci package
 Submodules
 ----------
 
-functest.ci.check\_deployment module
-------------------------------------
+.. toctree::
 
-.. automodule:: functest.ci.check_deployment
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.ci.check_deployment
 
 Module contents
 ---------------

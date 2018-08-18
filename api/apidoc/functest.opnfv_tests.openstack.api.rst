@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.api package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.api.connection\_check module
-------------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.api.connection_check
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.api.connection_check
 
 Module contents
 ---------------

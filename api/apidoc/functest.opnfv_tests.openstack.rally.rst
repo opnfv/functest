@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.rally package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.rally.rally module
---------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.rally.rally
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.rally.rally
 
 Module contents
 ---------------

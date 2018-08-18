@@ -4,14 +4,9 @@ functest.opnfv\_tests.vnf.router.test\_controller package
 Submodules
 ----------
 
-functest.opnfv\_tests.vnf.router.test\_controller.function\_test\_exec module
------------------------------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.vnf.router.test_controller.function_test_exec
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.vnf.router.test_controller.function_test_exec
 
 Module contents
 ---------------

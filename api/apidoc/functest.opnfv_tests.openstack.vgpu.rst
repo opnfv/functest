@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.vgpu package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.vgpu.vgpu module
-------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.vgpu.vgpu
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.vgpu.vgpu
 
 Module contents
 ---------------

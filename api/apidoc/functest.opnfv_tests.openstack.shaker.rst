@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.shaker package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.shaker.shaker module
-----------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.shaker.shaker
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.shaker.shaker
 
 Module contents
 ---------------

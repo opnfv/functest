@@ -4,14 +4,9 @@ functest.opnfv\_tests.openstack.patrole package
 Submodules
 ----------
 
-functest.opnfv\_tests.openstack.patrole.patrole module
-------------------------------------------------------
+.. toctree::
 
-.. automodule:: functest.opnfv_tests.openstack.patrole.patrole
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   functest.opnfv_tests.openstack.patrole.patrole
 
 Module contents
 ---------------
