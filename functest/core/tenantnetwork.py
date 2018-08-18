@@ -11,6 +11,7 @@
 
 It offers a simple way to create all tenant network ressources required by a
 testcase (including all Functest ones):
+
   - TenantNetwork1 selects the user and the project set as env vars
   - TenantNetwork2 creates a user and project to isolate the same ressources
 

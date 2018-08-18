@@ -1,10 +1,5 @@
-functest.opnfv_tests package
-============================
-
-.. automodule:: functest.opnfv_tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
+functest.opnfv\_tests package
+=============================
 
 Subpackages
 -----------
@@ -12,3 +7,11 @@ Subpackages
 .. toctree::
 
     functest.opnfv_tests.sdn
+
+Module contents
+---------------
+
+.. automodule:: functest.opnfv_tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

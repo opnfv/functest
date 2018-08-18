@@ -1,11 +1,6 @@
 functest package
 ================
 
-.. automodule:: functest
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Subpackages
 -----------
 
@@ -13,3 +8,11 @@ Subpackages
 
     functest.core
     functest.opnfv_tests
+
+Module contents
+---------------
+
+.. automodule:: functest
+    :members:
+    :undoc-members:
+    :show-inheritance:
