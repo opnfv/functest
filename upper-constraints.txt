@@ -21,4 +21,3 @@ ansible===2.3.2.0
 flasgger===0.6.6
 xtesting===0.35.0
 networking-bgpvpn===7.0.0
-sphinx-opnfv-theme===0.1.1
