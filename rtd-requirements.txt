@@ -1,0 +1,4 @@
+-r requirements.txt
+-r test-requirements.txt
+git+https://gerrit.opnfv.org/gerrit/snaps@stable/fraser#egg=snaps
+git+https://github.com/openstack/refstack-client@a59189eaacda24b787ecb65e6634257beba361ec#egg=refstack-client
