@@ -7,10 +7,10 @@
 # which accompanies this distribution, and is available at
 # http://www.apache.org/licenses/LICENSE-2.0
 
-"""
-OpenStack deployment checker
+""" OpenStack deployment checker
 
 Verifies that:
+
  - Credentials file is given and contains the right information
  - OpenStack endpoints are reachable
 """

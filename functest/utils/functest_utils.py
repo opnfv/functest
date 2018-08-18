@@ -98,15 +98,13 @@ def get_nova_version(cloud):
 def get_openstack_version(cloud):
     """ Detect OpenStack version via Nova API microversion
 
-    It follows MicroversionHistory_.
+    It follows `MicroversionHistory
+    <https://docs.openstack.org/nova/latest/reference/api-microversion-history.html>`_.
 
     Returns:
 
     - OpenStack release
     - Unknown on operation error
-
-    .. _MicroversionHistory:
-    https://docs.openstack.org/nova/latest/reference/api-microversion-history.html
     """
     version = get_nova_version(cloud)
     try:

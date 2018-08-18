@@ -1,13 +1,38 @@
 functest.core package
 =====================
 
-.. automodule:: functest.core
+Submodules
+----------
+
+functest.core.cloudify module
+-----------------------------
+
+.. automodule:: functest.core.cloudify
     :members:
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
+functest.core.singlevm module
+-----------------------------
 
-.. toctree::
+.. automodule:: functest.core.singlevm
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
+functest.core.tenantnetwork module
+----------------------------------
+
+.. automodule:: functest.core.tenantnetwork
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: functest.core
+    :members:
+    :undoc-members:
+    :show-inheritance:
