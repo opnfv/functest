@@ -9,7 +9,7 @@
 
 """Ease deploying a single VM reachable via ssh
 
-It offers a simple way to create all tenant network ressources + a VM for
+It offers a simple way to create all tenant network resources + a VM for
 advanced testcases (e.g. deploying an orchestrator).
 """
 
@@ -257,14 +257,14 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             if self.flavor:
                 self.orig_cloud.delete_flavor(self.flavor.id)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")
 
 
 class VmReady2(VmReady1):
     """Deploy a single VM reachable via ssh (scenario2)
 
     It creates new user/project before creating and configuring all tenant
-    network ressources, flavors, images, etc. required by advanced testcases.
+    network resources, flavors, images, etc. required by advanced testcases.
 
     It ensures that all testcases inheriting from SingleVm2 could work
     without specific configurations (or at least read the same config data).
@@ -293,7 +293,7 @@ class VmReady2(VmReady1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")
 
 
 class SingleVm1(VmReady1):
@@ -449,14 +449,14 @@ class SingleVm1(VmReady1):
                 self.cloud.delete_keypair(self.keypair.name)
             super(SingleVm1, self).clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")
 
 
 class SingleVm2(SingleVm1):
     """Deploy a single VM reachable via ssh (scenario2)
 
     It creates new user/project before creating and configuring all tenant
-    network ressources and vms required by advanced testcases.
+    network resources and vms required by advanced testcases.
 
     It ensures that all testcases inheriting from SingleVm2 could work
     without specific configurations (or at least read the same config data).
@@ -485,4 +485,4 @@ class SingleVm2(SingleVm1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")

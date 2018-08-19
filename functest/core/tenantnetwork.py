@@ -9,11 +9,11 @@
 
 """Ease deploying tenant networks
 
-It offers a simple way to create all tenant network ressources required by a
+It offers a simple way to create all tenant network resources required by a
 testcase (including all Functest ones):
 
   - TenantNetwork1 selects the user and the project set as env vars
-  - TenantNetwork2 creates a user and project to isolate the same ressources
+  - TenantNetwork2 creates a user and project to isolate the same resources
 
 This classes could be reused by more complexed scenarios (Single VM)
 """
@@ -107,14 +107,14 @@ class NewProject(object):
             if self.role:
                 self.orig_cloud.delete_role(self.role.id)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")
 
 
 class TenantNetwork1(testcase.TestCase):
     # pylint: disable=too-many-instance-attributes
     """Create a tenant network (scenario1)
 
-    It creates and configures all tenant network ressources required by
+    It creates and configures all tenant network resources required by
     advanced testcases (subnet, network and router).
 
     It ensures that all testcases inheriting from TenantNetwork1 could work
@@ -247,14 +247,14 @@ class TenantNetwork1(testcase.TestCase):
             if self.network:
                 self.cloud.delete_network(self.network.id)
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("cannot clean all ressources")
+            self.__logger.exception("cannot clean all resources")
 
 
 class TenantNetwork2(TenantNetwork1):
     """Create a tenant network (scenario2)
 
     It creates new user/project before creating and configuring all tenant
-    network ressources required by a testcase (subnet, network and router).
+    network resources required by a testcase (subnet, network and router).
 
     It ensures that all testcases inheriting from TenantNetwork2 could work
     without network specific configurations (or at least read the same config
@@ -284,4 +284,4 @@ class TenantNetwork2(TenantNetwork1):
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot clean all ressources")
+            self.__logger.exception("Cannot clean all resources")
