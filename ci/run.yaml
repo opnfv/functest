@@ -1,0 +1,190 @@
+---
+- job-template:
+    name: '{repo}-{container}-{test}-{tag}-run'
+    builders:
+      - shell: |
+          docker run \
+            -e NAMESERVER={nameserver} \
+            -e EXTERNAL_NETWORK={external_network} \
+            -v \
+            {prefix}/results/$JOB_NAME-$BUILD_ID:/home/opnfv/functest/results \
+            -v {prefix}/openstack.creds:/home/opnfv/functest/conf/env_file \
+            -v {prefix}/images:/home/opnfv/functest/images \
+            {repo}/{container}:{tag} run_tests -t {test}
+
+- project:
+    name: '{repo}-healthcheck-{test}-{tag}-run'
+    container: functest-healthcheck
+    test:
+      - connection_check
+      - tenantnetwork1
+      - tenantnetwork2
+      - vmready1
+      - vmready2
+      - singlevm1
+      - singlevm2
+      - vping_ssh
+      - vping_userdata
+      - cinder_test
+      - odl
+      - api_check
+      - snaps_health_check
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-healthcheck-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: healthcheck
+          projects:
+            - name: '{repo}-functest-healthcheck-connection_check-{tag}-run'
+            - name: '{repo}-functest-healthcheck-tenantnetwork1-{tag}-run'
+            - name: '{repo}-functest-healthcheck-tenantnetwork2-{tag}-run'
+            - name: '{repo}-functest-healthcheck-vmready1-{tag}-run'
+            - name: '{repo}-functest-healthcheck-vmready2-{tag}-run'
+            - name: '{repo}-functest-healthcheck-singlevm1-{tag}-run'
+            - name: '{repo}-functest-healthcheck-singlevm2-{tag}-run'
+            - name: '{repo}-functest-healthcheck-vping_ssh-{tag}-run'
+            - name: '{repo}-functest-healthcheck-vping_userdata-{tag}-run'
+            - name: '{repo}-functest-healthcheck-cinder_test-{tag}-run'
+            - name: '{repo}-functest-healthcheck-odl-{tag}-run'
+            - name: '{repo}-functest-healthcheck-api_check-{tag}-run'
+            - name: '{repo}-functest-healthcheck-snaps_health_check-{tag}-run'
+
+- project:
+    name: '{repo}-functest-healthcheck-{tag}-run'
+    jobs:
+      - '{repo}-functest-healthcheck-{tag}-run'
+
+- project:
+    name: '{repo}-smoke-{test}-{tag}-run'
+    container: functest-smoke
+    test:
+      - tempest_smoke
+      - neutron-tempest-plugin-api
+      - rally_sanity
+      - refstack_defcore
+      - patrole
+      - vmtp
+      - shaker
+      - snaps_smoke
+      - neutron_trunk
+      - networking-bgpvpn
+      - networking-sfc
+      - barbican
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-smoke-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: smoke
+          projects:
+            - name: '{repo}-functest-smoke-tempest_smoke-{tag}-run'
+            - name: '{repo}-functest-smoke-neutron-tempest-plugin-api-{tag}-run'
+            - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
+            - name: '{repo}-functest-smoke-patrole-{tag}-run'
+            - name: '{repo}-functest-smoke-vmtp-{tag}-run'
+            - name: '{repo}-functest-smoke-shaker-{tag}-run'
+            - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
+            - name: '{repo}-functest-smoke-neutron_trunk-{tag}-run'
+            - name: '{repo}-functest-smoke-networking-bgpvpn-{tag}-run'
+            - name: '{repo}-functest-smoke-networking-sfc-{tag}-run'
+            - name: '{repo}-functest-smoke-barbican-{tag}-run'
+
+- project:
+    name: '{repo}-functest-smoke-{tag}-run'
+    jobs:
+      - '{repo}-functest-smoke-{tag}-run'
+
+- project:
+    name: '{repo}-components-{test}-{tag}-run'
+    container: functest-components
+    test:
+      - tempest_full
+      - tempest_scenario
+      - rally_full
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-components-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: components
+          projects:
+            - name: '{repo}-functest-components-tempest_full-{tag}-run'
+            - name: '{repo}-functest-components-tempest_scenario-{tag}-run'
+            - name: '{repo}-functest-components-rally_full-{tag}-run'
+
+- project:
+    name: '{repo}-functest-components-{tag}-run'
+    jobs:
+      - '{repo}-functest-components-{tag}-run'
+
+- project:
+    name: '{repo}-vnf-{test}-{tag}-run'
+    container: functest-vnf
+    test:
+      - cloudify
+      - cloudify_ims
+      - heat_ims
+      - vyos_vrouter
+      - juju_epc
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-vnf-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: vnf
+          projects:
+            - name: '{repo}-functest-vnf-cloudify-{tag}-run'
+            - name: '{repo}-functest-vnf-cloudify_ims-{tag}-run'
+            - name: '{repo}-functest-vnf-heat_ims-{tag}-run'
+            - name: '{repo}-functest-vnf-vyos_vrouter-{tag}-run'
+            - name: '{repo}-functest-vnf-juju_epc-{tag}-run'
+
+- project:
+    name: '{repo}-functest-vnf-{tag}-run'
+    jobs:
+      - '{repo}-functest-vnf-{tag}-run'
+
+- project:
+    name: '{repo}-features-{test}-{tag}-run'
+    container: functest-features
+    test:
+      - doctor-notification
+      - bgpvpn
+      - functest-odl-sfc
+      - barometercollectd
+      - fds
+      - vgpu
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-features-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: features
+          projects:
+            - name: '{repo}-functest-features-doctor-notification-{tag}-run'
+            - name: '{repo}-functest-features-bgpvpn-{tag}-run'
+            - name: '{repo}-functest-features-functest-odl-sfc-{tag}-run'
+            - name: '{repo}-functest-features-barometercollectd-{tag}-run'
+            - name: '{repo}-functest-features-fds-{tag}-run'
+            - name: '{repo}-functest-features-vgpu-{tag}-run'
+
+- project:
+    name: '{repo}-functest-features-{tag}-run'
+    jobs:
+      - '{repo}-functest-features-{tag}-run'

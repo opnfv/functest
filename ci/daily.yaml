@@ -1,0 +1,59 @@
+---
+- job-template:
+    name: '{repo}-{container}-{tag}-pull'
+    builders:
+      - shell: docker pull {repo}/{container}:{tag}
+
+- project:
+    name: '{repo}-{container}-{tag}-pull'
+    container:
+      - functest-healthcheck
+      - functest-smoke
+      - functest-components
+      - functest-vnf
+      - functest-features
+    jobs:
+      - '{repo}-{container}-{tag}-pull'
+
+- job-template:
+    name: '{repo}-functest-{tag}-pull'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: pull all containers
+          projects:
+            - name: '{repo}-functest-healthcheck-{tag}-pull'
+            - name: '{repo}-functest-smoke-{tag}-pull'
+            - name: '{repo}-functest-components-{tag}-pull'
+            - name: '{repo}-functest-vnf-{tag}-pull'
+            - name: '{repo}-functest-features-{tag}-pull'
+
+- project:
+    name: '{repo}-functest-{tag}-pull'
+    jobs:
+      - '{repo}-functest-{tag}-pull'
+
+- job-template:
+    name: '{repo}-functest-{tag}-daily'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: pull containers
+          projects:
+            - name: '{repo}-functest-{tag}-pull'
+      - multijob:
+          name: basics tests
+          projects:
+            - name: '{repo}-functest-healthcheck-{tag}-run'
+      - multijob:
+          name: advanced tests
+          projects:
+            - name: '{repo}-functest-smoke-{tag}-run'
+            - name: '{repo}-functest-components-{tag}-run'
+            - name: '{repo}-functest-vnf-{tag}-run'
+            - name: '{repo}-functest-features-{tag}-run'
+
+- project:
+    name: '{repo}-functest-{tag}-daily'
+    jobs:
+      - '{repo}-functest-{tag}-daily'
