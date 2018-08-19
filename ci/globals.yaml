@@ -1,0 +1,9 @@
+---
+- defaults:
+    name: global
+    repo: 'opnfv'
+    branch: 'stable/fraser'
+    tag: 'fraser'
+    prefix: '/home/opnfv/functest'
+    nameserver: '8.8.8.8'
+    external_network: 'ext-net'
