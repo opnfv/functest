@@ -1,0 +1,107 @@
+---
+- buildparameters: &buildparameters
+    name: 'buildparameters'
+    parameters:
+      - string:
+          name: branch
+          default: '{branch}'
+
+- projectparameters: &projectparameters
+    name: 'projectparameters'
+    current-parameters: true
+
+- scm:
+    name: gerrit
+    scm:
+      - git:
+          url: https://gerrit.opnfv.org/gerrit/functest
+          refspec: '+refs/changes/*:refs/changes/*'
+          branches:
+            - ${branch}
+
+- job-template:
+    name: '{repo}-{container}-{tag}-build'
+    <<: *buildparameters
+    scm:
+      - gerrit
+    builders:
+      - shell: |
+          cd docker/$(echo {container} |cut -d\- -f 2)
+          docker build \
+            --pull=false --no-cache --force-rm=true \
+            --build-arg BRANCH=${{branch}} \
+            -t {repo}/{container}:{tag} .
+
+- project:
+    name: '{repo}-{container}-{tag}-build'
+    container:
+      - functest-core
+      - functest-tempest
+      - functest-healthcheck
+      - functest-smoke
+      - functest-components
+      - functest-vnf
+      - functest-features
+    jobs:
+      - '{repo}-{container}-{tag}-build'
+
+- job-template:
+    name: '{repo}-functest-{tag}-build'
+    project-type: multijob
+    <<: *buildparameters
+    builders:
+      - multijob:
+          name: build functest-core
+          projects:
+            - name: '{repo}-functest-core-{tag}-build'
+              <<: *projectparameters
+      - multijob:
+          name: build functest-tempest
+          projects:
+            - name: '{repo}-functest-tempest-{tag}-build'
+              <<: *projectparameters
+      - multijob:
+          name: build all remaining contrainers
+          projects:
+            - name: '{repo}-functest-healthcheck-{tag}-build'
+              <<: *projectparameters
+            - name: '{repo}-functest-smoke-{tag}-build'
+              <<: *projectparameters
+            - name: '{repo}-functest-components-{tag}-build'
+              <<: *projectparameters
+            - name: '{repo}-functest-vnf-{tag}-build'
+              <<: *projectparameters
+            - name: '{repo}-functest-features-{tag}-build'
+              <<: *projectparameters
+
+- project:
+    name: '{repo}-functest-{tag}-build'
+    jobs:
+      - '{repo}-functest-{tag}-build'
+
+- job-template:
+    name: '{repo}-functest-{tag}-gate'
+    project-type: multijob
+    <<: *buildparameters
+    builders:
+      - multijob:
+          name: build containers
+          projects:
+            - name: '{repo}-functest-{tag}-build'
+              <<: *projectparameters
+      - multijob:
+          name: basics tests
+          projects:
+            - name: '{repo}-functest-healthcheck-{tag}-run'
+      - multijob:
+          name: advanced tests
+          projects:
+            - name: '{repo}-functest-smoke-{tag}-run'
+            - name: '{repo}-functest-components-{tag}-run'
+            - name: '{repo}-functest-vnf-{tag}-run'
+            - name: '{repo}-functest-features-{tag}-run'
+
+- project:
+    name: '{repo}-functest-{tag}-gate'
+    jobs:
+      - '{repo}-functest-{tag}-gate'

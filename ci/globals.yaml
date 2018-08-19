@@ -1,0 +1,9 @@
+---
+- defaults:
+    name: global
+    repo: 'opnfv'
+    branch: 'master'
+    tag: 'latest'
+    prefix: '/home/opnfv/functest'
+    nameserver: '10.3.0.1'
+    external_network: 'ext-net'
