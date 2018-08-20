@@ -354,6 +354,18 @@ tiers:
                         services:
                             - barbican
 
+            -
+                case_name: intel-nfv-ci
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Intel NFV CI tempest plugin.
+                run:
+                    name: intel_nfv_ci
+                    args:
+                        mode: '^intel_nfv_ci_tests\.tests\.scenario\..*$'
+
     -
         name: benchmarking
         order: 2
