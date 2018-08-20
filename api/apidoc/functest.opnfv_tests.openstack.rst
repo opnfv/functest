@@ -9,6 +9,7 @@ Subpackages
     functest.opnfv_tests.openstack.api
     functest.opnfv_tests.openstack.cinder
     functest.opnfv_tests.openstack.patrole
+    functest.opnfv_tests.openstack.intel_nfv_ci
     functest.opnfv_tests.openstack.rally
     functest.opnfv_tests.openstack.refstack
     functest.opnfv_tests.openstack.shaker
