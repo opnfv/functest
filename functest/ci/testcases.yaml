@@ -396,6 +396,21 @@ tiers:
                         services:
                             - barbican
 
+            -
+                case_name: intel-nfv-ci
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Intel NFV CI tempest plugin.
+                run:
+                    module: 'functest.opnfv_tests.openstack.intel_nfv_ci.intel_nfv_ci'
+                    class: 'IntelNfvCi'
+                    args:
+                        mode: '^intel_nfv_ci_tests\.tests\.scenario\..*$'
+                        qemu_ssh_user: 'ubuntu'
+                        qemu_ssh_private_key_path: '/root/.ssh/id_rsa'
+
     -
         name: features
         order: 2
