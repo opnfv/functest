@@ -9,7 +9,8 @@ ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev \
+        musl-dev libvirt-dev gcc && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
@@ -18,6 +19,9 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     git clone https://github.com/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git checkout $PATROLE_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
+    git clone https://git.openstack.org/openstack/intel-nfv-ci-tests /src/intel-nfv-ci-tests && \
+    (cd /src/intel-nfv-ci-tests && git fetch https://git.openstack.org/openstack/intel-nfv-ci-tests refs/changes/91/595591/1 && git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/intel-nfv-ci-tests/ && \
     git clone https://github.com/openstack/vmtp.git /src/vmtp && \
     (cd /src/vmtp && git fetch origin $VMTP_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
@@ -26,10 +30,10 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     git clone --depth 1 https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
+        /src/patrole /src/intel-nfv-ci-tests /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         networking-bgpvpn networking-sfc /src/vmtp && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
+        /src/patrole /src/intel-nfv-ci-tests /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
