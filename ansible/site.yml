@@ -71,6 +71,7 @@
             - networking-bgpvpn
             - networking-sfc
             - barbican
+            - intel-nfv-ci
         - container: functest-benchmarking
           tests:
             - vmtp
