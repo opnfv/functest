@@ -74,6 +74,12 @@ validate the scenario for the release.
 |             |               |            | for the following OpenStack      |
 |             |               |            | services: Nova, Neutron, Glance, |
 |             |               |            | Cinder and Keystone              |
+|             |               +------------+----------------------------------+
+|             |               | intel      | Intel NFV CI is a tempest plugin |
+|             |               | \_nfv_ci   | for testing Nova functionality of|
+|             |               |            | hugepages support, cpu pinning,  |
+|             |               |            | thread isolation and NUMA        |
+|             |               |            | topologies                       |
 |             +---------------+------------+----------------------------------+
 |             |               | neutron    | The neutron trunk port testcases |
 |             |               | \_trunk    | have been introduced and they are|
