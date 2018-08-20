@@ -73,6 +73,7 @@
       - networking-bgpvpn
       - networking-sfc
       - barbican
+      - intel-nfv-ci
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
@@ -93,6 +94,7 @@
             - name: '{repo}-functest-smoke-networking-bgpvpn-{tag}-run'
             - name: '{repo}-functest-smoke-networking-sfc-{tag}-run'
             - name: '{repo}-functest-smoke-barbican-{tag}-run'
+            - name: '{repo}-functest-smoke-intel-nfv-ci-{tag}-run'
 
 - project:
     name: '{repo}-functest-smoke-{tag}-run'
