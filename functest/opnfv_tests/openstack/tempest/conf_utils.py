@@ -199,6 +199,7 @@ def configure_tempest_update_params(
         # enable multinode tests
         rconfig.set('compute', 'min_compute_nodes', compute_cnt)
         rconfig.set('compute-feature-enabled', 'live_migration', True)
+    rconfig.set('compute-feature-enabled', 'shelve', False)
     if os.environ.get('OS_REGION_NAME'):
         rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
     identity_api_version = os.environ.get("OS_IDENTITY_API_VERSION", '3')
