@@ -36,6 +36,7 @@ class TempestCommon(singlevm.VmReady1):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
+    shared_network = True
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
 
     def __init__(self, **kwargs):
@@ -226,6 +227,10 @@ class TempestCommon(singlevm.VmReady1):
             raise Exception('Verification UUID not found')
         LOGGER.info('Verification UUID: %s', self.verification_id)
 
+        shutil.copy(
+            "{}/tempest.log".format(self.deployment_dir),
+            "{}/tempest.debug.log".format(self.res_dir))
+
     def parse_verifier_result(self):
         """Parse and save test results."""
         stat = self.get_verifier_result(self.verification_id)
@@ -346,7 +351,7 @@ class TempestCommon(singlevm.VmReady1):
 
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(
-            self.conf_file, network_name=self.network.id,
+            self.conf_file, network_name=self.network.name,
             image_id=self.image.id,
             flavor_id=self.flavor.id,
             compute_cnt=compute_cnt,
@@ -362,6 +367,7 @@ class TempestCommon(singlevm.VmReady1):
             self.update_rally_regex()
             self.update_default_role()
             self.update_rally_logs()
+            shutil.copy("/etc/rally/rally.conf", self.res_dir)
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
             self.apply_tempest_blacklist()
