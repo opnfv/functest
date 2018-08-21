@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_306f7594",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-08-21T13:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a561d44_506829ba",
+      "revId": "10bd33240f4d5d10017192db9ba0607fe0800f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_3065b5e1",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_7069ed8a",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-08-21T13:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a561d44_3065b5e1",
+      "revId": "10bd33240f4d5d10017192db9ba0607fe0800f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_9062c1d6",
         "filename": "functest/opnfv_tests/openstack/intel_nfv_ci/intel_nfv_ci.py",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2018-08-21T07:48:19Z",
       "side": 1,
       "message": "Orange doesn\u0027t own this copyright :)",
+      "revId": "10bd33240f4d5d10017192db9ba0607fe0800f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_105991fe",
+        "filename": "functest/opnfv_tests/openstack/intel_nfv_ci/intel_nfv_ci.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-08-21T13:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a561d44_9062c1d6",
       "revId": "10bd33240f4d5d10017192db9ba0607fe0800f14",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
