@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_70f9ed4c",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-08-21T13:15:56Z",
+      "side": 1,
+      "message": "Hi Cedric, intel-nfv-ci-tests has some pending patches to be merged. In order to make it work, I had to cherry-pick them. When it will be ready, I will update it here. It is the reason why I put this patch in WIP state.",
+      "parentUuid": "9a561d44_106fd1c6",
+      "revId": "10bd33240f4d5d10017192db9ba0607fe0800f14",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_506829ba",
         "filename": "docker/smoke/testcases.yaml",
         "patchSetId": 2
