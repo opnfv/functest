@@ -65,6 +65,7 @@
             - name: '{repo}-functest-smoke-vping_userdata-{tag}-run'
             - name: '{repo}-functest-smoke-tempest_smoke_serial-{tag}-run'
             - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
+            - name: '{repo}-functest-smoke-refstack_defcore-{tag}-run'
             - name: '{repo}-functest-smoke-patrole-{tag}-run'
             - name: '{repo}-functest-smoke-odl-{tag}-run'
             - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
