@@ -36,12 +36,12 @@
     name: '{repo}-{container}-{tag}-build'
     container:
       - functest-core
-      - functest-tempest
       - functest-healthcheck
       - functest-smoke
       - functest-components
       - functest-vnf
       - functest-features
+      - functest-parser
     jobs:
       - '{repo}-{container}-{tag}-build'
 
@@ -56,11 +56,6 @@
             - name: '{repo}-functest-core-{tag}-build'
               <<: *projectparameters
       - multijob:
-          name: build functest-tempest
-          projects:
-            - name: '{repo}-functest-tempest-{tag}-build'
-              <<: *projectparameters
-      - multijob:
           name: build all remaining contrainers
           projects:
             - name: '{repo}-functest-healthcheck-{tag}-build'
@@ -72,6 +67,8 @@
             - name: '{repo}-functest-vnf-{tag}-build'
               <<: *projectparameters
             - name: '{repo}-functest-features-{tag}-build'
+              <<: *projectparameters
+            - name: '{repo}-functest-parser-{tag}-build'
               <<: *projectparameters
 
 - project:
@@ -100,6 +97,7 @@
             - name: '{repo}-functest-components-{tag}-run'
             - name: '{repo}-functest-vnf-{tag}-run'
             - name: '{repo}-functest-features-{tag}-run'
+            - name: '{repo}-functest-parser-{tag}-run'
 
 - project:
     name: '{repo}-functest-{tag}-gate'

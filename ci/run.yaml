@@ -155,3 +155,25 @@
     name: '{repo}-functest-features-{tag}-run'
     jobs:
       - '{repo}-functest-features-{tag}-run'
+
+- project:
+    name: '{repo}-parser-{test}-{tag}-run'
+    container: functest-parser
+    test:
+      - parser-basics
+    jobs:
+      - '{repo}-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-parser-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: features
+          projects:
+            - name: '{repo}-functest-parser-parser-basics-{tag}-run'
+
+- project:
+    name: '{repo}-functest-parser-{tag}-run'
+    jobs:
+      - '{repo}-functest-parser-{tag}-run'
