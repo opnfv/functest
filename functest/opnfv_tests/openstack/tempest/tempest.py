@@ -364,6 +364,8 @@ class TempestCommon(singlevm.VmReady1):
         try:
             assert super(TempestCommon, self).run(
                 **kwargs) == testcase.TestCase.EX_OK
+            if not os.path.exists(self.res_dir):
+                os.makedirs(self.res_dir)
             self.update_rally_regex()
             self.update_default_role()
             self.update_rally_logs()
