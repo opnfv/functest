@@ -491,6 +491,20 @@ tiers:
                     module: 'functest.opnfv_tests.openstack.vgpu.vgpu'
                     class: 'vGPU'
 
+            -
+                case_name: stor4nfv_os
+                project_name: stor4nfv
+                criteria: 100
+                blocking: false
+                description: >-
+                    This tests are necessary demonstrate conformance
+                    of the OpenStack+Stor4NFV deployment.
+                dependencies:
+                    - DEPLOY_SCENARIO: 'stor4nfv'
+                run:
+                    module: 'stor4nfv_tests.stor4nfv_os'
+                    class: 'OsStor4nfvTest'
+
     -
         name: components
         order: 3

@@ -167,6 +167,7 @@
       - barometercollectd
       - fds
       - vgpu
+      - stor4nfv_os
     jobs:
       - '{repo}-{container}-{test}-{tag}-run'
 
@@ -183,6 +184,7 @@
             - name: '{repo}-functest-features-barometercollectd-{tag}-run'
             - name: '{repo}-functest-features-fds-{tag}-run'
             - name: '{repo}-functest-features-vgpu-{tag}-run'
+            - name: '{repo}-functest-features-stor4nfv_os-{tag}-run'
 
 - project:
     name: '{repo}-functest-features-{tag}-run'
