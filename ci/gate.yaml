@@ -36,7 +36,6 @@
     name: '{repo}-{container}-{tag}-build'
     container:
       - functest-core
-      - functest-tempest
       - functest-healthcheck
       - functest-smoke
       - functest-components
@@ -54,11 +53,6 @@
           name: build functest-core
           projects:
             - name: '{repo}-functest-core-{tag}-build'
-              <<: *projectparameters
-      - multijob:
-          name: build functest-tempest
-          projects:
-            - name: '{repo}-functest-tempest-{tag}-build'
               <<: *projectparameters
       - multijob:
           name: build all remaining contrainers
