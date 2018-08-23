@@ -12,6 +12,7 @@
       - functest-components
       - functest-vnf
       - functest-features
+      - functest-parser
     jobs:
       - '{repo}-{container}-{tag}-pull'
 
@@ -27,6 +28,7 @@
             - name: '{repo}-functest-components-{tag}-pull'
             - name: '{repo}-functest-vnf-{tag}-pull'
             - name: '{repo}-functest-features-{tag}-pull'
+            - name: '{repo}-functest-parser-{tag}-pull'
 
 - project:
     name: '{repo}-functest-{tag}-pull'
@@ -52,6 +54,7 @@
             - name: '{repo}-functest-components-{tag}-run'
             - name: '{repo}-functest-vnf-{tag}-run'
             - name: '{repo}-functest-features-{tag}-run'
+            - name: '{repo}-functest-parser-{tag}-run'
 
 - project:
     name: '{repo}-functest-{tag}-daily'
