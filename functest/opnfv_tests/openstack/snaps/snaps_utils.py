@@ -46,16 +46,20 @@ def get_active_compute_cnt(os_creds):
     return len(computes)
 
 
-def get_credentials(proxy_settings_str=None, ssh_proxy_cmd=None):
+def get_credentials(proxy_settings_str=None, ssh_proxy_cmd=None,
+                    overrides=None):
     """
     Returns snaps OSCreds object instance
     :param: proxy_settings_str: proxy settings string <host>:<port>
     :param: ssh_proxy_cmd: the SSH proxy command for the environment
+    :param overrides: dict() values to override in credentials
     :return: an instance of snaps OSCreds object
     """
-    creds_override = None
+    creds_override = {}
     if hasattr(config.CONF, 'snaps_os_creds_override'):
-        creds_override = getattr(config.CONF, 'snaps_os_creds_override')
+        creds_override.update(getattr(config.CONF, 'snaps_os_creds_override'))
+    if overrides:
+        creds_override.update(overrides)
     os_creds = openstack_tests.get_credentials(
         os_env_file=constants.ENV_FILE, proxy_settings_str=proxy_settings_str,
         ssh_proxy_cmd=ssh_proxy_cmd, overrides=creds_override)
