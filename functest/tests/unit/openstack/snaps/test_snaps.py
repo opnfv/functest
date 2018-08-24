@@ -21,7 +21,7 @@ from functest.opnfv_tests.openstack.snaps import (
 
 class ConnectionCheckTesting(unittest.TestCase):
     """
-    Ensures the VPingUserdata class can run in Functest. This test does not
+    Ensures the ConnectionCheck class can run in Functest. This test does not
     actually connect with an OpenStack pod.
     """
 
@@ -29,9 +29,15 @@ class ConnectionCheckTesting(unittest.TestCase):
         self.os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
-
-        self.connection_check = connection_check.ConnectionCheck(
-            os_creds=self.os_creds, ext_net_name='foo')
+        with mock.patch('os_client_config.get_config') as mock_get_config, \
+                mock.patch('shade.OperatorCloud') as mock_shade, \
+                mock.patch('functest.core.tenantnetwork.NewProject') \
+                as mock_new_project:
+            self.connection_check = connection_check.ConnectionCheck(
+                os_creds=self.os_creds, ext_net_name='foo')
+        mock_get_config.assert_called()
+        mock_shade.assert_called()
+        mock_new_project.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_client_tests')
@@ -86,7 +92,7 @@ class ConnectionCheckTesting(unittest.TestCase):
 
 class APICheckTesting(unittest.TestCase):
     """
-    Ensures the VPingUserdata class can run in Functest. This test does not
+    Ensures the ApiCheck class can run in Functest. This test does not
     actually connect with an OpenStack pod.
     """
 
@@ -94,9 +100,15 @@ class APICheckTesting(unittest.TestCase):
         self.os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
-
-        self.api_check = api_check.ApiCheck(
-            os_creds=self.os_creds, ext_net_name='foo')
+        with mock.patch('os_client_config.get_config') as mock_get_config, \
+                mock.patch('shade.OperatorCloud') as mock_shade, \
+                mock.patch('functest.core.tenantnetwork.NewProject') \
+                as mock_new_project:
+            self.api_check = api_check.ApiCheck(
+                os_creds=self.os_creds, ext_net_name='foo')
+        mock_get_config.assert_called()
+        mock_shade.assert_called()
+        mock_new_project.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
@@ -151,7 +163,7 @@ class APICheckTesting(unittest.TestCase):
 
 class HealthCheckTesting(unittest.TestCase):
     """
-    Ensures the VPingUserdata class can run in Functest. This test does not
+    Ensures the HealthCheck class can run in Functest. This test does not
     actually connect with an OpenStack pod.
     """
 
@@ -159,9 +171,15 @@ class HealthCheckTesting(unittest.TestCase):
         self.os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
-
-        self.health_check = health_check.HealthCheck(
-            os_creds=self.os_creds, ext_net_name='foo')
+        with mock.patch('os_client_config.get_config') as mock_get_config, \
+                mock.patch('shade.OperatorCloud') as mock_shade, \
+                mock.patch('functest.core.tenantnetwork.NewProject') \
+                as mock_new_project:
+            self.health_check = health_check.HealthCheck(
+                os_creds=self.os_creds, ext_net_name='foo')
+        mock_get_config.assert_called()
+        mock_shade.assert_called()
+        mock_new_project.assert_called()
 
     @mock.patch('snaps.openstack.tests.os_source_file_test.'
                 'OSIntegrationTestCase.parameterize')
@@ -219,7 +237,7 @@ class HealthCheckTesting(unittest.TestCase):
 
 class SmokeTesting(unittest.TestCase):
     """
-    Ensures the VPingUserdata class can run in Functest. This test does not
+    Ensures the SnapsSmoke class can run in Functest. This test does not
     actually connect with an OpenStack pod.
     """
 
@@ -227,9 +245,15 @@ class SmokeTesting(unittest.TestCase):
         self.os_creds = OSCreds(
             username='user', password='pass',
             auth_url='http://foo.com:5000/v3', project_name='bar')
-
-        self.smoke = smoke.SnapsSmoke(
-            os_creds=self.os_creds, ext_net_name='foo')
+        with mock.patch('os_client_config.get_config') as mock_get_config, \
+                mock.patch('shade.OperatorCloud') as mock_shade, \
+                mock.patch('functest.core.tenantnetwork.NewProject') \
+                as mock_new_project:
+            self.smoke = smoke.SnapsSmoke(
+                os_creds=self.os_creds, ext_net_name='foo')
+        mock_get_config.assert_called()
+        mock_shade.assert_called()
+        mock_new_project.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
