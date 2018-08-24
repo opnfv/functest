@@ -11,11 +11,13 @@
 """configuration params to run snaps tests"""
 
 import logging
+import uuid
 
 import os_client_config
 import shade
 from xtesting.core import unit
 
+from functest.core import tenantnetwork
 from functest.opnfv_tests.openstack.snaps import snaps_utils
 from functest.utils import config
 from functest.utils import functest_utils
@@ -30,8 +32,41 @@ class SnapsTestRunner(unit.Suite):
     def __init__(self, **kwargs):
         super(SnapsTestRunner, self).__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
-        self.os_creds = kwargs.get('os_creds') or snaps_utils.get_credentials()
 
+        try:
+            cloud_config = os_client_config.get_config()
+            self.orig_cloud = shade.OpenStackCloud(cloud_config=cloud_config)
+            guid = str(uuid.uuid4())
+            self.project = tenantnetwork.NewProject(
+                self.orig_cloud, self.case_name, guid)
+            self.project.create()
+        except Exception:  # pylint: disable=broad-except
+            raise Exception("Cannot create user or project")
+
+        if self.orig_cloud.get_role("admin"):
+            role_name = "admin"
+        elif self.orig_cloud.get_role("Admin"):
+            role_name = "Admin"
+        else:
+            raise Exception("Cannot detect neither admin nor Admin")
+        self.orig_cloud.grant_role(
+            role_name, user=self.project.user.id,
+            project=self.project.project.id,
+            domain=self.project.domain.id)
+        self.role = None
+        if not self.orig_cloud.get_role("heat_stack_owner"):
+            self.role = self.orig_cloud.create_role("heat_stack_owner")
+        self.orig_cloud.grant_role(
+            "heat_stack_owner", user=self.project.user.id,
+            project=self.project.project.id,
+            domain=self.project.domain.id)
+        creds_overrides = dict(
+            username=self.project.user.name,
+            project_name=self.project.project.name,
+            project_id=self.project.project.id,
+            password=self.project.password)
+        self.os_creds = kwargs.get('os_creds') or \
+            snaps_utils.get_credentials(overrides=creds_overrides)
         if 'ext_net_name' in kwargs:
             self.ext_net_name = kwargs['ext_net_name']
         else:
@@ -54,6 +89,18 @@ class SnapsTestRunner(unit.Suite):
         self.image_metadata = None
         if hasattr(config.CONF, 'snaps_images'):
             self.image_metadata = getattr(config.CONF, 'snaps_images')
+
+    def clean(self):
+        """Cleanup of OpenStack resources. Should be called on completion."""
+        try:
+            super(SnapsTestRunner, self).clean()
+            assert self.orig_cloud
+            assert self.project
+            if self.role:
+                self.orig_cloud.delete_role(self.role.id)
+            self.project.clean()
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Cannot clean all resources")
 
     def check_requirements(self):
         """Skip if OpenStack Rocky or newer."""
