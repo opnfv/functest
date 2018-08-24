@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_e806b11f",
+        "filename": "functest/opnfv_tests/openstack/snaps/snaps_test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-08-24T09:05:22Z",
+      "side": 1,
+      "message": "pep8 recommends not to use \\ and this one can be easily removed.",
+      "revId": "7cc38fa4c3f3ca06c893b54a77f9489e29fed907",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
