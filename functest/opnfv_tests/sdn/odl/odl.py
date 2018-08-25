@@ -169,7 +169,6 @@ class ODLTests(robotframework.RobotFramework):
             kwargs['odlrestconfport'] = env.get('SDN_CONTROLLER_RESTCONFPORT')
             kwargs['odlusername'] = env.get('SDN_CONTROLLER_USER')
             kwargs['odlpassword'] = env.get('SDN_CONTROLLER_PASSWORD')
-            installer_type = env.get('INSTALLER_TYPE')
             kwargs['osusername'] = os.environ['OS_USERNAME']
             kwargs['osuserdomainname'] = os.environ.get(
                 'OS_USER_DOMAIN_NAME', 'Default')
@@ -178,11 +177,6 @@ class ODLTests(robotframework.RobotFramework):
                 'OS_PROJECT_DOMAIN_NAME', 'Default')
             kwargs['osauthurl'] = os.environ['OS_AUTH_URL']
             kwargs['ospassword'] = os.environ['OS_PASSWORD']
-            if installer_type == 'apex' or installer_type == 'netvirt':
-                kwargs['odlwebport'] = '8081'
-                kwargs['odlrestconfport'] = '8081'
-            elif installer_type == 'compass':
-                kwargs['odlrestconfport'] = '8080'
             assert kwargs['odlip']
         except KeyError as ex:
             self.__logger.error(

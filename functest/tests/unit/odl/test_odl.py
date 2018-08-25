@@ -49,7 +49,7 @@ class ODLTesting(unittest.TestCase):
     _os_interface = "public"
 
     def setUp(self):
-        for var in ("INSTALLER_TYPE", "SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
+        for var in ("SDN_CONTROLLER", "SDN_CONTROLLER_IP"):
             if var in os.environ:
                 del os.environ[var]
         os.environ["OS_AUTH_URL"] = self._os_auth_url
@@ -532,39 +532,6 @@ class ODLRunTesting(ODLTesting):
             testcase.TestCase.EX_OK,
             odlip=self._sdn_controller_ip,
             odlwebport=self._odl_webport)
-
-    def test_apex_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "apex"
-        self._test_missing_value()
-
-    def test_apex(self):
-        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "apex"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip, odlwebport='8081',
-                       odlrestconfport='8081')
-
-    def test_netvirt_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "netvirt"
-        self._test_missing_value()
-
-    def test_netvirt(self):
-        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "netvirt"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip, odlwebport='8081',
-                       odlrestconfport='8081')
-
-    def test_compass(self):
-        os.environ["SDN_CONTROLLER_IP"] = self._sdn_controller_ip
-        os.environ["INSTALLER_TYPE"] = "compass"
-        self._test_run(testcase.TestCase.EX_OK, None,
-                       odlip=self._sdn_controller_ip,
-                       odlrestconfport='8080')
-
-    def test_compass_no_controller_ip(self):
-        os.environ["INSTALLER_TYPE"] = "compass"
-        self._test_missing_value()
 
 
 class ODLArgParserTesting(ODLTesting):
