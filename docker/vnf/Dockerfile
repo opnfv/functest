@@ -8,6 +8,7 @@ ARG CLOUDIFY_VIMS_TAG=fraser
 ARG HEAT_VIMS_TAG=release-129
 ARG VROUTER_TAG=fraser
 ARG JUJU_TAG=tags/juju-2.2.5
+ARG JUJU_WAIT_TAG=2.6.4
 
 ENV GOPATH /src/epc-requirements/go
 ENV GOBIN /src/epc-requirements/go/bin
@@ -33,7 +34,7 @@ RUN apk --no-cache add --update \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
     git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        juju-wait && \
+        juju-wait==$JUJU_WAIT_TAG && \
     go get github.com/rogpeppe/godeps && \
     go get -d -v github.com/juju/juju/... || true && \
     (cd $GOPATH/src/github.com/juju/juju && git checkout $JUJU_TAG && godeps -u dependencies.tsv) && \
