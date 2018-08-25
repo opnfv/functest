@@ -5,6 +5,8 @@ ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.3.0
 ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
+ARG NEUTRON_TAG=d307f5635d4015e7842a4a177f66c76ba4bd818a
+ARG BARBICAN_TAG=b8bf147bdcdd33f3ad276ca8815fd253ec9b24af
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -21,9 +23,11 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     git clone https://github.com/openstack/vmtp.git /src/vmtp && \
     (cd /src/vmtp && git fetch origin $VMTP_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
-    git clone --depth 1 https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
+    git clone https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
+    (cd /src/neutron-tempest-plugin && git fetch origin $NEUTRON_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
-    git clone --depth 1 https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
+    git clone https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
+    (cd /src/barbican-tempest-plugin && git fetch origin $BARBICAN_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
