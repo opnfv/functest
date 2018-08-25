@@ -4,4 +4,5 @@ robotframework-sshlibrary;python_version=='2.7'
 baro_tests
 sdnvpn
 sfc
+stor4nfv_tests
 doctor-tests;python_version>='3.0'
