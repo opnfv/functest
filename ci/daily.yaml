@@ -1,19 +1,19 @@
 ---
 - job-template:
-    name: '{repo}-{container}-{tag}-pull'
+    name: '{repo}-functest-{container}-{tag}-pull'
     builders:
-      - shell: docker pull {repo}/{container}:{tag}
+      - shell: docker pull {repo}/functest-{container}:{tag}
 
 - project:
-    name: '{repo}-{container}-{tag}-pull'
+    name: '{repo}-functest-{container}-{tag}-pull'
     container:
-      - functest-healthcheck
-      - functest-smoke
-      - functest-components
-      - functest-vnf
-      - functest-features
+      - healthcheck
+      - smoke
+      - components
+      - vnf
+      - features
     jobs:
-      - '{repo}-{container}-{tag}-pull'
+      - '{repo}-functest-{container}-{tag}-pull'
 
 - job-template:
     name: '{repo}-functest-{tag}-pull'

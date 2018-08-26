@@ -1,6 +1,7 @@
 ---
 - job-template:
-    name: '{repo}-{container}-{test}-{tag}-run'
+    name: '{repo}-functest-{container}-{test}-{tag}-run'
+    defaults: 'functest-defaults'
     builders:
       - shell: |
           docker run \
@@ -10,11 +11,11 @@
             {prefix}/results/$JOB_NAME-$BUILD_ID:/home/opnfv/functest/results \
             -v {prefix}/openstack.creds:/home/opnfv/functest/conf/env_file \
             -v {prefix}/images:/home/opnfv/functest/images \
-            {repo}/{container}:{tag} run_tests -t {test}
+            {repo}/functest-{container}:{tag} run_tests -t {test}
 
 - project:
-    name: '{repo}-healthcheck-{test}-{tag}-run'
-    container: functest-healthcheck
+    name: '{repo}-functest-healthcheck-{test}-{tag}-run'
+    container: healthcheck
     test:
       - connection_check
       - tenantnetwork1
@@ -30,7 +31,7 @@
       - api_check
       - snaps_health_check
     jobs:
-      - '{repo}-{container}-{test}-{tag}-run'
+      - '{repo}-functest-{container}-{test}-{tag}-run'
 
 - job-template:
     name: '{repo}-functest-healthcheck-{tag}-run'
@@ -59,8 +60,8 @@
       - '{repo}-functest-healthcheck-{tag}-run'
 
 - project:
-    name: '{repo}-smoke-{test}-{tag}-run'
-    container: functest-smoke
+    name: '{repo}-functest-smoke-{test}-{tag}-run'
+    container: smoke
     test:
       - tempest_smoke
       - neutron-tempest-plugin-api
@@ -75,7 +76,7 @@
       - networking-sfc
       - barbican
     jobs:
-      - '{repo}-{container}-{test}-{tag}-run'
+      - '{repo}-functest-{container}-{test}-{tag}-run'
 
 - job-template:
     name: '{repo}-functest-smoke-{tag}-run'
@@ -103,14 +104,14 @@
       - '{repo}-functest-smoke-{tag}-run'
 
 - project:
-    name: '{repo}-components-{test}-{tag}-run'
-    container: functest-components
+    name: '{repo}-functest-components-{test}-{tag}-run'
+    container: components
     test:
       - tempest_full
       - tempest_scenario
       - rally_full
     jobs:
-      - '{repo}-{container}-{test}-{tag}-run'
+      - '{repo}-functest-{container}-{test}-{tag}-run'
 
 - job-template:
     name: '{repo}-functest-components-{tag}-run'
@@ -129,8 +130,8 @@
       - '{repo}-functest-components-{tag}-run'
 
 - project:
-    name: '{repo}-vnf-{test}-{tag}-run'
-    container: functest-vnf
+    name: '{repo}-functest-vnf-{test}-{tag}-run'
+    container: vnf
     test:
       - cloudify
       - cloudify_ims
@@ -138,7 +139,7 @@
       - vyos_vrouter
       - juju_epc
     jobs:
-      - '{repo}-{container}-{test}-{tag}-run'
+      - '{repo}-functest-{container}-{test}-{tag}-run'
 
 - job-template:
     name: '{repo}-functest-vnf-{tag}-run'
@@ -159,8 +160,8 @@
       - '{repo}-functest-vnf-{tag}-run'
 
 - project:
-    name: '{repo}-features-{test}-{tag}-run'
-    container: functest-features
+    name: '{repo}-functest-features-{test}-{tag}-run'
+    container: features
     test:
       - doctor-notification
       - bgpvpn
@@ -170,7 +171,7 @@
       - vgpu
       - stor4nfv_os
     jobs:
-      - '{repo}-{container}-{test}-{tag}-run'
+      - '{repo}-functest-{container}-{test}-{tag}-run'
 
 - job-template:
     name: '{repo}-functest-features-{tag}-run'
