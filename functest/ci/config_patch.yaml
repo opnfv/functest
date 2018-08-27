@@ -125,9 +125,7 @@ fdio:
         extra_alt_properties: {'hw_mem_page_size':'large'}
     heat_ims:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
-        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
-        extra_alt_properties: {'hw_mem_page_size':'large'}
     vyos_vrouter:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
@@ -263,9 +261,7 @@ ovs:
         extra_alt_properties: {'hw_mem_page_size':'large'}
     heat_ims:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
-        flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
-        extra_alt_properties: {'hw_mem_page_size':'large'}
     vyos_vrouter:
         flavor_extra_specs: {'hw:mem_page_size':'large'}
         flavor_alt_extra_specs: {'hw:mem_page_size':'large'}

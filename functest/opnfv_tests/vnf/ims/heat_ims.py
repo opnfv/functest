@@ -34,12 +34,12 @@ class HeatIms(singlevm.VmReady2):
 
     __logger = logging.getLogger(__name__)
 
-    filename_alt = ('/home/opnfv/functest/images/'
-                    'ubuntu-14.04-server-cloudimg-amd64-disk1.img')
+    filename = ('/home/opnfv/functest/images/'
+                'ubuntu-14.04-server-cloudimg-amd64-disk1.img')
 
-    flavor_alt_ram = 2048
-    flavor_alt_vcpus = 2
-    flavor_alt_disk = 25
+    flavor_ram = 2048
+    flavor_vcpus = 2
+    flavor_disk = 25
 
     quota_security_group = 20
     quota_security_group_rule = 100
@@ -72,9 +72,6 @@ class HeatIms(singlevm.VmReady2):
             version=get_config("vnf.version", config_file),
         )
         self.__logger.debug("VNF configuration: %s", self.vnf)
-
-        self.image_alt = None
-        self.flavor_alt = None
         self.keypair = None
         self.stack = None
         self.clearwater = None
@@ -122,7 +119,8 @@ class HeatIms(singlevm.VmReady2):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            self.start_time = time.time()
+            assert super(HeatIms, self).run(
+                **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             if not self.execute():
                 self.result = 100
@@ -136,18 +134,13 @@ class HeatIms(singlevm.VmReady2):
     def deploy_vnf(self):
         """Deploy Clearwater IMS."""
         start_time = time.time()
-
-        self.image_alt = self.publish_image_alt()
-        self.flavor_alt = self.create_flavor_alt()
-        # KeyPair + Image + Flavor OK
-
         descriptor = self.vnf['descriptor']
         parameters = self.vnf['parameters']
 
         parameters['public_mgmt_net_id'] = self.ext_net.id
         parameters['public_sig_net_id'] = self.ext_net.id
-        parameters['flavor'] = self.flavor_alt.name
-        parameters['image'] = self.image_alt.name
+        parameters['flavor'] = self.flavor.name
+        parameters['image'] = self.image.name
         parameters['key_name'] = self.keypair.name
         parameters['external_mgmt_dns_ip'] = env.get('NAMESERVER')
         parameters['external_sig_dns_ip'] = env.get('NAMESERVER')
