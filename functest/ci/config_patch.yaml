@@ -147,3 +147,60 @@ ovs:
         flavor_alt_extra_specs: {'hw:mem_page_size':'large'}
         extra_properties: {'hw_mem_page_size':'large'}
         extra_alt_properties: {'hw_mem_page_size':'large'}
+
+vio:
+    vping_ssh:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    vping_userdata:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    tempest_smoke_serial:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    refstack_defcore:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    patrole:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    neutron_trunk:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_full_parallel:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    rally_sanity:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    rally_full:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    cloudify_ims:
+        image: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.vmdk
+        image_format: vmdk
+        image_alt:
+            /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
+        image_alt_format: vmdk
+    vyos_vrouter:
+        image: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/vyos-1.1.7.vmdk
+        image_alt_format: vmdk
+    juju_epc:
+        image:
+            /home/opnfv/functest/images/ubuntu-16.04-server-cloudimg-amd64-disk1.vmdk
+        image_format: vmdk
+        image_alt:
+            /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
+        image_alt_format: vmdk

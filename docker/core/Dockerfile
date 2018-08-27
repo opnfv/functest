@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/pike
 
 RUN apk --no-cache add --update \
         python libffi libssl1.0 libjpeg-turbo py-pip bash \
-        grep sed wget ca-certificates git openssh-client && \
+        grep sed wget ca-certificates git openssh-client qemu-img && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
