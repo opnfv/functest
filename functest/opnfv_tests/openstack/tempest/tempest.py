@@ -356,7 +356,8 @@ class TempestCommon(singlevm.VmReady1):
             flavor_id=self.flavor.id,
             compute_cnt=compute_cnt,
             image_alt_id=self.image_alt.id,
-            flavor_alt_id=self.flavor_alt.id)
+            flavor_alt_id=self.flavor_alt.id,
+            domain_name=self.cloud.auth.get("project_domain_name", "Default"))
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
