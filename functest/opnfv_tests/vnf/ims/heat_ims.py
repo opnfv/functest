@@ -217,6 +217,9 @@ class HeatIms(singlevm.VmReady2):
         try:
             if self.stack:
                 self.cloud.delete_stack(self.stack.id, wait=True)
+        except TypeError:
+            # shade raises TypeError exception when checking stack status
+            pass
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean stack ressources")
         super(HeatIms, self).clean()
