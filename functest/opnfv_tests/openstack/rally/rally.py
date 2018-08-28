@@ -188,16 +188,13 @@ class RallyBase(singlevm.VmReady2):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
-            installer_type = env.get('INSTALLER_TYPE')
             deploy_scenario = env.get('DEPLOY_SCENARIO')
-            if (bool(installer_type) and bool(deploy_scenario) and
+            if (bool(deploy_scenario) and
                     'scenario' in black_list_yaml.keys()):
                 for item in black_list_yaml['scenario']:
                     scenarios = item['scenarios']
-                    installers = item['installers']
                     in_it = RallyBase.in_iterable_re
-                    if (in_it(deploy_scenario, scenarios) and
-                            in_it(installer_type, installers)):
+                    if in_it(deploy_scenario, scenarios):
                         tests = item['tests']
                         black_tests.extend(tests)
         except Exception:  # pylint: disable=broad-except
