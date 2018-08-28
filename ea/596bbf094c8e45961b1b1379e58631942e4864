@@ -1,0 +1,10 @@
+Code-Review+1: Rémi Le Trocquer <remi.letrocquer@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+1: andre bollore <andre.bollore@orange.com>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 28 Aug 2018 14:59:04 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/61469
+Project: functest
+Branch: refs/heads/master
