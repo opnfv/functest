@@ -12,6 +12,7 @@
 
 from __future__ import print_function
 
+import json
 import logging
 import fileinput
 import os
@@ -185,7 +186,8 @@ def update_tempest_conf_file(conf_file, rconfig):
 
 def configure_tempest_update_params(
         tempest_conf_file, network_name=None, image_id=None, flavor_id=None,
-        compute_cnt=1, image_alt_id=None, flavor_alt_id=None):
+        compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
+        domain_name="Default"):
     # pylint: disable=too-many-branches, too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
@@ -210,6 +212,8 @@ def configure_tempest_update_params(
     if os.environ.get('OS_REGION_NAME'):
         rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
     identity_api_version = os.environ.get("OS_IDENTITY_API_VERSION", '3')
+    rconfig.set('auth', 'admin_domain_scope', True)
+    rconfig.set('auth', 'default_credentials_domain_name', domain_name)
     if identity_api_version == '3':
         auth_version = 'v3'
         rconfig.set('identity-feature-enabled', 'api_v2', False)
@@ -217,6 +221,13 @@ def configure_tempest_update_params(
         auth_version = 'v2'
     if env.get("NEW_USER_ROLE").lower() != "member":
         rconfig.set('auth', 'tempest_roles', env.get("NEW_USER_ROLE"))
+    if not json.loads(env.get("USE_DYNAMIC_CREDENTIALS").lower()):
+        rconfig.set('auth', 'use_dynamic_credentials', False)
+        account_file = os.path.join(
+            getattr(config.CONF, 'dir_functest_data'), 'accounts.yaml')
+        assert os.path.exists(
+            account_file), "{} doesn't exist".format(account_file)
+        rconfig.set('auth', 'test_accounts_file', account_file)
     rconfig.set('identity', 'auth_version', auth_version)
     rconfig.set(
         'validation', 'ssh_timeout',
