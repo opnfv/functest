@@ -116,7 +116,6 @@ class OSTempestTesting(unittest.TestCase):
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']):
             conf_utils.TEMPEST_BLACKLIST = Exception
-            os.environ['INSTALLER_TYPE'] = 'installer_type'
             os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
             self.tempestcommon.apply_tempest_blacklist()
             obj = mock_open()
@@ -132,7 +131,6 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch("os.path.exists", return_value=True)
     def test_apply_blacklist_default(self, *args):
         item_dict = {'scenarios': ['deploy_scenario'],
-                     'installers': ['installer_type'],
                      'tests': ['test2']}
         with mock.patch('six.moves.builtins.open',
                         mock.mock_open()) as mock_open, \
@@ -140,7 +138,6 @@ class OSTempestTesting(unittest.TestCase):
                               return_value=['test1', 'test2']), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'yaml.safe_load', return_value=item_dict):
-            os.environ['INSTALLER_TYPE'] = 'installer_type'
             os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
             self.tempestcommon.apply_tempest_blacklist()
             obj = mock_open()
