@@ -111,10 +111,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'scenario': [
                     {'scenarios': ['test_scenario'],
-                     'installers': ['test_installer'],
                      'tests': ['test']},
                     {'scenarios': ['other_scenario'],
-                     'installers': ['test_installer'],
                      'tests': ['other_test']}]})
     def test_excl_scenario_default(self, mock_func):
         os.environ['INSTALLER_TYPE'] = 'test_installer'
@@ -126,25 +124,18 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.yaml.safe_load',
                 return_value={'scenario': [
                     {'scenarios': ['^os-[^-]+-featT-modeT$'],
-                     'installers': ['test_installer'],
                      'tests': ['test1']},
                     {'scenarios': ['^os-ctrlT-[^-]+-modeT$'],
-                     'installers': ['test_installer'],
                      'tests': ['test2']},
                     {'scenarios': ['^os-ctrlT-featT-[^-]+$'],
-                     'installers': ['test_installer'],
                      'tests': ['test3']},
                     {'scenarios': ['^os-'],
-                     'installers': ['test_installer'],
                      'tests': ['test4']},
                     {'scenarios': ['other_scenario'],
-                     'installers': ['test_installer'],
                      'tests': ['test0a']},
                     {'scenarios': [''],  # empty scenario
-                     'installers': ['test_installer'],
                      'tests': ['test0b']}]})
     def test_excl_scenario_regex(self, mock_func):
-        os.environ['INSTALLER_TYPE'] = 'test_installer'
         os.environ['DEPLOY_SCENARIO'] = 'os-ctrlT-featT-modeT'
         self.assertEqual(self.rally_base.excl_scenario(),
                          ['test1', 'test2', 'test3', 'test4'])
@@ -162,7 +153,6 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_migration_supported', return_value=False)
     def test_excl_func_default(self, mock_func, mock_yaml_load):
-        os.environ['INSTALLER_TYPE'] = 'test_installer'
         os.environ['DEPLOY_SCENARIO'] = 'test_scenario'
         self.assertEqual(self.rally_base.excl_func(), ['test'])
         mock_func.assert_called()

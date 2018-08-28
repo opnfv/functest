@@ -2,8 +2,6 @@ scenario:
     -
         scenarios:
             - '^os-'  # all scenarios
-        installers:
-            - '.+'  # all installers
         tests:
             # Following test occasionally fails due to race condition issue on
             # quota manipulation in nova.
