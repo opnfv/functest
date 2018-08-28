@@ -215,6 +215,8 @@ def configure_tempest_update_params(
         rconfig.set('identity-feature-enabled', 'api_v2', False)
     else:
         auth_version = 'v2'
+    if env.get("NEW_USER_ROLE").lower() != "member":
+        rconfig.set('auth', 'tempest_roles', env.get("NEW_USER_ROLE"))
     rconfig.set('identity', 'auth_version', auth_version)
     rconfig.set(
         'validation', 'ssh_timeout',
