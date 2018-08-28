@@ -1,6 +1,6 @@
 git+https://gerrit.opnfv.org/gerrit/functest#egg=functest
 git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
-git+https://gerrit.opnfv.org/gerrit/snaps#egg=snaps
+git+https://gerrit.opnfv.org/gerrit/snaps@d869e27230bf390c8f4fe68f5682584d4b9dbc49#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
