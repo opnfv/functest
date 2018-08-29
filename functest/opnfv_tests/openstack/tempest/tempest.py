@@ -31,7 +31,7 @@ from functest.utils import env
 LOGGER = logging.getLogger(__name__)
 
 
-class TempestCommon(singlevm.VmReady1):
+class TempestCommon(singlevm.VmReady2):
     # pylint: disable=too-many-instance-attributes
     """TempestCommon testcases implementation class."""
 
@@ -43,6 +43,27 @@ class TempestCommon(singlevm.VmReady1):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'tempest'
         super(TempestCommon, self).__init__(**kwargs)
+        assert self.orig_cloud
+        assert self.cloud
+        assert self.project
+        if self.orig_cloud.get_role("admin"):
+            role_name = "admin"
+        elif self.orig_cloud.get_role("Admin"):
+            role_name = "Admin"
+        else:
+            raise Exception("Cannot detect neither admin nor Admin")
+        self.orig_cloud.grant_role(
+            role_name, user=self.project.user.id,
+            project=self.project.project.id,
+            domain=self.project.domain.id)
+        environ = dict(
+            os.environ,
+            OS_USERNAME=self.project.user.name,
+            OS_PROJECT_NAME=self.project.project.name,
+            OS_PROJECT_ID=self.project.project.id,
+            OS_PASSWORD=self.project.password)
+        conf_utils.create_rally_deployment(environ=environ)
+        conf_utils.create_verifier()
         self.verifier_id = conf_utils.get_verifier_id()
         self.verifier_repo_dir = conf_utils.get_verifier_repo_dir(
             self.verifier_id)
