@@ -105,19 +105,17 @@ def get_verifier_id():
     """
     Returns verifier id for current Tempest
     """
-    create_rally_deployment()
-    create_verifier()
     cmd = ("rally verify list-verifiers | awk '/" +
            getattr(config.CONF, 'tempest_verifier_name') +
            "/ {print $2}'")
     proc = subprocess.Popen(cmd, shell=True,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
-    deployment_uuid = proc.stdout.readline().rstrip()
-    if deployment_uuid == "":
+    verifier_uuid = proc.stdout.readline().rstrip()
+    if verifier_uuid == "":
         LOGGER.error("Tempest verifier not found.")
         raise Exception('Error with command:%s' % cmd)
-    return deployment_uuid
+    return verifier_uuid
 
 
 def get_verifier_deployment_id():
@@ -141,9 +139,6 @@ def get_verifier_repo_dir(verifier_id):
     """
     Returns installed verifier repo directory for Tempest
     """
-    if not verifier_id:
-        verifier_id = get_verifier_id()
-
     return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
@@ -154,12 +149,6 @@ def get_verifier_deployment_dir(verifier_id, deployment_id):
     """
     Returns Rally deployment directory for current verifier
     """
-    if not verifier_id:
-        verifier_id = get_verifier_id()
-
-    if not deployment_id:
-        deployment_id = get_verifier_deployment_id()
-
     return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                         'verification',
                         'verifier-{}'.format(verifier_id),
