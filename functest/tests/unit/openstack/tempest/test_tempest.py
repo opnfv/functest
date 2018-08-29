@@ -23,9 +23,16 @@ class OSTempestTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
 
     def setUp(self):
-        with mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                        'conf_utils.get_verifier_id',
-                        return_value='test_deploy_id'), \
+        with mock.patch('os_client_config.get_config'), \
+                mock.patch('shade.OpenStackCloud'), \
+                mock.patch('functest.core.tenantnetwork.NewProject'), \
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.create_rally_deployment'), \
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.create_verifier'), \
+                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                           'conf_utils.get_verifier_id',
+                           return_value='test_deploy_id'), \
                 mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                            'conf_utils.get_verifier_deployment_id',
                            return_value='test_deploy_id'), \

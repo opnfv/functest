@@ -106,26 +106,16 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
     def test_get_verif_repo_dir_default(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.os.path.join',
-                        return_value='test_verifier_repo_dir'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.get_verifier_id') as mock_get_id:
+                        return_value='test_verifier_repo_dir'):
             self.assertEqual(conf_utils.get_verifier_repo_dir(''),
                              'test_verifier_repo_dir')
-            self.assertTrue(mock_get_id.called)
 
     def test_get_depl_dir_default(self):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'conf_utils.os.path.join',
-                        return_value='test_verifier_repo_dir'), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.get_verifier_id') as mock_get_vid, \
-            mock.patch('functest.opnfv_tests.openstack.tempest.'
-                       'conf_utils.get_verifier_deployment_id') \
-                as mock_get_did:
+                        return_value='test_verifier_repo_dir'):
             self.assertEqual(conf_utils.get_verifier_deployment_dir('', ''),
                              'test_verifier_repo_dir')
-            self.assertTrue(mock_get_vid.called)
-            self.assertTrue(mock_get_did.called)
 
     def _test_missing_param(self, params, image_id, flavor_id, alt=False):
         with mock.patch('six.moves.configparser.RawConfigParser.'
