@@ -59,7 +59,7 @@ class NewProject(object):
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
         self.project = self.orig_cloud.create_project(
-            name='{}-project_{}'.format(self.case_name, self.guid),
+            name='{}-project_{}'.format(self.case_name[:18], self.guid),
             description="Created by OPNFV Functest: {}".format(
                 self.case_name),
             domain_id=self.domain.id)
