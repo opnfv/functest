@@ -20,7 +20,7 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/github.com\\/openstack\\/tempest@\\1#egg=tempest/ | \
+        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\git.openstack.org\\/openstack\\/tempest@\\1#egg=tempest/ \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
@@ -32,7 +32,7 @@ RUN apk --no-cache add --update \
     git clone --depth 1 -b $CLOUDIFY_VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/cloudify_vims && \
     git clone --depth 1 -b $HEAT_VIMS_TAG https://github.com/Metaswitch/clearwater-heat.git /src/heat_vims && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
-    git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
+    git clone --depth 1 https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         juju-wait==$JUJU_WAIT_TAG && \
     go get github.com/rogpeppe/godeps && \
