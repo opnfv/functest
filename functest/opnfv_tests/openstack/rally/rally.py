@@ -75,7 +75,6 @@ class RallyBase(singlevm.VmReady2):
             project=self.project.project.id,
             domain=self.project.domain.id)
         self.creators = []
-        self.mode = ''
         self.summary = []
         self.scenario_dir = ''
         self.smoke = None
@@ -85,6 +84,8 @@ class RallyBase(singlevm.VmReady2):
         self.details = None
         self.compute_cnt = 0
         self.flavor_alt = None
+        self.task_file = ''
+        self.run_cmd = ''
 
     def _build_task_args(self, test_file_name):
         """Build arguments for the Rally task."""
@@ -331,22 +332,8 @@ class RallyBase(singlevm.VmReady2):
     def _run_task(self, test_name):
         """Run a task."""
         LOGGER.info('Starting test scenario "%s" ...', test_name)
-
-        task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
-        if not os.path.exists(task_file):
-            LOGGER.error("Task file '%s' does not exist.", task_file)
-            raise Exception("Task file '{}' does not exist.".format(task_file))
-
-        file_name = self._prepare_test_list(test_name)
-        if self.file_is_empty(file_name):
-            LOGGER.info('No tests for scenario "%s"', test_name)
-            return
-
-        cmd = (["rally", "task", "start", "--abort-on-sla-failure", "--task",
-                task_file, "--task-args",
-                str(self._build_task_args(test_name))])
-        LOGGER.debug('running command: %s', cmd)
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        LOGGER.debug('running command: %s', self.run_cmd)
+        proc = subprocess.Popen(self.run_cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         output = proc.communicate()[0]
 
@@ -356,7 +343,6 @@ class RallyBase(singlevm.VmReady2):
             LOGGER.error("Failed to retrieve task_id")
             LOGGER.error("Result:\n%s", output)
             raise Exception("Failed to retrieve task id")
-
         self._save_results(test_name, task_id)
 
     def _append_summary(self, json_raw, test_name):
@@ -386,26 +372,45 @@ class RallyBase(singlevm.VmReady2):
                             'task_status': self.task_succeed(json_raw)}
         self.summary.append(scenario_summary)
 
-    def _prepare_env(self):
+    def prepare_env(self):
         """Create resources needed by test scenarios."""
         assert self.cloud
         LOGGER.debug('Validating the test name...')
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
+        self.task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
+        if not os.path.exists(self.task_file):
+            LOGGER.error("Task file '%s' does not exist.", self.task_file)
+            raise Exception("Task file '{}' does not exist.".
+                            format(self.task_file))
+
         self.compute_cnt = len(self.cloud.list_hypervisors())
         self.flavor_alt = self.create_flavor_alt()
         LOGGER.debug("flavor: %s", self.flavor_alt)
 
-    def _run_tests(self):
+    def prepare_run(self, test_name):
+        """Prepare resources for test run."""
+        file_name = self._prepare_test_list(test_name)
+        if self.file_is_empty(file_name):
+            LOGGER.info('No tests for scenario "%s"', test_name)
+            return False
+        self.run_cmd = (["rally", "task", "start", "--abort-on-sla-failure",
+                         "--task", self.task_file, "--task-args",
+                         str(self._build_task_args(test_name))])
+        return True
+
+    def run_tests(self):
         """Execute tests."""
         if self.test_name == 'all':
             for test in self.TESTS:
                 if test == 'all' or test == 'vm':
                     continue
-                self._run_task(test)
+                if self.prepare_run(test):
+                    self._run_task(test)
         else:
-            self._run_task(self.test_name)
+            if self.prepare_run(self.test_name):
+                self._run_task(self.test_name)
 
     def _generate_report(self):
         """Generate test execution summary report."""
@@ -492,8 +497,8 @@ class RallyBase(singlevm.VmReady2):
                 OS_PROJECT_ID=self.project.project.id,
                 OS_PASSWORD=self.project.password)
             conf_utils.create_rally_deployment(environ=environ)
-            self._prepare_env()
-            self._run_tests()
+            self.prepare_env()
+            self.run_tests()
             self._generate_report()
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
@@ -512,7 +517,6 @@ class RallySanity(RallyBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_sanity"
         super(RallySanity, self).__init__(**kwargs)
-        self.mode = 'sanity'
         self.test_name = 'all'
         self.smoke = True
         self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'sanity')
@@ -526,7 +530,6 @@ class RallyFull(RallyBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_full"
         super(RallyFull, self).__init__(**kwargs)
-        self.mode = 'full'
         self.test_name = 'all'
         self.smoke = False
         self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'full')

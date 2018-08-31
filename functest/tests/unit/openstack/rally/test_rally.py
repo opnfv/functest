@@ -30,6 +30,7 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base.image = munch.Munch(name='foo')
             self.rally_base.flavor = munch.Munch(name='foo')
             self.rally_base.flavor_alt = munch.Munch(name='bar')
+            self.rally_base.test_name = 'all'
         self.assertTrue(mock_get_config.called)
         self.assertTrue(mock_shade.called)
         self.assertTrue(mock_new_project.called)
@@ -181,25 +182,21 @@ class OSRallyTesting(unittest.TestCase):
                 return_value=False)
     def test_run_task_missing_task_file(self, mock_path_exists):
         with self.assertRaises(Exception):
-            self.rally_base._run_task('test_name')
+            self.rally_base.prepare_env()
         mock_path_exists.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
-                return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_prepare_test_list', return_value='test_file_name')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'file_is_empty', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.LOGGER.info')
-    def test_run_task_no_tests_for_scenario(self, mock_logger_info,
-                                            mock_file_empty, mock_prep_list,
-                                            mock_path_exists):
-        self.rally_base._run_task('test_name')
+    def test_prepare_run_no_tests_for_scenario(
+            self, mock_logger_info, mock_file_empty, mock_prep_list):
+        self.rally_base.prepare_run('test_name')
         mock_logger_info.assert_any_call('No tests for scenario \"%s\"',
                                          'test_name')
         mock_file_empty.assert_called()
         mock_prep_list.assert_called()
-        mock_path_exists.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_prepare_test_list', return_value='test_file_name')
@@ -264,7 +261,7 @@ class OSRallyTesting(unittest.TestCase):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test'
         with self.assertRaises(Exception):
-            self.rally_base._prepare_env()
+            self.rally_base.prepare_env()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_external_network')
@@ -278,25 +275,32 @@ class OSRallyTesting(unittest.TestCase):
                               side_effect=Exception) \
                 as mock_create_flavor:
             with self.assertRaises(Exception):
-                self.rally_base._prepare_env()
+                self.rally_base.prepare_env()
             mock_list_hyperv.assert_called_once()
             mock_create_flavor.assert_called_once()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'prepare_run', return_value=True)
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task')
-    def test_run_tests_all(self, mock_run_task):
+    def test_run_tests_all(self, mock_run_task, mock_prepare_run):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'all'
-        self.rally_base._run_tests()
+        self.rally_base.run_tests()
+        mock_prepare_run.assert_any_call('test1')
+        mock_prepare_run.assert_any_call('test2')
         mock_run_task.assert_any_call('test1')
         mock_run_task.assert_any_call('test2')
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'prepare_run', return_value=True)
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_run_task')
-    def test_run_tests_default(self, mock_run_task):
+    def test_run_tests_default(self, mock_run_task, mock_prepare_run):
         self.rally_base.TESTS = ['test1', 'test2']
         self.rally_base.test_name = 'test1'
-        self.rally_base._run_tests()
+        self.rally_base.run_tests()
+        mock_prepare_run.assert_any_call('test1')
         mock_run_task.assert_any_call('test1')
 
     def test_clean_up_default(self):
@@ -309,9 +313,9 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_prepare_env')
+                'prepare_env')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_run_tests')
+                'run_tests')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_generate_report')
     def test_run_default(self, *args):
@@ -328,7 +332,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_prepare_env', side_effect=Exception)
+                'prepare_env', side_effect=Exception)
     def test_run_exception_prepare_env(self, mock_prep_env, *args):
         # pylint: disable=unused-argument
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
