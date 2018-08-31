@@ -32,7 +32,7 @@ RUN apk --no-cache add --update \
     git clone --depth 1 -b $CLOUDIFY_VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/cloudify_vims && \
     git clone --depth 1 -b $HEAT_VIMS_TAG https://github.com/Metaswitch/clearwater-heat.git /src/heat_vims && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
-    git clone https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
+    git clone --depth 1 https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         juju-wait==$JUJU_WAIT_TAG && \
     go get github.com/rogpeppe/godeps && \
