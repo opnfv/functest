@@ -67,6 +67,9 @@ tiers:
                     module:
                         'functest.opnfv_tests.openstack.refstack.refstack'
                     class: 'Refstack'
+                    args:
+                        option:
+                            - '--concurrency=4'
 
             -
                 case_name: patrole
