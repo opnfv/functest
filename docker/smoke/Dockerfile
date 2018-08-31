@@ -17,16 +17,16 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git clone https://github.com/openstack/patrole.git /src/patrole && \
+    git clone --depth 1 https://github.com/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git checkout $PATROLE_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
-    git clone https://github.com/openstack/vmtp.git /src/vmtp && \
+    git clone --depth 1 https://github.com/openstack/vmtp.git /src/vmtp && \
     (cd /src/vmtp && git fetch origin $VMTP_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
-    git clone https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
+    git clone --depth 1 https://github.com/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
     (cd /src/neutron-tempest-plugin && git fetch origin $NEUTRON_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
-    git clone https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
+    git clone --depth 1 https://github.com/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
     (cd /src/barbican-tempest-plugin && git fetch origin $BARBICAN_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
