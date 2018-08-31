@@ -28,10 +28,14 @@ RUN apk --no-cache add --update \
     sed -i s/unf_ext\ \(.*\)/unf_ext\ \(0.0.7.4\)/g /src/vims-test/Gemfile.lock && \
     git clone --depth 1 https://github.com/Metaswitch/quaff /src/vims-test/quaff && \
     (cd /src/vims-test/quaff && git checkout $QUAFF_TAG) && \
-    git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-build-infra /src/vims-test/build-infra && \
-    git clone --depth 1 -b $CLOUDIFY_VIMS_TAG https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/cloudify_vims && \
-    git clone --depth 1 -b $HEAT_VIMS_TAG https://github.com/Metaswitch/clearwater-heat.git /src/heat_vims && \
+    git clone --depth 1 https://github.com/Metaswitch/clearwater-build-infra /src/vims-test/build-infra && \
+    (cd /src/vims-test/build-infra && git checkout $VIMS_TEST_TAG) && \
+    git clone --depth 1 https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git /src/cloudify_vims && \
+    (cd /src/cloudify_vims && git checkout $CLOUDIFY_VIMS_TAG) && \
+    git clone --depth 1 https://github.com/Metaswitch/clearwater-heat.git /src/heat_vims && \
+    (cd /src/heat_vims && git checkout $HEAT_VIMS_TAG) && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
+    (cd /src/opnfv-vnf-vyos-blueprint && git checkout $VROUTER_TAG) && \
     git clone --depth 1 https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         juju-wait==$JUJU_WAIT_TAG && \
