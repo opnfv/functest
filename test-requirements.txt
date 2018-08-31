@@ -11,3 +11,4 @@ sphinx-rtd-theme
 yamllint
 doc8>=0.6.0 # Apache-2.0
 bashate>=0.5.1 # Apache-2.0
+nosehtmloutput  # Apache-2.0
