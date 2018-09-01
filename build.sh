@@ -29,11 +29,11 @@ for dir in ${amd64_dirs}; do
         (docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true)
 done
 [ ! -z "${amd64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.7 || true)
+    (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.8 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|alpine:3.7|multiarch/alpine:arm64-v3.7|g" {} +
+    -e "s|alpine:3.8|multiarch/alpine:arm64-v3.8|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
@@ -47,7 +47,7 @@ for dir in ${arm64_dirs}; do
 done
 [ ! -z "${arm64_dirs}" ] &&
     (docker rmi "${repo}/functest-core:arm64-latest" \
-        multiarch/alpine:arm64-v3.7 || true)
+        multiarch/alpine:arm64-v3.8 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 exit $?
