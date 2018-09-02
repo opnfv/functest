@@ -21,8 +21,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
     esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        -e git+https://git.openstack.org/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git clone --depth 1 https://git.openstack.org/openstack/os-faults.git /src/os-faults && \
     (cd /src/os-faults && git fetch --depth 1 --tags origin $OS_FAULTS_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \

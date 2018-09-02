@@ -39,6 +39,7 @@
       - tempest
       - healthcheck
       - smoke
+      - benchmarking
       - components
       - vnf
       - features
@@ -66,6 +67,8 @@
             - name: '{repo}-functest-healthcheck-{tag}-build'
               <<: *functest-projectparameters
             - name: '{repo}-functest-smoke-{tag}-build'
+              <<: *functest-projectparameters
+            - name: '{repo}-functest-benchmarking-{tag}-build'
               <<: *functest-projectparameters
             - name: '{repo}-functest-components-{tag}-build'
               <<: *functest-projectparameters
@@ -97,6 +100,7 @@
           name: advanced tests
           projects:
             - name: '{repo}-functest-smoke-{tag}-run'
+            - name: '{repo}-functest-benchmarking-{tag}-run'
             - name: '{repo}-functest-components-{tag}-run'
             - name: '{repo}-functest-vnf-{tag}-run'
             - name: '{repo}-functest-features-{tag}-run'
