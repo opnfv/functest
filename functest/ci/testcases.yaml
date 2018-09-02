@@ -274,37 +274,6 @@ tiers:
                             - 'test_networks_multiprovider_rbac'
 
             -
-                case_name: vmtp
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    VMTP is a small python application that will automatically
-                    perform ping connectivity, round trip time measurement
-                    (latency) and TCP/UDP throughput
-                dependencies:
-                    - POD_ARCH: '^(?!aarch64$)'
-                run:
-                    module:
-                        'functest.opnfv_tests.openstack.vmtp.vmtp'
-                    class: 'Vmtp'
-
-            -
-                case_name: shaker
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    Shaker wraps around popular system network testing tools
-                    like iperf, iperf3 and netperf (with help of flent). Shaker
-                    is able to deploy OpenStack instances and networks in
-                    different topologies.
-                run:
-                    module:
-                        'functest.opnfv_tests.openstack.shaker.shaker'
-                    class: 'Shaker'
-
-            -
                 case_name: snaps_smoke
                 project_name: functest
                 criteria: 100
@@ -397,8 +366,46 @@ tiers:
                             - barbican
 
     -
-        name: features
+        name: benchmarking
         order: 2
+        description: >-
+            Run several OpenStack performance tools
+            https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
+        testcases:
+            -
+                case_name: vmtp
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    VMTP is a small python application that will automatically
+                    perform ping connectivity, round trip time measurement
+                    (latency) and TCP/UDP throughput
+                dependencies:
+                    - POD_ARCH: '^(?!aarch64$)'
+                run:
+                    module:
+                        'functest.opnfv_tests.openstack.vmtp.vmtp'
+                    class: 'Vmtp'
+
+            -
+                case_name: shaker
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Shaker wraps around popular system network testing tools
+                    like iperf, iperf3 and netperf (with help of flent). Shaker
+                    is able to deploy OpenStack instances and networks in
+                    different topologies.
+                run:
+                    module:
+                        'functest.opnfv_tests.openstack.shaker.shaker'
+                    class: 'Shaker'
+
+    -
+        name: features
+        order: 3
         description: >-
             Test suites from feature projects
             integrated in functest
@@ -507,7 +514,7 @@ tiers:
 
     -
         name: components
-        order: 3
+        order: 4
         description: >-
             Extensive testing of OpenStack API.
         testcases:
@@ -561,7 +568,7 @@ tiers:
 
     -
         name: vnf
-        order: 4
+        order: 5
         description: >-
             Collection of VNF test cases.
         testcases:

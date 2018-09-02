@@ -52,6 +52,11 @@ jobs:
     - script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
+        - amd64_dirs="docker/benchmarking"
+        - arm64_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/features"
         - arm64_dirs=""
     - script: sudo -E bash build.sh

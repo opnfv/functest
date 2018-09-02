@@ -8,6 +8,7 @@ docker/core \
 docker/tempest \
 docker/healthcheck \
 docker/smoke \
+docker/benchmarking \
 docker/features \
 docker/components \
 docker/vnf"}
