@@ -9,6 +9,7 @@
     container:
       - healthcheck
       - smoke
+      - benchmarking
       - components
       - vnf
       - features
@@ -24,6 +25,7 @@
           projects:
             - name: '{repo}-functest-healthcheck-{tag}-pull'
             - name: '{repo}-functest-smoke-{tag}-pull'
+            - name: '{repo}-functest-benchmarking-{tag}-pull'
             - name: '{repo}-functest-components-{tag}-pull'
             - name: '{repo}-functest-vnf-{tag}-pull'
             - name: '{repo}-functest-features-{tag}-pull'
@@ -49,6 +51,7 @@
           name: advanced tests
           projects:
             - name: '{repo}-functest-smoke-{tag}-run'
+            - name: '{repo}-functest-benchmarking-{tag}-run'
             - name: '{repo}-functest-components-{tag}-run'
             - name: '{repo}-functest-vnf-{tag}-run'
             - name: '{repo}-functest-features-{tag}-run'

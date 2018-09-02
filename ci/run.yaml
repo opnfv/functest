@@ -68,8 +68,6 @@
       - rally_sanity
       - refstack_defcore
       - patrole
-      - vmtp
-      - shaker
       - snaps_smoke
       - neutron_trunk
       - networking-bgpvpn
@@ -90,8 +88,6 @@
             - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
             - name: '{repo}-functest-smoke-refstack_defcore-{tag}-run'
             - name: '{repo}-functest-smoke-patrole-{tag}-run'
-            - name: '{repo}-functest-smoke-vmtp-{tag}-run'
-            - name: '{repo}-functest-smoke-shaker-{tag}-run'
             - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
             - name: '{repo}-functest-smoke-neutron_trunk-{tag}-run'
             - name: '{repo}-functest-smoke-networking-bgpvpn-{tag}-run'
@@ -102,6 +98,30 @@
     name: '{repo}-functest-smoke-{tag}-run'
     jobs:
       - '{repo}-functest-smoke-{tag}-run'
+
+- project:
+    name: '{repo}-functest-benchmarking-{test}-{tag}-run'
+    container: benchmarking
+    test:
+      - vmtp
+      - shaker
+    jobs:
+      - '{repo}-functest-{container}-{test}-{tag}-run'
+
+- job-template:
+    name: '{repo}-functest-benchmarking-{tag}-run'
+    project-type: multijob
+    builders:
+      - multijob:
+          name: smoke
+          projects:
+            - name: '{repo}-functest-benchmarking-vmtp-{tag}-run'
+            - name: '{repo}-functest-benchmarking-shaker-{tag}-run'
+
+- project:
+    name: '{repo}-functest-benchmarking-{tag}-run'
+    jobs:
+      - '{repo}-functest-benchmarking-{tag}-run'
 
 - project:
     name: '{repo}-functest-components-{test}-{tag}-run'
