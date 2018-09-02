@@ -2,7 +2,7 @@
 tiers:
     -
         name: features
-        order: 2
+        order: 3
         description: >-
             Test suites from feature projects
             integrated in functest

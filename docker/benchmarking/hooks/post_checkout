@@ -1,6 +1,6 @@
 #!/bin/bash
 
-from="${DOCKER_REPO%/*}/functest-tempest:${DOCKER_TAG}"
+from="${DOCKER_REPO%/*}/functest-core:${DOCKER_TAG}"
 sed -i "s|^FROM.*$|FROM ${from}|" Dockerfile
 
 exit $?
