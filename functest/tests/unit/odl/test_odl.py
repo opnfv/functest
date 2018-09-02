@@ -253,7 +253,7 @@ class ODLMainTesting(ODLTesting):
                 mock.patch.object(self.test, 'parse_results'), \
                 mock.patch.object(self.test, 'generate_report',
                                   return_value=1):
-            self._test_run_suites(testcase.TestCase.EX_RUN_ERROR, *args)
+            self._test_run_suites(testcase.TestCase.EX_OK, *args)
 
     @mock.patch('os.makedirs')
     @mock.patch('robot.run')

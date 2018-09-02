@@ -17,9 +17,7 @@ tiers:
                     Keystone, Glance, Neutron and Nova and may perform some
                     simple queries.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.api.connection_check'
-                    class: 'ConnectionCheck'
+                    name: connection_check
 
             -
                 case_name: tenantnetwork1
@@ -31,8 +29,7 @@ tiers:
                     required by advanced testcases (subnet, network and
                     router).
                 run:
-                    module: 'functest.core.tenantnetwork'
-                    class: 'TenantNetwork1'
+                    name: tenantnetwork1
 
             -
                 case_name: tenantnetwork2
@@ -44,8 +41,7 @@ tiers:
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
                 run:
-                    module: 'functest.core.tenantnetwork'
-                    class: 'TenantNetwork2'
+                    name: tenantnetwork2
 
             -
                 case_name: vmready1
@@ -57,8 +53,7 @@ tiers:
                     resources and prepares a future VM attached to that
                     network.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'VmReady1'
+                    name: vmready1
 
             -
                 case_name: vmready2
@@ -70,8 +65,7 @@ tiers:
                     all tenant network ressources, flavors, images, etc.
                     required by advanced testcases.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'VmReady2'
+                    name: vmready2
 
             -
                 case_name: singlevm1
@@ -83,8 +77,7 @@ tiers:
                     resources and completes it by booting a VM attached to that
                     network.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'SingleVm1'
+                    name: singlevm1
 
             -
                 case_name: singlevm2
@@ -96,8 +89,7 @@ tiers:
                     all tenant network ressources and vms required by advanced
                     testcases.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'SingleVm2'
+                    name: singlevm2
 
             -
                 case_name: vping_ssh
@@ -109,8 +101,7 @@ tiers:
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
                 run:
-                    module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
-                    class: 'VPingSSH'
+                    name: vping_ssh
 
             -
                 case_name: vping_userdata
@@ -121,9 +112,7 @@ tiers:
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.vping.vping_userdata'
-                    class: 'VPingUserdata'
+                    name: vping_userdata
 
             -
                 case_name: cinder_test
@@ -136,8 +125,7 @@ tiers:
                     from instance 1, attach it on instance 2 3) Read volume
                     data
                 run:
-                    module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
-                    class: 'CinderCheck'
+                    name: cinder_test
 
             -
                 case_name: odl
@@ -151,8 +139,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl'
                 run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
+                    name: odl
                     args:
                         suites:
                             - /src/odl_test/csit/suites/integration/basic
@@ -170,8 +157,7 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
-                    class: 'ApiCheck'
+                    name: api_check
 
             -
                 case_name: snaps_health_check
@@ -184,5 +170,4 @@ tiers:
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.health_check'
-                    class: 'HealthCheck'
+                    name: snaps_health_check

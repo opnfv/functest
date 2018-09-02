@@ -17,8 +17,7 @@ tiers:
                     the OpenStack deployment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L83
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
                         option:
@@ -35,8 +34,7 @@ tiers:
                     the OpenStack deployment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L84
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.scenario)'
                         option:
@@ -51,5 +49,4 @@ tiers:
                     This test case runs the full suite of scenarios of the
                     OpenStack Rally suite using several threads and iterations.
                 run:
-                    module: 'functest.opnfv_tests.openstack.rally.rally'
-                    class: 'RallyFull'
+                    name: rally_full
