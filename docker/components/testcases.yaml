@@ -2,7 +2,7 @@
 tiers:
     -
         name: components
-        order: 3
+        order: 4
         description: >-
             Extensive testing of OpenStack API.
         testcases:

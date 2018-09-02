@@ -4,7 +4,6 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.3.0
-ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
 ARG NEUTRON_TAG=d307f5635d4015e7842a4a177f66c76ba4bd818a
 ARG BARBICAN_TAG=b8bf147bdcdd33f3ad276ca8815fd253ec9b24af
 
@@ -20,9 +19,6 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     git clone --depth 1 https://git.openstack.org/openstack/patrole.git /src/patrole && \
     (cd /src/patrole && git fetch --tags origin $PATROLE_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
-    git clone https://git.openstack.org/openstack/vmtp.git /src/vmtp && \
-    (cd /src/vmtp && git fetch origin --tags $VMTP_TAG && git checkout FETCH_HEAD) && \
-    update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     git clone https://git.openstack.org/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
     (cd /src/neutron-tempest-plugin && git fetch --tags origin $NEUTRON_TAG && git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
@@ -33,7 +29,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         networking-bgpvpn networking-sfc /src/vmtp && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin /src/vmtp && \
+        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
