@@ -18,8 +18,7 @@ tiers:
                     - INSTALLER_TYPE: '(apex)|(fuel)|(daisy)'
                     - DEPLOY_SCENARIO: '^((?!fdio|nofeature).)*$'
                 run:
-                    module: 'xtesting.core.feature'
-                    class: 'BashFeature'
+                    name: bashfeature
                     args:
                         cmd: 'doctor-test'
 
@@ -33,8 +32,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'bgpvpn'
                 run:
-                    module: 'sdnvpn.test.functest.run_sdnvpn_tests'
-                    class: 'SdnvpnFunctest'
+                    name: bgpvpn
 
             -
                 case_name: functest-odl-sfc
@@ -47,8 +45,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl.*sfc'
                 run:
-                    module: 'sfc.tests.functest.run_sfc_tests'
-                    class: 'SfcFunctest'
+                    name: functest-odl-sfc
 
             -
                 case_name: barometercollectd
@@ -62,8 +59,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'bar'
                 run:
-                    module: 'baro_tests.barometer'
-                    class: 'BarometerCollectd'
+                    name: barometercollectd
 
             -
                 case_name: fds
@@ -77,8 +73,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl.*-fdio'
                 run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
+                    name: odl
                     args:
                         suites:
                             - /src/fds/testing/robot
@@ -92,8 +87,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'vgpu'
                 run:
-                    module: 'functest.opnfv_tests.openstack.vgpu.vgpu'
-                    class: 'vGPU'
+                    name: vgpu
 
             -
                 case_name: stor4nfv_os
@@ -106,5 +100,4 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'stor4nfv'
                 run:
-                    module: 'stor4nfv_tests.stor4nfv_os'
-                    class: 'OsStor4nfvTest'
+                    name: stor4nfv_os

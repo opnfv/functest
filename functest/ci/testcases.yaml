@@ -17,9 +17,7 @@ tiers:
                     Keystone, Glance, Neutron and Nova and may perform some
                     simple queries.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.api.connection_check'
-                    class: 'ConnectionCheck'
+                    name: connection_check
 
             -
                 case_name: tenantnetwork1
@@ -31,8 +29,7 @@ tiers:
                     required by advanced testcases (subnet, network and
                     router).
                 run:
-                    module: 'functest.core.tenantnetwork'
-                    class: 'TenantNetwork1'
+                    name: tenantnetwork1
 
             -
                 case_name: tenantnetwork2
@@ -44,8 +41,7 @@ tiers:
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
                 run:
-                    module: 'functest.core.tenantnetwork'
-                    class: 'TenantNetwork2'
+                    name: tenantnetwork2
 
             -
                 case_name: vmready1
@@ -57,8 +53,7 @@ tiers:
                     resources and prepares a future VM attached to that
                     network.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'VmReady1'
+                    name: vmready1
 
             -
                 case_name: vmready2
@@ -70,8 +65,7 @@ tiers:
                     all tenant network ressources, flavors, images, etc.
                     required by advanced testcases.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'VmReady2'
+                    name: vmready2
 
             -
                 case_name: singlevm1
@@ -83,8 +77,7 @@ tiers:
                     resources and completes it by booting a VM attached to that
                     network.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'SingleVm1'
+                    name: singlevm1
 
             -
                 case_name: singlevm2
@@ -96,8 +89,7 @@ tiers:
                     all tenant network ressources and vms required by advanced
                     testcases.
                 run:
-                    module: 'functest.core.singlevm'
-                    class: 'SingleVm2'
+                    name: singlevm2
 
             -
                 case_name: vping_ssh
@@ -109,8 +101,7 @@ tiers:
                     floating IPs over the public network. 2) Connectivity
                     between 2 instances over a private network.
                 run:
-                    module: 'functest.opnfv_tests.openstack.vping.vping_ssh'
-                    class: 'VPingSSH'
+                    name: vping_ssh
 
             -
                 case_name: vping_userdata
@@ -121,9 +112,7 @@ tiers:
                     This test case verifies:  1) Boot a VM with given userdata.
                     2) Connectivity between 2 instances over a private network.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.vping.vping_userdata'
-                    class: 'VPingUserdata'
+                    name: vping_userdata
 
             -
                 case_name: cinder_test
@@ -136,8 +125,7 @@ tiers:
                     from instance 1, attach it on instance 2 3) Read volume
                     data
                 run:
-                    module: 'functest.opnfv_tests.openstack.cinder.cinder_test'
-                    class: 'CinderCheck'
+                    name: cinder_test
 
             -
                 case_name: odl
@@ -151,8 +139,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl'
                 run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
+                    name: odl
                     args:
                         suites:
                             - /src/odl_test/csit/suites/integration/basic
@@ -170,8 +157,7 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.api_check'
-                    class: 'ApiCheck'
+                    name: api_check
 
             -
                 case_name: snaps_health_check
@@ -184,8 +170,7 @@ tiers:
                     and Cirros VM instance and observes the console output to
                     validate the single port obtains the correct IP address.
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.health_check'
-                    class: 'HealthCheck'
+                    name: snaps_health_check
 
     -
         name: smoke
@@ -205,8 +190,7 @@ tiers:
                     the OpenStack deplopyment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L114
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
@@ -223,8 +207,7 @@ tiers:
                     Tempest automatically and depends on the parameters of
                     the OpenStack deployment.
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '^neutron_tempest_plugin\.api'
                         option:
@@ -239,8 +222,7 @@ tiers:
                     This test case runs a sub group of tests of the OpenStack
                     Rally suite in smoke mode.
                 run:
-                    module: 'functest.opnfv_tests.openstack.rally.rally'
-                    class: 'RallySanity'
+                    name: rally_sanity
 
             -
                 case_name: refstack_defcore
@@ -251,9 +233,7 @@ tiers:
                     This test case runs a sub group of tests of the OpenStack
                     Defcore testcases.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.refstack.refstack'
-                    class: 'Refstack'
+                    name: refstack_defcore
                     args:
                         option:
                             - '--concurrency=4'
@@ -266,8 +246,7 @@ tiers:
                 description: >-
                     Test suite from Patrole project.
                 run:
-                    module: 'functest.opnfv_tests.openstack.patrole.patrole'
-                    class: 'Patrole'
+                    name: patrole
                     args:
                         role: 'admin'
                         includes:
@@ -288,9 +267,7 @@ tiers:
                 dependencies:
                     - POD_ARCH: '^(?!aarch64$)'
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.vmtp.vmtp'
-                    class: 'Vmtp'
+                    name: vmtp
 
             -
                 case_name: shaker
@@ -303,9 +280,7 @@ tiers:
                     is able to deploy OpenStack instances and networks in
                     different topologies.
                 run:
-                    module:
-                        'functest.opnfv_tests.openstack.shaker.shaker'
-                    class: 'Shaker'
+                    name: shaker
 
             -
                 case_name: snaps_smoke
@@ -321,8 +296,7 @@ tiers:
                     snaps.use_keystone is True, functest must have access to
                     the cloud's private network.
                 run:
-                    module: 'functest.opnfv_tests.openstack.snaps.smoke'
-                    class: 'SnapsSmoke'
+                    name: snaps_smoke
 
             -
                 case_name: neutron_trunk
@@ -335,8 +309,7 @@ tiers:
                     generated by Tempest having as input the relevant
                     testcase list file.
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: 'neutron_tempest_plugin.(api|scenario).test_trunk'
                         neutron_extensions:
@@ -353,8 +326,7 @@ tiers:
                     suite. The list of test cases is generated by Tempest
                     having as input the relevant regex.
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '^networking_bgpvpn_tempest\.'
                         neutron_extensions:
@@ -372,8 +344,7 @@ tiers:
                     suite. The list of test cases is generated by Tempest
                     having as input the relevant regex.
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode:
                             '^(?:networking_sfc\.tests\.tempest_plugin.tests.api).*$'
@@ -391,8 +362,7 @@ tiers:
                     It leverages on the tempest plugin containing tests used to
                     verify the functionality of a barbican installation.
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode:
                             'barbican_tempest_plugin.tests.(api|scenario).(?!test_image_signing)'
@@ -417,8 +387,7 @@ tiers:
                     - INSTALLER_TYPE: '(apex)|(fuel)|(daisy)'
                     - DEPLOY_SCENARIO: '^((?!fdio|nofeature).)*$'
                 run:
-                    module: 'xtesting.core.feature'
-                    class: 'BashFeature'
+                    name: bashfeature
                     args:
                         cmd: 'doctor-test'
 
@@ -432,8 +401,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'bgpvpn'
                 run:
-                    module: 'sdnvpn.test.functest.run_sdnvpn_tests'
-                    class: 'SdnvpnFunctest'
+                    name: bgpvpn
 
             -
                 case_name: functest-odl-sfc
@@ -446,8 +414,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl.*sfc'
                 run:
-                    module: 'sfc.tests.functest.run_sfc_tests'
-                    class: 'SfcFunctest'
+                    name: functest-odl-sfc
 
             -
                 case_name: barometercollectd
@@ -461,8 +428,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'bar'
                 run:
-                    module: 'baro_tests.barometer'
-                    class: 'BarometerCollectd'
+                    name: barometercollectd
 
             -
                 case_name: fds
@@ -476,8 +442,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'odl.*-fdio'
                 run:
-                    module: 'functest.opnfv_tests.sdn.odl.odl'
-                    class: 'ODLTests'
+                    name: odl
                     args:
                         suites:
                             - /src/fds/testing/robot
@@ -491,8 +456,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'vgpu'
                 run:
-                    module: 'functest.opnfv_tests.openstack.vgpu.vgpu'
-                    class: 'vGPU'
+                    name: vgpu
 
             -
                 case_name: stor4nfv_os
@@ -505,8 +469,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'stor4nfv'
                 run:
-                    module: 'stor4nfv_tests.stor4nfv_os'
-                    class: 'OsStor4nfvTest'
+                    name: stor4nfv_os
 
     -
         name: components
@@ -525,8 +488,7 @@ tiers:
                     the OpenStack deployment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L83
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
                         option:
@@ -543,8 +505,7 @@ tiers:
                     the OpenStack deployment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L84
                 run:
-                    module: 'functest.opnfv_tests.openstack.tempest.tempest'
-                    class: 'TempestCommon'
+                    name: tempest_common
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.scenario)'
                         option:
@@ -559,8 +520,7 @@ tiers:
                     This test case runs the full suite of scenarios of the
                     OpenStack Rally suite using several threads and iterations.
                 run:
-                    module: 'functest.opnfv_tests.openstack.rally.rally'
-                    class: 'RallyFull'
+                    name: rally_full
 
     -
         name: vnf
@@ -578,8 +538,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.core.cloudify'
-                    class: 'Cloudify'
+                    name: cloudify
             -
                 case_name: cloudify_ims
                 project_name: functest
@@ -592,8 +551,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
-                    class: 'CloudifyIms'
+                    name: cloudify_ims
 
             -
                 case_name: heat_ims
@@ -607,8 +565,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.heat_ims'
-                    class: 'HeatIms'
+                    name: heat_ims
 
             -
                 case_name: vyos_vrouter
@@ -620,8 +577,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
-                    class: 'CloudifyVrouter'
+                    name: vyos_vrouter
 
             -
                 case_name: juju_epc
@@ -634,5 +590,4 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.epc.juju_epc'
-                    class: 'JujuEpc'
+                    name: juju_epc

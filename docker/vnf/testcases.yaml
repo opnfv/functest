@@ -16,8 +16,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.core.cloudify'
-                    class: 'Cloudify'
+                    name: cloudify
             -
                 case_name: cloudify_ims
                 project_name: functest
@@ -30,8 +29,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.cloudify_ims'
-                    class: 'CloudifyIms'
+                    name: cloudify_ims
 
             -
                 case_name: heat_ims
@@ -45,8 +43,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.ims.heat_ims'
-                    class: 'HeatIms'
+                    name: heat_ims
 
             -
                 case_name: vyos_vrouter
@@ -58,8 +55,7 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.router.cloudify_vrouter'
-                    class: 'CloudifyVrouter'
+                    name: vyos_vrouter
 
             -
                 case_name: juju_epc
@@ -72,5 +68,4 @@ tiers:
                 dependencies:
                     - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
-                    module: 'functest.opnfv_tests.vnf.epc.juju_epc'
-                    class: 'JujuEpc'
+                    name: juju_epc
