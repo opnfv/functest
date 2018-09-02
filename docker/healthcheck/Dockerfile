@@ -13,7 +13,7 @@ RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/uppe
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
     git clone --depth 1 https://git.opendaylight.org/gerrit/p/integration/test.git /src/odl_test && \
-    (cd /src/odl_test && git fetch --tags origin $ODL_TAG && git checkout FETCH_HEAD) && \
+    (cd /src/odl_test && git fetch --depth 1 --tags origin $ODL_TAG && git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git thirdparty-requirements.txt upper-constraints.txt \
         upper-constraints.opnfv.txt
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
