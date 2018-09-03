@@ -9,7 +9,7 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 
 DEST=$(mktemp -d)
-VOL_DEV_NAME=${1:-vdb}
+VOL_DEV_NAME=${1:-vdc}
 echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 
 echo "$(lsblk -l -o NAME)"
