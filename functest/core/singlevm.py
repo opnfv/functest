@@ -58,7 +58,6 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'vmready1'
         super(VmReady1, self).__init__(**kwargs)
-        self.orig_cloud = self.cloud
         self.image = None
         self.flavor = None
 
