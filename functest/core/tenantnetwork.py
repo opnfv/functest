@@ -198,9 +198,9 @@ class TenantNetwork1(testcase.TestCase):
         if hasattr(config.CONF, '{}_segmentation_id'.format(self.case_name)):
             provider["segmentation_id"] = getattr(
                 config.CONF, '{}_segmentation_id'.format(self.case_name))
-        self.network = self.cloud.create_network(
+        self.network = self.orig_cloud.create_network(
             '{}-net_{}'.format(self.case_name, self.guid),
-            provider=provider,
+            provider=provider, project_id=self.project.project.id,
             shared=self.shared_network)
         self.__logger.debug("network: %s", self.network)
 
