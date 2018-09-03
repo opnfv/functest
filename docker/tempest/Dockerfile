@@ -21,14 +21,20 @@ RUN apk --no-cache add --virtual .build-deps --update \
     esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git clone --depth 1 https://git.openstack.org/openstack/os-faults.git /src/os-faults && \
-    (cd /src/os-faults && git fetch --depth 1 --tags origin $OS_FAULTS_TAG && git checkout FETCH_HEAD) && \
+    git init /src/os-faults && \
+    (cd /src/os-faults && \
+        git fetch --tags https://git.openstack.org/openstack/os-faults.git $OS_FAULTS_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/os-faults/ && \
-    git clone --depth 1 https://git.openstack.org/openstack/rally.git /src/rally && \
-    (cd /src/rally && git fetch --depth 1 --tags origin $RALLY_TAG && git checkout FETCH_HEAD) && \
+    git init /src/rally && \
+    (cd /src/rally && \
+        git fetch --tags https://git.openstack.org/openstack/rally.git $RALLY_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
-    git clone --depth 1 https://git.openstack.org/openstack/rally-openstack.git /src/rally-openstack && \
-    (cd /src/rally-openstack && git fetch --depth 1 --tags origin $RALLY_OPENSTACK_TAG && git checkout FETCH_HEAD) && \
+    git init /src/rally-openstack && \
+    (cd /src/rally-openstack && \
+        git fetch --tags https://git.openstack.org/openstack/rally-openstack.git $RALLY_OPENSTACK_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         tempest /src/rally-openstack /src/os-faults && \

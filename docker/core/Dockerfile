@@ -18,8 +18,10 @@ RUN apk --no-cache add --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         -e git+https://git.openstack.org/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
-    git clone --depth 1 https://gerrit.opnfv.org/gerrit/functest /src/functest && \
-    (cd /src/functest && git fetch --depth 1 --tags origin $BRANCH && git checkout FETCH_HEAD) && \
+    git init /src/functest && \
+    (cd /src/functest && \
+        git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/functest && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \

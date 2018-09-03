@@ -13,8 +13,10 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git clone https://git.openstack.org/openstack/vmtp.git /src/vmtp && \
-    (cd /src/vmtp && git fetch origin --tags $VMTP_TAG && git checkout FETCH_HEAD) && \
+    git init /src/vmtp && \
+    (cd /src/vmtp && \
+        git fetch --tags https://git.openstack.org/openstack/vmtp.git $VMTP_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/vmtp && \

@@ -14,7 +14,10 @@ RUN apk --no-cache add --update python3 sshpass && \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
+    git init /src/fds && \
+    (cd /src/fds && \
+        git fetch --tags https://gerrit.opnfv.org/gerrit/fds $FDS_TAG && \
+        git checkout FETCH_HEAD) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \

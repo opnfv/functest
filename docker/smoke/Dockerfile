@@ -15,14 +15,20 @@ RUN apk --no-cache add --virtual .build-deps --update \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git clone --depth 1 https://git.openstack.org/openstack/patrole.git /src/patrole && \
-    (cd /src/patrole && git fetch --tags origin $PATROLE_TAG && git checkout FETCH_HEAD) && \
+    git init /src/patrole && \
+    (cd /src/patrole && \
+        git fetch --tags https://git.openstack.org/openstack/patrole.git $PATROLE_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
-    git clone https://git.openstack.org/openstack/neutron-tempest-plugin.git /src/neutron-tempest-plugin && \
-    (cd /src/neutron-tempest-plugin && git fetch --tags origin $NEUTRON_TAG && git checkout FETCH_HEAD) && \
+    git init /src/neutron-tempest-plugin && \
+    (cd /src/neutron-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/neutron-tempest-plugin.git $NEUTRON_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
-    git clone https://git.openstack.org/openstack/barbican-tempest-plugin.git /src/barbican-tempest-plugin && \
-    (cd /src/barbican-tempest-plugin && git fetch --tags origin $BARBICAN_TAG && git checkout FETCH_HEAD) && \
+    git init /src/barbican-tempest-plugin && \
+    (cd /src/barbican-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
+        git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
