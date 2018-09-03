@@ -306,9 +306,9 @@ class TempestCommon(singlevm.VmReady2):
         """Set image name as tempest img_name_regex"""
         rconfig = configparser.RawConfigParser()
         rconfig.read(rally_conf)
-        if not rconfig.has_section('tempest'):
-            rconfig.add_section('tempest')
-        rconfig.set('tempest', 'img_name_regex', '^{}$'.format(
+        if not rconfig.has_section('openstack'):
+            rconfig.add_section('openstack')
+        rconfig.set('openstack', 'img_name_regex', '^{}$'.format(
             self.image.name))
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
@@ -320,9 +320,9 @@ class TempestCommon(singlevm.VmReady2):
             return
         rconfig = configparser.RawConfigParser()
         rconfig.read(rally_conf)
-        if not rconfig.has_section('tempest'):
-            rconfig.add_section('tempest')
-        rconfig.set('tempest', 'swift_operator_role', role.name)
+        if not rconfig.has_section('openstack'):
+            rconfig.add_section('openstack')
+        rconfig.set('openstack', 'swift_operator_role', role.name)
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
@@ -342,10 +342,10 @@ class TempestCommon(singlevm.VmReady2):
         """Clean Rally config"""
         rconfig = configparser.RawConfigParser()
         rconfig.read(rally_conf)
-        if rconfig.has_option('tempest', 'img_name_regex'):
-            rconfig.remove_option('tempest', 'img_name_regex')
-        if rconfig.has_option('tempest', 'swift_operator_role'):
-            rconfig.remove_option('tempest', 'swift_operator_role')
+        if rconfig.has_option('openstack', 'img_name_regex'):
+            rconfig.remove_option('openstack', 'img_name_regex')
+        if rconfig.has_option('openstack', 'swift_operator_role'):
+            rconfig.remove_option('openstack', 'swift_operator_role')
         if rconfig.has_option('DEFAULT', 'log-file'):
             rconfig.remove_option('DEFAULT', 'log-file')
         if rconfig.has_option('DEFAULT', 'log_dir'):
