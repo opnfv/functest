@@ -4,8 +4,8 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=stable/queens
 ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.3.0
-ARG NEUTRON_TAG=d307f5635d4015e7842a4a177f66c76ba4bd818a
-ARG BARBICAN_TAG=b8bf147bdcdd33f3ad276ca8815fd253ec9b24af
+ARG NEUTRON_TAG=0.2.0
+ARG BARBICAN_TAG=0.1.0
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
