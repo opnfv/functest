@@ -88,6 +88,7 @@ class Shaker(singlevm.SingleVm2):
             'export OS_PROJECT_ID={} && '
             'unset OS_TENANT_NAME && '
             'unset OS_TENANT_ID && '
+            'unset OS_ENDPOINT_TYPE && '
             'export OS_PASSWORD={} && '
             '{}'
             'env && '
