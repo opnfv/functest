@@ -134,9 +134,10 @@ class TenantNetwork1(testcase.TestCase):
             getattr(config.CONF, 'dir_results'), self.case_name)
         try:
             cloud_config = os_client_config.get_config()
-            self.cloud = shade.OpenStackCloud(cloud_config=cloud_config)
+            self.cloud = self.orig_cloud = shade.OpenStackCloud(
+                cloud_config=cloud_config)
         except Exception:  # pylint: disable=broad-except
-            self.cloud = None
+            self.cloud = self.orig_cloud = None
             self.ext_net = None
             self.__logger.exception("Cannot connect to Cloud")
         try:
@@ -205,9 +206,15 @@ class TenantNetwork1(testcase.TestCase):
         if hasattr(config.CONF, '{}_segmentation_id'.format(self.case_name)):
             provider["segmentation_id"] = getattr(
                 config.CONF, '{}_segmentation_id'.format(self.case_name))
-        self.network = self.cloud.create_network(
+        domain = self.orig_cloud.get_domain(
+            name_or_id=self.orig_cloud.auth.get(
+                "project_domain_name", "Default"))
+        project = self.orig_cloud.get_project(
+            self.cloud.auth['project_name'],
+            domain_id=domain.id)
+        self.network = self.orig_cloud.create_network(
             '{}-net_{}'.format(self.case_name, self.guid),
-            provider=provider,
+            provider=provider, project_id=project.id,
             shared=self.shared_network)
         self.__logger.debug("network: %s", self.network)
 
