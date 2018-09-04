@@ -84,33 +84,6 @@ tiers:
                             - 'test_networks_multiprovider_rbac'
 
             -
-                case_name: vmtp
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    VMTP is a small python application that will automatically
-                    perform ping connectivity, round trip time measurement
-                    (latency) and TCP/UDP throughput
-                dependencies:
-                    - POD_ARCH: '^(?!aarch64$)'
-                run:
-                    name: vmtp
-
-            -
-                case_name: shaker
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    Shaker wraps around popular system network testing tools
-                    like iperf, iperf3 and netperf (with help of flent). Shaker
-                    is able to deploy OpenStack instances and networks in
-                    different topologies.
-                run:
-                    name: shaker
-
-            -
                 case_name: snaps_smoke
                 project_name: functest
                 criteria: 100
