@@ -182,6 +182,26 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 ['rally', 'verify', 'configure-verifier', '--reconfigure',
                  '--id', str(getattr(config.CONF, 'tempest_verifier_name'))])
 
+    def test_convert_dict_to_ini(self):
+        self.assertEqual(
+            conf_utils.convert_dict_to_ini({}), "")
+        self.assertEqual(
+            conf_utils.convert_dict_to_ini({"a": "b"}), "a=b")
+        self.assertEqual(
+            conf_utils.convert_dict_to_ini({"a": "b", "c": "d"}), "a=b,c=d")
+        with self.assertRaises(AssertionError):
+            conf_utils.convert_list_to_ini("")
+
+    def test_convert_list_to_ini(self):
+        self.assertEqual(
+            conf_utils.convert_list_to_ini([]), "")
+        self.assertEqual(
+            conf_utils.convert_list_to_ini(["a"]), "a")
+        self.assertEqual(
+            conf_utils.convert_list_to_ini(["a", "b"]), "a,b")
+        with self.assertRaises(AssertionError):
+            conf_utils.convert_list_to_ini("")
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
