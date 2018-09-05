@@ -163,9 +163,9 @@ tiers:
                     It leverages on the tempest plugin containing tests used to
                     verify the functionality of a barbican installation.
                 run:
-                    name: tempest_common
+                    name: barbican
                     args:
                         mode:
-                            'barbican_tempest_plugin.tests.(api|scenario).(?!test_image_signing)'
+                            '^barbican_tempest_plugin.((?!test_signed_image_upload_boot_failure).)*$'
                         services:
                             - barbican
