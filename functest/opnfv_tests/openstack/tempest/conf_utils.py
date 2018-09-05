@@ -19,6 +19,7 @@ import os
 import subprocess
 
 import pkg_resources
+import six
 from six.moves import configparser
 import yaml
 
@@ -210,7 +211,9 @@ def configure_tempest_update_params(
     else:
         auth_version = 'v2'
     if env.get("NEW_USER_ROLE").lower() != "member":
-        rconfig.set('auth', 'tempest_roles', env.get("NEW_USER_ROLE"))
+        rconfig.set(
+            'auth', 'tempest_roles',
+            convert_list_to_ini([env.get("NEW_USER_ROLE")]))
     if not json.loads(env.get("USE_DYNAMIC_CREDENTIALS").lower()):
         rconfig.set('auth', 'use_dynamic_credentials', False)
         account_file = os.path.join(
@@ -262,3 +265,16 @@ def configure_verifier(deployment_dir):
                         % tempest_conf_file)
     else:
         return tempest_conf_file
+
+
+def convert_dict_to_ini(value):
+    "Convert dict to oslo.conf input"
+    assert isinstance(value, dict)
+    return ",".join("{}={}".format(
+        key, val) for (key, val) in six.iteritems(value))
+
+
+def convert_list_to_ini(value):
+    "Convert list to oslo.conf input"
+    assert isinstance(value, list)
+    return ",".join("{}".format(val) for val in value)

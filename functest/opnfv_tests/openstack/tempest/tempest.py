@@ -353,6 +353,29 @@ class TempestCommon(singlevm.VmReady2):
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
+    def update_scenario_section(self):
+        """Update scenario section in tempest.conf"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        filename = getattr(
+            config.CONF, '{}_image'.format(self.case_name), self.filename)
+        if not rconfig.has_section('scenario'):
+            rconfig.add_section('scenario')
+        rconfig.set('scenario', 'img_file', os.path.basename(filename))
+        rconfig.set('scenario', 'img_dir', os.path.dirname(filename))
+        rconfig.set('scenario', 'img_disk_format', getattr(
+            config.CONF, '{}_image_format'.format(self.case_name),
+            self.image_format))
+        extra_properties = self.extra_properties.copy()
+        extra_properties.update(
+            getattr(config.CONF, '{}_extra_properties'.format(
+                self.case_name), {}))
+        rconfig.set(
+            'scenario', 'img_properties',
+            conf_utils.convert_dict_to_ini(extra_properties))
+        with open(self.conf_file, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -375,6 +398,7 @@ class TempestCommon(singlevm.VmReady2):
             image_alt_id=self.image_alt.id,
             flavor_alt_id=self.flavor_alt.id,
             domain_name=self.cloud.auth.get("project_domain_name", "Default"))
+        self.update_scenario_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
