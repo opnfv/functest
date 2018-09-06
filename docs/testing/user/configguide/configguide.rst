@@ -16,18 +16,10 @@ Docker images are available on the dockerhub:
   * opnfv/functest-core
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
+  * opnfv/functest-benchmarking
   * opnfv/functest-features
   * opnfv/functest-components
   * opnfv/functest-vnf
-
-The tag "opnfv-6.0.0" is the official release image in Fraser, but you can
-also pull "fraser" tag as it is being maintained by Functest team and might
-include bugfixes.
-
-The Functest docker container environment can -in principle- be also
-used with non-OPNFV official installers (e.g. 'devstack'), with the
-**disclaimer** that support for such environments is outside of the
-scope and responsibility of the OPNFV project.
 
 
 Preparing your environment
@@ -62,10 +54,9 @@ Create a directory for the different images (attached as a Docker volume)::
   images/CentOS-7-x86_64-GenericCloud.qcow2
   images/cirros-0.4.0-x86_64-disk.img
   images/cirros-0.4.0-x86_64-lxc.tar.gz
-  images/cirros-d161201-aarch64-disk.img
-  images/cirros-d161201-aarch64-initramfs
-  images/cirros-d161201-aarch64-kernel
   images/cloudify-manager-premium-4.0.1.qcow2
+  images/shaker-image-arm64.qcow2
+  images/shaker-image.qcow
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
@@ -86,11 +77,22 @@ Results shall be displayed as follows::
   +----------------------------+------------------+---------------------+------------------+----------------+
   |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +----------------------------+------------------+---------------------+------------------+----------------+
-  |      connection_check      |     functest     |     healthcheck     |      00:07       |      PASS      |
-  |         api_check          |     functest     |     healthcheck     |      07:46       |      PASS      |
-  |     snaps_health_check     |     functest     |     healthcheck     |      00:36       |      PASS      |
+  |      connection_check      |     functest     |     healthcheck     |      00:09       |      PASS      |
+  |       tenantnetwork1       |     functest     |     healthcheck     |      00:14       |      PASS      |
+  |       tenantnetwork2       |     functest     |     healthcheck     |      00:11       |      PASS      |
+  |          vmready1          |     functest     |     healthcheck     |      00:19       |      PASS      |
+  |          vmready2          |     functest     |     healthcheck     |      00:16       |      PASS      |
+  |         singlevm1          |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |         singlevm2          |     functest     |     healthcheck     |      00:36       |      PASS      |
+  |         vping_ssh          |     functest     |     healthcheck     |      00:46       |      PASS      |
+  |       vping_userdata       |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |        cinder_test         |     functest     |     healthcheck     |      01:18       |      PASS      |
+  |         api_check          |     functest     |     healthcheck     |      10:33       |      PASS      |
+  |     snaps_health_check     |     functest     |     healthcheck     |      00:44       |      PASS      |
+  |            odl             |     functest     |     healthcheck     |      00:00       |      SKIP      |
   +----------------------------+------------------+---------------------+------------------+----------------+
-  NOTE: the duration is a reference and it might vary depending on your SUT.
+
+NOTE: the duration is a reference and it might vary depending on your SUT.
 
 Testing smoke suite
 ^^^^^^^^^^^^^^^^^^^
@@ -104,21 +106,45 @@ Run smoke suite::
 
 Results shall be displayed as follows::
 
-  +------------------------------+------------------+---------------+------------------+----------------+
-  |          TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
-  +------------------------------+------------------+---------------+------------------+----------------+
-  |          vping_ssh           |     functest     |     smoke     |      00:57       |      PASS      |
-  |        vping_userdata        |     functest     |     smoke     |      00:33       |      PASS      |
-  |     tempest_smoke_serial     |     functest     |     smoke     |      13:22       |      PASS      |
-  |         rally_sanity         |     functest     |     smoke     |      24:07       |      PASS      |
-  |       refstack_defcore       |     functest     |     smoke     |      05:21       |      PASS      |
-  |           patrole            |     functest     |     smoke     |      04:29       |      PASS      |
-  |         snaps_smoke          |     functest     |     smoke     |      46:54       |      PASS      |
-  |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
-  |        neutron_trunk         |     functest     |     smoke     |      00:00       |      SKIP      |
-  +------------------------------+------------------+---------------+------------------+----------------+
-  Note: if the scenario does not support some tests, they are indicated as SKIP.
-  See User guide for details.
+  +------------------------------------+------------------+---------------+------------------+----------------+
+  |             TEST CASE              |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +------------------------------------+------------------+---------------+------------------+----------------+
+  |           tempest_smoke            |     functest     |     smoke     |      04:24       |      PASS      |
+  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      10:43       |      PASS      |
+  |            rally_sanity            |     functest     |     smoke     |      23:16       |      PASS      |
+  |          refstack_defcore          |     functest     |     smoke     |      06:30       |      PASS      |
+  |              patrole               |     functest     |     smoke     |      02:08       |      PASS      |
+  |            snaps_smoke             |     functest     |     smoke     |      00:00       |      SKIP      |
+  |           neutron_trunk            |     functest     |     smoke     |      02:09       |      PASS      |
+  |         networking-bgpvpn          |     functest     |     smoke     |      00:00       |      SKIP      |
+  |           networking-sfc           |     functest     |     smoke     |      00:00       |      SKIP      |
+  |              barbican              |     functest     |     smoke     |      00:00       |      SKIP      |
+  +------------------------------------+------------------+---------------+------------------+----------------+
+
+Note: if the scenario does not support some tests, they are indicated as SKIP.
+See User guide for details.
+
+Testing benchmarking suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run benchmarking suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/images:/home/opnfv/functest/images \
+      opnfv/functest-benchmarking
+
+Results shall be displayed as follows::
+
+  +-------------------+------------------+----------------------+------------------+----------------+
+  |     TEST CASE     |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +-------------------+------------------+----------------------+------------------+----------------+
+  |        vmtp       |     functest     |     benchmarking     |      18:43       |      PASS      |
+  |       shaker      |     functest     |     benchmarking     |      29:45       |      PASS      |
+  +-------------------+------------------+----------------------+------------------+----------------+
+
+Note: if the scenario does not support some tests, they are indicated as SKIP.
+See User guide for details.
 
 Testing features suite
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -140,9 +166,12 @@ Results shall be displayed as follows::
   |       functest-odl-sfc      |          sfc           |     features     |      00:00       |      SKIP      |
   |      barometercollectd      |       barometer        |     features     |      00:00       |      SKIP      |
   |             fds             |     fastdatastacks     |     features     |      00:00       |      SKIP      |
+  |             vgpu            |        functest        |     features     |      00:00       |      SKIP      |
+  |         stor4nfv_os         |        stor4nfv        |     features     |      00:00       |      SKIP      |
   +-----------------------------+------------------------+------------------+------------------+----------------+
-  Note: if the scenario does not support some tests, they are indicated as SKIP.
-  See User guide for details.
+
+Note: if the scenario does not support some tests, they are indicated as SKIP.
+See User guide for details.
 
 Testing components suite
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -156,12 +185,13 @@ Run components suite::
 
 Results shall be displayed as follows::
 
-  +-------------------------------+------------------+--------------------+------------------+----------------+
-  |           TEST CASE           |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
-  +-------------------------------+------------------+--------------------+------------------+----------------+
-  |     tempest_full_parallel     |     functest     |     components     |      48:28       |      PASS      |
-  |           rally_full          |     functest     |     components     |      126:02      |      PASS      |
-  +-------------------------------+------------------+--------------------+------------------+----------------+
+  +--------------------------+------------------+--------------------+------------------+----------------+
+  |        TEST CASE         |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
+  +--------------------------+------------------+--------------------+------------------+----------------+
+  |       tempest_full       |     functest     |     components     |      53:40       |      FAIL      |
+  |     tempest_scenario     |     functest     |     components     |      18:50       |      PASS      |
+  |        rally_full        |     functest     |     components     |      167:13      |      PASS      |
+  +--------------------------+------------------+--------------------+------------------+----------------+
 
 Testing vnf suite
 ^^^^^^^^^^^^^^^^^
@@ -178,11 +208,12 @@ Results shall be displayed as follows::
   +----------------------+------------------+--------------+------------------+----------------+
   |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +----------------------+------------------+--------------+------------------+----------------+
-  |     cloudify_ims     |     functest     |     vnf      |      28:15       |      PASS      |
-  |     vyos_vrouter     |     functest     |     vnf      |      17:59       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      46:44       |      PASS      |
+  |       cloudify       |     functest     |     vnf      |      04:05       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      24:07       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      18:15       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      15:48       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      29:38       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
-
 
 Functest Dockers for Kubernetes deployment
 ------------------------------------------
@@ -198,14 +229,7 @@ Preparing your environment
 
 cat env::
 
-  INSTALLER_TYPE=XXX
-  DEPLOY_SCENARIO=XXX
-
-cat k8s.creds::
-
-  export KUBERNETES_PROVIDER=local
-  export KUBE_MASTER_URL=XXX
-  export KUBE_MASTER_IP=XXX
+  DEPLOY_SCENARIO=k8s-XXX
 
 Testing healthcheck suite
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -213,7 +237,6 @@ Testing healthcheck suite
 Run healthcheck suite::
 
   sudo docker run -it --env-file env \
-      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/config:/root/.kube/config \
       opnfv/functest-kubernetes-healthcheck
 
@@ -222,11 +245,11 @@ volume mapped to ~/.kube/config inside kubernetes container.
 
 Results shall be displayed as follows::
 
-  +-------------------------+------------------+-----------------+------------------+----------------+
-  |        TEST CASE        |     PROJECT      |       TIER      |     DURATION     |     RESULT     |
-  +-------------------------+------------------+-----------------+------------------+----------------+
-  |        k8s_smoke        |     functest     |   healthcheck   |      01:54       |      PASS      |
-  +-------------------------+------------------+-----------------+------------------+----------------+
+  +-------------------+------------------+---------------------+------------------+----------------+
+  |     TEST CASE     |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
+  +-------------------+------------------+---------------------+------------------+----------------+
+  |     k8s_smoke     |     functest     |     healthcheck     |      02:27       |      PASS      |
+  +-------------------+------------------+---------------------+------------------+----------------+
 
 Testing smoke suite
 ^^^^^^^^^^^^^^^^^^^
@@ -234,7 +257,6 @@ Testing smoke suite
 Run smoke suite::
 
   sudo docker run -it --env-file env \
-      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/config:/root/.kube/config \
       opnfv/functest-kubernetes-smoke
 
@@ -243,7 +265,7 @@ Results shall be displayed as follows::
   +-------------------------+------------------+---------------+------------------+----------------+
   |        TEST CASE        |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +-------------------------+------------------+---------------+------------------+----------------+
-  |     k8s_conformance     |     functest     |     smoke     |      57:47       |      PASS      |
+  |     k8s_conformance     |     functest     |     smoke     |      57:14       |      PASS      |
   +-------------------------+------------------+---------------+------------------+----------------+
 
 Testing features suite
@@ -252,7 +274,6 @@ Testing features suite
 Run features suite::
 
   sudo docker run -it --env-file env \
-      -v $(pwd)/k8s.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/config:/root/.kube/config \
       opnfv/functest-kubernetes-features
 
@@ -269,10 +290,13 @@ Environment variables
 =====================
 
 Several environement variables may be specified:
-  * INSTALLER_TYPE=(apex|compass|daisy|fuel|joid)
+
   * INSTALLER_IP=<Specific IP Address>
   * DEPLOY_SCENARIO=<vim>-<controller>-<nfv_feature>-<ha_mode>
-
+  * NAMESERVER=XXX  # if not 8.8.8.8
+  * VOLUME_DEVICE_NAME=XXX  # if not vdb
+  * EXTERNAL_NETWORK=XXX # if not first network with router:external=True
+  * NEW_USER_ROLE=XXX # if not member
 
 INSTALLER_IP is required by Barometer in order to access the installer node and
 the deployment.
@@ -305,8 +329,9 @@ to the Functest Docker Container, using the -e
 only relevant to Jenkins CI invoked testing and **should not be used**
 when performing manual test scenarios:
 
-  * NODE_NAME = <Test POD Name>
-  * BUILD_TAG = <Jenkins Build Tag>
+  * INSTALLER_TYPE=(apex|compass|daisy|fuel)
+  * NODE_NAME=<Test POD Name>
+  * BUILD_TAG=<Jenkins Build Tag>
 
 where:
 
