@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 
 ======================================
-OPNFV master release note for Functest
+OPNFV hunter release note for Functest
 ======================================
 
 Abstract
@@ -23,22 +23,37 @@ OpenStack
 The internal test cases are:
 
  * connection_check
- * api_check
- * snaps_health_check
+ * tenantnetwork1
+ * tenantnetwork2
+ * vmready1
+ * vmready2
+ * singlevm1
+ * singlevm2
  * vping_ssh
  * vping_userdata
- * tempest_smoke_serial
+ * cinder_test
+ * api_check
+ * snaps_health_check
+ * odl
+ * tempest_smoke
+ * neutron-tempest-plugin-api
  * rally_sanity
  * refstack_defcore
  * patrole
- * odl
  * snaps_smoke
  * neutron_trunk
+ * networking-bgpvpn
+ * networking-sfc
+ * barbican
  * tempest_full
+ * tempest_scenario
  * rally_full
+ * cloudify
  * cloudify_ims
+ * heat_ims
  * vyos_vrouter
  * juju_epc
+ * vgpu
 
 The OPNFV projects integrated into Functest framework for automation are:
 
@@ -47,6 +62,7 @@ The OPNFV projects integrated into Functest framework for automation are:
  * odl-sfc
  * barometer
  * fds
+ * stor4nfv_os
 
 Kubernetes
 ----------
@@ -67,7 +83,7 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Repository branch**                | stable/hunter                        |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -80,6 +96,7 @@ Software
 
  * https://hub.docker.com/r/opnfv/functest-healthcheck
  * https://hub.docker.com/r/opnfv/functest-smoke
+ * https://hub.docker.com/r/opnfv/functest-benchmarking
  * https://hub.docker.com/r/opnfv/functest-features
  * https://hub.docker.com/r/opnfv/functest-components
  * https://hub.docker.com/r/opnfv/functest-vnf
@@ -90,7 +107,7 @@ Software
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
  * https://hub.docker.com/r/opnfv/functest-kubernetes-features
 
-Docker tag for master: latest
+Docker tag for hunter: hunter
 
 Documents
 ---------
@@ -106,44 +123,50 @@ Version change
 New test cases
 --------------
 
- * neutron_trunk
- * patrole
- * juju_epc
- * k8s_smoke
- * k8s_conformance
- * stor4nfv
- * clover
+ * tenantnetwork1
+ * tenantnetwork2
+ * vmready1
+ * vmready2
+ * singlevm1
+ * singlevm2
+ * cinder_test
+ * neutron-tempest-plugin-api
+ * networking-bgpvpn
+ * networking-sfc
+ * barbican
+ * vmtp
+ * shaker
+ * tempest_scenario
+ * cloudify
+ * heat_ims
+ * vgpu
 
 Key changes
 -----------
 
- * update test cases and containers to `OpenStack Pike`_
- * move the framework into a separate project: Xtesting_
- * ease running all containers thanks to default values
- * clean interfaces with OPNFV Installers and Features
- * rewrite all vnfs to allow multiple tests in parallel
- * fully support non-default region names and Keystone v3 domains
- * refactor all tempest-based test cases (e.g. refstack_defcore)
- * remove obsolete OpenStack and Functest utils
- * verify all changes via doc8 and yamllint too
- * generate reports for all tempest-based test cases
+ * update test cases and containers to `OpenStack Rocky`_ and to
+   `Kubernetes v1.11.2`_
+ * define new scenarios to ease writing testcases vs OpenStack
+ * isolate all resources created in different tenants
+ * fully remove all OPNFV logics
+ * publish new Jenkins jobs
+ * support VIO (VMware Integrated OpenStack) and arm64 for Kubernetes
+ * reduce Functest Kubernetes image sizes
+ * add tempest_full and tempest_scenario in all daily jobs
+ * include benchmarking tools such as Vmtp ans Shaker
+ * increase functional scope by adding bgpvpn and sfc tempest plugins
 
-.. _`OpenStack Pike`: https://raw.githubusercontent.com/openstack/requirements/stable/pike/upper-constraints.txt
-.. _Xtesting: http://xtesting.readthedocs.io/en/latest/
+.. _`OpenStack Rocky`: https://github.com/openstack/requirements/blob/stable/rocky/upper-constraints.txt
+.. _`Kubernetes v1.11.2`: https://github.com/kubernetes/kubernetes/tree/v1.11.2
 
 Key benefits
 ------------
 
- * the enduser can run all tests by setting only one input (EXTERNAL_NETWORK)
- * the developer can only work on the test suites without diving into CI/CD
-   integration
- * both OpenStack and Kubernetes deployments can be verified
- * Functest test cases are trustable as they meet the best coding rules (unit
-   tests, coverage, linters, etc.)
- * Functest can be reused in other projects (e.g.
-   `ONS: Re-using OPNFV framework tests for LFN projects`_)
-
-.. _`ONS: Re-using OPNFV framework tests for LFN projects`: https://wiki.lfnetworking.org/display/LN/LFN+Developer+Forum+Schedule?preview=/328197/328329/ONS-OPNFV%20framework%20tests%20for%20LFN%20projects.pdf
+ * the enduser can easily build its own toolchains by loading our Jenkins jobs
+ * all developpers can easily verify their changes before merge
+ * our testcases may be run vs VIM in production
+ * all testcases can run in parallel to decrease the overall duration
+ * Functest includes most of the OpenStack gate jobs
 
 Code quality
 ------------
