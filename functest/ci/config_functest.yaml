@@ -11,6 +11,7 @@ general:
         functest_conf: /home/opnfv/functest/conf
         functest_data: /home/opnfv/functest/data
         ims_data: /home/opnfv/functest/data/ims/
+        rally_data: /home/opnfv/functest/data/rally
         refstack_data: /home/opnfv/functest/data/refstack
         router_data: /home/opnfv/functest/data/router/opnfv-vnf-data
         functest_images: /home/opnfv/functest/images
