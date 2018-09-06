@@ -23,22 +23,37 @@ OpenStack
 The internal test cases are:
 
  * connection_check
- * api_check
- * snaps_health_check
+ * tenantnetwork1
+ * tenantnetwork2
+ * vmready1
+ * vmready2
+ * singlevm1
+ * singlevm2
  * vping_ssh
  * vping_userdata
- * tempest_smoke_serial
+ * cinder_test
+ * api_check
+ * snaps_health_check
+ * odl
+ * tempest_smoke
+ * neutron-tempest-plugin-api
  * rally_sanity
  * refstack_defcore
  * patrole
- * odl
  * snaps_smoke
  * neutron_trunk
+ * networking-bgpvpn
+ * networking-sfc
+ * barbican
  * tempest_full
+ * tempest_scenario
  * rally_full
+ * cloudify
  * cloudify_ims
+ * heat_ims
  * vyos_vrouter
  * juju_epc
+ * vgpu
 
 The OPNFV projects integrated into Functest framework for automation are:
 
@@ -47,6 +62,7 @@ The OPNFV projects integrated into Functest framework for automation are:
  * odl-sfc
  * barometer
  * fds
+ * stor4nfv_os
 
 Kubernetes
 ----------
@@ -80,6 +96,7 @@ Software
 
  * https://hub.docker.com/r/opnfv/functest-healthcheck
  * https://hub.docker.com/r/opnfv/functest-smoke
+ * https://hub.docker.com/r/opnfv/functest-benchmarking
  * https://hub.docker.com/r/opnfv/functest-features
  * https://hub.docker.com/r/opnfv/functest-components
  * https://hub.docker.com/r/opnfv/functest-vnf
@@ -106,30 +123,37 @@ Version change
 New test cases
 --------------
 
- * neutron_trunk
- * patrole
- * juju_epc
- * k8s_smoke
- * k8s_conformance
- * stor4nfv
- * clover
+ * tenantnetwork1
+ * tenantnetwork2
+ * vmready1
+ * vmready2
+ * singlevm1
+ * singlevm2
+ * cinder_test
+ * neutron-tempest-plugin-api
+ * networking-bgpvpn
+ * networking-sfc
+ * barbican
+ * vmtp
+ * shaker
+ * tempest_scenario
+ * cloudify
+ * heat_ims
+ * vgpu
 
 Key changes
 -----------
 
- * update test cases and containers to `OpenStack Pike`_
- * move the framework into a separate project: Xtesting_
- * ease running all containers thanks to default values
- * clean interfaces with OPNFV Installers and Features
- * rewrite all vnfs to allow multiple tests in parallel
- * fully support non-default region names and Keystone v3 domains
- * refactor all tempest-based test cases (e.g. refstack_defcore)
- * remove obsolete OpenStack and Functest utils
- * verify all changes via doc8 and yamllint too
- * generate reports for all tempest-based test cases
+ * update test cases and containers to `OpenStack Queens`_ and to
+   `Kubernetes v1.11`_
+ * define new scenarios to ease writing testcases vs OpenStack
+ * allow parallel testing
+ * publish new Jenkins jobs to help any user to build his own CI/CD chain
+ * remove all OPNFV logics
+ * support VIO (VMware Integrated OpenStack)
 
-.. _`OpenStack Pike`: https://raw.githubusercontent.com/openstack/requirements/stable/pike/upper-constraints.txt
-.. _Xtesting: http://xtesting.readthedocs.io/en/latest/
+.. _`OpenStack Queens`: https://raw.githubusercontent.com/openstack/requirements/stable/pike/upper-constraints.txt
+.. _`Kubernetes v1.11`: https://github.com/kubernetes/kubernetes/tree/v1.11.2
 
 Key benefits
 ------------
