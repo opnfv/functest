@@ -22,7 +22,7 @@ import paramiko
 from xtesting.core import testcase
 
 from functest.core import tenantnetwork
-from functest.utils import config
+from functest.utils import config, env
 
 
 class VmReady1(tenantnetwork.TenantNetwork1):
@@ -53,6 +53,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     flavor_alt_disk = 1
     flavor_alt_extra_specs = flavor_extra_specs
     create_server_timeout = 180
+    scsi_extra_prop = "hw_disk_bus: scsi, hw_scsi_model: virtio-scsi"
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -73,9 +74,10 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_properties = self.extra_properties.copy()
-        extra_properties.update(
-            getattr(config.CONF, '{}_extra_properties'.format(
-                self.case_name), {}))
+        if env.get('VOLUME_DEVICE_TYPE') == 'scsi':
+            extra_properties.update(dict((k.strip(), v.strip()) for k, v in (
+                item.split(':') for item in self.scsi_extra_prop.split(
+                    ','))))
         image = self.cloud.create_image(
             name if name else '{}-img_{}'.format(self.case_name, self.guid),
             filename=getattr(
@@ -104,9 +106,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_alt_properties = self.extra_alt_properties.copy()
-        extra_alt_properties.update(
-            getattr(config.CONF, '{}_extra_alt_properties'.format(
-                self.case_name), {}))
+        if env.get('VOLUME_DEVICE_TYPE') == 'scsi':
+            extra_alt_properties.update(dict((k.strip(),
+                                        v.strip()) for k, v in
+                                        (item.split(':') for item
+                                        in self.scsi_extra_prop.split(','))))
         image = self.cloud.create_image(
             name if name else '{}-img_alt_{}'.format(
                 self.case_name, self.guid),

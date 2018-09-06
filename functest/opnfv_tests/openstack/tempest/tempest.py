@@ -25,8 +25,7 @@ import yaml
 
 from functest.core import singlevm
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import config
-from functest.utils import env
+from functest.utils import config, env
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,6 +37,7 @@ class TempestCommon(singlevm.VmReady2):
     visibility = 'public'
     shared_network = True
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
+    scsi_extra_prop = "hw_disk_bus: scsi, hw_scsi_model: virtio-scsi"
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -367,9 +367,10 @@ class TempestCommon(singlevm.VmReady2):
             config.CONF, '{}_image_format'.format(self.case_name),
             self.image_format))
         extra_properties = self.extra_properties.copy()
-        extra_properties.update(
-            getattr(config.CONF, '{}_extra_properties'.format(
-                self.case_name), {}))
+        if env.get('VOLUME_DEVICE_TYPE') == 'scsi':
+            extra_properties.update(dict((k.strip(), v.strip()) for k, v in (
+                item.split(':') for item in self.scsi_extra_prop.split(
+                    ','))))
         rconfig.set(
             'scenario', 'img_properties',
             conf_utils.convert_dict_to_ini(extra_properties))
