@@ -16,3 +16,4 @@ Jinja2 # BSD License (3 clause)
 xtesting
 os-client-config # Apache-2.0
 shade # Apache-2.0
+ruamel.yaml.jinja2 # MIT
