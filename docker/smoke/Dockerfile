@@ -35,6 +35,10 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/neutron/policy.json https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
+    mkdir -p /home/opnfv/functest/data/rally && \
+    wget -q -r -nH -np --cut-dirs=4 -R "index.html*" -P /home/opnfv/functest/data/rally/neutron \
+        https://git.openstack.org/cgit/openstack/neutron/plain/rally-jobs/?h=master && \
+    find /home/opnfv/functest/data/rally/neutron -name "*\?h*" | sed -e "p;s/\(\?h\).*//" | xargs -r -n2 mv && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]

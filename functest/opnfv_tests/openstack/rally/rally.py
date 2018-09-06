@@ -16,6 +16,7 @@ import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import time
 
@@ -52,7 +53,6 @@ class RallyBase(singlevm.VmReady2):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
-    RESULTS_DIR = os.path.join(getattr(config.CONF, 'dir_results'), 'rally')
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
     TEMP_DIR = os.path.join(RALLY_DIR, "var")
 
@@ -74,6 +74,9 @@ class RallyBase(singlevm.VmReady2):
             role_name, user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
+        self.results_dir = os.path.join(
+            getattr(config.CONF, 'dir_results'), self.case_name)
+        self.task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
         self.creators = []
         self.summary = []
         self.scenario_dir = ''
@@ -292,10 +295,10 @@ class RallyBase(singlevm.VmReady2):
     def _save_results(self, test_name, task_id):
         """ Generate and save task execution results"""
         # check for result directory and create it otherwise
-        if not os.path.exists(self.RESULTS_DIR):
+        if not os.path.exists(self.results_dir):
             LOGGER.debug('%s does not exist, we create it.',
-                         self.RESULTS_DIR)
-            os.makedirs(self.RESULTS_DIR)
+                         self.results_dir)
+            os.makedirs(self.results_dir)
 
         # put detailed result to log
         cmd = (["rally", "task", "detailed", "--uuid", task_id])
@@ -304,8 +307,8 @@ class RallyBase(singlevm.VmReady2):
         LOGGER.info("%s\n%s", " ".join(cmd), output)
 
         # save report as JSON
-        report_json_name = 'opnfv-{}.json'.format(test_name)
-        report_json_dir = os.path.join(self.RESULTS_DIR, report_json_name)
+        report_json_name = '{}.json'.format(test_name)
+        report_json_dir = os.path.join(self.results_dir, report_json_name)
         cmd = (["rally", "task", "report", "--json", "--uuid", task_id,
                 "--out", report_json_dir])
         LOGGER.debug('running command: %s', cmd)
@@ -313,8 +316,8 @@ class RallyBase(singlevm.VmReady2):
         LOGGER.info("%s\n%s", " ".join(cmd), output)
 
         # save report as HTML
-        report_html_name = 'opnfv-{}.html'.format(test_name)
-        report_html_dir = os.path.join(self.RESULTS_DIR, report_html_name)
+        report_html_name = '{}.html'.format(test_name)
+        report_html_dir = os.path.join(self.results_dir, report_html_name)
         cmd = (["rally", "task", "report", "--html", "--uuid", task_id,
                 "--out", report_html_dir])
         LOGGER.debug('running command: %s', cmd)
@@ -384,7 +387,6 @@ class RallyBase(singlevm.VmReady2):
         else:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
-        self.task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
         if not os.path.exists(self.task_file):
             LOGGER.error("Task file '%s' does not exist.", self.task_file)
             raise Exception("Task file '{}' does not exist.".
@@ -438,7 +440,7 @@ class RallyBase(singlevm.VmReady2):
             except ZeroDivisionError:
                 success_avg = 0
             success_str = str("{:0.2f}".format(success_avg)) + '%'
-            duration_str = time.strftime("%M:%S",
+            duration_str = time.strftime("%H:%M:%S",
                                          time.gmtime(item['overall_duration']))
             res_table.add_row([item['test_name'], duration_str,
                                item['nb_tests'], success_str])
@@ -532,3 +534,53 @@ class RallyFull(RallyBase):
         self.test_name = 'all'
         self.smoke = False
         self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'full')
+
+
+class RallyJobs(RallyBase):
+    """Rally OpenStack CI testcase implementation."""
+
+    TESTS = ["neutron"]
+
+    def __init__(self, **kwargs):
+        """Initialize RallyJobs object."""
+        if "case_name" not in kwargs:
+            kwargs["case_name"] = "rally_jobs"
+        super(RallyJobs, self).__init__(**kwargs)
+        self.test_name = 'all'
+        self.task_file = os.path.join(self.RALLY_DIR, 'rally_jobs.yaml')
+        self.task_yaml = None
+
+    def prepare_run(self):
+        """Create resources needed by test scenarios."""
+        super(RallyJobs, self).prepare_run()
+        with open(os.path.join(self.RALLY_DIR,
+                               'rally_jobs.yaml'), 'r') as task_file:
+            self.task_yaml = yaml.safe_load(task_file)
+
+        if not all(task in self.task_yaml for task in self.tests):
+            raise Exception("Test '%s' not in '%s'" %
+                            (self.test_name, self.tests))
+
+    def prepare_task(self, test_name):
+        """Prepare resources for test run."""
+        inst_dir = getattr(config.CONF, 'dir_rally_inst')
+        try:
+            shutil.rmtree(os.path.join(inst_dir, 'plugins'))
+            shutil.rmtree(os.path.join(inst_dir, 'extra'))
+        except Exception:  # pylint: disable=broad-except
+            pass
+
+        jobs_dir = os.path.join(
+            getattr(config.CONF, 'dir_rally_data'), test_name, 'rally-jobs')
+        shutil.copytree(os.path.join(jobs_dir, 'plugins'),
+                        os.path.join(inst_dir, 'plugins'))
+        shutil.copytree(os.path.join(jobs_dir, 'extra'),
+                        os.path.join(inst_dir, 'extra'))
+        task = os.path.join(
+            jobs_dir, self.task_yaml.get(test_name).get("task"))
+        if not os.path.exists(task):
+            raise Exception("The scenario '%s' does not exist." % task)
+
+        LOGGER.debug('Scenario fetched from : %s', task)
+        self.run_cmd = (["rally", "task", "start", "--task", task])
+        return True

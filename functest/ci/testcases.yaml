@@ -225,6 +225,17 @@ tiers:
                     name: rally_sanity
 
             -
+                case_name: rally_jobs
+                project_name: functest
+                enabled: false
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs a group of Rally jobs used presented for
+                    OpenStack gating
+                run:
+                    name: rally_jobs
+            -
                 case_name: refstack_defcore
                 project_name: functest
                 criteria: 100
