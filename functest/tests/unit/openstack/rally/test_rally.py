@@ -71,7 +71,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_apply_blacklist')
+                'apply_blacklist')
     def test_prepare_test_list_missing_temp_dir(
             self, mock_method, mock_os_makedirs, mock_path_exists):
         mock_path_exists.side_effect = self.check_temp_dir
@@ -153,10 +153,13 @@ class OSRallyTesting(unittest.TestCase):
                     {'functions': ['no_migration'], 'tests': ['test']}]})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_migration_supported', return_value=False)
-    def test_excl_func_default(self, mock_func, mock_yaml_load):
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                '_network_trunk_supported', return_value=False)
+    def test_excl_func_default(self, mock_trunk, mock_func, mock_yaml_load):
         os.environ['DEPLOY_SCENARIO'] = 'test_scenario'
         self.assertEqual(self.rally_base.excl_func(), ['test'])
         mock_func.assert_called()
+        mock_trunk.assert_called()
         mock_yaml_load.assert_called()
 
     @mock.patch('six.moves.builtins.open', side_effect=Exception)
@@ -263,8 +266,7 @@ class OSRallyTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.rally_base.prepare_run()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'get_external_network')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.TESTS = ['test1', 'test2']

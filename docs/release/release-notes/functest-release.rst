@@ -131,6 +131,7 @@ New test cases
  * singlevm2
  * cinder_test
  * neutron-tempest-plugin-api
+ * rally_jobs
  * networking-bgpvpn
  * networking-sfc
  * barbican
