@@ -32,6 +32,9 @@ INPUTS = {
     'ENERGY_RECORDER_API_USER': env.INPUTS['ENERGY_RECORDER_API_USER'],
     'ENERGY_RECORDER_API_PASSWORD': env.INPUTS['ENERGY_RECORDER_API_PASSWORD'],
     'VOLUME_DEVICE_NAME': 'vdb',
+    'VOLUME_DEVICE_TYPE': 'virtio',
+    'IMAGE_EXTRA_PROP': '',
+    'IMAGE_ALT_EXTRA_PROP': '',
     'NAMESERVER': '8.8.8.8',
     'NEW_USER_ROLE': 'Member',
     'USE_DYNAMIC_CREDENTIALS': 'True'
@@ -51,3 +54,9 @@ def string():
     for env_var in INPUTS:
         msg.add_row([env_var, get(env_var) if get(env_var) else ''])
     return msg
+
+if env.get('VOLUME_DEVICE_TYPE') == 'scsi':
+    INPUTS.update(IMAGE_EXTRA_PROP={'hw_disk_bus': 'scsi',
+                                    'hw_scsi_model': 'virtio-scsi'})
+    INPUTS.update(IMAGE_ALT_EXTRA_PROP={'hw_disk_bus': 'scsi',
+                                        'hw_scsi_model': 'virtio-scsi'})

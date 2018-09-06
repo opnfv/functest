@@ -23,6 +23,7 @@ from xtesting.core import testcase
 
 from functest.core import tenantnetwork
 from functest.utils import config
+from functest.utils import env
 
 
 class VmReady1(tenantnetwork.TenantNetwork1):
@@ -73,6 +74,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_properties = self.extra_properties.copy()
+        if env.get('IMAGE_EXTRA_PROP'):
+            extra_properties.update(env.get('IMAGE_EXTRA_PROP'))
         extra_properties.update(
             getattr(config.CONF, '{}_extra_properties'.format(
                 self.case_name), {}))
@@ -104,6 +107,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_alt_properties = self.extra_alt_properties.copy()
+        if env.get('IMAGE_ALT_EXTRA_PROP'):
+            extra_alt_properties.update(env.get('IMAGE_ALT_EXTRA_PROP'))
         extra_alt_properties.update(
             getattr(config.CONF, '{}_extra_alt_properties'.format(
                 self.case_name), {}))
