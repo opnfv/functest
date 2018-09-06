@@ -17,3 +17,8 @@ functionality:
             - NovaServers.boot_server_attach_created_volume_and_live_migrate
             - NovaServers.boot_server_from_volume_and_live_migrate
             - NovaServers.boot_and_migrate_server
+    -
+        functions:
+            - no_net_trunk_service
+        tests:
+            - '^NeutronTrunk'

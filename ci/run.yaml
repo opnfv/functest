@@ -66,6 +66,7 @@
       - tempest_smoke
       - neutron-tempest-plugin-api
       - rally_sanity
+      - rally_jobs
       - refstack_defcore
       - patrole
       - snaps_smoke
@@ -86,6 +87,7 @@
             - name: '{repo}-functest-smoke-tempest_smoke-{tag}-run'
             - name: '{repo}-functest-smoke-neutron-tempest-plugin-api-{tag}-run'
             - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
+            - name: '{repo}-functest-smoke-rally_jobs-{tag}-run'
             - name: '{repo}-functest-smoke-refstack_defcore-{tag}-run'
             - name: '{repo}-functest-smoke-patrole-{tag}-run'
             - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
