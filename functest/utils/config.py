@@ -65,6 +65,9 @@ class Config(object):
 CONF = Config()
 CONF.patch_file(pkg_resources.resource_filename(
     'functest', 'ci/config_patch.yaml'))
+if env.get('VOLUME_DEVICE_NAME'):
+    CONF.patch_file(pkg_resources.resource_filename(
+        'functest', 'ci/config_fuel_patch.yaml'))
 if env.get("POD_ARCH") in ['aarch64']:
     CONF.patch_file(pkg_resources.resource_filename(
         'functest', 'ci/config_aarch64_patch.yaml'))
