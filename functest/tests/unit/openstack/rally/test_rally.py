@@ -263,8 +263,7 @@ class OSRallyTesting(unittest.TestCase):
         with self.assertRaises(Exception):
             self.rally_base.prepare_run()
 
-    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'get_external_network')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.TESTS = ['test1', 'test2']
