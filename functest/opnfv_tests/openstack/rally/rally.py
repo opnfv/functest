@@ -21,6 +21,7 @@ import time
 
 import pkg_resources
 import prettytable
+from six.moves import configparser
 from xtesting.core import testcase
 from xtesting.energy import energy
 import yaml
@@ -137,6 +138,30 @@ class RallyBase(singlevm.VmReady2):
 
         self._apply_blacklist(scenario_file_name, test_file_name)
         return test_file_name
+
+    @staticmethod
+    def update_keystone_default_role(rally_conf='/etc/rally/rally.conf'):
+        """Set keystone_default_role in rally.conf"""
+        if env.get("NEW_USER_ROLE").lower() != "member":
+            rconfig = configparser.RawConfigParser()
+            rconfig.read(rally_conf)
+            if not rconfig.has_section('openstack'):
+                rconfig.add_section('openstack')
+            rconfig.set(
+                'openstack', 'keystone_default_role', env.get("NEW_USER_ROLE"))
+            with open(rally_conf, 'wb') as config_file:
+                rconfig.write(config_file)
+
+    @staticmethod
+    def clean_rally_conf(rally_conf='/etc/rally/rally.conf'):
+        """Clean Rally config"""
+        if env.get("NEW_USER_ROLE").lower() != "member":
+            rconfig = configparser.RawConfigParser()
+            rconfig.read(rally_conf)
+            if rconfig.has_option('openstack', 'keystone_default_role'):
+                rconfig.remove_option('openstack', 'keystone_default_role')
+            with open(rally_conf, 'wb') as config_file:
+                rconfig.write(config_file)
 
     @staticmethod
     def get_task_id(cmd_raw):
@@ -412,6 +437,7 @@ class RallyBase(singlevm.VmReady2):
         if self.test_name not in self.TESTS:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
+        self.update_keystone_default_role()
         self.compute_cnt = len(self.cloud.list_hypervisors())
         self.flavor_alt = self.create_flavor_alt()
         LOGGER.debug("flavor: %s", self.flavor_alt)
@@ -485,6 +511,7 @@ class RallyBase(singlevm.VmReady2):
 
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
+        self.clean_rally_conf()
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
         super(RallyBase, self).clean()
