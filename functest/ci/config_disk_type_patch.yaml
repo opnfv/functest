@@ -1,0 +1,158 @@
+---
+os:
+    general:
+        openstack:
+            extra_properties:
+                short_id: 'ubuntu16.04'
+                hw_disk_bus: 'scsi'
+                hw_scsi_model: 'virtio-scsi'
+
+    vmready1:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vmready2:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    singlevm1:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    singlevm2:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vping_ssh:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vping_userdata:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    cinder_test:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    tempest_smoke:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    neutron-tempest-plugin-api:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    refstack_defcore:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    patrole:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    vmtp:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    shaker:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    neutron_trunk:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    networking-bgpvpn:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    networking-sfc:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    barbican:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    tempest_full:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    tempest_scenario:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+        extra_alt_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    rally_sanity:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    rally_full:
+        extra_properties:
+            hw_disk_bus: 'scsi'
+            hw_scsi_model: 'virtio-scsi'
+
+    snaps:
+        images:
+            glance_tests:
+                extra_properties:
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
+            cirros:
+                extra_properties:
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
+            ubuntu:
+                extra_properties:
+                    hw_disk_bus: 'scsi'
+                    hw_scsi_model: 'virtio-scsi'
