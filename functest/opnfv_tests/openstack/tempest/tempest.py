@@ -382,6 +382,11 @@ class TempestCommon(singlevm.VmReady2):
             config.CONF, '{}_image_format'.format(self.case_name),
             self.image_format))
         extra_properties = self.extra_properties.copy()
+        if env.get('IMAGE_PROPERTIES'):
+            extra_properties.update(
+                dict((k.strip(), v.strip()) for k, v in (
+                    item.split(': ') for item in env.get(
+                        'IMAGE_PROPERTIES').split(','))))
         extra_properties.update(
             getattr(config.CONF, '{}_extra_properties'.format(
                 self.case_name), {}))
