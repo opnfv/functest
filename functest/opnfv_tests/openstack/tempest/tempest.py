@@ -62,12 +62,15 @@ class TempestCommon(singlevm.VmReady2):
             OS_PROJECT_NAME=self.project.project.name,
             OS_PROJECT_ID=self.project.project.id,
             OS_PASSWORD=self.project.password)
-        conf_utils.create_rally_deployment(environ=environ)
-        conf_utils.create_verifier()
-        self.verifier_id = conf_utils.get_verifier_id()
+        self.deployment_id = conf_utils.create_rally_deployment(
+            environ=environ)
+        if not self.deployment_id:
+            raise Exception("Deployment create failed")
+        self.verifier_id = conf_utils.create_verifier()
+        if not self.verifier_id:
+            raise Exception("Verifier create failed")
         self.verifier_repo_dir = conf_utils.get_verifier_repo_dir(
             self.verifier_id)
-        self.deployment_id = conf_utils.get_verifier_deployment_id()
         self.deployment_dir = conf_utils.get_verifier_deployment_dir(
             self.verifier_id, self.deployment_id)
         self.verification_id = None
@@ -390,6 +393,8 @@ class TempestCommon(singlevm.VmReady2):
         LOGGER.debug("flavor: %s", self.flavor_alt)
 
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
+        if not self.conf_file:
+            raise Exception("Tempest verifier configuring failed")
         conf_utils.configure_tempest_update_params(
             self.conf_file, network_name=self.network.name,
             image_id=self.image.id,

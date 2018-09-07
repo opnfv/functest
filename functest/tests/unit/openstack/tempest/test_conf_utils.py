@@ -20,9 +20,12 @@ from functest.utils import config
 class OSTempestConfUtilsTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
 
+    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils'
+                '.get_verifier_deployment_id', return_value='foo')
     @mock.patch('subprocess.check_output')
-    def test_create_rally_deployment(self, mock_exec):
-        self.assertEqual(conf_utils.create_rally_deployment(), None)
+    def test_create_rally_deployment(self, mock_exec, mock_get_id):
+        # pylint: disable=unused-argument
+        self.assertEqual(conf_utils.create_rally_deployment(), 'foo')
         calls = [
             mock.call(['rally', 'deployment', 'destroy', '--deployment',
                        str(getattr(config.CONF, 'rally_deployment_name'))]),
@@ -51,22 +54,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
                 'create_verifier', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_rally_deployment', return_value=mock.Mock())
-    def test_get_verif_id_missing_verif(self, mock_rally, mock_tempest):
-        # pylint: disable=unused-argument
-        setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.subprocess.Popen') as mock_popen, \
-                self.assertRaises(Exception):
-            mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': ''}
-            mock_stdout.configure_mock(**attrs)
-            mock_popen.return_value = mock_stdout
-            conf_utils.get_verifier_id()
-
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'create_verifier', return_value=mock.Mock())
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'create_rally_deployment', return_value=mock.Mock())
     def test_get_verifier_id_default(self, mock_rally, mock_tempest):
         # pylint: disable=unused-argument
         setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
@@ -79,17 +66,6 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
 
             self.assertEqual(conf_utils.get_verifier_id(),
                              'test_deploy_id')
-
-    def test_get_depl_id_missing_rally(self):
-        setattr(config.CONF, 'tempest_verifier_name', 'test_deploy_name')
-        with mock.patch('functest.opnfv_tests.openstack.tempest.'
-                        'conf_utils.subprocess.Popen') as mock_popen, \
-                self.assertRaises(Exception):
-            mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': ''}
-            mock_stdout.configure_mock(**attrs)
-            mock_popen.return_value = mock_stdout
-            conf_utils.get_verifier_deployment_id()
 
     def test_get_depl_id_default(self):
         setattr(config.CONF, 'tempest_verifier_name', 'test_deploy_name')

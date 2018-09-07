@@ -81,6 +81,7 @@ def create_rally_deployment(environ=None):
     cmd = ['rally', 'deployment', 'check']
     output = subprocess.check_output(cmd)
     LOGGER.info("%s\n%s", " ".join(cmd), output)
+    return get_verifier_deployment_id()
 
 
 def create_verifier():
@@ -101,6 +102,7 @@ def create_verifier():
            '--type', 'tempest', '--system-wide']
     output = subprocess.check_output(cmd)
     LOGGER.info("%s\n%s", " ".join(cmd), output)
+    return get_verifier_id()
 
 
 def get_verifier_id():
@@ -114,9 +116,6 @@ def get_verifier_id():
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
     verifier_uuid = proc.stdout.readline().rstrip()
-    if verifier_uuid == "":
-        LOGGER.error("Tempest verifier not found.")
-        raise Exception('Error with command:%s' % cmd)
     return verifier_uuid
 
 
@@ -131,9 +130,6 @@ def get_verifier_deployment_id():
                             stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
     deployment_uuid = proc.stdout.readline().rstrip()
-    if deployment_uuid == "":
-        LOGGER.error("Rally deployment not found.")
-        raise Exception('Error with command:%s' % cmd)
     return deployment_uuid
 
 
@@ -261,10 +257,8 @@ def configure_verifier(deployment_dir):
     if not os.path.isfile(tempest_conf_file):
         LOGGER.error("Tempest configuration file %s NOT found.",
                      tempest_conf_file)
-        raise Exception("Tempest configuration file %s NOT found."
-                        % tempest_conf_file)
-    else:
-        return tempest_conf_file
+        return None
+    return tempest_conf_file
 
 
 def convert_dict_to_ini(value):
