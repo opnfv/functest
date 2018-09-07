@@ -32,15 +32,12 @@ class VrouterOnBoardingBase(object):
         self.logger = logging.getLogger(__name__)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
-        self.data_dir = getattr(config.CONF, 'dir_router_data')
         self.result_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), case_name)
         self.util = util
         self.util_info = util_info
         self.vnf_list = []
 
-        if not os.path.exists(self.data_dir):
-            os.makedirs(self.data_dir)
         if not os.path.exists(self.result_dir):
             os.makedirs(self.result_dir)
 

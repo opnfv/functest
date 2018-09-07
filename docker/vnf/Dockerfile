@@ -47,6 +47,11 @@ RUN apk --no-cache add --update \
     (cd /src/opnfv-vnf-vyos-blueprint && \
         git fetch --tags https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git $VROUTER_TAG && \
         git checkout FETCH_HEAD) && \
+    mkdir -p /home/opnfv/functest/data/router && \
+    git init /home/opnfv/functest/data/router/opnfv-vnf-data && \
+    (cd /home/opnfv/functest/data/router/opnfv-vnf-data && \
+        git fetch --tags https://github.com/oolorg/opnfv-vnf-data.git $VROUTER_TAG && \
+        git checkout FETCH_HEAD) && \
     git init /src/epc-requirements/abot_charm && \
     (cd /src/epc-requirements/abot_charm && \
         git fetch --tags https://github.com/RebacaInc/abot_charm.git $ABOT_CHARM && \
