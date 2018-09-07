@@ -12,7 +12,7 @@ general:
         functest_data: /home/opnfv/functest/data
         ims_data: /home/opnfv/functest/data/ims/
         refstack_data: /home/opnfv/functest/data/refstack
-        router_data: /home/opnfv/functest/data/router/
+        router_data: /src/opnfv-vnf-data
         functest_images: /home/opnfv/functest/images
         rally_inst: /root/.rally
 

@@ -14,11 +14,8 @@
 import json
 import logging
 import os
-import pkg_resources
 import requests
 import yaml
-
-from git import Repo
 
 from functest.utils import config
 
@@ -68,28 +65,6 @@ class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
 
         if not os.path.exists(self.vnf_data_dir):
             os.makedirs(self.vnf_data_dir)
-
-        case_dir = pkg_resources.resource_filename(
-            'functest', 'opnfv_tests/vnf/router')
-
-        config_file_name = getattr(
-            config.CONF, 'vnf_{}_config'.format("vyos_vrouter"))
-
-        config_file = os.path.join(case_dir, config_file_name)
-
-        with open(config_file) as file_fd:
-            vrouter_config_yaml = yaml.safe_load(file_fd)
-        file_fd.close()
-
-        test_data = vrouter_config_yaml.get("test_data")
-
-        self.logger.debug("Downloading the test data.")
-        vrouter_data_path = self.vnf_data_dir + self.opnfv_vnf_data_dir
-
-        if not os.path.exists(vrouter_data_path):
-            Repo.clone_from(test_data['url'],
-                            vrouter_data_path,
-                            branch=test_data['branch'])
 
         with open(self.test_env_config_yaml) as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
