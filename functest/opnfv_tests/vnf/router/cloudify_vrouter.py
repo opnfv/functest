@@ -167,11 +167,6 @@ class CloudifyVrouter(cloudify.Cloudify):
 
     def deploy_vnf(self):
         start_time = time.time()
-
-        self.cloud.create_security_group_rule(
-            'default', port_range_min=22, port_range_max=22,
-            protocol='tcp', direction='ingress')
-
         self.__logger.info("Upload VNFD")
         descriptor = self.vnf['descriptor']
         self.util_info["cfy"] = self.cfy_client
