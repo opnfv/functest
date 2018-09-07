@@ -33,6 +33,9 @@ RUN apk --no-cache add --update \
     (cd /src/cloudify_vims && git fetch --depth 1 --tags origin $CLOUDIFY_VIMS_TAG && git checkout FETCH_HEAD) && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git /src/opnfv-vnf-vyos-blueprint && \
     (cd /src/opnfv-vnf-vyos-blueprint && git fetch --depth 1 --tags origin $VROUTER_TAG && git checkout FETCH_HEAD) && \
+    mkdir -p /home/opnfv/functest/data/router && \
+    git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-data.git /home/opnfv/functest/data/router/opnfv-vnf-data && \
+    (cd /home/opnfv/functest/data/router/opnfv-vnf-data && git fetch --depth 1 --tags origin $VROUTER_TAG && git checkout FETCH_HEAD) && \
     git clone --depth 1 https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
     (cd /src/epc-requirements/abot_charm && git fetch  --depth 1 --tags origin $ABOT_CHARM && git checkout FETCH_HEAD) && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \

@@ -3,9 +3,6 @@ tenant_images:
     cloudify_manager_4.0:
         /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.qcow2
     vyos1.1.7: /home/opnfv/functest/images/vyos-1.1.7.img
-test_data:
-    url: 'https://github.com/oolorg/opnfv-vnf-data.git'
-    branch: 'fraser'
 orchestrator:
     name: cloudify
     version: '4.0'
