@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_1e68b1f4",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-08T07:57:59Z",
+      "side": 1,
+      "message": "Why not cloning neutron repo here?",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_7e6d6504",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-08T07:57:59Z",
+      "side": 1,
+      "message": "maybe used or presented may be removed.",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_5e7229e6",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-08T07:57:59Z",
+      "side": 1,
+      "message": "dito",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
