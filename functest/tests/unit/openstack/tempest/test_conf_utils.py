@@ -162,9 +162,9 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
         self.assertEqual(
             conf_utils.convert_dict_to_ini({}), "")
         self.assertEqual(
-            conf_utils.convert_dict_to_ini({"a": "b"}), "a=b")
+            conf_utils.convert_dict_to_ini({"a": "b"}), "a:b")
         value = conf_utils.convert_dict_to_ini({"a": "b", "c": "d"})
-        self.assertTrue(value == "a=b,c=d" or value == "c=d,a=b")
+        self.assertTrue(value == "a:b,c:d" or value == "c:d,a:b")
         with self.assertRaises(AssertionError):
             conf_utils.convert_list_to_ini("")
 

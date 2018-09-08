@@ -264,7 +264,7 @@ def configure_verifier(deployment_dir):
 def convert_dict_to_ini(value):
     "Convert dict to oslo.conf input"
     assert isinstance(value, dict)
-    return ",".join("{}={}".format(
+    return ",".join("{}:{}".format(
         key, val) for (key, val) in six.iteritems(value))
 
 
