@@ -12,6 +12,7 @@
 """vrouter function test execution module"""
 
 import logging
+import os
 import time
 import yaml
 
@@ -31,11 +32,11 @@ class FunctionTestExec(object):
         credentials = util_info["credentials"]
         self.vnf_ctrl = VnfController(util_info)
 
-        test_cmd_map_file = open(self.util.vnf_data_dir +
-                                 self.util.opnfv_vnf_data_dir +
-                                 self.util.command_template_dir +
-                                 self.util.test_cmd_map_yaml_file,
-                                 'r')
+        test_cmd_map_file = open(
+            os.path.join(
+                self.util.vnf_data_dir, self.util.command_template_dir,
+                self.util.test_cmd_map_yaml_file),
+            'r')
         self.test_cmd_map_yaml = yaml.safe_load(test_cmd_map_file)
         test_cmd_map_file.close()
 
