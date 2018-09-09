@@ -211,35 +211,6 @@ Feature, unit and vnf_base inherit from testcase::
   +--------------------+   +---------+   +------------------------+   +-----------------+
 
 
-Testcase
---------
-.. raw:: html
-   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.testcase.html
-
-Feature
--------
-.. raw:: html
-   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.feature.html
-
-Unit
-----
-.. raw:: html
-   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.unit.html
-
-VNF
----
-.. raw:: html
-   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.vnf.html
-
-Robotframework
---------------
-.. raw:: html
-   :url: http://artifacts.opnfv.org/functest/docs/apidoc/functest.core.robotframework.html
-
-
-see `[5]`_ to get code samples
-
-
 Functest util classes
 =====================
 
@@ -266,7 +237,7 @@ instances. SNAPS `[4]`_ is an OPNFV project providing OpenStack utils.
 TestAPI
 =======
 Functest is using the Test collection framework and the TestAPI developed by
-the OPNFV community. See `[6]`_ for details.
+the OPNFV community. See `[5]`_ for details.
 
 
 Reporting
@@ -278,7 +249,7 @@ jinja2 templates `[3]`_.
 Dashboard
 =========
 
-Additional dashboarding is managed at the testing group level, see `[7]`_ for
+Additional dashboarding is managed at the testing group level, see `[6]`_ for
 details.
 
 
@@ -286,7 +257,7 @@ details.
 How TOs
 =======
 
-See How to section on Functest wiki `[8]`_
+See How to section on Functest wiki `[7]`_
 
 
 ==========
@@ -301,12 +272,10 @@ _`[3]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting
 
 _`[4]`: https://git.opnfv.org/snaps/
 
-_`[5]` : http://testresults.opnfv.org/functest/framework/index.html
+_`[5]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 
-_`[6]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+_`[6]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
 
-_`[7]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
-
-_`[8]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
+_`[7]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 
 IRC support chan: #opnfv-functest
