@@ -115,6 +115,8 @@ class TempestCommon(singlevm.VmReady2):
     def check_requirements(self):
         self.check_services()
         self.check_extensions()
+        if self.is_skipped:
+            self.project.clean()
 
     @staticmethod
     def read_file(filename):
