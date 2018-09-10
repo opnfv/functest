@@ -10,6 +10,7 @@ ARG JUJU_TAG=tags/juju-2.2.5
 ARG ABOT_TAG=opnfv-fraser
 ARG JUJU_WAIT_TAG=2.6.4
 ARG ABOT_CHARM=opnfv-fraser
+ARG GODEPS_TAG=404a7e748cd352bb0d7449dedc645546eebbfc6e
 
 ENV GOPATH /src/epc-requirements/go
 ENV GOBIN /src/epc-requirements/go/bin
@@ -41,7 +42,8 @@ RUN apk --no-cache add --update \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
         juju-wait==$JUJU_WAIT_TAG && \
-    go get github.com/rogpeppe/godeps && \
+    go get -d github.com/rogpeppe/godeps && \
+    (cd $GOPATH/src/github.com/rogpeppe/godeps && git checkout $GODEPS_TAG && go install -v github.com/rogpeppe/godeps) && \
     go get -d -v github.com/juju/juju/... || true && \
     (cd $GOPATH/src/github.com/juju/juju && git checkout $JUJU_TAG && godeps -u dependencies.tsv) && \
     go install -v github.com/juju/juju/... && \
