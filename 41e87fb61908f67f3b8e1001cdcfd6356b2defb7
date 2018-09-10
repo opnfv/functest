@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_449b78c9",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-09-10T12:24:53Z",
+      "side": 1,
+      "message": "Done. Btw, cloning master since the Rally plugin hosted by neutron in stable/queens does not support recent versions of Rally. The actual functionality is same on both versions in this respect.\n\nhttps://git.openstack.org/cgit/openstack/neutron/commit/?h\u003dstable/queens\u0026id\u003d26894447b33adbbfb475a8a4b6f51f24e951af5d",
+      "parentUuid": "5a682502_1e68b1f4",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_7e6d6504",
         "filename": "docker/smoke/testcases.yaml",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_24a0fcf3",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-09-10T12:24:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5a682502_7e6d6504",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_5e7229e6",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2018-09-08T07:57:59Z",
       "side": 1,
       "message": "dito",
+      "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_84a59006",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2018-09-10T12:24:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5a682502_5e7229e6",
       "revId": "41e87fb61908f67f3b8e1001cdcfd6356b2defb7",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
