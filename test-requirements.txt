@@ -10,4 +10,4 @@ sphinx>=1.6.2 # BSD
 sphinx-rtd-theme
 yamllint
 doc8 # Apache-2.0
-bashate>=0.5.1 # Apache-2.0
+bashate>=0.2 # Apache-2.0
