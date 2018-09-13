@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:gambia
 
-ARG BRANCH=master
+ARG BRANCH=stable/gambia
 ARG OPENSTACK_TAG=stable/queens
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 

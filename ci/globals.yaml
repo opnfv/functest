@@ -3,7 +3,7 @@
     name: global
     repo: 'opnfv'
     branch: 'master'
-    tag: 'latest'
+    tag: 'gambia'
 
 - defaults:
     name: functest-defaults

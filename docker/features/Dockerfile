@@ -1,6 +1,6 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-tempest:gambia
 
-ARG BRANCH=master
+ARG BRANCH=stable/gambia
 ARG OPENSTACK_TAG=stable/queens
 ARG FDS_TAG=master
 

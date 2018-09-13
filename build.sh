@@ -18,36 +18,36 @@ build_opts=(--pull=true --no-cache --force-rm=true \
     --build-arg RALLY_OPENSTACK_TAG="${RALLY_OPENSTACK_TAG:-1.2.0}")
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
+    -e "s|opnfv/functest-core:gambia|${repo}/functest-core:amd64-gambia|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-tempest|${repo}/functest-tempest:amd64-latest|g" {} +
+    -e "s|opnfv/functest-tempest:gambia|${repo}/functest-tempest:amd64-gambia|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
-            -t "${repo}/functest-${dir##**/}:amd64-latest" .)
-        docker push "${repo}/functest-${dir##**/}:amd64-latest"
+            -t "${repo}/functest-${dir##**/}:amd64-gambia" .)
+        docker push "${repo}/functest-${dir##**/}:amd64-gambia"
     [ "${dir}" != "docker/core" ] &&
-        (docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true)
+        (docker rmi "${repo}/functest-${dir##**/}:amd64-gambia" || true)
 done
 [ ! -z "${amd64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.8 || true)
+    (docker rmi "${repo}/functest-core:amd64-gambia" alpine:3.8 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
     -e "s|alpine:3.8|multiarch/alpine:arm64-v3.8|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
+    -e "s|opnfv/functest-core:gambia|${repo}/functest-core:arm64-gambia|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-tempest|${repo}/functest-tempest:arm64-latest|g" {} +
+    -e "s|opnfv/functest-tempest:gambia|${repo}/functest-tempest:arm64-gambia|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
-        -t "${repo}/functest-${dir##**/}:arm64-latest" .)
-    docker push "${repo}/functest-${dir##**/}:arm64-latest"
+        -t "${repo}/functest-${dir##**/}:arm64-gambia" .)
+    docker push "${repo}/functest-${dir##**/}:arm64-gambia"
     [ "${dir}" != "docker/core" ] &&
-        (docker rmi "${repo}/functest-${dir##**/}:arm64-latest" || true)
+        (docker rmi "${repo}/functest-${dir##**/}:arm64-gambia" || true)
 done
 [ ! -z "${arm64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:arm64-latest" \
+    (docker rmi "${repo}/functest-core:arm64-gambia" \
         multiarch/alpine:arm64-v3.8 || true)
 find . -name Dockerfile -exec git checkout {} +
 
