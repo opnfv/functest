@@ -4,7 +4,7 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.3.0
-ARG NEUTRON_TAG=0.2.0
+ARG NEUTRON_TAG=master
 ARG BARBICAN_TAG=0.1.0
 
 RUN apk --no-cache add --virtual .build-deps --update \
