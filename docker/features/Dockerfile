@@ -1,7 +1,7 @@
 FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
-ARG OPENSTACK_TAG=stable/queens
+ARG OPENSTACK_TAG=stable/rocky
 ARG FDS_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt

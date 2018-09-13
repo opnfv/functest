@@ -1,7 +1,7 @@
 FROM opnfv/functest-core:hunter
 
 ARG BRANCH=stable/hunter
-ARG OPENSTACK_TAG=stable/queens
+ARG OPENSTACK_TAG=stable/rocky
 ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
 
 RUN apk --no-cache add --update libxml2 libxslt && \

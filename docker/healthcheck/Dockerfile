@@ -1,7 +1,7 @@
 FROM opnfv/functest-core:hunter
 
 ARG BRANCH=stable/hunter
-ARG OPENSTACK_TAG=stable/queens
+ARG OPENSTACK_TAG=stable/rocky
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
