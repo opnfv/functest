@@ -1,7 +1,7 @@
 FROM opnfv/functest-tempest
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/queens
+ARG OPENSTACK_TAG=master
 ARG FDS_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
