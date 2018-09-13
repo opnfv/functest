@@ -3,7 +3,7 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG RALLY_TAG=1.1.0
-ARG RALLY_OPENSTACK_TAG=1.2.0
+ARG RALLY_OPENSTACK_TAG=67882d55ca453d6aa863d279ec4cfc2b52c80f0a
 ARG OS_FAULTS_TAG=0.1.17
 
 RUN apk --no-cache add --virtual .build-deps --update \
