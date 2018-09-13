@@ -1,6 +1,6 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-tempest:hunter
 
-ARG BRANCH=master
+ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/queens
 ARG FDS_TAG=master
 

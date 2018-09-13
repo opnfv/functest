@@ -70,7 +70,7 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:hunter
 
 Results shall be displayed as follows::
 
@@ -102,7 +102,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:hunter
 
 Results shall be displayed as follows::
 
@@ -132,7 +132,7 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking
+      opnfv/functest-benchmarking:hunter
 
 Results shall be displayed as follows::
 
@@ -154,7 +154,7 @@ Run features suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-features
+      opnfv/functest-features:hunter
 
 Results shall be displayed as follows::
 
@@ -181,7 +181,7 @@ Run components suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-components
+      opnfv/functest-components:hunter
 
 Results shall be displayed as follows::
 
@@ -201,7 +201,7 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf
+      opnfv/functest-vnf:hunter
 
 Results shall be displayed as follows::
 
@@ -238,7 +238,7 @@ Run healthcheck suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-healthcheck
+      opnfv/functest-kubernetes-healthcheck:hunter
 
 A config file in the current dir 'config' is also required, which should be
 volume mapped to ~/.kube/config inside kubernetes container.
@@ -258,7 +258,7 @@ Run smoke suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-smoke
+      opnfv/functest-kubernetes-smoke:hunter
 
 Results shall be displayed as follows::
 
@@ -275,7 +275,7 @@ Run features suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-features
+      opnfv/functest-kubernetes-features:hunter
 
 Results shall be displayed as follows::
 

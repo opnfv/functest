@@ -1,7 +1,7 @@
 FROM alpine:3.8
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=stable/queens
+ARG BRANCH=stable/hunter
+ARG OPENSTACK_TAG=stable/rocky
 ARG PIP_TAG=18.0
 
 RUN apk --no-cache add --update \

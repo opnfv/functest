@@ -24,8 +24,8 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-core:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-core:latest
+          --template ${DOCKER_USERNAME}/functest-core:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-core:hunter
     - stage: build functest-tempest images
       script: sudo -E bash build.sh
       env:
@@ -36,8 +36,8 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-tempest:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-tempest:latest
+          --template ${DOCKER_USERNAME}/functest-tempest:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-tempest:hunter
     - stage: build all functest images
       script: sudo -E bash build.sh
       env:
@@ -73,25 +73,25 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-healthcheck:latest
+          --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-healthcheck:hunter
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-smoke:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-smoke:latest
+          --template ${DOCKER_USERNAME}/functest-smoke:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-smoke:hunter
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-features:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-features:latest
+          --template ${DOCKER_USERNAME}/functest-features:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-features:hunter
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-components:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-components:latest
+          --template ${DOCKER_USERNAME}/functest-components:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-components:hunter
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
-          --template ${DOCKER_USERNAME}/functest-vnf:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-vnf:latest
+          --template ${DOCKER_USERNAME}/functest-vnf:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-vnf:hunter

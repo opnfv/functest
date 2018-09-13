@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:hunter
 
-ARG BRANCH=master
+ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/queens
 ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
 

@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:hunter
 
-ARG BRANCH=master
+ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/queens
 ARG VIMS_TEST_TAG=release-129
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
