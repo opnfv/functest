@@ -386,6 +386,7 @@ tiers:
             -
                 case_name: doctor-notification
                 project_name: doctor
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -401,6 +402,7 @@ tiers:
             -
                 case_name: bgpvpn
                 project_name: sdnvpn
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -413,6 +415,7 @@ tiers:
             -
                 case_name: functest-odl-sfc
                 project_name: sfc
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -426,6 +429,7 @@ tiers:
             -
                 case_name: barometercollectd
                 project_name: barometer
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -440,6 +444,7 @@ tiers:
             -
                 case_name: fds
                 project_name: fastdatastacks
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -468,6 +473,7 @@ tiers:
             -
                 case_name: stor4nfv_os
                 project_name: stor4nfv
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
