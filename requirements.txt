@@ -1,18 +1,18 @@
 # The order of packages is significant, because pip processes them in the order
 # of appearance. Changing the order has an impact on the overall integration
 # process, which may cause wedges in the gate later.
-pbr!=2.1.0,>=2.0.0 # Apache-2.0
-PyYAML>=3.12 # MIT
-requests>=2.14.2 # Apache-2.0
+pbr!=2.1.0 # Apache-2.0
+PyYAML # MIT
+requests # Apache-2.0
 robotframework>=3.0
 scp
 cloudify-rest-client
-mock>=2.0.0 # BSD
-PrettyTable<0.8,>=0.7.1 # BSD
-six>=1.10.0 # MIT
+mock # BSD
+PrettyTable<0.8 # BSD
+six # MIT
 snaps
-paramiko>=2.0.0 # LGPLv2.1+
-Jinja2>=2.10 # BSD License (3 clause)
+paramiko # LGPLv2.1+
+Jinja2 # BSD License (3 clause)
 xtesting
-os-client-config>=1.28.0 # Apache-2.0
-shade>=1.17.0 # Apache-2.0
+os-client-config # Apache-2.0
+shade # Apache-2.0

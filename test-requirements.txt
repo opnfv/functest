@@ -1,14 +1,14 @@
 # The order of packages is significant, because pip processes them in the order
 # of appearance. Changing the order has an impact on the overall integration
 # process, which may cause wedges in the gate later.
-coverage!=4.4,>=4.0 # Apache-2.0
-mock>=2.0.0 # BSD
-nose>=1.3.7 # LGPL
+coverage!=4.4 # Apache-2.0
+mock # BSD
+nose # LGPL
 flake8<2.6.0,>=2.5.4 # MIT
 pylint # GPLv2
-sphinx!=1.6.6,!=1.6.7,>=1.6.2 # BSD
+sphinx!=1.6.6,!=1.6.7 # BSD
 sphinx-rtd-theme
 yamllint
-doc8>=0.6.0 # Apache-2.0
-bashate>=0.5.1 # Apache-2.0
-nosehtmloutput  # Apache-2.0
+doc8 # Apache-2.0
+bashate # Apache-2.0
+nosehtmloutput # Apache-2.0
