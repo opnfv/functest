@@ -482,7 +482,6 @@ The kubernetes testcases are distributed across various Tiers:
 .. _`[9]`: https://github.com/openstack/defcore
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://www.rebaca.com/abot-test-orchestration-tool/

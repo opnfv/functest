@@ -3,8 +3,8 @@
 Executing Functest suites
 =========================
 
-As mentioned in the configuration guide `[1]`_, Alpine docker containers have
-been introduced in Euphrates.
+As mentioned in the :ref:`functest-install-guide`, Alpine docker containers
+have been introduced in Euphrates.
 Tier containers have been created.
 Assuming that you pulled the container and your environement is ready, you can
 simply run the tiers by typing (e.g. with functest-healthcheck)::
@@ -111,5 +111,4 @@ In OPNFV CI we collect all the results from CI. A test API shall be available
 as well as a test database `[16]`_.
 
 
-.. _`[1]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
-.. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+.. _`[16]`: http://testresults.opnfv.org/test/#/

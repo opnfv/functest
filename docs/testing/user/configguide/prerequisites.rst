@@ -102,4 +102,3 @@ determine the needed IP addresses for each node in the SUT may vary according
 to the used installer and are therefore ommitted here.
 
 .. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
-.. _`[4]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html

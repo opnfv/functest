@@ -21,8 +21,6 @@ Functest User Guide
 References
 ==========
 
-`[1]`_: Functest configuration guide
-
 `[2]`_: OpenStack Tempest documentation
 
 `[3]`_: Rally documentation
@@ -43,8 +41,6 @@ References
 
 `[11]`_: Robot Framework web site
 
-`[12]`_: Functest User guide
-
 `[13]`_: SNAPS wiki
 
 `[14]`_: vRouter
@@ -59,7 +55,6 @@ References
 
 IRC support chan: #opnfv-functest
 
-.. _`[1]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
@@ -70,11 +65,10 @@ IRC support chan: #opnfv-functest
 .. _`[9]`: https://github.com/openstack/defcore
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
-.. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+.. _`[16]`: http://testresults.opnfv.org/test/#/
 .. _`OPNFV main site`: http://www.opnfv.org
 .. _`Functest page`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
