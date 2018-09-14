@@ -261,7 +261,7 @@ class FunctestUtilsTesting(unittest.TestCase):
     def test_openstack_version1(self, *args):
         cloud = mock.Mock()
         self.assertEqual(functest_utils.get_openstack_version(
-            cloud), "Rocky or newer")
+            cloud), "Rocky")
         args[0].assert_called_once_with(cloud)
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
@@ -327,7 +327,7 @@ class FunctestUtilsTesting(unittest.TestCase):
     def test_openstack_version10(self, *args):
         cloud = mock.Mock()
         self.assertEqual(
-            functest_utils.get_openstack_version(cloud), "Rocky or newer")
+            functest_utils.get_openstack_version(cloud), "Master")
         args[0].assert_called_once_with(cloud)
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
