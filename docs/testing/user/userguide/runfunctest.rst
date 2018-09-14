@@ -111,5 +111,5 @@ In OPNFV CI we collect all the results from CI. A test API shall be available
 as well as a test database `[16]`_.
 
 
-.. _`[1]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
-.. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+.. _`[1]`: :ref:`<functest-install-guide>`
+.. _`[16]`: :doc:`<opnfvdocs:testing-dev>`

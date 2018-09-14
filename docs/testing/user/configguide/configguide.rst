@@ -633,7 +633,7 @@ and install the **docker-engine**. The instructions conclude with a
 work with the above pre-requisite actions.
 
 
-.. _`[4]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
+.. _`[4]`: :ref:`<functest-install-guide>`
 .. _`dockerdocs`: https://docs.docker.com/
 .. _`Proxy`: https://docs.docker.com/engine/admin/systemd/#http-proxy
 .. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/

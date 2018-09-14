@@ -88,4 +88,4 @@ upstream communities.
 
 The functional test cases are described in the Functest User `[2]`_
 
-.. _`[2]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
+.. _`[2]`: :ref:`<functest-userguide>`

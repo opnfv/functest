@@ -59,7 +59,7 @@ References
 
 IRC support chan: #opnfv-functest
 
-.. _`[1]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
+.. _`[1]`: :ref:`<functest-install-guide>`
 .. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
@@ -70,7 +70,7 @@ IRC support chan: #opnfv-functest
 .. _`[9]`: https://github.com/openstack/defcore
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: http://robotframework.org/
-.. _`[12]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
+.. _`[12]`: :ref:`<functest-userguide>`
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
