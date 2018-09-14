@@ -86,6 +86,4 @@ however, it would be possible to adapt them to any OpenStack based VIM +
 controller environment, since most of the test cases are integrated from
 upstream communities.
 
-The functional test cases are described in the Functest User `[2]`_
-
-.. _`[2]`: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
+The functional test cases are described in the :ref:`functest-userguide`
