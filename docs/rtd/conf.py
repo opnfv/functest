@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Functest Developer Guide documentation build configuration file, created by
-# sphinx-quickstart on Wed Apr  4 05:36:49 2018.
+# Functest documentation build configuration file, created
+# by sphinx-quickstart on Tue Apr  3 03:51:57 2018.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -44,7 +44,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Functest Developer Guide'
+project = u'Functest'
 copyright = u'2018, Functest <opnfv-tech-discuss@lists.opnfv.org>'
 author = u'Functest <opnfv-tech-discuss@lists.opnfv.org>'
 
@@ -113,7 +113,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'FunctestDeveloperGuidedoc'
+htmlhelp_basename = 'Functestdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -141,8 +141,8 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc,
-     'FunctestDeveloperGuide.tex',
-     u'Functest Developer Guide Documentation',
+     'Functest.tex',
+     u'Functest Documentation',
      u'Functest \\textless{}opnfv-tech-discuss@lists.opnfv.org\\textgreater{}',
      'manual'),
 ]
@@ -154,8 +154,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc,
-     'functestdeveloperguide',
-     u'Functest Developer Guide Documentation',
+     'functest',
+     u'Functest Documentation',
      [author],
      1)
 ]
@@ -168,10 +168,10 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc,
-     'FunctestDeveloperGuide',
-     u'Functest Developer Guide Documentation',
+     'Functest',
+     u'Functest Documentation',
      author,
-     'FunctestDeveloperGuide',
+     'Functest',
      'One line description of project.',
      'Miscellaneous'),
 ]
