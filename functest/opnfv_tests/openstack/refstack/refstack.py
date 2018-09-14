@@ -40,15 +40,18 @@ class Refstack(tempest.TempestCommon):
         return yaml.load(yaml_data)
 
     def _extract_tempest_data(self):
+        olddir = os.getcwd()
         try:
-            cmd = ['stestr', '--here', self.verifier_repo_dir, 'list',
-                   '^tempest.']
+            os.chdir(self.verifier_repo_dir)
+            cmd = ['stestr', 'list', '^tempest.']
             output = subprocess.check_output(cmd)
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception when listing tempest tests: %s\n%s",
                 cpe.cmd, cpe.output)
             raise
+        finally:
+            os.chdir(olddir)
         yaml_data2 = ""
         for line in output.splitlines():
             try:
