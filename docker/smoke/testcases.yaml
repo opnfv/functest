@@ -82,6 +82,7 @@ tiers:
                             - 'network'
                         excludes:
                             - 'test_networks_multiprovider_rbac'
+                            - 'test_auto_allocated_topology_rbac'
 
             -
                 case_name: snaps_smoke
