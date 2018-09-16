@@ -2,7 +2,7 @@
 - defaults:
     name: global
     repo: 'opnfv'
-    branch: 'master'
+    branch: 'stable/hunter'
     tag: 'hunter'
 
 - defaults:
