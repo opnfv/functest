@@ -169,8 +169,18 @@ class CloudifyIms(cloudify.Cloudify):
         """Deploy Clearwater IMS."""
         start_time = time.time()
 
+        secgroups = self.cloud.list_security_groups(
+            filters={'name' : 'default',
+                     'project_id': self.project.project.id})
+        if secgroups:
+            secgroup = secgroups[0]
+        else:
+            self.__logger.error("No 'default' security group in project "
+                                 +self.project.project.name)
+            return False
+
         self.cloud.create_security_group_rule(
-            'default', port_range_min=22, port_range_max=22,
+            secgroup.id, port_range_min=22, port_range_max=22,
             protocol='tcp', direction='ingress')
 
         self.__logger.info("Upload VNFD")
