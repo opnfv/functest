@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_2c90d5eb",
+        "filename": "docs/requirements.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-18T17:39:41Z",
+      "side": 1,
+      "message": "No. It has to be included in test-requirements. see OpenStack.",
+      "revId": "bde93de9f9997a0fc7966e76c2b5700983ff3b1d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_8cbc896e",
+        "filename": "tox.ini",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-18T17:39:41Z",
+      "side": 1,
+      "message": "That breaks our rules. The docs can be built from python packages.",
+      "revId": "bde93de9f9997a0fc7966e76c2b5700983ff3b1d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
