@@ -12,3 +12,5 @@ yamllint
 doc8 # Apache-2.0
 bashate # Apache-2.0
 nosehtmloutput # Apache-2.0
+lfdocs-conf
+sphinx-opnfv-theme

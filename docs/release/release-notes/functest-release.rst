@@ -178,7 +178,7 @@ Code quality
 Useful links
 ============
 
- * wiki project page: https://wiki.opnfv.org/opnfv_functional_testing
+ * wiki project page: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
  * Functest git repository: https://git.opnfv.org/cgit/functest
  * Functest CI dashboard: https://build.opnfv.org/ci/view/functest/
  * JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611

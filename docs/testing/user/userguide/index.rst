@@ -76,7 +76,7 @@ IRC support chan: #opnfv-functest
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
 .. _`[16]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 .. _`OPNFV main site`: http://www.opnfv.org
-.. _`Functest page`: https://wiki.opnfv.org/functest
+.. _`Functest page`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
 .. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/functest/ci/config_functest.yaml
