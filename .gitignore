@@ -4,7 +4,6 @@
 .project
 .pydevproject
 rally_conf.json
-/docs_build/
 /docs/**/build/
 _build
 /docs_output/
@@ -19,3 +18,4 @@ functest.egg-info
 .tox
 *.out
 *.pdf
+docs/_build/*
