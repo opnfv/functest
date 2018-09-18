@@ -247,5 +247,5 @@ section.
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
 .. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
-.. _`Functest Dashboard`: http://testresults.opnfv.org/kibana_dashboards/
+.. _`Functest Dashboard`: http://testresults.opnfv.org/
 .. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html
