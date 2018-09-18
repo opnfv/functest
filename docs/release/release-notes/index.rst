@@ -7,7 +7,6 @@ Functest Release Notes
 **********************
 
 .. toctree::
-   :numbered:
    :maxdepth: 4
 
    functest-release.rst

@@ -5,7 +5,6 @@ Functest Developer Guide
 ************************
 
 .. toctree::
-   :numbered:
    :maxdepth: 2
 
 ============
@@ -268,7 +267,7 @@ _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/index.html Functest
 
 _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest user guide
 
-_`[3]`: https://git.opnfv.org/cgit/releng/tree/utils/test/reporting
+_`[3]`: https://git.opnfv.org/releng-testresults/tree/reporting
 
 _`[4]`: https://git.opnfv.org/snaps/
 
