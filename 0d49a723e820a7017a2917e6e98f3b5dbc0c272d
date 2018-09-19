@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_77dd7a14",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-09-19T08:21:37Z",
+      "side": 1,
+      "message": "That was a tricky and a painful one :)\n\nIf you try to install libvirt-python of openstack-queens upper constraints (3.10.0) in a clean alpine 3.8:\n\napk add gcc linux-headers python-dev musl-dev libvirt-dev py2-pip \u0026\u0026 pip install libvirt-python\u003d\u003d3.10.0\n\nyou will get the error:\nMissing type converters:\n    char **:1\n    ERROR: failed virConnectBaselineHypervisorCPU\n\nThat happens because libvirt-dev apk 4.4.0 is incompatible with libvirt-python 3.10.0. In order to fix it you have to use the libvirt-dev apk 3.9.0 from 3.7 alpine repo, because it does not exist in 3.8.\n\nAlpine Repo v3.7\nhttp://dl-cdn.alpinelinux.org/alpine/v3.7/main/x86_64/libvirt-dev-3.9.0-r1.apk\nAlpine Repo v3.8\nhttp://dl-cdn.alpinelinux.org/alpine/v3.8/main/x86_64/libvirt-dev-4.4.0-r0.apk\n\nPlease also have a look at my previous comment. This part of dockerfile is essential for stable/gambia, where openstack-queens is used. But for latest openstack it can be removed.",
+      "parentUuid": "5a682502_e95a4f4f",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_694f5f93",
         "filename": "docker/smoke/testcases.yaml",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_57e2fed5",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-09-19T08:21:37Z",
+      "side": 1,
+      "message": "I will prepare a patch-set for that. Good suggestion",
+      "parentUuid": "5a682502_694f5f93",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_a949778d",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2018-09-18T14:25:22Z",
       "side": 1,
       "message": "Would it be possible to first detect capabilities and avoid any INSTALLER_TYPE condition? Functest is no longer linked to OPNFV installers (at least out of releng).",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_b7e712e4",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-09-19T08:21:37Z",
+      "side": 1,
+      "message": "This one needs effort. I am going to try it but it may take some time.",
+      "parentUuid": "5a682502_a949778d",
       "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
