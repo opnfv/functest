@@ -22,6 +22,13 @@ NO_PROXY=${no_proxy:-"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"}
 EOF
 }
 
+add_proxy_apt () {
+    cat << EOF >> "$1"
+Acquire::http::Proxy "${http_proxy:-http://proxy:8080}";
+Acquire::https::Proxy "${https_proxy:-http://proxy:8080}";
+EOF
+}
+
 tmpdir=$(mktemp -d)
 for image in $images; do
     if [ ! -f "$image" ]; then
@@ -31,8 +38,13 @@ for image in $images; do
     guestmount -a "${image}" -i --rw "${tmpdir}"
     add_proxy "${tmpdir}/etc/environment"
     if [[ ${image} == *"cloudify-manager"* ]]; then
+        echo >> "${tmpdir}/etc/sysconfig/cloudify-mgmtworker"
         add_proxy "${tmpdir}/etc/sysconfig/cloudify-mgmtworker"
+        echo >> "${tmpdir}/etc/sysconfig/cloudify-restservice"
         add_proxy "${tmpdir}/etc/sysconfig/cloudify-restservice"
+    fi
+    if [[ ${image} == "ubuntu"* ]]; then
+        add_proxy_apt "${tmpdir}/etc/apt/apt.conf"
     fi
     guestunmount "${tmpdir}"
 done
