@@ -7,6 +7,7 @@
           docker run \
             -e NAMESERVER={nameserver} \
             -e EXTERNAL_NETWORK={external_network} \
+            -e STORAGE_PROTOCOL={storage_protocol} \
             -v \
             {prefix}/results/$JOB_NAME-$BUILD_ID:/home/opnfv/functest/results \
             -v {prefix}/openstack.creds:/home/opnfv/functest/conf/env_file \
