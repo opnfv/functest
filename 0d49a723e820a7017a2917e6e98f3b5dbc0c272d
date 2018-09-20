@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_9825e3ad",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-20T08:31:47Z",
+      "side": 1,
+      "message": "In that case, I would prefer you to remove it here. And then to add it after cherry-picking in gambia. A conflict message may be added in such a case in your commit msg.\n\nWe may also override OS upper-constraints in that case as we did to bypass a python request bug (E release). Or revert to alpine 3.7. Or add that testcase for hunter or newer only. Let\u0027s think about them :)",
+      "parentUuid": "5a682502_77dd7a14",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_694f5f93",
         "filename": "docker/smoke/testcases.yaml",
         "patchSetId": 7
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5a682502_980e8333",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-20T08:31:47Z",
+      "side": 1,
+      "message": "Thank you",
+      "parentUuid": "5a682502_57e2fed5",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_a949778d",
         "filename": "functest/ci/testcases.yaml",
         "patchSetId": 7
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "This one needs effort. I am going to try it but it may take some time.",
       "parentUuid": "5a682502_a949778d",
+      "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_bdf37109",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-20T08:31:47Z",
+      "side": 1,
+      "message": "Sure. It will be backported at least to stable/hunter.",
+      "parentUuid": "5a682502_b7e712e4",
       "revId": "0d49a723e820a7017a2917e6e98f3b5dbc0c272d",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
