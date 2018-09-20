@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_b89fff02",
+        "filename": "ci/globals.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 667
+      },
+      "writtenOn": "2018-09-20T12:46:17Z",
+      "side": 1,
+      "message": "Just to ensure: is it so that iSCSI protocol is used in all CI pods or could it be something else?",
+      "revId": "a561c6ca316feb1a203327aa729ac0317f70df48",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
