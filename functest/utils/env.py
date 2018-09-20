@@ -30,7 +30,8 @@ INPUTS = {
     'VOLUME_DEVICE_NAME': 'vdb',
     'NAMESERVER': '8.8.8.8',
     'NEW_USER_ROLE': 'Member',
-    'USE_DYNAMIC_CREDENTIALS': 'True'
+    'USE_DYNAMIC_CREDENTIALS': 'True',
+    'STORAGE_PROTOCOL': 'iSCSI'
 }
 
 

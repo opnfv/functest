@@ -229,7 +229,9 @@ def configure_tempest_update_params(
         getattr(config.CONF, 'tempest_validation_ssh_timeout'))
     rconfig.set('object-storage', 'operator_role',
                 getattr(config.CONF, 'tempest_object_storage_operator_role'))
-
+    if not rconfig.has_section('volume'):
+        rconfig.add_section('volume')
+    rconfig.set('volume', 'storage_protocol', env.get('STORAGE_PROTOCOL'))
     rconfig.set(
         'identity', 'v3_endpoint_type',
         os.environ.get('OS_INTERFACE', 'public'))
