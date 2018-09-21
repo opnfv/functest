@@ -640,16 +640,21 @@ class RallyJobs(RallyBase):
         with open(result_file_name, 'w') as fname:
             template.dump(cases, fname)
 
-    def prepare_task(self, test_name):
-        """Prepare resources for test run."""
+    @staticmethod
+    def _remove_plugins_extra():
         inst_dir = getattr(config.CONF, 'dir_rally_inst')
         try:
             shutil.rmtree(os.path.join(inst_dir, 'plugins'))
             shutil.rmtree(os.path.join(inst_dir, 'extra'))
         except Exception:  # pylint: disable=broad-except
             pass
+
+    def prepare_task(self, test_name):
+        """Prepare resources for test run."""
+        self._remove_plugins_extra()
         jobs_dir = os.path.join(
             getattr(config.CONF, 'dir_rally_data'), test_name, 'rally-jobs')
+        inst_dir = getattr(config.CONF, 'dir_rally_inst')
         shutil.copytree(os.path.join(jobs_dir, 'plugins'),
                         os.path.join(inst_dir, 'plugins'))
         shutil.copytree(os.path.join(jobs_dir, 'extra'),
@@ -667,3 +672,7 @@ class RallyJobs(RallyBase):
         self.apply_blacklist(task, task_file_name)
         self.run_cmd = (["rally", "task", "start", "--task", task_file_name])
         return True
+
+    def clean(self):
+        self._remove_plugins_extra()
+        super(RallyJobs, self).clean()
