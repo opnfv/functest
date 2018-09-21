@@ -16,6 +16,24 @@
       "revId": "e25327f5fdd2b097aac69b31e50b9c8ffdbfa6ef",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_cf5f8e71",
+        "filename": "functest/opnfv_tests/openstack/intel_nfv_ci/intel_nfv_ci.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2018-09-21T06:48:13Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5a682502_3893effb",
+      "revId": "e25327f5fdd2b097aac69b31e50b9c8ffdbfa6ef",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
