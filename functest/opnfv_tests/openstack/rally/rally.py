@@ -667,3 +667,12 @@ class RallyJobs(RallyBase):
         self.apply_blacklist(task, task_file_name)
         self.run_cmd = (["rally", "task", "start", "--task", task_file_name])
         return True
+
+    def clean(self):
+        inst_dir = getattr(config.CONF, 'dir_rally_inst')
+        try:
+            shutil.rmtree(os.path.join(inst_dir, 'plugins'))
+            shutil.rmtree(os.path.join(inst_dir, 'extra'))
+            super(RallyJobs, self).clean()
+        except Exception:  # pylint: disable=broad-except
+            pass
