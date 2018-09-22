@@ -55,6 +55,9 @@ class TempestCommon(singlevm.VmReady2):
             role_name, user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
+        self.orig_cloud.grant_role(
+            role_name, user=self.project.user.id,
+            domain=self.project.domain.id)
         environ = dict(
             os.environ,
             OS_USERNAME=self.project.user.name,
