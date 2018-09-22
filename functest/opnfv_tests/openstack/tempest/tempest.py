@@ -46,17 +46,17 @@ class TempestCommon(singlevm.VmReady2):
         assert self.cloud
         assert self.project
         if self.orig_cloud.get_role("admin"):
-            role_name = "admin"
+            self.role_name = "admin"
         elif self.orig_cloud.get_role("Admin"):
-            role_name = "Admin"
+            self.role_name = "Admin"
         else:
             raise Exception("Cannot detect neither admin nor Admin")
         self.orig_cloud.grant_role(
-            role_name, user=self.project.user.id,
+            self.role_name, user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
         self.orig_cloud.grant_role(
-            role_name, user=self.project.user.id,
+            self.role_name, user=self.project.user.id,
             domain=self.project.domain.id)
         environ = dict(
             os.environ,
@@ -348,7 +348,7 @@ class TempestCommon(singlevm.VmReady2):
             compute_cnt=compute_cnt,
             image_alt_id=self.image_alt.id,
             flavor_alt_id=self.flavor_alt.id,
-            domain_name=self.cloud.auth.get("project_domain_name", "Default"))
+            admin_role_name=self.role_name, cidr=self.cidr)
         self.update_scenario_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
