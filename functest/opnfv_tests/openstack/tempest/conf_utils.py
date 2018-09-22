@@ -177,8 +177,9 @@ def update_tempest_conf_file(conf_file, rconfig):
 def configure_tempest_update_params(
         tempest_conf_file, image_id=None, flavor_id=None,
         compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
-        admin_role_name='admin', cidr='192.168.120.0/24'):
-    # pylint: disable=too-many-branches, too-many-arguments
+        admin_role_name='admin', cidr='192.168.120.0/24',
+        domain_id='default'):
+    # pylint: disable=too-many-branches,too-many-arguments,too-many-statements
     """
     Add/update needed parameters into tempest.conf file
     """
@@ -221,6 +222,7 @@ def configure_tempest_update_params(
     rconfig.set('identity', 'auth_version', 'v3')
     rconfig.set('identity', 'admin_role', admin_role_name)
     rconfig.set('identity', 'admin_domain_scope', True)
+    rconfig.set('identity', 'default_domain_id', domain_id)
     rconfig.set('identity-feature-enabled', 'api_v2', False)
     rconfig.set('identity-feature-enabled', 'api_v2_admin', False)
     if not rconfig.has_section('neutron'):
