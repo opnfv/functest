@@ -173,7 +173,8 @@ def update_tempest_conf_file(conf_file, rconfig):
 def configure_tempest_update_params(
         tempest_conf_file, image_id=None, flavor_id=None,
         compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
-        domain_name="Default"):
+        domain_name='Default', admin_role_name='admin',
+        cidr='192.168.120.0/24'):
     # pylint: disable=too-many-branches, too-many-arguments
     """
     Add/update needed parameters into tempest.conf file
@@ -203,14 +204,6 @@ def configure_tempest_update_params(
         convert_list_to_ini(filters))
     if os.environ.get('OS_REGION_NAME'):
         rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
-    identity_api_version = os.environ.get("OS_IDENTITY_API_VERSION", '3')
-    rconfig.set('auth', 'admin_domain_scope', True)
-    rconfig.set('auth', 'default_credentials_domain_name', domain_name)
-    if identity_api_version == '3':
-        auth_version = 'v3'
-        rconfig.set('identity-feature-enabled', 'api_v2', False)
-    else:
-        auth_version = 'v2'
     if env.get("NEW_USER_ROLE").lower() != "member":
         rconfig.set(
             'auth', 'tempest_roles',
@@ -222,7 +215,15 @@ def configure_tempest_update_params(
         assert os.path.exists(
             account_file), "{} doesn't exist".format(account_file)
         rconfig.set('auth', 'test_accounts_file', account_file)
-    rconfig.set('identity', 'auth_version', auth_version)
+    rconfig.set('identity', 'auth_version', 'v3')
+    rconfig.set('identity', 'admin_role', admin_role_name)
+    rconfig.set('identity', 'admin_domain_scope', True)
+    rconfig.set('identity-feature-enabled', 'api_v2', False)
+    rconfig.set('identity-feature-enabled', 'api_v2_admin', False)
+    if not rconfig.has_section('neutron'):
+        rconfig.add_section('neutron')
+    rconfig.set('neutron', 'default_network', cidr)
+    rconfig.set('neutron', 'project_network_cidr', cidr)
     rconfig.set(
         'validation', 'ssh_timeout',
         getattr(config.CONF, 'tempest_validation_ssh_timeout'))
