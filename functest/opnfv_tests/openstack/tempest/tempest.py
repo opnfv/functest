@@ -36,7 +36,6 @@ class TempestCommon(singlevm.VmReady2):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
-    shared_network = True
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
 
     def __init__(self, **kwargs):
@@ -92,6 +91,9 @@ class TempestCommon(singlevm.VmReady2):
                 'neutron_extensions']
         except Exception:  # pylint: disable=broad-except
             pass
+
+    def create_network_resources(self):
+        pass
 
     def check_services(self):
         """Check the mandatory services."""
@@ -398,7 +400,7 @@ class TempestCommon(singlevm.VmReady2):
         if not self.conf_file:
             raise Exception("Tempest verifier configuring failed")
         conf_utils.configure_tempest_update_params(
-            self.conf_file, network_name=self.network.name,
+            self.conf_file,
             image_id=self.image.id,
             flavor_id=self.flavor.id,
             compute_cnt=compute_cnt,
