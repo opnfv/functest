@@ -409,7 +409,8 @@ class TempestCommon(singlevm.VmReady2):
             compute_cnt=compute_cnt,
             image_alt_id=self.image_alt.id,
             flavor_alt_id=self.flavor_alt.id,
-            admin_role_name=self.role_name, cidr=self.cidr)
+            admin_role_name=self.role_name, cidr=self.cidr,
+            domain_id=self.project.domain.id)
         self.update_scenario_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
