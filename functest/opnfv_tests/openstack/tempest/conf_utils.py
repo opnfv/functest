@@ -175,7 +175,7 @@ def update_tempest_conf_file(conf_file, rconfig):
 
 
 def configure_tempest_update_params(
-        tempest_conf_file, network_name=None, image_id=None, flavor_id=None,
+        tempest_conf_file, image_id=None, flavor_id=None,
         compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
         domain_name="Default"):
     # pylint: disable=too-many-branches, too-many-arguments
@@ -185,7 +185,6 @@ def configure_tempest_update_params(
     LOGGER.debug("Updating selected tempest.conf parameters...")
     rconfig = configparser.RawConfigParser()
     rconfig.read(tempest_conf_file)
-    rconfig.set('compute', 'fixed_network_name', network_name)
     rconfig.set('compute', 'volume_device_name', env.get('VOLUME_DEVICE_NAME'))
     if image_id is not None:
         rconfig.set('compute', 'image_ref', image_id)

@@ -36,7 +36,6 @@ class TempestCommon(singlevm.VmReady2):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
-    shared_network = True
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
 
     def __init__(self, **kwargs):
@@ -78,6 +77,9 @@ class TempestCommon(singlevm.VmReady2):
         self.conf_file = None
         self.image_alt = None
         self.flavor_alt = None
+
+    def _create_network_resources(self):
+        pass
 
     @staticmethod
     def read_file(filename):
@@ -337,7 +339,7 @@ class TempestCommon(singlevm.VmReady2):
 
         self.conf_file = conf_utils.configure_verifier(self.deployment_dir)
         conf_utils.configure_tempest_update_params(
-            self.conf_file, network_name=self.network.name,
+            self.conf_file,
             image_id=self.image.id,
             flavor_id=self.flavor.id,
             compute_cnt=compute_cnt,
