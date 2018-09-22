@@ -109,16 +109,17 @@ Results shall be displayed as follows::
   +------------------------------------+------------------+---------------+------------------+----------------+
   |             TEST CASE              |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +------------------------------------+------------------+---------------+------------------+----------------+
-  |           tempest_smoke            |     functest     |     smoke     |      04:24       |      PASS      |
-  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      10:43       |      PASS      |
-  |            rally_sanity            |     functest     |     smoke     |      23:16       |      PASS      |
-  |          refstack_defcore          |     functest     |     smoke     |      06:30       |      PASS      |
-  |              patrole               |     functest     |     smoke     |      02:08       |      PASS      |
-  |            snaps_smoke             |     functest     |     smoke     |      00:00       |      SKIP      |
-  |           neutron_trunk            |     functest     |     smoke     |      02:09       |      PASS      |
+  |           tempest_smoke            |     functest     |     smoke     |      06:13       |      PASS      |
+  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      09:32       |      PASS      |
+  |            rally_sanity            |     functest     |     smoke     |      29:34       |      PASS      |
+  |             rally_jobs             |     functest     |     smoke     |      24:02       |      PASS      |
+  |          refstack_defcore          |     functest     |     smoke     |      13:07       |      PASS      |
+  |              patrole               |     functest     |     smoke     |      05:17       |      PASS      |
+  |            snaps_smoke             |     functest     |     smoke     |      90:13       |      PASS      |
+  |           neutron_trunk            |     functest     |     smoke     |      00:00       |      SKIP      |
   |         networking-bgpvpn          |     functest     |     smoke     |      00:00       |      SKIP      |
   |           networking-sfc           |     functest     |     smoke     |      00:00       |      SKIP      |
-  |              barbican              |     functest     |     smoke     |      00:00       |      SKIP      |
+  |              barbican              |     functest     |     smoke     |      05:01       |      PASS      |
   +------------------------------------+------------------+---------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
