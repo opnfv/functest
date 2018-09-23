@@ -537,6 +537,11 @@ class RallyBase(singlevm.VmReady2):
                 OS_PROJECT_NAME=self.project.project.name,
                 OS_PROJECT_ID=self.project.project.id,
                 OS_PASSWORD=self.project.password)
+            try:
+                del environ['OS_TENANT_NAME']
+                del environ['OS_TENANT_ID']
+            except Exception:  # pylint: disable=broad-except
+                pass
             conf_utils.create_rally_deployment(environ=environ)
             self._prepare_env()
             self._run_tests()
