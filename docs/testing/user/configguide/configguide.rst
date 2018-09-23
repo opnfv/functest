@@ -189,7 +189,7 @@ Results shall be displayed as follows::
   +--------------------------+------------------+--------------------+------------------+----------------+
   |        TEST CASE         |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
   +--------------------------+------------------+--------------------+------------------+----------------+
-  |       tempest_full       |     functest     |     components     |      53:40       |      FAIL      |
+  |       tempest_full       |     functest     |     components     |      49:51       |      PASS      |
   |     tempest_scenario     |     functest     |     components     |      18:50       |      PASS      |
   |        rally_full        |     functest     |     components     |      167:13      |      PASS      |
   +--------------------------+------------------+--------------------+------------------+----------------+
