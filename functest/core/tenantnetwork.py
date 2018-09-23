@@ -106,7 +106,7 @@ class NewProject(object):
                 self.orig_cloud.delete_project(self.project.id)
             if self.role:
                 self.orig_cloud.delete_role(self.role.id)
-            sec_id = self.cloud.list_security_groups(
+            sec_id = self.orig_cloud.list_security_groups(
                 filters={'name': 'default',
                          'project_id': self.project.id})[0].id
             self.orig_cloud.delete_security_group(sec_id)
