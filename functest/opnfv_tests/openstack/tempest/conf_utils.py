@@ -221,10 +221,11 @@ def configure_tempest_update_params(
     rconfig.set('identity', 'default_domain_id', domain_id)
     rconfig.set('identity-feature-enabled', 'api_v2', False)
     rconfig.set('identity-feature-enabled', 'api_v2_admin', False)
-    if not rconfig.has_section('neutron'):
-        rconfig.add_section('neutron')
-    rconfig.set('neutron', 'default_network', cidr)
-    rconfig.set('neutron', 'project_network_cidr', cidr)
+    if not rconfig.has_section('network'):
+        rconfig.add_section('network')
+    rconfig.set('network', 'default_network', cidr)
+    rconfig.set('network', 'project_network_cidr', cidr)
+    rconfig.set('network', 'project_networks_reachable', False)
     rconfig.set(
         'validation', 'ssh_timeout',
         getattr(config.CONF, 'tempest_validation_ssh_timeout'))
