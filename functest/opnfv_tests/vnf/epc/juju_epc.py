@@ -230,7 +230,7 @@ class JujuEpc(singlevm.VmReady2):
                        self.cloud.region_name if self.cloud.region_name else (
                            'RegionOne')),
                    'abot-controller',
-                   '--agent-version', '2.2.9',
+                   '--agent-version', '2.3.9',
                    '--metadata-source', '/root',
                    '--constraints', 'mem=2G',
                    '--bootstrap-series', 'xenial',
