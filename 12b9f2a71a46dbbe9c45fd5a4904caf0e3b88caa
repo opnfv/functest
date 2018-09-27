@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_df4a9782",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2018-09-27T14:40:09Z",
+      "side": 1,
+      "message": "I know we are getting no more extra properties in the conf file with this patch, but here you remove the support for it in the future as well. Should we keep the code to process extra properties for future reference too?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
