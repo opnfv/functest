@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a682502_a855dfc7",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-30T10:23:13Z",
+      "side": 1,
+      "message": "I would prefer in 2 lines as recommended by lots of py projects.",
+      "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a682502_df4a9782",
         "filename": "functest/core/singlevm.py",
         "patchSetId": 5
@@ -19,6 +36,57 @@
         "endLine": 80,
         "endChar": 27
       },
+      "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_e85eb7e8",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-30T10:23:13Z",
+      "side": 1,
+      "message": "Why not switching to dict? It would remove quite useless logic here.",
+      "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_c863fbaf",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-30T10:23:13Z",
+      "side": 1,
+      "message": "It could be simplified by switching to dict instead of string.",
+      "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_8852a3db",
+        "filename": "functest/utils/env.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-09-30T10:23:13Z",
+      "side": 1,
+      "message": "I would prefer a more generic way.\nWe could simply allow adding extra properties via env var.\n\nBut if all arm64 deployments require these values the current patching system is quite equal.\n\nvirtio should be defined as default.",
       "revId": "12b9f2a71a46dbbe9c45fd5a4904caf0e3b88caa",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
