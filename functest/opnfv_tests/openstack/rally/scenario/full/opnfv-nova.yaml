@@ -381,6 +381,40 @@
       sla:
         {{ no_failures_sla() }}
 
+  NovaServers.boot_server_associate_and_dissociate_floating_ip:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        create_floating_ip_args:
+          ext_network: {{ floating_network }}
+        nics:
+          - net-id: {{ netid }}
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  NovaServers.boot_and_associate_floating_ip:
+    -
+      args:
+        {{ vm_params(image_name, flavor_name) }}
+        create_floating_ip_args:
+          ext_network: {{ floating_network }}
+        nics:
+          - net-id: {{ netid }}
+      context:
+        {% call user_context(tenants_amount, users_amount, use_existing_users) %}
+        network: {}
+        {% endcall %}
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      sla:
+        {{ no_failures_sla() }}
+
   NovaServerGroups.create_and_delete_server_group:
     -
       args:
