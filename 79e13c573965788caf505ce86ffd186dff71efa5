@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_9ba02af6",
+        "filename": "functest/utils/env.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-04T19:12:03Z",
+      "side": 1,
+      "message": "I would prefer any specific logic. Here it may be set by jjbs directly.",
+      "revId": "79e13c573965788caf505ce86ffd186dff71efa5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
