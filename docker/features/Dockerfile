@@ -21,8 +21,9 @@ RUN apk --no-cache add --update python3 sshpass && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
-    python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        doctor-tests && \
+    python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
+        -cupper-constraints.opnfv.txt \
+        -rthirdparty-requirements.txt && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt /src/fds/.git && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
