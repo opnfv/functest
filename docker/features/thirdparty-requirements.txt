@@ -1,8 +1,8 @@
-robotframework-httplibrary
-robotframework-requests
-robotframework-sshlibrary;python_version=='2.7'
-# baro_tests
-# sdnvpn
-# sfc
-# stor4nfv_tests
+robotframework-httplibrary;python_version<'3.0'
+robotframework-requests;python_version<'3.0'
+robotframework-sshlibrary;python_version<'3.0'
+# baro_tests;python_version<'3.0'
+# sdnvpn;python_version<'3.0'
+# sfc;python_version<'3.0'
+# stor4nfv_tests;python_version<'3.0'
 # doctor-tests;python_version>='3.0'
