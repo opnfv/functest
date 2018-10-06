@@ -30,7 +30,7 @@ RUN apk --no-cache add --update python3 sshpass && \
     git clone --depth 1 -b $FDS_TAG https://gerrit.opnfv.org/gerrit/fds /src/fds && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
-        doctor-tests && \
+        -rthirdparty-requirements.txt && \
     rm -r upper-constraints.txt thirdparty-requirements.txt /src/fds/.git \
         /src/os-faults /src/rally && \
     mkdir -p /etc/rally && \
