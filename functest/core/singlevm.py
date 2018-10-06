@@ -74,10 +74,10 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_properties = self.extra_properties.copy()
-        if env.get('IMG_PROP'):
+        if env.get('IMAGE_PROPERTIES'):
             extra_properties.update(dict((k.strip(), v.strip()) for k, v in
                                          (item.split(': ') for item in
-                                          env.get('IMG_PROP').split(','))))
+                                          env.get('IMAGE_PROPERTIES').split(','))))
         extra_properties.update(
             getattr(config.CONF, '{}_extra_properties'.format(
                 self.case_name), {}))
@@ -109,10 +109,10 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         extra_alt_properties = self.extra_alt_properties.copy()
-        if env.get('IMG_PROP'):
+        if env.get('IMAGE_PROPERTIES'):
             extra_alt_properties.update(dict((k.strip(), v.strip()) for k, v in
                                              (item.split(': ') for item in
-                                              env.get('IMG_PROP').split(','))))
+                                              env.get('IMAGE_PROPERTIES').split(','))))
         extra_alt_properties.update(
             getattr(config.CONF, '{}_extra_alt_properties'.format(
                 self.case_name), {}))
