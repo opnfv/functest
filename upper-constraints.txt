@@ -1,15 +1,12 @@
-git+https://gerrit.opnfv.org/gerrit/functest#egg=functest
-git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
+git+https://gerrit.opnfv.org/gerrit/functest@stable/gambia#egg=functest
+git+https://gerrit.opnfv.org/gerrit/releng@54f42524a0507f819df7cab9b1c4832c967c1411#egg=opnfv&subdirectory=modules
 git+https://gerrit.opnfv.org/gerrit/snaps@0dacfaa2fbd2dfe7fc9d438b9350a0187506e61c#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn#egg=sdnvpn
-git+https://gerrit.opnfv.org/gerrit/sfc#egg=sfc
--e git+https://gerrit.opnfv.org/gerrit/doctor#egg=doctor-tests
+git+https://gerrit.opnfv.org/gerrit/sfc@stable/gambia#egg=sfc
+-e git+https://gerrit.opnfv.org/gerrit/doctor@stable/gambia#egg=doctor-tests
 git+https://gerrit.opnfv.org/gerrit/stor4nfv#egg=stor4nfv-tests
 git+https://gerrit.opnfv.org/gerrit/clover#egg=clover
-git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
-git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
--e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
 cloudify-rest-client===4.3.2
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
