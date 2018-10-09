@@ -93,6 +93,5 @@
             - bgpvpn
             - functest-odl-sfc
             - barometercollectd
-            - fds
             - vgpu
             - stor4nfv_os
