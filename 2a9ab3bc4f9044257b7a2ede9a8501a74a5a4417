@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_0c45fe6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T03:45:05Z",
+      "side": 1,
+      "message": "Fully disagree because you would have removed the rst linter.\nYour link linter is usefull but strongly differs from doc8.",
+      "revId": "2a9ab3bc4f9044257b7a2ede9a8501a74a5a4417",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_ec49a28c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T03:45:05Z",
+      "side": 1,
+      "message": "lots of typos.",
+      "revId": "2a9ab3bc4f9044257b7a2ede9a8501a74a5a4417",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
