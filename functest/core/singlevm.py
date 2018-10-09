@@ -156,6 +156,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     self.flavor_disk))
         self.__logger.debug("flavor: %s", flavor)
         flavor_extra_specs = self.flavor_extra_specs.copy()
+        if env.get('FLAVOR_EXTRA_SPECS'):
+            flavor_extra_specs.update(
+                dict((k.strip(), v.strip()) for k, v in (
+                    item.split(': ') for item in env.get(
+                        'FLAVOR_EXTRA_SPECS').split(','))))
         flavor_extra_specs.update(
             getattr(config.CONF,
                     '{}_flavor_extra_specs'.format(self.case_name), {}))
@@ -184,6 +189,11 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     self.flavor_alt_disk))
         self.__logger.debug("flavor: %s", flavor)
         flavor_alt_extra_specs = self.flavor_alt_extra_specs.copy()
+        if env.get('FLAVOR_EXTRA_SPECS'):
+            flavor_alt_extra_specs.update(
+                dict((k.strip(), v.strip()) for k, v in (
+                    item.split(': ') for item in env.get(
+                        'FLAVOR_EXTRA_SPECS').split(','))))
         flavor_alt_extra_specs.update(
             getattr(config.CONF,
                     '{}_flavor_alt_extra_specs'.format(self.case_name), {}))
