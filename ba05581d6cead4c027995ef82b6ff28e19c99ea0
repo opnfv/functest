@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_0c3cdee1",
+        "filename": "docs/_static/favicon.ico",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T03:53:08Z",
+      "side": 1,
+      "message": "simply useless but the generic config forces it",
+      "revId": "ba05581d6cead4c027995ef82b6ff28e19c99ea0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_8c2f4ea1",
+        "filename": "docs/conf.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T03:53:08Z",
+      "side": 1,
+      "message": "lots of warning exclusions for 1 line (-330/10 by pylint)",
+      "revId": "ba05581d6cead4c027995ef82b6ff28e19c99ea0",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
