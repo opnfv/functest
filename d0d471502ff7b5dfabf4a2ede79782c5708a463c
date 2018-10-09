@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_e7625cd7",
+        "filename": "functest/ci/config_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T15:30:54Z",
+      "side": 0,
+      "message": "I think we should keep 1024 here (default is 512)",
+      "revId": "d0d471502ff7b5dfabf4a2ede79782c5708a463c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_c75f600d",
+        "filename": "functest/ci/config_patch.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-09T15:30:54Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "d0d471502ff7b5dfabf4a2ede79782c5708a463c",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
