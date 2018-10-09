@@ -449,22 +449,6 @@ tiers:
                     name: barometercollectd
 
             -
-                case_name: fds
-                project_name: fastdatastacks
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test Suite for the OpenDaylight SDN Controller when GBP
-                    features are installed. It integrates some test suites from
-                    upstream using Robot as the test framework.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'odl.*-fdio'
-                run:
-                    name: odl
-                    args:
-                        suites:
-                            - /src/fds/testing/robot
-            -
                 case_name: vgpu
                 project_name: functest
                 criteria: 100

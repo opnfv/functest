@@ -2,7 +2,6 @@ FROM opnfv/functest-tempest:gambia
 
 ARG BRANCH=stable/gambia
 ARG OPENSTACK_TAG=stable/queens
-ARG FDS_TAG=master
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass && \
@@ -14,17 +13,13 @@ RUN apk --no-cache add --update python3 sshpass && \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
-    git init /src/fds && \
-    (cd /src/fds && \
-        git fetch --tags https://gerrit.opnfv.org/gerrit/fds $FDS_TAG && \
-        git checkout FETCH_HEAD) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt /src/fds/.git && \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
