@@ -33,6 +33,7 @@ INPUTS = {
     'ENERGY_RECORDER_API_PASSWORD': env.INPUTS['ENERGY_RECORDER_API_PASSWORD'],
     'VOLUME_DEVICE_NAME': 'vdb',
     'IMAGE_PROPERTIES': '',
+    'FLAVOR_EXRA_SPECS': '',
     'NAMESERVER': '8.8.8.8',
     'NEW_USER_ROLE': 'Member',
     'USE_DYNAMIC_CREDENTIALS': 'True',
@@ -53,3 +54,13 @@ def string():
     for env_var in INPUTS:
         msg.add_row([env_var, get(env_var) if get(env_var) else ''])
     return msg
+
+if 'ovs' in env.get('DEPLOY_SCENARIO') or 'fdio' in env.get('DEPLOY_SCENARIO'):
+    if env.get('FLAVOR_EXTRA_SPECS'):
+        os.environ['FLAVOR_EXTRA_SPECS'] += ", hw:mem_page_size: large"
+    else:
+        INPUTS.update(FLAVOR_EXTRA_SPECS="hw:mem_page_size: large")
+    if env.get('IMAGE_PROPERTIES'):
+        os.environ['IMAGE_PROPERTIES'] += ", hw_mem_page_size: large"
+    else:
+        INPUTS.update(IMAGE_PROPERTIES="hw_mem_page_size: large")
