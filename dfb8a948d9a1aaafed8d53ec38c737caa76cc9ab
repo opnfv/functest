@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a682502_56a66011",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-14T07:06:50Z",
+      "side": 1,
+      "message": "Could you please remove the added spaces?\nIt doesn\u0027t conform with OpenStack and doesn\u0027t help jjbs.\nhttps://github.com/openstack/oslo.config/blob/master/oslo_config/types.py#L600",
+      "revId": "dfb8a948d9a1aaafed8d53ec38c737caa76cc9ab",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a682502_36abe4d9",
+        "filename": "functest/core/singlevm.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2018-10-14T07:06:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dfb8a948d9a1aaafed8d53ec38c737caa76cc9ab",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
