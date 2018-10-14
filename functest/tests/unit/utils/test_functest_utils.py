@@ -338,6 +338,47 @@ class FunctestUtilsTesting(unittest.TestCase):
             functest_utils.get_openstack_version(cloud), "Unknown")
         args[0].assert_called_once_with(cloud)
 
+    def test_convert_dict_to_ini(self):
+        self.assertEqual(
+            functest_utils.convert_dict_to_ini({}), "")
+        self.assertEqual(
+            functest_utils.convert_dict_to_ini({"a": "b"}), "a:b")
+        value = functest_utils.convert_dict_to_ini({"a": "b", "c": "d"})
+        self.assertTrue(value == "a:b,c:d" or value == "c:d,a:b")
+        with self.assertRaises(AssertionError):
+            functest_utils.convert_list_to_ini("")
+
+    def test_convert_list_to_ini(self):
+        self.assertEqual(
+            functest_utils.convert_list_to_ini([]), "")
+        self.assertEqual(
+            functest_utils.convert_list_to_ini(["a"]), "a")
+        self.assertEqual(
+            functest_utils.convert_list_to_ini(["a", "b"]), "a,b")
+        with self.assertRaises(AssertionError):
+            functest_utils.convert_list_to_ini("")
+
+    def test_convert_ini_to_dict(self):
+        self.assertEqual(
+            functest_utils.convert_ini_to_dict(""), {})
+        self.assertEqual(
+            functest_utils.convert_ini_to_dict("a:b"), {"a": "b"})
+        self.assertEqual(
+            functest_utils.convert_ini_to_dict(
+                "a:b,c:d"), {"a": "b", "c": "d"})
+        with self.assertRaises(AssertionError):
+            functest_utils.convert_list_to_ini({})
+
+    def test_convert_ini_to_list(self):
+        self.assertEqual(
+            functest_utils.convert_ini_to_list(""), [])
+        self.assertEqual(
+            functest_utils.convert_ini_to_list("a"), ["a"])
+        self.assertEqual(
+            functest_utils.convert_ini_to_list("a,b"), ["a", "b"])
+        with self.assertRaises(AssertionError):
+            functest_utils.convert_ini_to_list([])
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)

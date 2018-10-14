@@ -27,6 +27,7 @@ from functest.core import singlevm
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -384,15 +385,14 @@ class TempestCommon(singlevm.VmReady2):
         extra_properties = self.extra_properties.copy()
         if env.get('IMAGE_PROPERTIES'):
             extra_properties.update(
-                dict((k.strip(), v.strip()) for k, v in (
-                    item.split(': ') for item in env.get(
-                        'IMAGE_PROPERTIES').split(','))))
+                functest_utils.convert_ini_to_dict(
+                    env.get('IMAGE_PROPERTIES')))
         extra_properties.update(
             getattr(config.CONF, '{}_extra_properties'.format(
                 self.case_name), {}))
         rconfig.set(
             'scenario', 'img_properties',
-            conf_utils.convert_dict_to_ini(extra_properties))
+            functest_utils.convert_dict_to_ini(extra_properties))
         with open(self.conf_file, 'wb') as config_file:
             rconfig.write(config_file)
 

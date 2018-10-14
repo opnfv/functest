@@ -15,6 +15,8 @@ import subprocess
 import sys
 import yaml
 
+import six
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -132,3 +134,33 @@ def get_openstack_version(cloud):
     except AssertionError:
         LOGGER.exception("Cannot detect OpenStack version")
         return "Unknown"
+
+
+def convert_dict_to_ini(value):
+    "Convert dict to oslo.conf input"
+    assert isinstance(value, dict)
+    return ",".join("{}:{}".format(
+        key, val) for (key, val) in six.iteritems(value))
+
+
+def convert_list_to_ini(value):
+    "Convert list to oslo.conf input"
+    assert isinstance(value, list)
+    return ",".join("{}".format(val) for val in value)
+
+
+def convert_ini_to_dict(value):
+    "Convert oslo.conf input to dict"
+    assert isinstance(value, str)
+    try:
+        return {k: v for k, v in (x.split(':') for x in value.split(','))}
+    except ValueError:
+        return {}
+
+
+def convert_ini_to_list(value):
+    "Convert list to oslo.conf input"
+    assert isinstance(value, str)
+    if not value:
+        return []
+    return [x for x in value.split(',')]
