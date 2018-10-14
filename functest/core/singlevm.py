@@ -24,6 +24,7 @@ from xtesting.core import testcase
 from functest.core import tenantnetwork
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 class VmReady1(tenantnetwork.TenantNetwork1):
@@ -76,9 +77,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         extra_properties = self.extra_properties.copy()
         if env.get('IMAGE_PROPERTIES'):
             extra_properties.update(
-                dict((k.strip(), v.strip()) for k, v in (
-                    item.split(': ') for item in env.get(
-                        'IMAGE_PROPERTIES').split(','))))
+                functest_utils.convert_ini_to_dict(
+                    env.get('IMAGE_PROPERTIES')))
         extra_properties.update(
             getattr(config.CONF, '{}_extra_properties'.format(
                 self.case_name), {}))
@@ -112,9 +112,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         extra_alt_properties = self.extra_alt_properties.copy()
         if env.get('IMAGE_PROPERTIES'):
             extra_alt_properties.update(
-                dict((k.strip(), v.strip()) for k, v in (
-                    item.split(': ') for item in env.get(
-                        'IMAGE_PROPERTIES').split(','))))
+                functest_utils.convert_ini_to_dict(
+                    env.get('IMAGE_PROPERTIES')))
         extra_alt_properties.update(
             getattr(config.CONF, '{}_extra_alt_properties'.format(
                 self.case_name), {}))
