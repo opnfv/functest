@@ -19,12 +19,12 @@ import os
 import subprocess
 
 import pkg_resources
-import six
 from six.moves import configparser
 import yaml
 
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 RALLY_CONF_PATH = "/etc/rally/rally.conf"
@@ -201,13 +201,13 @@ def configure_tempest_update_params(
                'ServerGroupAntiAffinityFilter', 'ServerGroupAffinityFilter']
     rconfig.set(
         'compute-feature-enabled', 'scheduler_available_filters',
-        convert_list_to_ini(filters))
+        functest_utils.convert_list_to_ini(filters))
     if os.environ.get('OS_REGION_NAME'):
         rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
     if env.get("NEW_USER_ROLE").lower() != "member":
         rconfig.set(
             'auth', 'tempest_roles',
-            convert_list_to_ini([env.get("NEW_USER_ROLE")]))
+            functest_utils.convert_list_to_ini([env.get("NEW_USER_ROLE")]))
     if not json.loads(env.get("USE_DYNAMIC_CREDENTIALS").lower()):
         rconfig.set('auth', 'use_dynamic_credentials', False)
         account_file = os.path.join(
@@ -269,16 +269,3 @@ def configure_verifier(deployment_dir):
                      tempest_conf_file)
         return None
     return tempest_conf_file
-
-
-def convert_dict_to_ini(value):
-    "Convert dict to oslo.conf input"
-    assert isinstance(value, dict)
-    return ",".join("{}:{}".format(
-        key, val) for (key, val) in six.iteritems(value))
-
-
-def convert_list_to_ini(value):
-    "Convert list to oslo.conf input"
-    assert isinstance(value, list)
-    return ",".join("{}".format(val) for val in value)
