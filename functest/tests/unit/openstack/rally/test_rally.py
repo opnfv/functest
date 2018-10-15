@@ -267,6 +267,9 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base.prepare_run()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.shutil.copyfile')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.shutil.copytree')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.shutil.rmtree')
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.TESTS = ['test1', 'test2']

@@ -56,7 +56,8 @@ class RallyBase(singlevm.VmReady2):
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
-    TEMP_DIR = os.path.join(RALLY_DIR, "var")
+    TASK_DIR = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
+    TEMP_DIR = os.path.join(TASK_DIR, 'var')
 
     visibility = 'public'
     shared_network = True
@@ -78,7 +79,7 @@ class RallyBase(singlevm.VmReady2):
             domain=self.project.domain.id)
         self.results_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
-        self.task_file = os.path.join(self.RALLY_DIR, 'task.yaml')
+        self.task_file = ''
         self.creators = []
         self.summary = []
         self.scenario_dir = ''
@@ -420,10 +421,26 @@ class RallyBase(singlevm.VmReady2):
         else:
             raise Exception("Test name '%s' is invalid" % self.test_name)
 
-        if not os.path.exists(self.task_file):
-            LOGGER.error("Task file '%s' does not exist.", self.task_file)
+        if not os.path.exists(self.TASK_DIR):
+            os.makedirs(self.TASK_DIR)
+
+        task = os.path.join(self.RALLY_DIR, 'task.yaml')
+        if not os.path.exists(task):
+            LOGGER.error("Task file '%s' does not exist.", task)
             raise Exception("Task file '{}' does not exist.".
-                            format(self.task_file))
+                            format(task))
+        self.task_file = os.path.join(self.TASK_DIR, 'task.yaml')
+        shutil.copyfile(task, self.task_file)
+
+        task_macro = os.path.join(self.RALLY_DIR, 'macro')
+        if not os.path.exists(task_macro):
+            LOGGER.error("Task macro dir '%s' does not exist.", task_macro)
+            raise Exception("Task macro dir '{}' does not exist.".
+                            format(task_macro))
+        macro_dir = os.path.join(self.TASK_DIR, 'macro')
+        if os.path.exists(macro_dir):
+            shutil.rmtree(macro_dir)
+        shutil.copytree(task_macro, macro_dir)
 
         self.update_keystone_default_role()
         self.compute_cnt = len(self.cloud.list_hypervisors())
