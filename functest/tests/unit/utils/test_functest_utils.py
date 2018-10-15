@@ -366,6 +366,9 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.assertEqual(
             functest_utils.convert_ini_to_dict(
                 "a:b,c:d"), {"a": "b", "c": "d"})
+        self.assertEqual(
+            functest_utils.convert_ini_to_dict(
+                "a:b:c,d:e:f"), {"a:b": "c", "d:e": "f"})
         with self.assertRaises(AssertionError):
             functest_utils.convert_list_to_ini({})
 
