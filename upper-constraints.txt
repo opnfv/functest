@@ -5,8 +5,8 @@ git+https://gerrit.opnfv.org/gerrit/barometer@stable/gambia#egg=baro_tests
 git+https://gerrit.opnfv.org/gerrit/sdnvpn@stable/gambia#egg=sdnvpn
 git+https://gerrit.opnfv.org/gerrit/sfc@stable/gambia#egg=sfc
 -e git+https://gerrit.opnfv.org/gerrit/doctor@stable/gambia#egg=doctor-tests
-git+https://gerrit.opnfv.org/gerrit/stor4nfv#egg=stor4nfv-tests
-git+https://gerrit.opnfv.org/gerrit/clover#egg=clover
+git+https://gerrit.opnfv.org/gerrit/stor4nfv@stable/gambia#egg=stor4nfv-tests
+git+https://gerrit.opnfv.org/gerrit/clover@stable/gambia#egg=clover
 cloudify-rest-client===4.3.2
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
