@@ -111,4 +111,4 @@ In OPNFV CI we collect all the results from CI. A test API shall be available
 as well as a test database `[16]`_.
 
 
-.. _`[16]`: http://testresults.opnfv.org/test/#/
+.. _`[16]`: http://testresults.opnfv.org/test/
