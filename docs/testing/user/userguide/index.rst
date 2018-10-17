@@ -68,7 +68,7 @@ IRC support chan: #opnfv-functest
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
-.. _`[16]`: http://testresults.opnfv.org/test/#/
+.. _`[16]`: http://testresults.opnfv.org/test/
 .. _`OPNFV main site`: http://www.opnfv.org
 .. _`Functest page`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
