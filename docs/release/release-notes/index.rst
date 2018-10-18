@@ -10,6 +10,5 @@ Functest Release Notes
    :maxdepth: 4
 
    functest-release.rst
-   functest-gating.rst
 
 Build date: |today|
