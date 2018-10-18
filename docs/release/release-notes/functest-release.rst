@@ -112,10 +112,8 @@ Docker tag for gambia: gambia
 Documents
 ---------
 
- * Config Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/configguide/index.html
- * User Guide: http://docs.opnfv.org/en/latest/submodules/functest/docs/testing/user/userguide/index.html
- * Developer Guide: https://functest.readthedocs.io/projects/devguide/en/stable-gambia/
- * API Docs: https://functest.readthedocs.io/en/stable-gambia/
+ * Functests Guides: https://functest.readthedocs.io/en/stable-gambia/
+ * API Docs: https://functest-api.readthedocs.io/en/stable-gambia/
 
 Version change
 ==============
