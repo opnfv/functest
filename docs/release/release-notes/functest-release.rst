@@ -112,10 +112,8 @@ Docker tag for hunter: hunter
 Documents
 ---------
 
- * Config Guide: https://functest.readthedocs.io/projects/configguide/en/stable-hunter/
- * User Guide: https://functest.readthedocs.io/projects/userguide/en/stable-hunter/
- * Developer Guide: https://functest.readthedocs.io/projects/devguide/en/stable-hunter/
- * API Docs: https://functest.readthedocs.io/en/stable-hunter/
+ * Functests Guides: https://functest.readthedocs.io/en/stable-hunter/
+ * API Docs: https://functest-api.readthedocs.io/en/stable-hunter/
 
 Version change
 ==============
