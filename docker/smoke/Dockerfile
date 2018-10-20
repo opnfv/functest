@@ -3,9 +3,9 @@ FROM opnfv/functest-tempest
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG REFSTACK_TARGET=2018.02
-ARG PATROLE_TAG=0.4.0
+ARG PATROLE_TAG=master
 ARG NEUTRON_TAG=master
-ARG BARBICAN_TAG=0.1.0
+ARG BARBICAN_TAG=master
 ARG NEUTRON_RALLY_TAG=master
 
 RUN apk --no-cache add --virtual .build-deps --update \
