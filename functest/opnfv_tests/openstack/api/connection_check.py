@@ -37,7 +37,8 @@ class ConnectionCheck(testcase.TestCase):
         try:
             assert self.cloud
             self.start_time = time.time()
-            for func in ["list_aggregates", "list_domains", "list_endpoints",
+            for func in ["get_network_extensions",
+                         "list_aggregates", "list_domains", "list_endpoints",
                          "list_floating_ip_pools", "list_floating_ips",
                          "list_hypervisors", "list_keypairs", "list_networks",
                          "list_ports", "list_role_assignments", "list_roles",
