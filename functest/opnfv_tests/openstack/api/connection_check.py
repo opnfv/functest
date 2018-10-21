@@ -32,12 +32,14 @@ class ConnectionCheck(testcase.TestCase):
             self.cloud = None
 
     def run(self, **kwargs):
+        # pylint: disable=protected-access
         """Run all read operations to check connections"""
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
             self.start_time = time.time()
-            for func in ["list_aggregates", "list_domains", "list_endpoints",
+            for func in ["get_network_extensions",
+                         "list_aggregates", "list_domains", "list_endpoints",
                          "list_floating_ip_pools", "list_floating_ips",
                          "list_hypervisors", "list_keypairs", "list_networks",
                          "list_ports", "list_role_assignments", "list_roles",
@@ -45,6 +47,10 @@ class ConnectionCheck(testcase.TestCase):
                          "list_subnets"]:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
+            data = self.cloud._network_client.get("/service-providers.json")
+            self.__logger.debug(
+                "list_service_providers: %s",
+                self.cloud._get_and_munchify('service_providers', data))
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
