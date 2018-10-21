@@ -314,9 +314,8 @@ class TempestCommon(singlevm.VmReady2):
         html_file = os.path.join(self.res_dir,
                                  "tempest-report.html")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
-               self.verification_id, "--to", html_file]
-        subprocess.Popen(cmd, stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT)
+               self.verification_id, "--to", str(html_file)]
+        subprocess.check_output(cmd)
 
     def update_rally_regex(self, rally_conf='/etc/rally/rally.conf'):
         """Set image name as tempest img_name_regex"""
