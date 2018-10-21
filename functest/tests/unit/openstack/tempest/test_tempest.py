@@ -170,8 +170,7 @@ class OSTempestTesting(unittest.TestCase):
                 mock_logger_info. \
                     assert_any_call("Starting Tempest test suite: '%s'.", cmd)
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                'subprocess.Popen')
+    @mock.patch('subprocess.check_output')
     def test_generate_report(self, mock_popen):
         self.tempestcommon.verification_id = "1234"
         html_file = os.path.join(
@@ -182,8 +181,7 @@ class OSTempestTesting(unittest.TestCase):
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
                "1234", "--to", html_file]
         self.tempestcommon.generate_report()
-        mock_popen.assert_called_once_with(cmd, stdout=mock.ANY,
-                                           stderr=mock.ANY)
+        mock_popen.assert_called_once_with(cmd)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
