@@ -29,7 +29,7 @@ References
 
 `[5]`_: Clearwater vIMS blueprint
 
-`[6]`_: NIST web site
+`[6]`_: Security Content Automation Protocol
 
 `[7]`_: OpenSCAP web site
 
@@ -59,7 +59,7 @@ IRC support chan: #opnfv-functest
 .. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
 .. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
-.. _`[6]`: https://scap.nist.gov/
+.. _`[6]`: https://en.wikipedia.org/wiki/Security_Content_Automation_Protocol
 .. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[8]`: https://github.com/openstack/refstack-client
 .. _`[9]`: https://github.com/openstack/defcore
