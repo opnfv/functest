@@ -36,7 +36,7 @@ RUN apk --no-cache add --update \
     mkdir -p /home/opnfv/functest/data/router && \
     git clone --depth 1 -b $VROUTER_TAG https://github.com/oolorg/opnfv-vnf-data.git /home/opnfv/functest/data/router/opnfv-vnf-data && \
     (cd /home/opnfv/functest/data/router/opnfv-vnf-data && git fetch --depth 1 --tags origin $VROUTER_TAG && git checkout FETCH_HEAD) && \
-    git clone --depth 1 https://github.com/RebacaInc/abot_charm.git /src/epc-requirements/abot_charm && \
+    git clone --depth 1 https://github.com/collivier/abot_charm.git /src/epc-requirements/abot_charm && \
     (cd /src/epc-requirements/abot_charm && git fetch  --depth 1 --tags origin $ABOT_CHARM && git checkout FETCH_HEAD) && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH \
