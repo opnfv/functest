@@ -55,7 +55,7 @@ RUN apk --no-cache add --update \
         git checkout FETCH_HEAD) && \
     git init /src/epc-requirements/abot_charm && \
     (cd /src/epc-requirements/abot_charm && \
-        git fetch --tags https://github.com/RebacaInc/abot_charm.git $ABOT_CHARM && \
+        git fetch --tags https://github.com/collivier/abot_charm.git $ABOT_CHARM && \
         git checkout FETCH_HEAD) && \
     python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         juju-wait==$JUJU_WAIT_TAG && \
