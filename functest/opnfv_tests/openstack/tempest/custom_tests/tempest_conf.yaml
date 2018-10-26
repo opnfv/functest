@@ -1,13 +1,14 @@
-# This is an empty configuration file to be filled up with the desired options
-# to generate a custom tempest.conf
-# Examples:
-# network-feature-enabled:
-#     port_security: True
-
-# volume-feature-enabled:
-#     api_v1: False
-
-# validation:
-#     image_ssh_user: root
-#     ssh_timeout: 300
-
+---
+compute-feature-enabled:
+    shelve: false
+    vnc_console: false
+identity-feature-enabled:
+    api_v2: false
+    api_v2_admin: false
+image-feature-enabled:
+    api_v2: true
+    api_v1: false
+volume:
+    storage_protocol: iSCSI
+volume-feature-enabled:
+    backup: false
