@@ -225,6 +225,9 @@ def configure_tempest_update_params(
     rconfig.set('identity', 'default_domain_id', domain_id)
     rconfig.set('identity-feature-enabled', 'api_v2', False)
     rconfig.set('identity-feature-enabled', 'api_v2_admin', False)
+    if not rconfig.has_section('compute-feature-enabled'):
+        rconfig.add_section('compute-feature-enabled')
+    rconfig.set('compute-feature-enabled', 'vnc_console', False)
     if not rconfig.has_section('network'):
         rconfig.add_section('network')
     rconfig.set('network', 'default_network', cidr)
