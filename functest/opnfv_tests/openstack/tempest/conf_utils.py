@@ -228,6 +228,9 @@ def configure_tempest_update_params(
         rconfig.add_section('image-feature-enabled')
     rconfig.set('image-feature-enabled', 'api_v2', True)
     rconfig.set('image-feature-enabled', 'api_v1', False)
+    if not rconfig.has_section('volume-feature-enabled'):
+        rconfig.add_section('volume-feature-enabled')
+    rconfig.set('volume-feature-enabled', 'backup', False)
     if not rconfig.has_section('network'):
         rconfig.add_section('network')
     rconfig.set('network', 'default_network', cidr)
