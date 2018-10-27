@@ -2,8 +2,8 @@ FROM opnfv/functest-core:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
-ARG RALLY_TAG=1.1.0
-ARG RALLY_OPENSTACK_TAG=67882d55ca453d6aa863d279ec4cfc2b52c80f0a
+ARG RALLY_TAG=1.2.1
+ARG RALLY_OPENSTACK_TAG=1.3.0
 ARG OS_FAULTS_TAG=0.1.17
 
 RUN apk --no-cache add --virtual .build-deps --update \
