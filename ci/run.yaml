@@ -190,7 +190,6 @@
       - bgpvpn
       - functest-odl-sfc
       - barometercollectd
-      - fds
       - vgpu
       - stor4nfv_os
     jobs:
@@ -207,7 +206,6 @@
             - name: '{repo}-functest-features-bgpvpn-{tag}-run'
             - name: '{repo}-functest-features-functest-odl-sfc-{tag}-run'
             - name: '{repo}-functest-features-barometercollectd-{tag}-run'
-            - name: '{repo}-functest-features-fds-{tag}-run'
             - name: '{repo}-functest-features-vgpu-{tag}-run'
             - name: '{repo}-functest-features-stor4nfv_os-{tag}-run'
 
