@@ -7,11 +7,13 @@
           docker run \
             -e NAMESERVER={nameserver} \
             -e EXTERNAL_NETWORK={external_network} \
-            -e STORAGE_PROTOCOL={storage_protocol} \
             -v \
             {prefix}/results/$JOB_NAME-$BUILD_ID:/home/opnfv/functest/results \
             -v {prefix}/openstack.creds:/home/opnfv/functest/conf/env_file \
             -v {prefix}/images:/home/opnfv/functest/images \
+            -v {prefix}/tempest_conf.yaml:\
+          /usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack\
+          /tempest/custom_tests/tempest_conf.yaml \
             {repo}/functest-{container}:{tag} run_tests -t {test}
 
 - project:
