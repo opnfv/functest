@@ -556,8 +556,6 @@ tiers:
                 blocking: false
                 description: >-
                     This test case deploys the Cloudify orchestrator.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     name: cloudify
             -
@@ -583,8 +581,6 @@ tiers:
                     This test case deploys an OpenSource vIMS solution from
                     Clearwater using the OpenStack Heat orchestrator.
                     It also runs some signaling traffic.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     name: heat_ims
 
@@ -595,8 +591,6 @@ tiers:
                 blocking: false
                 description: >-
                     This test case is vRouter testing.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     name: vyos_vrouter
 
@@ -608,7 +602,5 @@ tiers:
                 description: >-
                     vEPC validation with Juju as VNF manager and ABoT as test
                     executor.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'os-.*-nofeature-.*ha'
                 run:
                     name: juju_epc
