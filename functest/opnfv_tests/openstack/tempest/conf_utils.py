@@ -36,7 +36,7 @@ GLANCE_IMAGE_PATH = os.path.join(
 TEMPEST_CUSTOM = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
 TEMPEST_BLACKLIST = pkg_resources.resource_filename(
-    'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.txt')
+    'functest', 'opnfv_tests/openstack/tempest/custom_tests/blacklist.yaml')
 TEMPEST_CONF_YAML = pkg_resources.resource_filename(
     'functest', 'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
 
