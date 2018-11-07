@@ -76,8 +76,6 @@ from snaps.openstack.utils.tests.neutron_utils_tests import (
 from snaps.openstack.utils.tests.nova_utils_tests import (
     NovaSmokeTests, NovaUtilsKeypairTests, NovaUtilsFlavorTests,
     NovaUtilsInstanceTests, NovaUtilsInstanceVolumeTests)
-from snaps.provisioning.tests.ansible_utils_tests import (
-    AnsibleProvisioningTests)
 
 
 def add_openstack_client_tests(suite, os_creds, ext_net_name,
@@ -431,11 +429,6 @@ def add_openstack_integration_tests(suite, os_creds, ext_net_name,
     if use_floating_ips:
         suite.addTest(OSIntegrationTestCase.parameterize(
             CreateStackFloatingIpTests, os_creds=os_creds,
-            ext_net_name=ext_net_name, use_keystone=use_keystone,
-            flavor_metadata=flavor_metadata, image_metadata=image_metadata,
-            log_level=log_level))
-        suite.addTest(OSIntegrationTestCase.parameterize(
-            AnsibleProvisioningTests, os_creds=os_creds,
             ext_net_name=ext_net_name, use_keystone=use_keystone,
             flavor_metadata=flavor_metadata, image_metadata=image_metadata,
             log_level=log_level))
