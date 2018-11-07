@@ -10,7 +10,7 @@ cloudify-rest-client
 mock # BSD
 PrettyTable<0.8 # BSD
 six # MIT
-snaps-oo
+snaps
 paramiko # LGPLv2.1+
 Jinja2 # BSD License (3 clause)
 xtesting
