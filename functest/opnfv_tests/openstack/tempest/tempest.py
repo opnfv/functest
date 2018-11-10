@@ -402,7 +402,7 @@ class TempestCommon(singlevm.VmReady2):
         """
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
-        compute_cnt = len(self.cloud.list_hypervisors())
+        compute_cnt = len(self.orig_cloud.list_hypervisors())
 
         self.image_alt = self.publish_image_alt()
         self.flavor_alt = self.create_flavor_alt()
