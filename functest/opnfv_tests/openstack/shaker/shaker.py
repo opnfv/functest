@@ -44,6 +44,12 @@ class Shaker(singlevm.SingleVm2):
         super(Shaker, self).__init__(**kwargs)
         self.role = None
 
+    def check_requirements(self):
+        if len(self.orig_cloud.list_hypervisors()) < 2:
+            self.__logger.warning("Shaker requires at least 2 hypervisors")
+            self.is_skipped = True
+            self.project.clean()
+
     def prepare(self):
         super(Shaker, self).prepare()
         self.cloud.create_security_group_rule(
