@@ -5,7 +5,7 @@
       - shell: docker pull {repo}/functest-{container}:{tag}
 
 - project:
-    name: '{repo}-functest-{container}-{tag}-pull'
+    name: repo-functest-container-tag-pull
     container:
       - healthcheck
       - smoke
@@ -16,22 +16,26 @@
     jobs:
       - '{repo}-functest-{container}-{tag}-pull'
 
+- functest-pulljobs: &functest-pulljobs
+    name: 'functest-pulljobs'
+    projects:
+      - name: '{repo}-functest-healthcheck-{tag}-pull'
+      - name: '{repo}-functest-smoke-{tag}-pull'
+      - name: '{repo}-functest-benchmarking-{tag}-pull'
+      - name: '{repo}-functest-components-{tag}-pull'
+      - name: '{repo}-functest-vnf-{tag}-pull'
+      - name: '{repo}-functest-features-{tag}-pull'
+
 - job-template:
     name: '{repo}-functest-{tag}-pull'
     project-type: multijob
     builders:
       - multijob:
           name: pull all containers
-          projects:
-            - name: '{repo}-functest-healthcheck-{tag}-pull'
-            - name: '{repo}-functest-smoke-{tag}-pull'
-            - name: '{repo}-functest-benchmarking-{tag}-pull'
-            - name: '{repo}-functest-components-{tag}-pull'
-            - name: '{repo}-functest-vnf-{tag}-pull'
-            - name: '{repo}-functest-features-{tag}-pull'
+          <<: *functest-pulljobs
 
 - project:
-    name: '{repo}-functest-{tag}-pull'
+    name: repo-functest-tag-pull
     jobs:
       - '{repo}-functest-{tag}-pull'
 
@@ -57,6 +61,6 @@
             - name: '{repo}-functest-features-{tag}-run'
 
 - project:
-    name: '{repo}-functest-{tag}-daily'
+    name: repo-functest-tag-daily
     jobs:
       - '{repo}-functest-{tag}-daily'
