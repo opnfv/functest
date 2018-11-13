@@ -33,7 +33,7 @@
             -t {repo}/functest-{container}:{tag} .
 
 - project:
-    name: '{repo}-functest-{container}-{tag}-build'
+    name: repo-functest-container-tag-build
     container:
       - core
       - tempest
@@ -78,7 +78,7 @@
               <<: *functest-projectparameters
 
 - project:
-    name: '{repo}-functest-{tag}-build'
+    name: repo-functest-tag-build
     jobs:
       - '{repo}-functest-{tag}-build'
 
@@ -106,6 +106,6 @@
             - name: '{repo}-functest-features-{tag}-run'
 
 - project:
-    name: '{repo}-functest-{tag}-gate'
+    name: repo-functest-tag-gate
     jobs:
       - '{repo}-functest-{tag}-gate'
