@@ -17,7 +17,7 @@
             {repo}/functest-{container}:{tag} run_tests -t {test}
 
 - project:
-    name: '{repo}-functest-healthcheck-{test}-{tag}-run'
+    name: repo-functest-healthcheck-test-tag-run
     container: healthcheck
     test:
       - connection_check
@@ -36,34 +36,38 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-healthcheckjobs: &functest-healthcheckjobs
+    name: 'functest-healthcheckjobs'
+    projects:
+      - name: '{repo}-functest-healthcheck-connection_check-{tag}-run'
+      - name: '{repo}-functest-healthcheck-tenantnetwork1-{tag}-run'
+      - name: '{repo}-functest-healthcheck-tenantnetwork2-{tag}-run'
+      - name: '{repo}-functest-healthcheck-vmready1-{tag}-run'
+      - name: '{repo}-functest-healthcheck-vmready2-{tag}-run'
+      - name: '{repo}-functest-healthcheck-singlevm1-{tag}-run'
+      - name: '{repo}-functest-healthcheck-singlevm2-{tag}-run'
+      - name: '{repo}-functest-healthcheck-vping_ssh-{tag}-run'
+      - name: '{repo}-functest-healthcheck-vping_userdata-{tag}-run'
+      - name: '{repo}-functest-healthcheck-cinder_test-{tag}-run'
+      - name: '{repo}-functest-healthcheck-odl-{tag}-run'
+      - name: '{repo}-functest-healthcheck-api_check-{tag}-run'
+      - name: '{repo}-functest-healthcheck-snaps_health_check-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-healthcheck-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
           name: healthcheck
-          projects:
-            - name: '{repo}-functest-healthcheck-connection_check-{tag}-run'
-            - name: '{repo}-functest-healthcheck-tenantnetwork1-{tag}-run'
-            - name: '{repo}-functest-healthcheck-tenantnetwork2-{tag}-run'
-            - name: '{repo}-functest-healthcheck-vmready1-{tag}-run'
-            - name: '{repo}-functest-healthcheck-vmready2-{tag}-run'
-            - name: '{repo}-functest-healthcheck-singlevm1-{tag}-run'
-            - name: '{repo}-functest-healthcheck-singlevm2-{tag}-run'
-            - name: '{repo}-functest-healthcheck-vping_ssh-{tag}-run'
-            - name: '{repo}-functest-healthcheck-vping_userdata-{tag}-run'
-            - name: '{repo}-functest-healthcheck-cinder_test-{tag}-run'
-            - name: '{repo}-functest-healthcheck-odl-{tag}-run'
-            - name: '{repo}-functest-healthcheck-api_check-{tag}-run'
-            - name: '{repo}-functest-healthcheck-snaps_health_check-{tag}-run'
+          <<: *functest-healthcheckjobs
 
 - project:
-    name: '{repo}-functest-healthcheck-{tag}-run'
+    name: repo-functest-healthcheck-tag-run
     jobs:
       - '{repo}-functest-healthcheck-{tag}-run'
 
 - project:
-    name: '{repo}-functest-smoke-{test}-{tag}-run'
+    name: repo-functest-smoke-test-tag-run
     container: smoke
     test:
       - tempest_smoke
@@ -80,32 +84,36 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-smokejobs: &functest-smokejobs
+    name: 'functest-smokejobs'
+    projects:
+      - name: '{repo}-functest-smoke-tempest_smoke-{tag}-run'
+      - name: '{repo}-functest-smoke-neutron-tempest-plugin-api-{tag}-run'
+      - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
+      - name: '{repo}-functest-smoke-rally_jobs-{tag}-run'
+      - name: '{repo}-functest-smoke-refstack_defcore-{tag}-run'
+      - name: '{repo}-functest-smoke-patrole-{tag}-run'
+      - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
+      - name: '{repo}-functest-smoke-neutron_trunk-{tag}-run'
+      - name: '{repo}-functest-smoke-networking-bgpvpn-{tag}-run'
+      - name: '{repo}-functest-smoke-networking-sfc-{tag}-run'
+      - name: '{repo}-functest-smoke-barbican-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-smoke-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
           name: smoke
-          projects:
-            - name: '{repo}-functest-smoke-tempest_smoke-{tag}-run'
-            - name: '{repo}-functest-smoke-neutron-tempest-plugin-api-{tag}-run'
-            - name: '{repo}-functest-smoke-rally_sanity-{tag}-run'
-            - name: '{repo}-functest-smoke-rally_jobs-{tag}-run'
-            - name: '{repo}-functest-smoke-refstack_defcore-{tag}-run'
-            - name: '{repo}-functest-smoke-patrole-{tag}-run'
-            - name: '{repo}-functest-smoke-snaps_smoke-{tag}-run'
-            - name: '{repo}-functest-smoke-neutron_trunk-{tag}-run'
-            - name: '{repo}-functest-smoke-networking-bgpvpn-{tag}-run'
-            - name: '{repo}-functest-smoke-networking-sfc-{tag}-run'
-            - name: '{repo}-functest-smoke-barbican-{tag}-run'
+          <<: *functest-smokejobs
 
 - project:
-    name: '{repo}-functest-smoke-{tag}-run'
+    name: 'repo-functest-smoke-tag-run'
     jobs:
       - '{repo}-functest-smoke-{tag}-run'
 
 - project:
-    name: '{repo}-functest-benchmarking-{test}-{tag}-run'
+    name: 'repo-functest-benchmarking-test-tag-run'
     container: benchmarking
     test:
       - vmtp
@@ -113,23 +121,27 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-benchmarkingjobs: &functest-benchmarkingjobs
+    name: 'functest-benchmarkingjobs'
+    projects:
+      - name: '{repo}-functest-benchmarking-vmtp-{tag}-run'
+      - name: '{repo}-functest-benchmarking-shaker-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-benchmarking-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
-          name: smoke
-          projects:
-            - name: '{repo}-functest-benchmarking-vmtp-{tag}-run'
-            - name: '{repo}-functest-benchmarking-shaker-{tag}-run'
+          name: benchmarking
+          <<: *functest-benchmarkingjobs
 
 - project:
-    name: '{repo}-functest-benchmarking-{tag}-run'
+    name: repo-functest-benchmarking-tag-run
     jobs:
       - '{repo}-functest-benchmarking-{tag}-run'
 
 - project:
-    name: '{repo}-functest-components-{test}-{tag}-run'
+    name: repo-functest-components-test-tag-run
     container: components
     test:
       - tempest_full
@@ -138,24 +150,28 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-componentsjobs: &functest-componentsjobs
+    name: 'functest-componentsjobs'
+    projects:
+      - name: '{repo}-functest-components-tempest_full-{tag}-run'
+      - name: '{repo}-functest-components-tempest_scenario-{tag}-run'
+      - name: '{repo}-functest-components-rally_full-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-components-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
           name: components
-          projects:
-            - name: '{repo}-functest-components-tempest_full-{tag}-run'
-            - name: '{repo}-functest-components-tempest_scenario-{tag}-run'
-            - name: '{repo}-functest-components-rally_full-{tag}-run'
+          <<: *functest-componentsjobs
 
 - project:
-    name: '{repo}-functest-components-{tag}-run'
+    name: repo-functest-components-tag-run
     jobs:
       - '{repo}-functest-components-{tag}-run'
 
 - project:
-    name: '{repo}-functest-vnf-{test}-{tag}-run'
+    name: repo-functest-vnf-test-tag-run
     container: vnf
     test:
       - cloudify
@@ -166,26 +182,30 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-vnfjobs: &functest-vnfjobs
+    name: 'functest-vnfjobs'
+    projects:
+      - name: '{repo}-functest-vnf-cloudify-{tag}-run'
+      - name: '{repo}-functest-vnf-cloudify_ims-{tag}-run'
+      - name: '{repo}-functest-vnf-heat_ims-{tag}-run'
+      - name: '{repo}-functest-vnf-vyos_vrouter-{tag}-run'
+      - name: '{repo}-functest-vnf-juju_epc-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-vnf-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
           name: vnf
-          projects:
-            - name: '{repo}-functest-vnf-cloudify-{tag}-run'
-            - name: '{repo}-functest-vnf-cloudify_ims-{tag}-run'
-            - name: '{repo}-functest-vnf-heat_ims-{tag}-run'
-            - name: '{repo}-functest-vnf-vyos_vrouter-{tag}-run'
-            - name: '{repo}-functest-vnf-juju_epc-{tag}-run'
+          <<: *functest-vnfjobs
 
 - project:
-    name: '{repo}-functest-vnf-{tag}-run'
+    name: 'repo-functest-vnf-tag-run'
     jobs:
       - '{repo}-functest-vnf-{tag}-run'
 
 - project:
-    name: '{repo}-functest-features-{test}-{tag}-run'
+    name: repo-functest-features-test-tag-run
     container: features
     test:
       - doctor-notification
@@ -197,21 +217,25 @@
     jobs:
       - '{repo}-functest-{container}-{test}-{tag}-run'
 
+- functest-featuresjobs: &functest-featuresjobs
+    name: 'functest-featuresjobs'
+    projects:
+      - name: '{repo}-functest-features-doctor-notification-{tag}-run'
+      - name: '{repo}-functest-features-bgpvpn-{tag}-run'
+      - name: '{repo}-functest-features-functest-odl-sfc-{tag}-run'
+      - name: '{repo}-functest-features-barometercollectd-{tag}-run'
+      - name: '{repo}-functest-features-vgpu-{tag}-run'
+      - name: '{repo}-functest-features-stor4nfv_os-{tag}-run'
+
 - job-template:
     name: '{repo}-functest-features-{tag}-run'
     project-type: multijob
     builders:
       - multijob:
           name: features
-          projects:
-            - name: '{repo}-functest-features-doctor-notification-{tag}-run'
-            - name: '{repo}-functest-features-bgpvpn-{tag}-run'
-            - name: '{repo}-functest-features-functest-odl-sfc-{tag}-run'
-            - name: '{repo}-functest-features-barometercollectd-{tag}-run'
-            - name: '{repo}-functest-features-vgpu-{tag}-run'
-            - name: '{repo}-functest-features-stor4nfv_os-{tag}-run'
+          <<: *functest-featuresjobs
 
 - project:
-    name: '{repo}-functest-features-{tag}-run'
+    name: repo-functest-features-tag-run
     jobs:
       - '{repo}-functest-features-{tag}-run'
