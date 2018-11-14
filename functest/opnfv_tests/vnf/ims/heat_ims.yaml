@@ -4,11 +4,11 @@ orchestrator:
     version: '4.0'
 vnf:
     name: clearwater
-    version: '129'
+    version: '130'
     descriptor:
         file_name: /src/heat_vims/clearwater.yaml
         name: clearwater-opnfv
-        version: '129'
+        version: '130'
     inputs:
         zone: clearwater.opnfv
         dn_range_start: "6505550000"
