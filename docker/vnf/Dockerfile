@@ -1,11 +1,17 @@
 FROM opnfv/functest-core:hunter
 
+<<<<<<< HEAD
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
 ARG VIMS_TEST_TAG=release-129
+=======
+ARG BRANCH=master
+ARG OPENSTACK_TAG=master
+ARG VIMS_TEST_TAG=release-130
+>>>>>>> 3ac3d8d... Switch to Clearwater Zamin (heat_ims)
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=fraser
-ARG HEAT_VIMS_TAG=release-129
+ARG HEAT_VIMS_TAG=release-130
 ARG VROUTER_TAG=fraser
 ARG JUJU_TAG=tags/juju-2.3.9
 ARG JUJU_WAIT_TAG=2.6.4
