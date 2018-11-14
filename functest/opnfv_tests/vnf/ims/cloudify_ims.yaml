@@ -4,11 +4,11 @@ orchestrator:
     version: '4.0'
 vnf:
     name: clearwater
-    version: '129'
+    version: '130'
     descriptor:
         file_name: /src/cloudify_vims/openstack-blueprint.yaml
         name: clearwater-opnfv
-        version: '129'
+        version: '130'
     inputs:
         image_id: 'ubuntu_14.04'
         flavor_id: 'cloudify.small'
@@ -17,7 +17,7 @@ vnf:
         private_key_path: '/etc/cloudify/cloudify_ims.pem'
         external_network_name: ''
         public_domain: clearwater.opnfv
-        release: repo129
+        release: repo130
         bono_cluster_size: 1
         sprout_cluster_size: 1
         vellum_cluster_size: 1
