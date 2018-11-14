@@ -26,10 +26,15 @@
       - functest-gerrit
     builders:
       - shell: |
+          case "{container}" in
+          "components")
+              args="" ;;
+          *)
+              args="--build-arg BRANCH=${{branch}}" ;;
+          esac
           cd docker/$(echo {container} |cut -d\- -f 2)
-          docker build \
-            --pull=false --no-cache --force-rm=true \
-            --build-arg BRANCH=${{branch}} \
+          sudo docker build \
+            ${{args}} --pull=false --no-cache --force-rm=true \
             -t {repo}/functest-{container}:{tag} .
 
 - project:
