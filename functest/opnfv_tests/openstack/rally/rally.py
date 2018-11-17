@@ -55,7 +55,7 @@ class RallyBase(singlevm.VmReady2):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
-    BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.txt")
+    BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.yaml")
     TASK_DIR = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
     TEMP_DIR = os.path.join(TASK_DIR, 'var')
 
