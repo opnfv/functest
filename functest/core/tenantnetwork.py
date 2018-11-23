@@ -46,7 +46,6 @@ class NewProject(object):
         self.user = None
         self.password = None
         self.domain = None
-        self.role = None
         self.role_name = None
         self.default_member = env.get('NEW_USER_ROLE')
 
@@ -78,9 +77,9 @@ class NewProject(object):
                 raise Exception("Cannot detect {}".format(self.default_member))
         except Exception:  # pylint: disable=broad-except
             self.__logger.info("Creating default role %s", self.default_member)
-            self.role = self.orig_cloud.create_role(self.default_member)
-            self.role_name = self.role.name
-            self.__logger.debug("role: %s", self.role)
+            role = self.orig_cloud.create_role(self.default_member)
+            self.role_name = role.name
+            self.__logger.debug("role: %s", role)
         self.orig_cloud.grant_role(
             self.role_name, user=self.user.id, project=self.project.id,
             domain=self.domain.id)
@@ -104,8 +103,6 @@ class NewProject(object):
                 self.orig_cloud.delete_user(self.user.id)
             if self.project:
                 self.orig_cloud.delete_project(self.project.id)
-            if self.role:
-                self.orig_cloud.delete_role(self.role.id)
             secgroups = self.orig_cloud.list_security_groups(
                 filters={'name': 'default',
                          'project_id': self.project.id})
