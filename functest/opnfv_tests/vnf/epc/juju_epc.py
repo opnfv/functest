@@ -20,11 +20,11 @@ import sys
 from copy import deepcopy
 import pkg_resources
 import six
-import yaml
 
 from functest.core import singlevm
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 __author__ = "Amarendra Meher <amarendra@rebaca.com>"
 __author__ = "Soumaya K Nayek <soumaya.nayek@rebaca.com>"
@@ -96,32 +96,42 @@ class JujuEpc(singlevm.VmReady2):
         except Exception:
             raise Exception("VNF config file not found")
         self.config_file = os.path.join(self.case_dir, self.config)
-        self.orchestrator = dict(requirements=get_config(
-            "orchestrator.requirements", self.config_file))
+        self.orchestrator = dict(
+            requirements=functest_utils.get_parameter_from_yaml(
+                "orchestrator.requirements", self.config_file))
 
         self.created_object = []
         self.details['orchestrator'] = dict(
-            name=get_config("orchestrator.name", self.config_file),
-            version=get_config("orchestrator.version", self.config_file),
+            name=functest_utils.get_parameter_from_yaml(
+                "orchestrator.name", self.config_file),
+            version=functest_utils.get_parameter_from_yaml(
+                "orchestrator.version", self.config_file),
             status='ERROR',
             result=''
         )
 
         self.vnf = dict(
-            descriptor=get_config("vnf.descriptor", self.config_file),
-            requirements=get_config("vnf.requirements", self.config_file)
+            descriptor=functest_utils.get_parameter_from_yaml(
+                "vnf.descriptor", self.config_file),
+            requirements=functest_utils.get_parameter_from_yaml(
+                "vnf.requirements", self.config_file)
         )
         self.details['vnf'] = dict(
             descriptor_version=self.vnf['descriptor']['version'],
-            name=get_config("vnf.name", self.config_file),
-            version=get_config("vnf.version", self.config_file),
+            name=functest_utils.get_parameter_from_yaml(
+                "vnf.name", self.config_file),
+            version=functest_utils.get_parameter_from_yaml(
+                "vnf.version", self.config_file),
         )
         self.__logger.debug("VNF configuration: %s", self.vnf)
 
         self.details['test_vnf'] = dict(
-            name=get_config("vnf_test_suite.name", self.config_file),
-            version=get_config("vnf_test_suite.version", self.config_file),
-            tag_name=get_config("vnf_test_suite.tag_name", self.config_file)
+            name=functest_utils.get_parameter_from_yaml(
+                "vnf_test_suite.name", self.config_file),
+            version=functest_utils.get_parameter_from_yaml(
+                "vnf_test_suite.version", self.config_file),
+            tag_name=functest_utils.get_parameter_from_yaml(
+                "vnf_test_suite.tag_name", self.config_file)
         )
 
         self.res_dir = os.path.join(
@@ -391,29 +401,6 @@ class JujuEpc(singlevm.VmReady2):
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
         super(JujuEpc, self).clean()
-
-
-# ----------------------------------------------------------
-#
-#               YAML UTILS
-#
-# -----------------------------------------------------------
-def get_config(parameter, file_path):
-    """
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file_path) as config_file:
-        file_yaml = yaml.safe_load(config_file)
-    config_file.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " reporting.yaml" % parameter)
-    return value
 
 
 def sig_test_format(sig_test):

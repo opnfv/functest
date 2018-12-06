@@ -46,9 +46,7 @@ class ClearwaterTesting(object):
 
         self.ellis_ip = ellis_ip
 
-    def availability_check_by_creating_numbers(self,
-                                               signup_code='secret',
-                                               two_numbers=False):
+    def availability_check(self, signup_code='secret', two_numbers=False):
         """Create one or two numbers"""
         assert self.ellis_ip
         output_dict = {}

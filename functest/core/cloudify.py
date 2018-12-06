@@ -15,6 +15,7 @@ import logging
 import time
 
 from cloudify_rest_client import CloudifyClient
+from cloudify_rest_client.executions import Execution
 
 from functest.core import singlevm
 
@@ -81,3 +82,67 @@ class Cloudify(singlevm.SingleVm2):
             return 1
         self.__logger.info("Cloudify Manager is up and running")
         return 0
+
+
+def wait_for_execution(client, execution, logger, timeout=3600, ):
+    """Wait for a workflow execution on Cloudify Manager."""
+    # if execution already ended - return without waiting
+    if execution.status in Execution.END_STATES:
+        return execution
+
+    if timeout is not None:
+        deadline = time.time() + timeout
+
+    # Poll for execution status and execution logs, until execution ends
+    # and we receive an event of type in WORKFLOW_END_TYPES
+    offset = 0
+    batch_size = 50
+    event_list = []
+    execution_ended = False
+    while True:
+        event_list = client.events.list(
+            execution_id=execution.id,
+            _offset=offset,
+            _size=batch_size,
+            include_logs=True,
+            sort='@timestamp').items
+
+        offset = offset + len(event_list)
+        for event in event_list:
+            logger.debug(event.get('message'))
+
+        if timeout is not None:
+            if time.time() > deadline:
+                raise RuntimeError(
+                    'execution of operation {0} for deployment {1} '
+                    'timed out'.format(execution.workflow_id,
+                                       execution.deployment_id))
+            else:
+                # update the remaining timeout
+                timeout = deadline - time.time()
+
+        if not execution_ended:
+            execution = client.executions.get(execution.id)
+            execution_ended = execution.status in Execution.END_STATES
+
+        if execution_ended:
+            break
+
+        time.sleep(5)
+
+    return execution
+
+
+def get_execution_id(client, deployment_id):
+    """
+    Get the execution id of a env preparation.
+
+    network, security group, fip, VM creation
+    """
+    executions = client.executions.list(deployment_id=deployment_id)
+    for execution in executions:
+        if execution.workflow_id == 'create_deployment_environment':
+            return execution
+    raise RuntimeError('Failed to get create_deployment_environment '
+                       'workflow execution.'
+                       'Available executions: {0}'.format(executions))
