@@ -15,7 +15,6 @@ import logging
 import os
 import re
 import time
-import yaml
 
 import pkg_resources
 from xtesting.core import testcase
@@ -24,6 +23,7 @@ from functest.core import singlevm
 from functest.opnfv_tests.vnf.ims import clearwater
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 __author__ = "Valentin Boucher <valentin.boucher@kontron.com>"
 
@@ -63,13 +63,17 @@ class HeatIms(singlevm.VmReady2):
         config_file = os.path.join(self.case_dir, self.config)
 
         self.vnf = dict(
-            descriptor=get_config("vnf.descriptor", config_file),
-            parameters=get_config("vnf.inputs", config_file)
+            descriptor=functest_utils.get_parameter_from_yaml(
+                "vnf.descriptor", config_file),
+            parameters=functest_utils.get_parameter_from_yaml(
+                "vnf.inputs", config_file)
         )
         self.details['vnf'] = dict(
             descriptor_version=self.vnf['descriptor']['version'],
-            name=get_config("vnf.name", config_file),
-            version=get_config("vnf.version", config_file),
+            name=functest_utils.get_parameter_from_yaml(
+                "vnf.name", config_file),
+            version=functest_utils.get_parameter_from_yaml(
+                "vnf.version", config_file),
         )
         self.__logger.debug("VNF configuration: %s", self.vnf)
         self.keypair = None
@@ -99,7 +103,7 @@ class HeatIms(singlevm.VmReady2):
             '{}-kp_{}'.format(self.case_name, self.guid))
         self.__logger.debug("keypair: %s", self.keypair)
 
-        if (self.deploy_vnf() and self.test_vnf()):
+        if self.deploy_vnf() and self.test_vnf():
             self.result = 100
             return 0
         self.result = 1/3 * 100
@@ -169,7 +173,7 @@ class HeatIms(singlevm.VmReady2):
         # an infrastructure orchestrator so when Heat say "stack created"
         # it means that all OpenStack ressources are created but not that
         # Clearwater are up and ready (Cloud-Init script still running)
-        self.clearwater.availability_check_by_creating_numbers()
+        self.clearwater.availability_check()
 
         duration = time.time() - start_time
 
@@ -225,28 +229,3 @@ class HeatIms(singlevm.VmReady2):
         super(HeatIms, self).clean()
         if self.role:
             self.orig_cloud.delete_role(self.role.id)
-
-
-# ----------------------------------------------------------
-#
-#               YAML UTILS
-#
-# -----------------------------------------------------------
-def get_config(parameter, file_path):
-    """
-    Get config parameter.
-
-    Returns the value of a given parameter in file.yaml
-    parameter must be given in string format with dots
-    Example: general.openstack.image_name
-    """
-    with open(file_path) as config_file:
-        file_yaml = yaml.safe_load(config_file)
-    config_file.close()
-    value = file_yaml
-    for element in parameter.split("."):
-        value = value.get(element)
-        if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " reporting.yaml" % parameter)
-    return value
