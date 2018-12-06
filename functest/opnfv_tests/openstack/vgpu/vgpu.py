@@ -49,6 +49,5 @@ class VGPU(singlevm.SingleVm2):
                 'VGA compatible controller: Nvidia' in lspci_output):
             self.__logger.info("The VM have a vGPU")
             return 0
-        else:
-            self.__logger.error("The VM haven't any vGPU")
-            return 1
+        self.__logger.error("The VM haven't any vGPU")
+        return 1
