@@ -1,0 +1,71 @@
+---
+- hosts: 127.0.0.1
+  roles:
+    - role: collivier.xtesting
+      project: functest
+      suites:
+        - repo: opnfv
+          container: functest-healthcheck
+          tag: latest
+          tests:
+            - connection_check
+            - tenantnetwork1
+            - tenantnetwork2
+            - vmready1
+            - vmready2
+            - singlevm1
+            - singlevm2
+            - vping_ssh
+            - vping_userdata
+            - cinder_test
+            - odl
+            - api_check
+            - snaps_health_check
+        - repo: opnfv
+          container: functest-smoke
+          tag: latest
+          tests:
+            - tempest_smoke
+            - neutron-tempest-plugin-api
+            - rally_sanity
+            - rally_jobs
+            - refstack_defcore
+            - patrole
+            - snaps_smoke
+            - neutron_trunk
+            - networking-bgpvpn
+            - networking-sfc
+            - barbican
+        - repo: opnfv
+          container: functest-benchmarking
+          tag: latest
+          tests:
+            - vmtp
+            - shaker
+        - repo: opnfv
+          container: functest-components
+          tag: latest
+          tests:
+            - tempest_full
+            - tempest_scenario
+            - rally_full
+        - repo: opnfv
+          container: functest-vnf
+          tag: latest
+          tests:
+            - cloudify
+            - cloudify_ims
+            - heat_ims
+            - vyos_vrouter
+            - juju_epc
+        - repo: opnfv
+          container: functest-features
+          tag: latest
+          tests:
+            - doctor-notification
+            - bgpvpn
+            - functest-odl-sfc
+            - barometercollectd
+            - fds
+            - vgpu
+            - stor4nfv_os
