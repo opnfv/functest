@@ -55,6 +55,7 @@ tiers:
             -
                 case_name: rally_jobs
                 project_name: functest
+                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -90,7 +91,6 @@ tiers:
                         role: 'admin'
                         includes:
                             - 'image'
-                            - 'network'
                         excludes:
                             - 'test_networks_multiprovider_rbac'
                             - 'test_auto_allocated_topology_rbac'

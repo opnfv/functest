@@ -40,7 +40,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/glance && \
-    wget -q -O /etc/neutron/policy.json https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     git clone --depth 1 -b $NEUTRON_RALLY_TAG https://git.openstack.org/openstack/neutron.git /src/neutron && \
     (cd /src/neutron && git fetch --tags origin $NEUTRON_RALLY_TAG && git checkout FETCH_HEAD) && \
