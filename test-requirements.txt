@@ -9,6 +9,7 @@ pylint # GPLv2
 sphinx!=1.6.6,>=1.6.2 # BSD
 sphinx-rtd-theme
 yamllint
+ansible-lint
 doc8>=0.6.0 # Apache-2.0
 bashate>=0.5.1 # Apache-2.0
 nosehtmloutput>=0.0.3 # Apache-2.0
