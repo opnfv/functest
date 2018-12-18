@@ -42,8 +42,10 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/neutron/policy.json https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
-    git clone --depth 1 -b $NEUTRON_RALLY_TAG https://git.openstack.org/openstack/neutron.git /src/neutron && \
-    (cd /src/neutron && git fetch --tags origin $NEUTRON_RALLY_TAG && git checkout FETCH_HEAD) && \
+    git init /src/neutron && \
+    (cd /src/neutron && \
+        git fetch --tags https://git.openstack.org/openstack/neutron.git $NEUTRON_RALLY_TAG && \
+        git checkout FETCH_HEAD) && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     rm -r /src/neutron && \
