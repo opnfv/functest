@@ -262,6 +262,7 @@ tiers:
                         role: 'admin'
                         includes:
                             - 'image'
+                            - 'network'
                         excludes:
                             - 'test_networks_multiprovider_rbac'
                             - 'test_auto_allocated_topology_rbac'
