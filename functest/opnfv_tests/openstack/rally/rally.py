@@ -94,9 +94,9 @@ class RallyBase(singlevm.VmReady2):
         self.run_cmd = ''
         self.network_extensions = []
 
-    def _build_task_args(self, test_file_name):
+    def build_task_args(self, test_name):
         """Build arguments for the Rally task."""
-        task_args = {'service_list': [test_file_name]}
+        task_args = {'service_list': [test_name]}
         task_args['image_name'] = str(self.image.name)
         task_args['flavor_name'] = str(self.flavor.name)
         task_args['flavor_alt_name'] = str(self.flavor_alt.name)
@@ -456,7 +456,7 @@ class RallyBase(singlevm.VmReady2):
             return False
         self.run_cmd = (["rally", "task", "start", "--abort-on-sla-failure",
                          "--task", self.task_file, "--task-args",
-                         str(self._build_task_args(test_name))])
+                         str(self.build_task_args(test_name))])
         return True
 
     def run_tests(self):
@@ -662,6 +662,15 @@ class RallyJobs(RallyBase):
         with open(result_file_name, 'w') as fname:
             template.dump(cases, fname)
 
+    def build_task_args(self, test_name):
+        """Build arguments for the Rally task."""
+        task_args = {}
+        if self.ext_net:
+            task_args['floating_network'] = str(self.ext_net.name)
+        else:
+            task_args['floating_network'] = ''
+        return task_args
+
     @staticmethod
     def _remove_plugins_extra():
         inst_dir = getattr(config.CONF, 'dir_rally_inst')
@@ -692,7 +701,8 @@ class RallyJobs(RallyBase):
             os.makedirs(self.TEMP_DIR)
         task_file_name = os.path.join(self.TEMP_DIR, task_name)
         self.apply_blacklist(task, task_file_name)
-        self.run_cmd = (["rally", "task", "start", "--task", task_file_name])
+        self.run_cmd = (["rally", "task", "start", "--task", task_file_name,
+                         "--task-args", str(self.build_task_args(test_name))])
         return True
 
     def clean(self):

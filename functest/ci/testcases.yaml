@@ -227,7 +227,6 @@ tiers:
             -
                 case_name: rally_jobs
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-

@@ -38,13 +38,13 @@ class OSRallyTesting(unittest.TestCase):
     def test_build_task_args_missing_floating_network(self):
         os.environ['OS_AUTH_URL'] = ''
         self.rally_base.ext_net = None
-        task_args = self.rally_base._build_task_args('test_file_name')
+        task_args = self.rally_base.build_task_args('test_name')
         self.assertEqual(task_args['floating_network'], '')
 
     def test_build_task_args_missing_net_id(self):
         os.environ['OS_AUTH_URL'] = ''
         self.rally_base.network = None
-        task_args = self.rally_base._build_task_args('test_file_name')
+        task_args = self.rally_base.build_task_args('test_name')
         self.assertEqual(task_args['netid'], '')
 
     @staticmethod
@@ -206,7 +206,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'file_is_empty', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_build_task_args', return_value={})
+                'build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value=None)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists',
@@ -226,7 +226,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'file_is_empty', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                '_build_task_args', return_value={})
+                'build_task_args', return_value={})
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'get_task_id', return_value='1')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
