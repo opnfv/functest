@@ -262,7 +262,10 @@ tiers:
                         role: 'admin'
                         includes:
                             - 'image'
+                            - 'network'
                         excludes:
+                            - 'network.test_flavors_rbac'
+                            - 'network.test_network_ip_availability_rbac'
                             - 'test_networks_multiprovider_rbac'
                             - 'test_auto_allocated_topology_rbac'
 
