@@ -30,7 +30,7 @@
             - snaps_health_check
         - repo: opnfv
           container: functest-smoke
-          tag: latest
+          tag: hunter
           tests:
             - tempest_smoke
             - neutron-tempest-plugin-api
@@ -45,20 +45,20 @@
             - barbican
         - repo: opnfv
           container: functest-benchmarking
-          tag: latest
+          tag: hunter
           tests:
             - vmtp
             - shaker
         - repo: opnfv
           container: functest-components
-          tag: latest
+          tag: hunter
           tests:
             - tempest_full
             - tempest_scenario
             - rally_full
         - repo: opnfv
           container: functest-vnf
-          tag: latest
+          tag: hunter
           tests:
             - cloudify
             - cloudify_ims
@@ -67,7 +67,7 @@
             - juju_epc
         - repo: opnfv
           container: functest-features
-          tag: latest
+          tag: hunter
           tests:
             - doctor-notification
             - bgpvpn
