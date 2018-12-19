@@ -6,7 +6,6 @@ ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=master
 ARG NEUTRON_TAG=master
 ARG BARBICAN_TAG=master
-ARG NEUTRON_RALLY_TAG=master
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
@@ -34,20 +33,20 @@ RUN apk --no-cache add --virtual .build-deps --update \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         networking-bgpvpn networking-sfc && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
-    git init /src/neutron && \
-    (cd /src/neutron && \
-        git fetch --tags https://git.openstack.org/openstack/neutron.git $NEUTRON_RALLY_TAG && \
-        git checkout FETCH_HEAD) && \
+    virtualenv oslo && . oslo/bin/activate && \
+    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$BRANCH#egg=neutron && \
+    oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
+    deactivate && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
-    rm -r /src/neutron && \
+    rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
+        /src/neutron /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
