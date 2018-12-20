@@ -7,9 +7,10 @@ ARG PATROLE_TAG=master
 ARG NEUTRON_TAG=master
 ARG BARBICAN_TAG=master
 
-RUN apk --no-cache add --virtual .build-deps --update \
+RUN apk --no-cache add libxml2 py-libxml2 --update && \
+    apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ \
         > upper-constraints.txt && \
@@ -38,10 +39,16 @@ RUN apk --no-cache add --virtual .build-deps --update \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
-    virtualenv oslo && . oslo/bin/activate && \
+    virtualenv --system-site-packages oslo && . oslo/bin/activate && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$BRANCH#egg=neutron && \
+        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$BRANCH#egg=neutron \
+        -e git+https://git.openstack.org/openstack/cinder.git@$BRANCH#egg=cinder \
+        -e git+https://git.openstack.org/openstack/keystone.git@$BRANCH#egg=keystone \
+        -e git+https://git.openstack.org/openstack/nova.git@$BRANCH#egg=nova && \
+    oslopolicy-sample-generator  --format json --output-file /etc/cinder/policy.json --namespace cinder && \
+    oslopolicy-sample-generator  --format json --output-file /etc/keystone/policy.json --namespace keystone && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
+    oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
