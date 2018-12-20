@@ -9,7 +9,7 @@ ARG BARBICAN_TAG=master
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
         sed -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ \
         > upper-constraints.txt && \
@@ -36,12 +36,18 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
-    mkdir -p /etc/neutron /etc/glance && \
+    mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     virtualenv oslo && . oslo/bin/activate && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
+        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron \
+        -e git+https://git.openstack.org/openstack/cinder.git@$OPENSTACK_TAG#egg=cinder \
+        -e git+https://git.openstack.org/openstack/keystone.git@$OPENSTACK_TAG#egg=keystone \
+        -e git+https://git.openstack.org/openstack/nova.git@$OPENSTACK_TAG#egg=nova && \
+    oslopolicy-sample-generator  --format json --output-file /etc/cinder/policy.json --namespace cinder && \
+    oslopolicy-sample-generator  --format json --output-file /etc/keystone/policy.json --namespace keystone && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
+    oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \

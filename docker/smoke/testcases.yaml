@@ -89,8 +89,11 @@ tiers:
                     args:
                         role: 'admin'
                         includes:
+                            - 'identity'
+                            - 'compute'
                             - 'image'
                             - 'network'
+                            - 'volume'
                         excludes:
                             - 'network.test_flavors_rbac'
                             - 'network.test_network_ip_availability_rbac'
