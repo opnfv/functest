@@ -6,7 +6,7 @@ ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.3.0
 ARG NEUTRON_TAG=0.2.0
 ARG BARBICAN_TAG=0.1.0
-ARG NEUTRON_RALLY_TAG=$OPENSTACK_TAG
+ARG NEUTRON_RALLY_TAG=stable/rocky
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
