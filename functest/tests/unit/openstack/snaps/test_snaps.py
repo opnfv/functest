@@ -40,17 +40,22 @@ class APICheckTesting(unittest.TestCase):
         mock_shade.assert_called()
         mock_new_project.assert_called()
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
+    @mock.patch('unittest.TestLoader')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_client_tests')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_success(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = []
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=[]))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
             testcase.TestCase.EX_OK, self.api_check.is_successful())
         args[0].assert_called_with(mock.ANY)
@@ -58,17 +63,21 @@ class APICheckTesting(unittest.TestCase):
             ext_net_name='foo', image_metadata=mock.ANY,
             os_creds=self.os_creds, suite=mock.ANY, use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_client_tests')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
             testcase.TestCase.EX_TESTCASE_FAILED,
             self.api_check.is_successful())
@@ -77,18 +86,22 @@ class APICheckTesting(unittest.TestCase):
             ext_net_name='foo', image_metadata=mock.ANY,
             os_creds=self.os_creds, suite=mock.ANY, use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_client_tests')
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_api_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko_criteria(self, *args):
         self.api_check.criteria = 90
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.api_check.run())
         self.assertEquals(
             testcase.TestCase.EX_OK, self.api_check.is_successful())
         args[0].assert_called_with(mock.ANY)
@@ -117,15 +130,19 @@ class HealthCheckTesting(unittest.TestCase):
         mock_shade.assert_called()
         mock_new_project.assert_called()
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('snaps.openstack.tests.os_source_file_test.'
                 'OSIntegrationTestCase.parameterize')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_success(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = []
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=[]))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
             testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
@@ -134,15 +151,19 @@ class HealthCheckTesting(unittest.TestCase):
             image_metadata=mock.ANY, netconf_override=None,
             os_creds=self.os_creds, use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('snaps.openstack.tests.os_source_file_test.'
                 'OSIntegrationTestCase.parameterize')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
             testcase.TestCase.EX_TESTCASE_FAILED,
             self.health_check.is_successful())
@@ -152,16 +173,20 @@ class HealthCheckTesting(unittest.TestCase):
             image_metadata=mock.ANY, netconf_override=None,
             os_creds=self.os_creds, use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('snaps.openstack.tests.os_source_file_test.'
                 'OSIntegrationTestCase.parameterize')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko_criteria(self, *args):
         self.health_check.criteria = 90
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.health_check.run())
         self.assertEquals(
             testcase.TestCase.EX_OK, self.health_check.is_successful())
         args[0].assert_called_with(mock.ANY)
@@ -191,15 +216,19 @@ class SmokeTesting(unittest.TestCase):
         mock_shade.assert_called()
         mock_new_project.assert_called()
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_success(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = []
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=[]))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
         self.assertEquals(testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
         args[1].assert_called_with(
@@ -208,15 +237,19 @@ class SmokeTesting(unittest.TestCase):
             os_creds=self.os_creds, suite=mock.ANY, use_floating_ips=True,
             use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko(self, *args):
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
         self.assertEquals(
             testcase.TestCase.EX_TESTCASE_FAILED, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
@@ -226,16 +259,20 @@ class SmokeTesting(unittest.TestCase):
             os_creds=self.os_creds, suite=mock.ANY, use_floating_ips=True,
             use_keystone=True)
 
+    @mock.patch('xtesting.core.unit.Suite.generate_html')
+    @mock.patch('xtesting.core.unit.Suite.generate_xunit')
+    @mock.patch('xtesting.core.unit.Suite.generate_stats')
+    @mock.patch('os.path.isdir', return_value=True)
     @mock.patch('functest.opnfv_tests.openstack.snaps.snaps_suite_builder.'
                 'add_openstack_integration_tests')
-    @mock.patch('unittest.TextTestRunner.run',
-                return_value=mock.MagicMock(name='unittest.TextTestResult'))
+    @mock.patch('subunit.run.SubunitTestRunner.run')
     def test_run_1_of_100_ko_criteria(self, *args):
         self.smoke.criteria = 90
-        args[0].return_value.testsRun = 100
-        args[0].return_value.failures = ['foo']
-        args[0].return_value.errors = []
-        self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
+        args[0].return_value = mock.Mock(
+            decorated=mock.Mock(
+                testsRun=100, errors=[], failures=['foo']))
+        with mock.patch('six.moves.builtins.open', mock.mock_open()):
+            self.assertEquals(testcase.TestCase.EX_OK, self.smoke.run())
         self.assertEquals(
             testcase.TestCase.EX_OK, self.smoke.is_successful())
         args[0].assert_called_with(mock.ANY)
