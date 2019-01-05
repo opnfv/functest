@@ -1,19 +1,52 @@
 ---
-- hosts: 127.0.0.1
+- hosts:
+    - 127.0.0.1
   roles:
     - role: collivier.xtesting
       project: functest
-      docker_args:
-        env:
-          DEPLOY_SCENARIO: os-nosdn-nofeature-noha
-          NAMESERVER: 8.8.8.8
-        volumes:
-          - /home/opnfv/functest/openstack.creds:/home/opnfv/functest/conf/env_file
-          - /home/opnfv/functest/images:/home/opnfv/functest/images
+      gerrit_project: functest
+      docker_tags:
+        - hunter:
+            branch: stable/hunter
+      builds:
+        dependencies:
+          - repo: _
+            port:
+            container: alpine
+            tag: 3.8
+        steps:
+          - name: build opnfv/functest-core
+            containers:
+              - name: functest-core
+                ref_arg: BRANCH
+                path: docker/core
+          - name: build opnfv/functest-tempest
+            containers:
+              - name: functest-tempest
+                ref_arg: BRANCH
+                path: docker/tempest
+          - name: build containers
+            containers:
+              - name: functest-healthcheck
+                ref_arg: BRANCH
+                path: docker/healthcheck
+              - name: functest-smoke
+                ref_arg: BRANCH
+                path: docker/smoke
+              - name: functest-benchmarking
+                ref_arg: BRANCH
+                path: docker/benchmarking
+              - name: functest-components
+                ref_arg:
+                path: docker/components
+              - name: functest-vnf
+                ref_arg:
+                path: docker/vnf
+              - name: functest-features
+                ref_arg: BRANCH
+                path: docker/features
       suites:
-        - repo: opnfv
-          container: functest-healthcheck
-          tag: hunter
+        - container: functest-healthcheck
           tests:
             - connection_check
             - tenantnetwork1
@@ -28,9 +61,7 @@
             - odl
             - api_check
             - snaps_health_check
-        - repo: opnfv
-          container: functest-smoke
-          tag: hunter
+        - container: functest-smoke
           tests:
             - tempest_smoke
             - neutron-tempest-plugin-api
@@ -43,31 +74,23 @@
             - networking-bgpvpn
             - networking-sfc
             - barbican
-        - repo: opnfv
-          container: functest-benchmarking
-          tag: hunter
+        - container: functest-benchmarking
           tests:
             - vmtp
             - shaker
-        - repo: opnfv
-          container: functest-components
-          tag: hunter
+        - container: functest-components
           tests:
             - tempest_full
             - tempest_scenario
             - rally_full
-        - repo: opnfv
-          container: functest-vnf
-          tag: hunter
+        - container: functest-vnf
           tests:
             - cloudify
             - cloudify_ims
             - heat_ims
             - vyos_vrouter
             - juju_epc
-        - repo: opnfv
-          container: functest-features
-          tag: hunter
+        - container: functest-features
           tests:
             - doctor-notification
             - bgpvpn
