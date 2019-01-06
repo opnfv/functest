@@ -8,7 +8,7 @@
       builds:
         dependencies:
           - repo: _
-            port:
+            dport:
             container: alpine
             tag: 3.8
         steps:
