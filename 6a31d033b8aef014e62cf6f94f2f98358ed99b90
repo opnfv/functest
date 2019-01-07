@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_997e72e3",
+        "filename": "docs/com/pres/gambia/gambia.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-01-07T22:55:46Z",
+      "side": 1,
+      "message": "No It\u0027s just an analysis about all results given by Apex and Fuel if ODL. We need your help to check where the failures are.\n\nYes the target is to fill bugs in ODL if we confirm it fails.\nI listed the possibilities because I\u0027m not fully convinced about the causes.\nIn case of fuel, it seems the POD is misconfigured (see nosdn scenarios). In case of Apex, I would think it\u0027s about ODL.",
+      "parentUuid": "1a622d24_d92bca2e",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 20
+      },
+      "revId": "6a31d033b8aef014e62cf6f94f2f98358ed99b90",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_3920fe48",
         "filename": "docs/com/pres/gambia/gambia.md",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-07T14:53:22Z",
       "side": 1,
       "message": "this sounds a little ominous :) maybe just say due to lack of support from the OPNFV community",
+      "range": {
+        "startLine": 155,
+        "startChar": 73,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "6a31d033b8aef014e62cf6f94f2f98358ed99b90",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_d988eae9",
+        "filename": "docs/com/pres/gambia/gambia.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-01-07T22:55:46Z",
+      "side": 1,
+      "message": "In addition to Functest ;), OPNFV offers the TestDB which allows fair comparisons between networking technologies. I\u0027m convinced they are true added values compared to the upstream communities.\n\nHere it\u0027s just an observation (I will try to improve my wording). It could be simply a POD misconfiguration for the related scenario and then could have been fixed if we improved our release process.",
+      "parentUuid": "1a622d24_3920fe48",
       "range": {
         "startLine": 155,
         "startChar": 73,
