@@ -67,7 +67,8 @@ class Cloudify(singlevm.SingleVm2):
                     "The current manager status is %s", cfy_status)
                 if str(cfy_status) != 'running':
                     raise Exception("Cloudify Manager isn't up and running")
-                self.cfy_client.secrets.create("foo", "bar")
+                self.cfy_client.secrets.create(
+                    "foo", "bar", update_if_exists=True)
                 self.__logger.debug(
                     "List secrets: %s", self.cfy_client.secrets.list())
                 self.cfy_client.secrets.delete("foo")
