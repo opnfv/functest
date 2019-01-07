@@ -13,6 +13,7 @@ from __future__ import division
 
 import logging
 import time
+import traceback
 
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
@@ -75,8 +76,9 @@ class Cloudify(singlevm.SingleVm2):
                 self.__logger.info("Secrets API successfully reached")
                 break
             except Exception:  # pylint: disable=broad-except
-                self.__logger.info(
-                    "try %s: Cloudify Manager isn't up and running", loop + 1)
+                self.__logger.debug(
+                    "try %s: Cloudify Manager isn't up and running \n%s",
+                    loop + 1, traceback.format_exc())
                 time.sleep(30)
         else:
             self.__logger.error("Cloudify Manager isn't up and running")
