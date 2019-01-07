@@ -59,6 +59,8 @@ class Cloudify(singlevm.SingleVm2):
             username='admin', password='admin', tenant='default_tenant',
             api_version='v3')
         self.__logger.info("Attemps running status of the Manager")
+        secret_key = "foo"
+        secret_value = "bar"
         for loop in range(10):
             try:
                 self.__logger.debug(
@@ -68,11 +70,15 @@ class Cloudify(singlevm.SingleVm2):
                     "The current manager status is %s", cfy_status)
                 if str(cfy_status) != 'running':
                     raise Exception("Cloudify Manager isn't up and running")
-                self.cfy_client.secrets.create(
-                    "foo", "bar", update_if_exists=True)
+                if secret_key in self.cfy_client.secrets.list():
+                    self.__logger.debug("Updating secrets: %s", secret_key)
+                    self.cfy_client.secrets.update(secret_key, secret_value)
+                else:
+                    self.__logger.debug("Creating secrets: %s", secret_key)
+                    self.cfy_client.secrets.create(secret_key, secret_value)
                 self.__logger.debug(
                     "List secrets: %s", self.cfy_client.secrets.list())
-                self.cfy_client.secrets.delete("foo")
+                self.cfy_client.secrets.delete(secret_key)
                 self.__logger.info("Secrets API successfully reached")
                 break
             except Exception:  # pylint: disable=broad-except
