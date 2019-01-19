@@ -59,28 +59,10 @@ class TempestCommon(singlevm.VmReady2):
         self.orig_cloud.grant_role(
             self.role_name, user=self.project.user.id,
             domain=self.project.domain.id)
-        environ = dict(
-            os.environ,
-            OS_USERNAME=self.project.user.name,
-            OS_PROJECT_NAME=self.project.project.name,
-            OS_PROJECT_ID=self.project.project.id,
-            OS_PASSWORD=self.project.password)
-        try:
-            del environ['OS_TENANT_NAME']
-            del environ['OS_TENANT_ID']
-        except Exception:  # pylint: disable=broad-except
-            pass
-        self.deployment_id = conf_utils.create_rally_deployment(
-            environ=environ)
-        if not self.deployment_id:
-            raise Exception("Deployment create failed")
-        self.verifier_id = conf_utils.create_verifier()
-        if not self.verifier_id:
-            raise Exception("Verifier create failed")
-        self.verifier_repo_dir = conf_utils.get_verifier_repo_dir(
-            self.verifier_id)
-        self.deployment_dir = conf_utils.get_verifier_deployment_dir(
-            self.verifier_id, self.deployment_id)
+        self.deployment_id = None
+        self.verifier_id = None
+        self.verifier_repo_dir = None
+        self.deployment_dir = None
         self.verification_id = None
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
@@ -347,6 +329,8 @@ class TempestCommon(singlevm.VmReady2):
             os.makedirs(self.res_dir)
         rconfig = configparser.RawConfigParser()
         rconfig.read(rally_conf)
+        rconfig.set('DEFAULT', 'debug', True)
+        rconfig.set('DEFAULT', 'use_stderr', False)
         rconfig.set('DEFAULT', 'log-file', 'rally.log')
         rconfig.set('DEFAULT', 'log_dir', self.res_dir)
         with open(rally_conf, 'wb') as config_file:
@@ -361,6 +345,10 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.remove_option('openstack', 'img_name_regex')
         if rconfig.has_option('openstack', 'swift_operator_role'):
             rconfig.remove_option('openstack', 'swift_operator_role')
+        if rconfig.has_option('DEFAULT', 'use_stderr'):
+            rconfig.remove_option('DEFAULT', 'use_stderr')
+        if rconfig.has_option('DEFAULT', 'debug'):
+            rconfig.remove_option('DEFAULT', 'debug')
         if rconfig.has_option('DEFAULT', 'log-file'):
             rconfig.remove_option('DEFAULT', 'log-file')
         if rconfig.has_option('DEFAULT', 'log_dir'):
@@ -402,6 +390,29 @@ class TempestCommon(singlevm.VmReady2):
         """
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
+        environ = dict(
+            os.environ,
+            OS_USERNAME=self.project.user.name,
+            OS_PROJECT_NAME=self.project.project.name,
+            OS_PROJECT_ID=self.project.project.id,
+            OS_PASSWORD=self.project.password)
+        try:
+            del environ['OS_TENANT_NAME']
+            del environ['OS_TENANT_ID']
+        except Exception:  # pylint: disable=broad-except
+            pass
+        self.deployment_id = conf_utils.create_rally_deployment(
+            environ=environ)
+        if not self.deployment_id:
+            raise Exception("Deployment create failed")
+        self.verifier_id = conf_utils.create_verifier()
+        if not self.verifier_id:
+            raise Exception("Verifier create failed")
+        self.verifier_repo_dir = conf_utils.get_verifier_repo_dir(
+            self.verifier_id)
+        self.deployment_dir = conf_utils.get_verifier_deployment_dir(
+            self.verifier_id, self.deployment_id)
+
         compute_cnt = len(self.orig_cloud.list_hypervisors())
 
         self.image_alt = self.publish_image_alt()
