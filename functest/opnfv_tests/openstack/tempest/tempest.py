@@ -33,11 +33,12 @@ LOGGER = logging.getLogger(__name__)
 
 
 class TempestCommon(singlevm.VmReady2):
-    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-instance-attributes,too-many-public-methods
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
+    shared_network = True
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -82,9 +83,6 @@ class TempestCommon(singlevm.VmReady2):
                 'neutron_extensions']
         except Exception:  # pylint: disable=broad-except
             pass
-
-    def create_network_resources(self):
-        pass
 
     def check_services(self):
         """Check the mandatory services."""
@@ -356,6 +354,27 @@ class TempestCommon(singlevm.VmReady2):
         with open(rally_conf, 'wb') as config_file:
             rconfig.write(config_file)
 
+    def update_network_section(self):
+        """Update network section in tempest.conf"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section('network'):
+            rconfig.add_section('network')
+        rconfig.set('network', 'public_network_id', self.ext_net.id)
+        rconfig.set('network', 'floating_network_name', self.ext_net.name)
+        with open(self.conf_file, 'wb') as config_file:
+            rconfig.write(config_file)
+
+    def update_compute_section(self):
+        """Update neutron section in tempest.conf"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section('compute'):
+            rconfig.add_section('compute')
+        rconfig.set('compute', 'fixed_network_name', self.network.name)
+        with open(self.conf_file, 'wb') as config_file:
+            rconfig.write(config_file)
+
     def update_scenario_section(self):
         """Update scenario section in tempest.conf"""
         rconfig = configparser.RawConfigParser()
@@ -431,6 +450,8 @@ class TempestCommon(singlevm.VmReady2):
             flavor_alt_id=self.flavor_alt.id,
             admin_role_name=self.role_name, cidr=self.cidr,
             domain_id=self.project.domain.id)
+        self.update_network_section()
+        self.update_compute_section()
         self.update_scenario_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
