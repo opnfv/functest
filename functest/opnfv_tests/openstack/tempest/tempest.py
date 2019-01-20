@@ -366,7 +366,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.write(config_file)
 
     def update_compute_section(self):
-        """Update neutron section in tempest.conf"""
+        """Update compute section in tempest.conf"""
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         if not rconfig.has_section('compute'):
