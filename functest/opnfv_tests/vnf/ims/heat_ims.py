@@ -101,7 +101,7 @@ class HeatIms(singlevm.VmReady2):
             domain=self.project.domain.id)
         self.keypair = self.cloud.create_keypair(
             '{}-kp_{}'.format(self.case_name, self.guid))
-        self.__logger.debug("keypair: %s", self.keypair)
+        self.__logger.info("keypair: %s", self.keypair.private_key)
 
         if self.deploy_vnf() and self.test_vnf():
             self.result = 100
@@ -160,7 +160,7 @@ class HeatIms(singlevm.VmReady2):
         self.__logger.debug("servers: %s", servers)
         for server in servers:
             if not self.check_regex_in_console(
-                    server.name, regex='Cloud-init .* finished at ', loop=60):
+                    server.name, regex='Cloud-init .* finished at ', loop=240):
                 return False
             if 'ellis' in server.name:
                 self.__logger.debug("server: %s", server)
