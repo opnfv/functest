@@ -246,6 +246,7 @@ class JujuEpc(singlevm.VmReady2):
                    '--bootstrap-series', 'xenial',
                    '--config', 'network={}'.format(self.network.id),
                    '--config', 'ssl-hostname-verification=false',
+                   '--config', 'external-network={}'.format(self.ext_net.id),
                    '--config', 'use-floating-ip=true',
                    '--config', 'use-default-secgroup=true',
                    '--debug']
