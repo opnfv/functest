@@ -39,6 +39,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     virtualenv oslo && . oslo/bin/activate && \
+    pip install --upgrade 'pip<19.0' && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron \
         -e git+https://git.openstack.org/openstack/cinder.git@$OPENSTACK_TAG#egg=cinder \
