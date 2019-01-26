@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_08a200ae",
+        "filename": "docker/smoke/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-01-26T11:48:19Z",
+      "side": 1,
+      "message": "I thought 18.0 would have been copied (see core). I\u0027m checking...\nhttps://git.opnfv.org/functest/tree/docker/core/Dockerfile\n\nI would prefer to add ARG PIP_TAG\u003d18.0 here.",
+      "revId": "54cd21aa84a8eafcca20d2f588389f0774ffcfc3",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
