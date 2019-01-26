@@ -140,8 +140,7 @@ class JujuEpc(singlevm.VmReady2):
         try:
             self.public_auth_url = self.get_public_auth_url(self.orig_cloud)
             if not self.public_auth_url.endswith(('v3', 'v3/')):
-                self.public_auth_url = six.moves.urllib.parse.urljoin(
-                    self.public_auth_url, 'v3')
+                self.public_auth_url = "{}/v3".format(self.public_auth_url)
         except Exception:  # pylint: disable=broad-except
             self.public_auth_url = None
         self.sec = None

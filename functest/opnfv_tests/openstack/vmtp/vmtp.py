@@ -138,8 +138,7 @@ class Vmtp(singlevm.VmReady2):
             OS_PROJECT_ID=self.project.project.id,
             OS_PASSWORD=self.project.password)
         if not new_env["OS_AUTH_URL"].endswith(('v3', 'v3/')):
-            new_env["OS_AUTH_URL"] = six.moves.urllib.parse.urljoin(
-                new_env["OS_AUTH_URL"], 'v3')
+            new_env["OS_AUTH_URL"] = "{}/v3".format(new_env["OS_AUTH_URL"])
         try:
             del new_env['OS_TENANT_NAME']
             del new_env['OS_TENANT_ID']
