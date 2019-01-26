@@ -51,6 +51,9 @@ tiers:
                     Rally suite in smoke mode.
                 run:
                     name: rally_sanity
+                    args:
+                        optional:
+                            - 'gnocchi'
 
             -
                 case_name: rally_jobs
@@ -62,6 +65,9 @@ tiers:
                     OpenStack gating
                 run:
                     name: rally_jobs
+                    args:
+                        optional:
+                            - 'gnocchi'
 
             -
                 case_name: refstack_defcore
