@@ -70,8 +70,7 @@ from snaps.openstack.utils.tests.heat_utils_tests import (
 from snaps.openstack.utils.tests.keystone_utils_tests import KeystoneSmokeTests
 from snaps.openstack.utils.tests.neutron_utils_tests import (
     NeutronSmokeTests, NeutronUtilsNetworkTests, NeutronUtilsSubnetTests,
-    NeutronUtilsRouterTests, NeutronUtilsSecurityGroupTests,
-    NeutronUtilsFloatingIpTests)
+    NeutronUtilsRouterTests, NeutronUtilsSecurityGroupTests)
 from snaps.openstack.utils.tests.nova_utils_tests import (
     NovaSmokeTests, NovaUtilsKeypairTests, NovaUtilsFlavorTests,
     NovaUtilsInstanceTests)
@@ -170,9 +169,6 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
         log_level=log_level))
     suite.addTest(OSComponentTestCase.parameterize(
         NeutronUtilsSecurityGroupTests, os_creds=os_creds,
-        ext_net_name=ext_net_name, log_level=log_level))
-    suite.addTest(OSComponentTestCase.parameterize(
-        NeutronUtilsFloatingIpTests, os_creds=os_creds,
         ext_net_name=ext_net_name, log_level=log_level))
     suite.addTest(OSComponentTestCase.parameterize(
         NovaUtilsKeypairTests, os_creds=os_creds, ext_net_name=ext_net_name,
