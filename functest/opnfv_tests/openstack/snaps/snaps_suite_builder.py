@@ -67,8 +67,7 @@ from snaps.openstack.utils.tests.heat_utils_tests import (
     HeatSmokeTests, HeatUtilsCreateSimpleStackTests,
     HeatUtilsCreateComplexStackTests, HeatUtilsFlavorTests,
     HeatUtilsKeypairTests, HeatUtilsSecurityGroupTests)
-from snaps.openstack.utils.tests.keystone_utils_tests import (
-    KeystoneSmokeTests, KeystoneUtilsTests)
+from snaps.openstack.utils.tests.keystone_utils_tests import KeystoneSmokeTests
 from snaps.openstack.utils.tests.neutron_utils_tests import (
     NeutronSmokeTests, NeutronUtilsNetworkTests, NeutronUtilsSubnetTests,
     NeutronUtilsRouterTests, NeutronUtilsSecurityGroupTests,
@@ -146,9 +145,6 @@ def add_openstack_api_tests(suite, os_creds, ext_net_name, use_keystone=True,
     """
     # Tests the OpenStack API calls
     if use_keystone:
-        suite.addTest(OSComponentTestCase.parameterize(
-            KeystoneUtilsTests, os_creds=os_creds, ext_net_name=ext_net_name,
-            log_level=log_level))
         suite.addTest(OSComponentTestCase.parameterize(
             CreateUserSuccessTests, os_creds=os_creds,
             ext_net_name=ext_net_name, log_level=log_level))
