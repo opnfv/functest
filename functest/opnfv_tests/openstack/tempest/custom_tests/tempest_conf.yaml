@@ -2,9 +2,14 @@
 compute-feature-enabled:
     shelve: false
     vnc_console: false
+identity:
+    user_unique_last_password_count: 2
+    user_lockout_duration: 10
+    user_lockout_failure_attempts: 2
 identity-feature-enabled:
     api_v2: false
     api_v2_admin: false
+    security_compliance: true
 image-feature-enabled:
     api_v2: true
     api_v1: false
