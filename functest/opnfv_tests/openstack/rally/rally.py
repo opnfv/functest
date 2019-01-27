@@ -25,7 +25,6 @@ import prettytable
 from ruamel.yaml import YAML
 from six.moves import configparser
 from xtesting.core import testcase
-from xtesting.energy import energy
 import yaml
 
 from functest.core import singlevm
@@ -93,6 +92,7 @@ class RallyBase(singlevm.VmReady2):
         self.tests = []
         self.run_cmd = ''
         self.network_extensions = []
+        self.services = []
 
     def _build_task_args(self, test_file_name):
         """Build arguments for the Rally task."""
@@ -446,6 +446,9 @@ class RallyBase(singlevm.VmReady2):
         self.compute_cnt = len(self.cloud.list_hypervisors())
         self.network_extensions = self.cloud.get_network_extensions()
         self.flavor_alt = self.create_flavor_alt()
+        self.services = [service.name for service in
+                         self.cloud.list_services()]
+
         LOGGER.debug("flavor: %s", self.flavor_alt)
 
     def prepare_task(self, test_name):
@@ -459,11 +462,13 @@ class RallyBase(singlevm.VmReady2):
                          str(self._build_task_args(test_name))])
         return True
 
-    def run_tests(self):
+    def run_tests(self, **kwargs):
         """Execute tests."""
+        optional = kwargs.get('optional', [])
         for test in self.tests:
-            if self.prepare_task(test):
-                self.run_task(test)
+            if test in self.services or test not in optional:
+                if self.prepare_task(test):
+                    self.run_task(test)
 
     def _generate_report(self):
         """Generate test execution summary report."""
@@ -537,7 +542,6 @@ class RallyBase(singlevm.VmReady2):
 
         return super(RallyBase, self).is_successful()
 
-    @energy.enable_recording
     def run(self, **kwargs):
         """Run testcase."""
         self.start_time = time.time()
@@ -557,7 +561,7 @@ class RallyBase(singlevm.VmReady2):
                 pass
             conf_utils.create_rally_deployment(environ=environ)
             self.prepare_run()
-            self.run_tests()
+            self.run_tests(**kwargs)
             self._generate_report()
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
