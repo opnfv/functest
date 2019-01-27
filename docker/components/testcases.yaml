@@ -50,3 +50,6 @@ tiers:
                     OpenStack Rally suite using several threads and iterations.
                 run:
                     name: rally_full
+                    args:
+                        optional:
+                            - 'gnocchi'
