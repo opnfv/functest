@@ -103,7 +103,7 @@
         {{ vm_params(image_name,flavor_name) }}
         size:
           min: 1
-          max: 5
+          max: 1
         create_vm_params:
             nics:
               - net-id: {{ netid }}
@@ -129,7 +129,7 @@
       args:
         size:
           min: 1
-          max: 5
+          max: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
