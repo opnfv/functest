@@ -109,5 +109,6 @@ class SnapsTestRunner(unit.Suite):
             cloud = shade.OpenStackCloud(cloud_config=cloud_config)
             if functest_utils.get_nova_version(cloud) > (2, 60):
                 self.is_skipped = True
+                self.project.clean()
         except Exception:  # pylint: disable=broad-except
             pass
