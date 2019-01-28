@@ -264,14 +264,20 @@ class JujuEpc(singlevm.VmReady2):
     def check_app(self, name='abot-epc-basic', status='active'):
         """Check application status."""
         cmd = ['juju', 'status', '--format', 'short', name]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output)
-        ret = re.search(r'(?=workload:({})\))'.format(status), output)
-        if ret:
-            self.__logger.info("%s workload is %s", name, status)
-            return True
-        self.__logger.error("%s workload differs from %s", name, status)
-        return False
+        for i in range(10):
+            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+            self.__logger.info("%s\n%s", " ".join(cmd), output)
+            ret = re.search(r'(?=workload:({})\))'.format(status), output)
+            if ret:
+                self.__logger.info("%s workload is %s", name, status)
+                break
+            self.__logger.info(
+                "loop %d: %s workload differs from %s", i + 1, name, status)
+            time.sleep(60)
+        else:
+            self.__logger.error("%s workload differs from %s", name, status)
+            return False
+        return True
 
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
