@@ -31,7 +31,7 @@
     - args:
         {{ vm_params(image_name, flavor_name) }}
         block_migration: false
-        volume_size: 10
+        volume_size: 1
         force_delete: false
         nics:
           - net-id: {{ netid }}
@@ -67,7 +67,7 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        volume_size: 5
+        volume_size: 1
         nics:
           - net-id: {{ netid }}
       context:
