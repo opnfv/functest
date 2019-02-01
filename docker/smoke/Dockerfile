@@ -2,6 +2,7 @@ FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
+ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
 ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.4.0
 ARG NEUTRON_TAG=0.2.0
@@ -12,7 +13,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@\\1#egg=tempest/ \
+        sed -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ \
         > upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
         sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
