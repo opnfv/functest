@@ -26,8 +26,7 @@ class Cloudify(singlevm.SingleVm2):
 
     __logger = logging.getLogger(__name__)
 
-    filename = ('/home/opnfv/functest/images/'
-                'cloudify-manager-premium-4.0.1.qcow2')
+    filename = ('/home/opnfv/functest/images/cloudify-manager-4.4ga.qcow2')
     flavor_ram = 4096
     flavor_vcpus = 2
     flavor_disk = 40
