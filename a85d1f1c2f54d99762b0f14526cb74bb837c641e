@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_01b1368f",
+        "filename": "ansible/site.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2019-02-06T09:43:47Z",
+      "side": 1,
+      "message": "This change is de-facto changing the release criteria which needs an approval from the TSC. Even if there is a consensus to the change, it still has to have a formal approval.",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 27
+      },
+      "revId": "a85d1f1c2f54d99762b0f14526cb74bb837c641e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
