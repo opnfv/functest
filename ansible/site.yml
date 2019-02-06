@@ -61,13 +61,14 @@
             - odl
             - api_check
             - snaps_health_check
+            - tempest_smoke
         - container: functest-smoke
           tests:
-            - tempest_smoke
             - neutron-tempest-plugin-api
             - rally_sanity
-            - rally_jobs
             - refstack_defcore
+            - tempest_full
+            - tempest_scenario
             - patrole
             - snaps_smoke
             - neutron_trunk
@@ -76,12 +77,11 @@
             - barbican
         - container: functest-benchmarking
           tests:
+            - rally_jobs
             - vmtp
             - shaker
         - container: functest-components
           tests:
-            - tempest_full
-            - tempest_scenario
             - rally_full
         - container: functest-vnf
           tests:

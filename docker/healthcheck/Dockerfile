@@ -1,4 +1,4 @@
-FROM opnfv/functest-core:hunter
+FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky

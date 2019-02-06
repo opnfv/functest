@@ -7,7 +7,6 @@ ARG REFSTACK_TARGET=2018.02
 ARG PATROLE_TAG=0.4.0
 ARG NEUTRON_TAG=0.2.0
 ARG BARBICAN_TAG=0.1.0
-ARG NEUTRON_RALLY_TAG=$OPENSTACK_TAG
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
@@ -43,13 +42,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/neutron/policy.json https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
-    git init /src/neutron && \
-    (cd /src/neutron && \
-        git fetch --tags https://git.openstack.org/openstack/neutron.git $NEUTRON_RALLY_TAG && \
-        git checkout FETCH_HEAD) && \
-    mkdir -p /home/opnfv/functest/data/rally/neutron && \
-    cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
-    rm -r /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
