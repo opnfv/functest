@@ -49,10 +49,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
-    mkdir -p /home/opnfv/functest/data/rally/neutron && \
-    cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/neutron /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
+        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
