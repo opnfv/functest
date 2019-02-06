@@ -8,6 +8,17 @@ tiers:
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
         testcases:
             -
+                case_name: rally_jobs
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs a group of Rally jobs used in
+                    OpenStack gating
+                run:
+                    name: rally_jobs
+
+            -
                 case_name: vmtp
                 project_name: functest
                 criteria: 100
