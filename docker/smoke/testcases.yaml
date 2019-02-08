@@ -66,6 +66,8 @@ tiers:
                 run:
                     name: rally_jobs
                     args:
+                        tests:
+                            - 'neutron'
                         optional:
                             - 'gnocchi'
 
