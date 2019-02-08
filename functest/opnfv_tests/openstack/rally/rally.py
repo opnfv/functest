@@ -83,7 +83,6 @@ class RallyBase(singlevm.VmReady2):
         self.summary = []
         self.scenario_dir = ''
         self.smoke = None
-        self.test_name = None
         self.start_time = None
         self.result = None
         self.details = None
@@ -401,16 +400,15 @@ class RallyBase(singlevm.VmReady2):
                             'task_status': self.task_succeed(json_raw)}
         self.summary.append(scenario_summary)
 
-    def prepare_run(self):
+    def prepare_run(self, **kwargs):
         """Prepare resources needed by test scenarios."""
         assert self.cloud
-        LOGGER.debug('Validating the test name...')
-        if self.test_name == 'all':
-            self.tests = self.TESTS
-        elif self.test_name in self.TESTS:
-            self.tests = [self.test_name]
-        else:
-            raise Exception("Test name '%s' is invalid" % self.test_name)
+        LOGGER.debug('Validating run tests...')
+        for test in kwargs.get('tests', self.TESTS):
+            if test in self.TESTS:
+                self.tests.append(test)
+            else:
+                raise Exception("Test name '%s' is invalid" % test)
 
         if not os.path.exists(self.TASK_DIR):
             os.makedirs(self.TASK_DIR)
@@ -567,7 +565,7 @@ class RallyBase(singlevm.VmReady2):
             except Exception:  # pylint: disable=broad-except
                 pass
             conf_utils.create_rally_deployment(environ=environ)
-            self.prepare_run()
+            self.prepare_run(**kwargs)
             self.run_tests(**kwargs)
             self._generate_report()
             self.generate_html_report()
@@ -588,7 +586,6 @@ class RallySanity(RallyBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_sanity"
         super(RallySanity, self).__init__(**kwargs)
-        self.test_name = 'all'
         self.smoke = True
         self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'sanity')
 
@@ -601,7 +598,6 @@ class RallyFull(RallyBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_full"
         super(RallyFull, self).__init__(**kwargs)
-        self.test_name = 'all'
         self.smoke = False
         self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'full')
 
@@ -616,20 +612,20 @@ class RallyJobs(RallyBase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_jobs"
         super(RallyJobs, self).__init__(**kwargs)
-        self.test_name = 'all'
         self.task_file = os.path.join(self.RALLY_DIR, 'rally_jobs.yaml')
         self.task_yaml = None
 
-    def prepare_run(self):
+    def prepare_run(self, **kwargs):
         """Create resources needed by test scenarios."""
-        super(RallyJobs, self).prepare_run()
+        super(RallyJobs, self).prepare_run(**kwargs)
         with open(os.path.join(self.RALLY_DIR,
                                'rally_jobs.yaml'), 'r') as task_file:
             self.task_yaml = yaml.safe_load(task_file)
 
-        if not all(task in self.task_yaml for task in self.tests):
-            raise Exception("Test '%s' not in '%s'" %
-                            (self.test_name, self.tests))
+        for task in self.task_yaml:
+            if task not in self.tests:
+                raise Exception("Test '%s' not in '%s'" %
+                                (task, self.tests))
 
     def apply_blacklist(self, case_file_name, result_file_name):
         # pylint: disable=too-many-branches
