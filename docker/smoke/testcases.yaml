@@ -52,6 +52,16 @@ tiers:
                 run:
                     name: rally_sanity
                     args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'gnocchi'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
                         optional:
                             - 'gnocchi'
 
@@ -66,6 +76,16 @@ tiers:
                 run:
                     name: rally_jobs
                     args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'gnocchi'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
                         optional:
                             - 'gnocchi'
 
