@@ -223,6 +223,17 @@ tiers:
                     Rally suite in smoke mode.
                 run:
                     name: rally_sanity
+                    args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'gnocchi'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
 
             -
                 case_name: refstack_defcore
@@ -396,6 +407,9 @@ tiers:
                     OpenStack gating
                 run:
                     name: rally_jobs
+                    args:
+                        tests:
+                            - 'neutron'
 
             -
                 case_name: vmtp
@@ -531,6 +545,17 @@ tiers:
                     OpenStack Rally suite using several threads and iterations.
                 run:
                     name: rally_full
+                    args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'gnocchi'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
 
     -
         name: vnf

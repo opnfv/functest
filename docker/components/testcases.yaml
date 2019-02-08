@@ -51,5 +51,15 @@ tiers:
                 run:
                     name: rally_full
                     args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'gnocchi'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
                         optional:
                             - 'gnocchi'
