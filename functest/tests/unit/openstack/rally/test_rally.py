@@ -32,7 +32,6 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base.image = munch.Munch(name='foo')
             self.rally_base.flavor = munch.Munch(name='foo')
             self.rally_base.flavor_alt = munch.Munch(name='bar')
-            self.rally_base.test_name = 'all'
         self.assertTrue(mock_get_config.called)
         self.assertTrue(mock_shade.called)
         self.assertTrue(mock_new_project.called)
@@ -264,9 +263,8 @@ class OSRallyTesting(unittest.TestCase):
 
     def test_prepare_run_testname_invalid(self):
         self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test'
         with self.assertRaises(Exception):
-            self.rally_base.prepare_run()
+            self.rally_base.prepare_run(tests=['test'])
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.shutil.copyfile')
@@ -275,14 +273,13 @@ class OSRallyTesting(unittest.TestCase):
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.TESTS = ['test1', 'test2']
-        self.rally_base.test_name = 'test1'
         with mock.patch.object(self.rally_base.cloud,
                                'list_hypervisors') as mock_list_hyperv, \
             mock.patch.object(self.rally_base, 'create_flavor_alt',
                               side_effect=Exception) \
                 as mock_create_flavor:
             with self.assertRaises(Exception):
-                self.rally_base.prepare_run()
+                self.rally_base.prepare_run(tests=['test1'])
             mock_list_hyperv.assert_called_once()
             mock_create_flavor.assert_called_once()
 
@@ -292,7 +289,6 @@ class OSRallyTesting(unittest.TestCase):
                 'run_task')
     def test_run_tests_all(self, mock_run_task, mock_prepare_task):
         self.rally_base.tests = ['test1', 'test2']
-        self.rally_base.test_name = 'all'
         self.rally_base.run_tests()
         mock_prepare_task.assert_any_call('test1')
         mock_prepare_task.assert_any_call('test2')
