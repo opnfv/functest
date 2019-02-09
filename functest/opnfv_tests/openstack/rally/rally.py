@@ -349,15 +349,6 @@ class RallyBase(singlevm.VmReady2):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         LOGGER.info("%s\n%s", " ".join(cmd), output)
 
-        # save report as HTML
-        report_html_name = '{}.html'.format(test_name)
-        report_html_dir = os.path.join(self.results_dir, report_html_name)
-        cmd = (["rally", "task", "report", "--html", "--uuid", task_id,
-                "--out", report_html_dir])
-        LOGGER.debug('running command: %s', cmd)
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        LOGGER.info("%s\n%s", " ".join(cmd), output)
-
         json_results = open(report_json_dir).read()
         self._append_summary(json_results, test_name)
 
@@ -527,6 +518,22 @@ class RallyBase(singlevm.VmReady2):
                                     'nb success': success_rate}})
         self.details = payload
 
+    def generate_html_report(self):
+        """Save all task reports as single HTML
+
+        Raises:
+            subprocess.CalledProcessError: if Rally doesn't return 0
+
+        Returns:
+            None
+        """
+        cmd = ["rally", "task", "report", "--deployment",
+               str(getattr(config.CONF, 'rally_deployment_name')),
+               "--out", "{}/{}.html".format(self.results_dir, self.case_name)]
+        LOGGER.debug('running command: %s', cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
         self.clean_rally_conf()
@@ -563,6 +570,7 @@ class RallyBase(singlevm.VmReady2):
             self.prepare_run()
             self.run_tests(**kwargs)
             self._generate_report()
+            self.generate_html_report()
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
