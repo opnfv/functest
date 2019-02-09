@@ -527,6 +527,22 @@ class RallyBase(singlevm.VmReady2):
                                     'nb success': success_rate}})
         self.details = payload
 
+    def generate_html_report(self):
+        """Save all task reports as single HTML
+
+        Raises:
+            subprocess.CalledProcessError: if Rally doesn't return 0
+
+        Returns:
+            None
+        """
+        cmd = ["rally", "task", "report", "--deployment",
+               str(getattr(config.CONF, 'rally_deployment_name')),
+               "--out", "{}/{}.html".format(self.results_dir, self.case_name)]
+        LOGGER.debug('running command: %s', cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
         self.clean_rally_conf()
@@ -563,6 +579,7 @@ class RallyBase(singlevm.VmReady2):
             self.prepare_run()
             self.run_tests(**kwargs)
             self._generate_report()
+            self.generate_html_report()
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
@@ -708,6 +725,9 @@ class RallyJobs(RallyBase):
         self.run_cmd = (["rally", "task", "start", "--task", task_file_name,
                          "--task-args", str(self.build_task_args(test_name))])
         return True
+
+    def generate_html_report(self):
+        pass
 
     def clean(self):
         self._remove_plugins_extra()

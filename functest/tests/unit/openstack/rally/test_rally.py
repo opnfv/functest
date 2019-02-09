@@ -10,6 +10,7 @@
 import json
 import logging
 import os
+import subprocess
 import unittest
 
 import mock
@@ -17,6 +18,7 @@ import munch
 from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.rally import rally
+from functest.utils import config
 
 
 class OSRallyTesting(unittest.TestCase):
@@ -324,6 +326,8 @@ class OSRallyTesting(unittest.TestCase):
                 'run_tests')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_generate_report')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'generate_html_report')
     def test_run_default(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
         for func in args:
@@ -369,6 +373,26 @@ class OSRallyTesting(unittest.TestCase):
                                        {"task_status": True}]
             self.assertEqual(self.rally_base.is_successful(), 424)
             mock_super(rally.RallyBase, self).is_successful.assert_called()
+
+    @mock.patch('subprocess.check_output',
+                side_effect=subprocess.CalledProcessError('', ''))
+    def test_generate_html_report_ko(self, *args):
+        with self.assertRaises(subprocess.CalledProcessError):
+            self.rally_base.generate_html_report()
+        cmd = ["rally", "task", "report", "--deployment",
+               str(getattr(config.CONF, 'rally_deployment_name')),
+               "--out", "{}/{}.html".format(
+                   self.rally_base.results_dir, self.rally_base.case_name)]
+        args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
+
+    @mock.patch('subprocess.check_output', return_value=None)
+    def test_generate_html_report(self, *args):
+        self.assertEqual(self.rally_base.generate_html_report(), None)
+        cmd = ["rally", "task", "report", "--deployment",
+               str(getattr(config.CONF, 'rally_deployment_name')),
+               "--out", "{}/{}.html".format(
+                   self.rally_base.results_dir, self.rally_base.case_name)]
+        args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
 
 
 if __name__ == "__main__":
