@@ -79,7 +79,7 @@ class JujuEpc(singlevm.VmReady2):
     flavor_alt_vcpus = 1
     flavor_alt_disk = 10
 
-    juju_timeout = '3600'
+    juju_timeout = '4800'
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
