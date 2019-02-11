@@ -44,6 +44,12 @@ class CloudifyIms(cloudify.Cloudify):
     quota_security_group_rule = 100
     quota_port = 50
 
+    cop_yaml = ("https://github.com/cloudify-cosmo/cloudify-openstack-plugin/"
+                "releases/download/2.14.7/plugin.yaml")
+    cop_wgn = ("https://github.com/cloudify-cosmo/cloudify-openstack-plugin/"
+               "releases/download/2.14.7/cloudify_openstack_plugin-2.14.7-py27"
+               "-none-linux_x86_64-centos-Core.wgn")
+
     def __init__(self, **kwargs):
         """Initialize CloudifyIms testcase object."""
         if "case_name" not in kwargs:
@@ -152,10 +158,14 @@ class CloudifyIms(cloudify.Cloudify):
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
         (_, stdout, stderr) = self.ssh.exec_command(
-            "sudo cp ~/cloudify_ims.pem /etc/cloudify/ && "
-            "sudo chmod 444 /etc/cloudify/cloudify_ims.pem && "
-            "sudo yum install -y gcc python-devel python-cmd2 && "
-            "cfy status")
+            "sudo docker exec cfy_manager_local "
+            "cfy plugins upload -y {} {} && "
+            "sudo docker cp ~/cloudify_ims.pem "
+            "cfy_manager_local:/etc/cloudify/ && "
+            "sudo docker exec cfy_manager_local "
+            "chmod 444 /etc/cloudify/cloudify_ims.pem && "
+            "sudo docker exec cfy_manager_local cfy status".format(
+                self.cop_yaml, self.cop_wgn))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
 
