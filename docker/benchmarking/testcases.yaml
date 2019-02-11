@@ -8,6 +8,17 @@ tiers:
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
         testcases:
             -
+                case_name: rally_full
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the full suite of scenarios of the
+                    OpenStack Rally suite using several threads and iterations.
+                run:
+                    name: rally_full
+
+            -
                 case_name: rally_jobs
                 project_name: functest
                 criteria: 100
