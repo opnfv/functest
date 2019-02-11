@@ -27,14 +27,16 @@ class Cloudify(singlevm.SingleVm2):
     __logger = logging.getLogger(__name__)
 
     filename = ('/home/opnfv/functest/images/'
-                'cloudify-manager-community-18.10.4.qcow2')
+                'ubuntu-16.04-server-cloudimg-amd64-disk1.img')
     flavor_ram = 4096
     flavor_vcpus = 2
     flavor_disk = 40
-    username = 'centos'
+    username = 'ubuntu'
     ssh_connect_loops = 12
     create_server_timeout = 600
     ports = [80, 443, 5671, 53333]
+
+    cloudify_container = "cloudifyplatform/community:19.01.24"
 
     def __init__(self, **kwargs):
         """Initialize Cloudify testcase object."""
@@ -54,10 +56,20 @@ class Cloudify(singlevm.SingleVm2):
         """
         Deploy Cloudify Manager.
         """
+        (_, stdout, stderr) = self.ssh.exec_command(
+            "sudo wget https://get.docker.com/ -O script.sh && "
+            "sudo chmod +x script.sh && "
+            "sudo ./script.sh && "
+            "sudo docker run --name cfy_manager_local -d "
+            "--restart unless-stopped -v /sys/fs/cgroup:/sys/fs/cgroup:ro "
+            "--tmpfs /run --tmpfs /run/lock --security-opt seccomp:unconfined "
+            "--cap-add SYS_ADMIN --network=host {}".format(
+                self.cloudify_container))
+        self.__logger.debug("output:\n%s", stdout.read())
+        self.__logger.debug("error:\n%s", stderr.read())
         self.cfy_client = CloudifyClient(
             host=self.fip.floating_ip_address,
-            username='admin', password='admin', tenant='default_tenant',
-            api_version='v3')
+            username='admin', password='admin', tenant='default_tenant')
         self.__logger.info("Attemps running status of the Manager")
         secret_key = "foo"
         secret_value = "bar"

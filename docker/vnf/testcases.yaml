@@ -20,7 +20,6 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: false
-                enabled: false
                 description: >-
                     This test case deploys an OpenSource vIMS solution from
                     Clearwater using the Cloudify orchestrator. It also runs
@@ -45,7 +44,6 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: false
-                enabled: false
                 description: >-
                     This test case is vRouter testing.
                 run:
