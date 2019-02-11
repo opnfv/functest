@@ -33,9 +33,6 @@
               - name: functest-benchmarking
                 ref_arg: BRANCH
                 path: docker/benchmarking
-              - name: functest-components
-                ref_arg:
-                path: docker/components
               - name: functest-vnf
                 ref_arg:
                 path: docker/vnf
@@ -74,12 +71,10 @@
             - barbican
         - container: functest-benchmarking
           tests:
+            - rally_full
             - rally_jobs
             - vmtp
             - shaker
-        - container: functest-components
-          tests:
-            - rally_full
         - container: functest-vnf
           tests:
             - cloudify
