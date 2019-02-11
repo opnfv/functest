@@ -4,9 +4,10 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
-ARG CLOUDIFY_VIMS_TAG=fraser
+ARG CLOUDIFY_VIMS_TAG=gambia
 ARG HEAT_VIMS_TAG=release-130
 ARG VROUTER_TAG=fraser
+ARG VROUTER_BP_TAG=b16be2bfc4acabfec015300d294762b2da56c3a8
 ARG JUJU_TAG=tags/juju-2.3.9
 ARG JUJU_WAIT_TAG=2.6.4
 ARG ABOT_CHARM=opnfv-fraser
@@ -46,7 +47,7 @@ RUN apk --no-cache add --update \
         git checkout FETCH_HEAD) && \
     git init /src/opnfv-vnf-vyos-blueprint && \
     (cd /src/opnfv-vnf-vyos-blueprint && \
-        git fetch --tags https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git $VROUTER_TAG && \
+        git fetch --tags https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git $VROUTER_BP_TAG && \
         git checkout FETCH_HEAD) && \
     mkdir -p /home/opnfv/functest/data/router && \
     git init /home/opnfv/functest/data/router/opnfv-vnf-data && \
