@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_ca6f53c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-02-11T07:38:10Z",
+      "side": 1,
+      "message": "WIP is useless. (Your rating -1 is better)",
+      "revId": "4158771c71a26767d39edb1c686307c11d1a04bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_4a4ce370",
+        "filename": "docker/components/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-02-11T07:38:10Z",
+      "side": 1,
+      "message": "I would suggest to keep the default list as class attribute instead.",
+      "revId": "4158771c71a26767d39edb1c686307c11d1a04bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_2a47e74c",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-02-11T07:38:10Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "4158771c71a26767d39edb1c686307c11d1a04bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_8a755b9a",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-02-11T07:38:10Z",
+      "side": 1,
+      "message": "idem",
+      "revId": "4158771c71a26767d39edb1c686307c11d1a04bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_6a78bf8f",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-02-11T07:38:10Z",
+      "side": 1,
+      "message": "tests_input \u003d kwargs.get(\u0027tests\u0027, self.TESTS)",
+      "revId": "4158771c71a26767d39edb1c686307c11d1a04bc",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
