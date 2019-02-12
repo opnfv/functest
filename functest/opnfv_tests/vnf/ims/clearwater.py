@@ -83,7 +83,7 @@ class ClearwaterTesting(object):
         return output_dict
 
     def _create_ellis_account(self, account_url, params):
-        i = 50
+        i = 80
         for iloop in range(i):
             try:
                 req = requests.post(account_url, data=params)
@@ -98,7 +98,7 @@ class ClearwaterTesting(object):
             except Exception:  # pylint: disable=broad-except
                 self.logger.info(
                     "try %s: cannot create ellis account", iloop + 1)
-                time.sleep(25)
+                time.sleep(30)
         raise Exception(
             "Unable to create an account {}".format(
                 params.get('full_name')))
