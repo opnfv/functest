@@ -73,7 +73,7 @@ class Cloudify(singlevm.SingleVm2):
         self.__logger.info("Attemps running status of the Manager")
         secret_key = "foo"
         secret_value = "bar"
-        for loop in range(10):
+        for loop in range(20):
             try:
                 self.__logger.debug(
                     "status %s", self.cfy_client.manager.get_status())
