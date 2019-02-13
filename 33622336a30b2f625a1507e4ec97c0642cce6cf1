@@ -34,6 +34,24 @@
       "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_f0215efd",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2019-02-13T10:40:35Z",
+      "side": 1,
+      "message": "Or you want to remove the variable and do something like:\n\nself.TESTS \u003d kwargs.get(\u0027tests\u0027, self.TESTS)",
+      "parentUuid": "1a622d24_b01086a9",
+      "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
