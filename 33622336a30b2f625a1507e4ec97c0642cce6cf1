@@ -16,6 +16,24 @@
       "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_b01086a9",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2019-02-13T10:38:21Z",
+      "side": 1,
+      "message": "one question here: if user puts at configuration something not expected (eg. \"fantastic-test\") this part here is going to throw exception, because rally expects specific tests to be declared. If tests_input is removed, then, how rally.py is going to behave when it has to manipulate \"fantastic-test\"?",
+      "parentUuid": "1a622d24_9013cab7",
+      "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
