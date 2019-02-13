@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_304ab6ac",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2019-02-13T12:12:48Z",
+      "side": 1,
+      "message": "Why this is added here?",
+      "revId": "de72a4aa2f511d94385ad3ef1928b598db2cf136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
