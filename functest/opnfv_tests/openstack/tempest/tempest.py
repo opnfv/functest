@@ -260,7 +260,7 @@ class TempestCommon(singlevm.VmReady2):
                     return
 
             with open(os.path.join(self.res_dir,
-                                   "tempest.log"), 'r') as logfile:
+                                   "rally.log"), 'r') as logfile:
                 output = logfile.read()
 
             success_testcases = []
