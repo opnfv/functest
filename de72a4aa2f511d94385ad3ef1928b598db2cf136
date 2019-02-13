@@ -16,6 +16,24 @@
       "revId": "de72a4aa2f511d94385ad3ef1928b598db2cf136",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_f0fdde3c",
+        "filename": "functest/tests/unit/openstack/rally/test_rally.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2019-02-13T12:31:27Z",
+      "side": 1,
+      "message": "Right now I can only think it is a leftover. I will look into a couple of minutes and I will remove it if this is a case",
+      "parentUuid": "1a622d24_304ab6ac",
+      "revId": "de72a4aa2f511d94385ad3ef1928b598db2cf136",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
