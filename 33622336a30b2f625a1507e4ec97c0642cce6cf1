@@ -70,6 +70,24 @@
       "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_b087e6d6",
+        "filename": "functest/opnfv_tests/openstack/rally/rally.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 7381
+      },
+      "writtenOn": "2019-02-13T10:51:20Z",
+      "side": 1,
+      "message": "I am up for this. Let me push a new patch set",
+      "parentUuid": "1a622d24_707d4ee7",
+      "revId": "33622336a30b2f625a1507e4ec97c0642cce6cf1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
