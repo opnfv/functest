@@ -69,6 +69,21 @@ class OSRallyTesting(unittest.TestCase):
             return True
         return False
 
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.'
+                'RallyBase.get_verifier_deployment_id', return_value='foo')
+    @mock.patch('subprocess.check_output')
+    def test_create_rally_deployment(self, mock_exec, mock_get_id):
+        # pylint: disable=unused-argument
+        self.assertEqual(rally.RallyBase.create_rally_deployment(), 'foo')
+        calls = [
+            mock.call(['rally', 'deployment', 'destroy', '--deployment',
+                       str(getattr(config.CONF, 'rally_deployment_name'))]),
+            mock.call(['rally', 'deployment', 'create', '--fromenv', '--name',
+                       str(getattr(config.CONF, 'rally_deployment_name'))],
+                      env=None),
+            mock.call(['rally', 'deployment', 'check'])]
+        mock_exec.assert_has_calls(calls)
+
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -314,7 +329,7 @@ class OSRallyTesting(unittest.TestCase):
             self.rally_base.clean()
             self.assertEqual(mock_delete_flavor.call_count, 1)
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'prepare_run')
@@ -323,19 +338,19 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 '_generate_report')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
-                'generate_html_report')
+                'export_task')
     def test_run_default(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_OK)
         for func in args:
             func.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment', side_effect=Exception)
     def test_run_exception_create_rally_dep(self, mock_create_rally_dep):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_create_rally_dep.assert_called()
 
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'prepare_run', side_effect=Exception)
@@ -372,22 +387,44 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('subprocess.check_output',
                 side_effect=subprocess.CalledProcessError('', ''))
-    def test_generate_html_report_ko(self, *args):
+    def test_export_task_ko(self, *args):
+        file_name = "{}/{}.html".format(
+            self.rally_base.results_dir, self.rally_base.case_name)
         with self.assertRaises(subprocess.CalledProcessError):
-            self.rally_base.generate_html_report()
-        cmd = ["rally", "task", "report", "--deployment",
+            self.rally_base.export_task(file_name)
+        cmd = ["rally", "task", "export", "--type", "html", "--deployment",
                str(getattr(config.CONF, 'rally_deployment_name')),
-               "--out", "{}/{}.html".format(
-                   self.rally_base.results_dir, self.rally_base.case_name)]
+               "--to", file_name]
         args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
 
     @mock.patch('subprocess.check_output', return_value=None)
-    def test_generate_html_report(self, *args):
-        self.assertEqual(self.rally_base.generate_html_report(), None)
-        cmd = ["rally", "task", "report", "--deployment",
+    def test_export_task(self, *args):
+        file_name = "{}/{}.html".format(
+            self.rally_base.results_dir, self.rally_base.case_name)
+        self.assertEqual(self.rally_base.export_task(file_name), None)
+        cmd = ["rally", "task", "export", "--type", "html", "--deployment",
                str(getattr(config.CONF, 'rally_deployment_name')),
-               "--out", "{}/{}.html".format(
-                   self.rally_base.results_dir, self.rally_base.case_name)]
+               "--to", file_name]
+        args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
+
+    @mock.patch('subprocess.check_output',
+                side_effect=subprocess.CalledProcessError('', ''))
+    def test_verify_report_ko(self, *args):
+        file_name = "{}/{}.html".format(
+            self.rally_base.results_dir, self.rally_base.case_name)
+        with self.assertRaises(subprocess.CalledProcessError):
+            self.rally_base.verify_report(file_name, "1")
+        cmd = ["rally", "verify", "report", "--type", "html", "--uuid", "1",
+               "--to", file_name]
+        args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
+
+    @mock.patch('subprocess.check_output', return_value=None)
+    def test_verify_report(self, *args):
+        file_name = "{}/{}.html".format(
+            self.rally_base.results_dir, self.rally_base.case_name)
+        self.assertEqual(self.rally_base.verify_report(file_name, "1"), None)
+        cmd = ["rally", "verify", "report", "--type", "html", "--uuid", "1",
+               "--to", file_name]
         args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
 
 
