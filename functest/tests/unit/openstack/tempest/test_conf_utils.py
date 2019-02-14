@@ -13,27 +13,13 @@ import unittest
 
 import mock
 
+from functest.opnfv_tests.openstack.rally import rally
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 
 
 class OSTempestConfUtilsTesting(unittest.TestCase):
     # pylint: disable=too-many-public-methods
-
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils'
-                '.get_verifier_deployment_id', return_value='foo')
-    @mock.patch('subprocess.check_output')
-    def test_create_rally_deployment(self, mock_exec, mock_get_id):
-        # pylint: disable=unused-argument
-        self.assertEqual(conf_utils.create_rally_deployment(), 'foo')
-        calls = [
-            mock.call(['rally', 'deployment', 'destroy', '--deployment',
-                       str(getattr(config.CONF, 'rally_deployment_name'))]),
-            mock.call(['rally', 'deployment', 'create', '--fromenv', '--name',
-                       str(getattr(config.CONF, 'rally_deployment_name'))],
-                      env=None),
-            mock.call(['rally', 'deployment', 'check'])]
-        mock_exec.assert_has_calls(calls)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils'
                 '.LOGGER.debug')
@@ -52,8 +38,8 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
                 'create_verifier', return_value=mock.Mock())
-    @mock.patch('functest.opnfv_tests.openstack.tempest.conf_utils.'
-                'create_rally_deployment', return_value=mock.Mock())
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.'
+                'RallyBase.create_rally_deployment', return_value=mock.Mock())
     def test_get_verifier_id_default(self, mock_rally, mock_tempest):
         # pylint: disable=unused-argument
         setattr(config.CONF, 'tempest_verifier_name', 'test_verifier_name')
@@ -76,7 +62,7 @@ class OSTempestConfUtilsTesting(unittest.TestCase):
             mock_stdout.configure_mock(**attrs)
             mock_popen.return_value = mock_stdout
 
-            self.assertEqual(conf_utils.get_verifier_deployment_id(),
+            self.assertEqual(rally.RallyBase.get_verifier_deployment_id(),
                              'test_deploy_id')
 
     def test_get_verif_repo_dir_default(self):

@@ -10,11 +10,8 @@
 
 """Tempest configuration utilities."""
 
-from __future__ import print_function
-
 import json
 import logging
-import fileinput
 import os
 import subprocess
 
@@ -27,9 +24,6 @@ from functest.utils import env
 from functest.utils import functest_utils
 
 
-RALLY_CONF_PATH = "/etc/rally/rally.conf"
-RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
-    'functest', 'ci/rally_aarch64_patch.conf')
 GLANCE_IMAGE_PATH = os.path.join(
     getattr(config.CONF, 'dir_functest_images'),
     getattr(config.CONF, 'openstack_image_file_name'))
@@ -44,44 +38,6 @@ CI_INSTALLER_TYPE = env.get('INSTALLER_TYPE')
 
 """ logging configuration """
 LOGGER = logging.getLogger(__name__)
-
-
-def create_rally_deployment(environ=None):
-    """Create new rally deployment"""
-    # set the architecture to default
-    pod_arch = env.get("POD_ARCH")
-    arch_filter = ['aarch64']
-
-    if pod_arch and pod_arch in arch_filter:
-        LOGGER.info("Apply aarch64 specific to rally config...")
-        with open(RALLY_AARCH64_PATCH_PATH, "r") as pfile:
-            rally_patch_conf = pfile.read()
-
-        for line in fileinput.input(RALLY_CONF_PATH):
-            print(line, end=' ')
-            if "cirros|testvm" in line:
-                print(rally_patch_conf)
-
-    LOGGER.info("Creating Rally environment...")
-
-    try:
-        cmd = ['rally', 'deployment', 'destroy',
-               '--deployment',
-               str(getattr(config.CONF, 'rally_deployment_name'))]
-        output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output)
-    except subprocess.CalledProcessError:
-        pass
-
-    cmd = ['rally', 'deployment', 'create', '--fromenv',
-           '--name', str(getattr(config.CONF, 'rally_deployment_name'))]
-    output = subprocess.check_output(cmd, env=environ)
-    LOGGER.info("%s\n%s", " ".join(cmd), output)
-
-    cmd = ['rally', 'deployment', 'check']
-    output = subprocess.check_output(cmd)
-    LOGGER.info("%s\n%s", " ".join(cmd), output)
-    return get_verifier_deployment_id()
 
 
 def create_verifier():
@@ -117,20 +73,6 @@ def get_verifier_id():
                             stderr=subprocess.STDOUT)
     verifier_uuid = proc.stdout.readline().rstrip()
     return verifier_uuid
-
-
-def get_verifier_deployment_id():
-    """
-    Returns deployment id for active Rally deployment
-    """
-    cmd = ("rally deployment list | awk '/" +
-           getattr(config.CONF, 'rally_deployment_name') +
-           "/ {print $2}'")
-    proc = subprocess.Popen(cmd, shell=True,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT)
-    deployment_uuid = proc.stdout.readline().rstrip()
-    return deployment_uuid
 
 
 def get_verifier_repo_dir(verifier_id):

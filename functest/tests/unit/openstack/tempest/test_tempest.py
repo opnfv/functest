@@ -16,7 +16,6 @@ from xtesting.core import testcase
 
 from functest.opnfv_tests.openstack.tempest import tempest
 from functest.opnfv_tests.openstack.tempest import conf_utils
-from functest.utils import config
 
 
 class OSTempestTesting(unittest.TestCase):
@@ -26,15 +25,15 @@ class OSTempestTesting(unittest.TestCase):
         with mock.patch('os_client_config.get_config'), \
                 mock.patch('shade.OpenStackCloud'), \
                 mock.patch('functest.core.tenantnetwork.NewProject'), \
-                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                           'conf_utils.create_rally_deployment'), \
+                mock.patch('functest.opnfv_tests.openstack.rally.rally.'
+                           'RallyBase.create_rally_deployment'), \
                 mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                            'conf_utils.create_verifier'), \
                 mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                            'conf_utils.get_verifier_id',
                            return_value='test_deploy_id'), \
-                mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                           'conf_utils.get_verifier_deployment_id',
+                mock.patch('functest.opnfv_tests.openstack.rally.rally.'
+                           'RallyBase.get_verifier_deployment_id',
                            return_value='test_deploy_id'), \
                 mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                            'conf_utils.get_verifier_repo_dir',
@@ -171,19 +170,6 @@ class OSTempestTesting(unittest.TestCase):
                 mock_logger_info. \
                     assert_any_call("Starting Tempest test suite: '%s'.", cmd)
 
-    @mock.patch('subprocess.check_output')
-    def test_generate_report(self, mock_popen):
-        self.tempestcommon.verification_id = "1234"
-        html_file = os.path.join(
-            os.path.join(
-                getattr(config.CONF, 'dir_results'),
-                self.tempestcommon.case_name),
-            "tempest-report.html")
-        cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
-               "1234", "--to", html_file]
-        self.tempestcommon.generate_report()
-        mock_popen.assert_called_once_with(cmd)
-
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.os.makedirs',
@@ -260,8 +246,7 @@ class OSTempestTesting(unittest.TestCase):
                                   'apply_tempest_blacklist'), \
                 mock.patch.object(self.tempestcommon, 'run_verifier_tests'), \
                 mock.patch.object(self.tempestcommon,
-                                  'parse_verifier_result'), \
-                mock.patch.object(self.tempestcommon, 'generate_report'):
+                                  'parse_verifier_result'):
             self._test_run(testcase.TestCase.EX_OK)
             args[0].assert_called_once_with()
 
