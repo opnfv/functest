@@ -433,10 +433,13 @@ class RallyBase(singlevm.VmReady2):
         nb_tests = 0
         nb_success = 0
         overall_duration = 0.0
+        success = []
+        failures = []
 
         rally_report = json.loads(json_raw)
         for task in rally_report.get('tasks'):
             for subtask in task.get('subtasks'):
+                has_errors = False
                 for workload in subtask.get('workloads'):
                     if workload.get('full_duration'):
                         overall_duration += workload.get('full_duration')
@@ -447,11 +450,20 @@ class RallyBase(singlevm.VmReady2):
                     for result in workload.get('data'):
                         if not result.get('error'):
                             nb_success += 1
+                        else:
+                            has_errors = True
+
+                if has_errors:
+                    failures.append(subtask['title'])
+                else:
+                    success.append(subtask['title'])
 
         scenario_summary = {'test_name': test_name,
                             'overall_duration': overall_duration,
                             'nb_tests': nb_tests,
                             'nb_success': nb_success,
+                            'success': success,
+                            'failures': failures,
                             'task_status': self.task_succeed(json_raw)}
         self.summary.append(scenario_summary)
 
@@ -548,7 +560,9 @@ class RallyBase(singlevm.VmReady2):
             payload.append({'module': item['test_name'],
                             'details': {'duration': item['overall_duration'],
                                         'nb tests': item['nb_tests'],
-                                        'success': success_str}})
+                                        'success rate': success_str,
+                                        'success': item['success'],
+                                        'failures': item['failures']}})
 
         total_duration_str = time.strftime("%H:%M:%S",
                                            time.gmtime(total_duration))
