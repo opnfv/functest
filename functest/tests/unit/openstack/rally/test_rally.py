@@ -345,14 +345,31 @@ class OSRallyTesting(unittest.TestCase):
         mock_prep_env.assert_called()
 
     def test_append_summary(self):
-        text = '{"tasks": [{"subtasks": [{"workloads": [{"full_duration": ' \
-               '1.23,"data": [{"error": []}]}]},{"workloads": ' \
-               '[{"full_duration": 2.78, "data": [{"error": ["err"]}]}]}]}]}'
-        self.rally_base._append_summary(text, "foo_test")
+        json_dict = {
+            'tasks': [{
+                'subtasks': [{
+                    'name': 'sub_task',
+                    'workloads': [{
+                        'full_duration': 1.23,
+                        'data': [{
+                            'error': []
+                        }]
+                    }, {
+                        'full_duration': 2.78,
+                        'data': [{
+                            'error': ['err']
+                        }]
+                    }]
+                }]
+            }]
+        }
+        self.rally_base._append_summary(json.dumps(json_dict), "foo_test")
         self.assertEqual(self.rally_base.summary[0]['test_name'], "foo_test")
         self.assertEqual(self.rally_base.summary[0]['overall_duration'], 4.01)
         self.assertEqual(self.rally_base.summary[0]['nb_tests'], 2)
         self.assertEqual(self.rally_base.summary[0]['nb_success'], 1)
+        self.assertEqual(self.rally_base.summary[0]['success'], [])
+        self.assertEqual(self.rally_base.summary[0]['failures'], ['sub_task'])
 
     def test_is_successful_false(self):
         with mock.patch('six.moves.builtins.super') as mock_super:
