@@ -24,6 +24,7 @@ from xtesting.core import testcase
 import yaml
 
 from functest.core import singlevm
+from functest.opnfv_tests.openstack.rally import rally
 from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
@@ -289,14 +290,6 @@ class TempestCommon(singlevm.VmReady2):
         LOGGER.info("Tempest %s success_rate is %s%%",
                     self.case_name, self.result)
 
-    def generate_report(self):
-        """Generate verification report."""
-        html_file = os.path.join(self.res_dir,
-                                 "tempest-report.html")
-        cmd = ["rally", "verify", "report", "--type", "html", "--uuid",
-               self.verification_id, "--to", str(html_file)]
-        subprocess.check_output(cmd)
-
     def update_rally_regex(self, rally_conf='/etc/rally/rally.conf'):
         """Set image name as tempest img_name_regex"""
         rconfig = configparser.RawConfigParser()
@@ -420,7 +413,7 @@ class TempestCommon(singlevm.VmReady2):
             del environ['OS_TENANT_ID']
         except Exception:  # pylint: disable=broad-except
             pass
-        self.deployment_id = conf_utils.create_rally_deployment(
+        self.deployment_id = rally.RallyBase.create_rally_deployment(
             environ=environ)
         if not self.deployment_id:
             raise Exception("Deployment create failed")
@@ -471,7 +464,12 @@ class TempestCommon(singlevm.VmReady2):
             self.apply_tempest_blacklist()
             self.run_verifier_tests(**kwargs)
             self.parse_verifier_result()
-            self.generate_report()
+            rally.RallyBase.verify_report(
+                os.path.join(self.res_dir, "tempest-report.html"),
+                self.verification_id)
+            rally.RallyBase.verify_report(
+                os.path.join(self.res_dir, "tempest-report.xml"),
+                self.verification_id, "junit-xml")
             res = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception('Error with run')

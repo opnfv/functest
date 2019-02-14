@@ -11,7 +11,9 @@
 """Rally testcases implementation."""
 
 from __future__ import division
+from __future__ import print_function
 
+import fileinput
 import json
 import logging
 import os
@@ -28,7 +30,6 @@ from xtesting.core import testcase
 import yaml
 
 from functest.core import singlevm
-from functest.opnfv_tests.openstack.tempest import conf_utils
 from functest.utils import config
 from functest.utils import env
 
@@ -38,10 +39,13 @@ LOGGER = logging.getLogger(__name__)
 class RallyBase(singlevm.VmReady2):
     """Base class form Rally testcases implementation."""
 
-    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-instance-attributes, too-many-public-methods
     TESTS = ['authenticate', 'glance', 'cinder', 'gnocchi', 'heat',
              'keystone', 'neutron', 'nova', 'quotas']
 
+    RALLY_CONF_PATH = "/etc/rally/rally.conf"
+    RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
+        'functest', 'ci/rally_aarch64_patch.conf')
     RALLY_DIR = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally')
     RALLY_SCENARIO_DIR = pkg_resources.resource_filename(
@@ -144,6 +148,57 @@ class RallyBase(singlevm.VmReady2):
 
         self.apply_blacklist(scenario_file_name, test_file_name)
         return test_file_name
+
+    @staticmethod
+    def get_verifier_deployment_id():
+        """
+        Returns deployment id for active Rally deployment
+        """
+        cmd = ("rally deployment list | awk '/" +
+               getattr(config.CONF, 'rally_deployment_name') +
+               "/ {print $2}'")
+        proc = subprocess.Popen(cmd, shell=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
+        deployment_uuid = proc.stdout.readline().rstrip()
+        return deployment_uuid
+
+    @staticmethod
+    def create_rally_deployment(environ=None):
+        """Create new rally deployment"""
+        # set the architecture to default
+        pod_arch = env.get("POD_ARCH")
+        arch_filter = ['aarch64']
+
+        if pod_arch and pod_arch in arch_filter:
+            LOGGER.info("Apply aarch64 specific to rally config...")
+            with open(RallyBase.RALLY_AARCH64_PATCH_PATH, "r") as pfile:
+                rally_patch_conf = pfile.read()
+
+            for line in fileinput.input(RallyBase.RALLY_CONF_PATH):
+                print(line, end=' ')
+                if "cirros|testvm" in line:
+                    print(rally_patch_conf)
+
+        LOGGER.info("Creating Rally environment...")
+        try:
+            cmd = ['rally', 'deployment', 'destroy',
+                   '--deployment',
+                   str(getattr(config.CONF, 'rally_deployment_name'))]
+            output = subprocess.check_output(cmd)
+            LOGGER.info("%s\n%s", " ".join(cmd), output)
+        except subprocess.CalledProcessError:
+            pass
+
+        cmd = ['rally', 'deployment', 'create', '--fromenv',
+               '--name', str(getattr(config.CONF, 'rally_deployment_name'))]
+        output = subprocess.check_output(cmd, env=environ)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+
+        cmd = ['rally', 'deployment', 'check']
+        output = subprocess.check_output(cmd)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+        return RallyBase.get_verifier_deployment_id()
 
     @staticmethod
     def update_keystone_default_role(rally_conf='/etc/rally/rally.conf'):
@@ -516,8 +571,9 @@ class RallyBase(singlevm.VmReady2):
                                     'nb success': success_rate}})
         self.details = payload
 
-    def generate_html_report(self):
-        """Save all task reports as single HTML
+    @staticmethod
+    def export_task(file_name, export_type="html"):
+        """Export all task results (e.g. html or xunit report)
 
         Raises:
             subprocess.CalledProcessError: if Rally doesn't return 0
@@ -525,9 +581,26 @@ class RallyBase(singlevm.VmReady2):
         Returns:
             None
         """
-        cmd = ["rally", "task", "report", "--deployment",
+        cmd = ["rally", "task", "export", "--type", export_type,
+               "--deployment",
                str(getattr(config.CONF, 'rally_deployment_name')),
-               "--out", "{}/{}.html".format(self.results_dir, self.case_name)]
+               "--to", file_name]
+        LOGGER.debug('running command: %s', cmd)
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        LOGGER.info("%s\n%s", " ".join(cmd), output)
+
+    @staticmethod
+    def verify_report(file_name, uuid, export_type="html"):
+        """Generate the verifier report (e.g. html or xunit report)
+
+        Raises:
+            subprocess.CalledProcessError: if Rally doesn't return 0
+
+        Returns:
+            None
+        """
+        cmd = ["rally", "verify", "report", "--type", export_type,
+               "--uuid", uuid, "--to", file_name]
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         LOGGER.info("%s\n%s", " ".join(cmd), output)
@@ -564,11 +637,15 @@ class RallyBase(singlevm.VmReady2):
                 del environ['OS_TENANT_ID']
             except Exception:  # pylint: disable=broad-except
                 pass
-            conf_utils.create_rally_deployment(environ=environ)
+            self.create_rally_deployment(environ=environ)
             self.prepare_run(**kwargs)
             self.run_tests(**kwargs)
             self._generate_report()
-            self.generate_html_report()
+            self.export_task(
+                "{}/{}.html".format(self.results_dir, self.case_name))
+            self.export_task(
+                "{}/{}.xml".format(self.results_dir, self.case_name),
+                export_type="junit-xml")
             res = testcase.TestCase.EX_OK
         except Exception as exc:   # pylint: disable=broad-except
             LOGGER.error('Error with run: %s', exc)
