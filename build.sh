@@ -10,7 +10,6 @@ docker/healthcheck \
 docker/smoke \
 docker/benchmarking \
 docker/features \
-docker/components \
 docker/vnf"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=(--pull=true --no-cache --force-rm=true)
