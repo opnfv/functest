@@ -582,8 +582,6 @@ class RallyBase(singlevm.VmReady2):
             None
         """
         cmd = ["rally", "task", "export", "--type", export_type,
-               "--deployment",
-               str(getattr(config.CONF, 'rally_deployment_name')),
                "--to", file_name]
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
