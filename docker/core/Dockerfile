@@ -10,9 +10,8 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
-    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
-        sed -E /#egg=functest/d > upper-constraints.txt && \
-    cat upper-constraints.txt && \
+    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.txt  && \
+    sed -i -E /#egg=functest/d upper-constraints.txt && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt \
         -chttps://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG \
         pip==$PIP_TAG && \
