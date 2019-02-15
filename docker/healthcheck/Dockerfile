@@ -5,11 +5,12 @@ ARG OPENSTACK_TAG=stable/rocky
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@\\1#egg=tempest/ \
-        > upper-constraints.txt && \
-    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
-        sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
+RUN apk --no-cache add --virtual .build-deps --update \
+        python-dev build-base linux-headers libffi-dev openssl-dev && \
+    wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
+    sed -i -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@\\1#egg=tempest/ upper-constraints.txt && \
+    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
     git init /src/odl_test && \
