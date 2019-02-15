@@ -2,14 +2,16 @@ FROM opnfv/functest-core:gambia
 
 ARG BRANCH=stable/gambia
 ARG OPENSTACK_TAG=stable/queens
+ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
+ARG OSLO_CONCURRENCY=3.27.0
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
-RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG | \
-        sed -E s/^tempest==+\(.*\)$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@\\1#egg=tempest/ \
-        > upper-constraints.txt && \
-    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH | \
-        sed -E /#egg=functest/d > upper-constraints.opnfv.txt && \
+RUN wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
+    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
+    sed -i -E s/^oslo.concurrency==+.*$/oslo.concurrency===$OSLO_CONCURRENCY/ upper-constraints.txt && \
+    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         -rthirdparty-requirements.txt && \
     git init /src/odl_test && \
