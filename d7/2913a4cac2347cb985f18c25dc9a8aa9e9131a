@@ -1,0 +1,7 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Fri, 15 Feb 2019 18:29:08 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/67040
+Project: functest
+Branch: refs/heads/stable/hunter
