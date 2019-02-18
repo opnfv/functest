@@ -339,7 +339,7 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: '^networking_bgpvpn_tempest\.'
+                        mode: '^networking_bgpvpn_tempest.tests.api\.'
                         neutron_extensions:
                             - bgpvpn
                         option:
