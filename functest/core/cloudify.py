@@ -12,11 +12,13 @@
 from __future__ import division
 
 import logging
+import os
 import time
 import traceback
 
 from cloudify_rest_client import CloudifyClient
 from cloudify_rest_client.executions import Execution
+import scp
 
 from functest.core import singlevm
 
@@ -36,7 +38,9 @@ class Cloudify(singlevm.SingleVm2):
     create_server_timeout = 600
     ports = [80, 443, 5671, 53333]
 
-    cloudify_container = "cloudifyplatform/community:19.01.24"
+    cloudify_archive = ('/home/opnfv/functest/images/'
+                        'cloudify-docker-manager-community-19.01.24.tar')
+    cloudify_container = "docker-cfy-manager:latest"
 
     def __init__(self, **kwargs):
         """Initialize Cloudify testcase object."""
@@ -56,14 +60,19 @@ class Cloudify(singlevm.SingleVm2):
         """
         Deploy Cloudify Manager.
         """
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(self.cloudify_archive,
+                 remote_path=os.path.basename(self.cloudify_archive))
         (_, stdout, stderr) = self.ssh.exec_command(
             "sudo wget https://get.docker.com/ -O script.sh && "
             "sudo chmod +x script.sh && "
             "sudo ./script.sh && "
+            "sudo docker load -i ~/{} && "
             "sudo docker run --name cfy_manager_local -d "
             "--restart unless-stopped -v /sys/fs/cgroup:/sys/fs/cgroup:ro "
             "--tmpfs /run --tmpfs /run/lock --security-opt seccomp:unconfined "
             "--cap-add SYS_ADMIN --network=host {}".format(
+                os.path.basename(self.cloudify_archive),
                 self.cloudify_container))
         self.__logger.debug("output:\n%s", stdout.read())
         self.__logger.debug("error:\n%s", stderr.read())
