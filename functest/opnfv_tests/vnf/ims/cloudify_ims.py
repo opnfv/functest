@@ -36,9 +36,9 @@ class CloudifyIms(cloudify.Cloudify):
     filename_alt = ('/home/opnfv/functest/images/'
                     'ubuntu-14.04-server-cloudimg-amd64-disk1.img')
 
-    flavor_alt_ram = 2048
-    flavor_alt_vcpus = 2
-    flavor_alt_disk = 25
+    flavor_alt_ram = 1024
+    flavor_alt_vcpus = 1
+    flavor_alt_disk = 3
 
     quota_security_group = 20
     quota_security_group_rule = 100
