@@ -14,7 +14,7 @@ http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-aarch64-disk.img
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 http://cloud.centos.org/altarch/7/images/aarch64/CentOS-7-aarch64-GenericCloud.qcow2.xz
 http://repository.cloudifysource.org/cloudify/19.01.24/community-release/cloudify-docker-manager-community-19.01.24.tar
-https://sourceforge.net/projects/ool-opnfv/files/vyos-1.1.7.img
+http://testresults.opnfv.org/functest/vyos-1.1.8-amd64.qcow2
 http://testresults.opnfv.org/functest/shaker-image.qcow2
 http://testresults.opnfv.org/functest/shaker-image-arm64.qcow2
 EOF

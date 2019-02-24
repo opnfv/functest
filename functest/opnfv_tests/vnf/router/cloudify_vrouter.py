@@ -34,11 +34,11 @@ class CloudifyVrouter(cloudify.Cloudify):
 
     __logger = logging.getLogger(__name__)
 
-    filename_alt = '/home/opnfv/functest/images/vyos-1.1.7.img'
+    filename_alt = '/home/opnfv/functest/images/vyos-1.1.8-amd64.qcow2'
 
-    flavor_alt_ram = 2048
+    flavor_alt_ram = 1024
     flavor_alt_vcpus = 1
-    flavor_alt_disk = 50
+    flavor_alt_disk = 3
 
     cop_yaml = ("https://github.com/cloudify-cosmo/cloudify-openstack-plugin/"
                 "releases/download/2.14.7/plugin.yaml")
