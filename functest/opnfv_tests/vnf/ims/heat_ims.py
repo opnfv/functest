@@ -101,7 +101,7 @@ class HeatIms(singlevm.VmReady2):
             domain=self.project.domain.id)
         self.keypair = self.cloud.create_keypair(
             '{}-kp_{}'.format(self.case_name, self.guid))
-        self.__logger.info("keypair: %s", self.keypair.private_key)
+        self.__logger.info("keypair:\n%s", self.keypair.private_key)
 
         if self.deploy_vnf() and self.test_vnf():
             self.result = 100
