@@ -353,7 +353,7 @@ class SingleVm1(VmReady1):
         self.keypair = self.cloud.create_keypair(
             '{}-kp_{}'.format(self.case_name, self.guid))
         self.__logger.debug("keypair: %s", self.keypair)
-        self.__logger.debug("private_key: %s", self.keypair.private_key)
+        self.__logger.debug("private_key:\n%s", self.keypair.private_key)
         with open(self.key_filename, 'w') as private_key_file:
             private_key_file.write(self.keypair.private_key)
         self.sec = self.cloud.create_security_group(
