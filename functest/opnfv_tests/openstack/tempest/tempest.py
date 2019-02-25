@@ -273,7 +273,7 @@ class TempestCommon(singlevm.VmReady2):
                                     output):
                 failed_testcases.append(match)
             skipped_testcases = []
-            for match in re.findall(r'.*\{\d{1,2}\} (.*?) \.{3} skip:',
+            for match in re.findall(r'.*\{\d{1,2}\} (.*?) \.{3} skip(?::| )',
                                     output):
                 skipped_testcases.append(match)
 
