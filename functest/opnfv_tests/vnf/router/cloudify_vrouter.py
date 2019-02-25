@@ -215,8 +215,7 @@ class CloudifyVrouter(cloudify.Cloudify):
 
     def test_vnf(self):
         start_time = time.time()
-        testing = vrouter_base.VrouterOnBoardingBase(
-            self.case_name, self.util, self.util_info)
+        testing = vrouter_base.VrouterOnBoardingBase(self.util, self.util_info)
         result, test_result_data = testing.test_vnf()
         duration = time.time() - start_time
         if result:
