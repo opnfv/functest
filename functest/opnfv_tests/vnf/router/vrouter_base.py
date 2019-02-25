@@ -19,7 +19,6 @@ import time
 
 import pkg_resources
 
-from functest.utils import config
 from functest.opnfv_tests.vnf.router.test_controller import function_test_exec
 
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
@@ -28,18 +27,13 @@ __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 class VrouterOnBoardingBase(object):
     """vrouter testing base class"""
 
-    def __init__(self, case_name, util, util_info):
+    def __init__(self, util, util_info):
         self.logger = logging.getLogger(__name__)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
-        self.result_dir = os.path.join(
-            getattr(config.CONF, 'dir_results'), case_name)
         self.util = util
         self.util_info = util_info
         self.vnf_list = []
-
-        if not os.path.exists(self.result_dir):
-            os.makedirs(self.result_dir)
 
     def test_vnf(self):
         """vrouter test execution"""
