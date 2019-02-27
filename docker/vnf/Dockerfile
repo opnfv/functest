@@ -18,6 +18,7 @@ ENV GOPATH /src/epc-requirements/go
 ENV GOBIN /src/epc-requirements/go/bin
 ENV PATH $GOBIN:$PATH
 
+COPY clearwater-heat-add-deps.patch /tmp/clearwater-heat-add-deps.patch
 RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
         procps libxslt libxml2 zlib libffi python3 go musl-dev && \
@@ -44,7 +45,8 @@ RUN apk --no-cache add --update \
     git init  /src/heat_vims && \
     (cd /src/heat_vims && \
         git fetch --tags https://github.com/Metaswitch/clearwater-heat.git $HEAT_VIMS_TAG && \
-        git checkout FETCH_HEAD) && \
+        git checkout FETCH_HEAD && \
+        patch -p1 < /tmp/clearwater-heat-add-deps.patch) && \
     git init /src/opnfv-vnf-vyos-blueprint && \
     (cd /src/opnfv-vnf-vyos-blueprint && \
         git fetch --tags https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git $VROUTER_BP_TAG && \
@@ -69,7 +71,8 @@ RUN apk --no-cache add --update \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
-        /src/epc-requirements/abot_charm/.git /root/.cache/go-build && \
+        /src/epc-requirements/abot_charm/.git /root/.cache/go-build \
+        /tmp/clearwater-heat-add-deps.patch && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
