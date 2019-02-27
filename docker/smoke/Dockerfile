@@ -18,18 +18,13 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git fetch --tags https://git.openstack.org/openstack/patrole.git $PATROLE_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
-    git init /src/neutron-tempest-plugin && \
-    (cd /src/neutron-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/neutron-tempest-plugin.git $NEUTRON_TAG && \
-        git checkout FETCH_HEAD) && \
-    update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
     git init /src/barbican-tempest-plugin && \
     (cd /src/barbican-tempest-plugin && \
         git fetch --tags https://git.openstack.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
+        /src/patrole /src/barbican-tempest-plugin neutron-tempest-plugin \
         networking-bgpvpn networking-sfc && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
@@ -48,7 +43,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
+        /src/patrole /src/barbican-tempest-plugin && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
