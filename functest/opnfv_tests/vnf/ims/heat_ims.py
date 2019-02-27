@@ -45,6 +45,16 @@ class HeatIms(singlevm.VmReady2):
     quota_security_group_rule = 100
     quota_port = 50
 
+    parameters = {
+        'private_mgmt_net_cidr': '192.168.100.0/24',
+        'private_mgmt_net_gateway': '192.168.100.254',
+        'private_mgmt_net_pool_start': '192.168.100.1',
+        'private_mgmt_net_pool_end': '192.168.100.253',
+        'private_sig_net_cidr': '192.168.101.0/24',
+        'private_sig_net_gateway': '192.168.101.254',
+        'private_sig_net_pool_start': '192.168.101.1',
+        'private_sig_net_pool_end': '192.168.101.253'}
+
     def __init__(self, **kwargs):
         """Initialize HeatIms testcase object."""
         if "case_name" not in kwargs:
@@ -148,6 +158,7 @@ class HeatIms(singlevm.VmReady2):
         parameters['key_name'] = self.keypair.name
         parameters['external_mgmt_dns_ip'] = env.get('NAMESERVER')
         parameters['external_sig_dns_ip'] = env.get('NAMESERVER')
+        parameters.update(self.parameters)
 
         self.__logger.info("Create Heat Stack")
         self.stack = self.cloud.create_stack(
