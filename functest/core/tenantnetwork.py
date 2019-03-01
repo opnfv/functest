@@ -20,6 +20,8 @@ This classes could be reused by more complexed scenarios (Single VM)
 
 import logging
 import os
+import random
+import string
 import time
 import uuid
 
@@ -53,7 +55,8 @@ class NewProject(object):
         """Create projects/users"""
         assert self.orig_cloud
         assert self.case_name
-        self.password = str(uuid.uuid4())
+        self.password = ''.join(random.choice(
+            string.ascii_letters + string.digits) for _ in range(30))
         self.domain = self.orig_cloud.get_domain(
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
