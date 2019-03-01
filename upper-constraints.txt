@@ -19,3 +19,4 @@ ansible===2.3.2.0
 xtesting===0.61.0
 networking-bgpvpn===9.0.0
 networking-sfc===7.0.0
+neutron===13.0.2
