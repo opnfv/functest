@@ -168,8 +168,6 @@ def configure_tempest_update_params(
     rconfig.set(
         'validation', 'ssh_timeout',
         getattr(config.CONF, 'tempest_validation_ssh_timeout'))
-    rconfig.set('object-storage', 'operator_role',
-                getattr(config.CONF, 'tempest_object_storage_operator_role'))
     rconfig.set(
         'identity', 'v3_endpoint_type',
         os.environ.get('OS_INTERFACE', 'public'))

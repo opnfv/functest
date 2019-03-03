@@ -139,8 +139,6 @@ tempest:
         user_password: Tempest123!
     validation:
         ssh_timeout: 130
-    object_storage:
-        operator_role: SwiftOperator
     # network_type: vlan
     # physical_network: physnet2
     # segmentation_id: 2366
