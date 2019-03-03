@@ -132,24 +132,9 @@ odl_sfc:
 
 tempest:
     verifier_name: opnfv-tempest
-    identity:
-        tenant_name: tempest
-        tenant_description: Tenant for Tempest test suite
-        user_name: tempest
-        user_password: Tempest123!
-    validation:
-        ssh_timeout: 130
-    # network_type: vlan
-    # physical_network: physnet2
-    # segmentation_id: 2366
-    private_net_name: tempest-net
-    private_subnet_name: tempest-subnet
-    private_subnet_cidr: 192.168.150.0/24
-    router_name: tempest-router
 
 rally:
     deployment_name: opnfv-rally
-    network_name: rally-net
 
 vnf:
     juju_epc:
