@@ -166,9 +166,6 @@ def configure_tempest_update_params(
     rconfig.set('network', 'project_network_cidr', cidr)
     rconfig.set('network', 'project_networks_reachable', False)
     rconfig.set(
-        'validation', 'ssh_timeout',
-        getattr(config.CONF, 'tempest_validation_ssh_timeout'))
-    rconfig.set(
         'identity', 'v3_endpoint_type',
         os.environ.get('OS_INTERFACE', 'public'))
 
