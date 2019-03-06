@@ -6,7 +6,6 @@ Submodules
 
 .. toctree::
 
-   functest.opnfv_tests.openstack.tempest.conf_utils
    functest.opnfv_tests.openstack.tempest.tempest
 
 Module contents
