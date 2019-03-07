@@ -1,0 +1,1496 @@
+diff --git a/bono.yaml b/bono.yaml
+index f0189cd..e291ee4 100644
+--- a/bono.yaml
++++ b/bono.yaml
+@@ -23,26 +23,6 @@ parameters:
+     constraints:
+       - custom_constraint: neutron.network
+         description: Must be a valid network ID
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_id:
+-    type: string
+-    description: ID of private signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -64,9 +44,6 @@ parameters:
+   base_mgmt_security_group:
+     type: string
+     description: ID of base security group for all Clearwater nodes (managment)
+-  bono_sig_security_group:
+-    type: string
+-    description: ID of security group for Bono nodes (signaling)
+   repo_url:
+     type: string
+     description: URL for Clearwater repository
+@@ -78,9 +55,6 @@ parameters:
+   dns_mgmt_ip:
+     type: string
+     description: IP address for DNS server on management network
+-  dns_sig_ip:
+-    type: string
+-    description: IP address for DNS server on signaling network
+   dnssec_key:
+     type: string
+     description: DNSSEC private key (Base64-encoded)
+@@ -111,20 +85,6 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
+-  sig_port:
+-    type: OS::Neutron::Port
+-    properties:
+-      # Specify the network ID by string to work around OpenStack issues - see https://github.com/Metaswitch/clearwater-heat/issues/18.
+-      network_id: { str_replace: { params: { x: { get_param: private_sig_net_id } }, template: x } }
+-      security_groups:
+-        - { get_param: bono_sig_security_group }
+-
+-  sig_floating_ip:
+-    type: OS::Neutron::FloatingIP
+-    properties:
+-      floating_network_id: { get_param: public_sig_net_id }
+-      port_id: { get_resource: sig_port }
+-
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -134,7 +94,6 @@ resources:
+       key_name: { get_param: key_name }
+       networks:
+         - port: { get_resource: mgmt_port }
+-        - port: { get_resource: sig_port }
+       user_data_format: RAW
+       user_data:
+         str_replace:
+@@ -143,12 +102,7 @@ resources:
+             __zone__: { get_param: zone }
+             __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-            __public_sig_ip__: { get_attr: [ sig_floating_ip, floating_ip_address ] }
+-            __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_cidr__: { get_param: private_sig_net_cidr }
+-            __private_sig_gateway__: { get_param: private_sig_net_gateway }
+             __dns_mgmt_ip__: { get_param: dns_mgmt_ip }
+-            __dns_sig_ip__: { get_param: dns_sig_ip }
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
+@@ -159,33 +113,6 @@ resources:
+             exec > >(tee -a /var/log/clearwater-heat-bono.log) 2>&1
+             set -x
+ 
+-            # Set up the signaling network namespace on each boot by creating an init file and
+-            # linking to it from runlevel 2 and 3
+-            cat >/etc/init.d/signaling_namespace <<EOF
+-            #!/bin/bash
+-            # Create the signaling namespace and configure its interfaces.
+-            set -e
+-
+-            # Exit if the namespace is already set up.
+-            ip netns list | grep -q signaling && exit 0
+-
+-            # eth1 is the signaling interface (and eth0 is the management interface).
+-            # We need to set eth1 up manually - only eth0 is automatically configured via DHCP.
+-            ip netns add signaling
+-            ip link set eth1 netns signaling
+-            ip netns exec signaling ip link set dev lo up
+-            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
+-            ip netns exec signaling ip link set dev eth1 up
+-            ip netns exec signaling ip route add default via __private_sig_gateway__
+-            EOF
+-
+-            chmod a+x /etc/init.d/signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc3.d/S01signaling_namespace
+-
+-            # Also set up the signaling namespace now.
+-            /etc/init.d/signaling_namespace
+-
+             # Configure the APT software source.
+             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -196,11 +123,8 @@ resources:
+             etcd_ip=__etcd_ip__
+             [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
+             cat > /etc/clearwater/local_config << EOF
+-            signaling_namespace=signaling
+-            signaling_dns_server=__dns_sig_ip__
+-            management_local_ip=__private_mgmt_ip__
+-            local_ip=__private_sig_ip__
+-            public_ip=__public_sig_ip__
++            local_ip=__private_mgmt_ip__
++            public_ip=__public_mgmt_ip__
+             public_hostname=__index__.bono.__zone__
+             etcd_cluster=$etcd_ip
+             EOF
+@@ -223,8 +147,8 @@ resources:
+             while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
+             server __dns_mgmt_ip__
+             update add bono-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+-            update add __index__.bono.__zone__. 30 $(ip2rr __public_sig_ip__)
+-            update add __zone__. 30 $(ip2rr __public_sig_ip__)
++            update add __index__.bono.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add __zone__. 30 $(ip2rr __public_mgmt_ip__)
+             update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.__zone__.
+             update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2U" "" _sip._udp.__zone__.
+             update add _sip._tcp.__zone__. 30 SRV 0 0 5060 __index__.bono.__zone__.
+@@ -241,8 +165,6 @@ resources:
+             # Use the DNS server.
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+-            mkdir -p /etc/netns/signaling
+-            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
+             service dnsmasq force-reload
+ 
+ outputs:
+@@ -252,9 +174,3 @@ outputs:
+   private_mgmt_ip:
+     description: IP address in private management network
+     value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-  public_sig_ip:
+-    description: IP address in public signaling network
+-    value: { get_attr: [ sig_floating_ip, floating_ip_address ] }
+-  private_sig_ip:
+-    description: IP address in private signaling network
+-    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+diff --git a/clearwater.yaml b/clearwater.yaml
+index a155c60..6838496 100644
+--- a/clearwater.yaml
++++ b/clearwater.yaml
+@@ -37,41 +37,6 @@ parameters:
+     type: string
+     description: IP address of external DNS server on management network
+     default: 8.8.8.8
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_ip_version:
+-    type: string
+-    description: IP version (4 or 6) on the private signaling network
+-    constraints:
+-      - allowed_values:
+-        - "4"
+-        - "6"
+-        description: Must be 4 (IPv4) or 6 (IPv6)
+-    default: "4"
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+-  private_sig_net_pool_start:
+-    type: string
+-    description: Start of private signaling network IP address pool
+-    default: 192.168.1.1
+-  private_sig_net_pool_end:
+-    type: string
+-    description: End of private signaling network IP address pool
+-    default: 192.168.1.253
+-  external_sig_dns_ip:
+-    type: string
+-    description: IP address of external DNS server on signaling network
+-    default: 8.8.8.8
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -151,18 +116,6 @@ resources:
+       private_net_pool_end: { get_param: private_mgmt_net_pool_end }
+       dns_ip: { get_param: external_mgmt_dns_ip }
+ 
+-  sig_network:
+-    type: ./network.yaml
+-    properties:
+-      public_net_id: { get_param: public_sig_net_id }
+-      private_net_name: { str_replace: { params: { __stack__: { get_param: "OS::stack_name" } }, template: __stack__-private-signaling } }
+-      private_net_ip_version: { get_param: private_sig_net_ip_version }
+-      private_net_cidr: { get_param: private_sig_net_cidr }
+-      private_net_gateway: { get_param: private_sig_net_gateway }
+-      private_net_pool_start: { get_param: private_sig_net_pool_start }
+-      private_net_pool_end: { get_param: private_sig_net_pool_end }
+-      dns_ip: { get_param: external_sig_dns_ip }
+-
+   security_groups:
+     type: ./security-groups.yaml
+     properties:
+@@ -173,13 +126,10 @@ resources:
+     properties:
+       public_mgmt_net_id: { get_param: public_mgmt_net_id }
+       private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-      public_sig_net_id: { get_param: public_sig_net_id }
+-      private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-      private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+       flavor: { get_param: flavor }
+       image: { get_param: image }
+       key_name: { get_param: key_name }
+-      dns_security_group: { get_attr: [ security_groups, dns ] }
++      base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+       zone: { get_param: zone }
+       dnssec_key: { get_param: dnssec_key }
+ 
+@@ -192,7 +142,6 @@ resources:
+       image: { get_param: image }
+       key_name: { get_param: key_name }
+       base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-      ellis_mgmt_security_group: { get_attr: [ security_groups, ellis_mgmt ] }
+       repo_url: { get_param: repo_url }
+       zone: { get_param: zone }
+       dn_range_start: { get_param: dn_range_start }
+@@ -210,19 +159,13 @@ resources:
+         properties:
+           public_mgmt_net_id: { get_param: public_mgmt_net_id }
+           private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-          public_sig_net_id: { get_param: public_sig_net_id }
+-          private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-          private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+-          private_sig_net_gateway: { get_attr: [ sig_network, private_net_gateway ] }
+           flavor: { get_param: flavor }
+           image: { get_param: image }
+           key_name: { get_param: key_name }
+           base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-          bono_sig_security_group: { get_attr: [ security_groups, bono_sig ] }
+           repo_url: { get_param: repo_url }
+           zone: { get_param: zone }
+           dns_mgmt_ip: { get_attr: [ dns, private_mgmt_ip ] }
+-          dns_sig_ip: { get_attr: [ dns, private_sig_ip ] }
+           dnssec_key: { get_param: dnssec_key }
+           etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
+           index: __index__
+@@ -237,20 +180,13 @@ resources:
+         properties:
+           public_mgmt_net_id: { get_param: public_mgmt_net_id }
+           private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-          public_sig_net_id: { get_param: public_sig_net_id }
+-          private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-          private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+-          private_sig_net_gateway: { get_attr: [ sig_network, private_net_gateway ] }
+           flavor: { get_param: flavor }
+           image: { get_param: image }
+           key_name: { get_param: key_name }
+           base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-          sprout_sig_outbound_security_group: { get_attr: [ security_groups, sprout_sig_outbound ] }
+-          sprout_sig_inbound_security_group: { get_attr: [ security_groups, sprout_sig_inbound ] }
+           repo_url: { get_param: repo_url }
+           zone: { get_param: zone }
+           dns_mgmt_ip: { get_attr: [ dns, private_mgmt_ip ] }
+-          dns_sig_ip: { get_attr: [ dns, private_sig_ip ] }
+           dnssec_key: { get_param: dnssec_key }
+           etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
+           index: __index__
+@@ -265,20 +201,13 @@ resources:
+         properties:
+           public_mgmt_net_id: { get_param: public_mgmt_net_id }
+           private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-          public_sig_net_id: { get_param: public_sig_net_id }
+-          private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-          private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+-          private_sig_net_gateway: { get_attr: [ sig_network, private_net_gateway ] }
+           flavor: { get_param: flavor }
+           image: { get_param: image }
+           key_name: { get_param: key_name }
+           base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-          homer_mgmt_security_group: { get_attr: [ security_groups, homer_mgmt ] }
+-          homer_sig_security_group: { get_attr: [ security_groups, homer_sig ] }
+           repo_url: { get_param: repo_url }
+           zone: { get_param: zone }
+           dns_mgmt_ip: { get_attr: [ dns, private_mgmt_ip ] }
+-          dns_sig_ip: { get_attr: [ dns, private_sig_ip ] }
+           dnssec_key: { get_param: dnssec_key }
+           etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
+           index: __index__
+@@ -293,20 +222,13 @@ resources:
+         properties:
+           public_mgmt_net_id: { get_param: public_mgmt_net_id }
+           private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-          public_sig_net_id: { get_param: public_sig_net_id }
+-          private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-          private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+-          private_sig_net_gateway: { get_attr: [ sig_network, private_net_gateway ] }
+           flavor: { get_param: flavor }
+           image: { get_param: image }
+           key_name: { get_param: key_name }
+           base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-          dime_mgmt_security_group: { get_attr: [ security_groups, dime_mgmt ] }
+-          dime_sig_security_group: { get_attr: [ security_groups, dime_sig ] }
+           repo_url: { get_param: repo_url }
+           zone: { get_param: zone }
+           dns_mgmt_ip: { get_attr: [ dns, private_mgmt_ip ] }
+-          dns_sig_ip: { get_attr: [ dns, private_sig_ip ] }
+           dnssec_key: { get_param: dnssec_key }
+           etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
+           index: __index__
+@@ -321,20 +243,13 @@ resources:
+         properties:
+           public_mgmt_net_id: { get_param: public_mgmt_net_id }
+           private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+-          public_sig_net_id: { get_param: public_sig_net_id }
+-          private_sig_net_id: { get_attr: [ sig_network, private_net ] }
+-          private_sig_net_cidr: { get_attr: [ sig_network, private_net_cidr ] }
+-          private_sig_net_gateway: { get_attr: [ sig_network, private_net_gateway ] }
+           flavor: { get_param: flavor }
+           image: { get_param: image }
+           key_name: { get_param: key_name }
+           base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
+-          vellum_sig_outbound_security_group: { get_attr: [ security_groups, vellum_sig_outbound ] }
+-          vellum_sig_inbound_security_group: { get_attr: [ security_groups, vellum_sig_inbound ] }
+           repo_url: { get_param: repo_url }
+           zone: { get_param: zone }
+           dns_mgmt_ip: { get_attr: [ dns, private_mgmt_ip ] }
+-          dns_sig_ip: { get_attr: [ dns, private_sig_ip ] }
+           dnssec_key: { get_param: dnssec_key }
+           etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
+           index: __index__
+diff --git a/dime.yaml b/dime.yaml
+index 642f19d..c544ce6 100644
+--- a/dime.yaml
++++ b/dime.yaml
+@@ -23,26 +23,6 @@ parameters:
+     constraints:
+       - custom_constraint: neutron.network
+         description: Must be a valid network ID
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_id:
+-    type: string
+-    description: ID of private signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -64,12 +44,6 @@ parameters:
+   base_mgmt_security_group:
+     type: string
+     description: ID of base security group for all Clearwater nodes (management)
+-  dime_sig_security_group:
+-    type: string
+-    description: ID of security group for Dime nodes (signaling)
+-  dime_mgmt_security_group:
+-    type: string
+-    description: ID of security group for Dime nodes (management)
+   repo_url:
+     type: string
+     description: URL for Clearwater repository
+@@ -81,9 +55,6 @@ parameters:
+   dns_mgmt_ip:
+     type: string
+     description: IP address for DNS server on management network
+-  dns_sig_ip:
+-    type: string
+-    description: IP address for DNS server on signaling network
+   dnssec_key:
+     type: string
+     description: DNSSEC private key (Base64-encoded)
+@@ -107,7 +78,6 @@ resources:
+       network_id: { str_replace: { params: { x: { get_param: private_mgmt_net_id } }, template: x } }
+       security_groups:
+         - { get_param: base_mgmt_security_group }
+-        - { get_param: dime_mgmt_security_group }
+ 
+   mgmt_floating_ip:
+     type: OS::Neutron::FloatingIP
+@@ -115,14 +85,6 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
+-  sig_port:
+-    type: OS::Neutron::Port
+-    properties:
+-      # Specify the network ID by string to work around OpenStack issues - see https://github.com/Metaswitch/clearwater-heat/issues/18.
+-      network_id: { str_replace: { params: { x: { get_param: private_sig_net_id } }, template: x } }
+-      security_groups:
+-        - { get_param: dime_sig_security_group }
+-
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -132,7 +94,6 @@ resources:
+       key_name: { get_param: key_name }
+       networks:
+         - port: { get_resource: mgmt_port }
+-        - port: { get_resource: sig_port }
+       user_data_format: RAW
+       user_data:
+         str_replace:
+@@ -141,11 +102,7 @@ resources:
+             __zone__: { get_param: zone }
+             __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_cidr__: { get_param: private_sig_net_cidr }
+-            __private_sig_gateway__: { get_param: private_sig_net_gateway }
+             __dns_mgmt_ip__: { get_param: dns_mgmt_ip }
+-            __dns_sig_ip__: { get_param: dns_sig_ip }
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
+@@ -156,33 +113,6 @@ resources:
+             exec > >(tee -a /var/log/clearwater-heat-dime.log) 2>&1
+             set -x
+ 
+-            # Set up the signaling network namespace on each boot by creating an init file and
+-            # linking to it from runlevel 2 and 3
+-            cat >/etc/init.d/signaling_namespace <<EOF
+-            #!/bin/bash
+-            # Create the signaling namespace and configure its interfaces.
+-            set -e
+-
+-            # Exit if the namespace is already set up.
+-            ip netns list | grep -q signaling && exit 0
+-
+-            # eth1 is the signaling interface (and eth0 is the management interface).
+-            # We need to set eth1 up manually - only eth0 is automatically configured via DHCP.
+-            ip netns add signaling
+-            ip link set eth1 netns signaling
+-            ip netns exec signaling ip link set dev lo up
+-            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
+-            ip netns exec signaling ip link set dev eth1 up
+-            ip netns exec signaling ip route add default via __private_sig_gateway__
+-            EOF
+-
+-            chmod a+x /etc/init.d/signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc3.d/S01signaling_namespace
+-
+-            # Also set up the signaling namespace now.
+-            /etc/init.d/signaling_namespace
+-
+             # Configure the APT software source.
+             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -193,11 +123,8 @@ resources:
+             etcd_ip=__etcd_ip__
+             [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
+             cat > /etc/clearwater/local_config << EOF
+-            signaling_namespace=signaling
+-            signaling_dns_server=__dns_sig_ip__
+-            management_local_ip=__private_mgmt_ip__
+-            local_ip=__private_sig_ip__
+-            public_ip=__private_sig_ip__
++            local_ip=__private_mgmt_ip__
++            public_ip=__private_mgmt_ip__
+             public_hostname=dime-__index__.__zone__
+             etcd_cluster=$etcd_ip
+             EOF
+@@ -220,9 +147,9 @@ resources:
+             while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
+             server __dns_mgmt_ip__
+             update add dime-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+-            update add ralf.__zone__. 30 $(ip2rr __private_sig_ip__)
+-            update add hs.__zone__. 30 $(ip2rr __private_sig_ip__)
+-            update add hs-prov.__zone__. 30 $(ip2rr __private_mgmt_ip__)
++            update add ralf.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add hs.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add hs-prov.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+             send
+             EOF
+             } && [ $retries -lt 10 ]
+@@ -235,8 +162,6 @@ resources:
+             # Use the DNS server.
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+-            mkdir -p /etc/netns/signaling
+-            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
+             service dnsmasq force-reload
+ 
+ outputs:
+@@ -244,8 +169,5 @@ outputs:
+     description: IP address in public (management) network
+     value: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+   private_mgmt_ip:
+-    description: IP address in private signaling network
++    description: IP address in private management network
+     value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-  private_sig_ip:
+-    description: IP address in private signaling network
+-    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+diff --git a/dns.yaml b/dns.yaml
+index 825ede1..3e6c938 100644
+--- a/dns.yaml
++++ b/dns.yaml
+@@ -91,6 +91,16 @@ resources:
+       security_groups:
+         - { get_param: dns_security_group }
+ 
++  wait_condition:
++    type: OS::Heat::WaitCondition
++    properties:
++      handle: {get_resource: wait_handle}
++      count: 1
++      timeout: 600
++
++  wait_handle:
++    type: OS::Heat::WaitConditionHandle
++
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -110,6 +120,7 @@ resources:
+             __public_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+             __private_sig_cidr__: { get_param: private_sig_net_cidr }
++            wc_notify: { get_attr: [wait_handle, curl_cli] }
+           template: |
+             #!/bin/bash
+ 
+@@ -162,6 +173,7 @@ resources:
+ 
+             # Now that BIND configuration is correct, kick it to reload.
+             service bind9 reload
++            wc_notify --data-binary '{"status": "SUCCESS"}'
+ 
+ outputs:
+   public_mgmt_ip:
+diff --git a/ellis.yaml b/ellis.yaml
+index 963352d..d39c235 100644
+--- a/ellis.yaml
++++ b/ellis.yaml
+@@ -103,6 +103,16 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
++  wait_condition:
++    type: OS::Heat::WaitCondition
++    properties:
++      handle: {get_resource: wait_handle}
++      count: 1
++      timeout: 600
++
++  wait_handle:
++    type: OS::Heat::WaitConditionHandle
++
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -126,6 +136,7 @@ resources:
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
++            wc_notify: { get_attr: [wait_handle, curl_cli] }
+           template: |
+             #!/bin/bash
+ 
+@@ -227,6 +238,7 @@ resources:
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+             service dnsmasq force-reload
++            wc_notify --data-binary '{"status": "SUCCESS"}'
+ 
+ outputs:
+   public_mgmt_ip:
+diff --git a/homer.yaml b/homer.yaml
+index 4337984..e5bbb1f 100644
+--- a/homer.yaml
++++ b/homer.yaml
+@@ -23,26 +23,6 @@ parameters:
+     constraints:
+       - custom_constraint: neutron.network
+         description: Must be a valid network ID
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_id:
+-    type: string
+-    description: ID of private signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -64,12 +44,6 @@ parameters:
+   base_mgmt_security_group:
+     type: string
+     description: ID of base security group for all Clearwater nodes (management)
+-  homer_mgmt_security_group:
+-    type: string
+-    description: ID of security group for Homer nodes (maangement)
+-  homer_sig_security_group:
+-    type: string
+-    description: ID of security group for Homer nodes (signaling)
+   repo_url:
+     type: string
+     description: URL for Clearwater repository
+@@ -81,9 +55,6 @@ parameters:
+   dns_mgmt_ip:
+     type: string
+     description: IP address for DNS server on management network
+-  dns_sig_ip:
+-    type: string
+-    description: IP address for DNS server on signaling network
+   dnssec_key:
+     type: string
+     description: DNSSEC private key (Base64-encoded)
+@@ -107,7 +78,6 @@ resources:
+       network_id: { str_replace: { params: { x: { get_param: private_mgmt_net_id } }, template: x } }
+       security_groups:
+         - { get_param: base_mgmt_security_group }
+-        - { get_param: homer_mgmt_security_group }
+ 
+   mgmt_floating_ip:
+     type: OS::Neutron::FloatingIP
+@@ -115,20 +85,6 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
+-  sig_port:
+-    type: OS::Neutron::Port
+-    properties:
+-      # Specify the network ID by string to work around OpenStack issues - see https://github.com/Metaswitch/clearwater-heat/issues/18.
+-      network_id: { str_replace: { params: { x: { get_param: private_sig_net_id } }, template: x } }
+-      security_groups:
+-        - { get_param: homer_sig_security_group }
+-
+-  sig_floating_ip:
+-    type: OS::Neutron::FloatingIP
+-    properties:
+-      floating_network_id: { get_param: public_sig_net_id }
+-      port_id: { get_resource: sig_port }
+-
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -138,7 +94,6 @@ resources:
+       key_name: { get_param: key_name }
+       networks:
+         - port: { get_resource: mgmt_port }
+-        - port: { get_resource: sig_port }
+       user_data_format: RAW
+       user_data:
+         str_replace:
+@@ -147,12 +102,7 @@ resources:
+             __zone__: { get_param: zone }
+             __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-            __public_sig_ip__: { get_attr: [ sig_floating_ip, floating_ip_address ] }
+-            __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_cidr__: { get_param: private_sig_net_cidr }
+-            __private_sig_gateway__: { get_param: private_sig_net_gateway }
+             __dns_mgmt_ip__: { get_param: dns_mgmt_ip }
+-            __dns_sig_ip__: { get_param: dns_sig_ip }
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
+@@ -163,33 +113,6 @@ resources:
+             exec > >(tee -a /var/log/clearwater-heat-homer.log) 2>&1
+             set -x
+ 
+-            # Set up the signaling network namespace on each boot by creating an init file and
+-            # linking to it from runlevel 2 and 3
+-            cat >/etc/init.d/signaling_namespace <<EOF
+-            #!/bin/bash
+-            # Create the signaling namespace and configure its interfaces.
+-            set -e
+-
+-            # Exit if the namespace is already set up.
+-            ip netns list | grep -q signaling && exit 0
+-
+-            # eth1 is the signaling interface (and eth0 is the management interface).
+-            # We need to set eth1 up manually - only eth0 is automatically configured via DHCP.
+-            ip netns add signaling
+-            ip link set eth1 netns signaling
+-            ip netns exec signaling ip link set dev lo up
+-            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
+-            ip netns exec signaling ip link set dev eth1 up
+-            ip netns exec signaling ip route add default via __private_sig_gateway__
+-            EOF
+-
+-            chmod a+x /etc/init.d/signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc3.d/S01signaling_namespace
+-
+-            # Also set up the signaling namespace now.
+-            /etc/init.d/signaling_namespace
+-
+             # Configure the APT software source.
+             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -200,11 +123,8 @@ resources:
+             etcd_ip=__etcd_ip__
+             [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
+             cat > /etc/clearwater/local_config << EOF
+-            signaling_namespace=signaling
+-            signaling_dns_server=__dns_sig_ip__
+-            management_local_ip=__private_mgmt_ip__
+-            local_ip=__private_sig_ip__
+-            public_ip=__public_sig_ip__
++            local_ip=__private_mgmt_ip__
++            public_ip=__public_mgmt_ip__
+             public_hostname=homer-__index__.__zone__
+             etcd_cluster=$etcd_ip
+             EOF
+@@ -227,7 +147,7 @@ resources:
+             while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
+             server __dns_mgmt_ip__
+             update add homer-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+-            update add homer.__zone__. 30 $(ip2rr __public_sig_ip__)
++            update add homer.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+             send
+             EOF
+             } && [ $retries -lt 10 ]
+@@ -241,8 +161,6 @@ resources:
+             # Use the DNS server.
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+-            mkdir -p /etc/netns/signaling
+-            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
+             service dnsmasq force-reload
+ 
+ outputs:
+@@ -252,9 +170,3 @@ outputs:
+   private_mgmt_ip:
+     description: IP address in private management network
+     value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-  public_sig_ip:
+-    description: IP address in public signaling network
+-    value: { get_attr: [ sig_floating_ip, floating_ip_address ] }
+-  private_sig_ip:
+-    description: IP address in private signaling network
+-    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+diff --git a/security-groups.yaml b/security-groups.yaml
+index 5921d32..c73fe2b 100644
+--- a/security-groups.yaml
++++ b/security-groups.yaml
+@@ -32,340 +32,14 @@ resources:
+         - protocol: icmp
+         # SSH
+         - protocol: tcp
+-          port_range_min: 22
+-          port_range_max: 22
++          port_range_min: 1
++          port_range_max: 65535
+         # SNMP
+         - protocol: udp
+-          port_range_min: 161
+-          port_range_max: 161
+-        # etcd
+-        - protocol: tcp
+-          port_range_min: 2380
+-          port_range_max: 2380
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: base_mgmt } # omit remote_group_id to reference yourself
+-        - protocol: tcp
+-          port_range_min: 4000
+-          port_range_max: 4000
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: base_mgmt } # omit remote_group_id to reference yourself
+-
+-  dns:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-dns } }
+-      description: Security group for DNS nodes
+-      rules:
+-        # All egress traffic
+-        - direction: egress
+-          ethertype: IPv4
+-        - direction: egress
+-          ethertype: IPv6
+-        # ICMP
+-        - protocol: icmp
+-        # SSH
+-        - protocol: tcp
+-          port_range_min: 22
+-          port_range_max: 22
+-        # DNS
+-        - protocol: udp
+-          port_range_min: 53
+-          port_range_max: 53
+-        - protocol: tcp
+-          port_range_min: 53
+-          port_range_max: 53
+-
+-  ellis_mgmt:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-ellis-mgmt } }
+-      description: Security group for Ellis nodes (management)
+-      rules:
+-        # HTTP
+-        - protocol: tcp
+-          port_range_min: 80
+-          port_range_max: 80
+-        # HTTPS
+-        - protocol: tcp
+-          port_range_min: 443
+-          port_range_max: 443
+-
+-  bono_sig:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-bono-sig } }
+-      description: Security group for Bono nodes (signaling)
+-      rules:
+-        # STUN/TURN
+-        - protocol: udp
+-          port_range_min: 3478
+-          port_range_max: 3478
+-        - protocol: tcp
+-          port_range_min: 3478
+-          port_range_max: 3478
+-        # Internal SIP
+-        - protocol: tcp
+-          port_range_min: 5058
+-          port_range_max: 5058
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: bono_sig } # omit remote_group_id to reference yourself
+-        - protocol: tcp
+-          port_range_min: 5058
+-          port_range_max: 5058
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        # External SIP
+-        - protocol: udp
+-          port_range_min: 5060
+-          port_range_max: 5060
+-        - protocol: tcp
+-          port_range_min: 5060
+-          port_range_max: 5060
+-        # External SIP/WebSocket
+-        - protocol: tcp
+-          port_range_min: 5062
+-          port_range_max: 5062
+-        # RTP
+-        - protocol: udp
+-          port_range_min: 32768
++          port_range_min: 1
+           port_range_max: 65535
+ 
+-
+-  sprout_sig_outbound:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-sprout-sig-outbound } }
+-      description: Security group for Sprout nodes outbound traffic (signaling)
+-      rules:
+-        # Internal SIP
+-        - protocol: tcp
+-          port_range_min: 5052
+-          port_range_max: 5052
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: sprout_sig_outbound } # omit remote_group_id to reference yourself
+-        - protocol: tcp
+-          port_range_min: 5054
+-          port_range_max: 5054
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: sprout_sig_outbound } # omit remote_group_id to reference yourself
+-
+-  sprout_sig_inbound:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-sprout-sig-inbound } }
+-      description: Security group for Sprout nodes inbound traffic (signaling) 
+-      rules:
+-        # Internal SIP
+-        - protocol: tcp
+-          port_range_min: 5052
+-          port_range_max: 5052
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: bono_sig }
+-        - protocol: tcp
+-          port_range_min: 5054
+-          port_range_max: 5054
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: bono_sig }
+-        # Chronos timer pops
+-        - protocol: tcp
+-          port_range_min: 9888
+-          port_range_max: 9888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: vellum_sig_outbound }
+-        # Notifications from Homestead
+-        - protocol: tcp
+-          port_range_min: 9888
+-          port_range_max: 9888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: dime_sig }
+-
+-  homer_mgmt:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-homer-mgmt } }
+-      description: Security group for Homer nodes (management)
+-      rules:
+-        # Ut/HTTP
+-        - protocol: tcp
+-          port_range_min: 7888
+-          port_range_max: 7888
+-        - protocol: tcp
+-          port_range_min: 7888
+-          port_range_max: 7888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-
+-  homer_sig:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-homer-sig } }
+-      description: Security group for Homer nodes (signaling)
+-      rules:
+-        # Ut/HTTP
+-        - protocol: tcp
+-          port_range_min: 7888
+-          port_range_max: 7888
+-        - protocol: tcp
+-          port_range_min: 7888
+-          port_range_max: 7888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        - protocol: tcp
+-          port_range_min: 9160
+-          port_range_max: 9160
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: homer_sig } # omit remote_group_id to reference yourself
+-
+-  dime_mgmt:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-dime-mgmt } }
+-      description: Security group for Dime nodes (management)
+-      rules:
+-        # REST-ful Provisioning API
+-        - protocol: tcp
+-          port_range_min: 8889
+-          port_range_max: 8889
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: ellis_mgmt }
+-
+-  dime_sig:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-dime-sig } }
+-      description: Security group for Dime nodes (signaling)
+-      rules:
+-        # Cx-like HTTP API
+-        - protocol: tcp
+-          port_range_min: 8888
+-          port_range_max: 8888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: bono_sig }
+-        - protocol: tcp
+-          port_range_min: 8888
+-          port_range_max: 8888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        # Rf-like/HTTP API
+-        - protocol: tcp
+-          port_range_min: 10888
+-          port_range_max: 10888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: bono_sig }
+-        - protocol: tcp
+-          port_range_min: 10888
+-          port_range_max: 10888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        # Chronos timer pops
+-        - protocol: tcp
+-          port_range_min: 10888
+-          port_range_max: 10888
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: vellum_sig_outbound }
+-
+-  vellum_sig_outbound:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-vellum-sig-outbound } }
+-      description: Security group for Vellum nodes outbound traffic (signaling)
+-      rules:
+-        # Chronos
+-        - protocol: tcp
+-          port_range_min: 7253
+-          port_range_max: 7253
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: vellum_sig_outbound } # omit remote_group_id to reference yourself
+-        # Cassandra
+-        - protocol: tcp
+-          port_range_min: 7000
+-          port_range_max: 7000
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: vellum_sig_outbound } # omit remote_group_id to reference yourself
+-        # Memcached listening to Astaire
+-        - protocol: tcp
+-          port_range_min: 11211
+-          port_range_max: 11211
+-          remote_mode: remote_group_id
+-          #remote_group_id: { get_resource: vellum_sig_outbound } # omit remote_group_id to reference yourself
+-
+-  vellum_sig_inbound:
+-    type: OS::Neutron::SecurityGroup
+-    properties:
+-      name: { str_replace: { params: { __name_prefix__: { get_param: "name_prefix" } }, template: __name_prefix__-vellum-sig-inbound } }
+-      description: Security group for Vellum nodes inbound traffic (signaling)
+-      rules:
+-        # Astaire
+-        - protocol: tcp
+-          port_range_min: 11311
+-          port_range_max: 11311
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        # Astaire 
+-        - protocol: tcp
+-          port_range_min: 11311
+-          port_range_max: 11311
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: dime_sig }
+-        # Chronos 
+-        - protocol: tcp
+-          port_range_min: 7253
+-          port_range_max: 7253
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: sprout_sig_outbound }
+-        # Chronos
+-        - protocol: tcp
+-          port_range_min: 7253
+-          port_range_max: 7253
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: dime_sig }
+-        # Cassandra Thrift
+-        - protocol: tcp
+-          port_range_min: 9160
+-          port_range_max: 9160
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: dime_sig }
+-        # Cassandra Thrift
+-        - protocol: tcp
+-          port_range_min: 9160
+-          port_range_max: 9160
+-          remote_mode: remote_group_id
+-          remote_group_id: { get_resource: homer_sig }
+-
+ outputs:
+   base_mgmt:
+     description: Base security group for all Clearwater nodes (management)
+-    value: { get_resource: base_mgmt } 
+-  dns:
+-    description: Security group for DNS nodes
+-    value: { get_resource: dns }
+-  ellis_mgmt:
+-    description: Security group for Ellis nodes (managment)
+-    value: { get_resource: ellis_mgmt }
+-  bono_sig:
+-    description: Security group for Bono nodes (signaling)
+-    value: { get_resource: bono_sig }
+-  sprout_sig_outbound:
+-    description: Security group for Sprout nodes outbound traffic (signaling)
+-    value: { get_resource: sprout_sig_outbound }
+-  sprout_sig_inbound:
+-    description: Security group for Sprout nodes inbound traffic (signaling)
+-    value: { get_resource: sprout_sig_inbound }
+-  homer_mgmt:
+-    description: Security group for Homer nodes (management)
+-    value: { get_resource: homer_mgmt }
+-  homer_sig:
+-    description: Security group for Homer nodes (signaling)
+-    value: { get_resource: homer_sig }
+-  dime_mgmt:
+-    description: Security group for Dime nodes (management)
+-    value: { get_resource: dime_mgmt }
+-  dime_sig:
+-    description: Security group for Dime nodes (signaling)
+-    value: { get_resource: dime_sig }
+-  vellum_sig_outbound:
+-    description: Security group for Vellum nodes outbound traffic (signaling)
+-    value: { get_resource: vellum_sig_outbound }
+-  vellum_sig_inbound:
+-    description: Security group for Vellum nodes inbound traffic (signaling)
+-    value: { get_resource: vellum_sig_inbound }
++    value: { get_resource: base_mgmt }
+diff --git a/sprout.yaml b/sprout.yaml
+index 9c533b7..4188c45 100644
+--- a/sprout.yaml
++++ b/sprout.yaml
+@@ -23,26 +23,6 @@ parameters:
+     constraints:
+       - custom_constraint: neutron.network
+         description: Must be a valid network ID
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_id:
+-    type: string
+-    description: ID of private signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -64,12 +44,6 @@ parameters:
+   base_mgmt_security_group:
+     type: string
+     description: ID of base security group for all Clearwater nodes (management)
+-  sprout_sig_outbound_security_group:
+-    type: string
+-    description: ID of security group for Sprout nodes outbound traffic (signaling)
+-  sprout_sig_inbound_security_group:
+-    type: string
+-    description: ID of security group for Sprout nodes inbound traffic (signaling)
+   repo_url:
+     type: string
+     description: URL for Clearwater repository
+@@ -81,9 +55,6 @@ parameters:
+   dns_mgmt_ip:
+     type: string
+     description: IP address for DNS server on management network
+-  dns_sig_ip:
+-    type: string
+-    description: IP address for DNS server on signaling network
+   dnssec_key:
+     type: string
+     description: DNSSEC private key (Base64-encoded)
+@@ -114,15 +85,6 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
+-  sig_port:
+-    type: OS::Neutron::Port
+-    properties:
+-      # Specify the network ID by string to work around OpenStack issues - see https://github.com/Metaswitch/clearwater-heat/issues/18.
+-      network_id: { str_replace: { params: { x: { get_param: private_sig_net_id } }, template: x } }
+-      security_groups:
+-        - { get_param: sprout_sig_outbound_security_group }
+-        - { get_param: sprout_sig_inbound_security_group }
+-
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -132,7 +94,6 @@ resources:
+       key_name: { get_param: key_name }
+       networks:
+         - port: { get_resource: mgmt_port }
+-        - port: { get_resource: sig_port }
+       user_data_format: RAW
+       user_data:
+         str_replace:
+@@ -141,11 +102,7 @@ resources:
+             __zone__: { get_param: zone }
+             __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_cidr__: { get_param: private_sig_net_cidr }
+-            __private_sig_gateway__: { get_param: private_sig_net_gateway }
+             __dns_mgmt_ip__: { get_param: dns_mgmt_ip }
+-            __dns_sig_ip__: { get_param: dns_sig_ip }
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
+@@ -156,33 +113,6 @@ resources:
+             exec > >(tee -a /var/log/clearwater-heat-sprout.log) 2>&1
+             set -x
+ 
+-            # Set up the signaling network namespace on each boot by creating an init file and
+-            # linking to it from runlevel 2 and 3
+-            cat >/etc/init.d/signaling_namespace <<EOF
+-            #!/bin/bash
+-            # Create the signaling namespace and configure its interfaces.
+-            set -e
+-
+-            # Exit if the namespace is already set up.
+-            ip netns list | grep -q signaling && exit 0
+-
+-            # eth1 is the signaling interface (and eth0 is the management interface).
+-            # We need to set eth1 up manually - only eth0 is automatically configured via DHCP.
+-            ip netns add signaling
+-            ip link set eth1 netns signaling
+-            ip netns exec signaling ip link set dev lo up
+-            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
+-            ip netns exec signaling ip link set dev eth1 up
+-            ip netns exec signaling ip route add default via __private_sig_gateway__
+-            EOF
+-
+-            chmod a+x /etc/init.d/signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc3.d/S01signaling_namespace
+-
+-            # Also set up the signaling namespace now.
+-            /etc/init.d/signaling_namespace
+-
+             # Configure the APT software source.
+             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -193,11 +123,8 @@ resources:
+             etcd_ip=__etcd_ip__
+             [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
+             cat > /etc/clearwater/local_config << EOF
+-            signaling_namespace=signaling
+-            signaling_dns_server=__dns_sig_ip__
+-            management_local_ip=__private_mgmt_ip__
+-            local_ip=__private_sig_ip__
+-            public_ip=__private_sig_ip__
++            local_ip=__private_mgmt_ip__
++            public_ip=__private_mgmt_ip__
+             public_hostname=__index__.sprout.__zone__
+             etcd_cluster=$etcd_ip
+             EOF
+@@ -220,10 +147,10 @@ resources:
+             while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
+             server __dns_mgmt_ip__
+             update add sprout-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+-            update add __index__.sprout.__zone__. 30 $(ip2rr __private_sig_ip__)
+-            update add sprout.__zone__. 30 $(ip2rr __private_sig_ip__)
+-            update add scscf.sprout.__zone__. 30 $(ip2rr __private_sig_ip__)
+-            update add icscf.sprout.__zone__. 30 $(ip2rr __private_sig_ip__)
++            update add __index__.sprout.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add sprout.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add scscf.sprout.__zone__. 30 $(ip2rr __public_mgmt_ip__)
++            update add icscf.sprout.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+             update add sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.sprout.__zone__.
+             update add _sip._tcp.sprout.__zone__. 30 SRV 0 0 5054 __index__.sprout.__zone__.
+             update add icscf.sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.icscf.sprout.__zone__.
+@@ -242,8 +169,6 @@ resources:
+             # Use the DNS server.
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+-            mkdir -p /etc/netns/signaling
+-            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
+             service dnsmasq force-reload
+ 
+ outputs:
+@@ -251,8 +176,5 @@ outputs:
+     description: IP address in public (management) network
+     value: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+   private_mgmt_ip:
+-    description: IP address in private signaling network
++    description: IP address in private management network
+     value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-  private_sig_ip:
+-    description: IP address in private signaling network
+-    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+diff --git a/vellum.yaml b/vellum.yaml
+index aab71f9..05f6cd0 100644
+--- a/vellum.yaml
++++ b/vellum.yaml
+@@ -23,26 +23,6 @@ parameters:
+     constraints:
+       - custom_constraint: neutron.network
+         description: Must be a valid network ID
+-  public_sig_net_id:
+-    type: string
+-    description: ID of public signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_id:
+-    type: string
+-    description: ID of private signaling network
+-    constraints:
+-      - custom_constraint: neutron.network
+-        description: Must be a valid network ID
+-  private_sig_net_cidr:
+-    type: string
+-    description: Private signaling network address (CIDR notation)
+-    default: 192.168.1.0/24
+-  private_sig_net_gateway:
+-    type: string
+-    description: Private signaling network gateway address
+-    default: 192.168.1.254
+   flavor:
+     type: string
+     description: Flavor to use
+@@ -64,12 +44,6 @@ parameters:
+   base_mgmt_security_group:
+     type: string
+     description: ID of base security group for all Clearwater nodes (management)
+-  vellum_sig_outbound_security_group:
+-    type: string
+-    description: ID of security group for Vellum nodes outbound traffic (signaling)
+-  vellum_sig_inbound_security_group:
+-    type: string
+-    description: ID of security group for Vellum nodes inbound traffic (signaling)
+   repo_url:
+     type: string
+     description: URL for Clearwater repository
+@@ -81,9 +55,6 @@ parameters:
+   dns_mgmt_ip:
+     type: string
+     description: IP address for DNS server on management network
+-  dns_sig_ip:
+-    type: string
+-    description: IP address for DNS server on signaling network
+   dnssec_key:
+     type: string
+     description: DNSSEC private key (Base64-encoded)
+@@ -114,15 +85,6 @@ resources:
+       floating_network_id: { get_param: public_mgmt_net_id }
+       port_id: { get_resource: mgmt_port }
+ 
+-  sig_port:
+-    type: OS::Neutron::Port
+-    properties:
+-      # Specify the network ID by string to work around OpenStack issues - see https://github.com/Metaswitch/clearwater-heat/issues/18.
+-      network_id: { str_replace: { params: { x: { get_param: private_sig_net_id } }, template: x } }
+-      security_groups:
+-        - { get_param: vellum_sig_outbound_security_group }
+-        - { get_param: vellum_sig_inbound_security_group }
+-
+   server:
+     type: OS::Nova::Server
+     properties:
+@@ -132,7 +94,6 @@ resources:
+       key_name: { get_param: key_name }
+       networks:
+         - port: { get_resource: mgmt_port }
+-        - port: { get_resource: sig_port }
+       user_data_format: RAW
+       user_data:
+         str_replace:
+@@ -141,11 +102,7 @@ resources:
+             __zone__: { get_param: zone }
+             __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
+             __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_ip__: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
+-            __private_sig_cidr__: { get_param: private_sig_net_cidr }
+-            __private_sig_gateway__: { get_param: private_sig_net_gateway }
+             __dns_mgmt_ip__: { get_param: dns_mgmt_ip }
+-            __dns_sig_ip__: { get_param: dns_sig_ip }
+             __dnssec_key__: { get_param: dnssec_key }
+             __etcd_ip__ : { get_param: etcd_ip }
+             __index__ : { get_param: index }
+@@ -156,33 +113,6 @@ resources:
+             exec > >(tee -a /var/log/clearwater-heat-vellum.log) 2>&1
+             set -x
+ 
+-            # Set up the signaling network namespace on each boot by creating an init file and
+-            # linking to it from runlevel 2 and 3
+-            cat >/etc/init.d/signaling_namespace <<EOF
+-            #!/bin/bash
+-            # Create the signaling namespace and configure its interfaces.
+-            set -e
+-
+-            # Exit if the namespace is already set up.
+-            ip netns list | grep -q signaling && exit 0
+-
+-            # eth1 is the signaling interface (and eth0 is the management interface).
+-            # We need to set eth1 up manually - only eth0 is automatically configured via DHCP.
+-            ip netns add signaling
+-            ip link set eth1 netns signaling
+-            ip netns exec signaling ip link set dev lo up
+-            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
+-            ip netns exec signaling ip link set dev eth1 up
+-            ip netns exec signaling ip route add default via __private_sig_gateway__
+-            EOF
+-
+-            chmod a+x /etc/init.d/signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
+-            ln -s /etc/init.d/signaling_namespace /etc/rc3.d/S01signaling_namespace
+-
+-            # Also set up the signaling namespace now.
+-            /etc/init.d/signaling_namespace
+-
+             # Configure the APT software source.
+             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -193,11 +123,8 @@ resources:
+             etcd_ip=__etcd_ip__
+             [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
+             cat > /etc/clearwater/local_config << EOF
+-            signaling_namespace=signaling
+-            signaling_dns_server=__dns_sig_ip__
+-            management_local_ip=__private_mgmt_ip__
+-            local_ip=__private_sig_ip__
+-            public_ip=__private_sig_ip__
++            local_ip=__private_mgmt_ip__
++            public_ip=__private_mgmt_ip__
+             public_hostname=__index__.vellum.__zone__
+             etcd_cluster=$etcd_ip
+             EOF
+@@ -206,7 +133,7 @@ resources:
+             mkdir -p /etc/chronos
+             cat > /etc/chronos/chronos.conf << EOF
+             [http]
+-            bind-address = __private_sig_ip__
++            bind-address = __private_mgmt_ip__
+             bind-port = 7253
+             threads = 50
+ 
+@@ -218,7 +145,7 @@ resources:
+             enabled = true
+ 
+             [dns]
+-            servers = __dns_sig_ip__
++            servers = __dns_mgmt_ip__
+             EOF
+ 
+             # Now install the software.
+@@ -239,7 +166,7 @@ resources:
+             while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
+             server __dns_mgmt_ip__
+             update add vellum-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+-            update add vellum.__zone__. 30 $(ip2rr __private_sig_ip__)
++            update add vellum.__zone__. 30 $(ip2rr __public_mgmt_ip__)
+             send
+             EOF
+             } && [ $retries -lt 10 ]
+@@ -252,8 +179,6 @@ resources:
+             # Use the DNS server.
+             echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
+             echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
+-            mkdir -p /etc/netns/signaling
+-            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
+             service dnsmasq force-reload
+ 
+ outputs:
+@@ -263,6 +188,3 @@ outputs:
+   private_mgmt_ip:
+     description: IP address in private management network
+     value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
+-  private_sig_ip:
+-    description: IP address in private signaling network
+-    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }

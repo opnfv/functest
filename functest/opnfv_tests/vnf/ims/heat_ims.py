@@ -91,6 +91,9 @@ class HeatIms(singlevm.VmReady2):
         self.clearwater = None
         self.role = None
 
+    def create_network_resources(self):
+        pass
+
     def execute(self):
         # pylint: disable=too-many-locals,too-many-statements
         """
