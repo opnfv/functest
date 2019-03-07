@@ -49,11 +49,7 @@ class HeatIms(singlevm.VmReady2):
         'private_mgmt_net_cidr': '192.168.100.0/24',
         'private_mgmt_net_gateway': '192.168.100.254',
         'private_mgmt_net_pool_start': '192.168.100.1',
-        'private_mgmt_net_pool_end': '192.168.100.253',
-        'private_sig_net_cidr': '192.168.101.0/24',
-        'private_sig_net_gateway': '192.168.101.254',
-        'private_sig_net_pool_start': '192.168.101.1',
-        'private_sig_net_pool_end': '192.168.101.253'}
+        'private_mgmt_net_pool_end': '192.168.100.253'}
 
     def __init__(self, **kwargs):
         """Initialize HeatIms testcase object."""
@@ -90,6 +86,9 @@ class HeatIms(singlevm.VmReady2):
         self.stack = None
         self.clearwater = None
         self.role = None
+
+    def create_network_resources(self):
+        pass
 
     def execute(self):
         # pylint: disable=too-many-locals,too-many-statements
@@ -152,12 +151,10 @@ class HeatIms(singlevm.VmReady2):
         parameters = self.vnf['parameters']
 
         parameters['public_mgmt_net_id'] = self.ext_net.id
-        parameters['public_sig_net_id'] = self.ext_net.id
         parameters['flavor'] = self.flavor.name
         parameters['image'] = self.image.name
         parameters['key_name'] = self.keypair.name
         parameters['external_mgmt_dns_ip'] = env.get('NAMESERVER')
-        parameters['external_sig_dns_ip'] = env.get('NAMESERVER')
         parameters.update(self.parameters)
 
         self.__logger.info("Create Heat Stack")
