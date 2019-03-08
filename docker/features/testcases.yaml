@@ -23,19 +23,6 @@ tiers:
                         cmd: 'doctor-test'
 
             -
-                case_name: bgpvpn
-                project_name: sdnvpn
-                enabled: false
-                criteria: 100
-                blocking: false
-                description: >-
-                    Test suite from SDNVPN project.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'bgpvpn'
-                run:
-                    name: bgpvpn
-
-            -
                 case_name: functest-odl-sfc
                 project_name: sfc
                 criteria: 100
