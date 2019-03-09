@@ -168,7 +168,7 @@ class HeatIms(singlevm.VmReady2):
         self.__logger.debug("servers: %s", servers)
         for server in servers:
             if not self.check_regex_in_console(
-                    server.name, regex='Cloud-init .* finished at ', loop=240):
+                    server.name, regex='Cloud-init .* finished at ', loop=1):
                 return False
             if 'ellis' in server.name:
                 self.__logger.debug("server: %s", server)
