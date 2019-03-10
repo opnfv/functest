@@ -12,22 +12,11 @@ Repository: functest
 
 Committers:
 Morgan Richomme <morgan.richomme@orange.com>
-Jose Lausuch <jalausuch@suse.com>
 Cedric Ollivier <cedric.ollivier@orange.com>
-Helen Yao <helanyao@gmail.com>
-Serena Feng <feng.xiaowei@zte.com.cn>
 Juha Kosonen <juha.kosonen@nokia.com>
 Valentin Boucher <valentin.boucher@kontron.com>
 Viktor Tikkanen <viktor.tikkanen@nokia.com>
-Mei Mei <meimei@huawei.com>
 Linda Wang <wangwulin@huawei.com>
-
-Additional contributors:
-Georgios Paraskevopoulos <georgepar.91@gmail.com>
-Romanos Skiadas <rom.skiad@gmail.com>
-Michael Polenchuk <mpolenchuk@mirantis.com>
-Cristina Pauna <cristina.pauna@enea.com>
-Steven Pisarski <s.pisarski@cablelabs.com>
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
 
@@ -37,4 +26,3 @@ http://lists.opnfv.org/pipermail/opnfv-tech-discuss/2015-April/001971.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2015/opnfv-testperf.2015-09-29-13.00.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2016/opnfv-testperf.2016-03-01-08.00.html
 http://ircbot.wl.linuxfoundation.org/meetings/opnfv-functest/2016/opnfv-functest.2016-10-11-08.01.html
-
