@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_9d5826fc",
+        "filename": "INFO",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5267
+      },
+      "writtenOn": "2019-03-11T15:23:40Z",
+      "side": 0,
+      "message": "Jose Lausuch doesn\u0027t qualify for this kind of removal as his last review was on 2018-11-04. You can use the legacy method for removing him now, or wait until April.",
+      "revId": "464829a80878ede363537ec4020be30c21a5b859",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
