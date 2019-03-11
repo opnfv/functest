@@ -25,13 +25,6 @@ validate the scenario for the release.
 | Domain      | Tier          | Test case  | Comments                         |
 +=============+===============+============+==================================+
 | VIM         | healthcheck   | connection | Check OpenStack connectivity     |
-|             |               | \_check    | through SNAPS framework          |
-|             |               +------------+----------------------------------+
-|             |               | api_check  | Check OpenStack API through      |
-|             |               |            | SNAPS framework                  |
-|             |               +------------+----------------------------------+
-|             |               | snaps      | basic instance creation, check   |
-|             |               | \_health   | DHCP                             |
 |             |               | \_check    |                                  |
 |             +---------------+------------+----------------------------------+
 |             | smoke         | vping_ssh  | NFV "Hello World" using an SSH   |
@@ -61,9 +54,6 @@ validate the scenario for the release.
 |             |               +------------+----------------------------------+
 |             |               | rally      | Run a subset of the OpenStack    |
 |             |               | \_sanity   | Rally Test Suite in smoke mode   |
-|             |               +------------+----------------------------------+
-|             |               | snaps\     | Run the SNAPS-OO integration     |
-|             |               | \_smoke    | tests                            |
 |             |               +------------+----------------------------------+
 |             |               | refstack   | Reference RefStack suite         |
 |             |               | \_defcore  | tempest selection for NFV        |

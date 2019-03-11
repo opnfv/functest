@@ -106,22 +106,6 @@ tiers:
                             - 'test_auto_allocated_topology_rbac'
 
             -
-                case_name: snaps_smoke
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    This test case contains tests that setup and destroy
-                    environments with VMs with and without Floating IPs
-                    with a newly created user and project. Set the config
-                    value snaps.use_floating_ips (True|False) to toggle
-                    this functionality. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-                run:
-                    name: snaps_smoke
-
-            -
                 case_name: neutron_trunk
                 project_name: functest
                 criteria: 100

@@ -6,7 +6,6 @@ Subpackages
 
 .. toctree::
 
-    functest.ci
     functest.core
     functest.opnfv_tests
     functest.utils
