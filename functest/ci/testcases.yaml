@@ -146,33 +146,6 @@ tiers:
                             - /src/odl_test/csit/suites/openstack/neutron
 
             -
-                case_name: api_check
-                project_name: functest
-                criteria: 100
-                blocking: true
-                description: >-
-                    This test case verifies the retrieval of OpenStack clients:
-                    Keystone, Glance, Neutron and Nova and may perform some
-                    simple queries. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-                run:
-                    name: api_check
-
-            -
-                case_name: snaps_health_check
-                project_name: functest
-                criteria: 100
-                blocking: true
-                description: >-
-                    This test case creates executes the SimpleHealthCheck
-                    Python test class which creates an, image, flavor, network,
-                    and Cirros VM instance and observes the console output to
-                    validate the single port obtains the correct IP address.
-                run:
-                    name: snaps_health_check
-
-            -
                 case_name: tempest_smoke
                 project_name: functest
                 criteria: 100
@@ -292,22 +265,6 @@ tiers:
                         excludes:
                             - 'test_networks_multiprovider_rbac'
                             - 'test_auto_allocated_topology_rbac'
-
-            -
-                case_name: snaps_smoke
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    This test case contains tests that setup and destroy
-                    environments with VMs with and without Floating IPs
-                    with a newly created user and project. Set the config
-                    value snaps.use_floating_ips (True|False) to toggle
-                    this functionality. When the config value of
-                    snaps.use_keystone is True, functest must have access to
-                    the cloud's private network.
-                run:
-                    name: snaps_smoke
 
             -
                 case_name: neutron_trunk

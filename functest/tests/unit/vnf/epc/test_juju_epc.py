@@ -62,7 +62,6 @@ class JujuEpcTesting(unittest.TestCase):
                         'test_vnf':  {}}
 
     @unittest.skip("It must be fixed. Please see JIRA FUNCTEST-915")
-    @mock.patch('snaps.openstack.create_image.OpenStackImage.create')
     @mock.patch('os.system')
     def test_prepare_default(self, *args):
         """ Unittest for Prepare testcase """

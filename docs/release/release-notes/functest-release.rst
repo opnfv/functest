@@ -32,15 +32,12 @@ The internal test cases are:
  * vping_ssh
  * vping_userdata
  * cinder_test
- * api_check
- * snaps_health_check
  * odl
  * tempest_smoke
  * neutron-tempest-plugin-api
  * rally_sanity
  * refstack_defcore
  * patrole
- * snaps_smoke
  * neutron_trunk
  * networking-bgpvpn
  * networking-sfc
