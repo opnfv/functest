@@ -3,8 +3,6 @@ fdio:
     general:
         openstack:
             flavor_ram: 1024
-    snaps:
-        flavor_extra_specs: {'hw:mem_page_size':'large'}
     vmready1:
         flavor_ram: 1024
     vmready2:
@@ -52,8 +50,6 @@ ovs:
     general:
         openstack:
             flavor_ram: 1024
-    snaps:
-        flavor_extra_specs: {'hw:mem_page_size':'large'}
     vmready1:
         flavor_ram: 1024
     vmready2:

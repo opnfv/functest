@@ -24,24 +24,9 @@ The tests are:
 
 
  * *connection_check*
- * *api_check*
- * *snaps_health_check*
 
-Connection_check consists in 9 test cases (test duration < 5s) checking the
+Connection_check consists in test cases (test duration < 5s) checking the
 connectivity with Glance, Keystone, Neutron, Nova and the external network.
-
-Api_check verifies the retrieval of OpenStack clients: Keystone, Glance,
-Neutron and Nova and may perform some simple queries. When the config value of
-snaps.use_keystone is True, functest must have access to the cloud's private
-network. This suite consists in 49 tests (test duration < 2 minutes).
-
-Snaps_health_check creates a VM with a single port with an IPv4 address that
-is assigned by DHCP and then validates the expected IP with the actual.
-
-The flavors for the SNAPS test cases are able to be configured giving new
-metadata values as well as new values for the basic elements of flavor (i.e.
-ram, vcpu, disk, ephemeral, swap etc). The snaps.flavor_extra_specs dict in the
-config_functest.yaml file could be used for this purpose.
 
 Self-obviously, successful completion of the 'healthcheck' testcase is a
 necessary pre-requisite for the execution of all other test Tiers.
@@ -227,21 +212,6 @@ The Rally testcases are distributed across two Tiers:
 NOTE: Test case 'rally_sanity' executes a limited number of Rally smoke test
 cases. Test case 'rally_full' executes the full defined set of Rally tests.
 
-
-snaps_smoke
-------------
-
-This test case contains tests that setup and destroy environments with VMs with
-and without Floating IPs with a newly created user and project. Set the config
-value snaps.use_floating_ips (True|False) to toggle this functionality.
-Please note that When the configuration value of snaps.use_keystone is True,
-Functest must have access the cloud's private network.
-This suite consists in 120 tests (test duration ~= 50 minutes)
-
-The flavors for the SNAPS test cases are able to be configured giving new
-metadata values as well as new values for the basic elements of flavor (i.e.
-ram, vcpu, disk, ephemeral, swap etc). The snaps.flavor_extra_specs dict in
-the config_functest.yaml file could be used for this purpose.
 
 SDN Controllers
 ---------------

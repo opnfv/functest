@@ -64,9 +64,6 @@ follows::
  +                                           +       +        +       +       +
               SUT = System Under Test
 
-Note connectivity to management network is not needed for most of the
-testcases. But it may be needed for some specific snaps tests.
-
 All the libraries and dependencies needed by all of the Functest tools are
 pre-installed into the Docker images. This allows running Functest on any
 platform.

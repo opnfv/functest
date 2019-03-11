@@ -81,9 +81,7 @@ Functest internal test cases
 The internal test cases in Euphrates are:
 
 
- * api_check
  * connection_check
- * snaps_health_check
  * vping_ssh
  * vping_userdata
  * odl
@@ -105,8 +103,7 @@ The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases can be grouped by domain:
 
  * sdn: odl, odl_fds
- * openstack: api_check, connection_check, snaps_health_check, vping_ssh,
-   vping_userdata, tempest_*, rally_*
+ * openstack: connection_check, vping_ssh, vping_userdata, tempest_*, rally_*
  * vnf: cloudify_ims
 
 If you want to create a new test case you will have to create a new folder
@@ -126,7 +123,6 @@ The external test cases are:
  * fds
  * promise
  * refstack_defcore
- * snaps_smoke
  * functest-odl-sfc
  * orchestra_clearwaterims
  * orchestra_openims
@@ -229,14 +225,11 @@ as follows::
  |-- openstack_tacker.py
  `-- openstack_utils.py
 
-It is recommended to use the SNAPS-OO library for deploying OpenStack
-instances. SNAPS `[4]`_ is an OPNFV project providing OpenStack utils.
-
 
 TestAPI
 =======
 Functest is using the Test collection framework and the TestAPI developed by
-the OPNFV community. See `[5]`_ for details.
+the OPNFV community. See `[4]`_ for details.
 
 
 Reporting
@@ -248,7 +241,7 @@ jinja2 templates `[3]`_.
 Dashboard
 =========
 
-Additional dashboarding is managed at the testing group level, see `[6]`_ for
+Additional dashboarding is managed at the testing group level, see `[5]`_ for
 details.
 
 
@@ -256,7 +249,7 @@ details.
 How TOs
 =======
 
-See How to section on Functest wiki `[7]`_
+See How to section on Functest wiki `[6]`_
 
 
 ==========
@@ -269,12 +262,10 @@ _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest u
 
 _`[3]`: https://git.opnfv.org/releng-testresults/tree/reporting
 
-_`[4]`: https://git.opnfv.org/snaps/
+_`[4]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 
-_`[5]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+_`[5]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
 
-_`[6]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
-
-_`[7]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
+_`[6]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 
 IRC support chan: #opnfv-functest
