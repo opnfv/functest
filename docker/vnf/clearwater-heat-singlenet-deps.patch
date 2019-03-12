@@ -182,7 +182,7 @@ index f0189cd..9418be1 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/clearwater.yaml b/clearwater.yaml
-index a155c60..6838496 100644
+index a155c60..c48fe3a 100644
 --- a/clearwater.yaml
 +++ b/clearwater.yaml
 @@ -37,41 +37,6 @@ parameters:
@@ -246,7 +246,7 @@ index a155c60..6838496 100644
    security_groups:
      type: ./security-groups.yaml
      properties:
-@@ -173,13 +126,10 @@ resources:
+@@ -173,18 +126,16 @@ resources:
      properties:
        public_mgmt_net_id: { get_param: public_mgmt_net_id }
        private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -261,7 +261,13 @@ index a155c60..6838496 100644
        zone: { get_param: zone }
        dnssec_key: { get_param: dnssec_key }
  
-@@ -192,7 +142,6 @@ resources:
+   ellis:
+     type: ./ellis.yaml
++    depends_on: dns
+     properties:
+       public_mgmt_net_id: { get_param: public_mgmt_net_id }
+       private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
+@@ -192,7 +143,6 @@ resources:
        image: { get_param: image }
        key_name: { get_param: key_name }
        base_mgmt_security_group: { get_attr: [ security_groups, base_mgmt ] }
@@ -269,7 +275,15 @@ index a155c60..6838496 100644
        repo_url: { get_param: repo_url }
        zone: { get_param: zone }
        dn_range_start: { get_param: dn_range_start }
-@@ -210,19 +159,13 @@ resources:
+@@ -202,6 +152,7 @@ resources:
+ 
+   bono:
+     type: OS::Heat::ResourceGroup
++    depends_on: ellis
+     properties:
+       count: { get_param: bono_cluster_size }
+       index_var: "__index__"
+@@ -210,25 +161,20 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -289,7 +303,14 @@ index a155c60..6838496 100644
            dnssec_key: { get_param: dnssec_key }
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
-@@ -237,20 +180,13 @@ resources:
+ 
+   sprout:
+     type: OS::Heat::ResourceGroup
++    depends_on: ellis
+     properties:
+       count: { get_param: sprout_cluster_size }
+       index_var: __index__
+@@ -237,26 +183,20 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -310,7 +331,14 @@ index a155c60..6838496 100644
            dnssec_key: { get_param: dnssec_key }
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
-@@ -265,20 +201,13 @@ resources:
+ 
+   homer:
+     type: OS::Heat::ResourceGroup
++    depends_on: ellis
+     properties:
+       count: { get_param: homer_cluster_size }
+       index_var: __index__
+@@ -265,26 +205,20 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -331,7 +359,14 @@ index a155c60..6838496 100644
            dnssec_key: { get_param: dnssec_key }
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
-@@ -293,20 +222,13 @@ resources:
+ 
+   dime:
+     type: OS::Heat::ResourceGroup
++    depends_on: ellis
+     properties:
+       count: { get_param: dime_cluster_size }
+       index_var: __index__
+@@ -293,26 +227,20 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -352,7 +387,14 @@ index a155c60..6838496 100644
            dnssec_key: { get_param: dnssec_key }
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
-@@ -321,20 +243,13 @@ resources:
+ 
+   vellum:
+     type: OS::Heat::ResourceGroup
++    depends_on: ellis
+     properties:
+       count: { get_param: vellum_cluster_size }
+       index_var: __index__
+@@ -321,20 +249,13 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
