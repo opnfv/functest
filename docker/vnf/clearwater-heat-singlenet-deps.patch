@@ -182,7 +182,7 @@ index f0189cd..9418be1 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/clearwater.yaml b/clearwater.yaml
-index a155c60..c48fe3a 100644
+index a155c60..cc3bfe7 100644
 --- a/clearwater.yaml
 +++ b/clearwater.yaml
 @@ -37,41 +37,6 @@ parameters:
@@ -366,7 +366,7 @@ index a155c60..c48fe3a 100644
      properties:
        count: { get_param: dime_cluster_size }
        index_var: __index__
-@@ -293,26 +227,20 @@ resources:
+@@ -293,26 +227,24 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -390,11 +390,15 @@ index a155c60..c48fe3a 100644
  
    vellum:
      type: OS::Heat::ResourceGroup
-+    depends_on: ellis
++    depends_on:
++      - bono
++      - sprout
++      - homer
++      - dime
      properties:
        count: { get_param: vellum_cluster_size }
        index_var: __index__
-@@ -321,20 +249,13 @@ resources:
+@@ -321,20 +253,13 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -1517,7 +1521,7 @@ index 9c533b7..3702ef9 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/vellum.yaml b/vellum.yaml
-index aab71f9..563edf7 100644
+index aab71f9..9fe1662 100644
 --- a/vellum.yaml
 +++ b/vellum.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -1601,7 +1605,7 @@ index aab71f9..563edf7 100644
        user_data_format: RAW
        user_data:
          str_replace:
-@@ -141,47 +112,18 @@ resources:
+@@ -141,48 +112,22 @@ resources:
              __zone__: { get_param: zone }
              __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
              __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -1619,7 +1623,7 @@ index aab71f9..563edf7 100644
  
              # Log all output to file.
              exec > >(tee -a /var/log/clearwater-heat-vellum.log) 2>&1
-             set -x
+-            set -x
 -
 -            # Set up the signaling network namespace on each boot by creating an init file and
 -            # linking to it from runlevel 2 and 3
@@ -1639,7 +1643,11 @@ index aab71f9..563edf7 100644
 -            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
 -            ip netns exec signaling ip link set dev eth1 up
 -            ip netns exec signaling ip route add default via __private_sig_gateway__
--            EOF
++            sed -i /^rpc_address:.*$/d /etc/cassandra/cassandra.yaml
++            cat << EOF >> /etc/cassandra/cassandra.yaml
++            rpc_interface: eth0
++            rpc_interface_prefer_ipv6: false
+             EOF
 -
 -            chmod a+x /etc/init.d/signaling_namespace
 -            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
@@ -1647,11 +1655,12 @@ index aab71f9..563edf7 100644
 -
 -            # Also set up the signaling namespace now.
 -            /etc/init.d/signaling_namespace
-+            sysctl -w net.ipv6.conf.lo.disable_ipv6=0
- 
+-
++            cat /etc/cassandra/cassandra.yaml
              # Configure the APT software source.
              echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-@@ -193,11 +135,8 @@ resources:
+             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
+@@ -193,11 +138,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -1665,7 +1674,7 @@ index aab71f9..563edf7 100644
              public_hostname=__index__.vellum.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -206,7 +145,7 @@ resources:
+@@ -206,7 +148,7 @@ resources:
              mkdir -p /etc/chronos
              cat > /etc/chronos/chronos.conf << EOF
              [http]
@@ -1674,7 +1683,7 @@ index aab71f9..563edf7 100644
              bind-port = 7253
              threads = 50
  
-@@ -218,7 +157,7 @@ resources:
+@@ -218,7 +160,7 @@ resources:
              enabled = true
  
              [dns]
@@ -1683,7 +1692,7 @@ index aab71f9..563edf7 100644
              EOF
  
              # Now install the software.
-@@ -239,7 +178,7 @@ resources:
+@@ -239,7 +181,7 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add vellum-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -1692,7 +1701,7 @@ index aab71f9..563edf7 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -252,9 +191,8 @@ resources:
+@@ -252,9 +194,8 @@ resources:
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
@@ -1703,7 +1712,7 @@ index aab71f9..563edf7 100644
  
  outputs:
    public_mgmt_ip:
-@@ -263,6 +201,3 @@ outputs:
+@@ -263,6 +204,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
