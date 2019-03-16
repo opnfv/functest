@@ -1,5 +1,5 @@
 diff --git a/bono.yaml b/bono.yaml
-index f0189cd..9418be1 100644
+index f0189cd..42bfecb 100644
 --- a/bono.yaml
 +++ b/bono.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -160,18 +160,30 @@ index f0189cd..9418be1 100644
              update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.__zone__.
              update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2U" "" _sip._udp.__zone__.
              update add _sip._tcp.__zone__. 30 SRV 0 0 5060 __index__.bono.__zone__.
-@@ -241,9 +176,8 @@ resources:
+@@ -238,13 +173,20 @@ resources:
+               sleep 5
+             done
+ 
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
 -            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 60
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_cluster_state
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
-@@ -252,9 +186,3 @@ outputs:
+     description: IP address in public management network
+@@ -252,9 +194,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -182,7 +194,7 @@ index f0189cd..9418be1 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/clearwater.yaml b/clearwater.yaml
-index a155c60..cc3bfe7 100644
+index a155c60..1bfe257 100644
 --- a/clearwater.yaml
 +++ b/clearwater.yaml
 @@ -37,41 +37,6 @@ parameters:
@@ -279,7 +291,7 @@ index a155c60..cc3bfe7 100644
  
    bono:
      type: OS::Heat::ResourceGroup
-+    depends_on: ellis
++    depends_on: sprout
      properties:
        count: { get_param: bono_cluster_size }
        index_var: "__index__"
@@ -306,7 +318,7 @@ index a155c60..cc3bfe7 100644
  
    sprout:
      type: OS::Heat::ResourceGroup
-+    depends_on: ellis
++    depends_on: vellum
      properties:
        count: { get_param: sprout_cluster_size }
        index_var: __index__
@@ -334,7 +346,7 @@ index a155c60..cc3bfe7 100644
  
    homer:
      type: OS::Heat::ResourceGroup
-+    depends_on: ellis
++    depends_on: sprout
      properties:
        count: { get_param: homer_cluster_size }
        index_var: __index__
@@ -362,11 +374,11 @@ index a155c60..cc3bfe7 100644
  
    dime:
      type: OS::Heat::ResourceGroup
-+    depends_on: ellis
++    depends_on: sprout
      properties:
        count: { get_param: dime_cluster_size }
        index_var: __index__
-@@ -293,26 +227,24 @@ resources:
+@@ -293,26 +227,20 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -390,15 +402,11 @@ index a155c60..cc3bfe7 100644
  
    vellum:
      type: OS::Heat::ResourceGroup
-+    depends_on:
-+      - bono
-+      - sprout
-+      - homer
-+      - dime
++    depends_on: ellis
      properties:
        count: { get_param: vellum_cluster_size }
        index_var: __index__
-@@ -321,20 +253,13 @@ resources:
+@@ -321,20 +249,13 @@ resources:
          properties:
            public_mgmt_net_id: { get_param: public_mgmt_net_id }
            private_mgmt_net_id: { get_attr: [ mgmt_network, private_net ] }
@@ -420,7 +428,7 @@ index a155c60..cc3bfe7 100644
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
 diff --git a/dime.yaml b/dime.yaml
-index 642f19d..4fdbf10 100644
+index 642f19d..b6f115a 100644
 --- a/dime.yaml
 +++ b/dime.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -588,15 +596,25 @@ index 642f19d..4fdbf10 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -235,17 +173,13 @@ resources:
+@@ -232,20 +170,23 @@ resources:
+               sleep 5
+             done
+ 
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
 -            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 180
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
      description: IP address in public (management) network
@@ -609,7 +627,7 @@ index 642f19d..4fdbf10 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/dns.yaml b/dns.yaml
-index 825ede1..0412c4f 100644
+index 825ede1..11a833b 100644
 --- a/dns.yaml
 +++ b/dns.yaml
 @@ -23,22 +23,6 @@ parameters:
@@ -704,15 +722,16 @@ index 825ede1..0412c4f 100644
              # Install BIND.
              apt-get update
              DEBIAN_FRONTEND=noninteractive apt-get install bind9 --yes
-@@ -162,6 +142,7 @@ resources:
- 
+@@ -163,6 +143,8 @@ resources:
              # Now that BIND configuration is correct, kick it to reload.
              service bind9 reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
  outputs:
    public_mgmt_ip:
-@@ -170,9 +151,6 @@ outputs:
+     description: IP address in public management network
+@@ -170,9 +152,6 @@ outputs:
    private_mgmt_ip:
      description: IP address in private signaling network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -723,7 +742,7 @@ index 825ede1..0412c4f 100644
      description: DNS zone
      value: { get_param: zone }
 diff --git a/ellis.yaml b/ellis.yaml
-index 963352d..1dc62f0 100644
+index 963352d..a7ce50b 100644
 --- a/ellis.yaml
 +++ b/ellis.yaml
 @@ -44,9 +44,6 @@ parameters:
@@ -787,16 +806,28 @@ index 963352d..1dc62f0 100644
              EOF
              /usr/share/clearwater/clearwater-config-manager/scripts/cw-config upload shared_config --autoconfirm --dir /tmp
  
-@@ -227,6 +236,7 @@ resources:
+@@ -223,11 +232,19 @@ resources:
+               sleep 5
+             done
+ 
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
+             # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 60
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
+     description: IP address in public management network
 diff --git a/homer.yaml b/homer.yaml
-index 4337984..f87d3e8 100644
+index 4337984..f6bedde 100644
 --- a/homer.yaml
 +++ b/homer.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -966,18 +997,31 @@ index 4337984..f87d3e8 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -241,9 +172,8 @@ resources:
+@@ -237,14 +168,20 @@ resources:
+               sleep 5
+             done
+ 
+-            # Use the DNS server.
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
 -            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 180
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_cluster_state
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
-@@ -252,9 +182,3 @@ outputs:
+     description: IP address in public management network
+@@ -252,9 +189,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -1337,7 +1381,7 @@ index 5921d32..c73fe2b 100644
 -    value: { get_resource: vellum_sig_inbound }
 +    value: { get_resource: base_mgmt }
 diff --git a/sprout.yaml b/sprout.yaml
-index 9c533b7..3702ef9 100644
+index 9c533b7..f84915a 100644
 --- a/sprout.yaml
 +++ b/sprout.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -1500,15 +1544,26 @@ index 9c533b7..3702ef9 100644
              update add sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.sprout.__zone__.
              update add _sip._tcp.sprout.__zone__. 30 SRV 0 0 5054 __index__.sprout.__zone__.
              update add icscf.sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.icscf.sprout.__zone__.
-@@ -242,17 +180,13 @@ resources:
+@@ -239,20 +177,24 @@ resources:
+               sleep 5
+             done
+ 
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
 -            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 180
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_cluster_state
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
      description: IP address in public (management) network
@@ -1521,7 +1576,7 @@ index 9c533b7..3702ef9 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/vellum.yaml b/vellum.yaml
-index aab71f9..9fe1662 100644
+index aab71f9..8f63557 100644
 --- a/vellum.yaml
 +++ b/vellum.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -1605,7 +1660,7 @@ index aab71f9..9fe1662 100644
        user_data_format: RAW
        user_data:
          str_replace:
-@@ -141,48 +112,22 @@ resources:
+@@ -141,47 +112,18 @@ resources:
              __zone__: { get_param: zone }
              __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
              __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -1623,7 +1678,7 @@ index aab71f9..9fe1662 100644
  
              # Log all output to file.
              exec > >(tee -a /var/log/clearwater-heat-vellum.log) 2>&1
--            set -x
+             set -x
 -
 -            # Set up the signaling network namespace on each boot by creating an init file and
 -            # linking to it from runlevel 2 and 3
@@ -1643,11 +1698,7 @@ index aab71f9..9fe1662 100644
 -            ip netns exec signaling ip addr add __private_sig_ip__/$(echo __private_sig_cidr__ | cut -d / -f 2) dev eth1
 -            ip netns exec signaling ip link set dev eth1 up
 -            ip netns exec signaling ip route add default via __private_sig_gateway__
-+            sed -i /^rpc_address:.*$/d /etc/cassandra/cassandra.yaml
-+            cat << EOF >> /etc/cassandra/cassandra.yaml
-+            rpc_interface: eth0
-+            rpc_interface_prefer_ipv6: false
-             EOF
+-            EOF
 -
 -            chmod a+x /etc/init.d/signaling_namespace
 -            ln -s /etc/init.d/signaling_namespace /etc/rc2.d/S01signaling_namespace
@@ -1655,12 +1706,11 @@ index aab71f9..9fe1662 100644
 -
 -            # Also set up the signaling namespace now.
 -            /etc/init.d/signaling_namespace
--
-+            cat /etc/cassandra/cassandra.yaml
++            sysctl -w net.ipv6.conf.lo.disable_ipv6=0
+ 
              # Configure the APT software source.
              echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
-@@ -193,11 +138,8 @@ resources:
+@@ -193,11 +135,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -1674,7 +1724,7 @@ index aab71f9..9fe1662 100644
              public_hostname=__index__.vellum.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -206,7 +148,7 @@ resources:
+@@ -206,7 +145,7 @@ resources:
              mkdir -p /etc/chronos
              cat > /etc/chronos/chronos.conf << EOF
              [http]
@@ -1683,7 +1733,7 @@ index aab71f9..9fe1662 100644
              bind-port = 7253
              threads = 50
  
-@@ -218,7 +160,7 @@ resources:
+@@ -218,7 +157,7 @@ resources:
              enabled = true
  
              [dns]
@@ -1692,7 +1742,7 @@ index aab71f9..9fe1662 100644
              EOF
  
              # Now install the software.
-@@ -239,7 +181,7 @@ resources:
+@@ -239,7 +178,7 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add vellum-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -1701,18 +1751,30 @@ index aab71f9..9fe1662 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -252,9 +194,8 @@ resources:
+@@ -249,13 +188,20 @@ resources:
+               sleep 5
+             done
+ 
++            wc_notify --data-binary '{"status": "SUCCESS"}'
++
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
 -            echo 'nameserver __dns_sig_ip__' > /etc/netns/signaling/resolv.conf
              service dnsmasq force-reload
-+            wc_notify --data-binary '{"status": "SUCCESS"}'
  
++            sleep 300
++            monit summary
++            clearwater-etcdctl cluster-health
++            clearwater-etcdctl member list
++            cw-check_cluster_state
++            cw-check_config_sync
++
  outputs:
    public_mgmt_ip:
-@@ -263,6 +204,3 @@ outputs:
+     description: IP address in public management network
+@@ -263,6 +209,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
