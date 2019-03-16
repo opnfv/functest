@@ -227,12 +227,13 @@ class VmReady1(tenantnetwork.TenantNetwork1):
             console = self.cloud.get_server_console(name)
             self.__logger.debug("console: \n%s", console)
             if re.search(regex, console):
-                self.__logger.debug("regex found: ''%s' in console", regex)
+                self.__logger.debug(
+                    "regex found: '%s' in console\n%s", regex, console)
                 return True
             else:
                 self.__logger.debug(
-                    "try %s: cannot find regex '%s' in console",
-                    iloop + 1, regex)
+                    "try %s: cannot find regex '%s' in console\n%s",
+                    iloop + 1, regex, console)
                 time.sleep(10)
         self.__logger.error("cannot find regex '%s' in console", regex)
         return False
