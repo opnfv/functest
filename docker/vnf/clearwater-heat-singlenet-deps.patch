@@ -742,7 +742,7 @@ index 825ede1..11a833b 100644
      description: DNS zone
      value: { get_param: zone }
 diff --git a/ellis.yaml b/ellis.yaml
-index 963352d..a7ce50b 100644
+index 963352d..ee7e505 100644
 --- a/ellis.yaml
 +++ b/ellis.yaml
 @@ -44,9 +44,6 @@ parameters:
@@ -817,7 +817,7 @@ index 963352d..a7ce50b 100644
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
              service dnsmasq force-reload
  
-+            sleep 60
++            sleep 180
 +            monit summary
 +            clearwater-etcdctl cluster-health
 +            clearwater-etcdctl member list
