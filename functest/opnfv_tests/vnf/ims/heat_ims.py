@@ -15,7 +15,9 @@ import logging
 import os
 import re
 import time
+import tempfile
 
+import paramiko
 import pkg_resources
 from xtesting.core import testcase
 
@@ -86,6 +88,7 @@ class HeatIms(singlevm.VmReady2):
         self.stack = None
         self.clearwater = None
         self.role = None
+        (_, self.key_filename) = tempfile.mkstemp()
 
     def create_network_resources(self):
         pass
@@ -111,6 +114,8 @@ class HeatIms(singlevm.VmReady2):
         self.keypair = self.cloud.create_keypair(
             '{}-kp_{}'.format(self.case_name, self.guid))
         self.__logger.info("keypair:\n%s", self.keypair.private_key)
+        with open(self.key_filename, 'w') as private_key_file:
+            private_key_file.write(self.keypair.private_key)
 
         if self.deploy_vnf() and self.test_vnf():
             self.result = 100
@@ -144,6 +149,22 @@ class HeatIms(singlevm.VmReady2):
             self.stop_time = time.time()
         return status
 
+    def _monit(self, username="ubuntu", timeout=60):
+        servers = self.cloud.list_servers(detailed=True)
+        self.__logger.debug("servers: %s", servers)
+        for server in servers:
+            if 'ns' in server.name:
+                break
+            self.__logger.info("server:\n%s", server.name)
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
+            ssh.connect(
+                server.public_v4, username=username,
+                key_filename=self.key_filename, timeout=timeout)
+            (_, stdout, _) = ssh.exec_command('sudo monit summary')
+            self.__logger.info("output:\n%s", stdout.read())
+            ssh.close()
+
     def deploy_vnf(self):
         """Deploy Clearwater IMS."""
         start_time = time.time()
@@ -168,7 +189,7 @@ class HeatIms(singlevm.VmReady2):
         self.__logger.debug("servers: %s", servers)
         for server in servers:
             if not self.check_regex_in_console(
-                    server.name, regex='Cloud-init .* finished at ', loop=1):
+                    server.name, regex='Cloud-init .* finished at ', loop=60):
                 return False
             if 'ellis' in server.name:
                 self.__logger.debug("server: %s", server)
@@ -200,6 +221,8 @@ class HeatIms(singlevm.VmReady2):
 
         if not dns_ip:
             return False
+
+        self._monit()
 
         short_result = self.clearwater.run_clearwater_live_test(
             dns_ip=dns_ip,
