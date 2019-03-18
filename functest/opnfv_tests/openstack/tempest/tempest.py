@@ -645,7 +645,11 @@ class TempestCommon(singlevm.VmReady2):
             rally.RallyBase.verify_report(
                 os.path.join(self.res_dir, "tempest-report.xml"),
                 self.verification_id, "junit-xml")
-            res = testcase.TestCase.EX_OK
+            skips = self.details.get("skipped_number", 0)
+            if skips > 0 and kwargs.get("deny_skipping", False):
+                res = testcase.TestCase.EX_TESTCASE_FAILED
+            else:
+                res = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             LOGGER.exception('Error with run')
             self.result = 0

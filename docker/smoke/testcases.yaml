@@ -48,6 +48,7 @@ tiers:
                 run:
                     name: refstack_defcore
                     args:
+                        deny_skipping: true
                         option:
                             - '--concurrency=4'
 
