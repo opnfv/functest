@@ -371,6 +371,25 @@ class OSTempestTesting(unittest.TestCase):
                 ['rally', 'verify', 'configure-verifier', '--reconfigure',
                  '--id', str(getattr(config.CONF, 'tempest_verifier_name'))])
 
+    def test_is_successful_false(self):
+        with mock.patch('six.moves.builtins.super') as mock_super:
+            self.tempestcommon.deny_skipping = True
+            self.tempestcommon.details = {"skipped_number": 2}
+            self.assertEqual(self.tempestcommon.is_successful(),
+                             testcase.TestCase.EX_TESTCASE_FAILED)
+            mock_super(tempest.TempestCommon,
+                       self).is_successful.assert_not_called()
+
+    def test_is_successful_true(self):
+        with mock.patch('six.moves.builtins.super') as mock_super:
+            self.tempestcommon.deny_skipping = False
+            self.tempestcommon.details = {"skipped_number": 2}
+            mock_super(tempest.TempestCommon,
+                       self).is_successful.return_value = 567
+            self.assertEqual(self.tempestcommon.is_successful(), 567)
+            mock_super(tempest.TempestCommon,
+                       self).is_successful.assert_called()
+
 
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)

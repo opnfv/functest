@@ -94,6 +94,7 @@ class TempestCommon(singlevm.VmReady2):
                 'neutron_extensions']
         except Exception:  # pylint: disable=broad-except
             pass
+        self.deny_skipping = kwargs.get("deny_skipping", False)
 
     def check_services(self):
         """Check the mandatory services."""
@@ -663,3 +664,10 @@ class TempestCommon(singlevm.VmReady2):
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
         super(TempestCommon, self).clean()
+
+    def is_successful(self):
+        """The overall result of the test."""
+        skips = self.details.get("skipped_number", 0)
+        if skips > 0 and self.deny_skipping:
+            return testcase.TestCase.EX_TESTCASE_FAILED
+        return super(TempestCommon, self).is_successful()
