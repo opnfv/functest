@@ -229,6 +229,7 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: false
+                deny_skipping: true
                 description: >-
                     This test case runs a group of Rally jobs used in
                     OpenStack gating
