@@ -185,11 +185,14 @@ class HeatIms(singlevm.VmReady2):
             wait=True, **parameters)
         self.__logger.debug("stack: %s", self.stack)
 
+        time.sleep(300)
+        self._monit()
+
         servers = self.cloud.list_servers(detailed=True)
         self.__logger.debug("servers: %s", servers)
         for server in servers:
             if not self.check_regex_in_console(
-                    server.name, regex='Cloud-init .* finished at ', loop=60):
+                    server.name, regex='Cloud-init .* finished at ', loop=1):
                 return False
             if 'ellis' in server.name:
                 self.__logger.debug("server: %s", server)
@@ -222,8 +225,6 @@ class HeatIms(singlevm.VmReady2):
         if not dns_ip:
             return False
 
-        self._monit()
-
         short_result = self.clearwater.run_clearwater_live_test(
             dns_ip=dns_ip,
             public_domain=self.vnf['parameters']["zone"])
@@ -244,6 +245,7 @@ class HeatIms(singlevm.VmReady2):
             self.__logger.exception("Cannot calculate results")
             self.details['test_vnf'].update(status='FAIL')
             return False
+        self._monit()
         return True if vnf_test_rate > 0 else False
 
     def clean(self):
