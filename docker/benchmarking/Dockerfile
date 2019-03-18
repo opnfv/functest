@@ -7,7 +7,7 @@ ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        libressl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \

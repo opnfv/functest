@@ -6,7 +6,7 @@ ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
-        python-dev build-base linux-headers libffi-dev openssl-dev && \
+        python-dev build-base linux-headers libffi-dev libressl-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
