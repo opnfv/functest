@@ -1,11 +1,11 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG PIP_TAG=18.0
 
 RUN apk --no-cache add --update \
-        python libffi libssl1.0 libjpeg-turbo py-pip bash \
+        python libffi openssl libjpeg-turbo py-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
