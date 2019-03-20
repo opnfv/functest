@@ -68,7 +68,7 @@ RUN apk --no-cache add --update \
     (cd $GOPATH/src/github.com/juju/juju && git checkout $JUJU_TAG && godeps -u dependencies.tsv) && \
     go install -v github.com/juju/juju/... && \
     rm -r $GOPATH/src/ $GOPATH/pkg && \
-    (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system) && \
+    (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system && bundle update rest-client) && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /src/epc-requirements/abot_charm/.git /root/.cache/go-build \
