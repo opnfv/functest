@@ -22,6 +22,7 @@ import os
 import scp
 
 from functest.core import singlevm
+from functest.utils import env
 
 
 class Shaker(singlevm.SingleVm2):
@@ -99,8 +100,8 @@ class Shaker(singlevm.SingleVm2):
             '{}'
             'env && '
             'timeout {} shaker --image-name {} --flavor-name {} '
-            '--server-endpoint {}:9000 --scenario '
-            'openstack/full_l2,'
+            '--server-endpoint {}:9000 --external-net {} --dns-nameservers {} '
+            '--scenario openstack/full_l2,'
             'openstack/full_l3_east_west,'
             'openstack/full_l3_north_south,'
             'openstack/perf_l3_north_south '
@@ -110,7 +111,8 @@ class Shaker(singlevm.SingleVm2):
                 'export OS_CACERT=~/os_cacert && ' if os.environ.get(
                     'OS_CACERT') else '',
                 self.shaker_timeout, self.image.name, self.flavor.name,
-                self.fip.floating_ip_address))
+                self.fip.floating_ip_address, self.ext_net.id,
+                env.get('NAMESERVER')))
         self.__logger.info("output:\n%s", stdout.read())
         self.__logger.info("error:\n%s", stderr.read())
         if not os.path.exists(self.res_dir):
