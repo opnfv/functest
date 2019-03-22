@@ -185,7 +185,6 @@ class HeatIms(singlevm.VmReady2):
             wait=True, **parameters)
         self.__logger.debug("stack: %s", self.stack)
 
-        time.sleep(300)
         self._monit()
 
         servers = self.cloud.list_servers(detailed=True)
