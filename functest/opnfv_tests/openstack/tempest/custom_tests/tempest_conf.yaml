@@ -1,4 +1,6 @@
 ---
+compute:
+    max_microversion: 2.65
 compute-feature-enabled:
     shelve: false
     vnc_console: false

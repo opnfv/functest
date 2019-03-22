@@ -3,6 +3,7 @@ FROM opnfv/functest-tempest:hunter
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
 ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
+ARG REFSTACK_TARGET=2018.11
 ARG PATROLE_TAG=0.4.0
 ARG NEUTRON_TAG=0.2.0
 ARG BARBICAN_TAG=0.1.0
@@ -35,10 +36,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
+    wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
+        -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/neutron/policy.json https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     apk del .build-deps
-COPY defcore.txt /home/opnfv/functest/data/refstack/defcore.txt
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
