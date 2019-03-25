@@ -56,8 +56,6 @@
             - vping_userdata
             - cinder_test
             - odl
-            - api_check
-            - snaps_health_check
             - tempest_smoke
         - container: functest-smoke
           tests:
@@ -67,7 +65,6 @@
             - tempest_full
             - tempest_scenario
             - patrole
-            - snaps_smoke
             - neutron_trunk
             - networking-bgpvpn
             - networking-sfc
