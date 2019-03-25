@@ -43,7 +43,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin && \
+        /src/patrole /src/barbican-tempest-plugin \
+        /src/cinder /src/keystone /src/neutron /src/nova && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
