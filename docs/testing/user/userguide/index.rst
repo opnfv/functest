@@ -73,5 +73,5 @@ IRC support chan: #opnfv-functest
 .. _`Functest page`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
-.. _`config_functest.yaml` : https://git.opnfv.org/cgit/functest/tree/functest/ci/config_functest.yaml
+.. _`config_functest.yaml` : https://github.com/opnfv/functest/blob/master/functest/ci/config_functest.yaml
 .. _`Functest reporting`: http://testresults.opnfv.org/reporting/master/functest/status-apex.html
