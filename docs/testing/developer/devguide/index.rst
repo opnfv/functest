@@ -260,7 +260,7 @@ _`[1]`: http://artifacts.opnfv.org/functest/docs/configguide/index.html Functest
 
 _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest user guide
 
-_`[3]`: https://git.opnfv.org/releng-testresults/tree/reporting
+_`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 
 _`[4]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
 
