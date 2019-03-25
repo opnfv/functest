@@ -177,7 +177,7 @@ Useful links
 ============
 
  * wiki project page: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
- * Functest git repository: https://git.opnfv.org/cgit/functest
+ * Functest git repository: https://github.com/opnfv/functest
  * Functest CI dashboard: https://build.opnfv.org/ci/view/functest/
  * JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611
  * Functest IRC channel: #opnfv-functest
