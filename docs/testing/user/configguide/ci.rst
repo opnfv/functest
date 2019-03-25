@@ -13,4 +13,4 @@ container from Jenkins.
 
 See `[2]`_ for details.
 
-.. _`[2]`: https://git.opnfv.org/releng/tree/jjb/functest/functest-daily-jobs.yaml
+.. _`[2]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml
