@@ -1,7 +1,7 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-tempest:iruya
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/iruya
+ARG OPENSTACK_TAG=stable/stein
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass && \

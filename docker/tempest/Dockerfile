@@ -1,7 +1,7 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:iruya
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/iruya
+ARG OPENSTACK_TAG=stable/stein
 ARG RALLY_TAG=master
 ARG RALLY_OPENSTACK_TAG=master
 ARG OS_FAULTS_TAG=0.1.18

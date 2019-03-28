@@ -1,7 +1,7 @@
 FROM alpine:3.9
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/iruya
+ARG OPENSTACK_TAG=stable/stein
 ARG PIP_TAG=18.0
 
 RUN apk --no-cache add --update \

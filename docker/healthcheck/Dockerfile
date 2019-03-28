@@ -1,7 +1,7 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-tempest:iruya
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/iruya
+ARG OPENSTACK_TAG=stable/stein
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt

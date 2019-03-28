@@ -1,7 +1,7 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-tempest:iruya
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/iruya
+ARG OPENSTACK_TAG=stable/stein
 ARG REFSTACK_TARGET=2018.11
 ARG PATROLE_TAG=master
 ARG BARBICAN_TAG=master
