@@ -2,6 +2,7 @@ FROM opnfv/functest-core:iruya
 
 ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
+ARG TEMPEST_TAG=20.0.0
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia
@@ -24,7 +25,7 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
-    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
+    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
