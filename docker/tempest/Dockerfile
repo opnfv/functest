@@ -5,12 +5,14 @@ ARG OPENSTACK_TAG=master
 ARG RALLY_TAG=master
 ARG RALLY_OPENSTACK_TAG=master
 ARG OS_FAULTS_TAG=0.1.18
+ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
+    sed -i -E s/^ujson==+.*$/-e\ git+https:\\/\\/github.com\\/esnme\\/ultrajson@$UJSON_TAG#egg=ujson/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     git init /src/os-faults && \
