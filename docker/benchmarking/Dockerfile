@@ -25,7 +25,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://git.openstack.org/openstack/neutron.git $OPENSTACK_TAG && \
         git checkout FETCH_HEAD) && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt src/vmtp /src/neutron && \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
