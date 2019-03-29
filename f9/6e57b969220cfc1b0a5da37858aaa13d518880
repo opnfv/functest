@@ -1,0 +1,7 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Fri, 29 Mar 2019 02:37:29 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/67436
+Project: functest
+Branch: refs/heads/master
