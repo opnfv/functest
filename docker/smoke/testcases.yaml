@@ -100,6 +100,7 @@ tiers:
                             - 'network'
                         excludes:
                             - 'test_networks_multiprovider_rbac'
+                            - 'test_create_network_provider_segmentation_id'
 
             -
                 case_name: snaps_smoke
