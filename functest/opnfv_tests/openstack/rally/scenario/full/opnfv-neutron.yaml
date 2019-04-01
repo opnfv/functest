@@ -27,7 +27,8 @@
         ports_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
@@ -50,7 +51,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -74,7 +74,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -108,7 +107,8 @@
         ports_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
@@ -129,7 +129,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -151,7 +150,8 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
@@ -185,7 +185,8 @@
         ports_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
@@ -206,7 +207,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -227,7 +227,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -315,7 +314,8 @@
         ports_per_network: 2
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
@@ -332,7 +332,6 @@
         subnets_per_network: 2
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
         quotas:
           neutron:
             network: -1
@@ -350,7 +349,8 @@
         subnets_per_network: 2
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network: {}
+        network:
+          router: {}
         quotas:
           neutron:
             network: -1
