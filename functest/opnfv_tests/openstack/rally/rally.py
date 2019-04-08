@@ -58,6 +58,8 @@ class RallyBase(singlevm.VmReady2):
     TENANTS_AMOUNT = 3
     ITERATIONS_AMOUNT = 10
     CONCURRENCY = 4
+    VOLUME_VERSION = 3
+    VOLUME_SERVICE_TYPE = "volumev3"
     BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.yaml")
     TASK_DIR = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
     TEMP_DIR = os.path.join(TASK_DIR, 'var')
@@ -113,6 +115,8 @@ class RallyBase(singlevm.VmReady2):
         task_args['iterations'] = self.ITERATIONS_AMOUNT
         task_args['concurrency'] = self.CONCURRENCY
         task_args['smoke'] = self.smoke
+        task_args['volume_version'] = self.VOLUME_VERSION
+        task_args['volume_service_type'] = self.VOLUME_SERVICE_TYPE
 
         if self.ext_net:
             task_args['floating_network'] = str(self.ext_net.name)
