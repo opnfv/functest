@@ -8,6 +8,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -23,6 +25,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {{ volumes() }}
         {% endcall %}
       runner:
@@ -39,6 +43,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -52,6 +58,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -70,6 +78,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -91,6 +101,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -111,6 +123,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -123,6 +137,8 @@
         size: 1
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
     -
@@ -134,6 +150,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -148,6 +166,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         volumes:
           size: 1
           volumes_per_tenant: 4
@@ -165,6 +185,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {{ volumes() }}
         {% endcall %}
       runner:
@@ -182,6 +204,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -194,6 +218,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -206,6 +232,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -221,6 +249,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
@@ -235,6 +265,8 @@
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
         quotas:
           {{ unlimited_volumes() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {{ volumes() }}
         {% endcall %}
       runner:
@@ -250,6 +282,8 @@
         read_iops_sec: "1000"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -263,6 +297,8 @@
         read_iops_sec: "1000"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -279,6 +315,8 @@
         set_read_iops_sec: "1001"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -290,6 +328,8 @@
         description: "rally tests creating types"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -301,6 +341,8 @@
         description: "rally tests creating types"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -313,6 +355,8 @@
         update_description: "test update"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -328,6 +372,8 @@
         control_location: "front-end"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -339,6 +385,8 @@
         description: "rally tests creating types"
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
