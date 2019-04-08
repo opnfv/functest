@@ -22,6 +22,8 @@
               - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -37,6 +39,8 @@
           - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
       sla:
@@ -79,6 +83,8 @@
           {{ unlimited_volumes() }}
           {{ unlimited_neutron() }}
           {{ unlimited_nova() }}
+        api_versions:
+          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
         {% endcall %}
       runner:
         {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
