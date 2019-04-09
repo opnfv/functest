@@ -18,7 +18,6 @@ Docker images are available on the dockerhub:
   * opnfv/functest-smoke
   * opnfv/functest-benchmarking
   * opnfv/functest-features
-  * opnfv/functest-components
   * opnfv/functest-vnf
 
 
@@ -27,9 +26,10 @@ Preparing your environment
 
 cat env::
 
-  EXTERNAL_NETWORK=XXX
   DEPLOY_SCENARIO=XXX  # if not os-nosdn-nofeature-noha scenario
   NAMESERVER=XXX  # if not 8.8.8.8
+  EXTERNAL_NETWORK=XXX # if not first network with router:external=True
+  NEW_USER_ROLE=XXX # if not member
 
 See section on environment variables for details.
 
@@ -47,20 +47,17 @@ See section on OpenStack credentials for details.
 
 Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/fraser | bash -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
 
-  images/CentOS-7-aarch64-GenericCloud.qcow2
-  images/CentOS-7-aarch64-GenericCloud.qcow2.xz
-  images/CentOS-7-x86_64-GenericCloud.qcow2
+  images/cirros-0.4.0-aarch64-disk.img
   images/cirros-0.4.0-x86_64-disk.img
-  images/cirros-0.4.0-x86_64-lxc.tar.gz
-  images/cloudify-manager-premium-4.0.1.qcow2
+  images/cloudify-docker-manager-community-19.01.24.tar
   images/shaker-image-arm64.qcow2
-  images/shaker-image.qcow
+  images/shaker-image.qcow2
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
   images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
   images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
-  images/vyos-1.1.7.img
+  images/vyos-1.1.8-amd64.qcow2
 
 Testing healthcheck suite
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -74,23 +71,22 @@ Run healthcheck suite::
 
 Results shall be displayed as follows::
 
-  +----------------------------+------------------+---------------------+------------------+----------------+
-  |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
-  +----------------------------+------------------+---------------------+------------------+----------------+
-  |      connection_check      |     functest     |     healthcheck     |      00:09       |      PASS      |
-  |       tenantnetwork1       |     functest     |     healthcheck     |      00:14       |      PASS      |
-  |       tenantnetwork2       |     functest     |     healthcheck     |      00:11       |      PASS      |
-  |          vmready1          |     functest     |     healthcheck     |      00:19       |      PASS      |
-  |          vmready2          |     functest     |     healthcheck     |      00:16       |      PASS      |
-  |         singlevm1          |     functest     |     healthcheck     |      00:41       |      PASS      |
-  |         singlevm2          |     functest     |     healthcheck     |      00:36       |      PASS      |
-  |         vping_ssh          |     functest     |     healthcheck     |      00:46       |      PASS      |
-  |       vping_userdata       |     functest     |     healthcheck     |      00:41       |      PASS      |
-  |        cinder_test         |     functest     |     healthcheck     |      01:18       |      PASS      |
-  |         api_check          |     functest     |     healthcheck     |      10:33       |      PASS      |
-  |     snaps_health_check     |     functest     |     healthcheck     |      00:44       |      PASS      |
-  |            odl             |     functest     |     healthcheck     |      00:00       |      SKIP      |
-  +----------------------------+------------------+---------------------+------------------+----------------+
+  +--------------------------+------------------+---------------------+------------------+----------------+
+  |        TEST CASE         |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
+  +--------------------------+------------------+---------------------+------------------+----------------+
+  |     connection_check     |     functest     |     healthcheck     |      00:01       |      PASS      |
+  |      tenantnetwork1      |     functest     |     healthcheck     |      00:06       |      PASS      |
+  |      tenantnetwork2      |     functest     |     healthcheck     |      00:06       |      PASS      |
+  |         vmready1         |     functest     |     healthcheck     |      00:08       |      PASS      |
+  |         vmready2         |     functest     |     healthcheck     |      00:08       |      PASS      |
+  |        singlevm1         |     functest     |     healthcheck     |      00:35       |      PASS      |
+  |        singlevm2         |     functest     |     healthcheck     |      00:38       |      PASS      |
+  |        vping_ssh         |     functest     |     healthcheck     |      00:47       |      PASS      |
+  |      vping_userdata      |     functest     |     healthcheck     |      00:33       |      PASS      |
+  |       cinder_test        |     functest     |     healthcheck     |      01:16       |      PASS      |
+  |      tempest_smoke       |     functest     |     healthcheck     |      07:05       |      PASS      |
+  |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
+  +--------------------------+------------------+---------------------+------------------+----------------+
 
 NOTE: the duration is a reference and it might vary depending on your SUT.
 
@@ -109,17 +105,16 @@ Results shall be displayed as follows::
   +------------------------------------+------------------+---------------+------------------+----------------+
   |             TEST CASE              |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +------------------------------------+------------------+---------------+------------------+----------------+
-  |           tempest_smoke            |     functest     |     smoke     |      06:13       |      PASS      |
-  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      09:32       |      PASS      |
-  |            rally_sanity            |     functest     |     smoke     |      29:34       |      PASS      |
-  |             rally_jobs             |     functest     |     smoke     |      24:02       |      PASS      |
-  |          refstack_defcore          |     functest     |     smoke     |      13:07       |      PASS      |
-  |              patrole               |     functest     |     smoke     |      05:17       |      PASS      |
-  |            snaps_smoke             |     functest     |     smoke     |      90:13       |      PASS      |
+  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      13:50       |      PASS      |
+  |            rally_sanity            |     functest     |     smoke     |      14:13       |      PASS      |
+  |          refstack_defcore          |     functest     |     smoke     |      09:60       |      PASS      |
+  |            tempest_full            |     functest     |     smoke     |      58:40       |      PASS      |
+  |          tempest_scenario          |     functest     |     smoke     |      09:47       |      PASS      |
+  |              patrole               |     functest     |     smoke     |      05:34       |      PASS      |
   |           neutron_trunk            |     functest     |     smoke     |      00:00       |      SKIP      |
-  |         networking-bgpvpn          |     functest     |     smoke     |      00:00       |      SKIP      |
-  |           networking-sfc           |     functest     |     smoke     |      00:00       |      SKIP      |
-  |              barbican              |     functest     |     smoke     |      05:01       |      PASS      |
+  |         networking-bgpvpn          |     functest     |     smoke     |      01:43       |      PASS      |
+  |           networking-sfc           |     functest     |     smoke     |      04:49       |      PASS      |
+  |              barbican              |     functest     |     smoke     |      05:09       |      PASS      |
   +------------------------------------+------------------+---------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
@@ -137,12 +132,14 @@ Run benchmarking suite::
 
 Results shall be displayed as follows::
 
-  +-------------------+------------------+----------------------+------------------+----------------+
-  |     TEST CASE     |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
-  +-------------------+------------------+----------------------+------------------+----------------+
-  |        vmtp       |     functest     |     benchmarking     |      18:43       |      PASS      |
-  |       shaker      |     functest     |     benchmarking     |      29:45       |      PASS      |
-  +-------------------+------------------+----------------------+------------------+----------------+
+  +--------------------+------------------+----------------------+------------------+----------------+
+  |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +--------------------+------------------+----------------------+------------------+----------------+
+  |     rally_full     |     functest     |     benchmarking     |      121:55      |      PASS      |
+  |     rally_jobs     |     functest     |     benchmarking     |      24:21       |      PASS      |
+  |        vmtp        |     functest     |     benchmarking     |      00:00       |      SKIP      |
+  |       shaker       |     functest     |     benchmarking     |      00:00       |      SKIP      |
+  +--------------------+------------------+----------------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
 See User guide for details.
@@ -159,40 +156,18 @@ Run features suite::
 
 Results shall be displayed as follows::
 
-  +-----------------------------+------------------------+------------------+------------------+----------------+
-  |          TEST CASE          |        PROJECT         |       TIER       |     DURATION     |     RESULT     |
-  +-----------------------------+------------------------+------------------+------------------+----------------+
-  |     doctor-notification     |         doctor         |     features     |      00:00       |      SKIP      |
-  |            bgpvpn           |         sdnvpn         |     features     |      00:00       |      SKIP      |
-  |       functest-odl-sfc      |          sfc           |     features     |      00:00       |      SKIP      |
-  |      barometercollectd      |       barometer        |     features     |      00:00       |      SKIP      |
-  |             fds             |     fastdatastacks     |     features     |      00:00       |      SKIP      |
-  |             vgpu            |        functest        |     features     |      00:00       |      SKIP      |
-  |         stor4nfv_os         |        stor4nfv        |     features     |      00:00       |      SKIP      |
-  +-----------------------------+------------------------+------------------+------------------+----------------+
+  +-----------------------------+-------------------+------------------+------------------+----------------+
+  |          TEST CASE          |      PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +-----------------------------+-------------------+------------------+------------------+----------------+
+  |     doctor-notification     |       doctor      |     features     |      00:00       |      SKIP      |
+  |       functest-odl-sfc      |        sfc        |     features     |      00:00       |      SKIP      |
+  |      barometercollectd      |     barometer     |     features     |      00:00       |      SKIP      |
+  |             vgpu            |      functest     |     features     |      00:00       |      SKIP      |
+  |         stor4nfv_os         |      stor4nfv     |     features     |      00:00       |      SKIP      |
+  +-----------------------------+-------------------+------------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
 See User guide for details.
-
-Testing components suite
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Run components suite::
-
-  sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
-      -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-components
-
-Results shall be displayed as follows::
-
-  +--------------------------+------------------+--------------------+------------------+----------------+
-  |        TEST CASE         |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
-  +--------------------------+------------------+--------------------+------------------+----------------+
-  |       tempest_full       |     functest     |     components     |      49:51       |      PASS      |
-  |     tempest_scenario     |     functest     |     components     |      18:50       |      PASS      |
-  |        rally_full        |     functest     |     components     |      167:13      |      PASS      |
-  +--------------------------+------------------+--------------------+------------------+----------------+
 
 Testing vnf suite
 ^^^^^^^^^^^^^^^^^
@@ -209,11 +184,11 @@ Results shall be displayed as follows::
   +----------------------+------------------+--------------+------------------+----------------+
   |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +----------------------+------------------+--------------+------------------+----------------+
-  |       cloudify       |     functest     |     vnf      |      04:05       |      PASS      |
-  |     cloudify_ims     |     functest     |     vnf      |      24:07       |      PASS      |
-  |       heat_ims       |     functest     |     vnf      |      18:15       |      PASS      |
-  |     vyos_vrouter     |     functest     |     vnf      |      15:48       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      29:38       |      PASS      |
+  |       cloudify       |     functest     |     vnf      |      06:42       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      39:21       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      34:33       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      20:20       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      56:55       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
 Functest Dockers for Kubernetes deployment

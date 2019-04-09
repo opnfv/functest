@@ -258,8 +258,8 @@ debug information can be found from tempest.log file stored into related Rally
 deployment folder.
 
 Functest offers a possibility to test a customized list of Tempest test cases.
-To enable that, add a new entry in docker/components/testcases.yaml on the
-"components" container with the following content::
+To enable that, add a new entry in docker/smoke/testcases.yaml on the
+"smoke" container with the following content::
 
     -
         case_name: tempest_custom
@@ -292,7 +292,7 @@ This is an example of running a customized list of Tempest tests in Functest::
       -v $(pwd)/images:/home/opnfv/functest/images \
       -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python2.7/site-packages/functest/ci/testcases.yaml \
       -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python2.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
-      opnfv/functest-components run_tests -t tempest_custom
+      opnfv/functest-smoke run_tests -t tempest_custom
 
 
 Rally
