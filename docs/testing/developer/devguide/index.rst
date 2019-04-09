@@ -53,7 +53,6 @@ to the different tiers:
   * functest-healthcheck: https://hub.docker.com/r/opnfv/functest-healthcheck/
   * functest-smoke: https://hub.docker.com/r/opnfv/functest-smoke/
   * functest-features: https://hub.docker.com/r/opnfv/functest-features/
-  * functest-components: https://hub.docker.com/r/opnfv/functest-components/
   * functest-vnf: https://hub.docker.com/r/opnfv/functest-vnf/
   * functest-restapi: https://hub.docker.com/r/opnfv/functest-restapi/
 
@@ -163,8 +162,8 @@ The definition of the tiers has been agreed by the testing working group.
 The tiers are:
   * healthcheck
   * smoke
+  * benchmarking
   * features
-  * components
   * vnf
 
 Functest abstraction classes
