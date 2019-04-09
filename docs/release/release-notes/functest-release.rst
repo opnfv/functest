@@ -95,7 +95,6 @@ Software
  * https://hub.docker.com/r/opnfv/functest-smoke
  * https://hub.docker.com/r/opnfv/functest-benchmarking
  * https://hub.docker.com/r/opnfv/functest-features
- * https://hub.docker.com/r/opnfv/functest-components
  * https://hub.docker.com/r/opnfv/functest-vnf
 
  Functest Docker images (Kubernetes):

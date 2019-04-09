@@ -12,7 +12,6 @@ Functest User Guide
    intro.rst
    test_overview.rst
    test_details.rst
-   runfunctest.rst
    test_results.rst
    reporting.rst
    troubleshooting.rst
