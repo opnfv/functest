@@ -2,6 +2,7 @@
 -
     scenarios:
         - os-ovn-nofeature-ha
+        - os-ovn-nofeature-noha
     tests:
         - neutron_tempest_plugin.api.admin.test_agent_management
         - neutron_tempest_plugin.api.admin.test_dhcp_agent_scheduler
