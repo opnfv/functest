@@ -16,17 +16,8 @@ Functest Installation Guide
 References
 ==========
 
-`[1]`_ : Keystone and public end point constraint
-
-`[2]`_ : Functest Jenkins jobs
-
-`[3]`_ : OPNFV main site
-
-`[4]`_ : Functest wiki page
+`[1]`_ : Functest Jenkins jobs
 
 IRC support channel: #opnfv-functest
 
-.. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
-.. _`[2]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml
-.. _`[3]`: http://www.opnfv.org
-.. _`[4]`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
+.. _`[1]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml
