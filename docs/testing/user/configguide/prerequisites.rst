@@ -100,5 +100,3 @@ Jumphost using the 'ping' command using the respective IP address on the
 public/external network for each node in the SUT. The details of how to
 determine the needed IP addresses for each node in the SUT may vary according
 to the used installer and are therefore ommitted here.
-
-.. _`[1]`: https://ask.openstack.org/en/question/68144/keystone-unable-to-use-the-public-endpoint/
