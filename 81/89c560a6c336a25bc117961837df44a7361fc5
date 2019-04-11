@@ -1,0 +1,7 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 11 Apr 2019 09:22:07 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/67535
+Project: functest
+Branch: refs/heads/stable/iruya
