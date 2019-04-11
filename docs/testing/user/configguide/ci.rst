@@ -11,6 +11,6 @@ container from Jenkins.
     vnf)
   * functest-store-results: push logs to artifacts
 
-See `[2]`_ for details.
+See `[1]`_ for details.
 
-.. _`[2]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml
+.. _`[1]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml

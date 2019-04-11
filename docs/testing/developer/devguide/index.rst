@@ -261,7 +261,7 @@ _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest u
 
 _`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 
-_`[4]`: http://docs.opnfv.org/en/latest/testing/testing-dev.html
+_`[4]`: https://wiki.opnfv.org/display/functest/2017+Beijing?preview=%2F11699623%2F11700523%2FTestAPI+-+test+results+collection+service.pptx
 
 _`[5]`: https://opnfv.biterg.io/goto/283dba93ca18e95964f852c63af1d1ba
 
