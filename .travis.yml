@@ -2,6 +2,11 @@
 sudo: required
 services: docker
 language: generic
+dist: xenial
+addons:
+  apt:
+    packages:
+      - libssl1.0.0
 
 before_script:
   - sudo apt-get -y install qemu-user-static
