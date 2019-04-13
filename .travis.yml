@@ -5,6 +5,9 @@ language: generic
 
 before_script:
   - sudo apt-get -y install qemu-user-static
+  - sudo add-apt-repository -y ppa:jonathonf/python-3.6
+  - sudo apt-get update
+  - sudo apt-get install python3.6 python3.6-dev
   - sudo pip install tox
   - sudo -E docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - (cd .. && git clone https://github.com/estesp/manifest-tool)
@@ -14,7 +17,7 @@ before_script:
 jobs:
   include:
     - stage: run unit tests
-      script: tox -e docs,pep8,pylint,yamllint,bashate,py27,cover
+      script: tox -e docs,pep8,pylint,yamllint,bashate,py27,py36,cover
     - stage: build functest-core images
       script: sudo -E bash build.sh
       env:
