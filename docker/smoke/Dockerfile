@@ -33,18 +33,12 @@ RUN apk --no-cache add --virtual .build-deps --update \
     wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron \
-        -e git+https://git.openstack.org/openstack/cinder.git@$OPENSTACK_TAG#egg=cinder \
-        -e git+https://git.openstack.org/openstack/keystone.git@$OPENSTACK_TAG#egg=keystone \
-        -e git+https://git.openstack.org/openstack/nova.git@$OPENSTACK_TAG#egg=nova && \
-    oslopolicy-sample-generator  --format json --output-file /etc/cinder/policy.json --namespace cinder && \
-    oslopolicy-sample-generator  --format json --output-file /etc/keystone/policy.json --namespace keystone && \
+        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
-    oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin \
-        /src/cinder /src/keystone /src/neutron /src/nova && \
+        /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
