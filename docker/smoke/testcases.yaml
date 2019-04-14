@@ -106,6 +106,8 @@ tiers:
                             - 'test_networks_multiprovider_rbac'
                             - 'test_auto_allocated_topology_rbac'
                             - 'test_create_network_provider_segmentation_id'
+                            - 'test_update_network_provider_physical_network'
+                            - 'test_update_network_provider_segmentation_id'
 
             -
                 case_name: neutron_trunk
