@@ -158,7 +158,6 @@ def configure_tempest_update_params(
         rconfig.set('auth', 'test_accounts_file', account_file)
     rconfig.set('identity', 'auth_version', 'v3')
     rconfig.set('identity', 'admin_role', admin_role_name)
-    rconfig.set('identity', 'admin_domain_scope', True)
     rconfig.set('identity', 'default_domain_id', domain_id)
     if not rconfig.has_section('network'):
         rconfig.add_section('network')
