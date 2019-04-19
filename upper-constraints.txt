@@ -18,3 +18,4 @@ ansible===2.3.2.0
 xtesting===0.61.0
 git+https://git.openstack.org/openstack/networking-bgpvpn@10.0.0.0rc1#egg=networking_bgpvpn
 git+https://git.openstack.org/openstack/networking-sfc@8.0.0.0rc1#egg=networking_sfc
+os-faults===0.2.1
