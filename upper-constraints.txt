@@ -17,3 +17,4 @@ xtesting===0.61.0
 networking-bgpvpn===8.0.0
 networking-sfc===6.0.0
 neutron===12.0.5
+os-faults===0.1.17
