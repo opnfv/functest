@@ -10,18 +10,18 @@ ARG BARBICAN_TAG=0.1.0
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
-    wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
-    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     git init /src/patrole && \
     (cd /src/patrole && \
-        git fetch --tags https://git.openstack.org/openstack/patrole.git $PATROLE_TAG && \
+        git fetch --tags https://opendev.org/openstack/patrole.git $PATROLE_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     git init /src/barbican-tempest-plugin && \
     (cd /src/barbican-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
+        git fetch --tags https://opendev.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
@@ -31,10 +31,10 @@ RUN apk --no-cache add --virtual .build-deps --update \
     wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
         -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
-    wget -q -O /etc/glance/policy.json https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=$OPENSTACK_TAG && \
+    wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://git.openstack.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
+        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \

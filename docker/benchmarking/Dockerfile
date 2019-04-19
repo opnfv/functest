@@ -3,20 +3,20 @@ FROM opnfv/functest-tempest:iruya
 ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
 ARG TEMPEST_TAG=20.0.0
-ARG VMTP_TAG=99b261ccccc2f8a08ee2d8fca9f54ef9d69899d7
+ARG VMTP_TAG=2.5.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
-    wget -q -O- https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?h=$OPENSTACK_TAG > upper-constraints.txt && \
-    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/git.openstack.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
     CFLAGS="-O0" pip install --no-cache-dir -cupper-constraints.txt -cupper-constraints.opnfv.txt lxml && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
-        git fetch --tags https://git.openstack.org/openstack/vmtp.git $VMTP_TAG && \
+        git fetch --tags https://opendev.org/x/vmtp.git $VMTP_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
@@ -24,7 +24,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     git init /src/neutron && \
     (cd /src/neutron && \
-        git fetch --tags https://git.openstack.org/openstack/neutron.git $OPENSTACK_TAG && \
+        git fetch --tags https://opendev.org/openstack/neutron.git $OPENSTACK_TAG && \
         git checkout FETCH_HEAD) && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \
