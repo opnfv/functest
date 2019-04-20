@@ -331,6 +331,14 @@ class FunctestUtilsTesting(unittest.TestCase):
         args[0].assert_called_once_with(cloud)
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 66))
+    def test_openstack_version11(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(
+            cloud), "Stein")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
                 return_value=None)
     def test_openstack_version_exc(self, *args):
         cloud = mock.Mock()
