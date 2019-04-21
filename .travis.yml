@@ -87,6 +87,11 @@ jobs:
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64 \
+          --template ${DOCKER_USERNAME}/functest-benchmarking:ARCH-gambia \
+          --target ${DOCKER_USERNAME}/functest-benchmarking:gambia
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64 \
           --template ${DOCKER_USERNAME}/functest-features:ARCH-gambia \
           --target ${DOCKER_USERNAME}/functest-features:gambia
     - script: >
