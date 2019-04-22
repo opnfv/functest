@@ -34,12 +34,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
     wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
+        oslo.policy neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
-        /src/patrole /src/barbican-tempest-plugin \
-        /src/neutron && \
+        /src/patrole /src/barbican-tempest-plugin && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
