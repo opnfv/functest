@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/queens
 ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
 ARG OSLO_CONCURRENCY=3.27.0
 ARG RALLY_TAG=1.3.0
-ARG RALLY_OPENSTACK_TAG=1.2.0
+ARG RALLY_OPENSTACK_TAG=1.3.0
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
