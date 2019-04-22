@@ -15,7 +15,10 @@ identity-feature-enabled:
 image-feature-enabled:
     api_v2: true
     api_v1: false
+placement:
+    max_microversion: 1.31
 volume:
+    max_microversion: 3.59
     storage_protocol: iSCSI
 volume-feature-enabled:
     backup: false
