@@ -577,19 +577,8 @@ class TempestCommon(singlevm.VmReady2):
         """
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
-        environ = dict(
-            os.environ,
-            OS_USERNAME=self.project.user.name,
-            OS_PROJECT_NAME=self.project.project.name,
-            OS_PROJECT_ID=self.project.project.id,
-            OS_PASSWORD=self.project.password)
-        try:
-            del environ['OS_TENANT_NAME']
-            del environ['OS_TENANT_ID']
-        except Exception:  # pylint: disable=broad-except
-            pass
         self.deployment_id = rally.RallyBase.create_rally_deployment(
-            environ=environ)
+            environ=self.project.get_environ())
         if not self.deployment_id:
             raise Exception("Deployment create failed")
         self.verifier_id = self.create_verifier()

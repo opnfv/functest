@@ -644,18 +644,7 @@ class RallyBase(singlevm.VmReady2):
         try:
             assert super(RallyBase, self).run(
                 **kwargs) == testcase.TestCase.EX_OK
-            environ = dict(
-                os.environ,
-                OS_USERNAME=self.project.user.name,
-                OS_PROJECT_NAME=self.project.project.name,
-                OS_PROJECT_ID=self.project.project.id,
-                OS_PASSWORD=self.project.password)
-            try:
-                del environ['OS_TENANT_NAME']
-                del environ['OS_TENANT_ID']
-            except Exception:  # pylint: disable=broad-except
-                pass
-            self.create_rally_deployment(environ=environ)
+            self.create_rally_deployment(environ=self.project.get_environ())
             self.prepare_run(**kwargs)
             self.run_tests(**kwargs)
             self._generate_report()

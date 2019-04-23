@@ -98,6 +98,21 @@ class NewProject(object):
             cloud_config=osconfig.get_one_cloud())
         self.__logger.debug("new cloud %s", self.cloud.auth)
 
+    def get_environ(self):
+        "Get new environ"
+        environ = dict(
+            os.environ,
+            OS_USERNAME=self.user.name,
+            OS_PROJECT_NAME=self.project.name,
+            OS_PROJECT_ID=self.project.id,
+            OS_PASSWORD=self.password)
+        try:
+            del environ['OS_TENANT_NAME']
+            del environ['OS_TENANT_ID']
+        except Exception:  # pylint: disable=broad-except
+            pass
+        return environ
+
     def clean(self):
         """Remove projects/users"""
         try:

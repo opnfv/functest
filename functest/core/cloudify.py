@@ -114,6 +114,49 @@ class Cloudify(singlevm.SingleVm2):
         self.__logger.info("Cloudify Manager is up and running")
         return 0
 
+    def put_private_key(self):
+        """Put private keypair in manager"""
+        self.__logger.info("Put private keypair in manager")
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            "sudo docker cp ~/cloudify_ims.pem "
+            "cfy_manager_local:/etc/cloudify/ && "
+            "sudo docker exec cfy_manager_local "
+            "chmod 444 /etc/cloudify/cloudify_ims.pem")
+        self.__logger.debug("output:\n%s", stdout.read())
+        self.__logger.debug("error:\n%s", stderr.read())
+
+    def upload_cfy_plugins(self, yaml, wgn):
+        """Upload Cloudify plugins"""
+        (_, stdout, stderr) = self.ssh.exec_command(
+            "sudo docker exec cfy_manager_local "
+            "cfy plugins upload -y {} {} && "
+            "sudo docker exec cfy_manager_local cfy status".format(yaml, wgn))
+        self.__logger.debug("output:\n%s", stdout.read())
+        self.__logger.debug("error:\n%s", stderr.read())
+
+    def kill_existing_execution(self, dep_name):
+        """kill existing execution"""
+        try:
+            self.__logger.info('Deleting the current deployment')
+            exec_list = self.cfy_client.executions.list()
+            for execution in exec_list:
+                if execution['status'] == "started":
+                    try:
+                        self.cfy_client.executions.cancel(
+                            execution['id'], force=True)
+                    except Exception:  # pylint: disable=broad-except
+                        self.__logger.warn("Can't cancel the current exec")
+            execution = self.cfy_client.executions.start(
+                dep_name, 'uninstall', parameters=dict(ignore_failure=True))
+            wait_for_execution(self.cfy_client, execution, self.__logger)
+            self.cfy_client.deployments.delete(dep_name)
+            time.sleep(10)
+            self.cfy_client.blueprints.delete(dep_name)
+        except Exception:  # pylint: disable=broad-except
+            self.__logger.exception("Some issue during the undeployment ..")
+
 
 def wait_for_execution(client, execution, logger, timeout=3600, ):
     """Wait for a workflow execution on Cloudify Manager."""
