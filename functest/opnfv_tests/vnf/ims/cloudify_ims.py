@@ -16,7 +16,6 @@ import os
 import time
 
 import pkg_resources
-import scp
 import six
 
 from functest.core import cloudify
@@ -154,20 +153,8 @@ class CloudifyIms(cloudify.Cloudify):
 
         duration = time.time() - start_time
 
-        self.__logger.info("Put private keypair in manager")
-        scpc = scp.SCPClient(self.ssh.get_transport())
-        scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
-        (_, stdout, stderr) = self.ssh.exec_command(
-            "sudo docker exec cfy_manager_local "
-            "cfy plugins upload -y {} {} && "
-            "sudo docker cp ~/cloudify_ims.pem "
-            "cfy_manager_local:/etc/cloudify/ && "
-            "sudo docker exec cfy_manager_local "
-            "chmod 444 /etc/cloudify/cloudify_ims.pem && "
-            "sudo docker exec cfy_manager_local cfy status".format(
-                self.cop_yaml, self.cop_wgn))
-        self.__logger.info("output:\n%s", stdout.read())
-        self.__logger.info("error:\n%s", stderr.read())
+        self.put_private_key()
+        self.upload_cfy_plugins(self.cop_yaml, self.cop_wgn)
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
