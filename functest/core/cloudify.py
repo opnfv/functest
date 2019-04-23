@@ -114,6 +114,28 @@ class Cloudify(singlevm.SingleVm2):
         self.__logger.info("Cloudify Manager is up and running")
         return 0
 
+    def put_private_key(self):
+        """Put private keypair in manager"""
+        self.__logger.info("Put private keypair in manager")
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            "sudo docker cp ~/cloudify_ims.pem "
+            "cfy_manager_local:/etc/cloudify/ && "
+            "sudo docker exec cfy_manager_local "
+            "chmod 444 /etc/cloudify/cloudify_ims.pem")
+        self.__logger.debug("output:\n%s", stdout.read())
+        self.__logger.debug("error:\n%s", stderr.read())
+
+    def upload_cfy_plugins(self, yaml, wgn):
+        """Upload Cloudify plugins"""
+        (_, stdout, stderr) = self.ssh.exec_command(
+            "sudo docker exec cfy_manager_local "
+            "cfy plugins upload -y {} {} && "
+            "sudo docker exec cfy_manager_local cfy status".format(yaml, wgn))
+        self.__logger.debug("output:\n%s", stdout.read())
+        self.__logger.debug("error:\n%s", stderr.read())
+
 
 def wait_for_execution(client, execution, logger, timeout=3600, ):
     """Wait for a workflow execution on Cloudify Manager."""
