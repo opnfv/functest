@@ -16,7 +16,6 @@ import os
 import time
 
 import pkg_resources
-import scp
 import six
 
 from functest.core import cloudify
@@ -154,20 +153,8 @@ class CloudifyIms(cloudify.Cloudify):
 
         duration = time.time() - start_time
 
-        self.__logger.info("Put private keypair in manager")
-        scpc = scp.SCPClient(self.ssh.get_transport())
-        scpc.put(self.key_filename, remote_path='~/cloudify_ims.pem')
-        (_, stdout, stderr) = self.ssh.exec_command(
-            "sudo docker exec cfy_manager_local "
-            "cfy plugins upload -y {} {} && "
-            "sudo docker cp ~/cloudify_ims.pem "
-            "cfy_manager_local:/etc/cloudify/ && "
-            "sudo docker exec cfy_manager_local "
-            "chmod 444 /etc/cloudify/cloudify_ims.pem && "
-            "sudo docker exec cfy_manager_local cfy status".format(
-                self.cop_yaml, self.cop_wgn))
-        self.__logger.info("output:\n%s", stdout.read())
-        self.__logger.info("error:\n%s", stderr.read())
+        self.put_private_key()
+        self.upload_cfy_plugins(self.cop_yaml, self.cop_wgn)
 
         self.details['orchestrator'].update(status='PASS', duration=duration)
 
@@ -249,65 +236,23 @@ class CloudifyIms(cloudify.Cloudify):
     def test_vnf(self):
         """Run test on clearwater ims instance."""
         start_time = time.time()
-
         dns_ip = self.cfy_client.deployments.outputs.get(
             self.vnf['descriptor'].get('name'))['outputs']['dns_ip']
-
         if not dns_ip:
             return False
-
-        short_result = self.clearwater.run_clearwater_live_test(
-            dns_ip=dns_ip,
-            public_domain=self.vnf['inputs']["public_domain"])
+        short_result, vnf_test_rate = self.clearwater.run_clearwater_live_test(
+            dns_ip=dns_ip, public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time
         self.__logger.info(short_result)
-        self.details['test_vnf'].update(result=short_result,
-                                        duration=duration)
-        try:
-            vnf_test_rate = short_result['passed'] / (
-                short_result['total'] - short_result['skipped'])
-            # orchestrator + vnf + test_vnf
-            self.result += vnf_test_rate / 3 * 100
-        except ZeroDivisionError:
-            self.__logger.error("No test has been executed")
+        self.details['test_vnf'].update(result=short_result, duration=duration)
+        self.result += vnf_test_rate / 3 * 100
+        if vnf_test_rate == 0:
             self.details['test_vnf'].update(status='FAIL')
-            return False
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot calculate results")
-            self.details['test_vnf'].update(status='FAIL')
-            return False
         return True if vnf_test_rate > 0 else False
 
     def clean(self):
         """Clean created objects/functions."""
-        try:
-            dep_name = self.vnf['descriptor'].get('name')
-            # kill existing execution
-            self.__logger.info('Deleting the current deployment')
-            exec_list = self.cfy_client.executions.list()
-            for execution in exec_list:
-                if execution['status'] == "started":
-                    try:
-                        self.cfy_client.executions.cancel(
-                            execution['id'], force=True)
-                    except Exception:  # pylint: disable=broad-except
-                        self.__logger.warn("Can't cancel the current exec")
-
-            execution = self.cfy_client.executions.start(
-                dep_name,
-                'uninstall',
-                parameters=dict(ignore_failure=True),
-                force=True)
-
-            cloudify.wait_for_execution(
-                self.cfy_client, execution, self.__logger)
-            self.cfy_client.deployments.delete(
-                self.vnf['descriptor'].get('name'))
-            time.sleep(10)
-            self.cfy_client.blueprints.delete(
-                self.vnf['descriptor'].get('name'))
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Some issue during the undeployment ..")
+        self.kill_existing_execution(self.vnf['descriptor'].get('name'))
         if self.image_alt:
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
