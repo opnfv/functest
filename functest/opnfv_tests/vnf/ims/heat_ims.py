@@ -216,34 +216,19 @@ class HeatIms(singlevm.VmReady2):
     def test_vnf(self):
         """Run test on clearwater ims instance."""
         start_time = time.time()
-
         outputs = self.cloud.get_stack(self.stack.id).outputs
         self.__logger.debug("stack outputs: %s", outputs)
         dns_ip = re.findall(r'[0-9]+(?:\.[0-9]+){3}', str(outputs))[0]
-
         if not dns_ip:
             return False
-
-        short_result = self.clearwater.run_clearwater_live_test(
-            dns_ip=dns_ip,
-            public_domain=self.vnf['parameters']["zone"])
+        short_result, vnf_test_rate = self.clearwater.run_clearwater_live_test(
+            dns_ip=dns_ip, public_domain=self.vnf['parameters']["zone"])
         duration = time.time() - start_time
         self.__logger.info(short_result)
-        self.details['test_vnf'] = dict(result=short_result,
-                                        duration=duration)
-        try:
-            vnf_test_rate = short_result['passed'] / (
-                short_result['total'] - short_result['skipped'])
-            # orchestrator + vnf + test_vnf
-            self.result += vnf_test_rate / 3 * 100
-        except ZeroDivisionError:
-            self.__logger.error("No test has been executed")
+        self.details['test_vnf'] = dict(result=short_result, duration=duration)
+        self.result += vnf_test_rate / 3 * 100
+        if vnf_test_rate == 0:
             self.details['test_vnf'].update(status='FAIL')
-            return False
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Cannot calculate results")
-            self.details['test_vnf'].update(status='FAIL')
-            return False
         self._monit()
         return True if vnf_test_rate > 0 else False
 
