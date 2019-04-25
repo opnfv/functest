@@ -205,7 +205,12 @@ class ClearwaterTesting(object):
             vims_test_result["skipped"] = int(grp.group(3))
             vims_test_result['passed'] = (
                 int(grp.group(2)) - int(grp.group(3)) - int(grp.group(1)))
+            if vims_test_result['total'] - vims_test_result['skipped'] > 0:
+                vnf_test_rate = vims_test_result['passed'] / (
+                    vims_test_result['total'] - vims_test_result['skipped'])
+            else:
+                vnf_test_rate = 0
         except Exception:  # pylint: disable=broad-except
             self.logger.exception("Cannot parse live tests results")
-            return None
-        return vims_test_result
+            return None, 0
+        return vims_test_result, vnf_test_rate
