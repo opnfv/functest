@@ -107,7 +107,7 @@ class Vmtp(singlevm.VmReady2):
         output = subprocess.check_output(cmd)
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         with open(self.config, "w+") as conf:
-            vmtp_conf = yaml.load(output)
+            vmtp_conf = yaml.full_load(output)
             vmtp_conf["private_key_file"] = self.privkey_filename
             vmtp_conf["public_key_file"] = self.pubkey_filename
             vmtp_conf["image_name"] = str(self.image.name)

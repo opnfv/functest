@@ -37,7 +37,7 @@ class Refstack(tempest.TempestCommon):
                         yaml_data, grp.group(1), grp.group(2))
                 except Exception:  # pylint: disable=broad-except
                     self.__logger.warning("Cannot parse %s", line)
-        return yaml.load(yaml_data)
+        return yaml.full_load(yaml_data)
 
     def _extract_tempest_data(self):
         olddir = os.getcwd()
@@ -60,7 +60,7 @@ class Refstack(tempest.TempestCommon):
                     yaml_data2, grp.group(1), grp.group(2))
             except Exception:  # pylint: disable=broad-except
                 self.__logger.warning("Cannot parse %s. skipping it", line)
-        return yaml.load(yaml_data2)
+        return yaml.full_load(yaml_data2)
 
     def generate_test_list(self, **kwargs):
         self.backup_tempest_config(self.conf_file, '/etc')
