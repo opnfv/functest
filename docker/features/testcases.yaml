@@ -65,7 +65,6 @@ tiers:
             -
                 case_name: stor4nfv_os
                 project_name: stor4nfv
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
