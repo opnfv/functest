@@ -17,6 +17,7 @@ from xtesting.utils import env
 INPUTS = {
     'EXTERNAL_NETWORK': None,
     'CI_LOOP': env.INPUTS['CI_LOOP'],
+    'DEBUG': env.INPUTS['DEBUG'],
     'DEPLOY_SCENARIO': env.INPUTS['DEPLOY_SCENARIO'],
     'INSTALLER_TYPE': env.INPUTS['INSTALLER_TYPE'],
     'SDN_CONTROLLER_IP': None,
