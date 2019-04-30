@@ -4,6 +4,8 @@ compute:
 compute-feature-enabled:
     shelve: false
     vnc_console: false
+    cold_migration: false
+    block_migration_for_live_migration: true
 identity:
     user_unique_last_password_count: 2
     user_lockout_duration: 10
