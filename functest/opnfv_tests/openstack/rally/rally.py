@@ -117,6 +117,7 @@ class RallyBase(singlevm.VmReady2):
         task_args['smoke'] = self.smoke
         task_args['volume_version'] = self.VOLUME_VERSION
         task_args['volume_service_type'] = self.VOLUME_SERVICE_TYPE
+        task_args['block_migration'] = env.get("BLOCK_MIGRATION").lower()
 
         if self.ext_net:
             task_args['floating_network'] = str(self.ext_net.name)
@@ -327,6 +328,8 @@ class RallyBase(singlevm.VmReady2):
             with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
+            if env.get('BLOCK_MIGRATION').lower() == 'true':
+                func_list.append("block_migration")
             if not self._migration_supported():
                 func_list.append("no_migration")
             if not self._network_trunk_supported():
