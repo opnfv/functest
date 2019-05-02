@@ -12,6 +12,11 @@ scenario:
 functionality:
     -
         functions:
+            - block_migration
+        tests:
+            - NovaServers.boot_server_from_volume_and_live_migrate
+    -
+        functions:
             - no_migration
         tests:
             - NovaServers.boot_and_live_migrate_server
