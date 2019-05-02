@@ -202,7 +202,7 @@
   NovaServers.boot_and_live_migrate_server:
     - args:
         {{ vm_params(image_name, flavor_name) }}
-        block_migration: false
+        block_migration: {{ block_migration }}
         nics:
           - net-id: {{ netid }}
       context:
@@ -217,7 +217,7 @@
       args:
         {{ vm_params(image_name, flavor_name) }}
         size: 10
-        block_migration: false
+        block_migration: {{ block_migration }}
         boot_server_kwargs:
             nics:
               - net-id: {{ netid }}
@@ -233,7 +233,7 @@
   NovaServers.boot_server_from_volume_and_live_migrate:
     - args:
         {{ vm_params(image_name, flavor_name) }}
-        block_migration: false
+        block_migration: {{ block_migration }}
         volume_size: 1
         force_delete: false
         nics:
