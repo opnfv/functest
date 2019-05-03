@@ -2,7 +2,7 @@ FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
-ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
+ARG TEMPEST_TAG=20.0.0
 ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
