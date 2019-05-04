@@ -23,4 +23,4 @@ volume:
     max_microversion: latest
     storage_protocol: iSCSI
 volume-feature-enabled:
-    backup: false
+    backup: true
