@@ -143,7 +143,7 @@ class TempestCommon(singlevm.VmReady2):
                                 stderr=subprocess.STDOUT)
         for line in proc.stdout:
             LOGGER.info(line.rstrip())
-            new_line = line.replace(' ', '').split('|')
+            new_line = line.decode().replace(' ', '').split('|')
             if 'Tests' in new_line:
                 break
             if 'Testscount' in new_line:
@@ -199,7 +199,7 @@ class TempestCommon(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         verifier_uuid = proc.stdout.readline().rstrip()
-        return verifier_uuid
+        return verifier_uuid.decode()
 
     @staticmethod
     def get_verifier_repo_dir(verifier_id):
@@ -235,7 +235,7 @@ class TempestCommon(singlevm.VmReady2):
                 for key, value in sub_conf.items():
                     rconfig.set(section, key, value)
 
-        with open(conf_file, 'wb') as config_file:
+        with open(conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
     @staticmethod
@@ -403,12 +403,12 @@ class TempestCommon(singlevm.VmReady2):
 
         with proc.stdout:
             for line in iter(proc.stdout.readline, b''):
-                if re.search(r"\} tempest\.", line):
+                if re.search(r"\} tempest\.", line.decode()):
                     LOGGER.info(line.rstrip())
-                elif re.search(r'(?=\(UUID=(.*)\))', line):
+                elif re.search(r'(?=\(UUID=(.*)\))', line.decode()):
                     self.verification_id = re.search(
-                        r'(?=\(UUID=(.*)\))', line).group(1)
-                f_stdout.write(line)
+                        r'(?=\(UUID=(.*)\))', line.decode()).group(1)
+                f_stdout.write(line.decode())
         proc.wait()
         f_stdout.close()
 
@@ -473,7 +473,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.add_section('openstack')
         rconfig.set('openstack', 'img_name_regex', '^{}$'.format(
             self.image.name))
-        with open(rally_conf, 'wb') as config_file:
+        with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
     def update_default_role(self, rally_conf='/etc/rally/rally.conf'):
@@ -486,7 +486,7 @@ class TempestCommon(singlevm.VmReady2):
         if not rconfig.has_section('openstack'):
             rconfig.add_section('openstack')
         rconfig.set('openstack', 'swift_operator_role', role.name)
-        with open(rally_conf, 'wb') as config_file:
+        with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
     def update_rally_logs(self, rally_conf='/etc/rally/rally.conf'):
@@ -499,7 +499,7 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.set('DEFAULT', 'use_stderr', False)
         rconfig.set('DEFAULT', 'log-file', 'rally.log')
         rconfig.set('DEFAULT', 'log_dir', self.res_dir)
-        with open(rally_conf, 'wb') as config_file:
+        with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
     @staticmethod
@@ -519,7 +519,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.remove_option('DEFAULT', 'log-file')
         if rconfig.has_option('DEFAULT', 'log_dir'):
             rconfig.remove_option('DEFAULT', 'log_dir')
-        with open(rally_conf, 'wb') as config_file:
+        with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
     def update_network_section(self):
@@ -530,7 +530,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.add_section('network')
         rconfig.set('network', 'public_network_id', self.ext_net.id)
         rconfig.set('network', 'floating_network_name', self.ext_net.name)
-        with open(self.conf_file, 'wb') as config_file:
+        with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
     def update_compute_section(self):
@@ -540,7 +540,7 @@ class TempestCommon(singlevm.VmReady2):
         if not rconfig.has_section('compute'):
             rconfig.add_section('compute')
         rconfig.set('compute', 'fixed_network_name', self.network.name)
-        with open(self.conf_file, 'wb') as config_file:
+        with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
     def update_scenario_section(self):
@@ -567,7 +567,7 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.set(
             'scenario', 'img_properties',
             functest_utils.convert_dict_to_ini(extra_properties))
-        with open(self.conf_file, 'wb') as config_file:
+        with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
     def configure(self, **kwargs):  # pylint: disable=unused-argument
