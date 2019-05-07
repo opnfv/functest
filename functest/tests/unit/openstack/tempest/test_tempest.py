@@ -271,7 +271,7 @@ class OSTempestTesting(unittest.TestCase):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'tempest.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': 'test_deploy_id'}
+            attrs = {'stdout.readline.return_value': b'test_deploy_id'}
             mock_stdout.configure_mock(**attrs)
             mock_popen.return_value = mock_stdout
 
@@ -283,7 +283,7 @@ class OSTempestTesting(unittest.TestCase):
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'tempest.subprocess.Popen') as mock_popen:
             mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': 'test_deploy_id'}
+            attrs = {'stdout.readline.return_value': b'test_deploy_id'}
             mock_stdout.configure_mock(**attrs)
             mock_popen.return_value = mock_stdout
 

@@ -166,7 +166,7 @@ class RallyBase(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         deployment_uuid = proc.stdout.readline().rstrip()
-        return deployment_uuid
+        return deployment_uuid.decode()
 
     @staticmethod
     def create_rally_deployment(environ=None):
@@ -215,7 +215,7 @@ class RallyBase(singlevm.VmReady2):
                 rconfig.add_section('openstack')
             rconfig.set(
                 'openstack', 'keystone_default_role', env.get("NEW_USER_ROLE"))
-            with open(rally_conf, 'wb') as config_file:
+            with open(rally_conf, 'w') as config_file:
                 rconfig.write(config_file)
 
     @staticmethod
@@ -226,7 +226,7 @@ class RallyBase(singlevm.VmReady2):
             rconfig.read(rally_conf)
             if rconfig.has_option('openstack', 'keystone_default_role'):
                 rconfig.remove_option('openstack', 'keystone_default_role')
-            with open(rally_conf, 'wb') as config_file:
+            with open(rally_conf, 'w') as config_file:
                 rconfig.write(config_file)
 
     @staticmethod
@@ -240,7 +240,7 @@ class RallyBase(singlevm.VmReady2):
         taskid_re = re.compile('^Task +(.*): started$')
         for line in cmd_raw.splitlines(True):
             line = line.strip()
-            match = taskid_re.match(line)
+            match = taskid_re.match(line.decode())
             if match:
                 return match.group(1)
         return None
@@ -657,8 +657,8 @@ class RallyBase(singlevm.VmReady2):
                 "{}/{}.xml".format(self.results_dir, self.case_name),
                 export_type="junit-xml")
             res = testcase.TestCase.EX_OK
-        except Exception as exc:   # pylint: disable=broad-except
-            LOGGER.error('Error with run: %s', exc)
+        except Exception:   # pylint: disable=broad-except
+            LOGGER.exception('Error with run:')
             self.result = 0
             res = testcase.TestCase.EX_RUN_ERROR
         self.stop_time = time.time()
