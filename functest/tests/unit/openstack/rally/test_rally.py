@@ -101,12 +101,12 @@ class OSRallyTesting(unittest.TestCase):
         mock_os_makedirs.assert_called()
 
     def test_get_task_id_default(self):
-        cmd_raw = 'Task 1: started'
+        cmd_raw = b'Task 1: started'
         self.assertEqual(self.rally_base.get_task_id(cmd_raw),
                          '1')
 
     def test_get_task_id_missing_id(self):
-        cmd_raw = ''
+        cmd_raw = b''
         self.assertEqual(self.rally_base.get_task_id(cmd_raw),
                          None)
 

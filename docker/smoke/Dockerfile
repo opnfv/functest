@@ -7,7 +7,7 @@ ARG PATROLE_TAG=master
 ARG BARBICAN_TAG=master
 
 RUN apk --no-cache add --virtual .build-deps --update \
-        python-dev build-base linux-headers libffi-dev \
+        python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
@@ -23,7 +23,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git fetch --tags https://opendev.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin neutron-tempest-plugin \
         networking-bgpvpn networking-sfc && \
     mkdir -p /home/opnfv/functest/data/refstack && \
@@ -32,7 +32,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
     wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     deactivate && \
@@ -40,5 +40,5 @@ RUN apk --no-cache add --virtual .build-deps --update \
         /src/patrole /src/barbican-tempest-plugin \
         /src/neutron && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.6/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
