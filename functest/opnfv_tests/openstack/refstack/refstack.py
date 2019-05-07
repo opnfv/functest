@@ -55,7 +55,7 @@ class Refstack(tempest.TempestCommon):
         yaml_data2 = ""
         for line in output.splitlines():
             try:
-                grp = re.search(r'^([^\[]*)(\[.*\])\n*$', line)
+                grp = re.search(r'^([^\[]*)(\[.*\])\n*$', line.decode("utf-8"))
                 yaml_data2 = "{}\n{}: {}".format(
                     yaml_data2, grp.group(1), grp.group(2))
             except Exception:  # pylint: disable=broad-except

@@ -27,7 +27,7 @@ class Patrole(tempest.TempestCommon):
         rconfig.add_section('rbac')
         rconfig.set('rbac', 'enable_rbac', True)
         rconfig.set('rbac', 'rbac_test_role', kwargs.get('role', 'admin'))
-        with open(self.conf_file, 'wb') as config_file:
+        with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
