@@ -273,7 +273,8 @@ class JujuEpc(singlevm.VmReady2):
         for i in range(10):
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
             self.__logger.info("%s\n%s", " ".join(cmd), output)
-            ret = re.search(r'(?=workload:({})\))'.format(status), output)
+            ret = re.search(
+                r'(?=workload:({})\))'.format(status), output.decode())
             if ret:
                 self.__logger.info("%s workload is %s", name, status)
                 break
