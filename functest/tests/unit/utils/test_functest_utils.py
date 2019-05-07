@@ -15,6 +15,7 @@ import unittest
 
 import mock
 import pkg_resources
+import six
 
 from functest.utils import functest_utils
 
@@ -97,23 +98,15 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_subproc_open, \
                 mock.patch('six.moves.builtins.open',
                            mock.mock_open()) as mopen:
-
-            FunctestUtilsTesting.readline = 0
-
-            mock_obj = mock.Mock()
-            attrs = {'readline.side_effect': self.cmd_readline()}
-            mock_obj.configure_mock(**attrs)
-
+            stream = six.BytesIO()
+            stream.write(self.cmd_readline().encode())
             mock_obj2 = mock.Mock()
-            attrs = {'stdout': mock_obj, 'wait.return_value': 1}
+            attrs = {'stdout': stream, 'wait.return_value': 1}
             mock_obj2.configure_mock(**attrs)
-
             mock_subproc_open.return_value = mock_obj2
-
-            resp = functest_utils.execute_command(self.cmd, info=True,
-                                                  error_msg=self.error_msg,
-                                                  verbose=True,
-                                                  output_file=self.output_file)
+            resp = functest_utils.execute_command(
+                self.cmd, info=True, error_msg=self.error_msg, verbose=True,
+                output_file=self.output_file)
             self.assertEqual(resp, 1)
             msg_exec = ("Executing command: '%s'" % self.cmd)
             mock_logger_info.assert_called_once_with(msg_exec)
@@ -126,23 +119,15 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_subproc_open, \
                 mock.patch('six.moves.builtins.open',
                            mock.mock_open()) as mopen:
-
-            FunctestUtilsTesting.readline = 0
-
-            mock_obj = mock.Mock()
-            attrs = {'readline.side_effect': self.cmd_readline()}
-            mock_obj.configure_mock(**attrs)
-
+            stream = six.BytesIO()
+            stream.write(self.cmd_readline().encode())
             mock_obj2 = mock.Mock()
-            attrs = {'stdout': mock_obj, 'wait.return_value': 0}
+            attrs = {'stdout': stream, 'wait.return_value': 0}
             mock_obj2.configure_mock(**attrs)
-
             mock_subproc_open.return_value = mock_obj2
-
-            resp = functest_utils.execute_command(self.cmd, info=True,
-                                                  error_msg=self.error_msg,
-                                                  verbose=True,
-                                                  output_file=self.output_file)
+            resp = functest_utils.execute_command(
+                self.cmd, info=True, error_msg=self.error_msg, verbose=True,
+                output_file=self.output_file)
             self.assertEqual(resp, 0)
             msg_exec = ("Executing command: '%s'" % self.cmd)
             mock_logger_info.assert_called_once_with(msg_exec)
@@ -153,23 +138,15 @@ class FunctestUtilsTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
-
-            FunctestUtilsTesting.readline = 2
-
-            mock_obj = mock.Mock()
-            attrs = {'readline.side_effect': self.cmd_readline()}
-            mock_obj.configure_mock(**attrs)
-
+            stream = six.BytesIO()
+            stream.write(self.cmd_readline().encode())
             mock_obj2 = mock.Mock()
-            attrs = {'stdout': mock_obj, 'wait.return_value': 0}
+            attrs = {'stdout': stream, 'wait.return_value': 0}
             mock_obj2.configure_mock(**attrs)
-
             mock_subproc_open.return_value = mock_obj2
-
-            resp = functest_utils.execute_command(self.cmd, info=False,
-                                                  error_msg="",
-                                                  verbose=False,
-                                                  output_file=None)
+            resp = functest_utils.execute_command(
+                self.cmd, info=False, error_msg="", verbose=False,
+                output_file=None)
             self.assertEqual(resp, 0)
 
     @mock.patch('sys.stdout')
@@ -177,22 +154,15 @@ class FunctestUtilsTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
-
-            FunctestUtilsTesting.readline = 2
-            mock_obj = mock.Mock()
-            attrs = {'readline.side_effect': self.cmd_readline()}
-            mock_obj.configure_mock(**attrs)
-
+            stream = six.BytesIO()
+            stream.write(self.cmd_readline().encode())
             mock_obj2 = mock.Mock()
-            attrs = {'stdout': mock_obj, 'wait.return_value': 1}
+            attrs = {'stdout': stream, 'wait.return_value': 1}
             mock_obj2.configure_mock(**attrs)
-
             mock_subproc_open.return_value = mock_obj2
-
-            resp = functest_utils.execute_command(self.cmd, info=False,
-                                                  error_msg="",
-                                                  verbose=False,
-                                                  output_file=None)
+            resp = functest_utils.execute_command(
+                self.cmd, info=False, error_msg="", verbose=False,
+                output_file=None)
             self.assertEqual(resp, 1)
 
     def test_get_param_from_yaml_failed(self):
