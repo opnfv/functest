@@ -445,15 +445,15 @@ The kubernetes testcases are distributed across various Tiers:
      designed to be run with no cloud provider configured.
 
 
-.. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
-.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
+.. _`[2]`: https://docs.openstack.org/tempest/latest/
+.. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
 .. _`[8]`: https://github.com/openstack/refstack-client
-.. _`[9]`: https://github.com/openstack/defcore
+.. _`[9]`: https://github.com/openstack/interop
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: http://robotframework.org/
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
-.. _`[15]`: https://www.rebaca.com/abot-test-orchestration-tool/
+.. _`[15]`: https://www.rebaca.com/what-we-do/abot-5g-network-simulator/
 .. _`[16]`: https://github.com/kubernetes/community/blob/master/contributors/devel/e2e-tests.md
 .. _`[17]`: https://github.com/Metaswitch/clearwater-heat/blob/release-129/clearwater.yaml
