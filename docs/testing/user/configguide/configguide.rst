@@ -550,7 +550,7 @@ docker container::
 Note: In a Jumphost node based on the CentOS family OS, the **nc**
 commands might not work. You can use the **curl** command instead.
 
-  curl http://www.opnfv.org:80
+  curl https://www.opnfv.org/
 
   <HTML><HEAD><meta http-equiv="content-type"
   .

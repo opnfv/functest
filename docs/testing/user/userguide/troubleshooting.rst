@@ -321,7 +321,7 @@ official documentation. `[3]`_
 To check any possible problems with Rally, the logs are stored under
 */home/opnfv/functest/results/rally/* in the Functest Docker container.
 
-.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
+.. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
 
 Controllers
 -----------
