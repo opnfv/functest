@@ -232,8 +232,8 @@ testcase, all test cases in a specified Tier, or the special case of execution
 of **ALL** testcases. The Functest CLI is introduced in more details in next
 section.
 
-.. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
-.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
+.. _`[2]`: https://docs.openstack.org/tempest/latest/
+.. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
 .. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
 .. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
 .. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
