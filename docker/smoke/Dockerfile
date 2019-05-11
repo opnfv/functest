@@ -44,6 +44,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/neutron && \
     apk del .build-deps
-COPY defcore.txt /home/opnfv/functest/data/refstack/defcore.txt
+COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
