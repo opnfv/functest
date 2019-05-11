@@ -61,7 +61,9 @@
           tests:
             - neutron-tempest-plugin-api
             - rally_sanity
-            - refstack_defcore
+            - refstack_compute
+            - refstack_object
+            - refstack_platform
             - tempest_full
             - tempest_scenario
             - patrole

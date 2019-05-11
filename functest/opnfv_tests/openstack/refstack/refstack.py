@@ -24,12 +24,9 @@ class Refstack(tempest.TempestCommon):
 
     __logger = logging.getLogger(__name__)
 
-    defcorelist = os.path.join(
-        getattr(config.CONF, 'dir_refstack_data'), 'defcore.txt')
-
-    def _extract_refstack_data(self):
+    def _extract_refstack_data(self, refstack_list):
         yaml_data = ""
-        with open(self.defcorelist) as def_file:
+        with open(refstack_list) as def_file:
             for line in def_file:
                 try:
                     grp = re.search(r'^([^\[]*)(\[.*\])\n*$', line)
@@ -63,8 +60,11 @@ class Refstack(tempest.TempestCommon):
         return yaml.load(yaml_data2)
 
     def generate_test_list(self, **kwargs):
+        refstack_list = os.path.join(
+            getattr(config.CONF, 'dir_refstack_data'),
+            "{}.txt".format(kwargs.get('target', 'compute')))
         self.backup_tempest_config(self.conf_file, '/etc')
-        refstack_data = self._extract_refstack_data()
+        refstack_data = self._extract_refstack_data(refstack_list)
         tempest_data = self._extract_tempest_data()
         with open(self.list, 'w') as ref_file:
             for key in refstack_data.keys():
