@@ -38,17 +38,50 @@ tiers:
                             - 'gnocchi'
 
             -
-                case_name: refstack_defcore
+                case_name: refstack_compute
                 project_name: functest
                 criteria: 100
                 blocking: false
                 deny_skipping: true
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
-                    Defcore testcases.
+                    Compute testcases.
                 run:
-                    name: refstack_defcore
+                    name: refstack
                     args:
+                        target: compute
+                        option:
+                            - '--concurrency=4'
+
+            -
+                case_name: refstack_object
+                project_name: functest
+                criteria: 100
+                blocking: false
+                deny_skipping: true
+                description: >-
+                    This test case runs a sub group of tests of the OpenStack
+                    Object testcases.
+                run:
+                    name: refstack
+                    args:
+                        target: object
+                        option:
+                            - '--concurrency=4'
+
+            -
+                case_name: refstack_platform
+                project_name: functest
+                criteria: 100
+                blocking: false
+                deny_skipping: true
+                description: >-
+                    This test case runs a sub group of tests of the OpenStack
+                    Object testcases.
+                run:
+                    name: refstack
+                    args:
+                        target: platform
                         option:
                             - '--concurrency=4'
 
