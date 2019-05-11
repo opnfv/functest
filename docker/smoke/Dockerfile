@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/rocky
 ARG TEMPEST_TAG=20.0.0
 ARG REFSTACK_TARGET=2018.11
 ARG PATROLE_TAG=0.4.0
-ARG NEUTRON_TAG=0.2.0
+ARG NEUTRON_TEMPEST_TAG=0.3.0
 ARG BARBICAN_TAG=0.1.0
 
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -22,7 +22,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/patrole/ && \
     git init /src/neutron-tempest-plugin && \
     (cd /src/neutron-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/neutron-tempest-plugin.git $NEUTRON_TAG && \
+        git fetch --tags https://opendev.org/openstack/neutron-tempest-plugin.git $NEUTRON_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
     git init /src/barbican-tempest-plugin && \
