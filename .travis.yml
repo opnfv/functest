@@ -3,6 +3,11 @@ sudo: required
 services: docker
 language: generic
 dist: xenial
+env:
+  global:
+    - MAKEFLAGS="-j2"
+    - CFLAGS="-O0"
+    - LIBSODIUM_MAKE_ARGS="-j2"
 addons:
   apt:
     packages:
