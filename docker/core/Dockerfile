@@ -3,6 +3,7 @@ FROM alpine:3.9
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG PIP_TAG=18.0
+ARG LIBSODIUM_MAKE_ARGS=-j4
 
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
