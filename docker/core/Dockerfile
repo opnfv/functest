@@ -23,7 +23,7 @@ RUN apk --no-cache add --update \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/functest && \
-    pip install --no-cache-dir --src /src -cupper-constraints.opnfv.txt \
+    LIBSODIUM_MAKE_ARGS=-j4 pip install --no-cache-dir --src /src -cupper-constraints.opnfv.txt \
         -chttps://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt \
         /src/functest && \
     rm -r upper-constraints.opnfv.txt /src/functest && \
