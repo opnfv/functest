@@ -12,7 +12,6 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
-    CFLAGS="-O0" pip3 install --no-cache-dir -cupper-constraints.txt -cupper-constraints.opnfv.txt lxml && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
         git fetch --tags https://opendev.org/x/vmtp.git $VMTP_TAG && \
