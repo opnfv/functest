@@ -28,8 +28,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
         /src/patrole /src/barbican-tempest-plugin neutron-tempest-plugin \
         networking-bgpvpn networking-sfc && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    wget "https://refstack.openstack.org/api/v1/guidelines/${REFSTACK_TARGET}/tests?target=compute&type=required&alias=true&flag=false" \
-        -O /home/opnfv/functest/data/refstack/defcore.txt && \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
     wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
@@ -40,5 +38,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin && \
     apk del .build-deps
+COPY defcore.txt /home/opnfv/functest/data/refstack/defcore.txt
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
