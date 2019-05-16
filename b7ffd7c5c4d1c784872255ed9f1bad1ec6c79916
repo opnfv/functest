@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81cdac0_864a251e",
+        "filename": "docker/smoke/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2019-05-16T12:32:34Z",
+      "side": 1,
+      "message": "Platform",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "b7ffd7c5c4d1c784872255ed9f1bad1ec6c79916",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52983846_2a0cb527",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 2175
+      },
+      "writtenOn": "2019-05-16T12:32:34Z",
+      "side": 1,
+      "message": "Platform",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 26
+      },
+      "revId": "b7ffd7c5c4d1c784872255ed9f1bad1ec6c79916",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
