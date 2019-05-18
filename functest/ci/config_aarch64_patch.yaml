@@ -1,11 +1,5 @@
 ---
 os:
-    general:
-        openstack:
-            image_file_name: cirros-0.4.0-aarch64-disk.img
-            image_url:
-                /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-
     vmready1:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
@@ -35,7 +29,15 @@ os:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
-    refstack_defcore:
+    refstack_compute:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+
+    refstack_object:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+
+    refstack_platform:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
