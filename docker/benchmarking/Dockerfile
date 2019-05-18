@@ -2,7 +2,7 @@ FROM opnfv/functest-tempest:iruya
 
 ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
-ARG TEMPEST_TAG=20.0.0
+ARG TEMPEST_TAG=23325c0ee8868324b1d4cd79ccbcb5026c7ed00a
 ARG VMTP_TAG=2.5.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
