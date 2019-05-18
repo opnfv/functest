@@ -65,7 +65,8 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
+                        mode:
+                            '(?!.*\[.*\bslow\b.*\])(?!.*ServersTestBootFromVolume.*)(?!.*ServerActionsTestJSON\.test_resize_volume_backed_server_confirm.*)(^tempest\.api)'
                         option:
                             - '--concurrency=4'
 

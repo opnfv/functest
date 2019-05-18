@@ -159,6 +159,7 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
+                        mode:
+                            '(?=.*\[.*\bsmoke\b.*\])(?!.*ServersTestBootFromVolume.*)(^tempest\.api)'
                         option:
                             - '--concurrency=4'
