@@ -2,7 +2,7 @@ FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
-ARG TEMPEST_TAG=3588bb3f5ef546a0ef4d4ad621fd1be381b5fdaf
+ARG TEMPEST_TAG=23325c0ee8868324b1d4cd79ccbcb5026c7ed00a
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass && \
