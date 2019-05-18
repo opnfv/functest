@@ -1,11 +1,5 @@
 ---
 os:
-    general:
-        openstack:
-            image_file_name: cirros-0.4.0-aarch64-disk.img
-            image_url:
-                /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-
     vmready1:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
