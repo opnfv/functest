@@ -1,8 +1,5 @@
 ---
 fdio:
-    general:
-        openstack:
-            flavor_ram: 1024
     vmready1:
         flavor_ram: 1024
     vmready2:
@@ -21,7 +18,11 @@ fdio:
         flavor_ram: 1024
     neutron-tempest-plugin-api:
         flavor_ram: 1024
-    refstack_defcore:
+    refstack_compute:
+        flavor_ram: 1024
+    refstack_object:
+        flavor_ram: 1024
+    refstack_platform:
         flavor_ram: 1024
     patrole:
         flavor_ram: 1024
@@ -47,9 +48,6 @@ fdio:
         flavor_ram: 1024
 
 ovs:
-    general:
-        openstack:
-            flavor_ram: 1024
     vmready1:
         flavor_ram: 1024
     vmready2:
@@ -68,7 +66,11 @@ ovs:
         flavor_ram: 1024
     neutron-tempest-plugin-api:
         flavor_ram: 1024
-    refstack_defcore:
+    refstack_compute:
+        flavor_ram: 1024
+    refstack_object:
+        flavor_ram: 1024
+    refstack_platform:
         flavor_ram: 1024
     patrole:
         flavor_ram: 1024
@@ -125,7 +127,17 @@ vio:
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
-    refstack_defcore:
+    refstack_compute:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    refstack_object:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    refstack_platform:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
@@ -179,10 +191,12 @@ vio:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
     cloudify:
-        image: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.vmdk
+        image:
+            /home/opnfv/functest/images/ubuntu-16.04-server-cloudimg-amd64-disk1.vmdk
         image_format: vmdk
     cloudify_ims:
-        image: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.vmdk
+        image:
+            /home/opnfv/functest/images/ubuntu-16.04-server-cloudimg-amd64-disk1.vmdk
         image_format: vmdk
         image_alt:
             /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
@@ -192,7 +206,8 @@ vio:
             /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
         image_format: vmdk
     vyos_vrouter:
-        image: /home/opnfv/functest/images/cloudify-manager-premium-4.0.1.vmdk
+        image:
+            /home/opnfv/functest/images/ubuntu-16.04-server-cloudimg-amd64-disk1.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/vyos-1.1.7.vmdk
         image_alt_format: vmdk
