@@ -104,7 +104,7 @@ class Vmtp(singlevm.VmReady2):
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
         cmd = ['vmtp', '-sc']
-        output = subprocess.check_output(cmd)
+        output = subprocess.check_output(cmd).decode()
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         with open(self.config, "w+") as conf:
             vmtp_conf = yaml.load(output)
@@ -146,11 +146,12 @@ class Vmtp(singlevm.VmReady2):
         cmd = ['vmtp', '-d', '--json', '{}/vmtp.json'.format(self.res_dir),
                '-c', self.config]
         output = subprocess.check_output(
-            cmd, stderr=subprocess.STDOUT, env=new_env)
+            cmd, stderr=subprocess.STDOUT, env=new_env).decode()
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         cmd = ['vmtp_genchart', '-c', '{}/vmtp.html'.format(self.res_dir),
                '{}/vmtp.json'.format(self.res_dir)]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+        output = subprocess.check_output(
+            cmd, stderr=subprocess.STDOUT).decode()
         self.__logger.info("%s\n%s", " ".join(cmd), output)
         with open('{}/vmtp.json'.format(self.res_dir), 'r') as res_file:
             self.details = json.load(res_file)
