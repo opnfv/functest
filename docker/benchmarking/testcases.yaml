@@ -38,7 +38,6 @@ tiers:
             -
                 case_name: vmtp
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
