@@ -15,7 +15,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     CFLAGS="-O0" pip3 install --no-cache-dir -cupper-constraints.txt -cupper-constraints.opnfv.txt lxml && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
-        git fetch --tags https://opendev.org/x/vmtp.git $VMTP_TAG && \
+        git fetch --tags https://review.opendev.org/x/vmtp.git $VMTP_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
