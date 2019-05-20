@@ -20,7 +20,8 @@ class ClearwaterTesting(unittest.TestCase):
     def setUp(self):
         with mock.patch('functest.opnfv_tests.vnf.ims.cloudify_ims.'
                         'os.makedirs'):
-            self.ims_vnf = clearwater.ClearwaterTesting("foo", "0.0.0.0")
+            self.ims_vnf = clearwater.ClearwaterTesting(
+                "foo", "0.0.0.0", "0.0.0.0")
 
         self.mock_post = mock.Mock()
         attrs = {'status_code': 201,

@@ -20,7 +20,7 @@ ENV PATH $GOBIN:$PATH
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
 COPY cloudify-rest-client-py3.patch /tmp/cloudify-rest-client-py3.patch
 RUN apk --no-cache add --update \
-        ruby ruby-bundler ruby-irb ruby-rdoc dnsmasq \
+        ruby ruby-bundler ruby-irb ruby-rdoc \
         procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \

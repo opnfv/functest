@@ -194,12 +194,16 @@ class HeatIms(singlevm.VmReady2):
                     server.name, regex='Cloud-init .* finished at ', loop=1):
                 return False
             if 'ellis' in server.name:
-                self.__logger.debug("server: %s", server)
+                self.__logger.debug("ellis: %s", server)
                 ellis_ip = server.public_v4
+            elif 'bono' in server.name:
+                self.__logger.debug("bono: %s", server)
+                bono_ip = server.public_v4
 
         assert ellis_ip
-        self.clearwater = clearwater.ClearwaterTesting(self.case_name,
-                                                       ellis_ip)
+        assert bono_ip
+        self.clearwater = clearwater.ClearwaterTesting(
+            self.case_name, bono_ip, ellis_ip)
         # This call can take time and many retry because Heat is
         # an infrastructure orchestrator so when Heat say "stack created"
         # it means that all OpenStack ressources are created but not that
@@ -222,7 +226,7 @@ class HeatIms(singlevm.VmReady2):
         if not dns_ip:
             return False
         short_result, vnf_test_rate = self.clearwater.run_clearwater_live_test(
-            dns_ip=dns_ip, public_domain=self.vnf['parameters']["zone"])
+            public_domain=self.vnf['parameters']["zone"])
         duration = time.time() - start_time
         self.__logger.info(short_result)
         self.details['test_vnf'] = dict(result=short_result, duration=duration)
