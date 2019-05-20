@@ -12,9 +12,6 @@
 import logging
 import os
 import re
-import shlex
-import shutil
-import subprocess
 import time
 
 import pkg_resources
@@ -30,7 +27,7 @@ __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
 class ClearwaterTesting(object):
     """vIMS clearwater base usable by several orchestrators"""
 
-    def __init__(self, case_name, ellis_ip):
+    def __init__(self, case_name, bono_ip, ellis_ip):
         self.logger = logging.getLogger(__name__)
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
@@ -45,6 +42,7 @@ class ClearwaterTesting(object):
             os.makedirs(self.result_dir)
 
         self.ellis_ip = ellis_ip
+        self.bono_ip = bono_ip
 
     def availability_check(self, signup_code='secret', two_numbers=False):
         """Create one or two numbers"""
@@ -143,9 +141,7 @@ class ClearwaterTesting(object):
                 time.sleep(25)
         raise Exception('Failed to create a number')
 
-    def run_clearwater_live_test(self, dns_ip, public_domain,
-                                 bono_ip=None, ellis_ip=None,
-                                 signup_code='secret'):
+    def run_clearwater_live_test(self, public_domain, signup_code='secret'):
         """Run the Clearwater live tests
 
         It first runs dnsmasq to reach clearwater services by FQDN and then the
@@ -157,23 +153,14 @@ class ClearwaterTesting(object):
         """
         # pylint: disable=too-many-locals,too-many-arguments
         self.logger.info('Run Clearwater live test')
-        dns_file = '/etc/resolv.conf'
-        dns_file_bak = '/etc/resolv.conf.bak'
-        self.logger.debug('Backup %s -> %s', dns_file, dns_file_bak)
-        shutil.copy(dns_file, dns_file_bak)
-        cmd = ("dnsmasq -d -u root --server=/clearwater.opnfv/{0} "
-               "-r /etc/resolv.conf.bak".format(dns_ip))
-        dnsmasq_process = subprocess.Popen(shlex.split(cmd))
-        script = ('echo -e "nameserver {0}" > {1};'
-                  'cd {2};'
-                  'rake test[{3}] SIGNUP_CODE={4}'
-                  .format('127.0.0.1',
-                          dns_file,
-                          self.test_dir,
+        script = ('cd {0};'
+                  'rake test[{1}] SIGNUP_CODE={2}'
+                  .format(self.test_dir,
                           public_domain,
                           signup_code))
-        if bono_ip and ellis_ip:
-            subscript = ' PROXY={0} ELLIS={1}'.format(bono_ip, ellis_ip)
+        if self.bono_ip and self.ellis_ip:
+            subscript = ' PROXY={0} ELLIS={1}'.format(
+                self.bono_ip, self.ellis_ip)
             script = '{0}{1}'.format(script, subscript)
         script = ('{0}{1}'.format(script, ' --trace'))
         cmd = "/bin/bash -c '{0}'".format(script)
@@ -182,11 +169,6 @@ class ClearwaterTesting(object):
         ft_utils.execute_command(cmd,
                                  error_msg='Clearwater live test failed',
                                  output_file=output_file)
-        dnsmasq_process.kill()
-        with open(dns_file_bak, 'r') as bak_file:
-            result = bak_file.read()
-            with open(dns_file, 'w') as dfile:
-                dfile.write(result)
 
         with open(output_file, 'r') as ofile:
             result = ofile.read()
