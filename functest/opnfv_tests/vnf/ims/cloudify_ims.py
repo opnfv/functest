@@ -224,8 +224,10 @@ class CloudifyIms(cloudify.Cloudify):
 
         ellis_ip = self.cfy_client.deployments.outputs.get(
             self.vnf['descriptor'].get('name'))['outputs']['ellis_ip']
-        self.clearwater = clearwater.ClearwaterTesting(self.case_name,
-                                                       ellis_ip)
+        bono_ip = self.cfy_client.deployments.outputs.get(
+            self.vnf['descriptor'].get('name'))['outputs']['bono_ip']
+        self.clearwater = clearwater.ClearwaterTesting(
+            self.case_name, bono_ip, ellis_ip)
         self.clearwater.availability_check()
 
         self.details['vnf'].update(status='PASS',
@@ -241,7 +243,7 @@ class CloudifyIms(cloudify.Cloudify):
         if not dns_ip:
             return False
         short_result, vnf_test_rate = self.clearwater.run_clearwater_live_test(
-            dns_ip=dns_ip, public_domain=self.vnf['inputs']["public_domain"])
+            public_domain=self.vnf['inputs']["public_domain"])
         duration = time.time() - start_time
         self.__logger.info(short_result)
         self.details['test_vnf'].update(result=short_result, duration=duration)
