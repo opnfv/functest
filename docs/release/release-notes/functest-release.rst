@@ -130,7 +130,7 @@ Key benefits
 Code quality
 ------------
 
- * pylint: 9.94/10
+ * pylint: 10.00/10
  * code coverage: 71%
 
 Useful links
