@@ -142,7 +142,7 @@ class TempestCommon(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         for line in proc.stdout:
-            LOGGER.info(line.rstrip())
+            LOGGER.info(line.decode().rstrip())
             new_line = line.decode().replace(' ', '').split('|')
             if 'Tests' in new_line:
                 break
@@ -175,7 +175,7 @@ class TempestCommon(singlevm.VmReady2):
                '--force']
         try:
             output = subprocess.check_output(cmd)
-            LOGGER.info("%s\n%s", " ".join(cmd), output)
+            LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
         except subprocess.CalledProcessError:
             pass
 
@@ -184,7 +184,7 @@ class TempestCommon(singlevm.VmReady2):
                '--name', str(getattr(config.CONF, 'tempest_verifier_name')),
                '--type', 'tempest', '--system-wide']
         output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output)
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
         return TempestCommon.get_verifier_id()
 
     @staticmethod
@@ -320,7 +320,7 @@ class TempestCommon(singlevm.VmReady2):
         cmd = ['rally', 'verify', 'configure-verifier', '--reconfigure',
                '--id', str(getattr(config.CONF, 'tempest_verifier_name'))]
         output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output)
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
 
         LOGGER.debug("Looking for tempest.conf file...")
         tempest_conf_file = os.path.join(deployment_dir, "tempest.conf")
@@ -347,7 +347,7 @@ class TempestCommon(singlevm.VmReady2):
             cmd = "(cd {0}; stestr list '{1}' >{2} 2>/dev/null)".format(
                 self.verifier_repo_dir, testr_mode, self.list)
             output = subprocess.check_output(cmd, shell=True)
-            LOGGER.info("%s\n%s", cmd, output)
+            LOGGER.info("%s\n%s", cmd, output.decode())
         os.remove('/etc/tempest.conf')
 
     def apply_tempest_blacklist(self):

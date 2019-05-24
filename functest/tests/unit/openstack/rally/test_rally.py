@@ -78,10 +78,13 @@ class OSRallyTesting(unittest.TestCase):
         calls = [
             mock.call(['rally', 'deployment', 'destroy', '--deployment',
                        str(getattr(config.CONF, 'rally_deployment_name'))]),
+            mock.call().decode(),
             mock.call(['rally', 'deployment', 'create', '--fromenv', '--name',
                        str(getattr(config.CONF, 'rally_deployment_name'))],
                       env=None),
-            mock.call(['rally', 'deployment', 'check'])]
+            mock.call().decode(),
+            mock.call(['rally', 'deployment', 'check']),
+            mock.call().decode()]
         mock_exec.assert_has_calls(calls)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
@@ -414,7 +417,7 @@ class OSRallyTesting(unittest.TestCase):
                "--to", file_name]
         args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
 
-    @mock.patch('subprocess.check_output', return_value=None)
+    @mock.patch('subprocess.check_output', return_value=b'')
     def test_export_task(self, *args):
         file_name = "{}/{}.html".format(
             self.rally_base.results_dir, self.rally_base.case_name)
@@ -435,7 +438,7 @@ class OSRallyTesting(unittest.TestCase):
                "--to", file_name]
         args[0].assert_called_with(cmd, stderr=subprocess.STDOUT)
 
-    @mock.patch('subprocess.check_output', return_value=None)
+    @mock.patch('subprocess.check_output', return_value=b'')
     def test_verify_report(self, *args):
         file_name = "{}/{}.html".format(
             self.rally_base.results_dir, self.rally_base.case_name)
