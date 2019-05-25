@@ -113,8 +113,8 @@ class Shaker(singlevm.SingleVm2):
                 self.shaker_timeout, self.image.name, self.flavor.name,
                 self.fip.floating_ip_address, self.ext_net.id,
                 env.get('NAMESERVER')))
-        self.__logger.info("output:\n%s", stdout.read().decode())
-        self.__logger.info("error:\n%s", stderr.read().decode())
+        self.__logger.info("output:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.info("error:\n%s", stderr.read().decode("utf-8"))
         if not os.path.exists(self.res_dir):
             os.makedirs(self.res_dir)
         try:
