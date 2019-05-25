@@ -78,13 +78,13 @@ class OSRallyTesting(unittest.TestCase):
         calls = [
             mock.call(['rally', 'deployment', 'destroy', '--deployment',
                        str(getattr(config.CONF, 'rally_deployment_name'))]),
-            mock.call().decode(),
+            mock.call().decode("utf-8"),
             mock.call(['rally', 'deployment', 'create', '--fromenv', '--name',
                        str(getattr(config.CONF, 'rally_deployment_name'))],
                       env=None),
-            mock.call().decode(),
+            mock.call().decode("utf-8"),
             mock.call(['rally', 'deployment', 'check']),
-            mock.call().decode()]
+            mock.call().decode("utf-8")]
         mock_exec.assert_has_calls(calls)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')

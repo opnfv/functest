@@ -99,7 +99,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 mock.patch('six.moves.builtins.open',
                            mock.mock_open()) as mopen:
             stream = six.BytesIO()
-            stream.write(self.cmd_readline().encode())
+            stream.write(self.cmd_readline().encode("utf-8"))
             mock_obj2 = mock.Mock()
             attrs = {'stdout': stream, 'wait.return_value': 1}
             mock_obj2.configure_mock(**attrs)
@@ -120,7 +120,7 @@ class FunctestUtilsTesting(unittest.TestCase):
                 mock.patch('six.moves.builtins.open',
                            mock.mock_open()) as mopen:
             stream = six.BytesIO()
-            stream.write(self.cmd_readline().encode())
+            stream.write(self.cmd_readline().encode("utf-8"))
             mock_obj2 = mock.Mock()
             attrs = {'stdout': stream, 'wait.return_value': 0}
             mock_obj2.configure_mock(**attrs)
@@ -139,7 +139,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
             stream = six.BytesIO()
-            stream.write(self.cmd_readline().encode())
+            stream.write(self.cmd_readline().encode("utf-8"))
             mock_obj2 = mock.Mock()
             attrs = {'stdout': stream, 'wait.return_value': 0}
             mock_obj2.configure_mock(**attrs)
@@ -155,7 +155,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
             stream = six.BytesIO()
-            stream.write(self.cmd_readline().encode())
+            stream.write(self.cmd_readline().encode("utf-8"))
             mock_obj2 = mock.Mock()
             attrs = {'stdout': stream, 'wait.return_value': 1}
             mock_obj2.configure_mock(**attrs)
