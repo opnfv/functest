@@ -110,7 +110,7 @@ class SshClient(object):  # pylint: disable=too-many-instance-attributes
                                       cmd)
                     break
 
-                res_buff += res.decode()
+                res_buff += res.decode("utf-8")
 
             self.logger.debug("Response : '%s'", res_buff)
             return res_buff

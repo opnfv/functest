@@ -142,8 +142,8 @@ class TempestCommon(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         for line in proc.stdout:
-            LOGGER.info(line.decode().rstrip())
-            new_line = line.decode().replace(' ', '').split('|')
+            LOGGER.info(line.decode("utf-8").rstrip())
+            new_line = line.decode("utf-8").replace(' ', '').split('|')
             if 'Tests' in new_line:
                 break
             if 'Testscount' in new_line:
@@ -175,7 +175,7 @@ class TempestCommon(singlevm.VmReady2):
                '--force']
         try:
             output = subprocess.check_output(cmd)
-            LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+            LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         except subprocess.CalledProcessError:
             pass
 
@@ -184,7 +184,7 @@ class TempestCommon(singlevm.VmReady2):
                '--name', str(getattr(config.CONF, 'tempest_verifier_name')),
                '--type', 'tempest', '--system-wide']
         output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return TempestCommon.get_verifier_id()
 
     @staticmethod
@@ -199,7 +199,7 @@ class TempestCommon(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         verifier_uuid = proc.stdout.readline().rstrip()
-        return verifier_uuid.decode()
+        return verifier_uuid.decode("utf-8")
 
     @staticmethod
     def get_verifier_repo_dir(verifier_id):
@@ -320,7 +320,7 @@ class TempestCommon(singlevm.VmReady2):
         cmd = ['rally', 'verify', 'configure-verifier', '--reconfigure',
                '--id', str(getattr(config.CONF, 'tempest_verifier_name'))]
         output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         LOGGER.debug("Looking for tempest.conf file...")
         tempest_conf_file = os.path.join(deployment_dir, "tempest.conf")
@@ -347,7 +347,7 @@ class TempestCommon(singlevm.VmReady2):
             cmd = "(cd {0}; stestr list '{1}' >{2} 2>/dev/null)".format(
                 self.verifier_repo_dir, testr_mode, self.list)
             output = subprocess.check_output(cmd, shell=True)
-            LOGGER.info("%s\n%s", cmd, output.decode())
+            LOGGER.info("%s\n%s", cmd, output.decode("utf-8"))
         os.remove('/etc/tempest.conf')
 
     def apply_tempest_blacklist(self):
@@ -403,12 +403,12 @@ class TempestCommon(singlevm.VmReady2):
 
         with proc.stdout:
             for line in iter(proc.stdout.readline, b''):
-                if re.search(r"\} tempest\.", line.decode()):
+                if re.search(r"\} tempest\.", line.decode("utf-8")):
                     LOGGER.info(line.rstrip())
-                elif re.search(r'(?=\(UUID=(.*)\))', line.decode()):
+                elif re.search(r'(?=\(UUID=(.*)\))', line.decode("utf-8")):
                     self.verification_id = re.search(
-                        r'(?=\(UUID=(.*)\))', line.decode()).group(1)
-                f_stdout.write(line.decode())
+                        r'(?=\(UUID=(.*)\))', line.decode("utf-8")).group(1)
+                f_stdout.write(line.decode("utf-8"))
         proc.wait()
         f_stdout.close()
 

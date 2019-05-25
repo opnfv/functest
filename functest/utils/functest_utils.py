@@ -43,9 +43,9 @@ def execute_command(cmd, info=False, error_msg="",
         ofd = open(output_file, "w")
     for line in iter(popen.stdout.readline, b''):
         if output_file:
-            ofd.write(line.decode())
+            ofd.write(line.decode("utf-8"))
         else:
-            line = line.decode().replace('\n', '')
+            line = line.decode("utf-8").replace('\n', '')
             print(line)
             sys.stdout.flush()
     if output_file:
