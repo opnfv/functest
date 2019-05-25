@@ -171,7 +171,7 @@ class JujuEpc(singlevm.VmReady2):
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
     def _register_credentials(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
@@ -189,7 +189,7 @@ class JujuEpc(singlevm.VmReady2):
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
                '--replace']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
     def prepare(self):
         """Prepare testcase (Additional pre-configuration steps)."""
@@ -214,7 +214,7 @@ class JujuEpc(singlevm.VmReady2):
                    'RegionOne'),
                '-u', self.public_auth_url]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return image
 
     def publish_image_alt(self, name=None):
@@ -225,7 +225,7 @@ class JujuEpc(singlevm.VmReady2):
                    'RegionOne'),
                '-u', self.public_auth_url]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return image_alt
 
     def deploy_orchestrator(self):  # pylint: disable=too-many-locals
@@ -255,11 +255,11 @@ class JujuEpc(singlevm.VmReady2):
                    '--config', 'use-default-secgroup=true',
                    '--debug']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception with Juju Bootstrap: %s\n%s",
-                cpe.cmd, cpe.output.decode())
+                cpe.cmd, cpe.output.decode("utf-8"))
             return False
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Some issue with Juju Bootstrap ...")
@@ -272,9 +272,9 @@ class JujuEpc(singlevm.VmReady2):
         cmd = ['juju', 'status', '--format', 'short', name]
         for i in range(10):
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
             ret = re.search(
-                r'(?=workload:({})\))'.format(status), output.decode())
+                r'(?=workload:({})\))'.format(status), output.decode("utf-8"))
             if ret:
                 self.__logger.info("%s workload is %s", name, status)
                 break
@@ -293,17 +293,17 @@ class JujuEpc(singlevm.VmReady2):
         self.__logger.info("Deploying Abot-epc bundle file ...")
         cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         self.__logger.info("Waiting for instances .....")
         try:
             cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
             self.__logger.info("Deployed Abot-epc on Openstack")
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception with Juju VNF Deployment: %s\n%s",
-                cpe.cmd, cpe.output.decode())
+                cpe.cmd, cpe.output.decode("utf-8"))
             return False
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Some issue with the VNF Deployment ..")
@@ -312,7 +312,7 @@ class JujuEpc(singlevm.VmReady2):
         self.__logger.info("Checking status of ABot and EPC units ...")
         cmd = ['juju', 'status']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.debug("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.debug("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         for app in ['abot-epc-basic', 'oai-epc', 'oai-hss']:
             if not self.check_app(app):
                 return False
@@ -322,7 +322,7 @@ class JujuEpc(singlevm.VmReady2):
                'juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         self.__logger.info("Copying the feature files within Abot_node ")
         cmd = ['timeout', '-t', JujuEpc.juju_timeout,
@@ -330,7 +330,7 @@ class JujuEpc(singlevm.VmReady2):
                'sudo', 'cp', '-vfR', '~/featureFiles/*',
                '/etc/rebaca-test-suite/featureFiles']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return True
 
     def test_vnf(self):
@@ -340,11 +340,11 @@ class JujuEpc(singlevm.VmReady2):
         cmd = ['juju', 'run-action', 'abot-epc-basic/0', 'run',
                'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
@@ -354,7 +354,7 @@ class JujuEpc(singlevm.VmReady2):
                '/var/lib/abot-epc-basic/artifacts/TestResults.json',
                '{}/.'.format(self.res_dir)]
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         self.__logger.info("Parsing the Test results...")
         res = (process_abot_test_result('{}/TestResults.json'.format(
             self.res_dir)))
@@ -393,17 +393,18 @@ class JujuEpc(singlevm.VmReady2):
         try:
             cmd = ['juju', 'debug-log', '--replay', '--no-tail']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.debug("%s\n%s", " ".join(cmd), output.decode())
+            self.__logger.debug(
+                "%s\n%s", " ".join(cmd), output.decode("utf-8"))
             self.__logger.info("Destroying Orchestrator...")
             cmd = ['timeout', '-t', JujuEpc.juju_timeout,
                    'juju', 'destroy-controller', '-y', 'abot-controller',
                    '--destroy-all-models']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode())
+            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception with Juju Cleanup: %s\n%s",
-                cpe.cmd, cpe.output.decode())
+                cpe.cmd, cpe.output.decode("utf-8"))
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("General issue during the undeployment ..")
         for fip in self.cloud.list_floating_ips():
