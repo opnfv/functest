@@ -20,3 +20,4 @@ git+https://git.openstack.org/openstack/networking-bgpvpn@10.0.0#egg=networking_
 git+https://git.openstack.org/openstack/networking-sfc@8.0.0#egg=networking_sfc
 neutron===14.0.1
 os-faults===0.2.1
+bandit===1.1.0
