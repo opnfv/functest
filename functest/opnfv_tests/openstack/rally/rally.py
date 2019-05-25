@@ -166,7 +166,7 @@ class RallyBase(singlevm.VmReady2):
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         deployment_uuid = proc.stdout.readline().rstrip()
-        return deployment_uuid.decode()
+        return deployment_uuid.decode("utf-8")
 
     @staticmethod
     def create_rally_deployment(environ=None):
@@ -191,18 +191,18 @@ class RallyBase(singlevm.VmReady2):
                    '--deployment',
                    str(getattr(config.CONF, 'rally_deployment_name'))]
             output = subprocess.check_output(cmd)
-            LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+            LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         except subprocess.CalledProcessError:
             pass
 
         cmd = ['rally', 'deployment', 'create', '--fromenv',
                '--name', str(getattr(config.CONF, 'rally_deployment_name'))]
         output = subprocess.check_output(cmd, env=environ)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         cmd = ['rally', 'deployment', 'check']
         output = subprocess.check_output(cmd)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return RallyBase.get_verifier_deployment_id()
 
     @staticmethod
@@ -240,7 +240,7 @@ class RallyBase(singlevm.VmReady2):
         taskid_re = re.compile('^Task +(.*): started$')
         for line in cmd_raw.splitlines(True):
             line = line.strip()
-            match = taskid_re.match(line.decode())
+            match = taskid_re.match(line.decode("utf-8"))
             if match:
                 return match.group(1)
         return None
@@ -399,7 +399,7 @@ class RallyBase(singlevm.VmReady2):
         cmd = (["rally", "task", "detailed", "--uuid", task_id])
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         # save report as JSON
         report_json_name = '{}.json'.format(test_name)
@@ -408,7 +408,7 @@ class RallyBase(singlevm.VmReady2):
                 "--out", report_json_dir])
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         json_results = open(report_json_dir).read()
         self._append_summary(json_results, test_name)
@@ -608,7 +608,7 @@ class RallyBase(singlevm.VmReady2):
                "--to", file_name]
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
     @staticmethod
     def verify_report(file_name, uuid, export_type="html"):
@@ -624,7 +624,7 @@ class RallyBase(singlevm.VmReady2):
                "--uuid", uuid, "--to", file_name]
         LOGGER.debug('running command: %s', cmd)
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        LOGGER.info("%s\n%s", " ".join(cmd), output.decode())
+        LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
