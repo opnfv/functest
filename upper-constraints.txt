@@ -16,6 +16,4 @@ robotframework-requests===0.5.0
 robotframework-sshlibrary===3.3.0
 ansible===2.3.2.0
 xtesting===0.62.0
-git+https://git.openstack.org/openstack/networking-bgpvpn#egg=networking_bgpvpn
-git+https://git.openstack.org/openstack/networking-sfc#egg=networking_sfc
 bandit===1.1.0

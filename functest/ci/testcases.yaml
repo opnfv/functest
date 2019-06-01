@@ -336,7 +336,7 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: '^networking_bgpvpn_tempest.tests.api\.'
+                        mode: '^neutron_tempest_plugin.bgpvpn.api\.'
                         neutron_extensions:
                             - bgpvpn
                         option:
@@ -355,7 +355,7 @@ tiers:
                     name: tempest_common
                     args:
                         mode:
-                            '^(?:networking_sfc\.tests\.tempest_plugin.tests.api).*$'
+                            '^(?:neutron_tempest_plugin\.sfc\.tests\.api).*$'
                         neutron_extensions:
                             - sfc
                         option:
