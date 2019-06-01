@@ -45,7 +45,7 @@ class Refstack(tempest.TempestCommon):
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
                 "Exception when listing tempest tests: %s\n%s",
-                cpe.cmd, cpe.output)
+                cpe.cmd, cpe.output.decode("utf-8"))
             raise
         finally:
             os.chdir(olddir)
