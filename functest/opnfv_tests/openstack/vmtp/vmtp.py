@@ -180,7 +180,8 @@ class Vmtp(singlevm.VmReady2):
             status = testcase.TestCase.EX_OK
         except subprocess.CalledProcessError as cpe:
             self.__logger.error(
-                "Exception when calling %s\n%s", cpe.cmd, cpe.output)
+                "Exception when calling %s\n%s", cpe.cmd,
+                cpe.output.decode("utf-8"))
             self.result = 0
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot run vmtp")
