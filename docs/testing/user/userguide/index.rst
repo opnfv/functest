@@ -54,21 +54,21 @@ References
 
 IRC support chan: #opnfv-functest
 
-.. _`[2]`: http://docs.openstack.org/developer/tempest/overview.html
-.. _`[3]`: https://rally.readthedocs.org/en/latest/index.html
-.. _`[4]`: http://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
+.. _`[2]`: https://docs.openstack.org/tempest/latest/
+.. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
+.. _`[4]`: https://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
 .. _`[6]`: https://en.wikipedia.org/wiki/Security_Content_Automation_Protocol
 .. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[8]`: https://github.com/openstack/refstack-client
 .. _`[9]`: https://github.com/openstack/defcore
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
-.. _`[11]`: http://robotframework.org/
+.. _`[11]`: https://robotframework.org/
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
 .. _`[16]`: http://testresults.opnfv.org/test/
-.. _`OPNFV main site`: http://www.opnfv.org
+.. _`OPNFV main site`: https://www.opnfv.org/
 .. _`Functest page`: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
 .. _`OpenRC`: http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html
 .. _`Rally installation procedure`: https://rally.readthedocs.org/en/latest/tutorial/step_0_installation.html
