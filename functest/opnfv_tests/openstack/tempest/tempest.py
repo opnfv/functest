@@ -489,19 +489,6 @@ class TempestCommon(singlevm.VmReady2):
         with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
-    def update_rally_logs(self, rally_conf='/etc/rally/rally.conf'):
-        """Print rally logs in res dir"""
-        if not os.path.exists(self.res_dir):
-            os.makedirs(self.res_dir)
-        rconfig = configparser.RawConfigParser()
-        rconfig.read(rally_conf)
-        rconfig.set('DEFAULT', 'debug', True)
-        rconfig.set('DEFAULT', 'use_stderr', False)
-        rconfig.set('DEFAULT', 'log-file', 'rally.log')
-        rconfig.set('DEFAULT', 'log_dir', self.res_dir)
-        with open(rally_conf, 'w') as config_file:
-            rconfig.write(config_file)
-
     @staticmethod
     def clean_rally_conf(rally_conf='/etc/rally/rally.conf'):
         """Clean Rally config"""
@@ -511,14 +498,6 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.remove_option('openstack', 'img_name_regex')
         if rconfig.has_option('openstack', 'swift_operator_role'):
             rconfig.remove_option('openstack', 'swift_operator_role')
-        if rconfig.has_option('DEFAULT', 'use_stderr'):
-            rconfig.remove_option('DEFAULT', 'use_stderr')
-        if rconfig.has_option('DEFAULT', 'debug'):
-            rconfig.remove_option('DEFAULT', 'debug')
-        if rconfig.has_option('DEFAULT', 'log-file'):
-            rconfig.remove_option('DEFAULT', 'log-file')
-        if rconfig.has_option('DEFAULT', 'log_dir'):
-            rconfig.remove_option('DEFAULT', 'log_dir')
         with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
@@ -621,7 +600,7 @@ class TempestCommon(singlevm.VmReady2):
                 os.makedirs(self.res_dir)
             self.update_rally_regex()
             self.update_default_role()
-            self.update_rally_logs()
+            rally.RallyBase.update_rally_logs(self.res_dir)
             shutil.copy("/etc/rally/rally.conf", self.res_dir)
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
@@ -647,6 +626,7 @@ class TempestCommon(singlevm.VmReady2):
         Cleanup all OpenStack objects. Should be called on completion.
         """
         self.clean_rally_conf()
+        rally.RallyBase.clean_rally_logs()
         if self.image_alt:
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:

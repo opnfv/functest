@@ -629,6 +629,7 @@ class RallyBase(singlevm.VmReady2):
     def clean(self):
         """Cleanup of OpenStack resources. Should be called on completion."""
         self.clean_rally_conf()
+        self.clean_rally_logs()
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
         super(RallyBase, self).clean()
@@ -641,12 +642,43 @@ class RallyBase(singlevm.VmReady2):
 
         return super(RallyBase, self).is_successful()
 
+    @staticmethod
+    def update_rally_logs(res_dir, rally_conf='/etc/rally/rally.conf'):
+        """Print rally logs in res dir"""
+        if not os.path.exists(res_dir):
+            os.makedirs(res_dir)
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        rconfig.set('DEFAULT', 'debug', True)
+        rconfig.set('DEFAULT', 'use_stderr', False)
+        rconfig.set('DEFAULT', 'log-file', 'rally.log')
+        rconfig.set('DEFAULT', 'log_dir', res_dir)
+        with open(rally_conf, 'w') as config_file:
+            rconfig.write(config_file)
+
+    @staticmethod
+    def clean_rally_logs(rally_conf='/etc/rally/rally.conf'):
+        """Clean Rally config"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(rally_conf)
+        if rconfig.has_option('DEFAULT', 'use_stderr'):
+            rconfig.remove_option('DEFAULT', 'use_stderr')
+        if rconfig.has_option('DEFAULT', 'debug'):
+            rconfig.remove_option('DEFAULT', 'debug')
+        if rconfig.has_option('DEFAULT', 'log-file'):
+            rconfig.remove_option('DEFAULT', 'log-file')
+        if rconfig.has_option('DEFAULT', 'log_dir'):
+            rconfig.remove_option('DEFAULT', 'log_dir')
+        with open(rally_conf, 'w') as config_file:
+            rconfig.write(config_file)
+
     def run(self, **kwargs):
         """Run testcase."""
         self.start_time = time.time()
         try:
             assert super(RallyBase, self).run(
                 **kwargs) == testcase.TestCase.EX_OK
+            self.update_rally_logs(self.res_dir)
             self.create_rally_deployment(environ=self.project.get_environ())
             self.prepare_run(**kwargs)
             self.run_tests(**kwargs)
