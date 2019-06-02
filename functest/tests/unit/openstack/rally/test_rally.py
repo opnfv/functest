@@ -325,13 +325,18 @@ class OSRallyTesting(unittest.TestCase):
         mock_run_task.assert_any_call('test1')
         mock_run_task.assert_any_call('test2')
 
-    def test_clean_up_default(self):
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'clean_rally_logs')
+    def test_clean_up_default(self, *args):
         with mock.patch.object(self.rally_base.orig_cloud,
                                'delete_flavor') as mock_delete_flavor:
             self.rally_base.flavor_alt = mock.Mock()
             self.rally_base.clean()
             self.assertEqual(mock_delete_flavor.call_count, 1)
+            args[0].assert_called_once_with()
 
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'update_rally_logs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -348,11 +353,16 @@ class OSRallyTesting(unittest.TestCase):
             func.assert_called()
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'update_rally_logs')
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment', side_effect=Exception)
-    def test_run_exception_create_rally_dep(self, mock_create_rally_dep):
+    def test_run_exception_create_rally_dep(self, *args):
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
-        mock_create_rally_dep.assert_called()
+        args[0].assert_called()
+        args[1].assert_called_once_with(self.rally_base.res_dir)
 
+    @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
+                'update_rally_logs')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
                 'create_rally_deployment', return_value=mock.Mock())
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.RallyBase.'
@@ -361,6 +371,7 @@ class OSRallyTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         self.assertEqual(self.rally_base.run(), testcase.TestCase.EX_RUN_ERROR)
         mock_prep_env.assert_called()
+        args[1].assert_called_once_with(self.rally_base.res_dir)
 
     def test_append_summary(self):
         json_dict = {
