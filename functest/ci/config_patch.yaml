@@ -1,4 +1,99 @@
 ---
+gsma:
+    tempest_smoke:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    neutron-tempest-plugin-api:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    refstack_compute:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    refstack_object:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    refstack_platform:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    patrole:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    vmtp:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+    shaker:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+    neutron_trunk:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    networking-bgpvpn:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    networking-sfc:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    barbican:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_full:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_scenario:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    rally_sanity:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    rally_full:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    cloudify:
+        flavor_ram: 4096
+        flavor_vcpus: 2
+        flavor_disk: 40
+    cloudify_ims:
+        flavor_ram: 4096
+        flavor_vcpus: 2
+        flavor_disk: 40
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    heat_ims:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+    vyos_vrouter:
+        flavor_ram: 4096
+        flavor_vcpus: 2
+        flavor_disk: 40
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    juju_epc:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+        flavor_alt_ram: 4096
+        flavor_alt_vcpus: 2
+        flavor_alt_disk: 40
+
 fdio:
     vmready1:
         flavor_ram: 1024
