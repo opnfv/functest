@@ -21,3 +21,4 @@ networking-sfc===7.0.0
 neutron===13.0.2
 os-faults===0.1.18
 bandit===1.1.0
+ruamel.yaml.jinja2==0.2.2
