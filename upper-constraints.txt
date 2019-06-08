@@ -17,3 +17,4 @@ robotframework-sshlibrary===3.3.0
 ansible===2.3.2.0
 xtesting===0.62.0
 bandit===1.1.0
+ruamel.yaml.jinja2==0.2.2
