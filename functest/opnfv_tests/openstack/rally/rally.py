@@ -431,7 +431,7 @@ class RallyBase(singlevm.VmReady2):
         LOGGER.debug('task_id : %s', task_id)
         if task_id is None:
             LOGGER.error("Failed to retrieve task_id")
-            LOGGER.error("Result:\n%s", output)
+            LOGGER.error("Result:\n%s", output.decode("utf-8"))
             raise Exception("Failed to retrieve task id")
         self._save_results(test_name, task_id)
 
@@ -796,6 +796,8 @@ class RallyJobs(RallyBase):
             task_args['floating_network'] = str(self.ext_net.name)
         else:
             task_args['floating_network'] = ''
+        task_args['image_name'] = str(self.image.name)
+        task_args['flavor_name'] = str(self.flavor.name)
         return task_args
 
     @staticmethod
