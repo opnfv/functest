@@ -74,5 +74,8 @@ os:
     rally_full:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
+    rally_jobs:
+        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+
     tempest:
         use_custom_flavors: 'True'
