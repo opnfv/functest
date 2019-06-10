@@ -64,6 +64,10 @@ gsma:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
+    rally_jobs:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
     cloudify:
         flavor_ram: 4096
         flavor_vcpus: 2
@@ -141,6 +145,8 @@ fdio:
         flavor_ram: 1024
     rally_full:
         flavor_ram: 1024
+    rally_jobs:
+        flavor_ram: 1024
 
 ovs:
     vmready1:
@@ -188,6 +194,8 @@ ovs:
     rally_sanity:
         flavor_ram: 1024
     rally_full:
+        flavor_ram: 1024
+    rally_jobs:
         flavor_ram: 1024
 
 vio:
@@ -283,6 +291,9 @@ vio:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
     rally_full:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    rally_jobs:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
     cloudify:
