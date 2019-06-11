@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fa2f7c5_514bb752",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "VMTP",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 72
+      },
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2f2b4d7_9aa75d91",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "I would add some figures to show the number of tests launched and the time required to execute them",
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09992f6b_413796cc",
         "filename": "docs/com/pres/stockholm/stockholm.md",
         "patchSetId": 1
@@ -13,6 +53,74 @@
       "writtenOn": "2019-06-11T12:14:59Z",
       "side": 1,
       "message": "l",
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6799a74_5059f90b",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "VMTP, Shaker",
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2465869c_fe0aeea3",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "OpenStack",
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1de8ba93_64dea71b",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "I would add a slide on that topic. Explain what GSMA profile is and explained what you did",
+      "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03076354_6a61add4",
+        "filename": "docs/com/pres/stockholm/stockholm.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 2965
+      },
+      "writtenOn": "2019-06-11T12:33:52Z",
+      "side": 1,
+      "message": "Nothing about ESTI ?",
       "revId": "8c9753f5fa676b5302865a1c711a3c21649c3bc2",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
