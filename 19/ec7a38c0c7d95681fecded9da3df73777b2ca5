@@ -1,0 +1,9 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Code-Review+2: Juha Kosonen <juha.kosonen@nokia.com>
+Code-Review+1: Bin Hu <bin.hu@att.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 13 Jun 2019 06:39:57 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/68038
+Project: functest
+Branch: refs/heads/master
