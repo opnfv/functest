@@ -19,7 +19,7 @@ docker/smoke \
 docker/benchmarking \
 docker/features"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
-build_opts=(--pull=true --no-cache --force-rm=true)
+build_opts="--pull=true --no-cache --force-rm=true"
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:iruya|${repo}/functest-core:amd64-iruya|g" {} +
@@ -48,7 +48,7 @@ find . -name Dockerfile -exec sed -i \
     "s|opnfv/functest-tempest:iruya|${repo}/functest-tempest:arm64-iruya|g" \
     {} +
 for dir in ${arm64_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build "${build_opts}" \
         -t "${repo}/functest-${dir##**/}:arm64-iruya" .)
     docker push "${repo}/functest-${dir##**/}:arm64-iruya"
     [ "${dir}" != "docker/core" ] &&
