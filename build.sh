@@ -19,7 +19,7 @@ docker/smoke \
 docker/benchmarking \
 docker/features"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
-build_opts=(--pull=true --no-cache --force-rm=true)
+build_opts="--pull=true --no-cache --force-rm=true"
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:hunter|${repo}/functest-core:amd64-hunter|g" {} +
@@ -48,7 +48,7 @@ find . -name Dockerfile -exec sed -i \
     "s|opnfv/functest-tempest:hunter|${repo}/functest-tempest:arm64-hunter|g" \
     {} +
 for dir in ${arm64_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build "${build_opts}" \
         -t "${repo}/functest-${dir##**/}:arm64-hunter" .)
     docker push "${repo}/functest-${dir##**/}:arm64-hunter"
     [ "${dir}" != "docker/core" ] &&
