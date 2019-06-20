@@ -40,6 +40,7 @@ class Shaker(singlevm.SingleVm2):
     ssh_connect_loops = 12
     create_server_timeout = 300
     shaker_timeout = '3600'
+    quota_instances = -1
 
     def __init__(self, **kwargs):
         super(Shaker, self).__init__(**kwargs)
@@ -82,6 +83,9 @@ class Shaker(singlevm.SingleVm2):
             "heat_stack_owner", user=self.project.user.id,
             project=self.project.project.id,
             domain=self.project.domain.id)
+        self.orig_cloud.set_compute_quotas(
+            self.project.project.name,
+            instances=self.quota_instances)
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put('/home/opnfv/functest/conf/env_file', remote_path='~/')
         if os.environ.get('OS_CACERT'):
