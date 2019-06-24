@@ -21,6 +21,7 @@ from functest.core import cloudify
 from functest.opnfv_tests.vnf.router import vrouter_base
 from functest.opnfv_tests.vnf.router.utilvnf import Utilvnf
 from functest.utils import config
+from functest.utils import env
 from functest.utils import functest_utils
 
 
@@ -109,6 +110,13 @@ class CloudifyVrouter(cloudify.Cloudify):
 
         self.image_alt = None
         self.flavor_alt = None
+
+    def check_requirements(self):
+        if env.get('NEW_USER_ROLE').lower() == "admin":
+            self.__logger.warn(
+                "Defining NEW_USER_ROLE=admin will easily break the testcase "
+                "because Cloudify doesn't manage tenancy (e.g. subnet "
+                "overlapping)")
 
     def execute(self):
         # pylint: disable=too-many-locals,too-many-statements
