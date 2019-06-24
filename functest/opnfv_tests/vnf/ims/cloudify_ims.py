@@ -105,7 +105,7 @@ class CloudifyIms(cloudify.Cloudify):
         if env.get('NEW_USER_ROLE').lower() == "admin":
             self.__logger.warn(
                 "Defining NEW_USER_ROLE=admin will easily break the testcase "
-                "because Cloudify doesn't manage tenancy (e.g. subnet  "
+                "because Cloudify doesn't manage tenancy (e.g. subnet "
                 "overlapping)")
 
     def execute(self):
