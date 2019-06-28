@@ -20,6 +20,7 @@ tiers:
                     args:
                         optional:
                             - 'gnocchi'
+                            - 'barbican'
 
             -
                 case_name: rally_jobs
