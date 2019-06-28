@@ -1,0 +1,71 @@
+  SwiftObjects.create_container_and_object_then_list_objects:
+    -
+      args:
+        objects_per_container: 2
+        object_size: 5120
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "admin"
+      sla:
+        {{ no_failures_sla() }}
+
+  SwiftObjects.list_objects_in_containers:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "admin"
+        swift_objects:
+          containers_per_tenant: 1
+          objects_per_container: 10
+          object_size: 1024
+      sla:
+        {{ no_failures_sla() }}
+
+  SwiftObjects.create_container_and_object_then_download_object:
+    -
+      args:
+        objects_per_container: 5
+        object_size: 1024
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "admin"
+      sla:
+        {{ no_failures_sla() }}
+
+  SwiftObjects.create_container_and_object_then_delete_all:
+    -
+      args:
+        objects_per_container: 5
+        object_size: 102400
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "admin"
+      sla:
+        {{ no_failures_sla() }}
+
+  SwiftObjects.list_and_download_objects_in_containers:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        roles:
+          - "admin"
+        swift_objects:
+          containers_per_tenant: 2
+          objects_per_container: 5
+          object_size: 10240
+      sla:
+        {{ no_failures_sla() }}

@@ -42,3 +42,7 @@
 {% if "heat" in service_list %}
 {%- include "var/opnfv-heat.yaml"-%}
 {% endif %}
+
+{% if "swift" in service_list %}
+{%- include "var/opnfv-swift.yaml"-%}
+{% endif %}
