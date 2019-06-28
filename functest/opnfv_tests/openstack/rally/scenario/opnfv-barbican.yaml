@@ -1,0 +1,98 @@
+  BarbicanContainers.create_and_add:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanContainers.create_certificate_and_delete:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanContainers.create_and_delete:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanContainers.create_rsa_and_delete:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.create_and_delete:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.create_and_get:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.create_and_list:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.create:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.get:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanContainers.list:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}
+
+  BarbicanSecrets.list:
+    -
+      runner:
+        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+      sla:
+        {{ no_failures_sla() }}

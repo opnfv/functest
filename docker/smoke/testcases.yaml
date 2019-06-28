@@ -36,6 +36,7 @@ tiers:
                     args:
                         optional:
                             - 'gnocchi'
+                            - 'barbican'
 
             -
                 case_name: refstack_compute

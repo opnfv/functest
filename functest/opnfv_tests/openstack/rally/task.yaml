@@ -46,3 +46,7 @@
 {% if "swift" in service_list %}
 {%- include "var/opnfv-swift.yaml"-%}
 {% endif %}
+
+{% if "barbican" in service_list %}
+{%- include "var/opnfv-barbican.yaml"-%}
+{% endif %}
