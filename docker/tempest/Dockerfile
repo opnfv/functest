@@ -3,8 +3,8 @@ FROM opnfv/functest-core:iruya
 ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
 ARG TEMPEST_TAG=e8088d1218eba0b8e4ed59fa5ca30ac9b664b7fb
-ARG RALLY_TAG=1.4.1
-ARG RALLY_OPENSTACK_TAG=90bd2c4c39deb449197993f9e42142c90c1b2f6d
+ARG RALLY_TAG=1.5.1
+ARG RALLY_OPENSTACK_TAG=1.5.0
 ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 RUN apk --no-cache add --virtual .build-deps --update \
