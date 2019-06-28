@@ -43,7 +43,7 @@ class RallyBase(singlevm.VmReady2):
 
     # pylint: disable=too-many-instance-attributes, too-many-public-methods
     stests = ['authenticate', 'glance', 'cinder', 'gnocchi', 'heat',
-              'keystone', 'neutron', 'nova', 'quotas']
+              'keystone', 'neutron', 'nova', 'quotas', 'swift']
 
     rally_conf_path = "/etc/rally/rally.conf"
     rally_aar4_patch_path = pkg_resources.resource_filename(
