@@ -36,7 +36,9 @@ The internal test cases are:
  * tempest_smoke
  * neutron-tempest-plugin-api
  * rally_sanity
- * refstack_defcore
+ * refstack_compute
+ * refstack_object
+ * refstack_platform
  * patrole
  * neutron_trunk
  * networking-bgpvpn

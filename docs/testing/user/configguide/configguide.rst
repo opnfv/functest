@@ -67,7 +67,7 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:iruya
 
 Results shall be displayed as follows::
 
@@ -98,7 +98,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:iruya
 
 Results shall be displayed as follows::
 
@@ -107,7 +107,9 @@ Results shall be displayed as follows::
   +------------------------------------+------------------+---------------+------------------+----------------+
   |     neutron-tempest-plugin-api     |     functest     |     smoke     |      13:50       |      PASS      |
   |            rally_sanity            |     functest     |     smoke     |      14:13       |      PASS      |
-  |          refstack_defcore          |     functest     |     smoke     |      09:60       |      PASS      |
+  |          refstack_compute          |     functest     |     smoke     |      07:24       |      PASS      |
+  |          refstack_object           |     functest     |     smoke     |      02:08       |      PASS      |
+  |         refstack_platform          |     functest     |     smoke     |      08:32       |      PASS      |
   |            tempest_full            |     functest     |     smoke     |      58:40       |      PASS      |
   |          tempest_scenario          |     functest     |     smoke     |      09:47       |      PASS      |
   |              patrole               |     functest     |     smoke     |      05:34       |      PASS      |
@@ -128,7 +130,7 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking
+      opnfv/functest-benchmarking:iruya
 
 Results shall be displayed as follows::
 
@@ -152,7 +154,7 @@ Run features suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-features
+      opnfv/functest-features:iruya
 
 Results shall be displayed as follows::
 
@@ -177,7 +179,7 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf
+      opnfv/functest-vnf:iruya
 
 Results shall be displayed as follows::
 
@@ -214,7 +216,7 @@ Run healthcheck suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-healthcheck
+      opnfv/functest-kubernetes-healthcheck:iruya
 
 A config file in the current dir 'config' is also required, which should be
 volume mapped to ~/.kube/config inside kubernetes container.
@@ -234,7 +236,7 @@ Run smoke suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-smoke
+      opnfv/functest-kubernetes-smoke:iruya
 
 Results shall be displayed as follows::
 
@@ -251,7 +253,7 @@ Run features suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-features
+      opnfv/functest-kubernetes-features:iruya
 
 Results shall be displayed as follows::
 
