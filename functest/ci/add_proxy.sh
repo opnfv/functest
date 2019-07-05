@@ -2,12 +2,16 @@
 
 set -e
 
+
 pushd "${1:-/home/opnfv/functest/images}" > /dev/null
 
 http_proxy=${http_proxy:-http://proxy:8080}
 https_proxy=${https_proxy:-${http_proxy:-http://proxy:8080}}
 ftp_proxy=${ftp_proxy:-${http_proxy:-http://proxy:8080}}
 no_proxy=${no_proxy:-"10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"}
+
+http_proxy_host=`echo $http_proxy |sed -nr 's/^.*\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}).*$/\1/p'`
+http_proxy_port=`echo $http_proxy |sed -nr 's/^.*\:([0-9]{0,5}).*$/\1/p'`
 
 images=${images-"\
 ubuntu-14.04-server-cloudimg-amd64-disk1.img \
@@ -33,6 +37,46 @@ Acquire::https::Proxy "${https_proxy}";
 EOF
 }
 
+add_proxy_juju_env () {
+    cat << EOF >> "$1"
+export no_proxy="${no_proxy}";
+export NO_PROXY="${no_proxy}";
+EOF
+}
+
+add_proxy_juju_systemd () {
+    cat << EOF >> "$1"
+[Manager]
+DefaultEnvironment="no_proxy='${no_proxy}'" "NO_PROXY='${no_proxy}'"
+EOF
+}
+
+add_proxy_maven () {
+    cat << EOF >> "$1"
+<settings>
+   <proxies>
+      <proxy>
+        <id>example-proxy</id>
+        <active>true</active>
+        <protocol>http</protocol>
+        <host>"${http_proxy_host}"</host>
+        <port>"${http_proxy_port}"</port>
+      </proxy>
+   </proxies>
+</settings>
+EOF
+}
+
+add_proxy_svn ()  {
+    cat << EOF >> "$1"
+[global]
+http-proxy-host = "${http_proxy_host}"
+http-proxy-port = "${http_proxy_port}"
+EOF
+}
+
+
+
 tmpdir=$(mktemp -d)
 for image in $images; do
     if [ ! -f "$image" ]; then
@@ -43,20 +87,27 @@ for image in $images; do
     add_proxy "${tmpdir}/etc/environment"
     if [[ ${image} == "ubuntu"* ]]; then
         add_proxy_apt "${tmpdir}/etc/apt/apt.conf"
+        add_proxy_juju_env "${tmpdir}/etc/juju-proxy.conf"
+        add_proxy_juju_systemd "${tmpdir}/etc/juju-proxy-systemd.conf"
+        mkdir -p ${tmpdir}/root/.m2
+        mkdir -p ${tmpdir}/root/.subversion
+        add_proxy_maven "${tmpdir}/root/.m2/settings.xml}"
+        add_proxy_svn "${tmpdir}/root/.subversion/servers}"
     fi
     guestunmount "${tmpdir}"
 done
 
-sudo docker load -i cloudify-docker-manager-community-19.01.24.tar
-dockerfile=${tmpdir}/Dockerfile
-cat << EOF > $dockerfile
+if [ -f cloudify-docker-manager-community-19.01.24.tar ]; then
+    sudo docker load -i cloudify-docker-manager-community-19.01.24.tar
+    dockerfile=${tmpdir}/Dockerfile
+    cat << EOF > $dockerfile
 FROM docker-cfy-manager:latest
 ENV HTTP_PROXY "${http_proxy}"
 ENV HTTPS_PROXY "${https_proxy}"
 ENV NO_PROXY "${no_proxy}"
 EOF
-for f in /etc/sysconfig/cloudify-mgmtworker /etc/sysconfig/cloudify-restservice; do \
-    cat << EOF >> $dockerfile
+    for f in /etc/sysconfig/cloudify-mgmtworker /etc/sysconfig/cloudify-restservice; do \
+        cat << EOF >> $dockerfile
 RUN echo >> $f
 RUN echo "http_proxy=${http_proxy}" >> $f
 RUN echo "https_proxy=${https_proxy}" >> $f
@@ -64,12 +115,16 @@ RUN echo "HTTP_PROXY=${http_proxy}" >> $f
 RUN echo "HTTPS_PROXY=${https_proxy}" >> $f
 RUN echo "no_proxy=${no_proxy}" >> $f
 EOF
-done
-sudo docker build -t docker-cfy-manager -f $dockerfile ${tmpdir}
-sudo docker save \
-    docker-cfy-manager > cloudify-docker-manager-community-19.01.24.tar
-sudo docker rmi docker-cfy-manager
+    done
+    sudo docker build -t docker-cfy-manager -f $dockerfile ${tmpdir}
+    sudo docker save docker-cfy-manager > cloudify-docker-manager-community-19.01.24.tar
+    sudo docker rmi docker-cfy-manager
 
-rm "${dockerfile}"
+    rm "${dockerfile}"
+else
+    echo "skip cloudify-docker-manager-community-19.01.24.tar ($(pwd)/cloudify-docker-manager-community-19.01.24.tar not found)"
+fi
+
 rmdir "${tmpdir}"
 popd > /dev/null
+
