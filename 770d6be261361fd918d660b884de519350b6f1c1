@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5fecf2_5a739513",
+        "filename": "functest/ci/add_proxy.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-07-06T10:36:47Z",
+      "side": 1,
+      "message": "could you please remove this trailing line?",
+      "revId": "770d6be261361fd918d660b884de519350b6f1c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f29a8fc2_f1225e93",
+        "filename": "functest/ci/add_proxy.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-07-06T10:36:47Z",
+      "side": 1,
+      "message": "We could define first http_proxy_host and then http_proxy from it. It would avoid parsing.",
+      "revId": "770d6be261361fd918d660b884de519350b6f1c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2e8d4a1_225ddab9",
+        "filename": "functest/ci/add_proxy.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-07-06T10:36:47Z",
+      "side": 1,
+      "message": "trailing lines",
+      "revId": "770d6be261361fd918d660b884de519350b6f1c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b2b36a9_fa827263",
+        "filename": "functest/ci/add_proxy.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2019-07-06T10:36:47Z",
+      "side": 1,
+      "message": "yes that makes sens.",
+      "revId": "770d6be261361fd918d660b884de519350b6f1c1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
+    }
+  ]
+}
