@@ -18,3 +18,8 @@ ansible===2.3.2.0
 xtesting===0.70.0
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
+-e git+https://opendev.org/openstack/tempest#egg=tempest
+git+https://opendev.org/openstack/rally.git#egg=rally
+git+https://opendev.org/openstack/rally-openstack.git#egg=rally-openstack
+git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
+git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
