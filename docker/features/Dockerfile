@@ -1,4 +1,4 @@
-FROM opnfv/functest-tempest
+FROM opnfv/functest-core
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master

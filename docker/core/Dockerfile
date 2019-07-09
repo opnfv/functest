@@ -13,6 +13,8 @@ RUN apk --no-cache add --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
+    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
+    sed -i -E s/^ujson==+.*$/-e\ git+https:\\/\\/github.com\\/esnme\\/ultrajson@$UJSON_TAG#egg=ujson/ upper-constraints.txt && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
         -e git+https://opendev.org/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git init /src/functest && \
@@ -28,4 +30,7 @@ RUN apk --no-cache add --update \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
+    mkdir -p /etc/rally && \
+    printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
+    mkdir -p /var/lib/rally/database && rally db create && \
     apk del .build-deps
