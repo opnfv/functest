@@ -28,3 +28,8 @@ functionality:
             - no_net_trunk_service
         tests:
             - '^NeutronTrunk'
+    -
+        functions:
+            - no_floating_ip
+        tests:
+            - NovaServers.boot_server_associate_and_dissociate_floating_ip
