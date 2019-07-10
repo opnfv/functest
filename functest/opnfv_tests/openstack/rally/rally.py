@@ -66,6 +66,7 @@ class RallyBase(singlevm.VmReady2):
 
     visibility = 'public'
     shared_network = True
+    allow_no_fip = True
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -334,6 +335,8 @@ class RallyBase(singlevm.VmReady2):
                 func_list.append("no_migration")
             if not self._network_trunk_supported():
                 func_list.append("no_net_trunk_service")
+            if not self.ext_net:
+                func_list.append("no_floating_ip")
 
             if 'functionality' in black_list_yaml.keys():
                 for item in black_list_yaml['functionality']:

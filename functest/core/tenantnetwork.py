@@ -146,6 +146,7 @@ class TenantNetwork1(testcase.TestCase):
     __logger = logging.getLogger(__name__)
     cidr = '192.168.120.0/24'
     shared_network = False
+    allow_no_fip = False
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -164,6 +165,7 @@ class TenantNetwork1(testcase.TestCase):
         try:
             self.ext_net = self.get_external_network(self.cloud)
         except Exception:  # pylint: disable=broad-except
+            self.ext_net = None
             self.__logger.exception("Cannot get the external network")
         self.guid = str(uuid.uuid4())
         self.network = None
@@ -216,7 +218,8 @@ class TenantNetwork1(testcase.TestCase):
         Raises: expection on error
         """
         assert self.cloud
-        assert self.ext_net
+        if not self.allow_no_fip:
+            assert self.ext_net
         provider = {}
         if hasattr(config.CONF, '{}_network_type'.format(self.case_name)):
             provider["network_type"] = getattr(
@@ -251,7 +254,7 @@ class TenantNetwork1(testcase.TestCase):
 
         self.router = self.cloud.create_router(
             name='{}-router_{}'.format(self.case_name, self.guid),
-            ext_gateway_net_id=self.ext_net.id)
+            ext_gateway_net_id=self.ext_net.id if self.ext_net else None)
         self.__logger.debug("router: %s", self.router)
         self.cloud.add_router_interface(self.router, subnet_id=self.subnet.id)
 
