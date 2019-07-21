@@ -16,7 +16,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         -rthirdparty-requirements.txt && \
     git init /src/odl_test && \
     (cd /src/odl_test && \
-        git fetch --tags https://git.opendaylight.org/gerrit/p/integration/test.git $ODL_TAG && \
+        git fetch --tags https://git.opendaylight.org/gerrit/integration/test $ODL_TAG && \
         git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git thirdparty-requirements.txt upper-constraints.txt \
         upper-constraints.opnfv.txt && \
