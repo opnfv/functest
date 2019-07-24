@@ -16,6 +16,6 @@ xtesting
 os-client-config # Apache-2.0
 shade # Apache-2.0
 ruamel.yaml.jinja2 # MIT
-tempest
+tempest # Apache-2.0
 rally
 rally-openstack
