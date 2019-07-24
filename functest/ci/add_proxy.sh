@@ -74,6 +74,13 @@ http-proxy-port = "${http_proxy_port}"
 EOF
 }
 
+add_proxy_pip ()  {
+    cat << EOF >> "$1"
+[global]
+proxy="${http_proxy}"
+EOF
+}
+
 tmpdir=$(mktemp -d)
 for image in $images; do
     if [ ! -f "$image" ]; then
@@ -88,8 +95,9 @@ for image in $images; do
         add_proxy_juju_systemd "${tmpdir}/etc/juju-proxy-systemd.conf"
         mkdir -p ${tmpdir}/root/.m2
         mkdir -p ${tmpdir}/root/.subversion
-        add_proxy_maven "${tmpdir}/root/.m2/settings.xml}"
-        add_proxy_svn "${tmpdir}/root/.subversion/servers}"
+        add_proxy_maven "${tmpdir}/root/.m2/settings.xml"
+        add_proxy_svn "${tmpdir}/root/.subversion/servers"
+        add_proxy_pip "${tmpdir}/etc/pip.conf"
     fi
     guestunmount "${tmpdir}"
 done
