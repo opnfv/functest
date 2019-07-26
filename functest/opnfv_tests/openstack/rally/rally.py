@@ -40,29 +40,29 @@ class RallyBase(singlevm.VmReady2):
     """Base class form Rally testcases implementation."""
 
     # pylint: disable=too-many-instance-attributes, too-many-public-methods
-    TESTS = ['authenticate', 'glance', 'cinder', 'gnocchi', 'heat',
+    tests = ['authenticate', 'glance', 'cinder', 'gnocchi', 'heat',
              'keystone', 'neutron', 'nova', 'quotas', 'swift', 'barbican']
 
-    RALLY_CONF_PATH = "/etc/rally/rally.conf"
-    RALLY_AARCH64_PATCH_PATH = pkg_resources.resource_filename(
+    rally_conf_path = "/etc/rally/rally.conf"
+    rally_aar4_patch_path = pkg_resources.resource_filename(
         'functest', 'ci/rally_aarch64_patch.conf')
-    RALLY_DIR = pkg_resources.resource_filename(
+    rally_dir = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally')
-    RALLY_SCENARIO_DIR = pkg_resources.resource_filename(
+    rally_scenario_dir = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally/scenario')
-    TEMPLATE_DIR = pkg_resources.resource_filename(
+    template_dir = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally/scenario/templates')
-    SUPPORT_DIR = pkg_resources.resource_filename(
+    support_dir = pkg_resources.resource_filename(
         'functest', 'opnfv_tests/openstack/rally/scenario/support')
-    USERS_AMOUNT = 2
-    TENANTS_AMOUNT = 3
-    ITERATIONS_AMOUNT = 10
-    CONCURRENCY = 4
-    VOLUME_VERSION = 3
-    VOLUME_SERVICE_TYPE = "volumev3"
-    BLACKLIST_FILE = os.path.join(RALLY_DIR, "blacklist.yaml")
-    TASK_DIR = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
-    TEMP_DIR = os.path.join(TASK_DIR, 'var')
+    users_amount = 2
+    tenants_amount = 3
+    iterations_amount = 10
+    concurrency = 4
+    volume_version = 3
+    volume_service_type = "volumev3"
+    blacklist_file = os.path.join(rally_dir, "blacklist.yaml")
+    task_dir = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
+    temp_dir = os.path.join(task_dir, 'var')
 
     visibility = 'public'
     shared_network = True
@@ -108,16 +108,16 @@ class RallyBase(singlevm.VmReady2):
         task_args['flavor_alt_name'] = str(self.flavor_alt.name)
         task_args['glance_image_location'] = str(self.filename)
         task_args['glance_image_format'] = str(self.image_format)
-        task_args['tmpl_dir'] = str(self.TEMPLATE_DIR)
-        task_args['sup_dir'] = str(self.SUPPORT_DIR)
-        task_args['users_amount'] = self.USERS_AMOUNT
-        task_args['tenants_amount'] = self.TENANTS_AMOUNT
+        task_args['tmpl_dir'] = str(self.template_dir)
+        task_args['sup_dir'] = str(self.support_dir)
+        task_args['users_amount'] = self.users_amount
+        task_args['tenants_amount'] = self.tenants_amount
         task_args['use_existing_users'] = False
-        task_args['iterations'] = self.ITERATIONS_AMOUNT
-        task_args['concurrency'] = self.CONCURRENCY
+        task_args['iterations'] = self.iterations_amount
+        task_args['concurrency'] = self.concurrency
         task_args['smoke'] = self.smoke
-        task_args['volume_version'] = self.VOLUME_VERSION
-        task_args['volume_service_type'] = self.VOLUME_SERVICE_TYPE
+        task_args['volume_version'] = self.volume_version
+        task_args['volume_service_type'] = self.volume_service_type
         task_args['block_migration'] = env.get("BLOCK_MIGRATION").lower()
 
         if self.ext_net:
@@ -135,7 +135,7 @@ class RallyBase(singlevm.VmReady2):
     def _prepare_test_list(self, test_name):
         """Build the list of test cases to be executed."""
         test_yaml_file_name = 'opnfv-{}.yaml'.format(test_name)
-        scenario_file_name = os.path.join(self.RALLY_SCENARIO_DIR,
+        scenario_file_name = os.path.join(self.rally_scenario_dir,
                                           test_yaml_file_name)
 
         if not os.path.exists(scenario_file_name):
@@ -147,10 +147,10 @@ class RallyBase(singlevm.VmReady2):
                                 % scenario_file_name)
 
         LOGGER.debug('Scenario fetched from : %s', scenario_file_name)
-        test_file_name = os.path.join(self.TEMP_DIR, test_yaml_file_name)
+        test_file_name = os.path.join(self.temp_dir, test_yaml_file_name)
 
-        if not os.path.exists(self.TEMP_DIR):
-            os.makedirs(self.TEMP_DIR)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
 
         self.apply_blacklist(scenario_file_name, test_file_name)
         return test_file_name
@@ -178,10 +178,10 @@ class RallyBase(singlevm.VmReady2):
 
         if pod_arch and pod_arch in arch_filter:
             LOGGER.info("Apply aarch64 specific to rally config...")
-            with open(RallyBase.RALLY_AARCH64_PATCH_PATH, "r") as pfile:
+            with open(RallyBase.rally_aar4_patch_path, "r") as pfile:
                 rally_patch_conf = pfile.read()
 
-            for line in fileinput.input(RallyBase.RALLY_CONF_PATH):
+            for line in fileinput.input(RallyBase.rally_conf_path):
                 print(line, end=' ')
                 if "cirros|testvm" in line:
                     print(rally_patch_conf)
@@ -282,7 +282,7 @@ class RallyBase(singlevm.VmReady2):
         """Exclude scenario."""
         black_tests = []
         try:
-            with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
+            with open(RallyBase.blacklist_file, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
             deploy_scenario = env.get('DEPLOY_SCENARIO')
@@ -326,7 +326,7 @@ class RallyBase(singlevm.VmReady2):
         func_list = []
 
         try:
-            with open(RallyBase.BLACKLIST_FILE, 'r') as black_list_file:
+            with open(RallyBase.blacklist_file, 'r') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
             if env.get('BLOCK_MIGRATION').lower() == 'true':
@@ -439,6 +439,7 @@ class RallyBase(singlevm.VmReady2):
         self._save_results(test_name, task_id)
 
     def _append_summary(self, json_raw, test_name):
+        # pylint: disable=too-many-locals
         """Update statistics summary info."""
         nb_tests = 0
         nb_success = 0
@@ -481,29 +482,29 @@ class RallyBase(singlevm.VmReady2):
         """Prepare resources needed by test scenarios."""
         assert self.cloud
         LOGGER.debug('Validating run tests...')
-        for test in kwargs.get('tests', self.TESTS):
-            if test in self.TESTS:
+        for test in kwargs.get('tests', self.tests):
+            if test in self.tests:
                 self.tests.append(test)
             else:
                 raise Exception("Test name '%s' is invalid" % test)
 
-        if not os.path.exists(self.TASK_DIR):
-            os.makedirs(self.TASK_DIR)
+        if not os.path.exists(self.task_dir):
+            os.makedirs(self.task_dir)
 
-        task = os.path.join(self.RALLY_DIR, 'task.yaml')
+        task = os.path.join(self.rally_dir, 'task.yaml')
         if not os.path.exists(task):
             LOGGER.error("Task file '%s' does not exist.", task)
             raise Exception("Task file '{}' does not exist.".
                             format(task))
-        self.task_file = os.path.join(self.TASK_DIR, 'task.yaml')
+        self.task_file = os.path.join(self.task_dir, 'task.yaml')
         shutil.copyfile(task, self.task_file)
 
-        task_macro = os.path.join(self.RALLY_DIR, 'macro')
+        task_macro = os.path.join(self.rally_dir, 'macro')
         if not os.path.exists(task_macro):
             LOGGER.error("Task macro dir '%s' does not exist.", task_macro)
             raise Exception("Task macro dir '{}' does not exist.".
                             format(task_macro))
-        macro_dir = os.path.join(self.TASK_DIR, 'macro')
+        macro_dir = os.path.join(self.task_dir, 'macro')
         if os.path.exists(macro_dir):
             shutil.rmtree(macro_dir)
         shutil.copytree(task_macro, macro_dir)
@@ -709,7 +710,7 @@ class RallySanity(RallyBase):
             kwargs["case_name"] = "rally_sanity"
         super(RallySanity, self).__init__(**kwargs)
         self.smoke = True
-        self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'sanity')
+        self.scenario_dir = os.path.join(self.rally_scenario_dir, 'sanity')
 
 
 class RallyFull(RallyBase):
@@ -721,26 +722,26 @@ class RallyFull(RallyBase):
             kwargs["case_name"] = "rally_full"
         super(RallyFull, self).__init__(**kwargs)
         self.smoke = False
-        self.scenario_dir = os.path.join(self.RALLY_SCENARIO_DIR, 'full')
+        self.scenario_dir = os.path.join(self.rally_scenario_dir, 'full')
 
 
 class RallyJobs(RallyBase):
     """Rally OpenStack CI testcase implementation."""
 
-    TESTS = ["neutron"]
+    tests = ["neutron"]
 
     def __init__(self, **kwargs):
         """Initialize RallyJobs object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_jobs"
         super(RallyJobs, self).__init__(**kwargs)
-        self.task_file = os.path.join(self.RALLY_DIR, 'rally_jobs.yaml')
+        self.task_file = os.path.join(self.rally_dir, 'rally_jobs.yaml')
         self.task_yaml = None
 
     def prepare_run(self, **kwargs):
         """Create resources needed by test scenarios."""
         super(RallyJobs, self).prepare_run(**kwargs)
-        with open(os.path.join(self.RALLY_DIR,
+        with open(os.path.join(self.rally_dir,
                                'rally_jobs.yaml'), 'r') as task_file:
             self.task_yaml = yaml.safe_load(task_file)
 
@@ -829,9 +830,9 @@ class RallyJobs(RallyBase):
             raise Exception("The scenario '%s' does not exist." % task)
         LOGGER.debug('Scenario fetched from : %s', task)
 
-        if not os.path.exists(self.TEMP_DIR):
-            os.makedirs(self.TEMP_DIR)
-        task_file_name = os.path.join(self.TEMP_DIR, task_name)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
+        task_file_name = os.path.join(self.temp_dir, task_name)
         self.apply_blacklist(task, task_file_name)
         self.run_cmd = (["rally", "task", "start", "--task", task_file_name,
                          "--task-args", str(self.build_task_args(test_name))])

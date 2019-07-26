@@ -21,7 +21,7 @@ from functest.opnfv_tests.vnf.router.vnf_controller.vnf_controller import (
     VnfController)
 
 
-class FunctionTestExec(object):
+class FunctionTestExec():
     """vrouter function test execution class"""
 
     logger = logging.getLogger(__name__)

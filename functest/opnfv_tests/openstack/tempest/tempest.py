@@ -41,13 +41,13 @@ class TempestCommon(singlevm.VmReady2):
     visibility = 'public'
     filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
     shared_network = True
-    TEMPEST_CONF_YAML = pkg_resources.resource_filename(
+    tempest_conf_yaml = pkg_resources.resource_filename(
         'functest',
         'opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml')
-    TEMPEST_CUSTOM = pkg_resources.resource_filename(
+    tempest_custom = pkg_resources.resource_filename(
         'functest',
         'opnfv_tests/openstack/tempest/custom_tests/test_list.txt')
-    TEMPEST_BLACKLIST = pkg_resources.resource_filename(
+    tempest_blacklist = pkg_resources.resource_filename(
         'functest',
         'opnfv_tests/openstack/tempest/custom_tests/blacklist.yaml')
 
@@ -224,7 +224,7 @@ class TempestCommon(singlevm.VmReady2):
     @staticmethod
     def update_tempest_conf_file(conf_file, rconfig):
         """Update defined paramters into tempest config file"""
-        with open(TempestCommon.TEMPEST_CONF_YAML) as yfile:
+        with open(TempestCommon.tempest_conf_yaml) as yfile:
             conf_yaml = yaml.safe_load(yfile)
         if conf_yaml:
             sections = rconfig.sections()
@@ -244,8 +244,8 @@ class TempestCommon(singlevm.VmReady2):
             compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
             admin_role_name='admin', cidr='192.168.120.0/24',
             domain_id='default'):
-        # pylint: disable=too-many-branches,too-many-arguments,
-        # too-many-statements
+        # pylint: disable=too-many-branches,too-many-arguments
+        # pylint: disable=too-many-statements,too-many-locals
         """
         Add/update needed parameters into tempest.conf file
         """
@@ -335,12 +335,12 @@ class TempestCommon(singlevm.VmReady2):
         LOGGER.debug("Generating test case list...")
         self.backup_tempest_config(self.conf_file, '/etc')
         if kwargs.get('mode') == 'custom':
-            if os.path.isfile(self.TEMPEST_CUSTOM):
+            if os.path.isfile(self.tempest_custom):
                 shutil.copyfile(
-                    self.TEMPEST_CUSTOM, self.list)
+                    self.tempest_custom, self.list)
             else:
                 raise Exception("Tempest test list file %s NOT found."
-                                % self.TEMPEST_CUSTOM)
+                                % self.tempest_custom)
         else:
             testr_mode = kwargs.get(
                 'mode', r'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$')
@@ -363,7 +363,7 @@ class TempestCommon(singlevm.VmReady2):
             deploy_scenario = env.get('DEPLOY_SCENARIO')
             if bool(deploy_scenario):
                 # if DEPLOY_SCENARIO is set we read the file
-                black_list_file = open(self.TEMPEST_BLACKLIST)
+                black_list_file = open(self.tempest_blacklist)
                 black_list_yaml = yaml.safe_load(black_list_file)
                 black_list_file.close()
                 for item in black_list_yaml:
