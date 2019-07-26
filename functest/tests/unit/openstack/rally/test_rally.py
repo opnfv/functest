@@ -96,7 +96,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_path_exists.side_effect = self.check_temp_dir
 
         yaml_file = 'opnfv-{}.yaml'.format('test_file_name')
-        ret_val = os.path.join(self.rally_base.TEMP_DIR, yaml_file)
+        ret_val = os.path.join(self.rally_base.temp_dir, yaml_file)
         self.assertEqual(self.rally_base._prepare_test_list('test_file_name'),
                          ret_val)
         mock_path_exists.assert_called()
@@ -280,7 +280,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_summary.assert_called()
 
     def test_prepare_run_testname_invalid(self):
-        self.rally_base.TESTS = ['test1', 'test2']
+        self.rally_base.tests = ['test1', 'test2']
         with self.assertRaises(Exception):
             self.rally_base.prepare_run(tests=['test'])
 
@@ -290,7 +290,7 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.shutil.rmtree')
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
-        self.rally_base.TESTS = ['test1', 'test2']
+        self.rally_base.tests = ['test1', 'test2']
         with mock.patch.object(self.rally_base.cloud,
                                'list_hypervisors') as mock_list_hyperv, \
             mock.patch.object(self.rally_base, 'create_flavor_alt',
