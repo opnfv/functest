@@ -147,7 +147,7 @@ class Cloudify(singlevm.SingleVm2):
                         self.cfy_client.executions.cancel(
                             execution['id'], force=True)
                     except Exception:  # pylint: disable=broad-except
-                        self.__logger.warn("Can't cancel the current exec")
+                        self.__logger.warning("Can't cancel the current exec")
             execution = self.cfy_client.executions.start(
                 dep_name, 'uninstall', parameters=dict(ignore_failure=True))
             wait_for_execution(self.cfy_client, execution, self.__logger)
@@ -191,9 +191,8 @@ def wait_for_execution(client, execution, logger, timeout=3600, ):
                     'execution of operation {0} for deployment {1} '
                     'timed out'.format(execution.workflow_id,
                                        execution.deployment_id))
-            else:
-                # update the remaining timeout
-                timeout = deadline - time.time()
+            # update the remaining timeout
+            timeout = deadline - time.time()
 
         if not execution_ended:
             execution = client.executions.get(execution.id)

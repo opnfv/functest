@@ -26,7 +26,7 @@ from functest.opnfv_tests.vnf.router.vnf_controller.vm_controller import (
     VmController)
 
 
-class VnfController(object):
+class VnfController():
     """vrouter controll class"""
 
     logger = logging.getLogger(__name__)

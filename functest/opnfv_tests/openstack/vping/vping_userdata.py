@@ -88,7 +88,7 @@ class VPingUserdata(singlevm.VmReady2):
             elif sec % 10 == 0:
                 if "request failed" in p_console:
                     self.logger.debug(
-                        "It seems userdata is not supported in nova boot. " +
+                        "It seems userdata is not supported in nova boot. "
                         "Waiting a bit...")
                     tries += 1
                 else:

@@ -43,7 +43,7 @@ NUMBER_OF_DIGITS_FOR_AVG_JITTER = 3
 NUMBER_OF_DIGITS_FOR_AVG_PKT_LOSS = 1
 
 
-class Utilvnf(object):  # pylint: disable=too-many-instance-attributes
+class Utilvnf():  # pylint: disable=too-many-instance-attributes
     """ Utility class of vrouter testcase """
 
     logger = logging.getLogger(__name__)
