@@ -18,7 +18,6 @@ ENV GOBIN /src/epc-requirements/go/bin
 ENV PATH $GOBIN:$PATH
 
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
-COPY cloudify-rest-client-py3.patch /tmp/cloudify-rest-client-py3.patch
 RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc \
         procps libxslt libxml2 zlib libffi go musl-dev && \
@@ -29,8 +28,6 @@ RUN apk --no-cache add --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
-    (cd /usr/lib/python3.6/site-packages/cloudify_rest_client && \
-        patch -p2 < /tmp/cloudify-rest-client-py3.patch) && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
     sed -i s/unf_ext\ \(.*\)/unf_ext\ \(0.0.7.4\)/g /src/vims-test/Gemfile.lock && \
     git init /src/vims-test/quaff && \
@@ -78,7 +75,7 @@ RUN apk --no-cache add --update \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system && bundle update rest-client) && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
-        /tmp/clearwater-heat-singlenet-deps.patch /tmp/cloudify-rest-client-py3.patch && \
+        /tmp/clearwater-heat-singlenet-deps.patch && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.6/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]

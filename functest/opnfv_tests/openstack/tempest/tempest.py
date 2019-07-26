@@ -244,8 +244,8 @@ class TempestCommon(singlevm.VmReady2):
             compute_cnt=1, image_alt_id=None, flavor_alt_id=None,
             admin_role_name='admin', cidr='192.168.120.0/24',
             domain_id='default'):
-        # pylint: disable=too-many-branches,too-many-arguments,
-        # too-many-statements
+        # pylint: disable=too-many-branches,too-many-arguments
+        # pylint: disable=too-many-statements,too-many-locals
         """
         Add/update needed parameters into tempest.conf file
         """

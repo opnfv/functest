@@ -148,13 +148,13 @@ class JujuEpc(singlevm.VmReady2):
 
     def check_requirements(self):
         if not os.path.exists("/src/epc-requirements/go/bin/juju"):
-            self.__logger.warn(
+            self.__logger.warning(
                 "Juju cannot be cross-compiled (arm and arm64) from the time "
                 "being")
             self.is_skipped = True
             self.project.clean()
         if env.get('NEW_USER_ROLE').lower() == "admin":
-            self.__logger.warn(
+            self.__logger.warning(
                 "Defining NEW_USER_ROLE=admin will easily break the testcase "
                 "because Juju doesn't manage tenancy (e.g. subnet  "
                 "overlapping)")

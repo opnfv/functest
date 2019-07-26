@@ -103,7 +103,7 @@ class CloudifyIms(cloudify.Cloudify):
 
     def check_requirements(self):
         if env.get('NEW_USER_ROLE').lower() == "admin":
-            self.__logger.warn(
+            self.__logger.warning(
                 "Defining NEW_USER_ROLE=admin will easily break the testcase "
                 "because Cloudify doesn't manage tenancy (e.g. subnet "
                 "overlapping)")
@@ -250,7 +250,7 @@ class CloudifyIms(cloudify.Cloudify):
         self.result += vnf_test_rate / 3 * 100
         if vnf_test_rate == 0:
             self.details['test_vnf'].update(status='FAIL')
-        return True if vnf_test_rate > 0 else False
+        return bool(vnf_test_rate > 0)
 
     def clean(self):
         """Clean created objects/functions."""

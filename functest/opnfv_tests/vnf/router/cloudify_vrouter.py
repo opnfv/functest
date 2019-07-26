@@ -113,7 +113,7 @@ class CloudifyVrouter(cloudify.Cloudify):
 
     def check_requirements(self):
         if env.get('NEW_USER_ROLE').lower() == "admin":
-            self.__logger.warn(
+            self.__logger.warning(
                 "Defining NEW_USER_ROLE=admin will easily break the testcase "
                 "because Cloudify doesn't manage tenancy (e.g. subnet "
                 "overlapping)")

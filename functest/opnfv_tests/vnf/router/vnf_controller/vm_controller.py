@@ -23,7 +23,7 @@ from functest.opnfv_tests.vnf.router.vnf_controller.ssh_client import (
     SshClient)
 
 
-class VmController(object):
+class VmController():
     """vm controll class"""
 
     logger = logging.getLogger(__name__)

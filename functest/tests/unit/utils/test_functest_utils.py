@@ -82,7 +82,7 @@ class FunctestUtilsTesting(unittest.TestCase):
     def _get_environ(self, var, *args):  # pylint: disable=unused-argument
         if var == 'INSTALLER_TYPE':
             return self.installer
-        elif var == 'DEPLOY_SCENARIO':
+        if var == 'DEPLOY_SCENARIO':
             return self.scenario
         return var
 
@@ -322,7 +322,7 @@ class FunctestUtilsTesting(unittest.TestCase):
         self.assertEqual(
             functest_utils.convert_dict_to_ini({"a": "b"}), "a:b")
         value = functest_utils.convert_dict_to_ini({"a": "b", "c": "d"})
-        self.assertTrue(value == "a:b,c:d" or value == "c:d,a:b")
+        self.assertTrue(value in ('a:b,c:d', 'c:d,a:b'))
         with self.assertRaises(AssertionError):
             functest_utils.convert_list_to_ini("")
 
