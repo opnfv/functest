@@ -189,7 +189,7 @@ class ODLTests(robotframework.RobotFramework):
         return self.run_suites(suites, **kwargs)
 
 
-class ODLParser(object):  # pylint: disable=too-few-public-methods
+class ODLParser():  # pylint: disable=too-few-public-methods
     """Parser to run ODL test suites."""
 
     def __init__(self):

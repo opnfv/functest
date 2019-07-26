@@ -24,7 +24,7 @@ from functest.opnfv_tests.vnf.router.test_controller import function_test_exec
 __author__ = "Shuya Nakama <shuya.nakama@okinawaopenlabs.org>"
 
 
-class VrouterOnBoardingBase(object):
+class VrouterOnBoardingBase():
     """vrouter testing base class"""
 
     def __init__(self, util, util_info):

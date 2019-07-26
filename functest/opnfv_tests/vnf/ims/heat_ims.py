@@ -234,7 +234,7 @@ class HeatIms(singlevm.VmReady2):
         if vnf_test_rate == 0:
             self.details['test_vnf'].update(status='FAIL')
         self._monit()
-        return True if vnf_test_rate > 0 else False
+        return bool(vnf_test_rate > 0)
 
     def clean(self):
         """Clean created objects/functions."""

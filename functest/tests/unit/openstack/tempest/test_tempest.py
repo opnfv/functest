@@ -123,7 +123,7 @@ class OSTempestTesting(unittest.TestCase):
                         mock.mock_open()) as mock_open, \
             mock.patch.object(self.tempestcommon, 'read_file',
                               return_value=['test1', 'test2']):
-            self.tempestcommon.TEMPEST_BLACKLIST = Exception
+            self.tempestcommon.tempest_blacklist = Exception
             os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
             self.tempestcommon.apply_tempest_blacklist()
             obj = mock_open()
@@ -163,9 +163,9 @@ class OSTempestTesting(unittest.TestCase):
                        return_value=[r'\} tempest\.']), \
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'subprocess.Popen'):
-            self.tempestcommon.TEMPEST_LIST = 'test_tempest_list'
+            self.tempestcommon.tempest_list = 'test_tempest_list'
             cmd = ["rally", "verify", "start", "--load-list",
-                   self.tempestcommon.TEMPEST_LIST]
+                   self.tempestcommon.tempest_list]
             with self.assertRaises(Exception):
                 self.tempestcommon.run_verifier_tests()
                 mock_logger_info. \

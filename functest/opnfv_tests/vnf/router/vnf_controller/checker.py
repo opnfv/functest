@@ -18,7 +18,7 @@ import re
 from jinja2 import Environment, FileSystemLoader
 
 
-class Checker(object):
+class Checker():
     """vrouter test result check class"""
 
     logger = logging.getLogger(__name__)

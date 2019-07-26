@@ -18,5 +18,5 @@ RUN apk --no-cache add --update sshpass && \
         -rthirdparty-requirements.txt && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt thirdparty-requirements.txt && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.6/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
