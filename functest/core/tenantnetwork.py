@@ -33,7 +33,7 @@ from functest.utils import config
 from functest.utils import env
 
 
-class NewProject(object):
+class NewProject():
     """Ease creating new projects/users"""
     # pylint: disable=too-many-instance-attributes
 

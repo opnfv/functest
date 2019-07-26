@@ -24,7 +24,7 @@ __author__ = ("Valentin Boucher <valentin.boucher@orange.com>, "
               "Helen Yao <helanyao@gmail.com>")
 
 
-class ClearwaterTesting(object):
+class ClearwaterTesting():
     """vIMS clearwater base usable by several orchestrators"""
 
     def __init__(self, case_name, bono_ip, ellis_ip):
@@ -91,8 +91,7 @@ class ClearwaterTesting(object):
                         'Account %s is created on Ellis\n%s',
                         params.get('full_name'), account_res)
                     return account_res
-                else:
-                    raise Exception("Cannot create ellis account")
+                raise Exception("Cannot create ellis account")
             except Exception:  # pylint: disable=broad-except
                 self.logger.info(
                     "try %s: cannot create ellis account", iloop + 1)
@@ -110,8 +109,7 @@ class ClearwaterTesting(object):
                     cookies = req.cookies
                     self.logger.debug('cookies: %s', cookies)
                     return cookies
-                else:
-                    raise Exception('Failed to get cookies for Ellis')
+                raise Exception('Failed to get cookies for Ellis')
             except Exception:  # pylint: disable=broad-except
                 self.logger.info(
                     "try %s: cannot get cookies for Ellis", iloop + 1)
@@ -128,13 +126,12 @@ class ClearwaterTesting(object):
                     self.logger.info(
                         'Calling number is created: %s', number_res)
                     return number_res
+                if req and req.json():
+                    reason = req.json()['reason']
                 else:
-                    if req and req.json():
-                        reason = req.json()['reason']
-                    else:
-                        reason = req
-                    self.logger.info("cannot create a number: %s", reason)
-                    raise Exception('Failed to create a number')
+                    reason = req
+                self.logger.info("cannot create a number: %s", reason)
+                raise Exception('Failed to create a number')
             except Exception:  # pylint: disable=broad-except
                 self.logger.info(
                     "try %s: cannot create a number", iloop + 1)

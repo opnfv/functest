@@ -24,7 +24,7 @@ DEFAULT_CONNECT_RETRY_COUNT = 10
 DEFAULT_SEND_TIMEOUT = 10
 
 
-class SshClient(object):  # pylint: disable=too-many-instance-attributes
+class SshClient():  # pylint: disable=too-many-instance-attributes
     """ssh client class for vrouter testing"""
 
     logger = logging.getLogger(__name__)
@@ -80,7 +80,7 @@ class SshClient(object):  # pylint: disable=too-many-instance-attributes
                 retrycount -= 1
 
         if retrycount == 0:
-            self.logger.warn(
+            self.logger.warning(
                 "Cannot establish connection to IP '%s'", self.ip_address)
             self.connected = False
             return self.connected
