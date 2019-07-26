@@ -280,6 +280,7 @@ class OSRallyTesting(unittest.TestCase):
         mock_summary.assert_called()
 
     def test_prepare_run_testname_invalid(self):
+        # pylint: disable=invalid-name
         self.rally_base.TESTS = ['test1', 'test2']
         with self.assertRaises(Exception):
             self.rally_base.prepare_run(tests=['test'])

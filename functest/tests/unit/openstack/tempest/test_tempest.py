@@ -119,6 +119,7 @@ class OSTempestTesting(unittest.TestCase):
     @mock.patch("os.remove")
     @mock.patch("os.path.exists", return_value=True)
     def test_apply_missing_blacklist(self, *args):
+        # pylint: disable=invalid-name
         with mock.patch('six.moves.builtins.open',
                         mock.mock_open()) as mock_open, \
             mock.patch.object(self.tempestcommon, 'read_file',
@@ -158,6 +159,7 @@ class OSTempestTesting(unittest.TestCase):
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.info')
     def test_run_verifier_tests_default(self, mock_logger_info):
+        # pylint: disable=invalid-name
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \
             mock.patch('six.moves.builtins.iter',
                        return_value=[r'\} tempest\.']), \

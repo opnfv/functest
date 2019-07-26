@@ -439,6 +439,7 @@ class RallyBase(singlevm.VmReady2):
         self._save_results(test_name, task_id)
 
     def _append_summary(self, json_raw, test_name):
+        # pylint: disable=too-many-locals
         """Update statistics summary info."""
         nb_tests = 0
         nb_success = 0
