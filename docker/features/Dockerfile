@@ -2,7 +2,7 @@ FROM opnfv/functest-tempest:iruya
 
 ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
-ARG TEMPEST_TAG=e8088d1218eba0b8e4ed59fa5ca30ac9b664b7fb
+ARG TEMPEST_TAG=21.0.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --update python3 sshpass && \
