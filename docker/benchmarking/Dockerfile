@@ -2,7 +2,7 @@ FROM opnfv/functest-tempest:hunter
 
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
-ARG TEMPEST_TAG=e8088d1218eba0b8e4ed59fa5ca30ac9b664b7fb
+ARG TEMPEST_TAG=21.0.0
 ARG VMTP_TAG=2.4.8
 
 RUN apk --no-cache add --update libxml2 libxslt && \
