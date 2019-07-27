@@ -238,7 +238,7 @@ class JujuEpc(singlevm.VmReady2):
         self.flavor_alt = self.create_flavor_alt()
         self.__logger.info("Starting Juju Bootstrap process...")
         try:
-            cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+            cmd = ['timeout', JujuEpc.juju_timeout,
                    'juju', 'bootstrap',
                    'abot-epc/{}'.format(
                        self.cloud.region_name if self.cloud.region_name else (
@@ -296,7 +296,7 @@ class JujuEpc(singlevm.VmReady2):
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         self.__logger.info("Waiting for instances .....")
         try:
-            cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
+            cmd = ['timeout', JujuEpc.juju_timeout, 'juju-wait']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
             self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
             self.__logger.info("Deployed Abot-epc on Openstack")
@@ -318,14 +318,14 @@ class JujuEpc(singlevm.VmReady2):
                 return False
 
         self.__logger.info("Transferring the feature files to Abot_node ...")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+        cmd = ['timeout', JujuEpc.juju_timeout,
                'juju', 'scp', '--', '-r', '-v',
                '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         self.__logger.info("Copying the feature files within Abot_node ")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+        cmd = ['timeout', JujuEpc.juju_timeout,
                'juju', 'ssh', 'abot-epc-basic/0',
                'sudo', 'cp', '-vfR', '~/featureFiles/*',
                '/etc/rebaca-test-suite/featureFiles']
@@ -342,13 +342,13 @@ class JujuEpc(singlevm.VmReady2):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout, 'juju-wait']
+        cmd = ['timeout', JujuEpc.juju_timeout, 'juju-wait']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+        cmd = ['timeout', JujuEpc.juju_timeout,
                'juju', 'scp', '--', '-v',
                'abot-epc-basic/0:'
                '/var/lib/abot-epc-basic/artifacts/TestResults.json',
@@ -396,7 +396,7 @@ class JujuEpc(singlevm.VmReady2):
             self.__logger.debug(
                 "%s\n%s", " ".join(cmd), output.decode("utf-8"))
             self.__logger.info("Destroying Orchestrator...")
-            cmd = ['timeout', '-t', JujuEpc.juju_timeout,
+            cmd = ['timeout', JujuEpc.juju_timeout,
                    'juju', 'destroy-controller', '-y', 'abot-controller',
                    '--destroy-all-models']
             output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
