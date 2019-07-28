@@ -25,3 +25,4 @@ git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
 git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
 pylint===1.9.5;python_version=='2.7'
 pylint===2.3.1;python_version=='3.7'
+ruamel.yaml===0.15.100
