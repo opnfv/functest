@@ -22,7 +22,9 @@ before_script:
 jobs:
   include:
     - stage: run unit tests
-      script: tox -e docs,pep8,pylint,yamllint,bashate,py27,py37,cover
+      script: >
+        tox -e \
+          docs,pep8,pylint,yamllint,ansiblelint,bashate,bandit,py27,py37,cover
     - stage: build functest-core images
       script: sudo -E bash build.sh
       env:
