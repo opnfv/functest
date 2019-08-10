@@ -1,0 +1,26 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.9
+    steps:
+      - checkout
+      - run:
+          name: Install dependendencies
+          command: sudo apt-get install python2.7-dev
+      - run:
+          name: Run tox
+          command: sudo pip install tox && tox
+      - store_artifacts:
+          path: api/build
+          destination: api
+      - store_artifacts:
+          path: docs/build
+          destination: docs
+      - store_artifacts:
+          path: cover
+          destination: cover
+      - store_artifacts:
+          path: coverage.xml
+          destination: coverage.xml
