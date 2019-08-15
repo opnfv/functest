@@ -769,26 +769,26 @@ class RallyJobs(RallyBase):
                     cases.pop(name)
         else:
             # workloads in subtasks
-            for sind, subtask in enumerate(cases.get('subtasks', [])):
-                idx = []
-                for wind, workload in enumerate(subtask.get('workloads', [])):
+            for sind, subtask in reversed(list(
+                    enumerate(cases.get('subtasks', [])))):
+                for wind, workload in reversed(list(
+                        enumerate(subtask.get('workloads', [])))):
                     scenario = workload.get('scenario', {})
                     for name in scenario.keys():
                         if self.in_iterable_re(name, black_tests):
-                            idx.append(wind)
+                            cases['subtasks'][sind]['workloads'].pop(wind)
                             break
-                for wind in reversed(idx):
-                    cases['subtasks'][sind]['workloads'].pop(wind)
+                if 'workloads' in cases['subtasks'][sind]:
+                    if not cases['subtasks'][sind]['workloads']:
+                        cases['subtasks'].pop(sind)
             # scenarios in subtasks
-            idx = []
-            for sind, subtask in enumerate(cases.get('subtasks', [])):
+            for sind, subtask in reversed(list(
+                    enumerate(cases.get('subtasks', [])))):
                 scenario = subtask.get('scenario', {})
                 for name in scenario.keys():
                     if self.in_iterable_re(name, black_tests):
-                        idx.append(sind)
+                        cases['subtasks'].pop(sind)
                         break
-            for sind in reversed(idx):
-                cases['subtasks'].pop(sind)
 
         with open(result_file_name, 'w') as fname:
             template.dump(cases, fname)
