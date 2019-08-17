@@ -56,12 +56,12 @@ IRC support chan: #opnfv-functest
 
 .. _`[2]`: https://docs.openstack.org/tempest/latest/
 .. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
-.. _`[4]`: https://events.linuxfoundation.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
+.. _`[4]`: https://events.static.linuxfound.org/sites/events/files/slides/Functest%20in%20Depth_0.pdf
 .. _`[5]`: https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater/blob/master/openstack-blueprint.yaml
 .. _`[6]`: https://en.wikipedia.org/wiki/Security_Content_Automation_Protocol
 .. _`[7]`: https://github.com/OpenSCAP/openscap
 .. _`[8]`: https://github.com/openstack/refstack-client
-.. _`[9]`: https://github.com/openstack/defcore
+.. _`[9]`: https://github.com/openstack/interop
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: https://robotframework.org/
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO

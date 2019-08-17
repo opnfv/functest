@@ -3,7 +3,7 @@
 Prerequisites
 =============
 The OPNFV deployment is out of the scope of this document but it can be
-found in https://docs.opnfv.org.
+found in https://docs.opnfv.org/en/stable-hunter/.
 The OPNFV platform is considered as the SUT in this document.
 
 Several prerequisites are needed for Functest:
