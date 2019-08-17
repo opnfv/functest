@@ -183,7 +183,7 @@ An overview of the Functest Structural Concept is depicted graphically below:
 
 Some of the test cases are developed by Functest team members, whereas others
 are integrated from upstream communities or other OPNFV projects. For example,
-`Tempest <http://docs.openstack.org/developer/tempest/overview.html>`_ is the
+`Tempest <https://docs.openstack.org/tempest/latest/>`_ is the
 OpenStack integration test suite and Functest is in charge of the selection,
 integration and automation of those tests that fit suitably to OPNFV.
 
