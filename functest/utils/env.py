@@ -35,7 +35,8 @@ INPUTS = {
     'NAMESERVER': '8.8.8.8',
     'NEW_USER_ROLE': 'Member',
     'USE_DYNAMIC_CREDENTIALS': 'True',
-    'BLOCK_MIGRATION': 'True'
+    'BLOCK_MIGRATION': 'True',
+    'CLEAN_ORPHAN_SECURITY_GROUPS': 'True'
 }
 
 
