@@ -238,6 +238,25 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         self.__logger.error("cannot find regex '%s' in console", regex)
         return False
 
+    def clean_orphan_security_groups(self):
+        """Clean all security groups which are not owned by an existing tenant
+
+        It lists all orphan security groups in use as debug to avoid
+        misunderstanding the testcase results (it could happen if cloud admin
+        removes accounts without cleaning the virtual machines)
+        """
+        sec_groups = self.orig_cloud.list_security_groups()
+        for sec_group in sec_groups:
+            if not sec_group.tenant_id:
+                continue
+            if not self.orig_cloud.get_project(sec_group.tenant_id):
+                self.__logger.debug("Cleaning security group %s", sec_group.id)
+                try:
+                    self.orig_cloud.delete_security_group(sec_group.id)
+                except Exception:  # pylint: disable=broad-except
+                    self.__logger.debug(
+                        "Orphan security group %s in use", sec_group.id)
+
     def run(self, **kwargs):
         """Boot the new VM
 
@@ -274,6 +293,8 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.cloud.delete_image(self.image.id)
             if self.flavor:
                 self.orig_cloud.delete_flavor(self.flavor.id)
+            if env.get('CLEAN_ORPHAN_SECURITY_GROUPS').lower() == 'true':
+                self.clean_orphan_security_groups()
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all resources")
 
