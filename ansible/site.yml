@@ -10,7 +10,7 @@
           - repo: _
             dport:
             container: alpine
-            tag: 3.10
+            tag: '3.10'
         steps:
           - name: build opnfv/functest-core
             containers:
@@ -81,6 +81,8 @@
             - heat_ims
             - vyos_vrouter
             - juju_epc
+          properties:
+            execution-type: SEQUENTIALLY
         - container: functest-features
           tests:
             - doctor-notification
