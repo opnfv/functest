@@ -82,6 +82,8 @@
             - heat_ims
             - vyos_vrouter
             - juju_epc
+          properties:
+            execution-type: SEQUENTIALLY
         - container: functest-features
           tests:
             - doctor-notification
