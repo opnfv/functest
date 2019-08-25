@@ -215,3 +215,18 @@ tiers:
                             '^barbican_tempest_plugin.((?!test_signed_image_upload_boot_failure).)*$'
                         services:
                             - barbican
+            -
+                case_name: octavia
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    It leverages on the tempest plugin containing tests used to
+                    verify the functionality of an octavia installation.
+                run:
+                    name: tempest_common
+                    args:
+                        mode:
+                            '^octavia_tempest_plugin.tests.api.*$'
+                        services:
+                            - octavia
