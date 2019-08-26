@@ -368,18 +368,17 @@ class TempestCommon(singlevm.VmReady2):
                 black_list_file.close()
                 for item in black_list_yaml:
                     scenarios = item['scenarios']
-                    if deploy_scenario in scenarios:
+                    in_it = rally.RallyBase.in_iterable_re
+                    if in_it(deploy_scenario, scenarios):
                         tests = item['tests']
-                        for test in tests:
-                            black_tests.append(test)
-                        break
+                        black_tests.extend(tests)
         except Exception:  # pylint: disable=broad-except
             black_tests = []
             LOGGER.debug("Tempest blacklist file does not exist.")
 
         for cases_line in cases_file:
             for black_tests_line in black_tests:
-                if black_tests_line in cases_line:
+                if re.search(black_tests_line, cases_line):
                     break
             else:
                 result_file.write(str(cases_line) + '\n')
