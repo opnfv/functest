@@ -24,3 +24,5 @@ volume:
     storage_protocol: iSCSI
 volume-feature-enabled:
     backup: true
+load_balancer:
+    test_with_noop: true
