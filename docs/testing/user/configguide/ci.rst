@@ -7,8 +7,8 @@ container from Jenkins.
 
 4 steps have been defined::
   * functest-cleanup: clean existing functest dockers on the jumphost
-  * functest-daily: run dockers opnfv/functest-* (healthcheck, smoke, features,
-    vnf)
+  * functest-daily: run dockers opnfv/functest-* (healthcheck, smoke,
+    benchmarking, vnf)
   * functest-store-results: push logs to artifacts
 
 See `[1]`_ for details.

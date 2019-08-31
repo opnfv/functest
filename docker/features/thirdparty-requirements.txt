@@ -1,7 +1,0 @@
-robotframework-httplibrary;python_version<'3.0'
-robotframework-requests;python_version<'3.0'
-robotframework-sshlibrary;python_version<'3.0'
-# baro_tests;python_version<'3.0'
-sfc;python_version<'3.0'
-# stor4nfv_tests;python_version<'3.0'
-# doctor-tests;python_version>='3.0'
