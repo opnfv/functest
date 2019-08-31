@@ -17,7 +17,6 @@ Docker images are available on the dockerhub:
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
   * opnfv/functest-benchmarking
-  * opnfv/functest-features
   * opnfv/functest-vnf
 
 
@@ -146,31 +145,6 @@ Results shall be displayed as follows::
 Note: if the scenario does not support some tests, they are indicated as SKIP.
 See User guide for details.
 
-Testing features suite
-^^^^^^^^^^^^^^^^^^^^^^
-
-Run features suite::
-
-  sudo docker run --env-file env \
-      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
-      -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-features:iruya
-
-Results shall be displayed as follows::
-
-  +-----------------------------+-------------------+------------------+------------------+----------------+
-  |          TEST CASE          |      PROJECT      |       TIER       |     DURATION     |     RESULT     |
-  +-----------------------------+-------------------+------------------+------------------+----------------+
-  |     doctor-notification     |       doctor      |     features     |      00:00       |      SKIP      |
-  |       functest-odl-sfc      |        sfc        |     features     |      00:00       |      SKIP      |
-  |      barometercollectd      |     barometer     |     features     |      00:00       |      SKIP      |
-  |             vgpu            |      functest     |     features     |      00:00       |      SKIP      |
-  |         stor4nfv_os         |      stor4nfv     |     features     |      00:00       |      SKIP      |
-  +-----------------------------+-------------------+------------------+------------------+----------------+
-
-Note: if the scenario does not support some tests, they are indicated as SKIP.
-See User guide for details.
-
 Testing vnf suite
 ^^^^^^^^^^^^^^^^^
 
@@ -200,7 +174,6 @@ Docker images are available on the dockerhub:
   * opnfv/functest-kubernetes-core
   * opnfv/functest-kubernetest-healthcheck
   * opnfv/functest-kubernetest-smoke
-  * opnfv/functest-kubernetest-features
 
 Preparing your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -245,24 +218,6 @@ Results shall be displayed as follows::
   +-------------------------+------------------+---------------+------------------+----------------+
   |     k8s_conformance     |     functest     |     smoke     |      57:14       |      PASS      |
   +-------------------------+------------------+---------------+------------------+----------------+
-
-Testing features suite
-^^^^^^^^^^^^^^^^^^^^^^
-
-Run features suite::
-
-  sudo docker run -it --env-file env \
-      -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-features:iruya
-
-Results shall be displayed as follows::
-
-  +----------------------+------------------+------------------+------------------+----------------+
-  |      TEST CASE       |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
-  +----------------------+------------------+------------------+------------------+----------------+
-  |     stor4nfv_k8s     |     stor4nfv     |     stor4nfv     |      00:00       |      SKIP      |
-  |      clover_k8s      |      clover      |      clover      |      00:00       |      SKIP      |
-  +----------------------+------------------+------------------+------------------+----------------+
 
 Environment variables
 =====================

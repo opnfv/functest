@@ -9,15 +9,13 @@ docker/tempest \
 docker/healthcheck \
 docker/smoke \
 docker/benchmarking \
-docker/features \
 docker/vnf"}
 arm_dirs=${arm_dirs-"\
 docker/core \
 docker/tempest \
 docker/healthcheck \
 docker/smoke \
-docker/benchmarking \
-docker/features"}
+docker/benchmarking"}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=("--pull=true" --no-cache "--force-rm=true")
 
