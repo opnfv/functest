@@ -11,12 +11,11 @@ infrastructure.
 The current list of test suites can be distributed over 5 main domains:
   * VIM (Virtualised Infrastructure Manager)
   * Controllers (i.e. SDN Controllers)
-  * Features
   * VNF (Virtual Network Functions)
   * Kubernetes
 
 Functest test suites are also distributed in the OPNFV testing categories:
-healthcheck, smoke, features, components, performance, VNF, Stress tests.
+healthcheck, smoke, benchmarking, VNF, Stress tests.
 
 All the Healthcheck and smoke tests of a given scenario must be succesful to
 validate the scenario for the release.
@@ -88,44 +87,6 @@ validate the scenario for the release.
 |             |               |            | upstream testcases. See below    |
 |             |               |            | for details                      |
 +-------------+---------------+------------+----------------------------------+
-| Features    | features      | bgpvpn     | Implementation of the OpenStack  |
-|             |               |            | bgpvpn API from the SDNVPN       |
-|             |               |            | feature project. It allows for   |
-|             |               |            | the creation of BGP VPNs.        |
-|             |               |            | See `SDNVPN User Guide`_ for     |
-|             |               |            | details                          |
-|             |               +------------+----------------------------------+
-|             |               | doctor     | Doctor platform, as of Colorado  |
-|             |               |            | release, provides the three      |
-|             |               |            | features:                        |
-|             |               |            | * Immediate Notification         |
-|             |               |            | * Consistent resource state      |
-|             |               |            | awareness for compute host down  |
-|             |               |            | * Valid compute host status      |
-|             |               |            | given to VM owner                |
-|             |               |            | See `Doctor User Guide`_ for     |
-|             |               |            | details                          |
-|             |               +------------+----------------------------------+
-|             |               | odl-sfc    | SFC testing for odl scenarios    |
-|             |               |            | See `SFC User Guide`_ for details|
-|             |               +------------+----------------------------------+
-|             |               | parser     | Parser is an integration project |
-|             |               |            | which aims to provide            |
-|             |               |            | placement/deployment templates   |
-|             |               |            | translation for OPNFV platform,  |
-|             |               |            | including TOSCA -> HOT, POLICY ->|
-|             |               |            | TOSCA and YANG -> TOSCA. it      |
-|             |               |            | deals with a fake vRNC.          |
-|             |               |            | See `Parser User Guide`_ for     |
-|             |               |            | details                          |
-|             |               +------------+----------------------------------+
-|             |               | fds        | Test Suite for the OpenDaylight  |
-|             |               |            | SDN Controller when the GBP      |
-|             |               |            | features are installed. It       |
-|             |               |            | integrates some test suites from |
-|             |               |            | upstream using Robot as the test |
-|             |               |            | framework                        |
-+-------------+---------------+------------+----------------------------------+
 | VNF         | vnf           | cloudify   | Example of a real VNF deployment |
 |             |               | \_ims      | to show the NFV capabilities of  |
 |             |               |            | the platform. The IP Multimedia  |
@@ -154,13 +115,6 @@ validate the scenario for the release.
 |             | smoke         | k8s\_      | Run a subset of Kubernetes       |
 |             |               | conformance| End-to-End tests, expected to    |
 |             |               |            | pass on any Kubernetes cluster   |
-|             +---------------+------------+----------------------------------+
-|             | stor4nfv      | stor4nfv   | Run tests necessary to           |
-|             |               | \_k8s      | demonstrate conformance of the   |
-|             |               |            | K8s+Stor4NFV deployment          |
-|             +---------------+------------+----------------------------------+
-|             | clover        | clover_k8s | Test functionality of            |
-|             |               |            | K8s+Istio+Clover deployment.     |
 +-------------+---------------+------------+----------------------------------+
 
 
@@ -219,9 +173,8 @@ combinations (which may change from one version to another):
 
 Most of the tests are runnable by any combination, but some tests might have
 restrictions imposed by the utilized installers or due to the available
-deployed features. The system uses the environment variables (INSTALLER_TYPE
-and DEPLOY_SCENARIO) to automatically determine the valid test cases, for each
-given environment.
+deployed services. The system uses the environment variables to automatically
+determine the valid test cases, for each given environment.
 
 A convenience Functest CLI utility is also available to simplify setting up the
 Functest evironment, management of the OpenStack environment (e.g. resource
@@ -234,8 +187,4 @@ section.
 
 .. _`[2]`: https://docs.openstack.org/tempest/latest/
 .. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
-.. _`Doctor User Guide`: http://artifacts.opnfv.org/doctor/colorado/userguide/index.html
-.. _`SDNVPN User Guide`: http://artifacts.opnfv.org/sdnvpn/colorado/docs/userguide/index.html
-.. _`Parser User Guide`: http://artifacts.opnfv.org/parser/colorado/docs/userguide/index.html
 .. _`Functest Dashboard`: http://testresults.opnfv.org/
-.. _`SFC User Guide`: http://artifacts.opnfv.org/sfc/colorado/userguide/index.html

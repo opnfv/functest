@@ -36,9 +36,6 @@
               - name: functest-vnf
                 ref_arg:
                 path: docker/vnf
-              - name: functest-features
-                ref_arg: BRANCH
-                path: docker/features
       suites:
         - container: functest-healthcheck
           tests:
@@ -83,10 +80,3 @@
             - juju_epc
           properties:
             execution-type: SEQUENTIALLY
-        - container: functest-features
-          tests:
-            - doctor-notification
-            - functest-odl-sfc
-            - barometercollectd
-            - vgpu
-            - stor4nfv_os

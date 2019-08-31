@@ -52,14 +52,6 @@ The internal test cases are:
  * heat_ims
  * vyos_vrouter
  * juju_epc
- * vgpu
-
-The OPNFV projects integrated into Functest framework for automation are:
-
- * doctor
- * odl-sfc
- * barometer
- * stor4nfv_os
 
 Kubernetes
 ----------
@@ -68,11 +60,6 @@ The internal test cases are:
 
  * k8s_smoke
  * k8s_conformance
-
-The OPNFV projects integrated into Functest framework for automation are:
-
- * stor4nfv
- * clover
 
 Release Data
 ============
@@ -94,14 +81,12 @@ Software
  * https://hub.docker.com/r/opnfv/functest-healthcheck
  * https://hub.docker.com/r/opnfv/functest-smoke
  * https://hub.docker.com/r/opnfv/functest-benchmarking
- * https://hub.docker.com/r/opnfv/functest-features
  * https://hub.docker.com/r/opnfv/functest-vnf
 
  Functest Docker images (Kubernetes):
 
  * https://hub.docker.com/r/opnfv/functest-kubernetes-healthcheck
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
- * https://hub.docker.com/r/opnfv/functest-kubernetes-features
 
 Docker tag for master: latest
 
