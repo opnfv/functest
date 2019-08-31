@@ -1,7 +1,0 @@
-robotframework-httplibrary
-robotframework-requests
-robotframework-sshlibrary
-# baro_tests
-# sfc
-# stor4nfv_tests
-# doctor-tests

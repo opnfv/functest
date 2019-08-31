@@ -108,24 +108,6 @@ jobs:
     - script: sudo -E bash build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs="docker/features"
-        - arm64_dirs=""
-        - arm_dirs=""
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs="docker/features"
-        - arm_dirs=""
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
-        - amd64_dirs=""
-        - arm64_dirs=""
-        - arm_dirs="docker/features"
-    - script: sudo -E bash build.sh
-      env:
-        - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/vnf"
         - arm64_dirs=""
         - arm_dirs=""
@@ -157,11 +139,6 @@ jobs:
           --platforms linux/amd64,linux/arm,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-benchmarking:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-benchmarking:latest
-    - script: >
-        sudo manifest-tool push from-args \
-          --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-features:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-features:latest
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \

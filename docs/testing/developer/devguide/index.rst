@@ -52,7 +52,6 @@ to the different tiers:
   * functest-core: https://hub.docker.com/r/opnfv/functest-core/
   * functest-healthcheck: https://hub.docker.com/r/opnfv/functest-healthcheck/
   * functest-smoke: https://hub.docker.com/r/opnfv/functest-smoke/
-  * functest-features: https://hub.docker.com/r/opnfv/functest-features/
   * functest-vnf: https://hub.docker.com/r/opnfv/functest-vnf/
   * functest-restapi: https://hub.docker.com/r/opnfv/functest-restapi/
 
@@ -107,41 +106,6 @@ repository, the internal test cases can be grouped by domain:
 
 If you want to create a new test case you will have to create a new folder
 under the testcases directory (See next section for details).
-
-Functest external test cases
-============================
-The external test cases are inherited from other OPNFV projects, especially the
-feature projects.
-
-The external test cases are:
-
- * barometer
- * bgpvpn
- * doctor
- * domino
- * fds
- * promise
- * refstack_defcore
- * functest-odl-sfc
- * orchestra_clearwaterims
- * orchestra_openims
- * vyos_vrouter
- * juju_vepc
-
-External test cases integrated in previous versions but not released in
-Euphrates:
-
- * copper
- * moon
- * netready
- * security_scan
-
-
-The code to run these test cases is hosted in the repository of the project.
-Please note that orchestra test cases are hosted in Functest repository and not
-in orchestra repository. Vyos_vrouter and juju_vepc code is also hosted in
-functest as there are no dedicated projects.
-
 
 Functest framework
 ==================
