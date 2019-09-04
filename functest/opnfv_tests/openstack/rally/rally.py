@@ -26,6 +26,7 @@ import pkg_resources
 import prettytable
 from ruamel.yaml import YAML
 from six.moves import configparser
+from threading import Timer
 from xtesting.core import testcase
 import yaml
 
@@ -67,7 +68,7 @@ class RallyBase(singlevm.VmReady2):
     visibility = 'public'
     shared_network = True
     allow_no_fip = True
-    task_timeout = '3600'
+    task_timeout = 3600
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -423,14 +424,24 @@ class RallyBase(singlevm.VmReady2):
         else:
             LOGGER.info('Test scenario: "%s" Failed.', test_name)
 
+    def kill_task(self, proc):
+        proc.kill()
+        self.task_aborted = True
+
     def run_task(self, test_name):
         """Run a task."""
         LOGGER.info('Starting test scenario "%s" ...', test_name)
         LOGGER.debug('running command: %s', self.run_cmd)
         proc = subprocess.Popen(self.run_cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
+        self.task_aborted = False
+        timer = Timer(self.task_timeout, self.kill_task, [proc])
+        timer.start()
         output = proc.communicate()[0]
-
+        if self.task_aborted:
+            LOGGER.error("Failed to complete task")
+            raise Exception("Failed to complete task")
+        timer.cancel()
         task_id = self.get_task_id(output)
         LOGGER.debug('task_id : %s', task_id)
         if task_id is None:
@@ -525,8 +536,7 @@ class RallyBase(singlevm.VmReady2):
         if self.file_is_empty(file_name):
             LOGGER.info('No tests for scenario "%s"', test_name)
             return False
-        self.run_cmd = (["timeout", "-t", self.task_timeout,
-                         "rally", "task", "start", "--abort-on-sla-failure",
+        self.run_cmd = (["rally", "task", "start", "--abort-on-sla-failure",
                          "--task", self.task_file, "--task-args",
                          str(self.build_task_args(test_name))])
         return True
@@ -718,6 +728,8 @@ class RallySanity(RallyBase):
 class RallyFull(RallyBase):
     """Rally full testcase implementation."""
 
+    task_timeout = 7200
+
     def __init__(self, **kwargs):
         """Initialize RallyFull object."""
         if "case_name" not in kwargs:
@@ -731,7 +743,7 @@ class RallyJobs(RallyBase):
     """Rally OpenStack CI testcase implementation."""
 
     stests = ["neutron"]
-    task_timeout = '7200'
+    task_timeout = 7200
 
     def __init__(self, **kwargs):
         """Initialize RallyJobs object."""
@@ -837,8 +849,7 @@ class RallyJobs(RallyBase):
             os.makedirs(self.temp_dir)
         task_file_name = os.path.join(self.temp_dir, task_name)
         self.apply_blacklist(task, task_file_name)
-        self.run_cmd = (["timeout", "-t", self.task_timeout,
-                         "rally", "task", "start", "--task", task_file_name,
+        self.run_cmd = (["rally", "task", "start", "--task", task_file_name,
                          "--task-args", str(self.build_task_args(test_name))])
         return True
 
