@@ -8,7 +8,7 @@ ARG RALLY_OPENSTACK_TAG=1.5.0
 ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 RUN apk --no-cache add --virtual .build-deps --update \
-        python-dev build-base linux-headers libffi-dev \
+        python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
@@ -24,9 +24,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
     (git clone https://opendev.org/openstack/rally-openstack.git /src/rally-openstack && \
         cd /src/rally-openstack && git checkout $RALLY_OPENSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         tempest /src/rally-openstack && \
-    pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/rally && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/rally /src/rally-openstack && \
     mkdir -p /etc/rally && \
