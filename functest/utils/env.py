@@ -36,7 +36,8 @@ INPUTS = {
     'NEW_USER_ROLE': 'Member',
     'USE_DYNAMIC_CREDENTIALS': 'True',
     'BLOCK_MIGRATION': 'True',
-    'CLEAN_ORPHAN_SECURITY_GROUPS': 'True'
+    'CLEAN_ORPHAN_SECURITY_GROUPS': 'True',
+    'PUBLIC_ENDPOINT_ONLY': 'False'
 }
 
 
