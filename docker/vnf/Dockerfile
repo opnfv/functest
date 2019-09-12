@@ -21,7 +21,7 @@ ENV PATH $GOBIN:$PATH
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
 RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc \
-        procps libxslt libxml2 zlib libffi python3 go musl-dev && \
+        procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
@@ -64,7 +64,7 @@ RUN apk --no-cache add --update \
         (cd /src/epc-requirements/abot_charm && \
             git fetch --tags https://github.com/RebacaInc/abot_charm.git $ABOT_CHARM && \
             git checkout FETCH_HEAD) && \
-        python3 -m pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+        pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
             juju-wait==$JUJU_WAIT_TAG && \
         go get -d github.com/rogpeppe/godeps && \
         (cd $GOPATH/src/github.com/rogpeppe/godeps && git checkout $GODEPS_TAG && go install -v github.com/rogpeppe/godeps) && \
@@ -78,5 +78,5 @@ RUN apk --no-cache add --update \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /tmp/clearwater-heat-singlenet-deps.patch && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.6/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]

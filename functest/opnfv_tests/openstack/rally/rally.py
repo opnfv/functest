@@ -22,7 +22,6 @@ import shutil
 import subprocess
 import time
 
-from threading import Timer
 import pkg_resources
 import prettytable
 from ruamel.yaml import YAML
@@ -101,7 +100,6 @@ class RallyBase(singlevm.VmReady2):
         self.run_cmd = ''
         self.network_extensions = []
         self.services = []
-        self.task_aborted = False
 
     def build_task_args(self, test_name):
         """Build arguments for the Rally task."""
@@ -425,25 +423,19 @@ class RallyBase(singlevm.VmReady2):
         else:
             LOGGER.info('Test scenario: "%s" Failed.', test_name)
 
-    def kill_task(self, proc):
-        """ Kill a task."""
-        proc.kill()
-        self.task_aborted = True
-
     def run_task(self, test_name):
         """Run a task."""
         LOGGER.info('Starting test scenario "%s" ...', test_name)
         LOGGER.debug('running command: %s', self.run_cmd)
         proc = subprocess.Popen(self.run_cmd, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
-        self.task_aborted = False
-        timer = Timer(self.task_timeout, self.kill_task, [proc])
-        timer.start()
-        output = proc.communicate()[0]
-        if self.task_aborted:
-            LOGGER.error("Failed to complete task")
-            raise Exception("Failed to complete task")
-        timer.cancel()
+        try:
+            output = proc.communicate(timeout=self.task_timeout)[0]
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            LOGGER.error("Failed to complete run task")
+            raise Exception("Failed to complete run task")
         task_id = self.get_task_id(output)
         LOGGER.debug('task_id : %s', task_id)
         if task_id is None:

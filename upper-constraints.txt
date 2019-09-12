@@ -9,7 +9,7 @@ git+https://gerrit.opnfv.org/gerrit/clover#egg=clover
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-heattranslator&subdirectory=tosca2heat/heat-translator
 git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-toscaparser&subdirectory=tosca2heat/tosca-parser
 -e git+https://gerrit.opnfv.org/gerrit/parser#egg=nfv-parser
-cloudify-rest-client===4.3.3
+git+https://github.com/collivier/cloudify-rest-client.git@4.3.3-py3#egg=cloudify-rest-client
 robotframework===3.0.2
 robotframework-httplibrary===0.4.2
 robotframework-requests===0.4.7

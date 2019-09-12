@@ -230,11 +230,10 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 self.__logger.debug(
                     "regex found: '%s' in console\n%s", regex, console)
                 return True
-            else:
-                self.__logger.debug(
-                    "try %s: cannot find regex '%s' in console\n%s",
-                    iloop + 1, regex, console)
-                time.sleep(10)
+            self.__logger.debug(
+                "try %s: cannot find regex '%s' in console\n%s",
+                iloop + 1, regex, console)
+            time.sleep(10)
         self.__logger.error("cannot find regex '%s' in console", regex)
         return False
 

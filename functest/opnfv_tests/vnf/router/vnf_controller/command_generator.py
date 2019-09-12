@@ -15,7 +15,7 @@ import logging
 from jinja2 import Environment, FileSystemLoader
 
 
-class CommandGenerator(object):
+class CommandGenerator():
     """command generator class for vrouter testing"""
 
     logger = logging.getLogger(__name__)
