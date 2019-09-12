@@ -16,10 +16,19 @@ import os_client_config
 import shade
 from xtesting.core import testcase
 
+from functest.utils import env
+
 
 class ConnectionCheck(testcase.TestCase):
     """Perform simplest queries"""
     __logger = logging.getLogger(__name__)
+
+    func_list = [
+        "get_network_extensions", "list_aggregates", "list_domains",
+        "list_endpoints", "list_floating_ip_pools", "list_floating_ips",
+        "list_hypervisors", "list_keypairs", "list_networks", "list_ports",
+        "list_role_assignments", "list_roles", "list_routers", "list_servers",
+        "list_services", "list_subnets"]
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -38,13 +47,12 @@ class ConnectionCheck(testcase.TestCase):
         try:
             assert self.cloud
             self.start_time = time.time()
-            for func in ["get_network_extensions",
-                         "list_aggregates", "list_domains", "list_endpoints",
-                         "list_floating_ip_pools", "list_floating_ips",
-                         "list_hypervisors", "list_keypairs", "list_networks",
-                         "list_ports", "list_role_assignments", "list_roles",
-                         "list_routers", "list_servers", "list_services",
-                         "list_subnets"]:
+            if env.get('PUBLIC_ENDPOINT_ONLY').lower() == 'true':
+                self.__logger.warning(
+                    "Listing services is skipped "
+                    "because the admin endpoints are unreachable")
+                self.func_list.remove("list_services")
+            for func in self.func_list:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
             data = self.cloud._network_client.get("/service-providers.json")
