@@ -10,7 +10,7 @@ import six
 from functest.utils import env
 
 
-class Config(object):
+class Config():
     def __init__(self):
         try:
             # pylint: disable=bad-continuation
