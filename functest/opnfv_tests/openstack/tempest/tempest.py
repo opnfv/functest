@@ -638,3 +638,15 @@ class TempestCommon(singlevm.VmReady2):
         if skips > 0 and self.deny_skipping:
             return testcase.TestCase.EX_TESTCASE_FAILED
         return super(TempestCommon, self).is_successful()
+
+
+class TempestScenario(TempestCommon):
+    """Tempest scenario testcase implementation class."""
+
+    quota_instances = -1
+
+    def run(self, **kwargs):
+        self.orig_cloud.set_compute_quotas(
+            self.project.project.name,
+            instances=self.quota_instances)
+        return super(TempestScenario, self).run(**kwargs)
