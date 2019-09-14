@@ -135,6 +135,8 @@ class Vmtp(singlevm.VmReady2):
             OS_USERNAME=self.project.user.name,
             OS_PROJECT_NAME=self.project.project.name,
             OS_PROJECT_ID=self.project.project.id,
+            OS_PROJECT_DOMAIN_NAME=self.project.domain.name,
+            OS_USER_DOMAIN_NAME=self.project.domain.name,
             OS_PASSWORD=self.project.password)
         if not new_env["OS_AUTH_URL"].endswith(('v3', 'v3/')):
             new_env["OS_AUTH_URL"] = "{}/v3".format(new_env["OS_AUTH_URL"])
