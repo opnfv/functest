@@ -56,7 +56,9 @@ class NewProject():
         assert self.orig_cloud
         assert self.case_name
         self.password = ''.join(random.choice(
-            string.ascii_letters + string.digits) for _ in range(30))
+            string.ascii_letters + string.digits +
+            '!$()*+,-.<=>?@[]^_{|}~') for _ in range(30))
+        self.__logger.debug("password: %s", self.password)
         self.domain = self.orig_cloud.get_domain(
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
