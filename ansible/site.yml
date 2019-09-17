@@ -60,11 +60,13 @@
             - refstack_platform
             - tempest_full
             - tempest_scenario
+            - tempest_slow
             - patrole
             - neutron_trunk
             - networking-bgpvpn
             - networking-sfc
             - barbican
+            - octavia
         - container: functest-benchmarking
           tests:
             - rally_full
