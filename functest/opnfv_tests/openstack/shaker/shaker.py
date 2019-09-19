@@ -41,6 +41,7 @@ class Shaker(singlevm.SingleVm2):
     create_server_timeout = 300
     shaker_timeout = '3600'
     quota_instances = -1
+    quota_cores = -1
 
     def __init__(self, **kwargs):
         super(Shaker, self).__init__(**kwargs)
@@ -85,7 +86,8 @@ class Shaker(singlevm.SingleVm2):
             domain=self.project.domain.id)
         self.orig_cloud.set_compute_quotas(
             self.project.project.name,
-            instances=self.quota_instances)
+            instances=self.quota_instances,
+            cores=self.quota_cores)
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put('/home/opnfv/functest/conf/env_file', remote_path='~/')
         if os.environ.get('OS_CACERT'):
