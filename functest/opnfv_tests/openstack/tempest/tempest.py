@@ -644,9 +644,11 @@ class TempestScenario(TempestCommon):
     """Tempest scenario testcase implementation class."""
 
     quota_instances = -1
+    quota_cores = -1
 
     def run(self, **kwargs):
         self.orig_cloud.set_compute_quotas(
             self.project.project.name,
-            instances=self.quota_instances)
+            instances=self.quota_instances,
+            cores=self.quota_cores)
         return super(TempestScenario, self).run(**kwargs)
