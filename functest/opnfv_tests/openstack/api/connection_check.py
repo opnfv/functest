@@ -17,6 +17,7 @@ import shade
 from xtesting.core import testcase
 
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 class ConnectionCheck(testcase.TestCase):
@@ -59,6 +60,7 @@ class ConnectionCheck(testcase.TestCase):
             self.__logger.debug(
                 "list_service_providers: %s",
                 self.cloud._get_and_munchify('service_providers', data))
+            functest_utils.get_openstack_version(self.cloud)
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
