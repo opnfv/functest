@@ -31,6 +31,7 @@ from xtesting.core import testcase
 
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 class NewProject(object):
@@ -205,7 +206,7 @@ class TenantNetwork1(testcase.TestCase):
     @staticmethod
     def get_public_auth_url(cloud):
         """Get Keystone public endpoint"""
-        keystone_id = cloud.search_services('keystone')[0].id
+        keystone_id = functest_utils.search_services(cloud, 'keystone')[0].id
         endpoint = cloud.search_endpoints(
             filters={'interface': 'public',
                      'service_id': keystone_id})[0].url

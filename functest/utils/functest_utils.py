@@ -11,10 +11,12 @@
 
 from __future__ import print_function
 import logging
+import os
 import subprocess
 import sys
 import yaml
 
+from openstack.cloud import _utils
 import six
 
 LOGGER = logging.getLogger(__name__)
@@ -136,6 +138,51 @@ def get_openstack_version(cloud):
     except AssertionError:
         LOGGER.exception("Cannot detect OpenStack version")
         return "Unknown"
+
+
+def list_services(cloud):
+    # pylint: disable=protected-access
+    """Search Keystone services via $OS_INTERFACE.
+
+    It mainly conforms with `Shade
+    <latest/reference/api-microversion-history.html>`_ but allows testing vs
+    public endpoints. It's worth mentioning that it doesn't support keystone
+    v2.
+
+    :returns: a list of ``munch.Munch`` containing the services description
+
+    :raises: ``OpenStackCloudException`` if something goes wrong during the
+        openstack API call.
+    """
+    url, key = '/services', 'services'
+    data = cloud._identity_client.get(
+        url, endpoint_filter={
+            'interface': os.environ.get('OS_INTERFACE', 'public')},
+        error_message="Failed to list services")
+    services = cloud._get_and_munchify(key, data)
+    return _utils.normalize_keystone_services(services)
+
+
+def search_services(cloud, name_or_id=None, filters=None):
+    # pylint: disable=protected-access
+    """Search Keystone services ia $OS_INTERFACE.
+
+    It mainly conforms with `Shade
+    <latest/reference/api-microversion-history.html>`_ but allows testing vs
+    public endpoints. It's worth mentioning that it doesn't support keystone
+    v2.
+
+    :param name_or_id: Name or id of the desired service.
+    :param filters: a dict containing additional filters to use. e.g.
+                    {'type': 'network'}.
+
+    :returns: a list of ``munch.Munch`` containing the services description
+
+    :raises: ``OpenStackCloudException`` if something goes wrong during the
+        openstack API call.
+    """
+    services = list_services(cloud)
+    return _utils._filter_list(services, name_or_id, filters)
 
 
 def convert_dict_to_ini(value):
