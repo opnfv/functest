@@ -172,6 +172,7 @@ class RallyBase(singlevm.VmReady2):
 
     @staticmethod
     def create_rally_deployment(environ=None):
+        # pylint: disable=unexpected-keyword-arg
         """Create new rally deployment"""
         # set the architecture to default
         pod_arch = env.get("POD_ARCH")
