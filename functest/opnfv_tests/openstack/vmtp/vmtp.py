@@ -125,6 +125,7 @@ class Vmtp(singlevm.VmReady2):
             conf.write(yaml.dump(vmtp_conf))
 
     def run_vmtp(self):
+        # pylint: disable=unexpected-keyword-arg
         """Run Vmtp and generate charts
 
         Raises: Exception on error
