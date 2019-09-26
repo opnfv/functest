@@ -16,7 +16,6 @@ import os_client_config
 import shade
 from xtesting.core import testcase
 
-from functest.utils import env
 from functest.utils import functest_utils
 
 
@@ -29,7 +28,7 @@ class ConnectionCheck(testcase.TestCase):
         "list_endpoints", "list_floating_ip_pools", "list_floating_ips",
         "list_hypervisors", "list_keypairs", "list_networks", "list_ports",
         "list_role_assignments", "list_roles", "list_routers", "list_servers",
-        "list_services", "list_subnets"]
+        "list_subnets"]
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -48,11 +47,8 @@ class ConnectionCheck(testcase.TestCase):
         try:
             assert self.cloud
             self.start_time = time.time()
-            if env.get('PUBLIC_ENDPOINT_ONLY').lower() == 'true':
-                self.__logger.warning(
-                    "Listing services is skipped "
-                    "because the admin endpoints are unreachable")
-                self.func_list.remove("list_services")
+            self.__logger.debug(
+                "list_services: %s", functest_utils.list_services(self.cloud))
             for func in self.func_list:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
