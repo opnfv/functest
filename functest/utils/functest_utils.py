@@ -145,7 +145,7 @@ def list_services(cloud):
     """Search Keystone services via $OS_INTERFACE.
 
     It mainly conforms with `Shade
-    <latest/reference/api-microversion-history.html>`_ but allows testing vs
+    <https://docs.openstack.org/shade/latest>`_ but allows testing vs
     public endpoints. It's worth mentioning that it doesn't support keystone
     v2.
 
@@ -168,7 +168,7 @@ def search_services(cloud, name_or_id=None, filters=None):
     """Search Keystone services ia $OS_INTERFACE.
 
     It mainly conforms with `Shade
-    <latest/reference/api-microversion-history.html>`_ but allows testing vs
+    <https://docs.openstack.org/shade/latest>`_ but allows testing vs
     public endpoints. It's worth mentioning that it doesn't support keystone
     v2.
 
