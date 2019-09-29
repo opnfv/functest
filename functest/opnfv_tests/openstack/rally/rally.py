@@ -33,6 +33,7 @@ import yaml
 from functest.core import singlevm
 from functest.utils import config
 from functest.utils import env
+from functest.utils import functest_utils
 
 LOGGER = logging.getLogger(__name__)
 
@@ -528,7 +529,7 @@ class RallyBase(singlevm.VmReady2):
         self.network_extensions = self.cloud.get_network_extensions()
         self.flavor_alt = self.create_flavor_alt()
         self.services = [service.name for service in
-                         self.cloud.list_services()]
+                         functest_utils.list_services(self.cloud)]
 
         LOGGER.debug("flavor: %s", self.flavor_alt)
 
