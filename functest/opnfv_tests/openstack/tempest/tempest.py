@@ -567,8 +567,7 @@ class TempestCommon(singlevm.VmReady2):
         self.deployment_dir = self.get_verifier_deployment_dir(
             self.verifier_id, self.deployment_id)
 
-        compute_cnt = len(self.orig_cloud.list_hypervisors())
-
+        compute_cnt = self.count_active_hypervisors()
         self.image_alt = self.publish_image_alt()
         self.flavor_alt = self.create_flavor_alt()
         LOGGER.debug("flavor: %s", self.flavor_alt)
