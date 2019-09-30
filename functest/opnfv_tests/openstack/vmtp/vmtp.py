@@ -60,7 +60,7 @@ class Vmtp(singlevm.VmReady2):
         (_, self.pubkey_filename) = tempfile.mkstemp()
 
     def check_requirements(self):
-        if len(self.orig_cloud.list_hypervisors()) < 2:
+        if self.count_active_hypervisors() < 2:
             self.__logger.warning("Vmtp requires at least 2 hypervisors")
             self.is_skipped = True
             self.project.clean()
