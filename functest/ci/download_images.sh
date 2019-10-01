@@ -15,4 +15,5 @@ http://repository.cloudifysource.org/cloudify/19.01.24/community-release/cloudif
 http://testresults.opnfv.org/functest/vyos-1.1.8-amd64.qcow2
 http://testresults.opnfv.org/functest/shaker-image.qcow2
 http://testresults.opnfv.org/functest/shaker-image-arm64.qcow2
+http://testresults.opnfv.org/functest/kloudbuster-7.1.1.qcow2
 EOF
