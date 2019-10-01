@@ -479,6 +479,20 @@ tiers:
                 run:
                     name: shaker
 
+            -
+                case_name: kloudbuster
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    KloudBuster is a tool that can load the data plane or
+                    storage infrastructure of any OpenStack cloud at massive
+                    scale and measure how well the cloud behaves under load
+                    where it matters: from the VMs standpoint, where cloud
+                    applications run.
+                run:
+                    name: kloudbuster
+
     -
         name: vnf
         order: 4
