@@ -48,7 +48,7 @@ class Shaker(singlevm.SingleVm2):
         self.role = None
 
     def check_requirements(self):
-        if len(self.orig_cloud.list_hypervisors()) < 2:
+        if self.count_active_hypervisors() < 2:
             self.__logger.warning("Shaker requires at least 2 hypervisors")
             self.is_skipped = True
             self.project.clean()

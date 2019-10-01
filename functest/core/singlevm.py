@@ -257,6 +257,14 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     self.__logger.debug(
                         "Orphan security group %s in use", sec_group.id)
 
+    def count_active_hypervisors(self):
+        """Count all hypervisors which are up."""
+        compute_cnt = 0
+        for hypervisor in self.orig_cloud.list_hypervisors():
+            if hypervisor['state'] == 'up':
+                compute_cnt += 1
+        return compute_cnt
+
     def run(self, **kwargs):
         """Boot the new VM
 

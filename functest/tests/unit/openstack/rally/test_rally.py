@@ -291,8 +291,8 @@ class OSRallyTesting(unittest.TestCase):
     def test_prepare_run_flavor_alt_creation_failed(self, *args):
         # pylint: disable=unused-argument
         self.rally_base.stests = ['test1', 'test2']
-        with mock.patch.object(self.rally_base.cloud,
-                               'list_hypervisors') as mock_list_hyperv, \
+        with mock.patch.object(self.rally_base, 'count_active_hypervisors') \
+            as mock_list_hyperv, \
             mock.patch.object(self.rally_base, 'create_flavor_alt',
                               side_effect=Exception) \
                 as mock_create_flavor:

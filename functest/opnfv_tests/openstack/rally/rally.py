@@ -525,7 +525,7 @@ class RallyBase(singlevm.VmReady2):
         shutil.copytree(task_macro, macro_dir)
 
         self.update_keystone_default_role()
-        self.compute_cnt = len(self.cloud.list_hypervisors())
+        self.compute_cnt = self.count_active_hypervisors()
         self.network_extensions = self.cloud.get_network_extensions()
         self.flavor_alt = self.create_flavor_alt()
         self.services = [service.name for service in
