@@ -3,6 +3,7 @@ FROM opnfv/functest-core
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 ARG VMTP_TAG=master
+ARG KLOUBUSTER_TAG=master
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -19,16 +20,21 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://review.opendev.org/x/vmtp.git $VMTP_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
+    git init /src/kloudbuster && \
+    (cd /src/kloudbuster && \
+        git fetch --tags https://review.opendev.org/x/kloudbuster.git $KLOUBUSTER_TAG && \
+        git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/kloudbuster/ && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/vmtp && \
+        /src/vmtp /src/kloudbuster && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     git init /src/neutron && \
     (cd /src/neutron && \
         git fetch --tags https://opendev.org/openstack/neutron.git $OPENSTACK_TAG && \
         git checkout FETCH_HEAD) && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/kloudbuster /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
