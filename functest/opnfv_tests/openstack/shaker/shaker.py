@@ -105,7 +105,7 @@ class Shaker(singlevm.SingleVm2):
             'export OS_PASSWORD="{}" && '
             '{}'
             'env && '
-            'timeout {} shaker --image-name {} --flavor-name {} '
+            'timeout {} shaker --debug --image-name {} --flavor-name {} '
             '--server-endpoint {}:9000 --external-net {} --dns-nameservers {} '
             '--scenario openstack/full_l2,'
             'openstack/full_l3_east_west,'
