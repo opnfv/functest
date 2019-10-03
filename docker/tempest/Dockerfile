@@ -3,8 +3,8 @@ FROM opnfv/functest-core:hunter
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
 ARG TEMPEST_TAG=21.0.0
-ARG RALLY_TAG=1.3.0
-ARG RALLY_OPENSTACK_TAG=1.3.0
+ARG RALLY_TAG=1.5.1
+ARG RALLY_OPENSTACK_TAG=1.5.0
 ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 RUN apk --no-cache add --virtual .build-deps --update \

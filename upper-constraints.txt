@@ -19,7 +19,7 @@ xtesting===0.62.0
 networking-bgpvpn===9.0.0
 networking-sfc===7.0.0
 neutron===13.0.2
-os-faults===0.1.18
+os-faults===0.2.1
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 pylint===1.9.5;python_version=='2.7'
