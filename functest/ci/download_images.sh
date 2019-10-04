@@ -13,6 +13,5 @@ http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-aarch64-disk.img
 https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 http://repository.cloudifysource.org/cloudify/19.01.24/community-release/cloudify-docker-manager-community-19.01.24.tar
 http://testresults.opnfv.org/functest/vyos-1.1.8-amd64.qcow2
-http://testresults.opnfv.org/functest/shaker-image.qcow2
-http://testresults.opnfv.org/functest/shaker-image-arm64.qcow2
+http://testresults.opnfv.org/functest/shaker-image-1.3.0+stretch.qcow2
 EOF

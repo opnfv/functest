@@ -399,6 +399,8 @@ tiers:
                     like iperf, iperf3 and netperf (with help of flent). Shaker
                     is able to deploy OpenStack instances and networks in
                     different topologies.
+                dependencies:
+                    - POD_ARCH: '^(?!aarch64$)'
                 run:
                     name: shaker
 

@@ -41,9 +41,6 @@ os:
         image:
             /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 
-    shaker:
-        image: /home/opnfv/functest/images/shaker-image-arm64.qcow2
-
     neutron_trunk:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
