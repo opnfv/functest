@@ -31,11 +31,11 @@ class Shaker(singlevm.SingleVm2):
 
     __logger = logging.getLogger(__name__)
 
-    filename = '/home/opnfv/functest/images/shaker-image.qcow2'
+    filename = '/home/opnfv/functest/images/shaker-image-1.3.0+stretch.qcow2'
     flavor_ram = 512
     flavor_vcpus = 1
     flavor_disk = 3
-    username = 'ubuntu'
+    username = 'debian'
     port = 9000
     ssh_connect_loops = 12
     create_server_timeout = 300
