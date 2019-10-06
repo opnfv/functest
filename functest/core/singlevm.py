@@ -256,12 +256,21 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     self.__logger.debug(
                         "Orphan security group %s in use", sec_group.id)
 
+    def count_hypervisors(self):
+        """Count hypervisors."""
+        if env.get('SKIP_DOWN_HYPERVISORS').lower() == 'false':
+            return len(self.cloud.list_hypervisors())
+        return self.count_active_hypervisors()
+
     def count_active_hypervisors(self):
         """Count all hypervisors which are up."""
         compute_cnt = 0
         for hypervisor in self.orig_cloud.list_hypervisors():
             if hypervisor['state'] == 'up':
                 compute_cnt += 1
+            else:
+                self.__logger.warning(
+                    "%s is down", hypervisor['hypervisor_hostname'])
         return compute_cnt
 
     def run(self, **kwargs):
