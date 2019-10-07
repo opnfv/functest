@@ -5,6 +5,9 @@
     - role: collivier.xtesting
       project: functest
       gerrit_project: functest
+      docker_tags:
+        - jerma:
+            branch: stable/iruya
       builds:
         dependencies:
           - repo: _
