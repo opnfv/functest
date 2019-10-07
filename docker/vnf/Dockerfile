@@ -1,7 +1,7 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:jerma
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/jerma
+ARG OPENSTACK_TAG=stable/train
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia

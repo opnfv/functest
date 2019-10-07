@@ -1,8 +1,8 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:jerma
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
-ARG VMTP_TAG=master
+ARG BRANCH=stable/jerma
+ARG OPENSTACK_TAG=stable/train
+ARG VMTP_TAG=822e7c5fe48480460da6d59a2805cf4c7d84026b
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
