@@ -20,54 +20,54 @@ arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=("--pull=true" --no-cache "--force-rm=true")
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
+    -e "s|opnfv/functest-core:jerma|${repo}/functest-core:amd64-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-tempest|${repo}/functest-tempest:amd64-latest|g" {} +
+    -e "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:amd64-jerma|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
-            -t "${repo}/functest-${dir##**/}:amd64-latest" .)
-        docker push "${repo}/functest-${dir##**/}:amd64-latest"
+            -t "${repo}/functest-${dir##**/}:amd64-jerma" .)
+        docker push "${repo}/functest-${dir##**/}:amd64-jerma"
     [ "${dir}" != "docker/core" ] &&
-        (docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true)
+        (docker rmi "${repo}/functest-${dir##**/}:amd64-jerma" || true)
 done
 [ -n "${amd64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.10 || true)
+    (docker rmi "${repo}/functest-core:amd64-jerma" alpine:3.10 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
     -e "s|alpine:3.10|multiarch/alpine:arm64-v3.10|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
+    -e "s|opnfv/functest-core:jerma|${repo}/functest-core:arm64-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-tempest|${repo}/functest-tempest:arm64-latest|g" {} +
+    -e "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:arm64-jerma|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
-        -t "${repo}/functest-${dir##**/}:arm64-latest" .)
-    docker push "${repo}/functest-${dir##**/}:arm64-latest"
+        -t "${repo}/functest-${dir##**/}:arm64-jerma" .)
+    docker push "${repo}/functest-${dir##**/}:arm64-jerma"
     [ "${dir}" != "docker/core" ] &&
-        (docker rmi "${repo}/functest-${dir##**/}:arm64-latest" || true)
+        (docker rmi "${repo}/functest-${dir##**/}:arm64-jerma" || true)
 done
 [ -n "${arm64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:arm64-latest" \
+    (docker rmi "${repo}/functest-core:arm64-jerma" \
         multiarch/alpine:arm64-v3.10 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
     -e "s|alpine:3.10|multiarch/alpine:armhf-v3.10|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core|${repo}/functest-core:arm-latest|g" {} +
+    -e "s|opnfv/functest-core:jerma|${repo}/functest-core:arm-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-tempest|${repo}/functest-tempest:arm-latest|g" {} +
+    -e "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:arm-jerma|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
-        -t "${repo}/functest-${dir##**/}:arm-latest" .)
-    docker push "${repo}/functest-${dir##**/}:arm-latest"
+        -t "${repo}/functest-${dir##**/}:arm-jerma" .)
+    docker push "${repo}/functest-${dir##**/}:arm-jerma"
     [ "${dir}" != "docker/core" ] &&
-        (docker rmi "${repo}/functest-${dir##**/}:arm-latest" || true)
+        (docker rmi "${repo}/functest-${dir##**/}:arm-jerma" || true)
 done
 [ -n "${arm_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:arm-latest" \
+    (docker rmi "${repo}/functest-core:arm-jerma" \
         multiarch/alpine:armhf-v3.10 || true)
 find . -name Dockerfile -exec git checkout {} +
 

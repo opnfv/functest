@@ -1,12 +1,12 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:jerma
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/jerma
+ARG OPENSTACK_TAG=stable/train
 ARG REFSTACK_TARGET=2018.11
-ARG PATROLE_TAG=master
-ARG NEUTRON_TEMPEST_TAG=master
-ARG BARBICAN_TAG=master
-ARG OCTAVIA_TAG=master
+ARG PATROLE_TAG=0.7.0
+ARG NEUTRON_TEMPEST_TAG=0.6.0
+ARG BARBICAN_TAG=0.3.0
+ARG OCTAVIA_TAG=1.2.0
 
 RUN apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
