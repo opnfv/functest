@@ -1,4 +1,4 @@
-git+https://gerrit.opnfv.org/gerrit/functest#egg=functest
+git+https://gerrit.opnfv.org/gerrit/functest@stable/jerma#egg=functest
 git+https://gerrit.opnfv.org/gerrit/releng#egg=opnfv&subdirectory=modules
 git+https://gerrit.opnfv.org/gerrit/snaps@0dacfaa2fbd2dfe7fc9d438b9350a0187506e61c#egg=snaps
 git+https://gerrit.opnfv.org/gerrit/barometer#egg=baro_tests
@@ -19,9 +19,9 @@ xtesting===0.70.0
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest#egg=tempest
-git+https://opendev.org/openstack/rally.git#egg=rally
-git+https://opendev.org/openstack/rally-openstack.git#egg=rally-openstack
-git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
+git+https://opendev.org/openstack/rally.git@2.0.0#egg=rally
+git+https://opendev.org/openstack/rally-openstack.git@1.5.0#egg=rally-openstack
+git+https://github.com/xrally/xrally-kubernetes.git@1.1.1#egg=xrally-kubernetes
 git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
 pylint===1.9.5;python_version=='2.7'
 pylint===2.3.1;python_version=='3.7'
