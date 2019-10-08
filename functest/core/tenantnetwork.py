@@ -20,13 +20,12 @@ This classes could be reused by more complexed scenarios (Single VM)
 
 import logging
 import os
-import random
-import string
 import time
 import uuid
 
 import os_client_config
 import shade
+from tempest.lib.common.utils import data_utils
 from xtesting.core import testcase
 
 from functest.utils import config
@@ -56,9 +55,7 @@ class NewProject():
         """Create projects/users"""
         assert self.orig_cloud
         assert self.case_name
-        self.password = ''.join(random.choice(
-            string.ascii_letters + string.digits +
-            '!()*+,-.<=>?@[]^_{|}~') for _ in range(30))
+        self.password = data_utils.rand_password().replace('%', '!')
         self.__logger.debug("password: %s", self.password)
         self.domain = self.orig_cloud.get_domain(
             name_or_id=self.orig_cloud.auth.get(
