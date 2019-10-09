@@ -7,7 +7,7 @@
       gerrit_project: functest
       docker_tags:
         - jerma:
-            branch: stable/iruya
+            branch: stable/jerma
       builds:
         dependencies:
           - repo: _
