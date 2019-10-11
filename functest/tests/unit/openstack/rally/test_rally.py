@@ -103,15 +103,19 @@ class OSRallyTesting(unittest.TestCase):
         mock_method.assert_called()
         mock_os_makedirs.assert_called()
 
-    def test_get_task_id_default(self):
-        cmd_raw = b'Task 1: started'
-        self.assertEqual(self.rally_base.get_task_id(cmd_raw),
-                         '1')
+    @mock.patch('subprocess.check_output', return_value=b'1\n')
+    def test_get_task_id_default(self, *args):
+        tag = 'nova'
+        self.assertEqual(self.rally_base.get_task_id(tag), '1')
+        args[0].assert_called_with(
+            ['rally', 'task', 'list', '--tag', tag, '--uuids-only'])
 
-    def test_get_task_id_missing_id(self):
-        cmd_raw = b''
-        self.assertEqual(self.rally_base.get_task_id(cmd_raw),
-                         None)
+    @mock.patch('subprocess.check_output', return_value=b'\n')
+    def test_get_task_id_missing_id(self, *args):
+        tag = 'nova'
+        self.assertEqual(self.rally_base.get_task_id(tag), '')
+        args[0].assert_called_with(
+            ['rally', 'task', 'list', '--tag', tag, '--uuids-only'])
 
     def test_task_succeed_fail(self):
         json_raw = json.dumps({})
