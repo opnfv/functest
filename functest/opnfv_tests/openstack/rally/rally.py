@@ -25,6 +25,7 @@ import time
 import pkg_resources
 import prettytable
 from ruamel.yaml import YAML
+import six
 from six.moves import configparser
 from xtesting.core import testcase
 import yaml
@@ -234,20 +235,17 @@ class RallyBase(singlevm.VmReady2):
                 rconfig.write(config_file)
 
     @staticmethod
-    def get_task_id(cmd_raw):
+    def get_task_id(tag):
         """
         Get task id from command rally result.
 
-        :param cmd_raw:
+        :param tag:
         :return: task_id as string
         """
-        taskid_re = re.compile('^Task +(.*): started$')
-        for line in cmd_raw.splitlines(True):
-            line = line.strip()
-            match = taskid_re.match(line.decode("utf-8"))
-            if match:
-                return match.group(1)
-        return None
+        cmd = ["rally", "task", "list", "--tag", tag, "--uuids-only"]
+        output = subprocess.check_output(cmd).decode("utf-8").rstrip()
+        LOGGER.info("%s: %s", " ".join(cmd), output)
+        return output
 
     @staticmethod
     def task_succeed(json_raw):
@@ -429,20 +427,19 @@ class RallyBase(singlevm.VmReady2):
         """Run a task."""
         LOGGER.info('Starting test scenario "%s" ...', test_name)
         LOGGER.debug('running command: %s', self.run_cmd)
-        proc = subprocess.Popen(self.run_cmd, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        try:
-            output = proc.communicate(timeout=self.task_timeout)[0]
-        except subprocess.TimeoutExpired:
-            proc.kill()
-            proc.communicate()
-            LOGGER.error("Failed to complete run task")
-            raise Exception("Failed to complete run task")
-        task_id = self.get_task_id(output)
+        if six.PY3:
+            subprocess.call(
+                self.run_cmd, timeout=self.task_timeout,
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        else:
+            with open(os.devnull, 'wb') as devnull:
+                subprocess.call(
+                    self.run_cmd, timeout=self.task_timeout,
+                    stdout=devnull, stderr=devnull)
+        task_id = self.get_task_id(test_name)
         LOGGER.debug('task_id : %s', task_id)
-        if task_id is None:
+        if not task_id:
             LOGGER.error("Failed to retrieve task_id")
-            LOGGER.error("Result:\n%s", output.decode("utf-8"))
             raise Exception("Failed to retrieve task id")
         self._save_results(test_name, task_id)
 
@@ -532,7 +529,8 @@ class RallyBase(singlevm.VmReady2):
         if self.file_is_empty(file_name):
             LOGGER.info('No tests for scenario "%s"', test_name)
             return False
-        self.run_cmd = (["rally", "task", "start", "--abort-on-sla-failure",
+        self.run_cmd = (["rally", "task", "start", "--tag", test_name,
+                         "--abort-on-sla-failure",
                          "--task", self.task_file, "--task-args",
                          str(self.build_task_args(test_name))])
         return True
