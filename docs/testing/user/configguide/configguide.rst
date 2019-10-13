@@ -351,7 +351,7 @@ By default all the logs are put un /home/opnfv/functest/results/functest.log.
 If you want to have more logs in console, you may edit the logging.ini file
 manually.
 Connect on the docker then edit the file located in
-/usr/lib/python2.7/site-packages/xtesting/ci/logging.ini
+/usr/lib/python3.6/site-packages/xtesting/ci/logging.ini
 
 Change wconsole to console in the desired module to get more traces.
 
@@ -361,8 +361,8 @@ Configuration
 
 You may also directly modify the python code or the configuration file (e.g.
 testcases.yaml used to declare test constraints) under
-/usr/lib/python2.7/site-packages/xtesting and
-/usr/lib/python2.7/site-packages/functest
+/usr/lib/python3.6/site-packages/xtesting and
+/usr/lib/python3.6/site-packages/functest
 
 
 Tips
