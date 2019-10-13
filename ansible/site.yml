@@ -69,6 +69,7 @@
             - networking-bgpvpn
             - networking-sfc
             - barbican
+            - octavia
         - container: functest-benchmarking
           tests:
             - rally_full
