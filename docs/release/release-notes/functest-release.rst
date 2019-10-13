@@ -117,14 +117,20 @@ Key changes
 Key benefits
 ------------
 
- * Functest master is conformed with OpenStack Gates
- * Functest VNF testcases could be executed in Openstack Gates
+ * the enduser can easily deploy its own `Functest toolchains`_ in few commands
+ * everyone can pick stable Functest rolling releases (latest included)
+ * Functest can verify VIM in production even on `Raspberry PI`_
+ * all testcases can run in parallel (tested with 4 executors in our gates)
+ * no remaining resources detected in our gates after multiple runs
+
+.. _`Functest toolchains`: https://wiki.opnfv.org/pages/viewpage.action?pageId=32015004
+.. _`Raspberry PI`: https://wiki.opnfv.org/display/functest/Run+Functest+containers+on+Raspberry+PI
 
 Code quality
 ------------
 
  * pylint: 10.00/10
- * code coverage: 71%
+ * code coverage: 70%
 
 Useful links
 ============
