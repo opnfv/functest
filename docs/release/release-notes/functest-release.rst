@@ -32,21 +32,26 @@ The internal test cases are:
  * vping_ssh
  * vping_userdata
  * cinder_test
- * odl
  * tempest_smoke
+ * odl
  * neutron-tempest-plugin-api
  * rally_sanity
  * refstack_compute
  * refstack_object
  * refstack_platform
+ * tempest_full
+ * tempest_scenario
+ * tempest_slow
  * patrole
+ * barbican
  * neutron_trunk
  * networking-bgpvpn
  * networking-sfc
- * barbican
- * tempest_full
- * tempest_scenario
+ * octavia
  * rally_full
+ * rally_jobs
+ * vmtp
+ * shaker
  * cloudify
  * cloudify_ims
  * heat_ims
