@@ -73,7 +73,7 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Repository branch**                | stable/jerma                         |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -108,23 +108,31 @@ Version change
 Key changes
 -----------
 
- * update testcases and containers to `OpenStack master`_ and to
-   `Kubernetes master`_
+ * update testcases and containers to `OpenStack Train`_ and to
+   `Kubernetes v1.16.1`_
+ * switch to Python 3.7 as default Python version (Python 2.7 is still
+   supported)
+ * add xrally_kubernetes
 
-.. _`OpenStack master`: https://github.com/openstack/requirements/blob/master/upper-constraints.txt
-.. _`Kubernetes master`: https://github.com/kubernetes/kubernetes
+.. _`OpenStack Train`: https://github.com/openstack/requirements/blob/stable/train/upper-constraints.txt
+.. _`Kubernetes v1.16.1`: https://github.com/kubernetes/kubernetes/tree/v1.16.1
 
 Key benefits
 ------------
 
- * Functest master is conformed with OpenStack Gates
- * Functest VNF testcases could be executed in Openstack Gates
+ * the enduser can easily deploy its own `Functest toolchains`_ in few commands
+ * everyone can pick stable Functest rolling releases (latest included)
+ * Functest can verify VIM in production even on `Raspberry PI`_
+ * all testcases can run in parallel (tested with 4 executors in our gates)
+ * no remaining resources detected in our gates after multiple runs
+
+.. _`Functest toolchains`: https://wiki.opnfv.org/pages/viewpage.action?pageId=32015004
 
 Code quality
 ------------
 
  * pylint: 10.00/10
- * code coverage: 71%
+ * code coverage: 70%
 
 Useful links
 ============
