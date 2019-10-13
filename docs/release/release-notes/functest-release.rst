@@ -72,7 +72,7 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Repository branch**                | stable/iruya                         |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -108,23 +108,35 @@ Key changes
 -----------
 
  * update testcases and containers to `OpenStack Stein`_ and to
-   `Kubernetes v1.14.1`_
+   `Kubernetes v1.15.4`_
+ * switch to Python 3.6 as default Python version (Python 2.7 is still
+   supported)
+ * add tempest_slow, octavia, refstack_object and refstack_platform
+ * add new Rally scenarios verifying Barbican and Swift
+ * allow running Rally without any external network
+ * fix the last resource leaks in the upstream projects (Tempest and Neutron
+   Tempest plugin)
+ * run all unit tests and all linters via CircleCI
 
 .. _`OpenStack Stein`: https://github.com/openstack/requirements/blob/stable/stein/upper-constraints.txt
-.. _`Kubernetes v1.14.1`: https://github.com/kubernetes/kubernetes/tree/v1.14.1
+.. _`Kubernetes v1.15.4`: https://github.com/kubernetes/kubernetes/tree/v1.15.4
 
 Key benefits
 ------------
 
- * the enduser can leverage on Functest `right after the upstream releases`_
+ * the enduser can easily deploy its own `Functest toolchains`_ in few commands
+ * everyone can pick stable Functest rolling releases (latest included)
+ * Functest can verify VIM in production even on `Raspberry PI`_
+ * all testcases can run in parallel (tested with 4 executors in our gates)
+ * no remaining resources detected in our gates after multiple runs
 
-.. _`right after the upstream releases`: https://lists.opnfv.org/g/opnfv-tsc/message/5181
+.. _`Functest toolchains`: https://wiki.opnfv.org/pages/viewpage.action?pageId=32015004
 
 Code quality
 ------------
 
  * pylint: 10.00/10
- * code coverage: 71%
+ * code coverage: 70%
 
 Useful links
 ============
