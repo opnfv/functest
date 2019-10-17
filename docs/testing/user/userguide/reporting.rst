@@ -48,7 +48,7 @@ and features) corresponding to this scenario.
 All the testcases (X) listed in the table are runnable on os-odl_l2-nofeature
 scenarios.
 Please note that other test cases (e.g. sfc_odl, bgpvpn) need ODL configuration
-addons and, as a consequence, specific scenario.
+add-ons and, as a consequence, specific scenario.
 There are not considered as runnable on the generic odl_l2 scenario.
 
 
@@ -82,7 +82,7 @@ Therefore the scoring provides 3 types of indicators:
   * the maturity: if the percentage (scoring/target scoring * 100) is high, it
     means that all the tests are PASS
   * the stability: as the number of iteration is included in the calculation,
-    the pecentage can be high only if the scenario is run regularly (at least
+    the percentage can be high only if the scenario is run regularly (at least
     more than 4 iterations over the last 10 days in CI)
 
 In any case, the scoring is used to give feedback to the other projects and
