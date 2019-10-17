@@ -98,7 +98,7 @@ Docker tag for iruya: iruya
 Documents
 ---------
 
- * Functests Guides: https://functest.readthedocs.io/en/stable-iruya/
+ * Functest Guides: https://functest.readthedocs.io/en/stable-iruya/
  * API Docs: https://functest-api.readthedocs.io/en/stable-iruya/
 
 Version change

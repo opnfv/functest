@@ -176,8 +176,8 @@ Functest Dockers for Kubernetes deployment
 Docker images are available on the dockerhub:
 
   * opnfv/functest-kubernetes-core
-  * opnfv/functest-kubernetest-healthcheck
-  * opnfv/functest-kubernetest-smoke
+  * opnfv/functest-kubernetes-healthcheck
+  * opnfv/functest-kubernetes-smoke
 
 Preparing your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -226,7 +226,7 @@ Results shall be displayed as follows::
 Environment variables
 =====================
 
-Several environement variables may be specified:
+Several environment variables may be specified:
 
   * INSTALLER_IP=<Specific IP Address>
   * DEPLOY_SCENARIO=<vim>-<controller>-<nfv_feature>-<ha_mode>
