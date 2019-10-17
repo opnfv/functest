@@ -99,7 +99,7 @@ Docker tag for jerma: jerma
 Documents
 ---------
 
- * Functests Guides: https://functest.readthedocs.io/en/stable-jerma/
+ * Functest Guides: https://functest.readthedocs.io/en/stable-jerma/
  * API Docs: https://functest-api.readthedocs.io/en/stable-jerma/
 
 Version change
