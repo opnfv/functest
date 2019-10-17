@@ -99,7 +99,7 @@ Docker tag for master: latest
 Documents
 ---------
 
- * Functests Guides: https://functest.readthedocs.io/en/latest/
+ * Functest Guides: https://functest.readthedocs.io/en/latest/
  * API Docs: https://functest-api.readthedocs.io/en/latest/
 
 Version change

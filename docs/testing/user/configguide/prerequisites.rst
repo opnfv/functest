@@ -92,4 +92,4 @@ should thus be known. Ensure you can reach each node in the SUT, from the
 Jumphost using the 'ping' command using the respective IP address on the
 public/external network for each node in the SUT. The details of how to
 determine the needed IP addresses for each node in the SUT may vary according
-to the used installer and are therefore ommitted here.
+to the used installer and are therefore omitted here.
