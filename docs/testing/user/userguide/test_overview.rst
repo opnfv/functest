@@ -18,7 +18,7 @@ The current list of test suites can be distributed over 5 main domains:
 Functest test suites are also distributed in the OPNFV testing categories:
 healthcheck, smoke, features, components, performance, VNF, Stress tests.
 
-All the Healthcheck and smoke tests of a given scenario must be succesful to
+All the Healthcheck and smoke tests of a given scenario must be successful to
 validate the scenario for the release.
 
 +-------------+---------------+------------+----------------------------------+
@@ -129,7 +129,7 @@ validate the scenario for the release.
 | VNF         | vnf           | cloudify   | Example of a real VNF deployment |
 |             |               | \_ims      | to show the NFV capabilities of  |
 |             |               |            | the platform. The IP Multimedia  |
-|             |               |            | Subsytem is a typical Telco test |
+|             |               |            | Subsystem is a typical Telco test|
 |             |               |            | case, referenced by ETSI.        |
 |             |               |            | It provides a fully functional   |
 |             |               |            | VoIP System                      |
@@ -224,7 +224,7 @@ and DEPLOY_SCENARIO) to automatically determine the valid test cases, for each
 given environment.
 
 A convenience Functest CLI utility is also available to simplify setting up the
-Functest evironment, management of the OpenStack environment (e.g. resource
+Functest environment, management of the OpenStack environment (e.g. resource
 clean-up) and for executing tests.
 The Functest CLI organised the testcase into logical Tiers, which contain in
 turn one or more testcases. The CLI allows execution of a single specified
