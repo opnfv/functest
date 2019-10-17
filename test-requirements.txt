@@ -16,3 +16,4 @@ bashate # Apache-2.0
 lfdocs-conf
 sphinx-opnfv-theme
 bandit
+sphinxcontrib-spelling

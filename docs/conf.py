@@ -175,3 +175,5 @@ texinfo_documents = [
      'One line description of project.',
      'Miscellaneous'),
 ]
+
+spelling_word_list_filename = 'spelling_wordlist.txt'
