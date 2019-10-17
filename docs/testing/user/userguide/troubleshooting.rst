@@ -133,8 +133,8 @@ here::
     vPing_ssh- ERROR - Cannot establish connection to IP xxx.xxx.xxx.xxx. Aborting
 
 If this is displayed, stop the test or wait for it to finish, if you have used
-the special method of test invocation with specific supression of OpenStack
-resource clean-up, as explained earler. It means that the Container can not
+the special method of test invocation with specific suppression of OpenStack
+resource clean-up, as explained earlier. It means that the Container can not
 reach the Public/External IP assigned to the instance **opnfv-vping-2**. There
 are many possible reasons, and they really depend on the chosen scenario. For
 most of the ODL-L3 and ONOS scenarios this has been noticed and it is a known
@@ -158,7 +158,7 @@ container::
     ping <public IP>
 
 If the ping does not return anything, try to ping from the Host where the
-Docker container is running. If that solves the problem, check the iptable
+Docker container is running. If that solves the problem, check the iptables
 rules because there might be some rules rejecting ICMP or TCP traffic
 coming/going from/to the container.
 
