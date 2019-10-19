@@ -38,6 +38,7 @@ class ClearwaterTesting(unittest.TestCase):
                  'cookies': ""}
         self.mock_post_200.configure_mock(**attrs)
 
+
 if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
     unittest.main(verbosity=2)
