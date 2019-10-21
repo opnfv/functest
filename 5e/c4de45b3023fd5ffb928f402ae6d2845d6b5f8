@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+1: Eric Debeau <eric.debeau@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 21 Oct 2019 19:23:27 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/functest/+/68649
+Project: functest
+Branch: refs/heads/stable/jerma
