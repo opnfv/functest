@@ -95,6 +95,7 @@ class TempestCommon(singlevm.VmReady2):
         except Exception:  # pylint: disable=broad-except
             pass
         self.deny_skipping = kwargs.get("deny_skipping", False)
+        self.tests_count = kwargs.get("tests_count", 0)
 
     def check_services(self):
         """Check the mandatory services."""
@@ -635,6 +636,9 @@ class TempestCommon(singlevm.VmReady2):
         """The overall result of the test."""
         skips = self.details.get("skipped_number", 0)
         if skips > 0 and self.deny_skipping:
+            return testcase.TestCase.EX_TESTCASE_FAILED
+        if self.tests_count and (
+                self.details.get("tests_number", 0) != self.tests_count):
             return testcase.TestCase.EX_TESTCASE_FAILED
         return super(TempestCommon, self).is_successful()
 
