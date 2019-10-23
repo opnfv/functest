@@ -1,0 +1,15 @@
+---
+-
+    scenarios:
+        - os-*
+    tests:
+        - neutron_tempest_plugin.api.admin.test_floating_ips_admin_actions.FloatingIPAdminTestJSON.test_associate_floating_ip_with_port_from_another_project
+        - neutron_tempest_plugin.api.admin.test_quotas.QuotasTest.test_detail_quotas
+        - neutron_tempest_plugin.api.admin.test_quotas.QuotasTest.test_quotas
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_floatingip_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_network_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_port_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_router_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_security_group_rule_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_security_group_when_quotas_is_full
+        - neutron_tempest_plugin.api.admin.test_quotas_negative.QuotasAdminNegativeTestJSON.test_create_subnet_when_quotas_is_full
