@@ -50,6 +50,9 @@ class TempestCommon(singlevm.VmReady2):
     tempest_blacklist = pkg_resources.resource_filename(
         'functest',
         'opnfv_tests/openstack/tempest/custom_tests/blacklist.yaml')
+    tempest_public_blacklist = pkg_resources.resource_filename(
+        'functest',
+        'opnfv_tests/openstack/tempest/custom_tests/public_blacklist.yaml')
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -350,7 +353,7 @@ class TempestCommon(singlevm.VmReady2):
             LOGGER.info("%s\n%s", cmd, output.decode("utf-8"))
         os.remove('/etc/tempest.conf')
 
-    def apply_tempest_blacklist(self):
+    def apply_tempest_blacklist(self, black_list):
         """Exclude blacklisted test cases."""
         LOGGER.debug("Applying tempest blacklist...")
         if os.path.exists(self.raw_list):
@@ -363,7 +366,7 @@ class TempestCommon(singlevm.VmReady2):
             deploy_scenario = env.get('DEPLOY_SCENARIO')
             if bool(deploy_scenario):
                 # if DEPLOY_SCENARIO is set we read the file
-                black_list_file = open(self.tempest_blacklist)
+                black_list_file = open(black_list)
                 black_list_yaml = yaml.safe_load(black_list_file)
                 black_list_file.close()
                 for item in black_list_yaml:
@@ -602,7 +605,10 @@ class TempestCommon(singlevm.VmReady2):
             shutil.copy("/etc/rally/rally.conf", self.res_dir)
             self.configure(**kwargs)
             self.generate_test_list(**kwargs)
-            self.apply_tempest_blacklist()
+            self.apply_tempest_blacklist(TempestCommon.tempest_blacklist)
+            if env.get('PUBLIC_ENDPOINT_ONLY').lower() == 'true':
+                self.apply_tempest_blacklist(
+                    TempestCommon.tempest_public_blacklist)
             self.run_verifier_tests(**kwargs)
             self.parse_verifier_result()
             rally.RallyBase.verify_report(
