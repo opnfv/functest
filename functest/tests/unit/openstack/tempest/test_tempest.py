@@ -125,7 +125,8 @@ class OSTempestTesting(unittest.TestCase):
                               return_value=['test1', 'test2']):
             self.tempestcommon.tempest_blacklist = Exception
             os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
-            self.tempestcommon.apply_tempest_blacklist()
+            self.tempestcommon.apply_tempest_blacklist(
+                self.tempestcommon.tempest_blacklist)
             obj = mock_open()
             obj.write.assert_any_call('test1\n')
             obj.write.assert_any_call('test2\n')
@@ -147,7 +148,8 @@ class OSTempestTesting(unittest.TestCase):
             mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                        'yaml.safe_load', return_value=item_dict):
             os.environ['DEPLOY_SCENARIO'] = 'deploy_scenario'
-            self.tempestcommon.apply_tempest_blacklist()
+            self.tempestcommon.apply_tempest_blacklist(
+                self.tempestcommon.tempest_blacklist)
             obj = mock_open()
             obj.write.assert_any_call('test1\n')
             self.assertFalse(obj.write.assert_any_call('test2\n'))
