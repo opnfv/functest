@@ -207,6 +207,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
+                tests_count: 219
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Compute testcases.
@@ -223,6 +224,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
+                tests_count: 57
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Object testcases.
@@ -239,6 +241,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
+                tests_count: 275
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Platform testcases.
