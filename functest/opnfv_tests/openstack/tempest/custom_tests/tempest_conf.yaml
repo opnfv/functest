@@ -26,3 +26,6 @@ volume-feature-enabled:
     backup: true
 load_balancer:
     test_with_noop: true
+neutron_plugin_options:
+    agent_availability_zone: nova
+    available_type_drivers: flat,geneve,vlan,gre,local,vxlan
