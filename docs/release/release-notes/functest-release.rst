@@ -34,6 +34,7 @@ The internal test cases are:
  * cinder_test
  * odl
  * tempest_smoke
+ * tempest_horizon
  * neutron-tempest-plugin-api
  * tempest_cinder
  * tempest_keystone

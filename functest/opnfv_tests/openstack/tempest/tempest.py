@@ -664,6 +664,21 @@ class TempestScenario(TempestCommon):
         return super(TempestScenario, self).run(**kwargs)
 
 
+class TempestHorizon(TempestCommon):
+    """Tempest Horizon testcase implementation class."""
+
+    def configure(self, **kwargs):
+        super(TempestHorizon, self).configure(**kwargs)
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section('dashboard'):
+            rconfig.add_section('dashboard')
+        rconfig.set('dashboard', 'dashboard_url', env.get('DASHBOARD_URL'))
+        with open(self.conf_file, 'w') as config_file:
+            rconfig.write(config_file)
+        self.backup_tempest_config(self.conf_file, self.res_dir)
+
+
 class TempestHeat(TempestCommon):
     """Tempest Heat testcase implementation class."""
 

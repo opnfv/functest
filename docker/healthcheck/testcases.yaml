@@ -162,3 +162,18 @@ tiers:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
                             - '--concurrency=3'
+
+            -
+                case_name: tempest_horizon
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Horizon project.
+                dependencies:
+                    - DASHBOARD_URL: '^(?!\s*$).+'
+                run:
+                    name: tempest_horizon
+                    args:
+                        mode: '^tempest_horizon.'

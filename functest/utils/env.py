@@ -38,7 +38,8 @@ INPUTS = {
     'BLOCK_MIGRATION': 'False',
     'CLEAN_ORPHAN_SECURITY_GROUPS': 'True',
     'SKIP_DOWN_HYPERVISORS': 'False',
-    'PUBLIC_ENDPOINT_ONLY': 'False'
+    'PUBLIC_ENDPOINT_ONLY': 'False',
+    'DASHBOARD_URL': ''
 }
 
 

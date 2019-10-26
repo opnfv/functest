@@ -57,6 +57,7 @@
             - cinder_test
             - odl
             - tempest_smoke
+            - tempest_horizon
         - container: functest-smoke
           tests:
             - neutron-tempest-plugin-api
