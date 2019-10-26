@@ -202,6 +202,22 @@ tiers:
                             - '--concurrency=4'
 
             -
+                case_name: tempest_cinder
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Cinder project.
+                run:
+                    name: tempest_common
+                    args:
+                        mode:
+                            '(?!.*test_incremental_backup)(^cinder_tempest_plugin.)'
+                        option:
+                            - '--concurrency=4'
+
+            -
                 case_name: rally_sanity
                 project_name: functest
                 criteria: 100
