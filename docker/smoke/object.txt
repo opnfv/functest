@@ -1,4 +1,5 @@
 tempest.api.identity.v3.test_tokens.TokensV3Test.test_create_token[id-6f8e4436-fc96-4282-8122-e41df57197a9]
+tempest.api.identity.v3.test_tokens.TokensV3Test.test_token_auth_creation_existence_deletion[id-0f9f5a5f-d5cd-4a86-8a5b-c5ded151f212]
 tempest.api.object_storage.test_account_quotas.AccountQuotasTest.test_upload_valid_object[id-a22ef352-a342-4587-8f47-3bbdb5b039c4]
 tempest.api.object_storage.test_account_quotas_negative.AccountQuotasNegativeTest.test_user_modify_quota[id-d1dc5076-555e-4e6d-9697-28f1fe976324]
 tempest.api.object_storage.test_account_services.AccountTest.test_list_containers[id-3499406a-ae53-4f8c-b43a-133d4dc6fe3f]
