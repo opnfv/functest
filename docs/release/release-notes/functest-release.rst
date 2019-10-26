@@ -37,6 +37,7 @@ The internal test cases are:
  * odl
  * neutron-tempest-plugin-api
  * tempest_cinder
+ * tempest_keystone
  * rally_sanity
  * refstack_compute
  * refstack_object
