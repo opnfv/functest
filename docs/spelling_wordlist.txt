@@ -30,6 +30,7 @@ fds
 frontend
 functest
 Functest
+functionalities
 guestbook
 Guestbook
 healthcheck
@@ -58,6 +59,7 @@ Kubernetes
 kvm
 linters
 linux
+login
 metadata
 Metadata
 middleware
@@ -87,6 +89,7 @@ Reachability
 reconnection
 redis
 refactored
+refactoring
 refstack
 Refstack
 repo
