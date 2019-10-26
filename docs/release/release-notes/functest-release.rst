@@ -36,6 +36,7 @@ The internal test cases are:
  * tempest_smoke
  * neutron-tempest-plugin-api
  * tempest_cinder
+ * tempest_keystone
  * rally_sanity
  * refstack_defcore
  * patrole
