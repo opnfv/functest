@@ -6,11 +6,13 @@ ARG TEMPEST_TAG=21.0.0
 ARG REFSTACK_TARGET=2018.11
 ARG PATROLE_TAG=0.4.0
 ARG NEUTRON_TEMPEST_TAG=0.3.0
+ARG CINDER_TEMPEST_TAG=0.1.0
 ARG BARBICAN_TAG=0.1.0
 
-RUN apk --no-cache add --virtual .build-deps --update \
+RUN apk --no-cache add --update libxml2 libxslt && \
+    apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
@@ -26,6 +28,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git fetch --tags https://opendev.org/openstack/neutron-tempest-plugin.git $NEUTRON_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
+    git init /src/cinder-tempest-plugin && \
+    (cd /src/cinder-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
+        git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/cinder-tempest-plugin && \
     git init /src/barbican-tempest-plugin && \
     (cd /src/barbican-tempest-plugin && \
         git fetch --tags https://opendev.org/openstack/barbican-tempest-plugin.git $BARBICAN_TAG && \
@@ -33,7 +40,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
-        networking-bgpvpn networking-sfc && \
+        networking-bgpvpn networking-sfc /src/cinder-tempest-plugin && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \

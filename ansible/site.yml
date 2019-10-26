@@ -60,6 +60,7 @@
         - container: functest-smoke
           tests:
             - neutron-tempest-plugin-api
+            - tempest_cinder
             - rally_sanity
             - refstack_defcore
             - tempest_full
