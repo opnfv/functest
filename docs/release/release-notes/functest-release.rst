@@ -33,6 +33,7 @@ The internal test cases are:
  * vping_userdata
  * cinder_test
  * tempest_smoke
+ * tempest_horizon
  * odl
  * neutron-tempest-plugin-api
  * rally_sanity
