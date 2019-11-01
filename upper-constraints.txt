@@ -21,7 +21,7 @@ ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest#egg=tempest
 git+https://opendev.org/openstack/rally.git#egg=rally
 git+https://opendev.org/openstack/rally-openstack.git#egg=rally-openstack
-git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
+git+https://github.com/nokia/xrally-kubernetes.git@c784302b617bca9493ffb2a44981d51492f5c8d5#egg=xrally-kubernetes
 git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
 pylint===1.9.5;python_version=='2.7'
 pylint===2.3.1;python_version=='3.7'
