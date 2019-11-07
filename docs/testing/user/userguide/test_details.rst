@@ -407,6 +407,6 @@ The kubernetes testcases are distributed across various Tiers:
 .. _`[11]`: https://robotframework.org/
 .. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
-.. _`[15]`: https://www.rebaca.com/what-we-do/abot-5g-network-simulator/
+.. _`[15]`: https://github.com/RebacaInc/abot_charm
 .. _`[16]`: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-testing/e2e-tests.md
 .. _`[17]`: https://github.com/Metaswitch/clearwater-heat/blob/release-129/clearwater.yaml
