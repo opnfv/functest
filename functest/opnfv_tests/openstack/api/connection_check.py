@@ -34,6 +34,8 @@ class ConnectionCheck(testcase.TestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'connection_check'
         super(ConnectionCheck, self).__init__(**kwargs)
+        self.output_log_name = 'functest.log'
+        self.output_debug_log_name = 'functest.debug.log'
         try:
             cloud_config = os_client_config.get_config()
             self.cloud = shade.OpenStackCloud(cloud_config=cloud_config)
