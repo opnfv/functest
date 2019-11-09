@@ -157,6 +157,8 @@ class TenantNetwork1(testcase.TestCase):
         super(TenantNetwork1, self).__init__(**kwargs)
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), self.case_name)
+        self.output_log_name = 'functest.log'
+        self.output_debug_log_name = 'functest.debug.log'
         try:
             cloud_config = os_client_config.get_config()
             self.cloud = self.orig_cloud = shade.OpenStackCloud(
