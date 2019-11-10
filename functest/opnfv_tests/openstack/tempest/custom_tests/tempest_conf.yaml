@@ -29,3 +29,4 @@ load_balancer:
 neutron_plugin_options:
     agent_availability_zone: nova
     available_type_drivers: flat,geneve,vlan,gre,local,vxlan
+    provider_vlans: foo,
