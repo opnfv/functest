@@ -23,7 +23,15 @@ volume:
     max_microversion: latest
     storage_protocol: iSCSI
 volume-feature-enabled:
+    multi_backend: false
     backup: true
+    snapshot: true
+    clone: true
+    manage_snapshot: true
+    manage_volume: true
+    extend_attached_volume: false
+    consistency_group: false
+    volume_revert: true
 load_balancer:
     test_with_noop: true
 neutron_plugin_options:
