@@ -65,3 +65,21 @@ tiers:
                             (^cinder_tempest_plugin.)"
                         option:
                             - '--concurrency=4'
+
+            -
+                case_name: tempest_keystone
+                project_name: functest
+                criteria: 100
+                blocking: false
+                deny_skipping: true
+                tests_count: 38
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Keystone project.
+                run:
+                    name: tempest_common
+                    args:
+                        mode: "(?!.*scenario.test_federated_authentication)\
+                          keystone_tempest_plugin."
+                        option:
+                            - '--concurrency=4'
