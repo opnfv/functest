@@ -11,9 +11,14 @@ identity:
     user_lockout_duration: 10
     user_lockout_failure_attempts: 2
 identity-feature-enabled:
+    trust: true
     api_v2: false
     api_v2_admin: false
     security_compliance: true
+    federation: false
+    external_idp: false
+    project_tags: true
+    application_credentials: true
 image-feature-enabled:
     api_v2: true
     api_v1: false
