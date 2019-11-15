@@ -75,6 +75,28 @@ tiers:
                     name: tempest_common
                     args:
                         mode: "(?!.*scenario.test_federated_authentication)\
-                          keystone_tempest_plugin."
+                            keystone_tempest_plugin."
                         option:
                             - '--concurrency=4'
+
+            -
+                case_name: rally_sanity
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs a sub group of tests of the OpenStack
+                    Rally suite in smoke mode.
+                run:
+                    name: rally_sanity
+                    args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
+                            - 'swift'
