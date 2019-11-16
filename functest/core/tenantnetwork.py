@@ -152,8 +152,8 @@ class TenantNetwork1(testcase.TestCase):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'tenantnetwork1'
         super(TenantNetwork1, self).__init__(**kwargs)
-        self.res_dir = os.path.join(
-            getattr(config.CONF, 'dir_results'), self.case_name)
+        self.dir_results = os.path.join(getattr(config.CONF, 'dir_results'))
+        self.res_dir = os.path.join(self.dir_results, self.case_name)
         self.output_log_name = 'functest.log'
         self.output_debug_log_name = 'functest.debug.log'
         try:
