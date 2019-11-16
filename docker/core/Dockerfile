@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/rocky
 
 RUN apk --no-cache add --update \
         python libffi openssl libjpeg-turbo py-pip bash \
-        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils && \
+        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
