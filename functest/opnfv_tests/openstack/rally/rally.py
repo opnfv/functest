@@ -95,7 +95,6 @@ class RallyBase(singlevm.VmReady2):
         self.smoke = None
         self.start_time = None
         self.result = None
-        self.details = None
         self.compute_cnt = 0
         self.flavor_alt = None
         self.tests = []
@@ -595,10 +594,10 @@ class RallyBase(singlevm.VmReady2):
         LOGGER.info("Rally '%s' success_rate is %s%% in %s/%s modules",
                     self.case_name, success_rate, nb_modules,
                     len(self.summary))
-        payload.append({'summary': {'duration': total_duration,
-                                    'nb tests': total_nb_tests,
-                                    'nb success': success_rate}})
-        self.details = payload
+        self.details['summary'] = {'duration': total_duration,
+                                   'nb tests': total_nb_tests,
+                                   'nb success': success_rate}
+        self.details["modules"] = payload
 
     @staticmethod
     def export_task(file_name, export_type="html"):
