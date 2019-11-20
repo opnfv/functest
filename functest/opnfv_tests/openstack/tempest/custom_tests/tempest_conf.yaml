@@ -5,7 +5,7 @@ compute-feature-enabled:
     shelve: false
     vnc_console: false
     cold_migration: false
-    block_migration_for_live_migration: true
+    block_migration_for_live_migration: false
 identity:
     user_unique_last_password_count: 2
     user_lockout_duration: 10
@@ -26,7 +26,7 @@ placement:
     max_microversion: 1.30
 volume:
     max_microversion: 3.55
-    storage_protocol: iSCSI
+    storage_protocol: ceph
 volume-feature-enabled:
     multi_backend: false
     backup: true
