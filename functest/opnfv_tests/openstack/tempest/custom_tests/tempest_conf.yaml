@@ -2,10 +2,33 @@
 compute:
     max_microversion: latest
 compute-feature-enabled:
-    shelve: false
-    vnc_console: false
-    cold_migration: false
+    attach_encrypted_volume: false
     block_migration_for_live_migration: false
+    block_migrate_cinder_iscsi: false
+    change_password: false
+    cold_migration: true
+    config_drive: true
+    console_output: true
+    disk_config: true
+    enable_instance_password: true
+    interface_attach: true
+    live_migration: true
+    live_migrate_back_and_forth: false
+    metadata_service: true
+    pause: true
+    personality: false
+    rdp_console: false
+    rescue: true
+    resize: true
+    serial_console: true
+    shelve: true
+    snapshot: true
+    spice_console: false
+    suspend: true
+    swap_volume: false
+    vnc_console: true
+    volume_backed_live_migration: false
+    volume_multiattach: false
 identity:
     user_unique_last_password_count: 2
     user_lockout_duration: 10
