@@ -27,6 +27,8 @@ placement:
 volume:
     max_microversion: latest
     storage_protocol: ceph
+    manage_volume_ref: source-name,volume-%s
+    manage_snapshot_ref: source-name,snapshot-%s
 volume-feature-enabled:
     multi_backend: false
     backup: true
