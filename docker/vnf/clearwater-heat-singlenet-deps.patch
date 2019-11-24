@@ -1,5 +1,5 @@
 diff --git a/bono.yaml b/bono.yaml
-index f0189cd..7566338 100644
+index f0189cd..cc03838 100644
 --- a/bono.yaml
 +++ b/bono.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -101,7 +101,7 @@ index f0189cd..7566338 100644
            template: |
              #!/bin/bash
  
-@@ -159,33 +124,6 @@ resources:
+@@ -159,36 +124,8 @@ resources:
              exec > >(tee -a /var/log/clearwater-heat-bono.log) 2>&1
              set -x
  
@@ -133,9 +133,13 @@ index f0189cd..7566338 100644
 -            /etc/init.d/signaling_namespace
 -
              # Configure the APT software source.
-             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
-@@ -196,11 +134,8 @@ resources:
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.
+@@ -196,11 +133,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -149,7 +153,7 @@ index f0189cd..7566338 100644
              public_hostname=__index__.bono.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -223,8 +158,8 @@ resources:
+@@ -223,8 +157,8 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add bono-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -160,7 +164,7 @@ index f0189cd..7566338 100644
              update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.__zone__.
              update add __zone__. 30 NAPTR 0 0 "s" "SIP+D2U" "" _sip._udp.__zone__.
              update add _sip._tcp.__zone__. 30 SRV 0 0 5060 __index__.bono.__zone__.
-@@ -241,10 +176,19 @@ resources:
+@@ -241,10 +175,19 @@ resources:
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
@@ -182,7 +186,7 @@ index f0189cd..7566338 100644
  outputs:
    public_mgmt_ip:
      description: IP address in public management network
-@@ -252,9 +196,3 @@ outputs:
+@@ -252,9 +195,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -428,7 +432,7 @@ index a155c60..dd90cb7 100644
            etcd_ip: { get_attr: [ ellis, private_mgmt_ip ] }
            index: __index__
 diff --git a/dime.yaml b/dime.yaml
-index 642f19d..6ae2676 100644
+index 642f19d..d2b8b92 100644
 --- a/dime.yaml
 +++ b/dime.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -535,7 +539,7 @@ index 642f19d..6ae2676 100644
            template: |
              #!/bin/bash
  
-@@ -156,33 +124,6 @@ resources:
+@@ -156,36 +124,8 @@ resources:
              exec > >(tee -a /var/log/clearwater-heat-dime.log) 2>&1
              set -x
  
@@ -567,9 +571,13 @@ index 642f19d..6ae2676 100644
 -            /etc/init.d/signaling_namespace
 -
              # Configure the APT software source.
-             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
-@@ -193,11 +134,8 @@ resources:
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.
+@@ -193,11 +133,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -583,7 +591,7 @@ index 642f19d..6ae2676 100644
              public_hostname=dime-__index__.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -220,9 +158,9 @@ resources:
+@@ -220,9 +157,9 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add dime-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -596,7 +604,7 @@ index 642f19d..6ae2676 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -235,17 +173,22 @@ resources:
+@@ -235,17 +172,22 @@ resources:
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
@@ -769,7 +777,7 @@ index 825ede1..f98ffa3 100644
      description: DNS zone
      value: { get_param: zone }
 diff --git a/ellis.yaml b/ellis.yaml
-index 963352d..ff59895 100644
+index 963352d..2bd0730 100644
 --- a/ellis.yaml
 +++ b/ellis.yaml
 @@ -44,9 +44,6 @@ parameters:
@@ -815,7 +823,17 @@ index 963352d..ff59895 100644
            template: |
              #!/bin/bash
  
-@@ -176,7 +183,7 @@ resources:
+@@ -134,8 +141,7 @@ resources:
+             set -x
+ 
+             # Configure the APT software source.
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.  Add xdms_hostname here to use Homer's management
+@@ -176,7 +182,7 @@ resources:
              chronos_hostname=vellum.__zone__
              ralf_session_store=vellum.__zone__
  
@@ -824,7 +842,7 @@ index 963352d..ff59895 100644
  
              # Email server configuration
              smtp_smarthost=localhost
-@@ -189,6 +196,8 @@ resources:
+@@ -189,6 +195,8 @@ resources:
              turn_workaround=secret
              ellis_api_key=secret
              ellis_cookie_key=secret
@@ -833,7 +851,7 @@ index 963352d..ff59895 100644
              EOF
              /usr/share/clearwater/clearwater-config-manager/scripts/cw-config upload shared_config --autoconfirm --dir /tmp
  
-@@ -197,7 +206,6 @@ resources:
+@@ -197,7 +205,6 @@ resources:
              # local_settings.py runs to pick up the configuration changes.
              service clearwater-infrastructure restart
              service ellis stop
@@ -841,7 +859,7 @@ index 963352d..ff59895 100644
  
              # Function to give DNS record type and IP address for specified IP address
              ip2rr() {
-@@ -228,6 +236,18 @@ resources:
+@@ -228,6 +235,18 @@ resources:
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
              service dnsmasq force-reload
  
@@ -861,7 +879,7 @@ index 963352d..ff59895 100644
    public_mgmt_ip:
      description: IP address in public management network
 diff --git a/homer.yaml b/homer.yaml
-index 4337984..9a93cfb 100644
+index 4337984..d23adb5 100644
 --- a/homer.yaml
 +++ b/homer.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -974,7 +992,7 @@ index 4337984..9a93cfb 100644
            template: |
              #!/bin/bash
  
-@@ -163,33 +124,6 @@ resources:
+@@ -163,36 +124,8 @@ resources:
              exec > >(tee -a /var/log/clearwater-heat-homer.log) 2>&1
              set -x
  
@@ -1006,9 +1024,13 @@ index 4337984..9a93cfb 100644
 -            /etc/init.d/signaling_namespace
 -
              # Configure the APT software source.
-             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
-@@ -200,11 +134,8 @@ resources:
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.
+@@ -200,11 +133,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -1022,7 +1044,7 @@ index 4337984..9a93cfb 100644
              public_hostname=homer-__index__.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -227,7 +158,7 @@ resources:
+@@ -227,7 +157,7 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add homer-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -1031,11 +1053,12 @@ index 4337984..9a93cfb 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -238,13 +169,21 @@ resources:
+@@ -237,14 +167,22 @@ resources:
+               sleep 5
              done
  
-             # Use the DNS server.
 -            # Use the DNS server.
+             # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
 -            mkdir -p /etc/netns/signaling
@@ -1056,7 +1079,7 @@ index 4337984..9a93cfb 100644
  outputs:
    public_mgmt_ip:
      description: IP address in public management network
-@@ -252,9 +191,3 @@ outputs:
+@@ -252,9 +190,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -1416,7 +1439,7 @@ index 5921d32..c73fe2b 100644
 -    value: { get_resource: vellum_sig_inbound }
 +    value: { get_resource: base_mgmt }
 diff --git a/sprout.yaml b/sprout.yaml
-index 9c533b7..2649e11 100644
+index 9c533b7..b51750b 100644
 --- a/sprout.yaml
 +++ b/sprout.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -1516,7 +1539,7 @@ index 9c533b7..2649e11 100644
            template: |
              #!/bin/bash
  
-@@ -156,33 +124,6 @@ resources:
+@@ -156,36 +124,8 @@ resources:
              exec > >(tee -a /var/log/clearwater-heat-sprout.log) 2>&1
              set -x
  
@@ -1548,9 +1571,13 @@ index 9c533b7..2649e11 100644
 -            /etc/init.d/signaling_namespace
 -
              # Configure the APT software source.
-             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-             curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
-@@ -193,11 +134,8 @@ resources:
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.
+@@ -193,11 +133,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -1564,7 +1591,7 @@ index 9c533b7..2649e11 100644
              public_hostname=__index__.sprout.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -220,10 +158,10 @@ resources:
+@@ -220,10 +157,10 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add sprout-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -1579,7 +1606,7 @@ index 9c533b7..2649e11 100644
              update add sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.sprout.__zone__.
              update add _sip._tcp.sprout.__zone__. 30 SRV 0 0 5054 __index__.sprout.__zone__.
              update add icscf.sprout.__zone__. 30 NAPTR 0 0 "s" "SIP+D2T" "" _sip._tcp.icscf.sprout.__zone__.
-@@ -242,17 +180,23 @@ resources:
+@@ -242,17 +179,23 @@ resources:
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
@@ -1610,7 +1637,7 @@ index 9c533b7..2649e11 100644
 -    description: IP address in private signaling network
 -    value: { get_attr: [ sig_port, fixed_ips, 0, ip_address ] }
 diff --git a/vellum.yaml b/vellum.yaml
-index aab71f9..375b3d8 100644
+index aab71f9..de15fcf 100644
 --- a/vellum.yaml
 +++ b/vellum.yaml
 @@ -23,26 +23,6 @@ parameters:
@@ -1694,7 +1721,7 @@ index aab71f9..375b3d8 100644
        user_data_format: RAW
        user_data:
          str_replace:
-@@ -141,47 +112,19 @@ resources:
+@@ -141,51 +112,22 @@ resources:
              __zone__: { get_param: zone }
              __public_mgmt_ip__: { get_attr: [ mgmt_floating_ip, floating_ip_address ] }
              __private_mgmt_ip__: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
@@ -1744,8 +1771,13 @@ index aab71f9..375b3d8 100644
 +            sysctl -w net.ipv6.conf.lo.disable_ipv6=0
  
              # Configure the APT software source.
-             echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
-@@ -193,11 +136,8 @@ resources:
+-            echo 'deb __repo_url__ binary/' > /etc/apt/sources.list.d/clearwater.list
+-            curl -L http://repo.cw-ngv.com/repo_key | apt-key add -
++            echo 'deb http://artifacts.opnfv.org/functest/clearwater/debian ./' > /etc/apt/sources.list.d/clearwater.list
+             apt-get update
+ 
+             # Configure /etc/clearwater/local_config.
+@@ -193,11 +135,8 @@ resources:
              etcd_ip=__etcd_ip__
              [ -n "$etcd_ip" ] || etcd_ip=__private_mgmt_ip__
              cat > /etc/clearwater/local_config << EOF
@@ -1759,7 +1791,7 @@ index aab71f9..375b3d8 100644
              public_hostname=__index__.vellum.__zone__
              etcd_cluster=$etcd_ip
              EOF
-@@ -206,7 +146,7 @@ resources:
+@@ -206,7 +145,7 @@ resources:
              mkdir -p /etc/chronos
              cat > /etc/chronos/chronos.conf << EOF
              [http]
@@ -1768,7 +1800,7 @@ index aab71f9..375b3d8 100644
              bind-port = 7253
              threads = 50
  
-@@ -218,7 +158,7 @@ resources:
+@@ -218,7 +157,7 @@ resources:
              enabled = true
  
              [dns]
@@ -1777,7 +1809,7 @@ index aab71f9..375b3d8 100644
              EOF
  
              # Now install the software.
-@@ -239,7 +179,7 @@ resources:
+@@ -239,7 +178,7 @@ resources:
              while ! { nsupdate -y "__zone__:__dnssec_key__" -v << EOF
              server __dns_mgmt_ip__
              update add vellum-__index__.__zone__. 30 $(ip2rr __public_mgmt_ip__)
@@ -1786,7 +1818,7 @@ index aab71f9..375b3d8 100644
              send
              EOF
              } && [ $retries -lt 10 ]
-@@ -252,10 +192,19 @@ resources:
+@@ -252,10 +191,19 @@ resources:
              # Use the DNS server.
              echo 'nameserver __dns_mgmt_ip__' > /etc/dnsmasq.resolv.conf
              echo 'RESOLV_CONF=/etc/dnsmasq.resolv.conf' >> /etc/default/dnsmasq
@@ -1808,7 +1840,7 @@ index aab71f9..375b3d8 100644
  outputs:
    public_mgmt_ip:
      description: IP address in public management network
-@@ -263,6 +212,3 @@ outputs:
+@@ -263,6 +211,3 @@ outputs:
    private_mgmt_ip:
      description: IP address in private management network
      value: { get_attr: [ mgmt_port, fixed_ips, 0, ip_address ] }
