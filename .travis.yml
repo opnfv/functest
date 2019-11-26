@@ -211,9 +211,32 @@ jobs:
         - amd64_dirs=""
         - arm64_dirs=""
         - arm_dirs="docker/smoke-cntt"
+    - script: sudo -E bash build.sh
+      env:
+        - REPO="${DOCKER_USERNAME}"
+        - amd64_dirs="docker/benchmarking-cntt"
+        - arm64_dirs=""
+        - arm_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - REPO="${DOCKER_USERNAME}"
+        - amd64_dirs=""
+        - arm64_dirs="docker/benchmarking-cntt"
+        - arm_dirs=""
+    - script: sudo -E bash build.sh
+      env:
+        - REPO="${DOCKER_USERNAME}"
+        - amd64_dirs=""
+        - arm64_dirs=""
+        - arm_dirs="docker/benchmarking-cntt"
     - stage: publish all cntt manifests
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
           --template ${DOCKER_USERNAME}/functest-smoke-cntt:ARCH-hunter \
           --target ${DOCKER_USERNAME}/functest-smoke-cntt:hunter
+    - script: >
+        sudo manifest-tool push from-args \
+          --platforms linux/amd64,linux/arm,linux/arm64 \
+          --template ${DOCKER_USERNAME}/functest-benchmarking-cntt:ARCH-hunter \
+          --target ${DOCKER_USERNAME}/functest-benchmarking-cntt:hunter
