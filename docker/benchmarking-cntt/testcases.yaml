@@ -1,0 +1,70 @@
+---
+tiers:
+    -
+        name: benchmarking
+        order: 2
+        description: >-
+            Run several OpenStack performance tools
+            https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
+        testcases:
+            -
+                case_name: rally_full
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the full suite of scenarios of the
+                    OpenStack Rally suite using several threads and iterations.
+                run:
+                    name: rally_full
+                    args:
+                        tests:
+                            - 'authenticate'
+                            - 'glance'
+                            - 'cinder'
+                            - 'heat'
+                            - 'keystone'
+                            - 'neutron'
+                            - 'nova'
+                            - 'quotas'
+                            - 'swift'
+
+            -
+                case_name: rally_jobs
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs a group of Rally jobs used in
+                    OpenStack gating
+                run:
+                    name: rally_jobs
+                    args:
+                        tests:
+                            - 'neutron'
+            -
+                case_name: vmtp
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    VMTP is a small python application that will automatically
+                    perform ping connectivity, round trip time measurement
+                    (latency) and TCP/UDP throughput
+                dependencies:
+                    - POD_ARCH: '^(?!aarch64$)'
+                run:
+                    name: vmtp
+
+            -
+                case_name: shaker
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Shaker wraps around popular system network testing tools
+                    like iperf, iperf3 and netperf (with help of flent). Shaker
+                    is able to deploy OpenStack instances and networks in
+                    different topologies.
+                run:
+                    name: shaker
