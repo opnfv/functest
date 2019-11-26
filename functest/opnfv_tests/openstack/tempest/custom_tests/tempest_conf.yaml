@@ -20,6 +20,7 @@ compute-feature-enabled:
     rdp_console: false
     rescue: true
     resize: true
+    scheduler_available_filters: RetryFilter,AvailabilityZoneFilter,ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,SameHostFilter,DifferentHostFilter
     serial_console: true
     shelve: true
     snapshot: true
