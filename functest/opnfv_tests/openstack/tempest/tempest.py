@@ -270,13 +270,6 @@ class TempestCommon(singlevm.VmReady2):
             # enable multinode tests
             rconfig.set('compute', 'min_compute_nodes', compute_cnt)
             rconfig.set('compute-feature-enabled', 'live_migration', True)
-        filters = ['RetryFilter', 'AvailabilityZoneFilter', 'ComputeFilter',
-                   'ComputeCapabilitiesFilter', 'ImagePropertiesFilter',
-                   'ServerGroupAntiAffinityFilter',
-                   'ServerGroupAffinityFilter']
-        rconfig.set(
-            'compute-feature-enabled', 'scheduler_available_filters',
-            functest_utils.convert_list_to_ini(filters))
         if os.environ.get('OS_REGION_NAME'):
             rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
         if env.get("NEW_USER_ROLE").lower() != "member":
