@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: latest
+    max_microversion: 2.79
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false
@@ -20,6 +20,10 @@ compute-feature-enabled:
     rdp_console: false
     rescue: true
     resize: true
+    scheduler_available_filters: "RetryFilter,AvailabilityZoneFilter,\
+      ComputeFilter,ComputeCapabilitiesFilter,ImagePropertiesFilter,\
+      ServerGroupAntiAffinityFilter,ServerGroupAffinityFilter,SameHostFilter,\
+      DifferentHostFilter"
     serial_console: false
     shelve: true
     snapshot: true
@@ -46,9 +50,9 @@ image-feature-enabled:
     api_v2: true
     api_v1: false
 placement:
-    max_microversion: latest
+    max_microversion: 1.36
 volume:
-    max_microversion: latest
+    max_microversion: 3.59
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s
