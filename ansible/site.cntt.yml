@@ -30,18 +30,15 @@
               - name: functest-healthcheck
                 ref_arg: BRANCH
                 path: docker/healthcheck
-              - name: functest-smoke
+              - name: functest-smoke-cntt
                 ref_arg: BRANCH
-                path: docker/smoke
-              - name: functest-benchmarking
+                path: docker/smoke-cntt
+              - name: functest-benchmarking-cntt
                 ref_arg: BRANCH
-                path: docker/benchmarking
+                path: docker/benchmarking-cntt
               - name: functest-vnf
                 ref_arg:
                 path: docker/vnf
-              - name: functest-features
-                ref_arg: BRANCH
-                path: docker/features
       suites:
         - container: functest-healthcheck
           tests:
@@ -57,22 +54,16 @@
             - cinder_test
             - odl
             - tempest_smoke
-        - container: functest-smoke
+        - container: functest-smoke-cntt
           tests:
             - neutron-tempest-plugin-api
             - tempest_cinder
             - tempest_keystone
             - rally_sanity
-            - refstack_defcore
             - tempest_full
             - tempest_scenario
             - tempest_slow
-            - patrole
-            - neutron_trunk
-            - networking-bgpvpn
-            - networking-sfc
-            - barbican
-        - container: functest-benchmarking
+        - container: functest-benchmarking-cntt
           tests:
             - rally_full
             - rally_jobs
@@ -87,10 +78,3 @@
             - juju_epc
           properties:
             execution-type: SEQUENTIALLY
-        - container: functest-features
-          tests:
-            - doctor-notification
-            - functest-odl-sfc
-            - barometercollectd
-            - vgpu
-            - stor4nfv_os
