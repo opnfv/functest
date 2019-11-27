@@ -1,0 +1,81 @@
+---
+- hosts:
+    - 127.0.0.1
+  roles:
+    - role: collivier.xtesting
+      project: functest
+      gerrit_project: functest
+      docker_tags:
+        - iruya:
+            branch: stable/iruya
+      builds:
+        dependencies:
+          - repo: _
+            dport:
+            container: alpine
+            tag: 3.9
+        steps:
+          - name: build opnfv/functest-core
+            containers:
+              - name: functest-core
+                ref_arg: BRANCH
+                path: docker/core
+          - name: build opnfv/functest-tempest
+            containers:
+              - name: functest-tempest
+                ref_arg: BRANCH
+                path: docker/tempest
+          - name: build containers
+            containers:
+              - name: functest-healthcheck
+                ref_arg: BRANCH
+                path: docker/healthcheck
+              - name: functest-smoke-cntt
+                ref_arg: BRANCH
+                path: docker/smoke-cntt
+              - name: functest-benchmarking-cntt
+                ref_arg: BRANCH
+                path: docker/benchmarking-cntt
+              - name: functest-vnf
+                ref_arg:
+                path: docker/vnf
+      suites:
+        - container: functest-healthcheck
+          tests:
+            - connection_check
+            - tenantnetwork1
+            - tenantnetwork2
+            - vmready1
+            - vmready2
+            - singlevm1
+            - singlevm2
+            - vping_ssh
+            - vping_userdata
+            - cinder_test
+            - odl
+            - tempest_smoke
+            - tempest_horizon
+        - container: functest-smoke-cntt
+          tests:
+            - neutron-tempest-plugin-api
+            - tempest_cinder
+            - tempest_keystone
+            - rally_sanity
+            - tempest_full
+            - tempest_scenario
+            - tempest_slow
+        - container: functest-benchmarking-cntt
+          tests:
+            - rally_full
+            - rally_jobs
+            - vmtp
+            - shaker
+        - container: functest-vnf
+          tests:
+            - cloudify
+            - cloudify_ims
+            - heat_ims
+            - vyos_vrouter
+            - juju_epc
+          properties:
+            execution-type: SEQUENTIALLY
