@@ -25,12 +25,12 @@
               - name: functest-healthcheck
                 ref_arg: BRANCH
                 path: docker/healthcheck
-              - name: functest-smoke
+              - name: functest-smoke-cntt
                 ref_arg: BRANCH
-                path: docker/smoke
-              - name: functest-benchmarking
+                path: docker/smoke-cntt
+              - name: functest-benchmarking-cntt
                 ref_arg: BRANCH
-                path: docker/benchmarking
+                path: docker/benchmarking-cntt
               - name: functest-vnf
                 ref_arg:
                 path: docker/vnf
@@ -50,25 +50,16 @@
             - odl
             - tempest_smoke
             - tempest_horizon
-        - container: functest-smoke
+        - container: functest-smoke-cntt
           tests:
             - neutron-tempest-plugin-api
             - tempest_cinder
             - tempest_keystone
             - rally_sanity
-            - refstack_compute
-            - refstack_object
-            - refstack_platform
             - tempest_full
             - tempest_scenario
             - tempest_slow
-            - patrole
-            - neutron_trunk
-            - networking-bgpvpn
-            - networking-sfc
-            - barbican
-            - octavia
-        - container: functest-benchmarking
+        - container: functest-benchmarking-cntt
           tests:
             - rally_full
             - rally_jobs

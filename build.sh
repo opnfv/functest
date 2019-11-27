@@ -5,7 +5,6 @@ set -e
 repo=${REPO:-opnfv}
 amd64_dirs=${amd64_dirs-"\
 docker/core \
-docker/tempest \
 docker/healthcheck \
 docker/smoke \
 docker/benchmarking \
@@ -14,7 +13,6 @@ docker/smoke-cntt \
 docker/benchmarking-cntt"}
 arm_dirs=${arm_dirs-"\
 docker/core \
-docker/tempest \
 docker/healthcheck \
 docker/smoke \
 docker/benchmarking \
