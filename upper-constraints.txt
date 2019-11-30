@@ -15,7 +15,7 @@ robotframework-httplibrary===0.4.2
 robotframework-requests===0.5.0
 robotframework-sshlibrary===3.3.0
 ansible===2.3.2.0
-xtesting===0.84.0
+xtesting===0.85.0
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest#egg=tempest
