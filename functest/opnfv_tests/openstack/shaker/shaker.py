@@ -19,6 +19,7 @@ and list of tests to execute.
 import logging
 import os
 
+import json
 import scp
 
 from functest.core import singlevm
@@ -129,6 +130,13 @@ class Shaker(singlevm.SingleVm2):
         except scp.SCPException:
             self.__logger.exception("cannot get report files")
             return 1
+        with open(os.path.join(self.res_dir, 'report.json')) as json_file:
+            data = json.load(json_file)
+            for value in data["records"].values():
+                if value["status"] != "ok":
+                    self.__logger.error(
+                        "%s failed\n%s", value["scenario"], value["stderr"])
+                    return 1
         return stdout.channel.recv_exit_status()
 
     def clean(self):
