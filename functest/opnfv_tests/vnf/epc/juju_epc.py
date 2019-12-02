@@ -384,6 +384,7 @@ class JujuEpc(singlevm.VmReady2):
             self.stop_time = time.time()
             return self.EX_TESTCASE_FAILED
         except Exception:  # pylint: disable=broad-except
+            self.result = 0
             self.stop_time = time.time()
             self.__logger.exception("Exception on VNF testing")
             return self.EX_TESTCASE_FAILED
