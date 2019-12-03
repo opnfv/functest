@@ -23,7 +23,7 @@ compute-feature-enabled:
     scheduler_available_filters: "AvailabilityZoneFilter,ComputeFilter,\
       ComputeCapabilitiesFilter,ImagePropertiesFilter,ServerGroupAntiAffinityFilter,\
       ServerGroupAffinityFilter,SameHostFilter,DifferentHostFilter"
-    serial_console: true
+    serial_console: false
     shelve: true
     snapshot: true
     spice_console: false
