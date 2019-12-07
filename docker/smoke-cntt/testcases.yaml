@@ -212,4 +212,4 @@ tiers:
                           (?!.*test_volume_migrate_attached)\
                           (?=.*\\[.*\\bslow\\b.*\\])(^tempest.)"
                         option:
-                            - '--concurrency=2'
+                            - '--concurrency=1'
