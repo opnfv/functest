@@ -347,7 +347,7 @@ tiers:
                     args:
                         mode: '(?=.*\[.*\bslow\b.*\])(^tempest\.)'
                         option:
-                            - '--concurrency=2'
+                            - '--concurrency=1'
 
             -
                 case_name: patrole
