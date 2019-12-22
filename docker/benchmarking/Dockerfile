@@ -2,7 +2,7 @@ FROM opnfv/functest-core:jerma
 
 ARG BRANCH=stable/jerma
 ARG OPENSTACK_TAG=stable/train
-ARG VMTP_TAG=822e7c5fe48480460da6d59a2805cf4c7d84026b
+ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -16,7 +16,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" pip3 install --no-cache-dir -cupper-constraints.txt -cupper-constraints.opnfv.txt lxml ;; esac && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
-        git fetch --tags https://review.opendev.org/x/vmtp.git $VMTP_TAG && \
+        git fetch --tags https://opendev.org/x/vmtp.git $VMTP_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest#egg=tempest/ upper-constraints.txt && \
