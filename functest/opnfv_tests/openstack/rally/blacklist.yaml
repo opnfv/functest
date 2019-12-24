@@ -1,13 +1,5 @@
 ---
 scenario:
-    -
-        scenarios:
-            - '^os-'  # all scenarios
-        tests:
-            # Following test occasionally fails due to race condition issue on
-            # quota manipulation in nova.
-            # Ref: https://bugs.launchpad.net/nova/+bug/1552622
-            - 'Quotas.nova_update_and_delete'
 
 functionality:
     -
