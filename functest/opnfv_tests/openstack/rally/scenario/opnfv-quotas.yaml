@@ -35,17 +35,6 @@
       sla:
         {{ no_failures_sla() }}
 
-  Quotas.nova_update_and_delete:
-    -
-      args:
-        max_quota: 1024
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
   Quotas.nova_update:
     -
       args:
