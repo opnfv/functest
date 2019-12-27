@@ -48,6 +48,10 @@ identity-feature-enabled:
 image-feature-enabled:
     api_v2: true
     api_v1: false
+network-feature-enabled:
+    port_admin_state_change: true
+    port_security: true
+    floating_ips: true
 placement:
     max_microversion: latest
 volume:
