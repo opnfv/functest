@@ -77,5 +77,5 @@ RUN apk --no-cache add --update \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /tmp/clearwater-heat-singlenet-deps.patch && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
