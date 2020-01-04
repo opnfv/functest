@@ -207,7 +207,7 @@ def convert_ini_to_dict(value):
     "Convert oslo.conf input to dict"
     assert isinstance(value, str)
     try:
-        return {k: v for k, v in (x.rsplit(':', 1) for x in value.split(','))}
+        return dict((x.rsplit(':', 1) for x in value.split(',')))
     except ValueError:
         return {}
 
@@ -217,4 +217,4 @@ def convert_ini_to_list(value):
     assert isinstance(value, str)
     if not value:
         return []
-    return [x for x in value.split(',')]
+    return list(value.split(','))

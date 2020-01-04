@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.11
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
@@ -25,8 +25,8 @@ RUN apk --no-cache add --update \
     pip3 install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
         /src/functest && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/functest && \
-    cp /usr/lib/python3.7/site-packages/functest/ci/logging.ini /usr/lib/python3.7/site-packages/xtesting/ci/ && \
-    cp /usr/lib/python3.7/site-packages/functest/ci/logging.debug.ini /usr/lib/python3.7/site-packages/xtesting/ci/ && \
+    cp /usr/lib/python3.8/site-packages/functest/ci/logging.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
+    cp /usr/lib/python3.8/site-packages/functest/ci/logging.debug.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \

@@ -10,7 +10,7 @@ In manual mode test results are displayed in the console and result files
 are put in /home/opnfv/functest/results.
 
 If you want additional logs, you may configure the logging.ini under
-/usr/lib/python3.7/site-packages/xtesting/ci.
+/usr/lib/python3.8/site-packages/xtesting/ci.
 
 Automated testing
 -----------------

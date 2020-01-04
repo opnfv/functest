@@ -30,5 +30,5 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
