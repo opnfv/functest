@@ -79,13 +79,13 @@ class VPingUserdata(singlevm.VmReady2):
                 self.logger.info("vPing detected!")
                 exit_code = testcase.TestCase.EX_OK
                 break
-            elif "failed to read iid from metadata" in p_console or tries > 5:
+            if "failed to read iid from metadata" in p_console or tries > 5:
                 self.logger.info("Failed to read iid from metadata")
                 break
-            elif sec == getattr(config.CONF, 'vping_ping_timeout'):
+            if sec == getattr(config.CONF, 'vping_ping_timeout'):
                 self.logger.info("Timeout reached.")
                 break
-            elif sec % 10 == 0:
+            if sec % 10 == 0:
                 if "request failed" in p_console:
                     self.logger.debug(
                         "It seems userdata is not supported in nova boot. "
