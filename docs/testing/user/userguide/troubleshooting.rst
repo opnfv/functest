@@ -44,8 +44,8 @@ follows::
 The Functest CLI is designed to route a call to the corresponding internal
 python scripts, located in paths::
 
-    /usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/vping/vping_ssh.py
-    /usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/vping/vping_userdata.py
+    /usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/vping/vping_ssh.py
+    /usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/vping/vping_userdata.py
 
 Notes:
 
@@ -125,7 +125,7 @@ This test case creates a floating IP on the external network and assigns it to
 the second instance **opnfv-vping-2**. The purpose of this is to establish
 a SSH connection to that instance and SCP a script that will ping the first
 instance. This script is located in the repository under
-/usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/vping/ping.sh
+/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/vping/ping.sh
 and takes an IP as a parameter. When the SCP is completed, the test will do a
 SSH call to that script inside the second instance. Some problems can happen
 here::
@@ -278,7 +278,7 @@ To enable that, add a new entry in docker/smoke/testcases.yaml on the
 
 Also, a list of the Tempest test cases must be provided to the container or
 modify the existing one in
-/usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
+/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
 
 Example of custom list of tests 'my-custom-tempest-tests.txt'::
 
@@ -290,8 +290,8 @@ This is an example of running a customized list of Tempest tests in Functest::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python3.7/site-packages/functest/ci/testcases.yaml \
-      -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
+      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python3.8/site-packages/functest/ci/testcases.yaml \
+      -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
       opnfv/functest-smoke run_tests -t tempest_custom
 
 
@@ -314,7 +314,7 @@ Possible scenarios are:
 
 To know more about what those scenarios are doing, they are defined in
 directory:
-/usr/lib/python3.7/site-packages/functest/opnfv_tests/openstack/rally/scenario
+/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/rally/scenario
 For more info about Rally scenario definition please refer to the Rally
 official documentation. `[3]`_
 
