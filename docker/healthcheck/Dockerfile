@@ -2,7 +2,7 @@ FROM opnfv/functest-core:jerma
 
 ARG BRANCH=stable/jerma
 ARG OPENSTACK_TAG=stable/train
-ARG ODL_TAG=85448c9d97b89989488e675b29b38ac42d8674e4
+ARG ODL_TAG=89b88a0a23561f0bda62338b394ec41655679b2d
 ARG TEMPEST_HORIZON_TAG=0.2.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
