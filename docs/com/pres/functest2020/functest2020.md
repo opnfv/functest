@@ -6,7 +6,7 @@
 
 
 
-### What's new in Jerma?
+## What's new in Jerma?
 
 
 ### Better test case verification
@@ -41,7 +41,11 @@
 **still pushing the limit!**
 
 
-### Kali (K-release)
+
+## Kali (K-release)
+
+
+### Ideas:
 
 - finish updating to Alpine 3.11 and Python 3.8
 - finish KloudBuster integration (it has to be updated to Python3 first)
