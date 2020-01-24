@@ -56,11 +56,12 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         /src/octavia-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
-    wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron && \
+        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron \
+        -e git+https://opendev.org/openstack/glance.git@$OPENSTACK_TAG#egg=glance && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
+    oslopolicy-sample-generator  --format json --output-file /etc/glance/policy.json --namespace glance && \
     deactivate && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
