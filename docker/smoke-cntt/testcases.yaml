@@ -21,10 +21,10 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: "(?!.*test_logging)\
-                            (?!.*test_logging_negative)\
-                            (?!.*test_network_segment_range)\
-                            (?!.*test_ports.PortTestCasesResourceRequest)\
+                        mode: "(?!.*admin.test_logging)\
+                            (?!.*admin.test_logging_negative)\
+                            (?!.*admin.test_network_segment_range)\
+                            (?!.*admin.test_ports.PortTestCasesResourceRequest)\
                             (?!.*test_conntrack_helper)\
                             (?!.*test_metering_extensions)\
                             (?!.*test_metering_negative)\
@@ -35,6 +35,7 @@ tiers:
                             (?!.*test_ports.PortsTestJSON.test_create_update_port_with_dns_domain)\
                             (?!.*test_ports.PortsTestJSON.test_create_update_port_with_dns_name)\
                             (?!.*test_ports.PortsTestJSON.test_create_update_port_with_no_dns_name)\
+                            (?!.*test_qos.QosMinimumBandwidthRuleTestJSON)\
                             (?!.*test_revisions.TestRevisions.test_update_dns_domain_bumps_revision)\
                             (?!.*test_router_interface_fip)\
                             (?!.*test_routers.DvrRoutersTestUpdateDistributedExtended)\
@@ -43,7 +44,6 @@ tiers:
                             (?!.*test_routers_negative.DvrRoutersNegativeTestExtended)\
                             (?!.*test_subnetpool_prefix_ops)\
                             (?!.*test_timestamp.TestTimeStamp.test_segment_with_timestamp)\
-                            (?!.*test_qos.QosMinimumBandwidthRuleTestJSON)\
                             (^neutron_tempest_plugin.api)"
                         option:
                             - '--concurrency=4'
