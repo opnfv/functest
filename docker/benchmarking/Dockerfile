@@ -1,14 +1,15 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=1843927ab31a6cc8b4313f786175da3ea2767a00
 ARG VMTP_TAG=master
+ARG NEUTRON_TAG=master
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/commit/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E /^tempest==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
@@ -25,7 +26,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     mkdir -p /home/opnfv/functest/data/rally/neutron && \
     git init /src/neutron && \
     (cd /src/neutron && \
-        git fetch --tags https://opendev.org/openstack/neutron.git $OPENSTACK_TAG && \
+        git fetch --tags https://opendev.org/openstack/neutron.git $NEUTRON_TAG && \
         git checkout FETCH_HEAD) && \
     cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \

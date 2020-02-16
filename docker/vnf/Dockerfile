@@ -1,7 +1,7 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=1843927ab31a6cc8b4313f786175da3ea2767a00
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia
@@ -23,7 +23,7 @@ RUN apk --no-cache add --update \
         procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/commit/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E /^tempest==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \

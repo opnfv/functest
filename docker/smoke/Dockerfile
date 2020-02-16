@@ -1,11 +1,13 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=1843927ab31a6cc8b4313f786175da3ea2767a00
 ARG PATROLE_TAG=master
 ARG NEUTRON_TEMPEST_TAG=master
 ARG CINDER_TEMPEST_TAG=master
 ARG KEYSTONE_TEMPEST_TAG=master
+ARG NEUTRON_TAG=master
+ARG GLANCE_TAG=master
 ARG BARBICAN_TAG=master
 ARG OCTAVIA_TAG=master
 
@@ -13,7 +15,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/commit/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E /^tempest==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
@@ -57,8 +59,8 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$OPENSTACK_TAG#egg=neutron \
-        -e git+https://opendev.org/openstack/glance.git@$OPENSTACK_TAG#egg=glance && \
+        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$NEUTRON_TAG#egg=neutron \
+        -e git+https://opendev.org/openstack/glance.git@$GLANCE_TAG#egg=glance && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/glance/policy.json --namespace glance && \
     deactivate && \
