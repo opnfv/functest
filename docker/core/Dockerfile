@@ -1,7 +1,7 @@
 FROM alpine:3.11
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=1843927ab31a6cc8b4313f786175da3ea2767a00
+ARG OPENSTACK_TAG=master
 
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
@@ -9,7 +9,7 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/commit/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
