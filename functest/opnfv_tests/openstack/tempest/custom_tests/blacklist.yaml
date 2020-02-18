@@ -5,6 +5,7 @@
         - os-ovn-nofeature-noha
     tests:
         - neutron_tempest_plugin.api.admin.test_dhcp_agent_scheduler
+        - neutron_tempest_plugin.api.test_trunk.TrunkTestInheritJSONBase.test_add_subport
         - patrole_tempest_plugin.tests.api.network.test_agents_rbac
         - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_network_type
         - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_segmentation_id
