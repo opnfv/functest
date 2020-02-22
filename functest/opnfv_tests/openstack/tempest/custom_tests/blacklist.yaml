@@ -5,6 +5,11 @@
         - os-ovn-nofeature-noha
     tests:
         - neutron_tempest_plugin.api.admin.test_dhcp_agent_scheduler
+        - neutron_tempest_plugin.api.admin.test_ports.PortTestCasesResourceRequest.test_port_resource_request
+        - neutron_tempest_plugin.api.admin.test_ports.PortTestCasesResourceRequest.test_port_resource_request_empty
+        - neutron_tempest_plugin.api.admin.test_ports.PortTestCasesResourceRequest.test_port_resource_request_inherited_policy
+        - neutron_tempest_plugin.api.admin.test_ports.PortTestCasesResourceRequest.test_port_resource_request_no_provider_net_conflict
+        - neutron_tempest_plugin.api.test_ports.PortsTestJSON.test_create_update_port_with_dns_name
         - neutron_tempest_plugin.api.test_trunk.TrunkTestInheritJSONBase.test_add_subport
         - patrole_tempest_plugin.tests.api.network.test_availability_zones_rbac.AvailabilityZoneExtRbacTest.test_list_availability_zone_rbac
         - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_network_type
