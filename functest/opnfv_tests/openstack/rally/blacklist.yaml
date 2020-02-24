@@ -1,5 +1,10 @@
 ---
 scenario:
+    -
+        scenarios:
+            - '^os-ovn-'
+        tests:
+            - 'NeutronNetworks.create_and_bind_ports'
 
 functionality:
     -
