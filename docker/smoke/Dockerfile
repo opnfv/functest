@@ -56,7 +56,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
+    mkdir -p /etc/neutron /etc/glance && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         oslo.policy -e git+https://opendev.org/openstack/neutron.git@$NEUTRON_TAG#egg=neutron \
@@ -67,7 +67,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin /src/neutron && \
+        /src/octavia-tempest-plugin /src/neutron /src/glance && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
