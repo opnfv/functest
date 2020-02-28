@@ -56,7 +56,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         networking-bgpvpn networking-sfc /src/cinder-tempest-plugin \
         /src/keystone-tempest-plugin /src/octavia-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    mkdir -p /etc/neutron /etc/cinder /etc/glance /etc/keystone /etc/nova && \
+    mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
