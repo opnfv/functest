@@ -31,6 +31,7 @@ RUN apk --no-cache add --update \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
     mkdir -p /etc/rally && \
-    printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
+    printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'\n" > /etc/rally/rally.conf && \
+    printf "\n[openstack]\nneutron_bind_l2_agent_types = Open vSwitch agent,Linux bridge agent,OVN Controller Gateway agent\n" >> /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
     apk del .build-deps
