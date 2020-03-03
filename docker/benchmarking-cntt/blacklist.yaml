@@ -1,0 +1,48 @@
+---
+scenario:
+    -
+        scenarios:
+            - '^os-'
+        tests:
+            - 'NeutronNetworks.associate_and_dissociate_floating_ips'
+            - 'NeutronNetworks.create_and_bind_ports'
+            - 'NeutronNetworks.create_and_delete_floating_ips'
+            - 'NeutronNetworks.create_and_list_floating_ips'
+            - 'NeutronSecurityGroup.create_and_delete_security_group_rule'
+            - 'NeutronSecurityGroup.create_and_delete_security_groups'
+            - 'NeutronSecurityGroup.create_and_list_security_group_rules'
+            - 'NeutronSecurityGroup.create_and_list_security_groups'
+            - 'NeutronSecurityGroup.create_and_show_security_group'
+            - 'NeutronSecurityGroup.create_and_show_security_group_rule'
+            - 'NeutronSecurityGroup.create_and_update_security_groups'
+            - 'NovaServers.boot_and_delete_server'
+
+functionality:
+    -
+        functions:
+            - block_migration
+        tests:
+            - NovaServers.boot_server_from_volume_and_live_migrate
+    -
+        functions:
+            - no_migration
+        tests:
+            - NovaServers.boot_and_live_migrate_server
+            - NovaServers.boot_server_attach_created_volume_and_live_migrate
+            - NovaServers.boot_server_from_volume_and_live_migrate
+            - NovaServers.boot_and_migrate_server
+    -
+        functions:
+            - no_net_trunk_service
+        tests:
+            - '^NeutronTrunk'
+    -
+        functions:
+            - no_floating_ip
+        tests:
+            - HeatStacks.create_and_delete_stack
+            - NovaServers.boot_and_associate_floating_ip
+            - NovaServers.boot_server_associate_and_dissociate_floating_ip
+            - NeutronNetworks.create_and_delete_floating_ips
+            - NeutronNetworks.create_and_list_floating_ips
+            - NeutronNetworks.associate_and_dissociate_floating_ips
