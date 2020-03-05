@@ -93,14 +93,15 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 38
+                tests_count: 27
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Keystone project.
                 run:
                     name: tempest_common
                     args:
-                        mode: "(?!.*scenario.test_federated_authentication)\
+                        mode: "(?!.*api.identity.v3.test_oauth1_tokens)\
+                            (?!.*scenario.test_federated_authentication)\
                             keystone_tempest_plugin."
                         option:
                             - '--concurrency=4'
