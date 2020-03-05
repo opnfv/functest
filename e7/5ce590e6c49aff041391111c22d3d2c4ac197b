@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Code-Review+1: Juha Kosonen <juha.kosonen@nokia.com>
+Verified+1: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Thu, 05 Mar 2020 12:18:33 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/functest/+/69759
+Project: functest
+Branch: refs/heads/stable/hunter
