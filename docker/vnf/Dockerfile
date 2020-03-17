@@ -23,7 +23,7 @@ RUN apk --no-cache add --update \
         ruby ruby-bundler ruby-irb ruby-rdoc \
         procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
-        ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ make && \
+        ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev g++ && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
