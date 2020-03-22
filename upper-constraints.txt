@@ -21,7 +21,7 @@ bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest#egg=tempest
 git+https://opendev.org/openstack/rally.git#egg=rally
-git+https://opendev.org/openstack/rally-openstack.git@e62608d35302ed3c0aeb31784ce5f4535c9e5fab#egg=rally-openstack
+git+https://opendev.org/openstack/rally-openstack.git@refs/changes/18/713718/6#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
 git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
 pylint===1.9.5;python_version=='2.7'
