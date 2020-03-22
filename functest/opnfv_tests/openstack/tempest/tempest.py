@@ -21,6 +21,7 @@ import subprocess
 import time
 
 import pkg_resources
+import six
 from six.moves import configparser
 from xtesting.core import testcase
 import yaml
@@ -199,9 +200,15 @@ class TempestCommon(singlevm.VmReady2):
         cmd = ("rally verify list-verifiers | awk '/" +
                getattr(config.CONF, 'tempest_verifier_name') +
                "/ {print $2}'")
-        proc = subprocess.Popen(cmd, shell=True,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
+        if six.PY3:
+            subprocess.Popen(
+                cmd, shell=True, stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL)
+        else:
+            with open(os.devnull, 'wb') as devnull:
+                subprocess.Popen(
+                    cmd, shell=True, stdout=subprocess.PIPE,
+                    stderr=devnull)
         verifier_uuid = proc.stdout.readline().rstrip()
         return verifier_uuid.decode("utf-8")
 
