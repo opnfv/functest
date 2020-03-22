@@ -201,7 +201,7 @@ class TempestCommon(singlevm.VmReady2):
                "/ {print $2}'")
         proc = subprocess.Popen(cmd, shell=True,
                                 stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
+                                stderr=subprocess.DEVNULL)
         verifier_uuid = proc.stdout.readline().rstrip()
         return verifier_uuid.decode("utf-8")
 
