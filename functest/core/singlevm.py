@@ -217,7 +217,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         self.__logger.debug("vm: %s", vm1)
         return vm1
 
-    def check_regex_in_console(self, name, regex=' login: ', loop=1):
+    def check_regex_in_console(self, name, regex=' login: ', loop=6):
         """Wait for specific message in console
 
         Returns: True or False on errors
@@ -481,10 +481,11 @@ class SingleVm1(VmReady1):
             self.prepare()
             self.sshvm = self.boot_vm(
                 key_name=self.keypair.id, security_groups=[self.sec.id])
-            (self.fip, self.ssh) = self.connect(self.sshvm)
-            if not self.execute():
-                self.result = 100
-                status = testcase.TestCase.EX_OK
+            if self.check_regex_in_console(self.sshvm.name):
+                (self.fip, self.ssh) = self.connect(self.sshvm)
+                if not self.execute():
+                    self.result = 100
+                    status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception('Cannot run %s', self.case_name)
         finally:

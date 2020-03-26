@@ -61,22 +61,38 @@ class VpingSSHTesting(unittest.TestCase):
             '{}-vm2_{}'.format(self.vping.case_name, self.vping.guid),
             security_groups=[self.vping.sec.id])
 
-    def test_execute_exc(self):
-        self.vping.vm2 = munch.Munch(private_v4='127.0.0.1')
+    @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.VPingSSH.'
+                'check_regex_in_console', return_value=True)
+    def test_execute_exc(self, *args):
+        self.vping.vm2 = munch.Munch(private_v4='127.0.0.1', name='foo')
         self.vping.ssh = mock.Mock()
         self.vping.ssh.exec_command.side_effect = ssh_exception.SSHException
         with self.assertRaises(ssh_exception.SSHException):
             self.vping.execute()
         self.vping.ssh.exec_command.assert_called_once_with(
             'ping -c 1 {}'.format(self.vping.vm2.private_v4))
+        args[0].assert_called_once_with('foo')
+
+    @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.VPingSSH.'
+                'check_regex_in_console', return_value=False)
+    def test_execute_exc2(self, *args):
+        self.vping.vm2 = munch.Munch(private_v4='127.0.0.1', name='foo')
+        self.vping.ssh = mock.Mock()
+        self.vping.execute()
+        self.vping.ssh.exec_command.assert_not_called()
+        args[0].assert_called_once_with('foo')
 
     def _test_execute(self, ret=0):
-        self.vping.vm2 = munch.Munch(private_v4='127.0.0.1')
+        self.vping.vm2 = munch.Munch(private_v4='127.0.0.1', name='foo')
         self.vping.ssh = mock.Mock()
         stdout = mock.Mock()
         stdout.channel.recv_exit_status.return_value = ret
         self.vping.ssh.exec_command.return_value = (None, stdout, mock.Mock())
-        self.assertEqual(self.vping.execute(), ret)
+        with mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.'
+                        'VPingSSH.check_regex_in_console',
+                        return_value=True) as mock_check:
+            self.assertEqual(self.vping.execute(), ret)
+            mock_check.assert_called_once_with('foo')
         self.vping.ssh.exec_command.assert_called_once_with(
             'ping -c 1 {}'.format(self.vping.vm2.private_v4))
 
