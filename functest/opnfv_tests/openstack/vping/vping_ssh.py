@@ -44,6 +44,8 @@ class VPingSSH(singlevm.SingleVm2):
         Returns: ping exit codes
         """
         assert self.ssh
+        if not self.check_regex_in_console(self.vm2.name):
+            return 1
         (_, stdout, stderr) = self.ssh.exec_command(
             'ping -c 1 {}'.format(
                 self.vm2.private_v4 or self.vm2.addresses[
