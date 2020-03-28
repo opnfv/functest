@@ -43,6 +43,7 @@ class Shaker(singlevm.SingleVm2):
     shaker_timeout = '3600'
     quota_instances = -1
     quota_cores = -1
+    check_console_loop = 12
 
     def __init__(self, **kwargs):
         super(Shaker, self).__init__(**kwargs)
