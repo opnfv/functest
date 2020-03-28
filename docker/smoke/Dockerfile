@@ -10,10 +10,10 @@ ARG CINDER_TEMPEST_TAG=0.2.0
 ARG KEYSTONE_TEMPEST_TAG=0.1.0
 ARG BARBICAN_TAG=0.1.0
 
-RUN apk --no-cache add --update libxml2 libxslt && \
+RUN apk --no-cache add --update libxml2 libxslt libpcre16 libpcre32 && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev pcre-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
