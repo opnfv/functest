@@ -368,6 +368,8 @@ class SingleVm1(VmReady1):
     ssh_connect_timeout = 1
     ssh_connect_loops = 6
     create_floating_ip_timeout = 120
+    check_console_loop = 6
+    check_console_regex = ' login: '
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -481,7 +483,9 @@ class SingleVm1(VmReady1):
             self.prepare()
             self.sshvm = self.boot_vm(
                 key_name=self.keypair.id, security_groups=[self.sec.id])
-            if self.check_regex_in_console(self.sshvm.name):
+            if self.check_regex_in_console(
+                    self.sshvm.name, regex=self.check_console_regex,
+                    loop=self.check_console_loop):
                 (self.fip, self.ssh) = self.connect(self.sshvm)
                 if not self.execute():
                     self.result = 100
