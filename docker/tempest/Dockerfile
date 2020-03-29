@@ -7,6 +7,7 @@ ARG RALLY_TAG=1.5.1
 ARG RALLY_OPENSTACK_TAG=1.5.0
 ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
+COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 RUN apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
@@ -32,4 +33,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
+    (cd /src/tempest && \
+        git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
+        git config --global user.name "Functest" && \
+        patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
+        git commit -a -m "Apply Accept-custom-registered-endpoints" && \
+        rm ~/.gitconfig) && \
+    rm /tmp/Accept-custom-registered-endpoints.patch && \
     apk del .build-deps
