@@ -1,0 +1,99 @@
+From 1d500e79156ada6bc6fdb628ed1da0efd4121f6a Mon Sep 17 00:00:00 2001
+From: Martin Kopec <mkopec@redhat.com>
+Date: Thu, 31 Oct 2019 13:56:42 +0000
+Subject: [PATCH 13/46] Accept custom registered endpoints
+
+The review drops usage of skip_path() filter in the related tests
+and uses raw_request() instead.
+
+Normally a swift url is organised as host:port/info and
+host:port/v1/AUTH_<tenant-id>, see
+https://docs.openstack.org/api-ref/object-store/
+But RadosGW API is organised as host:port/swift/info and
+host:port/swift/v1/AUTH_<tenant-id>, see
+https://docs.ceph.com/docs/master/radosgw/config-ref/#swift-settings
+
+Close-bug: 1799981
+Change-Id: I6a932639a05defe0f04c600afcc35a19662937af
+---
+ tempest/api/object_storage/test_crossdomain.py             | 7 +++----
+ tempest/api/object_storage/test_healthcheck.py             | 7 +++----
+ tempest/lib/services/object_storage/capabilities_client.py | 5 +++--
+ .../services/object_storage/test_capabilities_client.py    | 2 +-
+ 4 files changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/tempest/api/object_storage/test_crossdomain.py b/tempest/api/object_storage/test_crossdomain.py
+index f61d9f891..1567e0640 100644
+--- a/tempest/api/object_storage/test_crossdomain.py
++++ b/tempest/api/object_storage/test_crossdomain.py
+@@ -34,13 +34,12 @@ class CrossdomainTest(base.BaseObjectTest):
+     def setUp(self):
+         super(CrossdomainTest, self).setUp()
+ 
+-        # Turning http://.../v1/foobar into http://.../
+-        self.account_client.skip_path()
+-
+     @decorators.idempotent_id('d1b8b031-b622-4010-82f9-ff78a9e915c7')
+     @utils.requires_ext(extension='crossdomain', service='object')
+     def test_get_crossdomain_policy(self):
+-        resp, body = self.account_client.get("crossdomain.xml", {})
++        url = self.account_client._get_base_version_url() + "crossdomain.xml"
++        resp, body = self.account_client.raw_request(url, "GET")
++        self.account_client._error_checker(resp, body)
+         body = body.decode()
+ 
+         self.assertTrue(body.startswith(self.xml_start) and
+diff --git a/tempest/api/object_storage/test_healthcheck.py b/tempest/api/object_storage/test_healthcheck.py
+index a186f9ee6..8e9e4061d 100644
+--- a/tempest/api/object_storage/test_healthcheck.py
++++ b/tempest/api/object_storage/test_healthcheck.py
+@@ -22,13 +22,12 @@ class HealthcheckTest(base.BaseObjectTest):
+ 
+     def setUp(self):
+         super(HealthcheckTest, self).setUp()
+-        # Turning http://.../v1/foobar into http://.../
+-        self.account_client.skip_path()
+ 
+     @decorators.idempotent_id('db5723b1-f25c-49a9-bfeb-7b5640caf337')
+     def test_get_healthcheck(self):
+-
+-        resp, _ = self.account_client.get("healthcheck", {})
++        url = self.account_client._get_base_version_url() + "healthcheck"
++        resp, body = self.account_client.raw_request(url, "GET")
++        self.account_client._error_checker(resp, body)
+ 
+         # The target of the request is not any Swift resource. Therefore, the
+         # existence of response header is checked without a custom matcher.
+diff --git a/tempest/lib/services/object_storage/capabilities_client.py b/tempest/lib/services/object_storage/capabilities_client.py
+index d31bbc299..f08bd9aea 100644
+--- a/tempest/lib/services/object_storage/capabilities_client.py
++++ b/tempest/lib/services/object_storage/capabilities_client.py
+@@ -21,9 +21,10 @@ from tempest.lib.common import rest_client
+ class CapabilitiesClient(rest_client.RestClient):
+ 
+     def list_capabilities(self):
+-        self.skip_path()
+         try:
+-            resp, body = self.get('info')
++            url = self._get_base_version_url() + 'info'
++            resp, body = self.raw_request(url, 'GET')
++            self._error_checker(resp, body)
+         finally:
+             self.reset_path()
+         body = json.loads(body)
+diff --git a/tempest/tests/lib/services/object_storage/test_capabilities_client.py b/tempest/tests/lib/services/object_storage/test_capabilities_client.py
+index b7f972a85..9df7c7c18 100644
+--- a/tempest/tests/lib/services/object_storage/test_capabilities_client.py
++++ b/tempest/tests/lib/services/object_storage/test_capabilities_client.py
+@@ -43,7 +43,7 @@ class TestCapabilitiesClient(base.BaseServiceTest):
+         }
+         self.check_service_client_function(
+             self.client.list_capabilities,
+-            'tempest.lib.common.rest_client.RestClient.get',
++            'tempest.lib.common.rest_client.RestClient.raw_request',
+             resp,
+             bytes_body)
+ 
+-- 
+2.26.0.rc2
+
