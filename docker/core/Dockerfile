@@ -3,6 +3,7 @@ FROM alpine:3.10
 ARG BRANCH=stable/jerma
 ARG OPENSTACK_TAG=stable/train
 
+COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils mailcap && \
@@ -34,4 +35,11 @@ RUN apk --no-cache add --update \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'\n" > /etc/rally/rally.conf && \
     printf "\n[openstack]\nneutron_bind_l2_agent_types = Open vSwitch agent,Linux bridge agent,OVN Controller Gateway agent\n" >> /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
+    (cd /src/tempest && \
+        git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
+        git config --global user.name "Functest" && \
+        patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
+        git commit -a -m "Apply Accept-custom-registered-endpoints" && \
+        rm ~/.gitconfig) && \
+    rm /tmp/Accept-custom-registered-endpoints.patch && \
     apk del .build-deps
