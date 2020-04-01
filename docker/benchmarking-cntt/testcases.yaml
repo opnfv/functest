@@ -8,7 +8,7 @@ tiers:
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
         testcases:
             -
-                case_name: rally_full
+                case_name: rally_full_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -30,7 +30,7 @@ tiers:
                             - 'swift'
 
             -
-                case_name: rally_jobs
+                case_name: rally_jobs_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false

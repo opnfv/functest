@@ -49,17 +49,17 @@
             - tempest_horizon
         - container: functest-smoke-cntt
           tests:
-            - neutron-tempest-plugin-api
-            - tempest_cinder
-            - tempest_keystone
-            - rally_sanity
-            - tempest_full
-            - tempest_scenario
-            - tempest_slow
+            - neutron-tempest-plugin-api-cntt
+            - tempest_cinder_cntt
+            - tempest_keystone_cntt
+            - rally_sanity_cntt
+            - tempest_full_cntt
+            - tempest_scenario_cntt
+            - tempest_slow_cntt
         - container: functest-benchmarking-cntt
           tests:
-            - rally_full
-            - rally_jobs
+            - rally_full_cntt
+            - rally_jobs_cntt
             - vmtp
             - shaker
         - container: functest-vnf
