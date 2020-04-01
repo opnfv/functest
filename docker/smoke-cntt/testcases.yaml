@@ -7,7 +7,7 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                case_name: neutron-tempest-plugin-api
+                case_name: neutron-tempest-plugin-api-cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -71,7 +71,7 @@ tiers:
                             - '--concurrency=4'
 
             -
-                case_name: tempest_cinder
+                case_name: tempest_cinder_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -90,7 +90,7 @@ tiers:
                             - '--concurrency=4'
 
             -
-                case_name: tempest_keystone
+                case_name: tempest_keystone_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -109,7 +109,7 @@ tiers:
                             - '--concurrency=4'
 
             -
-                case_name: rally_sanity
+                case_name: rally_sanity_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -131,7 +131,7 @@ tiers:
                             - 'swift'
 
             -
-                case_name: tempest_full
+                case_name: tempest_full_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -192,7 +192,7 @@ tiers:
                             - '--concurrency=4'
 
             -
-                case_name: tempest_scenario
+                case_name: tempest_scenario_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -213,7 +213,7 @@ tiers:
                             - '--concurrency=1'
 
             -
-                case_name: tempest_slow
+                case_name: tempest_slow_cntt
                 project_name: functest
                 criteria: 100
                 blocking: false
