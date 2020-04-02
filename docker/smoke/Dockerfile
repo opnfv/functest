@@ -10,6 +10,7 @@ ARG NEUTRON_TAG=master
 ARG GLANCE_TAG=master
 ARG BARBICAN_TAG=master
 ARG OCTAVIA_TAG=master
+ARG HEAT_TEMPEST_TAG=master
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -51,10 +52,15 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://git.openstack.org/openstack/octavia-tempest-plugin.git $OCTAVIA_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/octavia-tempest-plugin && \
+    git init /src/heat-tempest-plugin && \
+    (cd /src/heat-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
+        git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/heat-tempest-plugin && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin && \
+        /src/octavia-tempest-plugin /src/heat-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     mkdir -p /etc/neutron /etc/glance && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
@@ -67,7 +73,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin /src/neutron /src/glance && \
+        /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/neutron /src/glance && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
