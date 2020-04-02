@@ -676,3 +676,69 @@ class TempestHorizon(TempestCommon):
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
+
+
+class TempestHeat(TempestCommon):
+    """Tempest Heat testcase implementation class."""
+
+    filename_alt = ('/home/opnfv/functest/images/'
+                    'Fedora-Cloud-Base-30-1.2.x86_64.qcow2')
+    flavor_alt_ram = 512
+    flavor_alt_vcpus = 1
+    flavor_alt_disk = 4
+
+    def __init__(self, **kwargs):
+        super(TempestHeat, self).__init__(**kwargs)
+        self.user2 = self.orig_cloud.create_user(
+            name='{}-user2_{}'.format(self.case_name, self.project.guid),
+            password=self.project.password,
+            domain_id=self.project.domain.id)
+        if not self.orig_cloud.get_role("heat_stack_owner"):
+            self.role = self.orig_cloud.create_role("heat_stack_owner")
+        self.orig_cloud.grant_role(
+            "heat_stack_owner", user=self.user2.id,
+            project=self.project.project.id,
+            domain=self.project.domain.id)
+
+    def configure(self, **kwargs):
+        assert self.user2
+        super(TempestHeat, self).configure(**kwargs)
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section('heat_plugin'):
+            rconfig.add_section('heat_plugin')
+        # It fails if region and domain ids are unset
+        rconfig.set(
+            'heat_plugin', 'region',
+            os.environ.get('OS_REGION_NAME', 'RegionOne'))
+        rconfig.set('heat_plugin', 'auth_url', os.environ["OS_AUTH_URL"])
+        rconfig.set('heat_plugin', 'project_domain_id', self.project.domain.id)
+        rconfig.set('heat_plugin', 'user_domain_id', self.project.domain.id)
+        rconfig.set(
+            'heat_plugin', 'project_domain_name', self.project.domain.name)
+        rconfig.set(
+            'heat_plugin', 'user_domain_name', self.project.domain.name)
+        rconfig.set('heat_plugin', 'username', self.user2.name)
+        rconfig.set('heat_plugin', 'password', self.project.password)
+        rconfig.set('heat_plugin', 'project_name', self.project.project.name)
+        rconfig.set('heat_plugin', 'admin_username', self.project.user.name)
+        rconfig.set('heat_plugin', 'admin_password', self.project.password)
+        rconfig.set(
+            'heat_plugin', 'admin_project_name', self.project.project.name)
+        rconfig.set('heat_plugin', 'image_ref', self.image_alt.id)
+        rconfig.set('heat_plugin', 'instance_type', self.flavor_alt.id)
+        rconfig.set('heat_plugin', 'minimal_image_ref', self.image.id)
+        rconfig.set('heat_plugin', 'minimal_instance_type', self.flavor.id)
+        rconfig.set('heat_plugin', 'floating_network_name', self.ext_net.name)
+        rconfig.set('heat_plugin', 'fixed_network_name', self.network.name)
+        with open(self.conf_file, 'w') as config_file:
+            rconfig.write(config_file)
+        self.backup_tempest_config(self.conf_file, self.res_dir)
+
+    def clean(self):
+        """
+        Cleanup all OpenStack objects. Should be called on completion.
+        """
+        super(TempestHeat, self).clean()
+        if self.user2:
+            self.orig_cloud.delete_user(self.user2.id)
