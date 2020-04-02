@@ -81,3 +81,8 @@ object-storage-feature-enabled:
       tempurl,crossdomain,container_quotas,staticweb,account_quotas,slo"
     object_versioning: true
     discoverability: true
+heat_plugin:
+    skip_scenario_test_list: AodhAlarmTest,SoftwareConfigIntegrationTest
+    auth_version: 3
+heat_features_enabled:
+    multi_cloud: false

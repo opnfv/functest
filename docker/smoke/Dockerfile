@@ -9,6 +9,7 @@ ARG CINDER_TEMPEST_TAG=0.3.0
 ARG KEYSTONE_TEMPEST_TAG=0.3.0
 ARG BARBICAN_TAG=0.3.0
 ARG OCTAVIA_TAG=1.2.0
+ARG HEAT_TEMPEST_TAG=37a8df97277b42693ead3f5709f23544788f5a9f
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -53,10 +54,15 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://git.openstack.org/openstack/octavia-tempest-plugin.git $OCTAVIA_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/octavia-tempest-plugin && \
+    git init /src/heat-tempest-plugin && \
+    (cd /src/heat-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
+        git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/openstack-requirements /src/heat-tempest-plugin && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin && \
+        /src/octavia-tempest-plugin /src/heat-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     mkdir -p /etc/neutron /etc/glance && \
     wget -q -O /etc/glance/policy.json https://opendev.org/openstack/glance/raw/branch/$OPENSTACK_TAG/etc/policy.json && \
@@ -68,7 +74,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     rm -r oslo upper-constraints.txt upper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin /src/neutron && \
+        /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/neutron && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
