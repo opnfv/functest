@@ -218,6 +218,21 @@ tiers:
                             - '--concurrency=3'
 
             -
+                case_name: tempest_heat
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Heat project.
+                run:
+                    name: tempest_heat
+                    args:
+                        mode: '^heat_tempest_plugin.tests'
+                        option:
+                            - '--concurrency=4'
+
+            -
                 case_name: rally_sanity
                 project_name: functest
                 criteria: 100

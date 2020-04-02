@@ -37,6 +37,7 @@ The internal test cases are:
  * neutron-tempest-plugin-api
  * tempest_cinder
  * tempest_keystone
+ * tempest_heat
  * rally_sanity
  * refstack_defcore
  * patrole
