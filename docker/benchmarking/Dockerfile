@@ -10,11 +10,10 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
-    sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
+    sed -i -E /#egg=tempest/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
-    sed -i -E /#egg=tempest/d upper-constraints.opnfv.txt && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" pip3 install --no-cache-dir -cupper-constraints.txt -cupper-constraints.opnfv.txt lxml ;; esac && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
