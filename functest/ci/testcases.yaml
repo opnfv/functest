@@ -161,7 +161,7 @@ tiers:
                     args:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
     -
         name: smoke
@@ -184,7 +184,7 @@ tiers:
                     args:
                         mode: '^neutron_tempest_plugin\.api'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: tempest_cinder
@@ -200,7 +200,7 @@ tiers:
                         mode:
                             '(?!.*test_incremental_backup)(^cinder_tempest_plugin.)'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: tempest_keystone
@@ -215,7 +215,7 @@ tiers:
                     args:
                         mode: 'keystone_tempest_plugin.'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: rally_sanity
@@ -245,7 +245,7 @@ tiers:
                     name: refstack_defcore
                     args:
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: tempest_full
@@ -262,7 +262,7 @@ tiers:
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: tempest_scenario
@@ -352,7 +352,7 @@ tiers:
                         neutron_extensions:
                             - bgpvpn
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
 
             -
                 case_name: networking-sfc

@@ -161,4 +161,4 @@ tiers:
                     args:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=3'
