@@ -76,3 +76,8 @@ neutron_plugin_options:
     available_type_drivers: flat,geneve,vlan,gre,local,vxlan
     provider_vlans: foo,
     create_shared_resources: true
+object-storage-feature-enabled:
+    discoverable_apis: "account_quotas,formpost,bulk_upload,bulk_delete,\
+      tempurl,crossdomain,container_quotas,staticweb,account_quotas,slo"
+    object_versioning: true
+    discoverability: true
