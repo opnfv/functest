@@ -251,7 +251,7 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        server_kwargs:
+        boot_server_kwargs:
             nics:
               - net-id: {{ netid }}
       context:
