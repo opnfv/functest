@@ -36,8 +36,9 @@
         flavor:
             name: {{ flavor_name }}
         number_instances: 2
-        nics:
-          - net-id: {{ netid }}
+        boot_server_kwargs:
+            nics:
+              - net-id: {{ netid }}
       context:
         {{ user_context(tenants_amount, users_amount, use_existing_users) }}
         quotas:
