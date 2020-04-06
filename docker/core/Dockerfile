@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=master
 
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
-        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap && \
+        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
