@@ -75,4 +75,8 @@ neutron_plugin_options:
     agent_availability_zone: nova
     available_type_drivers: flat,geneve,vlan,local
     provider_vlans: public,
-    create_shared_resources: true
+object-storage-feature-enabled:
+    discoverable_apis: "account_quotas,formpost,bulk_upload,bulk_delete,\
+      tempurl,crossdomain,container_quotas,staticweb,account_quotas,slo"
+    object_versioning: true
+    discoverability: true
