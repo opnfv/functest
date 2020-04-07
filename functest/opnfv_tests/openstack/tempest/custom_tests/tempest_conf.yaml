@@ -80,7 +80,8 @@ object-storage-feature-enabled:
     object_versioning: true
     discoverability: true
 heat_plugin:
-    skip_scenario_test_list: AodhAlarmTest,SoftwareConfigIntegrationTest
+    skip_scenario_test_list: "AodhAlarmTest,SoftwareConfigIntegrationTest,\
+      VolumeBackupRestoreIntegrationTest"
     auth_version: 3
 heat_features_enabled:
     multi_cloud: false
