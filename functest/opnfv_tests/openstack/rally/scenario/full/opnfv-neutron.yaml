@@ -150,8 +150,6 @@
         subnets_per_network: 1
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network:
-          router: {}
         quotas:
           neutron:
             network: -1
