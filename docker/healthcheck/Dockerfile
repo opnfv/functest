@@ -24,7 +24,6 @@ RUN wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK
         git fetch --tags https://git.opendaylight.org/gerrit/integration/test $ODL_TAG && \
         git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git /src/tempest-horizon/ thirdparty-requirements.txt upper-constraints.txt \
-        upper-constraints.opnfv.txt && \
-    apk del .build-deps
+        upper-constraints.opnfv.txt
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
