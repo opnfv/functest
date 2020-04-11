@@ -30,7 +30,7 @@ compute-feature-enabled:
     spice_console: false
     suspend: true
     swap_volume: false
-    vnc_console: false
+    vnc_console: true
     volume_backed_live_migration: false
     volume_multiattach: false
 identity:
@@ -70,14 +70,18 @@ volume-feature-enabled:
     extend_attached_volume: false
     consistency_group: false
     volume_revert: true
-load_balancer:
-    test_with_noop: true
 neutron_plugin_options:
     agent_availability_zone: nova
-    available_type_drivers: flat,geneve,vlan,local
-    provider_vlans: public,
+    available_type_drivers: flat,geneve,vlan,gre,local,vxlan
+    provider_vlans: foo,
 object-storage-feature-enabled:
     discoverable_apis: "account_quotas,formpost,bulk_upload,bulk_delete,\
       tempurl,crossdomain,container_quotas,staticweb,account_quotas,slo"
     object_versioning: true
     discoverability: true
+heat_plugin:
+    skip_scenario_test_list: "AodhAlarmTest,SoftwareConfigIntegrationTest,\
+      VolumeBackupRestoreIntegrationTest"
+    auth_version: 3
+heat_features_enabled:
+    multi_cloud: false
