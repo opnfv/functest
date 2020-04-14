@@ -15,7 +15,7 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        size: 10
+        size: 1
         block_migration: {{ block_migration }}
         boot_server_kwargs:
             nics:
