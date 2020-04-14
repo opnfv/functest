@@ -8,6 +8,7 @@ ARG RALLY_OPENSTACK_TAG=1.5.0
 ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
+COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
@@ -39,7 +40,9 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
         patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
-        git commit -a -m "Apply Accept-custom-registered-endpoints" && \
+        patch -p1 < /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
+        git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     rm /tmp/Accept-custom-registered-endpoints.patch && \
+    rm /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
     apk del .build-deps
