@@ -4,6 +4,7 @@ ARG BRANCH=stable/jerma
 ARG OPENSTACK_TAG=stable/train
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
+COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap && \
@@ -40,7 +41,9 @@ RUN apk --no-cache add --update \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
         patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
-        git commit -a -m "Apply Accept-custom-registered-endpoints" && \
+        patch -p1 < /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
+        git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     rm /tmp/Accept-custom-registered-endpoints.patch && \
+    rm /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
     apk del .build-deps
