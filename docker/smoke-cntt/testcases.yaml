@@ -60,6 +60,7 @@ tiers:
                             (?!.*test_routers_negative.HaRoutersNegativeTest)\
                             (?!.*test_security_groups.RbacSharedSecurityGroupTest)\
                             (?!.*test_subnetpool_prefix_ops)\
+                            (?!.*test_subnetpools.RbacSubnetPoolTest)\
                             (?!.*test_subnetpools.SubnetPoolsSearchCriteriaTest.test_list_validation_filters)\
                             (?!.*test_subnetpools_negative.SubnetPoolsNegativeTestJSON.test_tenant_create_subnetpool_associate_shared_address_scope)\
                             (?!.*test_subnets.SubnetsSearchCriteriaTest.test_list_validation_filters)\
