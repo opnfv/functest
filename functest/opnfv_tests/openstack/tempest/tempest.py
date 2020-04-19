@@ -724,6 +724,8 @@ class TempestHeat(TempestCommon):
         rconfig.set('heat_plugin', 'minimal_instance_type', self.flavor.id)
         rconfig.set('heat_plugin', 'floating_network_name', self.ext_net.name)
         rconfig.set('heat_plugin', 'fixed_network_name', self.network.name)
+        rconfig.set('heat_plugin', 'fixed_subnet_name', self.subnet.name)
+        rconfig.set('heat_plugin', 'network_for_ssh', self.network.name)
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)

@@ -245,7 +245,7 @@ tiers:
                     args:
                         mode: '^heat_tempest_plugin.tests'
                         option:
-                            - '--concurrency=4'
+                            - '--concurrency=1'
 
             -
                 case_name: rally_sanity
