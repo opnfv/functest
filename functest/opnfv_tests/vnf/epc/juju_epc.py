@@ -42,7 +42,7 @@ CREDS_TEMPLATE2 = """credentials:
     default-credential: abot-epc
     abot-epc:
       auth-type: userpass
-      password: {pass}
+      password: '{pass}'
       project-domain-name: {project_domain_n}
       tenant-name: {tenant_n}"""
 
@@ -51,7 +51,7 @@ CREDS_TEMPLATE = """credentials:
     default-credential: abot-epc
     abot-epc:
       auth-type: userpass
-      password: {pass}
+      password: '{pass}'
       project-domain-name: {project_domain_n}
       tenant-name: {tenant_n}
       user-domain-name: {user_domain_n}
@@ -187,7 +187,7 @@ class JujuEpc(singlevm.VmReady2):
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE.format(**creds_data))
         cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
-               '--replace']
+               '--replace', '--debug']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
