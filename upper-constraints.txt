@@ -22,7 +22,6 @@ ruamel.yaml.jinja2==0.2.2
 rally.git===3.0.0
 git+https://opendev.org/openstack/rally-openstack.git@83eae7f02ac1e15c0e2a6a35978abeb1f8b2cd3f#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@e4c605fa0ae0cae63ce5ac19ce8516f0bdd5e868#egg=xrally-kubernetes
-git+https://github.com/esnme/ultrajson@d25e024f481c5571d15f3c0c406a498ca0467cfd#egg=ujson
 pylint===1.9.5;python_version=='2.7'
 pylint===2.3.1;python_version=='3.7'
 ruamel.yaml===0.15.100
