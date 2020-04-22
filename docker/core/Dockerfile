@@ -5,11 +5,13 @@ ARG OPENSTACK_TAG=stable/rocky
 
 RUN apk --no-cache add --update \
         python libffi openssl libjpeg-turbo py-pip bash \
-        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap && \
+        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
+        libstdc++ && \
     apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
+    sed -i -E /^ujson==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py-pynacl ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
