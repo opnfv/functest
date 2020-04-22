@@ -5,7 +5,6 @@ ARG OPENSTACK_TAG=stable/stein
 ARG TEMPEST_TAG=21.0.0
 ARG RALLY_TAG=1.5.1
 ARG RALLY_OPENSTACK_TAG=1.5.0
-ARG UJSON_TAG=d25e024f481c5571d15f3c0c406a498ca0467cfd
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
@@ -14,7 +13,6 @@ RUN apk --no-cache add --virtual .build-deps --update \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E s/^tempest==+.*$/-e\ git+https:\\/\\/opendev.org\\/openstack\\/tempest@$TEMPEST_TAG#egg=tempest/ upper-constraints.txt && \
-    sed -i -E s/^ujson==+.*$/-e\ git+https:\\/\\/github.com\\/esnme\\/ultrajson@$UJSON_TAG#egg=ujson/ upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
