@@ -1,0 +1,85 @@
+From ffebbd89ca6c02312bc669e6d0d6295aae5b0319 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
+Date: Sun, 26 Apr 2020 20:42:27 +0200
+Subject: [PATCH] Increase Thread stack size
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+It sets Glibc default value.
+https://wiki.musl-libc.org/functional-differences-from-glibc.html
+https://bugs.python.org/issue32307
+
+Change-Id: I0158ec40fda63ab11fb8d50ac43610dac6c455c7
+Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
+---
+ rally/common/broker.py                 | 1 +
+ rally/plugins/task/runners/constant.py | 1 +
+ rally/plugins/task/runners/rps.py      | 1 +
+ rally/task/engine.py                   | 1 +
+ rally/task/hook.py                     | 1 +
+ 5 files changed, 5 insertions(+)
+
+diff --git a/rally/common/broker.py b/rally/common/broker.py
+index 2e0bd75e2..cb169ab3e 100644
+--- a/rally/common/broker.py
++++ b/rally/common/broker.py
+@@ -15,6 +15,7 @@
+ 
+ import collections
+ import threading
++threading.stack_size(8*1024*1024)
+ 
+ from rally.common import logging
+ 
+diff --git a/rally/plugins/task/runners/constant.py b/rally/plugins/task/runners/constant.py
+index 5feb1fee1..5300324f3 100644
+--- a/rally/plugins/task/runners/constant.py
++++ b/rally/plugins/task/runners/constant.py
+@@ -17,6 +17,7 @@ import collections
+ import multiprocessing
+ import queue as Queue
+ import threading
++threading.stack_size(8*1024*1024)
+ import time
+ 
+ from rally.common import utils
+diff --git a/rally/plugins/task/runners/rps.py b/rally/plugins/task/runners/rps.py
+index 98a706d11..defeedc1c 100644
+--- a/rally/plugins/task/runners/rps.py
++++ b/rally/plugins/task/runners/rps.py
+@@ -17,6 +17,7 @@ import collections
+ import multiprocessing
+ import queue as Queue
+ import threading
++threading.stack_size(8*1024*1024)
+ import time
+ 
+ from rally.common import logging
+diff --git a/rally/task/engine.py b/rally/task/engine.py
+index 594d7f464..71f7f01c5 100644
+--- a/rally/task/engine.py
++++ b/rally/task/engine.py
+@@ -16,6 +16,7 @@
+ import copy
+ import json
+ import threading
++threading.stack_size(8*1024*1024)
+ import time
+ import traceback
+ 
+diff --git a/rally/task/hook.py b/rally/task/hook.py
+index 524bc3b71..1f731abea 100644
+--- a/rally/task/hook.py
++++ b/rally/task/hook.py
+@@ -16,6 +16,7 @@
+ import abc
+ import collections
+ import threading
++threading.stack_size(8*1024*1024)
+ 
+ from rally.common import logging
+ from rally.common.plugin import plugin
+-- 
+2.26.2
+
