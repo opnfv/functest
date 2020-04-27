@@ -107,6 +107,30 @@ tiers:
                             - '--concurrency=3'
 
             -
+                case_name: tempest_heat_cntt
+                project_name: functest
+                criteria: 100
+                blocking: false
+                deny_skipping: true
+                tests_count: 121
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Heat project.
+                run:
+                    name: tempest_heat
+                    args:
+                        mode: "(?!.*functional.test_lbaasv2)\
+                          (?!.*RemoteStackTest.test_stack_create_with_cloud_credential)\
+                          (?!.*scenario.test_aodh_alarm)\
+                          (?!.*tests.scenario.test_autoscaling_lb)\
+                          (?!.*scenario.test_autoscaling_lbv2)\
+                          (?!.*scenario.test_server_software_config)\
+                          (?!.*test_volumes.VolumeBackupRestoreIntegrationTest)\
+                          ^heat_tempest_plugin.tests"
+                        option:
+                            - '--concurrency=1'
+
+            -
                 case_name: rally_sanity_cntt
                 project_name: functest
                 criteria: 100
