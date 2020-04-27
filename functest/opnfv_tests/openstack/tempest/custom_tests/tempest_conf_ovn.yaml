@@ -33,6 +33,7 @@ compute-feature-enabled:
     volume_backed_live_migration: false
     volume_multiattach: false
 identity:
+    auth_version: v3
     user_unique_last_password_count: 2
     user_lockout_duration: 10
     user_lockout_failure_attempts: 2

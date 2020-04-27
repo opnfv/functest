@@ -283,7 +283,6 @@ class TempestCommon(singlevm.VmReady2):
             assert os.path.exists(
                 account_file), "{} doesn't exist".format(account_file)
             rconfig.set('auth', 'test_accounts_file', account_file)
-        rconfig.set('identity', 'auth_version', 'v3')
         rconfig.set('identity', 'admin_role', admin_role_name)
         rconfig.set('identity', 'default_domain_id', domain_id)
         if not rconfig.has_section('network'):
