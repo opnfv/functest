@@ -55,6 +55,7 @@
             - neutron-tempest-plugin-api-cntt
             - tempest_cinder_cntt
             - tempest_keystone_cntt
+            - tempest_heat_cntt
             - rally_sanity_cntt
             - tempest_full_cntt
             - tempest_scenario_cntt
