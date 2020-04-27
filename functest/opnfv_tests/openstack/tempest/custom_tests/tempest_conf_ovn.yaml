@@ -83,7 +83,7 @@ object-storage-feature-enabled:
     discoverability: true
 heat_plugin:
     skip_scenario_test_list: "AodhAlarmTest,SoftwareConfigIntegrationTest,\
-      VolumeBackupRestoreIntegrationTest"
+      VolumeBackupRestoreIntegrationTest,CfnInitIntegrationTest"
     auth_version: 3
 heat_features_enabled:
     multi_cloud: false
