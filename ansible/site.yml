@@ -60,7 +60,7 @@
             - tempest_horizon
         - container: functest-smoke
           tests:
-            - neutron-tempest-plugin-api
+            - tempest_neutron
             - tempest_cinder
             - tempest_keystone
             - tempest_heat
