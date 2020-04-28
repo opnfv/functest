@@ -9,7 +9,7 @@ ARG CINDER_TEMPEST_TAG=0.3.0
 ARG KEYSTONE_TEMPEST_TAG=0.3.0
 ARG BARBICAN_TAG=0.3.0
 ARG OCTAVIA_TAG=1.2.0
-ARG HEAT_TEMPEST_TAG=37a8df97277b42693ead3f5709f23544788f5a9f
+ARG HEAT_TEMPEST_TAG=1.0.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
