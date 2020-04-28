@@ -25,7 +25,7 @@ os:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 
-    neutron-tempest-plugin-api:
+    tempest_neutron:
         image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
 

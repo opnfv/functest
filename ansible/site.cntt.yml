@@ -52,7 +52,7 @@
             - tempest_horizon
         - container: functest-smoke-cntt
           tests:
-            - neutron-tempest-plugin-api-cntt
+            - tempest_neutron_cntt
             - tempest_cinder_cntt
             - tempest_keystone_cntt
             - tempest_heat_cntt
