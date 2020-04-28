@@ -117,7 +117,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 121
+                tests_count: 120
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Heat project.
@@ -131,6 +131,7 @@ tiers:
                           (?!.*scenario.test_autoscaling_lbv2)\
                           (?!.*scenario.test_server_software_config)\
                           (?!.*test_volumes.VolumeBackupRestoreIntegrationTest)\
+                          (?!.*scenario.test_server_cfn_init)\
                           ^heat_tempest_plugin.tests"
                         option:
                             - '--concurrency=1'
