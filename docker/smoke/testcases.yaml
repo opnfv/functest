@@ -7,7 +7,7 @@ tiers:
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
             -
-                case_name: neutron-tempest-plugin-api
+                case_name: tempest_neutron
                 project_name: functest
                 criteria: 100
                 blocking: false
