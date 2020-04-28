@@ -5,6 +5,9 @@
     - role: collivier.xtesting
       project: functest
       gerrit_project: functest
+      docker_tags:
+        - kali:
+            branch: stable/kali
       builds:
         dependencies:
           - repo: _

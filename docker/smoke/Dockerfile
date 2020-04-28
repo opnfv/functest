@@ -1,6 +1,6 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:kali
 
-ARG BRANCH=master
+ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=master
 ARG PATROLE_TAG=master
 ARG NEUTRON_TEMPEST_TAG=master

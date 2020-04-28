@@ -1,4 +1,4 @@
-FROM opnfv/functest-smoke
+FROM opnfv/functest-smoke:kali
 
 COPY testcases.yaml /usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml
 COPY tempest_conf.yaml /usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/tempest_conf.yaml
