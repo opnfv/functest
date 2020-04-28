@@ -16,7 +16,7 @@ fdio:
         flavor_ram: 1024
     tempest_smoke:
         flavor_ram: 1024
-    neutron-tempest-plugin-api:
+    tempest_neutron:
         flavor_ram: 1024
     refstack_compute:
         flavor_ram: 1024
@@ -66,7 +66,7 @@ ovs:
         flavor_ram: 1024
     tempest_smoke:
         flavor_ram: 1024
-    neutron-tempest-plugin-api:
+    tempest_neutron:
         flavor_ram: 1024
     refstack_compute:
         flavor_ram: 1024
@@ -126,7 +126,7 @@ vio:
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
-    neutron-tempest-plugin-api:
+    tempest_neutron:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
