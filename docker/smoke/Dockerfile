@@ -2,15 +2,15 @@ FROM opnfv/functest-core:kali
 
 ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=master
-ARG PATROLE_TAG=master
-ARG NEUTRON_TEMPEST_TAG=master
-ARG CINDER_TEMPEST_TAG=master
-ARG KEYSTONE_TEMPEST_TAG=master
-ARG NEUTRON_TAG=master
-ARG GLANCE_TAG=master
-ARG BARBICAN_TAG=master
-ARG OCTAVIA_TAG=master
-ARG HEAT_TEMPEST_TAG=master
+ARG PATROLE_TAG=0.9.0
+ARG NEUTRON_TEMPEST_TAG=1.1.0
+ARG CINDER_TEMPEST_TAG=0.3.1
+ARG KEYSTONE_TEMPEST_TAG=0.4.0
+ARG NEUTRON_TAG=stable/ussuri
+ARG GLANCE_TAG=stable/ussuri
+ARG BARBICAN_TAG=1.0.0
+ARG OCTAVIA_TAG=1.4.0
+ARG HEAT_TEMPEST_TAG=1.0.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \

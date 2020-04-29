@@ -2,8 +2,8 @@ FROM opnfv/functest-core:kali
 
 ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=master
-ARG VMTP_TAG=master
-ARG NEUTRON_TAG=master
+ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
+ARG NEUTRON_TAG=stable/ussuri
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
