@@ -39,6 +39,7 @@ The internal test cases are:
  * tempest_cinder
  * tempest_keystone
  * tempest_heat
+ * tempest_telemetry
  * rally_sanity
  * refstack_compute
  * refstack_object
