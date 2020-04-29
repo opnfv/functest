@@ -248,6 +248,26 @@ tiers:
                             - '--concurrency=1'
 
             -
+                case_name: tempest_telemetry
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    This test case runs the Tempest suite proposed by the
+                    Telemetry project.
+                run:
+                    name: tempest_common
+                    args:
+                        mode: "(?!.*test_autoscaling)\
+                            (^telemetry_tempest_plugin)"
+                        services:
+                            - aodh
+                            - gnocchi
+                            - panko
+                        option:
+                            - '--concurrency=3'
+
+            -
                 case_name: rally_sanity
                 project_name: functest
                 criteria: 100
