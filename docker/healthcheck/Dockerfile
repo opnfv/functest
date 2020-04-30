@@ -1,7 +1,7 @@
 FROM opnfv/functest-core
 
 ARG BRANCH=stable/kali
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=stable/ussuri
 ARG ODL_TAG=89b88a0a23561f0bda62338b394ec41655679b2d
 ARG TEMPEST_HORIZON_TAG=1.0.0
 

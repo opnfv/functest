@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: latest
+    max_microversion: 2.87
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false
@@ -54,9 +54,9 @@ network-feature-enabled:
     port_security: true
     floating_ips: true
 placement:
-    max_microversion: latest
+    max_microversion: 1.36
 volume:
-    max_microversion: latest
+    max_microversion: 3.60
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s
