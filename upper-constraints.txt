@@ -19,7 +19,7 @@ xtesting===0.87.0
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest@22.0.0#egg=tempest
-rally.git===3.0.0
+-e git+https://opendev.org/openstack/rally.git@3.0.0#egg=rally
 git+https://opendev.org/openstack/rally-openstack.git@83eae7f02ac1e15c0e2a6a35978abeb1f8b2cd3f#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@e4c605fa0ae0cae63ce5ac19ce8516f0bdd5e868#egg=xrally-kubernetes
 ujson===2.0.3
