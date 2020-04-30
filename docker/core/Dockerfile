@@ -3,7 +3,7 @@ FROM alpine:3.11
 ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=stable/ussuri
 
-COPY Increase-Thread-stack-size.patch /tmp/Try-to-detect-the-race-conditions.patch
+COPY Try-to-detect-the-race-conditions.patch /tmp/Try-to-detect-the-race-conditions.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
