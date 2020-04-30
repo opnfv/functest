@@ -7,7 +7,7 @@ requests!=2.20.0 # Apache-2.0
 robotframework>=3.0
 scp
 cloudify-rest-client
-mock # BSD
+mock!=4.0.0,!=4.0.1 # BSD
 PrettyTable<0.8 # BSD
 six # MIT
 paramiko # LGPLv2.1+
