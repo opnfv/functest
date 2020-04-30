@@ -1,7 +1,7 @@
 FROM opnfv/functest-core:kali
 
 ARG BRANCH=stable/kali
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=stable/ussuri
 ARG PATROLE_TAG=0.9.0
 ARG NEUTRON_TEMPEST_TAG=1.1.0
 ARG CINDER_TEMPEST_TAG=0.3.1

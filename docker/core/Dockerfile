@@ -1,7 +1,7 @@
 FROM alpine:3.11
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG BRANCH=stable/kali
+ARG OPENSTACK_TAG=stable/ussuri
 
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
