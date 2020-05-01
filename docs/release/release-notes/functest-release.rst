@@ -48,7 +48,6 @@ The internal test cases are:
  * tempest_slow
  * patrole
  * barbican
- * neutron_trunk
  * networking-bgpvpn
  * networking-sfc
  * octavia
