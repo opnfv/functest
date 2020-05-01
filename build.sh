@@ -44,7 +44,7 @@ done
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|alpine:3.9|multiarch/alpine:arm64-v3.9|g" {} +
+    -e "s|alpine:3.9|arm64v8/alpine:3.9|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:hunter|${repo}/functest-core:arm64-hunter|g" {} +
 find . -name Dockerfile -exec sed -i \
@@ -60,11 +60,11 @@ for dir in ${arm64_dirs}; do
 done
 [ -n "${arm64_dirs}" ] &&
     (docker rmi "${repo}/functest-core:arm64-hunter" \
-        multiarch/alpine:arm64-v3.9 || true)
+        arm64v8/alpine:3.9 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|alpine:3.9|multiarch/alpine:armhf-v3.9|g" {} +
+    -e "s|alpine:3.9|arm32v6/alpine:3.9|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:hunter|${repo}/functest-core:arm-hunter|g" {} +
 find . -name Dockerfile -exec sed -i \
@@ -80,7 +80,7 @@ for dir in ${arm_dirs}; do
 done
 [ -n "${arm_dirs}" ] &&
     (docker rmi "${repo}/functest-core:arm-hunter" \
-        multiarch/alpine:armhf-v3.9 || true)
+        arm32v6/alpine:3.9 || true)
 find . -name Dockerfile -exec git checkout {} +
 
 exit $?
