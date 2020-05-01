@@ -427,7 +427,7 @@ tiers:
                             - '--concurrency=0'
 
             -
-                case_name: barbican
+                case_name: tempest_barbican
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -443,7 +443,7 @@ tiers:
                             - barbican
 
             -
-                case_name: octavia
+                case_name: tempest_octavia
                 project_name: functest
                 criteria: 100
                 blocking: false

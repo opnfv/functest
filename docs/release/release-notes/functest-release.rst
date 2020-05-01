@@ -47,10 +47,10 @@ The internal test cases are:
  * tempest_scenario
  * tempest_slow
  * patrole
- * barbican
+ * tempest_barbican
  * networking-bgpvpn
  * networking-sfc
- * octavia
+ * tempest_octavia
  * rally_full
  * rally_jobs
  * vmtp

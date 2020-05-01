@@ -72,8 +72,8 @@
             - neutron_trunk
             - networking-bgpvpn
             - networking-sfc
-            - barbican
-            - octavia
+            - tempest_barbican
+            - tempest_octavia
         - container: functest-benchmarking
           tests:
             - rally_full
