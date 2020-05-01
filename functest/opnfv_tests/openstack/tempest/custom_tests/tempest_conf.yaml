@@ -56,7 +56,7 @@ network-feature-enabled:
 placement:
     max_microversion: 1.36
 volume:
-    max_microversion: 3.60
+    max_microversion: "3.60"
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s
