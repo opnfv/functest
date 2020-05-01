@@ -42,7 +42,6 @@ The internal test cases are:
  * rally_sanity
  * refstack_defcore
  * patrole
- * neutron_trunk
  * networking-bgpvpn
  * networking-sfc
  * barbican
