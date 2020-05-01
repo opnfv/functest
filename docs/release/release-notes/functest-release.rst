@@ -44,7 +44,7 @@ The internal test cases are:
  * patrole
  * networking-bgpvpn
  * networking-sfc
- * barbican
+ * tempest_barbican
  * tempest_full
  * tempest_scenario
  * rally_full
