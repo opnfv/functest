@@ -318,19 +318,12 @@ class JujuEpc(singlevm.VmReady2):
                 return False
 
         self.__logger.info("Transferring the feature files to Abot_node ...")
-        cmd = ['timeout', JujuEpc.juju_timeout,
-               'juju', 'scp', '--', '-r', '-v',
-               '{}/featureFiles'.format(self.case_dir), 'abot-epc-basic/0:~/']
+        cmd = ['timeout', '60', 'juju', 'scp', '--', '-r', '-v',
+               '{}/featureFiles'.format(self.case_dir),
+               'abot-epc-basic/0:/etc/rebaca-test-suite/']
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
-        self.__logger.info("Copying the feature files within Abot_node ")
-        cmd = ['timeout', JujuEpc.juju_timeout,
-               'juju', 'ssh', 'abot-epc-basic/0',
-               'sudo', 'cp', '-vfR', '~/featureFiles/*',
-               '/etc/rebaca-test-suite/featureFiles']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
         return True
 
     def test_vnf(self):
