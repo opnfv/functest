@@ -26,60 +26,88 @@ Healthcheck suite::
   +--------------------------+------------------+---------------------+------------------+----------------+
   |     connection_check     |     functest     |     healthcheck     |      00:02       |      PASS      |
   |      tenantnetwork1      |     functest     |     healthcheck     |      00:06       |      PASS      |
-  |      tenantnetwork2      |     functest     |     healthcheck     |      00:06       |      PASS      |
-  |         vmready1         |     functest     |     healthcheck     |      00:06       |      PASS      |
+  |      tenantnetwork2      |     functest     |     healthcheck     |      00:07       |      PASS      |
+  |         vmready1         |     functest     |     healthcheck     |      00:08       |      PASS      |
   |         vmready2         |     functest     |     healthcheck     |      00:08       |      PASS      |
-  |        singlevm1         |     functest     |     healthcheck     |      00:28       |      PASS      |
-  |        singlevm2         |     functest     |     healthcheck     |      00:25       |      PASS      |
-  |        vping_ssh         |     functest     |     healthcheck     |      00:36       |      PASS      |
-  |      vping_userdata      |     functest     |     healthcheck     |      00:34       |      PASS      |
-  |       cinder_test        |     functest     |     healthcheck     |      01:03       |      PASS      |
-  |      tempest_smoke       |     functest     |     healthcheck     |      05:13       |      PASS      |
+  |        singlevm1         |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |        singlevm2         |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |        vping_ssh         |     functest     |     healthcheck     |      01:03       |      PASS      |
+  |      vping_userdata      |     functest     |     healthcheck     |      00:35       |      PASS      |
+  |       cinder_test        |     functest     |     healthcheck     |      01:08       |      PASS      |
+  |      tempest_smoke       |     functest     |     healthcheck     |      05:26       |      PASS      |
+  |     tempest_horizon      |     functest     |     healthcheck     |      01:09       |      PASS      |
   |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
   +--------------------------+------------------+---------------------+------------------+----------------+
 
 Smoke suite::
 
-  +------------------------------------+------------------+---------------+------------------+----------------+
-  |             TEST CASE              |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
-  +------------------------------------+------------------+---------------+------------------+----------------+
-  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      09:12       |      PASS      |
-  |            rally_sanity            |     functest     |     smoke     |      16:29       |      PASS      |
-  |          refstack_compute          |     functest     |     smoke     |      06:25       |      PASS      |
-  |          refstack_object           |     functest     |     smoke     |      01:54       |      PASS      |
-  |         refstack_platform          |     functest     |     smoke     |      06:52       |      PASS      |
-  |            tempest_full            |     functest     |     smoke     |      30:26       |      PASS      |
-  |          tempest_scenario          |     functest     |     smoke     |      09:23       |      PASS      |
-  |            tempest_slow            |     functest     |     smoke     |      24:42       |      PASS      |
-  |              patrole               |     functest     |     smoke     |      02:36       |      PASS      |
-  |              barbican              |     functest     |     smoke     |      02:13       |      PASS      |
-  |           neutron_trunk            |     functest     |     smoke     |      00:00       |      SKIP      |
-  |         networking-bgpvpn          |     functest     |     smoke     |      00:00       |      SKIP      |
-  |           networking-sfc           |     functest     |     smoke     |      00:00       |      SKIP      |
-  |              octavia               |     functest     |     smoke     |      00:00       |      SKIP      |
-  +------------------------------------+------------------+---------------+------------------+----------------+
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron      |     functest     |     smoke     |      14:27       |      PASS      |
+  |       tempest_cinder      |     functest     |     smoke     |      01:53       |      PASS      |
+  |      tempest_keystone     |     functest     |     smoke     |      01:19       |      PASS      |
+  |        tempest_heat       |     functest     |     smoke     |      23:16       |      PASS      |
+  |     tempest_telemetry     |     functest     |     smoke     |      05:03       |      PASS      |
+  |        rally_sanity       |     functest     |     smoke     |      19:40       |      PASS      |
+  |      refstack_compute     |     functest     |     smoke     |      08:07       |      PASS      |
+  |      refstack_object      |     functest     |     smoke     |      02:23       |      PASS      |
+  |     refstack_platform     |     functest     |     smoke     |      10:05       |      PASS      |
+  |        tempest_full       |     functest     |     smoke     |      41:00       |      PASS      |
+  |      tempest_scenario     |     functest     |     smoke     |      09:34       |      PASS      |
+  |        tempest_slow       |     functest     |     smoke     |      45:05       |      PASS      |
+  |          patrole          |     functest     |     smoke     |      02:30       |      PASS      |
+  |      tempest_barbican     |     functest     |     smoke     |      02:16       |      PASS      |
+  |      tempest_octavia      |     functest     |     smoke     |      14:01       |      PASS      |
+  +---------------------------+------------------+---------------+------------------+----------------+
+
+Smoke CNTT suite::
+
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |           TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron_cntt     |     functest     |     smoke     |      12:53       |      PASS      |
+  |      tempest_cinder_cntt      |     functest     |     smoke     |      01:57       |      PASS      |
+  |     tempest_keystone_cntt     |     functest     |     smoke     |      01:15       |      PASS      |
+  |       tempest_heat_cntt       |     functest     |     smoke     |      22:23       |      PASS      |
+  |       rally_sanity_cntt       |     functest     |     smoke     |      16:11       |      PASS      |
+  |       tempest_full_cntt       |     functest     |     smoke     |      34:57       |      PASS      |
+  |     tempest_scenario_cntt     |     functest     |     smoke     |      08:51       |      PASS      |
+  |       tempest_slow_cntt       |     functest     |     smoke     |      32:09       |      PASS      |
+  +-------------------------------+------------------+---------------+------------------+----------------+
 
 Benchmarking suite::
 
   +--------------------+------------------+----------------------+------------------+----------------+
   |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
   +--------------------+------------------+----------------------+------------------+----------------+
-  |     rally_full     |     functest     |     benchmarking     |      92:16       |      PASS      |
-  |     rally_jobs     |     functest     |     benchmarking     |      18:49       |      PASS      |
-  |        vmtp        |     functest     |     benchmarking     |      15:28       |      PASS      |
-  |       shaker       |     functest     |     benchmarking     |      24:04       |      PASS      |
+  |     rally_full     |     functest     |     benchmarking     |      100:35      |      PASS      |
+  |     rally_jobs     |     functest     |     benchmarking     |      30:18       |      PASS      |
+  |        vmtp        |     functest     |     benchmarking     |      17:18       |      PASS      |
+  |       shaker       |     functest     |     benchmarking     |      23:35       |      PASS      |
   +--------------------+------------------+----------------------+------------------+----------------+
+
+Benchmarking CNTT suite::
+
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |     rally_full_cntt     |     functest     |     benchmarking     |      85:26       |      PASS      |
+  |     rally_jobs_cntt     |     functest     |     benchmarking     |      17:46       |      PASS      |
+  |           vmtp          |     functest     |     benchmarking     |      17:11       |      PASS      |
+  |          shaker         |     functest     |     benchmarking     |      23:59       |      PASS      |
+  +-------------------------+------------------+----------------------+------------------+----------------+
 
 Vnf suite::
 
   +----------------------+------------------+--------------+------------------+----------------+
   |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +----------------------+------------------+--------------+------------------+----------------+
-  |       cloudify       |     functest     |     vnf      |      03:49       |      PASS      |
-  |     cloudify_ims     |     functest     |     vnf      |      24:20       |      PASS      |
-  |       heat_ims       |     functest     |     vnf      |      32:13       |      PASS      |
-  |     vyos_vrouter     |     functest     |     vnf      |      14:55       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      41:24       |      PASS      |
+  |       cloudify       |     functest     |     vnf      |      06:04       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      24:53       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      29:29       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      17:19       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      28:53       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
 Kubernetes healthcheck suite::
