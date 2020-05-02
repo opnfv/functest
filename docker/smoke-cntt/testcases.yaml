@@ -191,6 +191,7 @@ tiers:
                           (?!.*test_server_actions.ServerActionsTestJSON.test_change_server_password)\
                           (?!.*test_server_actions.ServerActionsTestJSON.test_get_vnc_console)\
                           (?!.*test_server_actions.ServerActionsTestJSON.test_reboot_server_soft)\
+                          (?!.*test_server_rescue.ServerBootFromVolumeStableRescueTest)\
                           (?!.*test_server_rescue.ServerStableDeviceRescueTest)\
                           (?!.*test_security_group_default_rules)\
                           (?!.*test_security_groups_negative.SecurityGroupsNegativeTestJSON.test_security_group_create_with_duplicate_name)\
