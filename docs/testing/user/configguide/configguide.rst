@@ -16,7 +16,9 @@ Docker images are available on the dockerhub:
   * opnfv/functest-core
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
+  * opnfv/functest-smoke-cntt
   * opnfv/functest-benchmarking
+  * opnfv/functest-benchmarking-cntt
   * opnfv/functest-features
   * opnfv/functest-vnf
 
@@ -28,8 +30,12 @@ cat env::
 
   DEPLOY_SCENARIO=XXX  # if not os-nosdn-nofeature-noha scenario
   NAMESERVER=XXX  # if not 8.8.8.8
-  EXTERNAL_NETWORK=XXX # if not first network with router:external=True
-  NEW_USER_ROLE=XXX # if not member
+  EXTERNAL_NETWORK=XXX  # if not first network with router:external=True
+  DASHBOARD_URL=XXX  # else tempest_horizon will be skipped
+  NEW_USER_ROLE=XXX  # if not member
+  SDN_CONTROLLER_IP=XXX  # if odl scenario
+  VOLUME_DEVICE_NAME=XXX  # if not vdb
+  FLAVOR_EXTRA_SPECS=hw:mem_page_size:large  # if fdio scenarios
 
 See section on environment variables for details.
 
@@ -42,6 +48,7 @@ cat env_file::
   export OS_PROJECT_NAME=XXX
   export OS_PASSWORD=XXX
   export OS_IDENTITY_API_VERSION=3
+  export OS_REGION_NAME=XXX
 
 See section on OpenStack credentials for details.
 
@@ -52,6 +59,7 @@ Create a directory for the different images (attached as a Docker volume)::
   images/cirros-0.4.0-aarch64-disk.img
   images/cirros-0.4.0-x86_64-disk.img
   images/cloudify-docker-manager-community-19.01.24.tar
+  images/Fedora-Cloud-Base-30-1.2.x86_64.qcow2
   images/shaker-image-arm64.qcow2
   images/shaker-image.qcow2
   images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
@@ -74,17 +82,18 @@ Results shall be displayed as follows::
   +--------------------------+------------------+---------------------+------------------+----------------+
   |        TEST CASE         |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +--------------------------+------------------+---------------------+------------------+----------------+
-  |     connection_check     |     functest     |     healthcheck     |      00:01       |      PASS      |
+  |     connection_check     |     functest     |     healthcheck     |      00:03       |      PASS      |
   |      tenantnetwork1      |     functest     |     healthcheck     |      00:08       |      PASS      |
-  |      tenantnetwork2      |     functest     |     healthcheck     |      00:09       |      PASS      |
-  |         vmready1         |     functest     |     healthcheck     |      00:13       |      PASS      |
-  |         vmready2         |     functest     |     healthcheck     |      00:12       |      PASS      |
-  |        singlevm1         |     functest     |     healthcheck     |      00:48       |      PASS      |
-  |        singlevm2         |     functest     |     healthcheck     |      00:35       |      PASS      |
-  |        vping_ssh         |     functest     |     healthcheck     |      00:53       |      PASS      |
-  |      vping_userdata      |     functest     |     healthcheck     |      00:51       |      PASS      |
-  |       cinder_test        |     functest     |     healthcheck     |      01:42       |      PASS      |
-  |      tempest_smoke       |     functest     |     healthcheck     |      04:55       |      PASS      |
+  |      tenantnetwork2      |     functest     |     healthcheck     |      00:16       |      PASS      |
+  |         vmready1         |     functest     |     healthcheck     |      00:09       |      PASS      |
+  |         vmready2         |     functest     |     healthcheck     |      00:10       |      PASS      |
+  |        singlevm1         |     functest     |     healthcheck     |      00:51       |      PASS      |
+  |        singlevm2         |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |        vping_ssh         |     functest     |     healthcheck     |      00:56       |      PASS      |
+  |      vping_userdata      |     functest     |     healthcheck     |      00:42       |      PASS      |
+  |       cinder_test        |     functest     |     healthcheck     |      02:19       |      PASS      |
+  |      tempest_smoke       |     functest     |     healthcheck     |      07:02       |      PASS      |
+  |     tempest_horizon      |     functest     |     healthcheck     |      00:52       |      PASS      |
   |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
   +--------------------------+------------------+---------------------+------------------+----------------+
 
@@ -102,23 +111,51 @@ Run smoke suite::
 
 Results shall be displayed as follows::
 
-  +------------------------------------+------------------+---------------+------------------+----------------+
-  |             TEST CASE              |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
-  +------------------------------------+------------------+---------------+------------------+----------------+
-  |     neutron-tempest-plugin-api     |     functest     |     smoke     |      07:29       |      PASS      |
-  |            rally_sanity            |     functest     |     smoke     |      13:07       |      PASS      |
-  |          refstack_defcore          |     functest     |     smoke     |      06:32       |      PASS      |
-  |            tempest_full            |     functest     |     smoke     |      33:01       |      PASS      |
-  |          tempest_scenario          |     functest     |     smoke     |      11:31       |      PASS      |
-  |              patrole               |     functest     |     smoke     |      02:14       |      PASS      |
-  |           neutron_trunk            |     functest     |     smoke     |      00:00       |      SKIP      |
-  |         networking-bgpvpn          |     functest     |     smoke     |      01:09       |      PASS      |
-  |           networking-sfc           |     functest     |     smoke     |      00:00       |      SKIP      |
-  |              barbican              |     functest     |     smoke     |      02:12       |      PASS      |
-  +------------------------------------+------------------+---------------+------------------+----------------+
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron      |     functest     |     smoke     |      16:49       |      PASS      |
+  |       tempest_cinder      |     functest     |     smoke     |      01:39       |      PASS      |
+  |      tempest_keystone     |     functest     |     smoke     |      00:57       |      PASS      |
+  |        tempest_heat       |     functest     |     smoke     |      24:33       |      PASS      |
+  |        rally_sanity       |     functest     |     smoke     |      18:41       |      PASS      |
+  |      refstack_defcore     |     functest     |     smoke     |      10:38       |      PASS      |
+  |        tempest_full       |     functest     |     smoke     |      55:19       |      PASS      |
+  |      tempest_scenario     |     functest     |     smoke     |      11:06       |      PASS      |
+  |        tempest_slow       |     functest     |     smoke     |      61:39       |      PASS      |
+  |          patrole          |     functest     |     smoke     |      02:46       |      PASS      |
+  |     networking-bgpvpn     |     functest     |     smoke     |      00:00       |      SKIP      |
+  |       networking-sfc      |     functest     |     smoke     |      00:00       |      SKIP      |
+  |      tempest_barbican     |     functest     |     smoke     |      02:30       |      PASS      |
+  +---------------------------+------------------+---------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
 See User guide for details.
+
+Testing smoke CNTT suite
+^^^^^^^^^^^^^^^^^^^
+
+Run smoke-cntt suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/images:/home/opnfv/functest/images \
+      opnfv/functest-smoke-cntt:hunter
+
+Results shall be displayed as follows::
+
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |           TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron_cntt     |     functest     |     smoke     |      13:54       |      PASS      |
+  |      tempest_cinder_cntt      |     functest     |     smoke     |      01:46       |      PASS      |
+  |     tempest_keystone_cntt     |     functest     |     smoke     |      00:58       |      PASS      |
+  |       tempest_heat_cntt       |     functest     |     smoke     |      25:31       |      PASS      |
+  |       rally_sanity_cntt       |     functest     |     smoke     |      18:50       |      PASS      |
+  |       tempest_full_cntt       |     functest     |     smoke     |      44:32       |      PASS      |
+  |     tempest_scenario_cntt     |     functest     |     smoke     |      11:14       |      PASS      |
+  |       tempest_slow_cntt       |     functest     |     smoke     |      43:55       |      PASS      |
+  +-------------------------------+------------------+---------------+------------------+----------------+
 
 Testing benchmarking suite
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -135,14 +172,35 @@ Results shall be displayed as follows::
   +--------------------+------------------+----------------------+------------------+----------------+
   |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
   +--------------------+------------------+----------------------+------------------+----------------+
-  |     rally_full     |     functest     |     benchmarking     |      121:55      |      PASS      |
-  |     rally_jobs     |     functest     |     benchmarking     |      24:21       |      PASS      |
-  |        vmtp        |     functest     |     benchmarking     |      00:00       |      SKIP      |
-  |       shaker       |     functest     |     benchmarking     |      00:00       |      SKIP      |
+  |     rally_full     |     functest     |     benchmarking     |      108:34      |      PASS      |
+  |     rally_jobs     |     functest     |     benchmarking     |      22:07       |      PASS      |
+  |        vmtp        |     functest     |     benchmarking     |      15:38       |      PASS      |
+  |       shaker       |     functest     |     benchmarking     |      25:12       |      PASS      |
   +--------------------+------------------+----------------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
 See User guide for details.
+
+Testing benchmarking CNTT suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run benchmarking-cntt suite::
+
+  sudo docker run --env-file env \
+      -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
+      -v $(pwd)/images:/home/opnfv/functest/images \
+      opnfv/functest-benchmarking:hunter
+
+Results shall be displayed as follows::
+
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |     rally_full_cntt     |     functest     |     benchmarking     |      106:60      |      PASS      |
+  |     rally_jobs_cntt     |     functest     |     benchmarking     |      21:16       |      PASS      |
+  |           vmtp          |     functest     |     benchmarking     |      16:15       |      PASS      |
+  |          shaker         |     functest     |     benchmarking     |      25:09       |      PASS      |
+  +-------------------------+------------------+----------------------+------------------+----------------+
 
 Testing features suite
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -184,11 +242,11 @@ Results shall be displayed as follows::
   +----------------------+------------------+--------------+------------------+----------------+
   |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +----------------------+------------------+--------------+------------------+----------------+
-  |       cloudify       |     functest     |     vnf      |      06:42       |      PASS      |
-  |     cloudify_ims     |     functest     |     vnf      |      39:21       |      PASS      |
-  |       heat_ims       |     functest     |     vnf      |      34:33       |      PASS      |
-  |     vyos_vrouter     |     functest     |     vnf      |      20:20       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      56:55       |      PASS      |
+  |       cloudify       |     functest     |     vnf      |      04:35       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      24:16       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      30:36       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      15:37       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      34:39       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
 Functest Dockers for Kubernetes deployment

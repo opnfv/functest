@@ -21,68 +21,105 @@ end of each suite and can be described as follow.
 
 Healthcheck suite::
 
- +----------------------------+------------------+---------------------+------------------+----------------+
- |         TEST CASE          |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
- +----------------------------+------------------+---------------------+------------------+----------------+
- |      connection_check      |     functest     |     healthcheck     |      00:07       |      PASS      |
- |         api_check          |     functest     |     healthcheck     |      07:46       |      PASS      |
- |     snaps_health_check     |     functest     |     healthcheck     |      00:36       |      PASS      |
- +----------------------------+------------------+---------------------+------------------+----------------+
+  +--------------------------+------------------+---------------------+------------------+----------------+
+  |        TEST CASE         |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
+  +--------------------------+------------------+---------------------+------------------+----------------+
+  |     connection_check     |     functest     |     healthcheck     |      00:03       |      PASS      |
+  |      tenantnetwork1      |     functest     |     healthcheck     |      00:08       |      PASS      |
+  |      tenantnetwork2      |     functest     |     healthcheck     |      00:16       |      PASS      |
+  |         vmready1         |     functest     |     healthcheck     |      00:09       |      PASS      |
+  |         vmready2         |     functest     |     healthcheck     |      00:10       |      PASS      |
+  |        singlevm1         |     functest     |     healthcheck     |      00:51       |      PASS      |
+  |        singlevm2         |     functest     |     healthcheck     |      00:41       |      PASS      |
+  |        vping_ssh         |     functest     |     healthcheck     |      00:56       |      PASS      |
+  |      vping_userdata      |     functest     |     healthcheck     |      00:42       |      PASS      |
+  |       cinder_test        |     functest     |     healthcheck     |      02:19       |      PASS      |
+  |      tempest_smoke       |     functest     |     healthcheck     |      07:02       |      PASS      |
+  |     tempest_horizon      |     functest     |     healthcheck     |      00:52       |      PASS      |
+  |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
+  +--------------------------+------------------+---------------------+------------------+----------------+
 
 Smoke suite::
 
- +------------------------------+------------------+---------------+------------------+----------------+
- |          TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
- +------------------------------+------------------+---------------+------------------+----------------+
- |          vping_ssh           |     functest     |     smoke     |      00:57       |      PASS      |
- |        vping_userdata        |     functest     |     smoke     |      00:33       |      PASS      |
- |     tempest_smoke_serial     |     functest     |     smoke     |      13:22       |      PASS      |
- |         rally_sanity         |     functest     |     smoke     |      24:07       |      PASS      |
- |       refstack_defcore       |     functest     |     smoke     |      05:21       |      PASS      |
- |           patrole            |     functest     |     smoke     |      04:29       |      PASS      |
- |         snaps_smoke          |     functest     |     smoke     |      46:54       |      PASS      |
- |             odl              |     functest     |     smoke     |      00:00       |      SKIP      |
- |        neutron_trunk         |     functest     |     smoke     |      00:00       |      SKIP      |
- +------------------------------+------------------+---------------+------------------+----------------+
 
-Features suite::
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron      |     functest     |     smoke     |      16:49       |      PASS      |
+  |       tempest_cinder      |     functest     |     smoke     |      01:39       |      PASS      |
+  |      tempest_keystone     |     functest     |     smoke     |      00:57       |      PASS      |
+  |        tempest_heat       |     functest     |     smoke     |      24:33       |      PASS      |
+  |        rally_sanity       |     functest     |     smoke     |      18:41       |      PASS      |
+  |      refstack_defcore     |     functest     |     smoke     |      10:38       |      PASS      |
+  |        tempest_full       |     functest     |     smoke     |      55:19       |      PASS      |
+  |      tempest_scenario     |     functest     |     smoke     |      11:06       |      PASS      |
+  |        tempest_slow       |     functest     |     smoke     |      61:39       |      PASS      |
+  |          patrole          |     functest     |     smoke     |      02:46       |      PASS      |
+  |     networking-bgpvpn     |     functest     |     smoke     |      00:00       |      SKIP      |
+  |       networking-sfc      |     functest     |     smoke     |      00:00       |      SKIP      |
+  |      tempest_barbican     |     functest     |     smoke     |      02:30       |      PASS      |
+  +---------------------------+------------------+---------------+------------------+----------------+
 
- +-----------------------------+------------------------+------------------+------------------+----------------+
- |          TEST CASE          |        PROJECT         |       TIER       |     DURATION     |     RESULT     |
- +-----------------------------+------------------------+------------------+------------------+----------------+
- |     doctor-notification     |         doctor         |     features     |      00:00       |      SKIP      |
- |            bgpvpn           |         sdnvpn         |     features     |      00:00       |      SKIP      |
- |       functest-odl-sfc      |          sfc           |     features     |      00:00       |      SKIP      |
- |      barometercollectd      |       barometer        |     features     |      00:00       |      SKIP      |
- |             fds             |     fastdatastacks     |     features     |      00:00       |      SKIP      |
- +-----------------------------+------------------------+------------------+------------------+----------------+
+Smoke CNTT suite::
 
-Components suite::
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |           TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +-------------------------------+------------------+---------------+------------------+----------------+
+  |      tempest_neutron_cntt     |     functest     |     smoke     |      13:54       |      PASS      |
+  |      tempest_cinder_cntt      |     functest     |     smoke     |      01:46       |      PASS      |
+  |     tempest_keystone_cntt     |     functest     |     smoke     |      00:58       |      PASS      |
+  |       tempest_heat_cntt       |     functest     |     smoke     |      25:31       |      PASS      |
+  |       rally_sanity_cntt       |     functest     |     smoke     |      18:50       |      PASS      |
+  |       tempest_full_cntt       |     functest     |     smoke     |      44:32       |      PASS      |
+  |     tempest_scenario_cntt     |     functest     |     smoke     |      11:14       |      PASS      |
+  |       tempest_slow_cntt       |     functest     |     smoke     |      43:55       |      PASS      |
+  +-------------------------------+------------------+---------------+------------------+----------------+
 
- +-------------------------------+------------------+--------------------+------------------+----------------+
- |           TEST CASE           |     PROJECT      |        TIER        |     DURATION     |     RESULT     |
- +-------------------------------+------------------+--------------------+------------------+----------------+
- |     tempest_full_parallel     |     functest     |     components     |      48:28       |      PASS      |
- |           rally_full          |     functest     |     components     |      126:02      |      PASS      |
- +-------------------------------+------------------+--------------------+------------------+----------------+
+Benchmarking suite::
+
+ +--------------------+------------------+----------------------+------------------+----------------+
+  |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +--------------------+------------------+----------------------+------------------+----------------+
+  |     rally_full     |     functest     |     benchmarking     |      108:34      |      PASS      |
+  |     rally_jobs     |     functest     |     benchmarking     |      22:07       |      PASS      |
+  |        vmtp        |     functest     |     benchmarking     |      15:38       |      PASS      |
+  |       shaker       |     functest     |     benchmarking     |      25:12       |      PASS      |
+  +--------------------+------------------+----------------------+------------------+----------------+
+
+Benchmarking CNTT suite::
+
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +-------------------------+------------------+----------------------+------------------+----------------+
+  |     rally_full_cntt     |     functest     |     benchmarking     |      106:60      |      PASS      |
+  |     rally_jobs_cntt     |     functest     |     benchmarking     |      21:16       |      PASS      |
+  |           vmtp          |     functest     |     benchmarking     |      16:15       |      PASS      |
+  |          shaker         |     functest     |     benchmarking     |      25:09       |      PASS      |
+  +-------------------------+------------------+----------------------+------------------+----------------+
 
 Vnf suite::
 
- +----------------------+------------------+--------------+------------------+----------------+
- |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
- +----------------------+------------------+--------------+------------------+----------------+
- |     cloudify_ims     |     functest     |     vnf      |      28:15       |      PASS      |
- |     vyos_vrouter     |     functest     |     vnf      |      17:59       |      PASS      |
- |       juju_epc       |     functest     |     vnf      |      46:44       |      PASS      |
- +----------------------+------------------+--------------+------------------+----------------+
+  +----------------------+------------------+--------------+------------------+----------------+
+  |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +----------------------+------------------+--------------+------------------+----------------+
+  |       cloudify       |     functest     |     vnf      |      04:35       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      24:16       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      30:36       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      15:37       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      34:39       |      PASS      |
+  +----------------------+------------------+--------------+------------------+----------------+
 
-Parser testcase::
+Features suite::
 
- +-----------------------+-----------------+------------------+------------------+----------------+
- |       TEST CASE       |     PROJECT     |       TIER       |     DURATION     |     RESULT     |
- +-----------------------+-----------------+------------------+------------------+----------------+
- |     parser-basics     |      parser     |     features     |      00:00       |      SKIP      |
- +-----------------------+-----------------+------------------+------------------+----------------+
+  +-----------------------------+------------------------+------------------+------------------+----------------+
+  |          TEST CASE          |        PROJECT         |       TIER       |     DURATION     |     RESULT     |
+  +-----------------------------+------------------------+------------------+------------------+----------------+
+  |     doctor-notification     |         doctor         |     features     |      00:00       |      SKIP      |
+  |            bgpvpn           |         sdnvpn         |     features     |      00:00       |      SKIP      |
+  |       functest-odl-sfc      |          sfc           |     features     |      00:00       |      SKIP      |
+  |      barometercollectd      |       barometer        |     features     |      00:00       |      SKIP      |
+  |             fds             |     fastdatastacks     |     features     |      00:00       |      SKIP      |
+  +-----------------------------+------------------------+------------------+------------------+----------------+
 
 Functest Kubernetes test result::
 
