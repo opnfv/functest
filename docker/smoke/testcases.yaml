@@ -238,9 +238,12 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode:
-                            '^octavia_tempest_plugin.tests.api.v2'
+                        mode: "(?!.*api.v2.test_availability_zone)\
+                            (?!.*api.v2.test_availability_zone_profile)\
+                            (?!.*api.v2.test_member.MemberAPITest.test_member_ipv4_create)\
+                            (?!.*api.v2.test_member.MemberAPITest.test_member_ipv6_create)\
+                            (^octavia_tempest_plugin.tests.(api|scenario))"
                         services:
                             - octavia
                         option:
-                            - '--concurrency=2'
+                            - '--concurrency=3'
