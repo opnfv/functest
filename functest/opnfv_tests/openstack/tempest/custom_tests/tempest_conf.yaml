@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: 2.79
+    max_microversion: 2.72
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false

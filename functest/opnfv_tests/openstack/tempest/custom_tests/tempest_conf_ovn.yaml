@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: 2.65
+    max_microversion: 2.72
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false
@@ -55,9 +55,9 @@ network-feature-enabled:
     port_security: true
     floating_ips: true
 placement:
-    max_microversion: 1.30
+    max_microversion: 1.31
 volume:
-    max_microversion: 3.55
+    max_microversion: 3.59
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s
@@ -71,6 +71,8 @@ volume-feature-enabled:
     extend_attached_volume: false
     consistency_group: false
     volume_revert: true
+load_balancer:
+    test_with_ipv6: false
 neutron_plugin_options:
     agent_availability_zone: nova
     available_type_drivers: flat,geneve,vlan,local
