@@ -1,4 +1,4 @@
-From 19b79df9e72184cbcf16a4dc70086ada44dfb335 Mon Sep 17 00:00:00 2001
+From 29ed118b9dc63721e78c3040912c76f54054a1be Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
 Date: Thu, 30 Apr 2020 13:59:24 +0200
 Subject: [PATCH] Try to detect the race conditions
@@ -9,13 +9,15 @@ Content-Transfer-Encoding: 8bit
 Change-Id: I9b468ec1cf79e0a66abeb1fb48f5f0f067c2c198
 Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
 ---
- rally/plugins/task/runners/constant.py |  8 ++++++++
- rally/task/runner.py                   | 15 +++++++++++++++
- rally/task/utils.py                    | 15 +++++++++++++++
- 3 files changed, 38 insertions(+)
+ rally/plugins/task/runners/constant.py        | 30 ++++++++++++++++++-
+ .../task/scenarios/requests/http_requests.py  |  9 ++++++
+ .../plugins/task/scenarios/requests/utils.py  |  9 ++++++
+ rally/task/runner.py                          | 27 +++++++++++++++--
+ rally/task/utils.py                           | 15 ++++++++++
+ 5 files changed, 87 insertions(+), 3 deletions(-)
 
 diff --git a/rally/plugins/task/runners/constant.py b/rally/plugins/task/runners/constant.py
-index 5feb1fee1..755afb05a 100644
+index 5feb1fee1..38a01e28e 100644
 --- a/rally/plugins/task/runners/constant.py
 +++ b/rally/plugins/task/runners/constant.py
 @@ -24,6 +24,10 @@ from rally.common import validation
@@ -47,8 +49,109 @@ index 5feb1fee1..755afb05a 100644
      start_time = time.time()
      # NOTE(msimonin): keep the previous behaviour
      # > when duration is 0, scenario executes exactly 1 time
+@@ -93,13 +101,25 @@ def _worker_process(queue, iteration_gen, timeout, concurrency, times,
+         worker_args = (
+             queue, cls, method_name, scenario_context, args, event_queue)
+ 
++        LOG.warn(
++            "Cedric _to_be_continued threading.Thread {} {}".format(
++                runner._worker_thread, worker_args))
+         thread = threading.Thread(target=runner._worker_thread,
+                                   args=worker_args)
+ 
++        LOG.warn(
++            "Cedric _to_be_continued thread.start() {} {}".format(
++                runner._worker_thread, worker_args))
+         thread.start()
++        LOG.warn(
++            "Cedric _to_be_continued thread.start() {} {}".format(
++                runner._worker_thread, worker_args))
+         if timeout:
+             timeout_queue.put((thread, time.time() + timeout))
+         pool.append(thread)
++        LOG.warn(
++            "Cedric _to_be_continued pool.append {} {}".format(
++                pool, thread))
+         alive_threads_in_pool += 1
+ 
+         while alive_threads_in_pool == concurrency:
+@@ -128,7 +148,14 @@ def _worker_process(queue, iteration_gen, timeout, concurrency, times,
+ 
+     # Wait until all threads are done
+     while pool:
+-        pool.popleft().join()
++        thr = pool.popleft()
++        LOG.warn(
++            "Cedric _worker_process wait_all_threads {} {} BEFORE JOIN".format(
++                pool, thr))
++        thr.join()
++        LOG.warn(
++            "Cedric _worker_process wait_all_threads {} {} AFTER JOIN".format(
++                pool, thr))
+ 
+     if timeout:
+         timeout_queue.put((None, None,))
+@@ -340,3 +367,4 @@ class ConstantForDurationScenarioRunner(runner.ScenarioRunner):
+             processes_to_start, _worker_process,
+             worker_args_gen(concurrency_overhead))
+         self._join_processes(process_pool, result_queue, event_queue)
++
+diff --git a/rally/plugins/task/scenarios/requests/http_requests.py b/rally/plugins/task/scenarios/requests/http_requests.py
+index e85ee5af2..4afdf29f1 100644
+--- a/rally/plugins/task/scenarios/requests/http_requests.py
++++ b/rally/plugins/task/scenarios/requests/http_requests.py
+@@ -15,6 +15,11 @@ import random
+ from rally.plugins.task.scenarios.requests import utils
+ from rally.task import scenario
+ 
++from rally.common import cfg
++from rally.common import logging
++CONF = cfg.CONF
++LOG = logging.getLogger(__file__)
++
+ 
+ """Scenarios for HTTP requests."""
+ 
+@@ -34,6 +39,10 @@ class HttpRequestsCheckRequest(utils.RequestScenario):
+         :param kwargs: optional additional request parameters
+         """
+ 
++        LOG.warn("Cedric run url {}".format(url))
++        LOG.warn("Cedric run method {}".format(method))
++        LOG.warn("Cedric run status_code {}".format(status_code))
++        LOG.warn("Cedric run kwargs {}".format(kwargs))
+         self._check_request(url, method, status_code, **kwargs)
+ 
+ 
+diff --git a/rally/plugins/task/scenarios/requests/utils.py b/rally/plugins/task/scenarios/requests/utils.py
+index 8fd35347a..cd69900a5 100644
+--- a/rally/plugins/task/scenarios/requests/utils.py
++++ b/rally/plugins/task/scenarios/requests/utils.py
+@@ -15,6 +15,11 @@ import requests
+ from rally.task import atomic
+ from rally.task import scenario
+ 
++from rally.common import cfg
++from rally.common import logging
++CONF = cfg.CONF
++LOG = logging.getLogger(__file__)
++
+ 
+ class RequestScenario(scenario.Scenario):
+     """Base class for Request scenarios with basic atomic actions."""
+@@ -31,6 +36,10 @@ class RequestScenario(scenario.Scenario):
+                             not equal to expected status code
+         """
+ 
++        LOG.warn("Cedric _check_request url {}".format(url))
++        LOG.warn("Cedric _check_request method {}".format(method))
++        LOG.warn("Cedric _check_request status_code {}".format(status_code))
++        LOG.warn("Cedric _check_request kwargs {}".format(kwargs))
+         resp = requests.request(method, url, **kwargs)
+         if status_code != resp.status_code:
+             error_msg = "Expected HTTP request code is `%s` actual `%s`"
 diff --git a/rally/task/runner.py b/rally/task/runner.py
-index 3397e1193..3fda122ce 100644
+index 3397e1193..57f9428f4 100644
 --- a/rally/task/runner.py
 +++ b/rally/task/runner.py
 @@ -87,6 +87,11 @@ def _run_scenario_once(cls, method_name, context_obj, scenario_kwargs,
@@ -72,7 +175,36 @@ index 3397e1193..3fda122ce 100644
              process = multiprocessing.Process(target=worker_process,
                                                args=next(worker_args_gen),
                                                kwargs={"info": kwrgs})
-@@ -245,8 +252,13 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
+@@ -202,18 +209,26 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
+         :param event_queue: multiprocessing.Queue that receives the events
+         """
+         while process_pool:
++            LOG.warn("Cedric _join_processes process_pool {}".format(process_pool))
+             while process_pool and not process_pool[0].is_alive():
++                LOG.warn("Cedric _join_processes process_pool {}".format(process_pool))
+                 process_pool.popleft().join()
+ 
+             if result_queue.empty() and event_queue.empty():
+                 # sleep a bit to avoid 100% usage of CPU by this method
++                LOG.warn("Cedric _join_processes result_queue is empty {}".format(result_queue))
++                LOG.warn("Cedric _join_processes event_queue is empty {}".format(event_queue))
+                 time.sleep(0.01)
+ 
+             while not event_queue.empty():
+-                self.send_event(**event_queue.get())
++                col_event_queue = event_queue.get()
++                LOG.warn("Cedric _join_processes event_queue is not empty {}".format(col_event_queue))
++                self.send_event(**col_event_queue)
+ 
+             while not result_queue.empty():
+-                self._send_result(result_queue.get())
++                col_result_queue = result_queue.get()
++                LOG.warn("Cedric _join_processes result_queue is not empty {}".format(col_result_queue))
++                self._send_result(col_result_queue)
+ 
+         self._flush_results()
+         result_queue.close()
+@@ -245,8 +260,13 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
          if len(self.result_batch) >= self.batch_size:
              sorted_batch = sorted(self.result_batch,
                                    key=lambda r: result["timestamp"])
@@ -86,7 +218,7 @@ index 3397e1193..3fda122ce 100644
  
      def send_event(self, type, value=None):
          """Store event to send it to consumer later.
-@@ -254,6 +266,9 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
+@@ -254,6 +274,9 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
          :param type: Event type
          :param value: Optional event data
          """
