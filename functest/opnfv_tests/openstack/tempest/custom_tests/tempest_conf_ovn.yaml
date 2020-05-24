@@ -56,6 +56,12 @@ network-feature-enabled:
     floating_ips: true
 placement:
     max_microversion: "1.30"
+validation:
+    image_ssh_user: cirros
+    ssh_timeout: 196
+    ip_version_for_ssh: 4
+    run_validation: true
+    connect_method: floating
 volume:
     max_microversion: 3.55
     storage_protocol: ceph
