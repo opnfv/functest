@@ -524,6 +524,16 @@ class TempestCommon(singlevm.VmReady2):
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
+    def update_validation_section(self):
+        """Update validation section in tempest.conf"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section('validation'):
+            rconfig.add_section('validation')
+        rconfig.set('validation', 'network_for_ssh', self.network.name)
+        with open(self.conf_file, 'w') as config_file:
+            rconfig.write(config_file)
+
     def update_scenario_section(self):
         """Update scenario section in tempest.conf"""
         rconfig = configparser.RawConfigParser()
@@ -589,6 +599,7 @@ class TempestCommon(singlevm.VmReady2):
             domain_id=self.project.domain.id)
         self.update_network_section()
         self.update_compute_section()
+        self.update_validation_section()
         self.update_scenario_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
