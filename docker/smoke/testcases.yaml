@@ -80,7 +80,7 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode: "(?!.*test_autoscaling)\
+                        mode: "(?!.*test_autoscaling)(?!.*test_live)\
                             (^telemetry_tempest_plugin)"
                         services:
                             - aodh
