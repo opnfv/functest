@@ -265,7 +265,7 @@ tiers:
                             - gnocchi
                             - panko
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=1'
 
             -
                 case_name: rally_sanity
