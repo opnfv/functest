@@ -71,7 +71,7 @@ volume-feature-enabled:
     backup: true
     snapshot: true
     clone: true
-    manage_snapshot: false
+    manage_snapshot: true
     manage_volume: true
     extend_attached_volume: false
     consistency_group: false
