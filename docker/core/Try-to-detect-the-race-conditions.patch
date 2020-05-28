@@ -1,4 +1,4 @@
-From 29ed118b9dc63721e78c3040912c76f54054a1be Mon Sep 17 00:00:00 2001
+From b7a04b5993c232f4357a213517ed798cb15f3c25 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
 Date: Thu, 30 Apr 2020 13:59:24 +0200
 Subject: [PATCH] Try to detect the race conditions
@@ -9,13 +9,28 @@ Content-Transfer-Encoding: 8bit
 Change-Id: I9b468ec1cf79e0a66abeb1fb48f5f0f067c2c198
 Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
 ---
+ rally/cli/main.py                             |  3 ++
  rally/plugins/task/runners/constant.py        | 30 ++++++++++++++++++-
  .../task/scenarios/requests/http_requests.py  |  9 ++++++
  .../plugins/task/scenarios/requests/utils.py  |  9 ++++++
  rally/task/runner.py                          | 27 +++++++++++++++--
  rally/task/utils.py                           | 15 ++++++++++
- 5 files changed, 87 insertions(+), 3 deletions(-)
+ 6 files changed, 90 insertions(+), 3 deletions(-)
 
+diff --git a/rally/cli/main.py b/rally/cli/main.py
+index 235a57113..bcc41cb01 100644
+--- a/rally/cli/main.py
++++ b/rally/cli/main.py
+@@ -15,6 +15,9 @@
+ 
+ """CLI interface for Rally."""
+ 
++import threading
++threading.stack_size(1024 * 1024)
++
+ import sys
+ 
+ from rally.cli import cliutils
 diff --git a/rally/plugins/task/runners/constant.py b/rally/plugins/task/runners/constant.py
 index 5feb1fee1..38a01e28e 100644
 --- a/rally/plugins/task/runners/constant.py
