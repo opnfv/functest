@@ -267,6 +267,7 @@ tiers:
                     args:
                         mode: "(?!.*test_volume_swap)\
                           (?!.*test_server_personality)\
+                          (?!.*test_server_rescue.ServerBootFromVolumeStableRescueTest)\
                           (?!.*test_container_sync.ContainerSyncTest.test_container_synchronization)\
                           (?!.*test_container_sync_middleware.ContainerSyncMiddlewareTest.test_container_synchronization)\
                           (?!.*test_encrypted_cinder_volumes)\
