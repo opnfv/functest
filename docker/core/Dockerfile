@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=stable/train
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
-COPY Try-to-detect-the-race-conditions.patch /tmp/Try-to-detect-the-race-conditions.patch
+COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
@@ -29,9 +29,9 @@ RUN apk --no-cache add --update \
     update-requirements -s --source /src/openstack-requirements /src/functest && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
         /src/functest && \
-    (cd /src/rally && patch -p1 < /tmp/Try-to-detect-the-race-conditions.patch) && \
+    (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/functest \
-        /tmp/Try-to-detect-the-race-conditions.patch && \
+        /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
     cp /usr/lib/python3.7/site-packages/functest/ci/logging.ini /usr/lib/python3.7/site-packages/xtesting/ci/ && \
     cp /usr/lib/python3.7/site-packages/functest/ci/logging.debug.ini /usr/lib/python3.7/site-packages/xtesting/ci/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
