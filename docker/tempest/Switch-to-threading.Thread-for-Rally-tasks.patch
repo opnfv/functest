@@ -1,0 +1,50 @@
+From 7223c6c766d2cbd47c54048426c904a27b52e069 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
+Date: Wed, 3 Jun 2020 15:23:59 +0200
+Subject: [PATCH] Switch to threading.Thread() for Rally tasks
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+multiprocessing.Process() often fails due to thread crashes [1].
+It looks similar to gsutil release notes [2].
+
+[1] https://build.opnfv.org/ci/job/functest-opnfv-functest-benchmarking-cntt-latest-rally_full_cntt-run/35/console
+[2] https://github.com/GoogleCloudPlatform/gsutil/issues/548
+[3] https://github.com/GoogleCloudPlatform/gsutil/blob/master/CHANGES.md
+
+Change-Id: I582933832e23d188c7fa5999e713dd5d7e82d2da
+Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
+(cherry picked from commit 9b07423c246e7e4ab9fa25851d79ce6986c10c2e)
+---
+ rally/task/runner.py | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/rally/task/runner.py b/rally/task/runner.py
+index 55372e509..0f0245588 100644
+--- a/rally/task/runner.py
++++ b/rally/task/runner.py
+@@ -17,6 +17,7 @@ import abc
+ import collections
+ import copy
+ import multiprocessing
++import threading
+ import time
+ 
+ import six
+@@ -188,9 +189,9 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin):
+         for i in range(processes_to_start):
+             kwrgs = {"processes_to_start": processes_to_start,
+                      "processes_counter": i}
+-            process = multiprocessing.Process(target=worker_process,
+-                                              args=next(worker_args_gen),
+-                                              kwargs={"info": kwrgs})
++            process = threading.Thread(target=worker_process,
++                                       args=next(worker_args_gen),
++                                       kwargs={"info": kwrgs})
+             process.start()
+             process_pool.append(process)
+ 
+-- 
+2.26.2
+
