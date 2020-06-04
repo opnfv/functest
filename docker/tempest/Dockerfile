@@ -8,6 +8,7 @@ ARG RALLY_OPENSTACK_TAG=1.5.0
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
+COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
@@ -29,9 +30,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
     update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         tempest /src/rally-openstack && \
+    (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/rally && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/rally /src/rally-openstack && \
+    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/rally /src/rally-openstack \
+        /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'" > /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
