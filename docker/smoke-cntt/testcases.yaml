@@ -71,7 +71,7 @@ tiers:
                             (?!.*test_trunk_negative.TrunkTestMtusJSON)\
                             (^neutron_tempest_plugin.api)"
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_cinder_cntt
@@ -90,7 +90,7 @@ tiers:
                             (?!.*test_consistencygroups)\
                             (^cinder_tempest_plugin.)"
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_keystone_cntt
@@ -109,7 +109,7 @@ tiers:
                             (?!.*scenario.test_federated_authentication)\
                             keystone_tempest_plugin."
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_heat_cntt
@@ -227,7 +227,7 @@ tiers:
                           (?!.*test_volumes_extend.VolumesExtendAttachedTest.test_extend_attached_volume)\
                           (?!.*\\[.*\\bslow\\b.*\\])(^tempest.api)"
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_scenario_cntt

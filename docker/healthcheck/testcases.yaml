@@ -161,7 +161,7 @@ tiers:
                     args:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_horizon
