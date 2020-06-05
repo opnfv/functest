@@ -21,7 +21,7 @@ tiers:
                     args:
                         mode: '^neutron_tempest_plugin\.api'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_cinder
@@ -37,7 +37,7 @@ tiers:
                         mode:
                             '(?!.*test_incremental_backup)(^cinder_tempest_plugin.)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_keystone
@@ -52,7 +52,7 @@ tiers:
                     args:
                         mode: 'keystone_tempest_plugin.'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_heat
@@ -97,7 +97,7 @@ tiers:
                     name: refstack_defcore
                     args:
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_full
@@ -114,7 +114,7 @@ tiers:
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_scenario
@@ -222,3 +222,5 @@ tiers:
                             '^barbican_tempest_plugin.((?!test_signed_image_upload_boot_failure).)*$'
                         services:
                             - barbican
+                        option:
+                            - '--concurrency=4'
