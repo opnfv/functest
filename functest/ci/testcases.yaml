@@ -161,7 +161,7 @@ tiers:
                     args:
                         mode: '(?=.*\[.*\bsmoke\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_horizon
@@ -199,7 +199,7 @@ tiers:
                     args:
                         mode: '^neutron_tempest_plugin\.api'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_cinder
@@ -215,7 +215,7 @@ tiers:
                         mode:
                             '(?!.*test_incremental_backup)(^cinder_tempest_plugin.)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_keystone
@@ -230,7 +230,7 @@ tiers:
                     args:
                         mode: 'keystone_tempest_plugin.'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_heat
@@ -265,7 +265,7 @@ tiers:
                             - gnocchi
                             - panko
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: rally_sanity
@@ -297,7 +297,7 @@ tiers:
                     args:
                         target: compute
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: refstack_object
@@ -314,7 +314,7 @@ tiers:
                     args:
                         target: object
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: refstack_platform
@@ -331,7 +331,7 @@ tiers:
                     args:
                         target: platform
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_full
@@ -348,7 +348,7 @@ tiers:
                     args:
                         mode: '(?!.*\[.*\bslow\b.*\])(^tempest\.api)'
                         option:
-                            - '--concurrency=3'
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_scenario
@@ -424,6 +424,8 @@ tiers:
                             '^barbican_tempest_plugin.((?!test_signed_image_upload_boot_failure).)*$'
                         services:
                             - barbican
+                        option:
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_octavia
