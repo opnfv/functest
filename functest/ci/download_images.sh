@@ -15,4 +15,5 @@ http://repository.cloudifysource.org/cloudify/19.01.24/community-release/cloudif
 http://testresults.opnfv.org/functest/vyos-1.1.8-amd64.qcow2
 http://testresults.opnfv.org/functest/shaker-image-1.3.4+stretch.qcow2
 https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.qcow2
+https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/30/Cloud/aarch64/images/Fedora-Cloud-Base-30-1.2.aarch64.qcow2
 EOF
