@@ -2,7 +2,7 @@
 tiers:
     -
         name: vnf
-        order: 4
+        order: 5
         description: >-
             Collection of VNF test cases.
         testcases:
