@@ -1,4 +1,4 @@
-From 9b07423c246e7e4ab9fa25851d79ce6986c10c2e Mon Sep 17 00:00:00 2001
+From 7223c6c766d2cbd47c54048426c904a27b52e069 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
 Date: Wed, 3 Jun 2020 15:23:59 +0200
 Subject: [PATCH] Switch to threading.Thread() for Rally tasks
@@ -15,36 +15,13 @@ It looks similar to gsutil release notes [2].
 
 Change-Id: I582933832e23d188c7fa5999e713dd5d7e82d2da
 Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
+(cherry picked from commit 9b07423c246e7e4ab9fa25851d79ce6986c10c2e)
 ---
- rally/cli/main.py    | 5 ++++-
  rally/task/runner.py | 7 ++++---
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/rally/cli/main.py b/rally/cli/main.py
-index 235a57113..14c057c0e 100644
---- a/rally/cli/main.py
-+++ b/rally/cli/main.py
-@@ -15,6 +15,10 @@
- 
- """CLI interface for Rally."""
- 
-+STACK_SIZE = 1024 * 1024
-+import threading
-+threading.stack_size(STACK_SIZE)
-+
- import sys
- 
- from rally.cli import cliutils
-@@ -25,7 +29,6 @@ from rally.cli.commands import plugin
- from rally.cli.commands import task
- from rally.cli.commands import verify
- 
--
- categories = {
-     "db": db.DBCommands,
-     "env": env.EnvCommands,
 diff --git a/rally/task/runner.py b/rally/task/runner.py
-index 3397e1193..5edebb406 100644
+index 55372e509..0f0245588 100644
 --- a/rally/task/runner.py
 +++ b/rally/task/runner.py
 @@ -17,6 +17,7 @@ import abc
@@ -54,8 +31,8 @@ index 3397e1193..5edebb406 100644
 +import threading
  import time
  
- from rally.common import logging
-@@ -186,9 +187,9 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin,
+ import six
+@@ -188,9 +189,9 @@ class ScenarioRunner(plugin.Plugin, validation.ValidatablePluginMixin):
          for i in range(processes_to_start):
              kwrgs = {"processes_to_start": processes_to_start,
                       "processes_counter": i}
