@@ -1,8 +1,8 @@
 ---
 tiers:
     -
-        name: benchmarking
-        order: 2
+        name: benchmarking_cntt
+        order: 4
         description: >-
             Run several OpenStack performance tools
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
@@ -66,5 +66,7 @@ tiers:
                     like iperf, iperf3 and netperf (with help of flent). Shaker
                     is able to deploy OpenStack instances and networks in
                     different topologies.
+                dependencies:
+                    - POD_ARCH: '^(?!aarch64$)'
                 run:
                     name: shaker
