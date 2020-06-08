@@ -201,6 +201,8 @@ fdio:
         flavor_ram: 1024
     tempest_barbican:
         flavor_ram: 1024
+    tempest_octavia:
+        flavor_ram: 1024
     tempest_neutron_cntt:
         flavor_ram: 1024
     tempest_cinder_cntt:
@@ -276,6 +278,8 @@ ovs:
     patrole:
         flavor_ram: 1024
     tempest_barbican:
+        flavor_ram: 1024
+    tempest_octavia:
         flavor_ram: 1024
     tempest_neutron_cntt:
         flavor_ram: 1024
@@ -403,6 +407,11 @@ vio:
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_barbican:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_octavia:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
