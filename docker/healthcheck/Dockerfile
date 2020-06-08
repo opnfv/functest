@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:kali
 
 ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=stable/ussuri
