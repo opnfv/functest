@@ -4,47 +4,31 @@ gsma:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    neutron-tempest-plugin-api:
+    tempest_horizon:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    refstack_compute:
+    tempest_neutron:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    refstack_object:
+    tempest_cinder:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    refstack_platform:
+    tempest_keystone:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    patrole:
+    tempest_heat:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    vmtp:
-        flavor_ram: 2048
-        flavor_vcpus: 1
-        flavor_disk: 40
-    shaker:
-        flavor_ram: 2048
-        flavor_vcpus: 1
-        flavor_disk: 40
-    neutron_trunk:
+    rally_sanity:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    networking-bgpvpn:
-        flavor_alt_ram: 2048
-        flavor_alt_vcpus: 1
-        flavor_alt_disk: 40
-    networking-sfc:
-        flavor_alt_ram: 2048
-        flavor_alt_vcpus: 1
-        flavor_alt_disk: 40
-    barbican:
+    refstack_defcore:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
@@ -56,11 +40,79 @@ gsma:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
-    rally_sanity:
+    tempest_slow:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    patrole:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    networking-bgpvpn:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    networking-sfc:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_barbican:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_neutron_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_cinder_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_keystone_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_heat_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    rally_sanity_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_full_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_scenario_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    tempest_slow_cntt:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
     rally_full:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    rally_jobs:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    vmtp:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+    shaker:
+        flavor_ram: 2048
+        flavor_vcpus: 1
+        flavor_disk: 40
+    rally_full_cntt:
+        flavor_alt_ram: 2048
+        flavor_alt_vcpus: 1
+        flavor_alt_disk: 40
+    rally_jobs_cntt:
         flavor_alt_ram: 2048
         flavor_alt_vcpus: 1
         flavor_alt_disk: 40
@@ -111,33 +163,61 @@ fdio:
         flavor_ram: 1024
     tempest_smoke:
         flavor_ram: 1024
+    tempest_horizon:
+        flavor_ram: 1024
     tempest_neutron:
         flavor_ram: 1024
+    tempest_cinder:
+        flavor_ram: 1024
+    tempest_keystone:
+        flavor_ram: 1024
+    tempest_heat:
+        flavor_ram: 1024
+    rally_sanity:
+        flavor_ram: 1024
     refstack_defcore:
-        flavor_ram: 1024
-    patrole:
-        flavor_ram: 1024
-    vmtp:
-        flavor_ram: 2048
-    shaker:
-        flavor_ram: 1024
-    neutron_trunk:
-        flavor_ram: 1024
-    networking-bgpvpn:
-        flavor_ram: 1024
-    networking-sfc:
-        flavor_ram: 1024
-    barbican:
         flavor_ram: 1024
     tempest_full:
         flavor_ram: 1024
     tempest_scenario:
         flavor_ram: 1024
-    rally_sanity:
+    tempest_slow:
+        flavor_ram: 1024
+    patrole:
+        flavor_ram: 1024
+    networking-bgpvpn:
+        flavor_ram: 1024
+    networking-sfc:
+        flavor_ram: 1024
+    tempest_barbican:
+        flavor_ram: 1024
+    tempest_neutron_cntt:
+        flavor_ram: 1024
+    tempest_cinder_cntt:
+        flavor_ram: 1024
+    tempest_keystone_cntt:
+        flavor_ram: 1024
+    tempest_heat_cntt:
+        flavor_ram: 1024
+    rally_sanity_cntt:
+        flavor_ram: 1024
+    tempest_full_cntt:
+        flavor_ram: 1024
+    tempest_scenario_cntt:
+        flavor_ram: 1024
+    tempest_slow_cntt:
         flavor_ram: 1024
     rally_full:
         flavor_ram: 1024
     rally_jobs:
+        flavor_ram: 1024
+    vmtp:
+        flavor_ram: 2048
+    shaker:
+        flavor_ram: 1024
+    rally_full_cntt:
+        flavor_ram: 1024
+    rally_jobs_cntt:
         flavor_ram: 1024
 
 ovs:
@@ -157,33 +237,61 @@ ovs:
         flavor_ram: 1024
     tempest_smoke:
         flavor_ram: 1024
+    tempest_horizon:
+        flavor_ram: 1024
     tempest_neutron:
         flavor_ram: 1024
+    tempest_cinder:
+        flavor_ram: 1024
+    tempest_keystone:
+        flavor_ram: 1024
+    tempest_heat:
+        flavor_ram: 1024
+    rally_sanity:
+        flavor_ram: 1024
     refstack_defcore:
-        flavor_ram: 1024
-    patrole:
-        flavor_ram: 1024
-    vmtp:
-        flavor_ram: 2048
-    shaker:
-        flavor_ram: 1024
-    neutron_trunk:
-        flavor_ram: 1024
-    networking-bgpvpn:
-        flavor_ram: 1024
-    networking-sfc:
-        flavor_ram: 1024
-    barbican:
         flavor_ram: 1024
     tempest_full:
         flavor_ram: 1024
     tempest_scenario:
         flavor_ram: 1024
-    rally_sanity:
+    tempest_slow:
+        flavor_ram: 1024
+    patrole:
+        flavor_ram: 1024
+    networking-bgpvpn:
+        flavor_ram: 1024
+    networking-sfc:
+        flavor_ram: 1024
+    tempest_barbican:
+        flavor_ram: 1024
+    tempest_neutron_cntt:
+        flavor_ram: 1024
+    tempest_cinder_cntt:
+        flavor_ram: 1024
+    tempest_keystone_cntt:
+        flavor_ram: 1024
+    tempest_heat_cntt:
+        flavor_ram: 1024
+    rally_sanity_cntt:
+        flavor_ram: 1024
+    tempest_full_cntt:
+        flavor_ram: 1024
+    tempest_scenario_cntt:
+        flavor_ram: 1024
+    tempest_slow_cntt:
         flavor_ram: 1024
     rally_full:
         flavor_ram: 1024
     rally_jobs:
+        flavor_ram: 1024
+    vmtp:
+        flavor_ram: 2048
+    shaker:
+        flavor_ram: 1024
+    rally_full_cntt:
+        flavor_ram: 1024
+    rally_jobs_cntt:
         flavor_ram: 1024
 
 vio:
@@ -213,44 +321,36 @@ vio:
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
+    tempest_horizon:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
     tempest_neutron:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
+    tempest_cinder:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_keystone:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_heat:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt:
+            /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.x86_64.vmdk
+        image_alt_format: vmdk
+    rally_sanity:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
     refstack_defcore:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_alt_format: vmdk
-    patrole:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_alt_format: vmdk
-    vmtp:
-        image:
-            /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
-        image_format: vmdk
-    shaker:
-        image: /home/opnfv/functest/images/shaker-image.vmdk
-        image_format: vmdk
-    neutron_trunk:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_alt_format: vmdk
-    networking-bgpvpn:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_alt_format: vmdk
-    networking-sfc:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
-        image_alt_format: vmdk
-    barbican:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
@@ -265,13 +365,87 @@ vio:
         image_format: vmdk
         image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_alt_format: vmdk
-    rally_sanity:
+    tempest_slow:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    patrole:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    networking-bgpvpn:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    networking-sfc:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_barbican:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_neutron_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_cinder_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_keystone_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_heat_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt:
+            /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.x86_64.vmdk
+        image_alt_format: vmdk
+    rally_sanity_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    tempest_full_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_scenario_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
+    tempest_slow_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt_format: vmdk
     rally_full:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
     rally_jobs:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    vmtp:
+        image:
+            /home/opnfv/functest/images/ubuntu-14.04-server-cloudimg-amd64-disk1.vmdk
+        image_format: vmdk
+    shaker:
+        image: /home/opnfv/functest/images/shaker-image.vmdk
+        image_format: vmdk
+    rally_full_cntt:
+        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_format: vmdk
+    rally_jobs_cntt:
         image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
         image_format: vmdk
     cloudify:
