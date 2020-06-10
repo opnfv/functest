@@ -49,7 +49,7 @@ class Vmtp(singlevm.VmReady2):
     flavor_ram = 2048
     flavor_vcpus = 1
     flavor_disk = 0
-    create_server_timeout = 300
+    create_server_timeout = 600
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
