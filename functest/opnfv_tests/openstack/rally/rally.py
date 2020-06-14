@@ -810,26 +810,10 @@ class RallyJobs(RallyBase):
         task_args['flavor_name'] = str(self.flavor.name)
         return task_args
 
-    @staticmethod
-    def _remove_plugins_extra():
-        inst_dir = getattr(config.CONF, 'dir_rally_inst')
-        try:
-            shutil.rmtree(os.path.join(inst_dir, 'plugins'))
-            shutil.rmtree(os.path.join(inst_dir, 'extra'))
-        except Exception:  # pylint: disable=broad-except
-            pass
-
     def prepare_task(self, test_name):
         """Prepare resources for test run."""
-        self._remove_plugins_extra()
         jobs_dir = os.path.join(
             getattr(config.CONF, 'dir_rally_data'), test_name, 'rally-jobs')
-        inst_dir = getattr(config.CONF, 'dir_rally_inst')
-        shutil.copytree(os.path.join(jobs_dir, 'plugins'),
-                        os.path.join(inst_dir, 'plugins'))
-        shutil.copytree(os.path.join(jobs_dir, 'extra'),
-                        os.path.join(inst_dir, 'extra'))
-
         task_name = self.task_yaml.get(test_name).get("task")
         task = os.path.join(jobs_dir, task_name)
         if not os.path.exists(task):
@@ -844,7 +828,3 @@ class RallyJobs(RallyBase):
                          "--task", task_file_name,
                          "--task-args", str(self.build_task_args(test_name))])
         return True
-
-    def clean(self):
-        self._remove_plugins_extra()
-        super(RallyJobs, self).clean()
