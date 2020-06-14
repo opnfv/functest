@@ -23,12 +23,13 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     update-requirements -s --source /src/openstack-requirements /src/vmtp/ && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/vmtp && \
-    mkdir -p /home/opnfv/functest/data/rally/neutron && \
+    mkdir -p /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     git init /src/neutron && \
     (cd /src/neutron && \
         git fetch --tags https://opendev.org/openstack/neutron.git $OPENSTACK_TAG && \
         git checkout FETCH_HEAD) && \
-    cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
+    sed "s/NeutronTrunks.create_and_list_trunk_subports/NeutronTrunks.create_and_list_trunks/g" \
+        /src/neutron/rally-jobs/task-neutron.yaml > /home/opnfv/functest/data/rally/neutron/rally-jobs/task-neutron.yaml && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vmtp /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python2.7/site-packages/xtesting/ci/testcases.yaml
