@@ -1,7 +1,5 @@
 FROM opnfv/functest-core
 
-ARG BRANCH=master
-ARG OPENSTACK_TAG=master
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia
@@ -23,13 +21,10 @@ RUN apk --no-cache add --update \
         procps libxslt libxml2 zlib libffi go musl-dev && \
     apk --no-cache add --virtual .build-deps --update \
         ruby-dev g++ make libxslt-dev libxml2-dev zlib-dev libffi-dev patch && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
-    sed -i -E /^tempest==+.*$/d upper-constraints.txt && \
-    case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
-    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
-    sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
-    sed -i -E /#egg=rally/d upper-constraints.opnfv.txt && \
-    git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
+    git init /src/vims-test && \
+    (cd /src/vims-test/quaff && \
+        git fetch --tags https://github.com/Metaswitch/clearwater-live-test $VIMS_TEST_TAG && \
+        git checkout FETCH_HEAD) && \
     sed -i s/unf_ext\ \(.*\)/unf_ext\ \(0.0.7.4\)/g /src/vims-test/Gemfile.lock && \
     git init /src/vims-test/quaff && \
     (cd /src/vims-test/quaff && \
@@ -64,7 +59,8 @@ RUN apk --no-cache add --update \
         (cd /src/epc-requirements/abot_charm && \
             git fetch --tags https://github.com/RebacaInc/abot_charm.git $ABOT_CHARM && \
             git checkout FETCH_HEAD) && \
-        pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+        pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
+            -c/src/functest/upper-constraints.txt \
             juju-wait==$JUJU_WAIT_TAG && \
         go get -d github.com/rogpeppe/godeps && \
         (cd $GOPATH/src/github.com/rogpeppe/godeps && git checkout $GODEPS_TAG && go install -v github.com/rogpeppe/godeps) && \
@@ -74,7 +70,7 @@ RUN apk --no-cache add --update \
         rm -r $GOPATH/src/ $GOPATH/pkg /src/epc-requirements/abot_charm/.git /root/.cache/go-build;; \
     esac && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system && bundle update rest-client) && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \
+    rm -r /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /tmp/clearwater-heat-singlenet-deps.patch && \
     apk del .build-deps

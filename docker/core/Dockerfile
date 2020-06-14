@@ -1,7 +1,7 @@
 FROM alpine:3.12
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=refs/changes/53/735453/1
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --update \
@@ -10,25 +10,26 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
-    wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
-    case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
-    wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
-    sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
-    sed -i -E /^tempest==+.*$/d upper-constraints.txt && \
-    pip3 install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
-        -e git+https://opendev.org/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
+    git init /src/requirements && \
+    (cd /src/requirements && \
+        git fetch --tags https://review.opendev.org/openstack/requirements $OPENSTACK_TAG && \
+        git checkout FETCH_HEAD) && \
     git init /src/functest && \
     (cd /src/functest && \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
-    update-requirements -s --source /src/openstack-requirements /src/functest && \
-    pip3 install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
-        /src/functest && \
+    case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
+    sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
+    sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
+    pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
+        -e /src/requirements && \
+    update-requirements -s --source /src/requirements /src/functest && \
+    pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
+        -e /src/functest && \
     (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
-    rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/functest \
-        /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
-    cp /usr/lib/python3.8/site-packages/functest/ci/logging.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
-    cp /usr/lib/python3.8/site-packages/functest/ci/logging.debug.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
+    rm /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
+    cp /src/functest/functest/ci/logging.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
+    cp /src/functest/functest/ci/logging.debug.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
