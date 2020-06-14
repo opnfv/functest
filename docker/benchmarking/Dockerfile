@@ -17,12 +17,12 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         /src/vmtp && \
-    mkdir -p /home/opnfv/functest/data/rally/neutron && \
+    mkdir -p /home/opnfv/functest/data/rally/neutron/rally-jobs && \
     git init /src/neutron && \
     (cd /src/neutron && \
         git fetch --tags https://opendev.org/openstack/neutron.git $OPENSTACK_TAG && \
         git checkout FETCH_HEAD) && \
-    cp -r /src/neutron/rally-jobs /home/opnfv/functest/data/rally/neutron/rally-jobs && \
+    cp /src/neutron/rally-jobs/task-neutron.yaml /home/opnfv/functest/data/rally/neutron/rally-jobs/ && \
     rm -r /src/vmtp /src/neutron && \
     apk del .build-deps
 COPY testcases.yaml /usr/lib/python3.7/site-packages/xtesting/ci/testcases.yaml
