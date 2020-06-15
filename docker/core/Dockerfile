@@ -1,7 +1,7 @@
 FROM alpine:3.12
 
 ARG BRANCH=master
-ARG OPENSTACK_TAG=refs/changes/53/735453/1
+ARG OPENSTACK_TAG=master
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --update \
