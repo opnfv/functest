@@ -5,7 +5,7 @@ ARG OPENSTACK_TAG=refs/changes/53/735453/1
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --update \
-        python3 libffi openssl libjpeg-turbo py3-pip bash \
+        python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
