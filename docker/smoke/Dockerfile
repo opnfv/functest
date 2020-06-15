@@ -15,6 +15,9 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+    case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
+        pip3 install --no-cache-dir -c/src/requirements/upper-constraints.txt \
+        -c/src/functest/upper-constraints.txt lxml ;; esac && \
     git init /src/patrole && \
     (cd /src/patrole && \
         git fetch --tags https://opendev.org/openstack/patrole.git $PATROLE_TAG && \

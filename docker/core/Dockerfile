@@ -23,9 +23,9 @@ RUN apk --no-cache add --update \
     (cd /src/functest && \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
+    sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
-    sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
     pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
         -e /src/requirements && \
     update-requirements -s --source /src/requirements /src/functest && \
