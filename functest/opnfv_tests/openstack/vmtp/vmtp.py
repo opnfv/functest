@@ -49,7 +49,8 @@ class Vmtp(singlevm.VmReady2):
     flavor_ram = 2048
     flavor_vcpus = 1
     flavor_disk = 0
-    create_server_timeout = 600
+    create_server_timeout = 300
+    ssh_retry_timeout = 240
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -122,6 +123,7 @@ class Vmtp(singlevm.VmReady2):
                 self.guid)
             vmtp_conf["dns_nameservers"] = [env.get('NAMESERVER')]
             vmtp_conf["generic_retry_count"] = self.create_server_timeout // 2
+            vmtp_conf["ssh_retry_count"] = self.ssh_retry_timeout // 2
             conf.write(yaml.dump(vmtp_conf))
 
     def run_vmtp(self):

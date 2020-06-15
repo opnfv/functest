@@ -39,7 +39,8 @@ class Shaker(singlevm.SingleVm2):
     username = 'debian'
     port = 9000
     ssh_connect_loops = 12
-    create_server_timeout = 600
+    create_server_timeout = 300
+    check_console_loop = 12
     shaker_timeout = '3600'
     quota_instances = -1
     quota_cores = -1
