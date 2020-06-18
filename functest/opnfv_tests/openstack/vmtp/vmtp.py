@@ -33,6 +33,7 @@ from xtesting.core import testcase
 
 from functest.core import singlevm
 from functest.utils import env
+from functest.utils import functest_utils
 
 
 class Vmtp(singlevm.VmReady2):
@@ -147,8 +148,15 @@ class Vmtp(singlevm.VmReady2):
             del new_env['OS_TENANT_ID']
         except Exception:  # pylint: disable=broad-except
             pass
+        extra_args = ""
+        if env.get("VMTP_HYPERVISORS"):
+            hypervisors = functest_utils.convert_ini_to_list(
+                env.get("VMTP_HYPERVISORS"))
+            for hypervisor in hypervisors:
+                extra_args = "{} --hypervisor {} ".format(
+                    extra_args, hypervisor)
         cmd = ['vmtp', '-d', '--json', '{}/vmtp.json'.format(self.res_dir),
-               '-c', self.config]
+               '-c', self.config, extra_args]
         output = subprocess.check_output(
             cmd, stderr=subprocess.STDOUT, env=new_env).decode("utf-8")
         self.__logger.info("%s\n%s", " ".join(cmd), output)
