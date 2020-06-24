@@ -4,36 +4,6 @@
   roles:
     - role: collivier.xtesting
       project: functest
-      gerrit_project: functest
-      docker_tags:
-        - jerma:
-            branch: stable/jerma
-      builds:
-        dependencies:
-          - repo: _
-            dport:
-            container: alpine
-            tag: '3.10'
-        steps:
-          - name: build opnfv/functest-core
-            containers:
-              - name: functest-core
-                ref_arg: BRANCH
-                path: docker/core
-          - name: build containers
-            containers:
-              - name: functest-healthcheck
-                ref_arg: BRANCH
-                path: docker/healthcheck
-              - name: functest-smoke-cntt
-                ref_arg: BRANCH
-                path: docker/smoke-cntt
-              - name: functest-benchmarking-cntt
-                ref_arg: BRANCH
-                path: docker/benchmarking-cntt
-              - name: functest-vnf
-                ref_arg:
-                path: docker/vnf
       suites:
         - container: functest-healthcheck
           tests:
