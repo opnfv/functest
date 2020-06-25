@@ -3,6 +3,7 @@ FROM alpine:3.11
 ARG BRANCH=stable/kali
 ARG OPENSTACK_TAG=stable/ussuri
 
+COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
@@ -39,4 +40,12 @@ RUN apk --no-cache add --update \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'\n" > /etc/rally/rally.conf && \
     printf "\n[openstack]\nneutron_bind_l2_agent_types = Open vSwitch agent,Linux bridge agent,OVN Controller Gateway agent\n" >> /etc/rally/rally.conf && \
     mkdir -p /var/lib/rally/database && rally db create && \
+    (cd /src/tempest && \
+        git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
+        git config --global user.name "Functest" && \
+        patch -p1 < /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
+        git commit -a -m "Backport critical bugfixes" && \
+        rm ~/.gitconfig) && \
+    sed -i -E /#egg=tempest/d /src/functest/upper-constraints.txt && \
+    rm tmp/object-storage-fix-and-cleanup-header-checks.patch && \
     apk del .build-deps

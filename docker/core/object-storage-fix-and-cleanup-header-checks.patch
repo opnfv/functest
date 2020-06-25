@@ -1,0 +1,186 @@
+From f8a487f86f24caa3fea68adb78fae64381bb3d09 Mon Sep 17 00:00:00 2001
+From: Thomas Morin <thomas.morin@orange.com>
+Date: Wed, 17 Jun 2020 18:08:49 +0200
+Subject: [PATCH] object storage: fix and cleanup header checks
+
+As explained in [1] it is not legitimate to require a Transfer-Encoding
+header in Swift responses. That prevents running some tests
+successfully in the case where Swift is behind a proxy/load-balancer
+that does not use any Transfer-Encoding in its responses.
+
+This change hence removes the checks for the presence of a
+"Transfer-Encoding" header, and replaces them by the use
+of the existing check methods, after modifying the
+custom_matcher checks on which these methods rely on to accept
+either a Content-Length or a Transfer-Encoding header.
+
+Some adaptation was also required to avoid trying to process 'etag'
+for DELETE requests.
+
+A side-effect of this change is a code simplification and
+cleanup since the specific header checks in the corresponding
+tests are replaced by the generic check methods.
+
+[1] https://bugs.launchpad.net/tempest/+bug/1819851/comments/3
+
+Closes-Bug: 1819851
+Change-Id: Iaccea41640a53b564f72cee73981e2e61d3e80ae
+---
+ .../api/object_storage/test_account_bulk.py   | 37 ++-----------------
+ tempest/api/object_storage/test_object_slo.py | 21 +++--------
+ tempest/common/custom_matchers.py             | 16 +++++++-
+ 3 files changed, 24 insertions(+), 50 deletions(-)
+
+diff --git a/tempest/api/object_storage/test_account_bulk.py b/tempest/api/object_storage/test_account_bulk.py
+index 6599e432f..80f790f51 100644
+--- a/tempest/api/object_storage/test_account_bulk.py
++++ b/tempest/api/object_storage/test_account_bulk.py
+@@ -16,7 +16,6 @@ import tarfile
+ import tempfile
+ 
+ from tempest.api.object_storage import base
+-from tempest.common import custom_matchers
+ from tempest.common import utils
+ from tempest.lib import decorators
+ 
+@@ -76,17 +75,7 @@ class BulkTest(base.BaseObjectTest):
+         resp = self._upload_archive(filepath)
+         self.containers.append(container_name)
+ 
+-        # When uploading an archived file with the bulk operation, the response
+-        # does not contain 'content-length' header. This is the special case,
+-        # therefore the existence of response headers is checked without
+-        # custom matcher.
+-        self.assertIn('transfer-encoding', resp.response)
+-        self.assertIn('content-type', resp.response)
+-        self.assertIn('x-trans-id', resp.response)
+-        self.assertIn('date', resp.response)
+-
+-        # Check only the format of common headers with custom matcher
+-        self.assertThat(resp.response, custom_matchers.AreAllWellFormatted())
++        self.assertHeaders(resp.response, 'Account', 'PUT')
+ 
+         param = {'format': 'json'}
+         resp, body = self.account_client.list_account_containers(param)
+@@ -113,17 +102,7 @@ class BulkTest(base.BaseObjectTest):
+         data = '%s/%s\n%s' % (container_name, object_name, container_name)
+         resp = self.bulk_client.delete_bulk_data(data=data)
+ 
+-        # When deleting multiple files using the bulk operation, the response
+-        # does not contain 'content-length' header. This is the special case,
+-        # therefore the existence of response headers is checked without
+-        # custom matcher.
+-        self.assertIn('transfer-encoding', resp.response)
+-        self.assertIn('content-type', resp.response)
+-        self.assertIn('x-trans-id', resp.response)
+-        self.assertIn('date', resp.response)
+-
+-        # Check only the format of common headers with custom matcher
+-        self.assertThat(resp.response, custom_matchers.AreAllWellFormatted())
++        self.assertHeaders(resp.response, 'Account', 'DELETE')
+ 
+         # Check if uploaded contents are completely deleted
+         self._check_contents_deleted(container_name)
+@@ -139,17 +118,7 @@ class BulkTest(base.BaseObjectTest):
+ 
+         resp = self.bulk_client.delete_bulk_data_with_post(data=data)
+ 
+-        # When deleting multiple files using the bulk operation, the response
+-        # does not contain 'content-length' header. This is the special case,
+-        # therefore the existence of response headers is checked without
+-        # custom matcher.
+-        self.assertIn('transfer-encoding', resp.response)
+-        self.assertIn('content-type', resp.response)
+-        self.assertIn('x-trans-id', resp.response)
+-        self.assertIn('date', resp.response)
+-
+-        # Check only the format of common headers with custom matcher
+-        self.assertThat(resp.response, custom_matchers.AreAllWellFormatted())
++        self.assertHeaders(resp.response, 'Account', 'POST')
+ 
+         # Check if uploaded contents are completely deleted
+         self._check_contents_deleted(container_name)
+diff --git a/tempest/api/object_storage/test_object_slo.py b/tempest/api/object_storage/test_object_slo.py
+index c66776e4e..ed323fd61 100644
+--- a/tempest/api/object_storage/test_object_slo.py
++++ b/tempest/api/object_storage/test_object_slo.py
+@@ -17,7 +17,6 @@ import hashlib
+ from oslo_serialization import jsonutils as json
+ 
+ from tempest.api.object_storage import base
+-from tempest.common import custom_matchers
+ from tempest.common import utils
+ from tempest.lib.common.utils import data_utils
+ from tempest.lib.common.utils import test_utils
+@@ -101,9 +100,11 @@ class ObjectSloTest(base.BaseObjectTest):
+         # Etag value of a large object is enclosed in double-quotations.
+         # After etag quotes are checked they are removed and the response is
+         # checked if all common headers are present and well formatted
+-        self.assertTrue(resp['etag'].startswith('\"'))
+-        self.assertTrue(resp['etag'].endswith('\"'))
+-        resp['etag'] = resp['etag'].strip('"')
++        if method != 'DELETE':
++            self.assertTrue(resp['etag'].startswith('\"'))
++            self.assertTrue(resp['etag'].endswith('\"'))
++            resp['etag'] = resp['etag'].strip('"')
++
+         self.assertHeaders(resp, 'Object', method)
+ 
+     @decorators.idempotent_id('2c3f24a6-36e8-4711-9aa2-800ee1fc7b5b')
+@@ -160,17 +161,7 @@ class ObjectSloTest(base.BaseObjectTest):
+             object_name,
+             params=params_del)
+ 
+-        # When deleting SLO using multipart manifest, the response contains
+-        # not 'content-length' but 'transfer-encoding' header. This is the
+-        # special case, therefore the existence of response headers is checked
+-        # outside of custom matcher.
+-        self.assertIn('transfer-encoding', resp)
+-        self.assertIn('content-type', resp)
+-        self.assertIn('x-trans-id', resp)
+-        self.assertIn('date', resp)
+-
+-        # Check only the format of common headers with custom matcher
+-        self.assertThat(resp, custom_matchers.AreAllWellFormatted())
++        self._assertHeadersSLO(resp, 'DELETE')
+ 
+         resp, body = self.container_client.list_container_objects(
+             self.container_name)
+diff --git a/tempest/common/custom_matchers.py b/tempest/common/custom_matchers.py
+index c702d8896..f1adeab64 100644
+--- a/tempest/common/custom_matchers.py
++++ b/tempest/common/custom_matchers.py
+@@ -62,8 +62,9 @@ class ExistsAllResponseHeaders(object):
+         # [1] https://bugs.launchpad.net/swift/+bug/1537811
+         # [2] http://tracker.ceph.com/issues/13582
+         if ('content-length' not in actual and
++                'transfer-encoding' not in actual and
+                 self._content_length_required(actual)):
+-            return NonExistentHeader('content-length')
++            return NonExistentHeaders(['content-length', 'transfer-encoding'])
+         if 'content-type' not in actual:
+             return NonExistentHeader('content-type')
+         if 'x-trans-id' not in actual:
+@@ -192,6 +193,19 @@ class NonExistentHeader(object):
+         return {}
+ 
+ 
++class NonExistentHeaders(object):
++    """Informs an error message in the case of missing certain headers"""
++
++    def __init__(self, headers):
++        self.headers = headers
++
++    def describe(self):
++        return "none of these headers exist: %s" % self.headers
++
++    def get_details(self):
++        return {}
++
++
+ class InvalidHeaderValue(object):
+     """Informs an error message when a header contains a bad value"""
+ 
+-- 
+2.27.0
+
