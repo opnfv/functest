@@ -40,6 +40,7 @@ tiers:
                             (?!.*test_networks.NetworksSearchCriteriaTest.test_list_validation_filters)\
                             (?!.*test_networks.NetworksTestAdmin.test_create_tenant_network_vxlan)\
                             (?!.*test_networks.NetworksTestJSON.test_create_update_network_dns_domain)\
+                            (?!.*test_port_forwarding_negative)\
                             (?!.*test_port_forwardings)\
                             (?!.*test_ports.PortsTaggingOnCreation)\
                             (?!.*test_ports.PortsTestJSON.test_create_port_with_propagate_uplink_status)\
