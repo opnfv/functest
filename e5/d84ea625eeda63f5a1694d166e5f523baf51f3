@@ -1,0 +1,7 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 30 Jun 2020 06:17:41 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/functest/+/70406
+Project: functest
+Branch: refs/heads/stable/kali
