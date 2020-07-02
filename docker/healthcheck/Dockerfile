@@ -9,6 +9,7 @@ ARG TEMPEST_HORIZON_TAG=0.1.0
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E /#egg=tempest/d upper-constraints.txt && \
+    sed -i -E /^kubernetes==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \

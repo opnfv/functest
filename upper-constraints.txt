@@ -27,3 +27,4 @@ pylint===2.3.1;python_version=='3.6'
 sphinxcontrib-spelling===4.2.1
 boto3===1.7.62
 ujson===2.0.3
+kubernetes===10.0.0
