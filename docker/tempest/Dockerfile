@@ -8,6 +8,7 @@ ARG RALLY_OPENSTACK_TAG=1.5.0
 
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
+COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --virtual .build-deps --update \
         python-dev build-base linux-headers libffi-dev \
@@ -43,9 +44,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
         patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
+        patch -p1 < /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
         patch -p1 < /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
-    rm /tmp/Accept-custom-registered-endpoints.patch && \
-    rm /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
+    rm /tmp/Accept-custom-registered-endpoints.patch \
+        /tmp/object-storage-fix-and-cleanup-header-checks.patch \
+        /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
     apk del .build-deps
