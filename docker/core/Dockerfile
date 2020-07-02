@@ -12,6 +12,7 @@ RUN apk --no-cache add --update \
         openssl-dev libjpeg-turbo-dev && \
     wget -q -O- https://opendev.org/openstack/requirements/raw/branch/$OPENSTACK_TAG/upper-constraints.txt > upper-constraints.txt && \
     sed -i -E /^ujson==+.*$/d upper-constraints.txt && \
+    sed -i -E /^kubernetes==+.*$/d upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py-pynacl ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
