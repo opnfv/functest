@@ -246,7 +246,7 @@ tiers:
                     the OpenStack deployment.
                     https://github.com/openstack/tempest/blob/18.0.0/tox.ini#L84
                 run:
-                    name: tempest_scenario
+                    name: tempest_common
                     args:
                         mode: "\
                           (?!.*test_volume_boot_pattern.TestVolumeBootPattern.test_boot_server_from_encrypted_volume_luks)\
