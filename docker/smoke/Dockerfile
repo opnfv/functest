@@ -78,6 +78,9 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         -e git+https://opendev.org/openstack/cinder.git@$CINDER_TAG#egg=cinder && \
     oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
     oslopolicy-sample-generator  --format json --output-file /etc/glance/policy.json --namespace glance && \
+    oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
+    oslopolicy-sample-generator  --format json --output-file /etc/keystone/policy.json --namespace keystone && \
+    oslopolicy-sample-generator  --format json --output-file /etc/cinder/policy.json --namespace cinder && \
     deactivate && \
     rm -r oslo /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
