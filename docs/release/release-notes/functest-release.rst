@@ -47,7 +47,9 @@ The internal test cases are:
  * tempest_full
  * tempest_scenario
  * tempest_slow
- * patrole
+ * patrole_admin
+ * patrole_user
+ * patrole_reader
  * tempest_barbican
  * tempest_octavia
  * rally_full

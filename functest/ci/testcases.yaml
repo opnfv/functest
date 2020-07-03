@@ -385,7 +385,7 @@ tiers:
                             - '--concurrency=1'
 
             -
-                case_name: patrole
+                case_name: patrole_admin
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -395,6 +395,56 @@ tiers:
                     name: patrole
                     args:
                         role: 'admin'
+                        includes:
+                            - 'image'
+                            - 'network'
+                        excludes:
+                            - 'network.test_flavors_rbac'
+                            - 'network.test_network_ip_availability_rbac'
+                            - 'test_networks_multiprovider_rbac'
+                            - 'test_auto_allocated_topology_rbac'
+                            - 'test_create_network_provider_segmentation_id'
+                            - 'test_update_network_provider_physical_network'
+                            - 'test_update_network_provider_segmentation_id'
+                            - 'network.test_agents_rbac'
+                            - 'test_list_metadef_namespaces'
+
+            -
+                case_name: patrole_user
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Patrole project.
+                run:
+                    name: patrole
+                    args:
+                        role: 'user'
+                        includes:
+                            - 'image'
+                            - 'network'
+                        excludes:
+                            - 'network.test_flavors_rbac'
+                            - 'network.test_network_ip_availability_rbac'
+                            - 'test_networks_multiprovider_rbac'
+                            - 'test_auto_allocated_topology_rbac'
+                            - 'test_create_network_provider_segmentation_id'
+                            - 'test_update_network_provider_physical_network'
+                            - 'test_update_network_provider_segmentation_id'
+                            - 'network.test_agents_rbac'
+                            - 'test_list_metadef_namespaces'
+
+            -
+                case_name: patrole_reader
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    Test suite from Patrole project.
+                run:
+                    name: patrole
+                    args:
+                        role: 'reader'
                         includes:
                             - 'image'
                             - 'network'

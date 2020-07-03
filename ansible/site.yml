@@ -61,7 +61,9 @@
             - tempest_full
             - tempest_scenario
             - tempest_slow
-            - patrole
+            - patrole_admin
+            - patrole_member
+            - patrole_reader
             - tempest_barbican
             - tempest_octavia
         - container: functest-benchmarking
