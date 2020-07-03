@@ -580,7 +580,8 @@ class TempestCommon(singlevm.VmReady2):
         self.deployment_dir = self.get_verifier_deployment_dir(
             self.verifier_id, self.deployment_id)
 
-        compute_cnt = self.count_hypervisors()
+        compute_cnt = self.count_hypervisors() if self.count_hypervisors(
+            ) <= 10 else 10
         self.image_alt = self.publish_image_alt()
         self.flavor_alt = self.create_flavor_alt()
         LOGGER.debug("flavor: %s", self.flavor_alt)
@@ -657,20 +658,6 @@ class TempestCommon(singlevm.VmReady2):
                 self.details.get("tests_number", 0) != self.tests_count):
             return testcase.TestCase.EX_TESTCASE_FAILED
         return super(TempestCommon, self).is_successful()
-
-
-class TempestScenario(TempestCommon):
-    """Tempest scenario testcase implementation class."""
-
-    quota_instances = -1
-    quota_cores = -1
-
-    def run(self, **kwargs):
-        self.orig_cloud.set_compute_quotas(
-            self.project.project.name,
-            instances=self.quota_instances,
-            cores=self.quota_cores)
-        return super(TempestScenario, self).run(**kwargs)
 
 
 class TempestHorizon(TempestCommon):
