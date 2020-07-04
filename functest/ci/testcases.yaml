@@ -410,7 +410,7 @@ tiers:
                             - 'test_list_metadef_namespaces'
 
             -
-                case_name: patrole_user
+                case_name: patrole_member
                 project_name: functest
                 criteria: 100
                 blocking: false
@@ -419,7 +419,7 @@ tiers:
                 run:
                     name: patrole
                     args:
-                        role: 'user'
+                        role: 'member'
                         includes:
                             - 'image'
                             - 'network'
