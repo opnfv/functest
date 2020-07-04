@@ -20,7 +20,8 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
         pip3 install --no-cache-dir -c/src/requirements/upper-constraints.txt \
-        -c/src/functest/upper-constraints.txt lxml ;; esac && \
+        -c/src/functest/upper-constraints.txt lxml && \
+        sed -i -E /^numpy=/d /src/requirements/upper-constraints.txt && apk add py3-numpy ;; esac && \
     git init /src/patrole && \
     (cd /src/patrole && \
         git fetch --tags https://opendev.org/openstack/patrole.git $PATROLE_TAG && \
