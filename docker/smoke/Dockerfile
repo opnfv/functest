@@ -67,7 +67,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/telemetry-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    mkdir -p /etc/neutron /etc/glance && \
+    mkdir -p /etc/neutron /etc/glance /etc/nova /etc/keystone /etc/cinder && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
