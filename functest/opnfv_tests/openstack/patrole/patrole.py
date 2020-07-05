@@ -24,17 +24,9 @@ class Patrole(tempest.TempestCommon):
         super(Patrole, self).configure(**kwargs)
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
-        rconfig.add_section('rbac')
-        rconfig.set('rbac', 'enable_rbac', True)
-        rconfig.set('rbac', 'rbac_test_roles', kwargs.get('role', 'admin'))
+        if not rconfig.has_section('rbac'):
+            rconfig.add_section('rbac')
+        rconfig.set('rbac', 'rbac_test_roles', kwargs.get('roles', 'admin'))
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
-
-    def run(self, **kwargs):
-        for exclude in kwargs.get('excludes', []):
-            kwargs['mode'] = "{}(?!.*{})".format(
-                kwargs.get('mode', ''), exclude)
-        kwargs['mode'] = '{}(?=patrole_tempest_plugin.tests.api.({}))'.format(
-            kwargs['mode'], '|'.join(kwargs.get('includes', [])))
-        return super(Patrole, self).run(**kwargs)

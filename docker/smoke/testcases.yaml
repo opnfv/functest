@@ -216,20 +216,13 @@ tiers:
                 run:
                     name: patrole
                     args:
-                        role: 'admin'
-                        includes:
-                            - 'image'
-                            - 'network'
-                        excludes:
-                            - 'network.test_flavors_rbac'
-                            - 'network.test_network_ip_availability_rbac'
-                            - 'test_networks_multiprovider_rbac'
-                            - 'test_auto_allocated_topology_rbac'
-                            - 'test_create_network_provider_segmentation_id'
-                            - 'test_update_network_provider_physical_network'
-                            - 'test_update_network_provider_segmentation_id'
-                            - 'network.test_agents_rbac'
-                            - 'test_list_metadef_namespaces'
+                        roles: 'admin'
+                        mode: "(?!.*test_unmanage_snapshot_rbac)\
+                          (?!.*test_delete_auto_allocated_topology)\
+                          (?=.*[.*\bslow\b.*])\
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
+                        option:
+                            - '--concurrency=4'
 
             -
                 case_name: patrole_member
@@ -241,20 +234,13 @@ tiers:
                 run:
                     name: patrole
                     args:
-                        role: 'member'
-                        includes:
-                            - 'image'
-                            - 'network'
-                        excludes:
-                            - 'network.test_flavors_rbac'
-                            - 'network.test_network_ip_availability_rbac'
-                            - 'test_networks_multiprovider_rbac'
-                            - 'test_auto_allocated_topology_rbac'
-                            - 'test_create_network_provider_segmentation_id'
-                            - 'test_update_network_provider_physical_network'
-                            - 'test_update_network_provider_segmentation_id'
-                            - 'network.test_agents_rbac'
-                            - 'test_list_metadef_namespaces'
+                        roles: 'member'
+                        mode: "(?!.*test_unmanage_snapshot_rbac)\
+                          (?!.*test_delete_auto_allocated_topology)\
+                          (?=.*[.*\bslow\b.*])\
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
+                        option:
+                            - '--concurrency=4'
 
             -
                 case_name: patrole_reader
@@ -266,20 +252,13 @@ tiers:
                 run:
                     name: patrole
                     args:
-                        role: 'reader'
-                        includes:
-                            - 'image'
-                            - 'network'
-                        excludes:
-                            - 'network.test_flavors_rbac'
-                            - 'network.test_network_ip_availability_rbac'
-                            - 'test_networks_multiprovider_rbac'
-                            - 'test_auto_allocated_topology_rbac'
-                            - 'test_create_network_provider_segmentation_id'
-                            - 'test_update_network_provider_physical_network'
-                            - 'test_update_network_provider_segmentation_id'
-                            - 'network.test_agents_rbac'
-                            - 'test_list_metadef_namespaces'
+                        roles: 'reader'
+                        mode: "(?!.*test_unmanage_snapshot_rbac)\
+                          (?!.*test_delete_auto_allocated_topology)\
+                          (?=.*[.*\bslow\b.*])\
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
+                        option:
+                            - '--concurrency=4'
 
             -
                 case_name: tempest_barbican

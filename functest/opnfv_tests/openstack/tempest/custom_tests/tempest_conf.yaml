@@ -96,3 +96,5 @@ heat_plugin:
     auth_version: 3
 heat_features_enabled:
     multi_cloud: false
+rbac:
+    enable_rbac: true
