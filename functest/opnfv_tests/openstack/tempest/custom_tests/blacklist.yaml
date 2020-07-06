@@ -12,9 +12,4 @@
         - neutron_tempest_plugin.api.test_ports.PortsTestJSON.test_create_update_port_with_dns_name
         - patrole_tempest_plugin.tests.api.network.test_availability_zones_rbac.AvailabilityZoneExtRbacTest.test_list_availability_zone_rbac
         - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_network_type
-        - patrole_tempest_plugin.tests.api.network.test_segments_rbac.SegmentsExtRbacTest.test_create_segment
-        - patrole_tempest_plugin.tests.api.network.test_segments_rbac.SegmentsExtRbacTest.test_delete_segment
-        - patrole_tempest_plugin.tests.api.network.test_segments_rbac.SegmentsExtRbacTest.test_list_segments
-        - patrole_tempest_plugin.tests.api.network.test_segments_rbac.SegmentsExtRbacTest.test_show_segment
-        - patrole_tempest_plugin.tests.api.network.test_segments_rbac.SegmentsExtRbacTest.test_update_segment
         - tempest.api.network.admin.test_dhcp_agent_scheduler
