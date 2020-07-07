@@ -11,5 +11,9 @@
         - neutron_tempest_plugin.api.admin.test_ports.PortTestCasesResourceRequest.test_port_resource_request_no_provider_net_conflict
         - neutron_tempest_plugin.api.test_ports.PortsTestJSON.test_create_update_port_with_dns_name
         - patrole_tempest_plugin.tests.api.network.test_availability_zones_rbac.AvailabilityZoneExtRbacTest.test_list_availability_zone_rbac
+        - patrole_tempest_plugin.tests.api.network.test_agents_rbac.DHCPAgentSchedulersRbacTest.test_add_dhcp_agent_to_network
+        - patrole_tempest_plugin.tests.api.network.test_agents_rbac.DHCPAgentSchedulersRbacTest.test_delete_network_from_dhcp_agent
+        - patrole_tempest_plugin.tests.api.network.test_agents_rbac.DHCPAgentSchedulersRbacTest.test_list_networks_hosted_by_one_dhcp_agent
         - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_network_type
+        - patrole_tempest_plugin.tests.api.network.test_networks_rbac.NetworksRbacTest.test_create_network_provider_segmentation_id
         - tempest.api.network.admin.test_dhcp_agent_scheduler
