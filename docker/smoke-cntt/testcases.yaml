@@ -114,7 +114,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 112
+                tests_count: 119
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Heat project.
@@ -123,12 +123,10 @@ tiers:
                     args:
                         mode: "(?!.*functional.test_lbaasv2)\
                           (?!.*functional.test_encryption_vol_type)\
-                          (?!.*functional.test_remote_stack.RemoteStackTest)\
                           (?!.*RemoteStackTest.test_stack_create_with_cloud_credential)\
                           (?!.*scenario.test_aodh_alarm)\
                           (?!.*tests.scenario.test_autoscaling_lb)\
                           (?!.*scenario.test_autoscaling_lbv2)\
-                          (?!.*scenario.test_remote_deeply_nested.RemoteDeeplyNestedStackTest)\
                           (?!.*scenario.test_server_software_config)\
                           (?!.*test_volumes.VolumeBackupRestoreIntegrationTest)\
                           (?!.*scenario.test_octavia_lbaas)\

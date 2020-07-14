@@ -89,10 +89,10 @@ object-storage-feature-enabled:
     object_versioning: true
     discoverability: true
 heat_plugin:
-    skip_functional_test_list: RemoteStackTest,EncryptionVolTypeTest
+    skip_functional_test_list: EncryptionVolTypeTest
     skip_scenario_test_list: "AodhAlarmTest,SoftwareConfigIntegrationTest,\
       VolumeBackupRestoreIntegrationTest,CfnInitIntegrationTest,\
-      LoadBalancerTest,RemoteDeeplyNestedStackTest"
+      LoadBalancerTest"
     auth_version: 3
 heat_features_enabled:
     multi_cloud: false
