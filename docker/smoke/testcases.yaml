@@ -298,3 +298,20 @@ tiers:
                             - octavia
                         option:
                             - '--concurrency=2'
+
+            -
+                case_name: tempest_cyborg
+                project_name: functest
+                criteria: 100
+                blocking: false
+                description: >-
+                    It leverages on the tempest plugin containing tests used to
+                    verify the functionality of a cyborg installation.
+                run:
+                    name: tempest_common
+                    args:
+                        mode: '^cyborg_tempest_plugin'
+                        services:
+                            - cyborg
+                        option:
+                            - '--concurrency=4'

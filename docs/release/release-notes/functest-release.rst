@@ -52,6 +52,7 @@ The internal test cases are:
  * patrole_reader
  * tempest_barbican
  * tempest_octavia
+ * tempest_cyborg
  * rally_full
  * rally_jobs
  * vmtp
