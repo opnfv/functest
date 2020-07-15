@@ -1,99 +1,99 @@
 ---
 os:
     vmready1:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     vmready2:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     singlevm1:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     singlevm2:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     vping_ssh:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     vping_userdata:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     cinder_test:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_smoke:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_horizon:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_neutron:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_cinder:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_keystone:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_heat:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
         image_alt:
             /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.aarch64.qcow2
     tempest_telemetry:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     rally_sanity:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     refstack_compute:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     refstack_object:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     refstack_platform:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_full:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_scenario:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_slow:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     patrole:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_barbican:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_octavia:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_neutron_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_cinder_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_keystone_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_heat_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
         image_alt:
             /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.aarch64.qcow2
     rally_sanity_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_full_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_scenario_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     tempest_slow_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     rally_full:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     rally_jobs:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     rally_full_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img
     rally_jobs_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-aarch64-disk.img
+        image: /home/opnfv/functest/images/cirros-0.5.1-aarch64-disk.img

@@ -55,8 +55,8 @@ Create a directory for the different images (attached as a Docker volume)::
 
   mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
 
-  images/cirros-0.4.0-aarch64-disk.img
-  images/cirros-0.4.0-x86_64-disk.img
+  images/cirros-0.5.1-aarch64-disk.img
+  images/cirros-0.5.1-x86_64-disk.img
   images/cloudify-docker-manager-community-19.01.24.tar
   images/Fedora-Cloud-Base-30-1.2.x86_64.qcow2
   images/shaker-image-1.3.0+stretch.qcow2
@@ -628,5 +628,5 @@ work with the above pre-requisite actions.
 .. _`Install Docker on CentOS`: https://docs.docker.com/engine/installation/linux/centos/
 .. _`Functest User Guide`: http://docs.opnfv.org/en/stable-danube/submodules/functest/docs/testing/user/userguide/index.html
 .. _`images/CentOS-7-x86_64-GenericCloud.qcow2`: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
-.. _`images/cirros-0.4.0-x86_64-disk.img`: http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img
+.. _`images/cirros-0.5.1-x86_64-disk.img`: http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
 .. _`images/ubuntu-14.04-server-cloudimg-amd64-disk1.img`: https://cloud-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img

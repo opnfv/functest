@@ -102,7 +102,7 @@ In this case, proceed to create it manually. These are some hints::
     --protocol tcp --port-range-min 80 --port-range-max 80 --remote-ip-prefix 0.0.0.0/0
 
 The next step is to create the instances. The image used is located in
-*/home/opnfv/functest/data/cirros-0.4.0-x86_64-disk.img* and a Glance image is
+*/home/opnfv/functest/data/cirros-0.5.1-x86_64-disk.img* and a Glance image is
 created with the name **functest-vping**. If booting the instances fails (i.e.
 the status is not **ACTIVE**), you can check why it failed by doing::
 

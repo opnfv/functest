@@ -312,154 +312,154 @@ ovs:
 
 vio:
     vmready1:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     vmready2:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     singlevm1:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     singlevm2:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     vping_ssh:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     vping_userdata:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     cinder_test:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     tempest_smoke:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_horizon:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_neutron:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_cinder:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_keystone:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_heat:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
         image_alt:
             /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.x86_64.vmdk
         image_alt_format: vmdk
     tempest_telemetry:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     rally_sanity:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     refstack_compute:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     refstack_object:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     refstack_platform:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_full:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_scenario:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_slow:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     patrole:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_barbican:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_octavia:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_neutron_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_cinder_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_keystone_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_heat_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
         image_alt:
             /home/opnfv/functest/images/Fedora-Cloud-Base-30-1.2.x86_64.vmdk
         image_alt_format: vmdk
     rally_sanity_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     tempest_full_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_scenario_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     tempest_slow_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
-        image_alt: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image_alt: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_alt_format: vmdk
     rally_full:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     rally_jobs:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     vmtp:
         image:
@@ -469,10 +469,10 @@ vio:
         image: /home/opnfv/functest/images/shaker-image.vmdk
         image_format: vmdk
     rally_full_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     rally_jobs_cntt:
-        image: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.vmdk
+        image: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.vmdk
         image_format: vmdk
     cloudify:
         image:

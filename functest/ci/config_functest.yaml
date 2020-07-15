@@ -18,10 +18,10 @@ general:
         rally_inst: /root/.rally
 
     openstack:
-        image_name: Cirros-0.4.0
-        image_name_alt: Cirros-0.4.0-1
-        image_file_name: cirros-0.4.0-x86_64-disk.img
-        image_url: /home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img
+        image_name: Cirros-0.5.1
+        image_name_alt: Cirros-0.5.1-1
+        image_file_name: cirros-0.5.1-x86_64-disk.img
+        image_url: /home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.img
         image_user: cirros
         image_disk_format: qcow2
         image_username: cirros
