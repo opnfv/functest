@@ -50,6 +50,7 @@ The internal test cases are:
  * patrole
  * tempest_barbican
  * tempest_octavia
+ * tempest_cyborg
  * rally_full
  * rally_jobs
  * vmtp

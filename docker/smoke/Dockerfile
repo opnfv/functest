@@ -10,6 +10,7 @@ ARG BARBICAN_TAG=1.0.0
 ARG OCTAVIA_TAG=1.4.0
 ARG HEAT_TEMPEST_TAG=1.0.0
 ARG TELEMETRY_TEMPEST_TAG=1.0.0
+ARG CYBORG_TEMPEST_TAG=1.0.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
@@ -58,11 +59,17 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://git.openstack.org/openstack/telemetry-tempest-plugin.git $TELEMETRY_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/telemetry-tempest-plugin && \
+    git init /src/cyborg-tempest-plugin && \
+    (cd /src/cyborg-tempest-plugin && \
+        git fetch --tags https://git.openstack.org/openstack/cyborg-tempest-plugin.git $CYBORG_TEMPEST_TAG && \
+        git checkout FETCH_HEAD) && \
+    update-requirements -s --source /src/requirements /src/cyborg-tempest-plugin && \
     pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
-        /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/telemetry-tempest-plugin && \
+        /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/telemetry-tempest-plugin \
+        /src/cyborg-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
     mkdir -p /etc/neutron /etc/glance && \
     virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
@@ -76,7 +83,8 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     rm -r oslo /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin \
-        /src/telemetry-tempest-plugin /src/neutron /src/glance && \
+        /src/telemetry-tempest-plugin /src/cyborg-tempest-plugin \
+        /src/neutron /src/glance && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
