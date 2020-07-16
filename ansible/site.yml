@@ -67,6 +67,7 @@
             - patrole
             - tempest_barbican
             - tempest_octavia
+            - tempest_cyborg
         - container: functest-benchmarking
           tests:
             - rally_full
