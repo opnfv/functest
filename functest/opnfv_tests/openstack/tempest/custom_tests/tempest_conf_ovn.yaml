@@ -57,7 +57,7 @@ placement:
     max_microversion: latest
 validation:
     image_ssh_user: cirros
-    ssh_timeout: 196
+    ssh_timeout: 300
     ip_version_for_ssh: 4
     run_validation: true
     connect_method: floating
