@@ -10,7 +10,7 @@
           - repo: _
             dport:
             container: alpine
-            tag: '3.12'
+            tag: edge
         steps:
           - name: build opnfv/functest-core
             containers:

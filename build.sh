@@ -34,11 +34,11 @@ for dir in ${amd64_dirs}; do
         (docker rmi "${repo}/functest-${dir##**/}:amd64-latest" || true)
 done
 [ -n "${amd64_dirs}" ] &&
-    (docker rmi "${repo}/functest-core:amd64-latest" alpine:3.12 || true)
+    (docker rmi "${repo}/functest-core:amd64-latest" alpine:edge || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|alpine:3.12|arm64v8/alpine:3.12|g" {} +
+    -e "s|alpine:edge|arm64v8/alpine:edge|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
@@ -52,11 +52,11 @@ for dir in ${arm64_dirs}; do
 done
 [ -n "${arm64_dirs}" ] &&
     (docker rmi "${repo}/functest-core:arm64-latest" \
-        arm64v8/alpine:3.12 || true)
+        arm64v8/alpine:edge || true)
 find . -name Dockerfile -exec git checkout {} +
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|alpine:3.12|arm32v6/alpine:3.12|g" {} +
+    -e "s|alpine:edge|arm32v6/alpine:edge|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:arm-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
@@ -70,7 +70,7 @@ for dir in ${arm_dirs}; do
 done
 [ -n "${arm_dirs}" ] &&
     (docker rmi "${repo}/functest-core:arm-latest" \
-        arm32v6/alpine:3.12 || true)
+        arm32v6/alpine:edge || true)
 find . -name Dockerfile -exec git checkout {} +
 
 exit $?
