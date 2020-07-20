@@ -75,26 +75,17 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/telemetry-tempest-plugin \
         /src/cyborg-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    mkdir -p /etc/neutron /etc/glance /etc/nova /etc/keystone /etc/cinder && \
-    virtualenv --no-pip --no-setuptools --no-wheel oslo && . oslo/bin/activate && \
     pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
-        oslo.policy -e git+https://opendev.org/openstack/neutron.git@$NEUTRON_TAG#egg=neutron \
-        -e git+https://opendev.org/openstack/glance.git@$GLANCE_TAG#egg=glance \
-        -e git+https://opendev.org/openstack/nova.git@$NOVA_TAG#egg=nova \
-        -e git+https://opendev.org/openstack/keystone.git@$KEYSTONE_TAG#egg=keystone \
-        -e git+https://opendev.org/openstack/cinder.git@$CINDER_TAG#egg=cinder && \
-    oslopolicy-sample-generator  --format json --output-file /etc/neutron/policy.json --namespace neutron && \
-    oslopolicy-sample-generator  --format json --output-file /etc/glance/policy.json --namespace glance && \
-    oslopolicy-sample-generator  --format json --output-file /etc/nova/policy.json --namespace nova && \
-    oslopolicy-sample-generator  --format json --output-file /etc/keystone/policy.json --namespace keystone && \
-    oslopolicy-sample-generator  --format json --output-file /etc/cinder/policy.json --namespace cinder && \
-    deactivate && \
-    rm -r oslo /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
+        git+https://opendev.org/openstack/neutron.git@$NEUTRON_TAG#egg=neutron \
+        git+https://opendev.org/openstack/glance.git@$GLANCE_TAG#egg=glance \
+        git+https://opendev.org/openstack/nova.git@$NOVA_TAG#egg=nova \
+        git+https://opendev.org/openstack/keystone.git@$KEYSTONE_TAG#egg=keystone \
+        git+https://opendev.org/openstack/cinder.git@$CINDER_TAG#egg=cinder && \
+    rm -r /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin \
-        /src/telemetry-tempest-plugin /src/cyborg-tempest-plugin \
-        /src/neutron /src/glance /src/nova /src/keystone /src/cinder && \
+        /src/telemetry-tempest-plugin /src/cyborg-tempest-plugin && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
