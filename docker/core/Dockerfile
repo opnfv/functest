@@ -7,6 +7,7 @@ COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endp
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
 COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
+COPY Create-new-server-test_reboot_server_hard.patch /tmp/Create-new-server-test_reboot_server_hard.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
@@ -51,10 +52,12 @@ RUN apk --no-cache add --update \
         patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
         patch -p1 < /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
         patch -p1 < /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
+        patch -p1 < /tmp/Create-new-server-test_reboot_server_hard.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     sed -i -E /#egg=tempest/d /src/functest/upper-constraints.txt && \
     rm /tmp/Accept-custom-registered-endpoints.patch \
         /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch \
-        /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
+        /tmp/object-storage-fix-and-cleanup-header-checks.patch \
+        /tmp/Create-new-server-test_reboot_server_hard.patch && \
     apk del .build-deps
