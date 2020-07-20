@@ -399,7 +399,7 @@ tiers:
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api)"
                         option:
                             - '--concurrency=4'
 
@@ -418,7 +418,7 @@ tiers:
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api)"
                         option:
                             - '--concurrency=4'
 
@@ -437,7 +437,7 @@ tiers:
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api)"
                         option:
                             - '--concurrency=4'
 
