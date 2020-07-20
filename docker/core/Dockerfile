@@ -4,6 +4,7 @@ ARG BRANCH=master
 ARG OPENSTACK_TAG=master
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
+COPY Create-new-server-test_reboot_server_hard.patch /tmp/Create-new-server-test_reboot_server_hard.patch
 RUN apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
@@ -29,8 +30,16 @@ RUN apk --no-cache add --update \
         -e /src/functest && \
     (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
     sed -i -E /#egg=rally/d /src/functest/upper-constraints.txt && \
+    sed -i -E /#egg=tempest/d /src/functest/upper-constraints.txt && \
+    (cd /src/tempest && \
+        git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
+        git config --global user.name "Functest" && \
+        patch -p1 < /tmp/Create-new-server-test_reboot_server_hard.patch && \
+        git commit -a -m "Backport critical bugfixes" && \
+        rm ~/.gitconfig) && \
     rm -r /src/requirements/.git /src/functest/.git \
-        /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
+        /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
+        /tmp/Create-new-server-test_reboot_server_hard.patch && \
     cp /src/functest/functest/ci/logging.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
     cp /src/functest/functest/ci/logging.debug.ini /usr/lib/python3.8/site-packages/xtesting/ci/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
