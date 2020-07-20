@@ -5,6 +5,7 @@ ARG OPENSTACK_TAG=stable/ussuri
 
 COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
+COPY Create-new-server-test_reboot_server_hard.patch /tmp/Create-new-server-test_reboot_server_hard.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
@@ -44,8 +45,10 @@ RUN apk --no-cache add --update \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
         patch -p1 < /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
+        patch -p1 < /tmp/Create-new-server-test_reboot_server_hard.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     sed -i -E /#egg=tempest/d /src/functest/upper-constraints.txt && \
-    rm tmp/object-storage-fix-and-cleanup-header-checks.patch && \
+    rm tmp/object-storage-fix-and-cleanup-header-checks.patch \
+        /tmp/Create-new-server-test_reboot_server_hard.patch && \
     apk del .build-deps
