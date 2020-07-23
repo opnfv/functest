@@ -1,0 +1,17 @@
+  VMTasks.dd_load_test:
+    -
+      args:
+        flavor:
+          name: {{ flavor_name }}
+        image:
+          name: {{ image_name }}
+        floating_network: {{ floating_network }}
+        force_delete: false
+        username: {{ username }}
+      runner:
+        {{ constant_runner(concurrency=1, times=iterations, is_smoke=smoke) }}
+      context:
+        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
+        network: {}
+      sla:
+        {{ no_failures_sla() }}

@@ -43,7 +43,8 @@ class RallyBase(singlevm.VmReady2):
 
     # pylint: disable=too-many-instance-attributes, too-many-public-methods
     stests = ['authenticate', 'glance', 'cinder', 'gnocchi', 'heat',
-              'keystone', 'neutron', 'nova', 'quotas', 'swift', 'barbican']
+              'keystone', 'neutron', 'nova', 'quotas', 'swift', 'barbican',
+              'vm']
 
     rally_conf_path = "/etc/rally/rally.conf"
     rally_aar4_patch_path = pkg_resources.resource_filename(
@@ -70,6 +71,7 @@ class RallyBase(singlevm.VmReady2):
     shared_network = True
     allow_no_fip = True
     task_timeout = 3600
+    username = 'cirros'
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
@@ -121,6 +123,7 @@ class RallyBase(singlevm.VmReady2):
         task_args['volume_version'] = self.volume_version
         task_args['volume_service_type'] = self.volume_service_type
         task_args['block_migration'] = env.get("BLOCK_MIGRATION").lower()
+        task_args['username'] = self.username
 
         if self.ext_net:
             task_args['floating_network'] = str(self.ext_net.name)

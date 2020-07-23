@@ -50,3 +50,7 @@
 {% if "barbican" in service_list %}
 {%- include "var/opnfv-barbican.yaml"-%}
 {% endif %}
+
+{% if "vm" in service_list %}
+{%- include "var/opnfv-vm.yaml"-%}
+{% endif %}
