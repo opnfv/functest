@@ -1,4 +1,4 @@
-From ae89f3507b1c84d3915e4e1d9d5854f11e5bab85 Mon Sep 17 00:00:00 2001
+From ef7c7d80cb8f28743dbb4c10fbb4b0679f84426a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
 Date: Tue, 21 Jul 2020 13:28:50 +0200
 Subject: [PATCH] Create new server test_reboot_server_hard
@@ -15,11 +15,11 @@ between all tempest tests.
 Change-Id: I203562f686b004094e5e18858004b7a2d26567a6
 Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
 ---
- tempest/api/compute/servers/test_server_actions.py | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ tempest/api/compute/servers/test_server_actions.py | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/tempest/api/compute/servers/test_server_actions.py b/tempest/api/compute/servers/test_server_actions.py
-index d477be0eb..2e453b620 100644
+index d477be0eb..c80c0ab05 100644
 --- a/tempest/api/compute/servers/test_server_actions.py
 +++ b/tempest/api/compute/servers/test_server_actions.py
 @@ -46,6 +46,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
@@ -47,13 +47,15 @@ index d477be0eb..2e453b620 100644
              linux_client = remote_client.RemoteClient(
                  self.get_server_ip(server, validation_resources),
                  self.ssh_user,
-@@ -122,7 +126,12 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+@@ -122,7 +126,14 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
                  validation_resources['keypair']['private_key'],
                  server=server,
                  servers_client=self.client)
 -            boot_time = linux_client.get_boot_time()
 +            try:
 +                boot_time = linux_client.get_boot_time()
++                LOG.info("OPNFV %s", self.client.get_console_output(
++                    self.server_id)['output'])
 +            except Exception as e:
 +                LOG.info("OPNFV %s", self.client.get_console_output(
 +                    self.server_id)['output'])
