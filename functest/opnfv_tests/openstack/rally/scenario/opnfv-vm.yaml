@@ -5,6 +5,8 @@
           name: {{ flavor_name }}
         image:
           name: {{ image_name }}
+        nics:
+          - net-id: {{ netid }}
         floating_network: {{ floating_network }}
         force_delete: false
         username: {{ username }}
