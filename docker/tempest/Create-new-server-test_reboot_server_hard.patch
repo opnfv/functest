@@ -1,68 +1,84 @@
-From ef7c7d80cb8f28743dbb4c10fbb4b0679f84426a Mon Sep 17 00:00:00 2001
+From 03eb38ce54aeec4bc4c1cb3475c6fb84661f8993 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?C=C3=A9dric=20Ollivier?= <cedric.ollivier@orange.com>
 Date: Tue, 21 Jul 2020 13:28:50 +0200
-Subject: [PATCH] Create new server test_reboot_server_hard
+Subject: [PATCH] Create new server in test_create_backup
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-It sometimes fail in all gates [1]
-This hack could highlight if it's a timeout issue or race conditions
-between all tempest tests.
+test_reboot_server_hard sometimes fail in all gates [1].
+This hack could highlight if they are side effects between
+test_create_backup and test_reboot_server_hard.
 
 [1] http://artifacts.opnfv.org/functest/E5AZMH89OOK6/functest-opnfv-functest-smoke-cntt-hunter-tempest_full_cntt-run-142/tempest_full_cntt/tempest-report.html
 
 Change-Id: I203562f686b004094e5e18858004b7a2d26567a6
 Signed-off-by: Cédric Ollivier <cedric.ollivier@orange.com>
 ---
- tempest/api/compute/servers/test_server_actions.py | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ .../api/compute/servers/test_server_actions.py    | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/tempest/api/compute/servers/test_server_actions.py b/tempest/api/compute/servers/test_server_actions.py
-index d477be0eb..c80c0ab05 100644
+index d477be0eb..c369311d3 100644
 --- a/tempest/api/compute/servers/test_server_actions.py
 +++ b/tempest/api/compute/servers/test_server_actions.py
-@@ -46,6 +46,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
-             # The server was deleted by previous test, create a new one
-             # Use class level validation resources to avoid them being
-             # deleted once a test is over
-+            LOG.info("OPNFV The server was deleted by previous test")
-             validation_resources = self.get_class_validation_resources(
-                 self.os_primary)
-             server = self.create_test_server(
-@@ -55,6 +56,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
-             self.__class__.server_id = server['id']
-         except Exception:
-             # Rebuild server if something happened to it during a test
-+            LOG.info("OPNFV Rebuild server if something happened to it")
-             self.__class__.server_id = self.recreate_server(
-                 self.server_id, validatable=True)
+@@ -443,6 +443,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+         # Check if glance v1 is available to determine which client to use. We
+         # prefer glance v1 for the compute API tests since the compute image
+         # API proxy was written for glance v1.
++        newserver = self.create_test_server(wait_until='ACTIVE')
+         if CONF.image_feature_enabled.api_v1:
+             glance_client = self.os_primary.image_client
+         elif CONF.image_feature_enabled.api_v2:
+@@ -453,7 +454,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+                 '[image-feature-enabled].')
  
-@@ -115,6 +117,8 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
-                 self.os_primary)
-             # Get the time the server was last rebooted,
-             server = self.client.show_server(self.server_id)['server']
-+            LOG.info("OPNFV %s", self.client.get_console_output(
-+                self.server_id)['output'])
-             linux_client = remote_client.RemoteClient(
-                 self.get_server_ip(server, validation_resources),
-                 self.ssh_user,
-@@ -122,7 +126,14 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
-                 validation_resources['keypair']['private_key'],
-                 server=server,
-                 servers_client=self.client)
--            boot_time = linux_client.get_boot_time()
-+            try:
-+                boot_time = linux_client.get_boot_time()
-+                LOG.info("OPNFV %s", self.client.get_console_output(
-+                    self.server_id)['output'])
-+            except Exception as e:
-+                LOG.info("OPNFV %s", self.client.get_console_output(
-+                    self.server_id)['output'])
-+                raise e
+         backup1 = data_utils.rand_name('backup-1')
+-        resp = self.client.create_backup(self.server_id,
++        resp = self.client.create_backup(newserver['id'],
+                                          backup_type='daily',
+                                          rotation=2,
+                                          name=backup1)
+@@ -481,8 +482,8 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+                                       image1_id, 'active')
  
-             # NOTE: This sync is for avoiding the loss of pub key data
-             # in a server
+         backup2 = data_utils.rand_name('backup-2')
+-        waiters.wait_for_server_status(self.client, self.server_id, 'ACTIVE')
+-        resp = self.client.create_backup(self.server_id,
++        waiters.wait_for_server_status(self.client, newserver['id'], 'ACTIVE')
++        resp = self.client.create_backup(newserver['id'],
+                                          backup_type='daily',
+                                          rotation=2,
+                                          name=backup2)
+@@ -499,7 +500,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+         properties = {
+             'image_type': 'backup',
+             'backup_type': "daily",
+-            'instance_uuid': self.server_id,
++            'instance_uuid': newserver['id'],
+         }
+         params = {
+             'status': 'active',
+@@ -524,8 +525,8 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+         # create the third one, due to the rotation is 2,
+         # the first one will be deleted
+         backup3 = data_utils.rand_name('backup-3')
+-        waiters.wait_for_server_status(self.client, self.server_id, 'ACTIVE')
+-        resp = self.client.create_backup(self.server_id,
++        waiters.wait_for_server_status(self.client, newserver['id'], 'ACTIVE')
++        resp = self.client.create_backup(newserver['id'],
+                                          backup_type='daily',
+                                          rotation=2,
+                                          name=backup3)
+@@ -536,7 +537,7 @@ class ServerActionsTestJSON(base.BaseV2ComputeTest):
+             image3_id = data_utils.parse_image_id(resp.response['location'])
+         self.addCleanup(glance_client.delete_image, image3_id)
+         # the first back up should be deleted
+-        waiters.wait_for_server_status(self.client, self.server_id, 'ACTIVE')
++        waiters.wait_for_server_status(self.client, newserver['id'], 'ACTIVE')
+         glance_client.wait_for_resource_deletion(image1_id)
+         oldest_backup_exist = False
+         if CONF.image_feature_enabled.api_v1:
 -- 
 2.27.0
 
