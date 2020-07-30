@@ -80,7 +80,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 8
+                tests_count: 11
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Cinder project.
