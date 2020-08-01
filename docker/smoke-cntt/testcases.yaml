@@ -213,7 +213,7 @@ tiers:
                           (?!.*test_attach_volume.AttachVolumeMultiAttach)\
                           (?!.*identity.admin.v2)(?!.*identity.v2)\
                           (?!.*image.v1)\
-                          (?!.*image.v2.test_images.ImportImagesTest.test_image_import)\
+                          (?!.*image.v2.test_images.ImportImagesTest)\
                           (?!.*admin.test_dhcp_agent_scheduler)\
                           (?!.*admin.test_routers_dvr)\
                           (?!.*test_metering_extensions)(?!.*network.test_tags)\
