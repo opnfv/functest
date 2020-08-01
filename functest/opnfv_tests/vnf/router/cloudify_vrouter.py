@@ -40,6 +40,8 @@ class CloudifyVrouter(cloudify.Cloudify):
     flavor_alt_vcpus = 1
     flavor_alt_disk = 3
 
+    check_console_loop = 12
+
     cop_yaml = ("https://github.com/cloudify-cosmo/cloudify-openstack-plugin/"
                 "releases/download/2.14.7/plugin.yaml")
     cop_wgn = ("https://github.com/cloudify-cosmo/cloudify-openstack-plugin/"
