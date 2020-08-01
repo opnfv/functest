@@ -9,7 +9,7 @@ ARG RALLY_OPENSTACK_TAG=1.5.0
 COPY Accept-custom-registered-endpoints.patch /tmp/Accept-custom-registered-endpoints.patch
 COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch
 COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
-COPY Create-new-server-test_reboot_server_hard.patch /tmp/Create-new-server-test_reboot_server_hard.patch
+COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 RUN apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
@@ -45,11 +45,11 @@ RUN apk --no-cache add --virtual .build-deps --update \
         patch -p1 < /tmp/Accept-custom-registered-endpoints.patch && \
         patch -p1 < /tmp/object-storage-fix-and-cleanup-header-checks.patch && \
         patch -p1 < /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch && \
-        patch -p1 < /tmp/Create-new-server-test_reboot_server_hard.patch && \
+        patch -p1 < /tmp/Create-new-server-in-test_create_backup.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     rm /tmp/Accept-custom-registered-endpoints.patch \
         /tmp/object-storage-fix-and-cleanup-header-checks.patch \
         /tmp/Fixes-race-condition-in-test_add_remove_fixed_ip.patch \
-        /tmp/Create-new-server-test_reboot_server_hard.patch && \
+        /tmp/Create-new-server-in-test_create_backup.patch && \
     apk del .build-deps
