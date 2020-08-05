@@ -227,7 +227,7 @@ _`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 
 _`[4]`: https://wiki.opnfv.org/display/functest/2017+Beijing?preview=%2F11699623%2F11700523%2FTestAPI+-+test+results+collection+service.pptx
 
-_`[5]`: https://opnfv.biterg.io/login?nextUrl=%2Fgoto%2F283dba93ca18e95964f852c63af1d1ba
+_`[5]`: https://lfanalytics.io/projects/lfn%2Fopnfv/dashboard
 
 _`[6]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 

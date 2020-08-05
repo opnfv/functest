@@ -11,7 +11,6 @@ Functest Installation Guide
    intro.rst
    prerequisites.rst
    configguide.rst
-   ci.rst
 
 References
 ==========
@@ -20,4 +19,4 @@ References
 
 IRC support channel: #opnfv-functest
 
-.. _`[1]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest-daily-jobs.yaml
+.. _`[1]`: https://github.com/opnfv/releng/blob/master/jjb/functest/functest.yaml
