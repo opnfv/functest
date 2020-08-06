@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.12
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
@@ -11,6 +11,8 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
+    apk --no-cache add --update --upgrade py3-distlib \
+        --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main && \
     git init /src/requirements && \
     (cd /src/requirements && \
         git fetch --tags https://review.opendev.org/openstack/requirements $OPENSTACK_TAG && \
@@ -20,7 +22,6 @@ RUN apk --no-cache add --update \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
     sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
-    sed -i -E /^distlib==+.*$/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
     pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
