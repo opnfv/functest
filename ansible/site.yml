@@ -70,7 +70,6 @@
             - tempest_scenario
             - tempest_slow
             - patrole
-            - neutron_trunk
             - networking-bgpvpn
             - networking-sfc
             - barbican
