@@ -11,7 +11,7 @@ RUN apk --no-cache add --update \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev && \
-    apk --no-cache add --update py3-distlib==0.3.1-r0 \
+    apk --no-cache add --update py3-distlib\>=0.3.1 \
         --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main && \
     git init /src/requirements && \
     (cd /src/requirements && \
