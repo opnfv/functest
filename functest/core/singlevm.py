@@ -456,8 +456,8 @@ class SingleVm1(VmReady1):
         Returns: echo exit codes
         """
         (_, stdout, stderr) = self.ssh.exec_command('echo Hello World')
-        self.__logger.debug("output:\n%s", stdout.read())
-        self.__logger.debug("error:\n%s", stderr.read())
+        self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
         return stdout.channel.recv_exit_status()
 
     def run(self, **kwargs):
