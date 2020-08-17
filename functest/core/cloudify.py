@@ -74,8 +74,8 @@ class Cloudify(singlevm.SingleVm2):
             "--cap-add SYS_ADMIN --network=host {}".format(
                 os.path.basename(self.cloudify_archive),
                 self.cloudify_container))
-        self.__logger.debug("output:\n%s", stdout.read())
-        self.__logger.debug("error:\n%s", stderr.read())
+        self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
         self.cfy_client = CloudifyClient(
             host=self.fip.floating_ip_address,
             username='admin', password='admin', tenant='default_tenant')
@@ -124,8 +124,8 @@ class Cloudify(singlevm.SingleVm2):
             "cfy_manager_local:/etc/cloudify/ && "
             "sudo docker exec cfy_manager_local "
             "chmod 444 /etc/cloudify/cloudify_ims.pem")
-        self.__logger.debug("output:\n%s", stdout.read())
-        self.__logger.debug("error:\n%s", stderr.read())
+        self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
 
     def upload_cfy_plugins(self, yaml, wgn):
         """Upload Cloudify plugins"""
@@ -133,8 +133,8 @@ class Cloudify(singlevm.SingleVm2):
             "sudo docker exec cfy_manager_local "
             "cfy plugins upload -y {} {} && "
             "sudo docker exec cfy_manager_local cfy status".format(yaml, wgn))
-        self.__logger.debug("output:\n%s", stdout.read())
-        self.__logger.debug("error:\n%s", stderr.read())
+        self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
 
     def kill_existing_execution(self, dep_name):
         """kill existing execution"""
