@@ -77,8 +77,10 @@ class CinderCheck(singlevm.SingleVm2):
         self.logger.debug("ssh: %s", self.ssh)
         (_, stdout, stderr) = self.ssh.exec_command(
             "sh ~/write_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
-        self.logger.debug("volume_write stdout: %s", stdout.read())
-        self.logger.debug("volume_write stderr: %s", stderr.read())
+        self.logger.debug(
+            "volume_write stdout: %s", stdout.read().decode("utf-8"))
+        self.logger.debug(
+            "volume_write stderr: %s", stderr.read().decode("utf-8"))
         # Detach volume from VM 1
         self.logger.info("Detach volume from VM 1")
         self.cloud.detach_volume(
@@ -103,8 +105,10 @@ class CinderCheck(singlevm.SingleVm2):
         self.logger.debug("ssh: %s", self.ssh2)
         (_, stdout, stderr) = self.ssh2.exec_command(
             "sh ~/read_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
-        self.logger.debug("read volume stdout: %s", stdout.read())
-        self.logger.debug("read volume stderr: %s", stderr.read())
+        self.logger.debug(
+            "read volume stdout: %s", stdout.read().decode("utf-8"))
+        self.logger.debug(
+            "read volume stderr: %s", stderr.read().decode("utf-8"))
         self.logger.info("Detach volume from VM 2")
         self.cloud.detach_volume(
             self.vm2, self.volume, timeout=self.volume_timeout)

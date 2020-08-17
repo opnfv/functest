@@ -14,11 +14,11 @@ import os
 import time
 import json
 import re
-import subprocess
 import sys
 
 from copy import deepcopy
 import pkg_resources
+import scp
 
 from functest.core import singlevm
 from functest.utils import config
@@ -58,7 +58,7 @@ CREDS_TEMPLATE = """credentials:
       username: {user_n}"""
 
 
-class JujuEpc(singlevm.VmReady2):
+class JujuEpc(singlevm.SingleVm2):
     # pylint:disable=too-many-instance-attributes
     """Abot EPC deployed with JUJU Orchestrator Case"""
 
@@ -74,11 +74,10 @@ class JujuEpc(singlevm.VmReady2):
     flavor_ram = 2048
     flavor_vcpus = 1
     flavor_disk = 10
-
     flavor_alt_ram = 4096
     flavor_alt_vcpus = 1
     flavor_alt_disk = 10
-
+    username = 'ubuntu'
     juju_timeout = '4800'
 
     def __init__(self, **kwargs):
@@ -146,18 +145,20 @@ class JujuEpc(singlevm.VmReady2):
         self.image_alt = None
         self.flavor_alt = None
 
-    def check_requirements(self):
-        if not os.path.exists("/src/epc-requirements/go/bin/juju"):
-            self.__logger.warn(
-                "Juju cannot be cross-compiled (arm and arm64) from the time "
-                "being")
-            self.is_skipped = True
-            self.project.clean()
-        if env.get('NEW_USER_ROLE').lower() == "admin":
-            self.__logger.warn(
-                "Defining NEW_USER_ROLE=admin will easily break the testcase "
-                "because Juju doesn't manage tenancy (e.g. subnet  "
-                "overlapping)")
+    def _install_juju(self):
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'sudo snap install juju --channel=2.3/stable --classic')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
+
+    def _install_juju_wait(self):
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'sudo apt-get update && sudo apt-get install python3-pip -y && '
+            'sudo pip3 install juju_wait===2.6.4')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
     def _register_cloud(self):
         assert self.public_auth_url
@@ -169,9 +170,13 @@ class JujuEpc(singlevm.VmReady2):
                 'RegionOne')}
         with open(clouds_yaml, 'w') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
-        cmd = ['juju', 'add-cloud', 'abot-epc', '-f', clouds_yaml, '--replace']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(clouds_yaml, remote_path='~/')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju add-cloud abot-epc -f clouds.yaml --replace')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
     def _register_credentials(self):
         self.__logger.info("Creating Credentials for Abot-epc .....")
@@ -186,46 +191,36 @@ class JujuEpc(singlevm.VmReady2):
                 "user_domain_name", "Default")}
         with open(credentials_yaml, 'w') as yfile:
             yfile.write(CREDS_TEMPLATE.format(**creds_data))
-        cmd = ['juju', 'add-credential', 'abot-epc', '-f', credentials_yaml,
-               '--replace', '--debug']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(credentials_yaml, remote_path='~/')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju add-credential abot-epc -f credentials.yaml '
+            ' --replace --debug')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
-    def prepare(self):
-        """Prepare testcase (Additional pre-configuration steps)."""
-        assert self.public_auth_url
-        self.__logger.info("Additional pre-configuration steps")
-        try:
-            os.makedirs(self.res_dir)
-        except OSError as ex:
-            if ex.errno != errno.EEXIST:
-                self.__logger.exception("Cannot create %s", self.res_dir)
-                raise Exception
-
-        self.__logger.info("ENV:\n%s", env.string())
-        self._register_cloud()
-        self._register_credentials()
-
-    def publish_image(self, name=None):
-        image = super(JujuEpc, self).publish_image(name)
-        cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
-               '-i', image.id, '-s', 'xenial',
-               '-r', self.cloud.region_name if self.cloud.region_name else (
-                   'RegionOne'),
-               '-u', self.public_auth_url]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-        return image
+    def _publish_image(self):
+        region_name = self.cloud.region_name if self.cloud.region_name else (
+            'RegionOne')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju metadata generate-image -d /home/ubuntu '
+            '-i {} -s xenial -r {} -u {}'.format(
+                self.image.id, region_name, self.public_auth_url))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
     def publish_image_alt(self, name=None):
         image_alt = super(JujuEpc, self).publish_image_alt(name)
-        cmd = ['juju', 'metadata', 'generate-image', '-d', '/root',
-               '-i', image_alt.id, '-s', 'trusty',
-               '-r', self.cloud.region_name if self.cloud.region_name else (
-                   'RegionOne'),
-               '-u', self.public_auth_url]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+        region_name = self.cloud.region_name if self.cloud.region_name else (
+            'RegionOne')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju metadata generate-image -d /home/ubuntu '
+            '-i {} -s trusty -r {} -u {}'.format(
+                image_alt.id, region_name, self.public_auth_url))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         return image_alt
 
     def deploy_orchestrator(self):  # pylint: disable=too-many-locals
@@ -234,47 +229,41 @@ class JujuEpc(singlevm.VmReady2):
 
         Bootstrap juju
         """
+        self._publish_image()
         self.image_alt = self.publish_image_alt()
         self.flavor_alt = self.create_flavor_alt()
         self.__logger.info("Starting Juju Bootstrap process...")
-        try:
-            cmd = ['timeout', JujuEpc.juju_timeout,
-                   'juju', 'bootstrap',
-                   'abot-epc/{}'.format(
-                       self.cloud.region_name if self.cloud.region_name else (
-                           'RegionOne')),
-                   'abot-controller',
-                   '--agent-version', '2.3.9',
-                   '--metadata-source', '/root',
-                   '--constraints', 'mem=2G',
-                   '--bootstrap-series', 'xenial',
-                   '--config', 'network={}'.format(self.network.id),
-                   '--config', 'ssl-hostname-verification=false',
-                   '--config', 'external-network={}'.format(self.ext_net.id),
-                   '--config', 'use-floating-ip=true',
-                   '--config', 'use-default-secgroup=true',
-                   '--debug']
-            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-        except subprocess.CalledProcessError as cpe:
-            self.__logger.error(
-                "Exception with Juju Bootstrap: %s\n%s",
-                cpe.cmd, cpe.output.decode("utf-8"))
-            return False
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Some issue with Juju Bootstrap ...")
-            return False
-
-        return True
+        region_name = self.cloud.region_name if self.cloud.region_name else (
+            'RegionOne')
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'timeout {} '
+            '/snap/bin/juju bootstrap abot-epc/{} abot-controller '
+            '--agent-version 2.3.9 --metadata-source /home/ubuntu '
+            '--constraints mem=2G --bootstrap-series xenial '
+            '--config network={} '
+            '--config ssl-hostname-verification=false '
+            '--config external-network={} '
+            '--config use-floating-ip=true '
+            '--config use-default-secgroup=true '
+            '--debug'.format(
+                JujuEpc.juju_timeout, region_name, self.network.id,
+                self.ext_net.id))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
     def check_app(self, name='abot-epc-basic', status='active'):
         """Check application status."""
-        cmd = ['juju', 'status', '--format', 'short', name]
         for i in range(10):
-            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+            (_, stdout, stderr) = self.ssh.exec_command(
+                '/snap/bin/juju status --format short {}'.format(name))
+            output = stdout.read().decode("utf-8")
+            self.__logger.debug("stdout:\n%s", output)
+            self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+            if stdout.channel.recv_exit_status():
+                continue
             ret = re.search(
-                r'(?=workload:({})\))'.format(status), output.decode("utf-8"))
+                r'(?=workload:({})\))'.format(status), output)
             if ret:
                 self.__logger.info("%s workload is %s", name, status)
                 break
@@ -289,65 +278,80 @@ class JujuEpc(singlevm.VmReady2):
     def deploy_vnf(self):
         """Deploy ABOT-OAI-EPC."""
         self.__logger.info("Upload VNFD")
-        descriptor = self.vnf['descriptor']
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(
+            '/src/epc-requirements/abot_charm', remote_path='~/',
+            recursive=True)
         self.__logger.info("Deploying Abot-epc bundle file ...")
-        cmd = ['juju', 'deploy', '{}'.format(descriptor.get('file_name'))]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-        self.__logger.info("Waiting for instances .....")
-        try:
-            cmd = ['timeout', JujuEpc.juju_timeout, 'juju-wait']
-            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-            self.__logger.info("Deployed Abot-epc on Openstack")
-        except subprocess.CalledProcessError as cpe:
-            self.__logger.error(
-                "Exception with Juju VNF Deployment: %s\n%s",
-                cpe.cmd, cpe.output.decode("utf-8"))
-            return False
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("Some issue with the VNF Deployment ..")
-            return False
-
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'sudo mkdir -p /src/epc-requirements && '
+            'sudo mv abot_charm /src/epc-requirements/abot_charm && '
+            '/snap/bin/juju deploy '
+            '/src/epc-requirements/abot_charm/functest-abot-epc-bundle/'
+            'bundle.yaml')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'PATH=/snap/bin/:$PATH '
+            'timeout {} juju-wait'.format(JujuEpc.juju_timeout))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
         self.__logger.info("Checking status of ABot and EPC units ...")
-        cmd = ['juju', 'status']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.debug("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+        (_, stdout, stderr) = self.ssh.exec_command('/snap/bin/juju status')
+        output = stdout.read().decode("utf-8")
+        self.__logger.debug("stdout:\n%s", output)
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
         for app in ['abot-epc-basic', 'oai-epc', 'oai-hss']:
             if not self.check_app(app):
                 return False
-
-        self.__logger.info("Transferring the feature files to Abot_node ...")
-        cmd = ['timeout', '60', 'juju', 'scp', '--', '-r', '-v',
-               '{}/featureFiles'.format(self.case_dir),
-               'abot-epc-basic/0:/etc/rebaca-test-suite/']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-
-        return True
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.put(
+            '{}/featureFiles'.format(self.case_dir), remote_path='~/',
+            recursive=True)
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'timeout {} /snap/bin/juju scp -- -r -v ~/featureFiles '
+            'abot-epc-basic/0:/etc/rebaca-test-suite/'.format(
+                JujuEpc.juju_timeout))
+        output = stdout.read().decode("utf-8")
+        self.__logger.debug("stdout:\n%s", output)
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        return not stdout.channel.recv_exit_status()
 
     def test_vnf(self):
         """Run test on ABoT."""
         start_time = time.time()
-        self.__logger.info("Running VNF Test cases....")
-        cmd = ['juju', 'run-action', 'abot-epc-basic/0', 'run',
-               'tagnames={}'.format(self.details['test_vnf']['tag_name'])]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-
-        cmd = ['timeout', JujuEpc.juju_timeout, 'juju-wait']
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju run-action abot-epc-basic/0 '
+            'run tagnames={}'.format(self.details['test_vnf']['tag_name']))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'PATH=/snap/bin/:$PATH '
+            'timeout {} juju-wait'.format(JujuEpc.juju_timeout))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
-        cmd = ['timeout', JujuEpc.juju_timeout,
-               'juju', 'scp', '--', '-v',
-               'abot-epc-basic/0:'
-               '/var/lib/abot-epc-basic/artifacts/TestResults.json',
-               '{}/.'.format(self.res_dir)]
-        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-        self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
+        (_, stdout, stderr) = self.ssh.exec_command(
+            'timeout {} /snap/bin/juju scp -- -v abot-epc-basic/0:'
+            '/var/lib/abot-epc-basic/artifacts/TestResults.json .'.format(
+                JujuEpc.juju_timeout))
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        if stdout.channel.recv_exit_status():
+            return not stdout.channel.recv_exit_status()
+        scpc = scp.SCPClient(self.ssh.get_transport())
+        scpc.get('TestResults.json', self.res_dir)
         self.__logger.info("Parsing the Test results...")
         res = (process_abot_test_result('{}/TestResults.json'.format(
             self.res_dir)))
@@ -362,45 +366,41 @@ class JujuEpc(singlevm.VmReady2):
             short_result['failures'], short_result['skipped'])
         return True
 
-    def run(self, **kwargs):
-        self.start_time = time.time()
+    def execute(self):
+        """Prepare testcase (Additional pre-configuration steps)."""
+        assert self.public_auth_url
+        self.__logger.info("Additional pre-configuration steps")
         try:
-            assert super(JujuEpc, self).run(**kwargs) == self.EX_OK
-            self.prepare()
-            if (self.deploy_orchestrator() and
-                    self.deploy_vnf() and
-                    self.test_vnf()):
-                self.stop_time = time.time()
-                self.result = 100
-                return self.EX_OK
-            self.result = 0
-            self.stop_time = time.time()
-            return self.EX_TESTCASE_FAILED
+            os.makedirs(self.res_dir)
+        except OSError as ex:
+            if ex.errno != errno.EEXIST:
+                self.__logger.exception("Cannot create %s", self.res_dir)
+                raise Exception
+        self.__logger.info("ENV:\n%s", env.string())
+        try:
+            assert self._install_juju()
+            assert self._install_juju_wait()
+            assert self._register_cloud()
+            assert self._register_credentials()
+            assert self.deploy_orchestrator()
+            assert self.deploy_vnf()
+            assert self.test_vnf()
         except Exception:  # pylint: disable=broad-except
-            self.result = 0
-            self.stop_time = time.time()
-            self.__logger.exception("Exception on VNF testing")
-            return self.EX_TESTCASE_FAILED
+            self.__logger.exception("juju_epc failed")
+            return 1
+        return 0
 
     def clean(self):
         """Clean created objects/functions."""
-        try:
-            cmd = ['juju', 'debug-log', '--replay', '--no-tail']
-            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.debug(
-                "%s\n%s", " ".join(cmd), output.decode("utf-8"))
-            self.__logger.info("Destroying Orchestrator...")
-            cmd = ['timeout', JujuEpc.juju_timeout,
-                   'juju', 'destroy-controller', '-y', 'abot-controller',
-                   '--destroy-all-models']
-            output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-            self.__logger.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
-        except subprocess.CalledProcessError as cpe:
-            self.__logger.error(
-                "Exception with Juju Cleanup: %s\n%s",
-                cpe.cmd, cpe.output.decode("utf-8"))
-        except Exception:  # pylint: disable=broad-except
-            self.__logger.exception("General issue during the undeployment ..")
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju debug-log --replay --no-tail')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
+        (_, stdout, stderr) = self.ssh.exec_command(
+            '/snap/bin/juju destroy-controller -y abot-controller '
+            '--destroy-all-models')
+        self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
+        self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         for fip in self.cloud.list_floating_ips():
             self.cloud.delete_floating_ip(fip.id)
         if self.image_alt:

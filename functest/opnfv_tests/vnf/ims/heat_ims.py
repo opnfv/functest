@@ -162,7 +162,7 @@ class HeatIms(singlevm.VmReady2):
                 server.public_v4, username=username,
                 key_filename=self.key_filename, timeout=timeout)
             (_, stdout, _) = ssh.exec_command('sudo monit summary')
-            self.__logger.info("output:\n%s", stdout.read())
+            self.__logger.info("output:\n%s", stdout.read().decode("utf-8"))
             ssh.close()
 
     def deploy_vnf(self):
