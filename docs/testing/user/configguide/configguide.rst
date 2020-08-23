@@ -13,7 +13,6 @@ Functest Dockers for OpenStack deployment
 -----------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-core
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
   * opnfv/functest-smoke-cntt
@@ -228,9 +227,11 @@ Functest Dockers for Kubernetes deployment
 ------------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-kubernetes-core
   * opnfv/functest-kubernetes-healthcheck
   * opnfv/functest-kubernetes-smoke
+  * opnfv/functest-kubernetes-security
+  * opnfv/functest-kubernetes-benchmarking
+  * opnfv/functest-kubernetes-cnf
 
 Preparing your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -273,9 +274,61 @@ Results shall be displayed as follows::
   +---------------------------+------------------+---------------+------------------+----------------+
   |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +---------------------------+------------------+---------------+------------------+----------------+
-  |     xrally_kubernetes     |     functest     |     smoke     |      22:04       |      PASS      |
-  |      k8s_conformance      |     functest     |     smoke     |      173:48      |      PASS      |
+  |      k8s_conformance      |     functest     |     smoke     |      76:12       |      PASS      |
+  |     xrally_kubernetes     |     functest     |     smoke     |      12:22       |      PASS      |
   +---------------------------+------------------+---------------+------------------+----------------+
+
+Testing security suite
+^^^^^^^^^^^^^^^^^^^^^^
+
+Run smoke suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-security:kali
+
+Results shall be displayed as follows::
+
+  +---------------------+------------------+------------------+------------------+----------------+
+  |      TEST CASE      |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +---------------------+------------------+------------------+------------------+----------------+
+  |     kube_hunter     |     functest     |     security     |      00:18       |      PASS      |
+  |      kube_bench     |     functest     |     security     |      00:01       |      PASS      |
+  +---------------------+------------------+------------------+------------------+----------------+
+
+Testing benchmarking suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run benchmarking suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-benchmarking:kali
+
+Results shall be displayed as follows::
+
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |           TEST CASE            |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |     xrally_kubernetes_full     |     functest     |     benchmarking     |      33:07       |      PASS      |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+
+Testing cnf suite
+^^^^^^^^^^^^^^^^^
+
+Run cnf suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-cnf:kali
+
+Results shall be displayed as follows::
+
+  +-------------------+------------------+--------------+------------------+----------------+
+  |     TEST CASE     |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +-------------------+------------------+--------------+------------------+----------------+
+  |      k8s_vims     |     functest     |     cnf      |      20:28       |      PASS      |
+  +-------------------+------------------+--------------+------------------+----------------+
 
 Environment variables
 =====================
