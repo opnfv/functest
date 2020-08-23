@@ -16,6 +16,8 @@ Clearwater
 clearwaterims
 cloudify
 Cloudify
+cnf
+cntt
 conf
 config
 dashboarding
@@ -139,6 +141,7 @@ verifier
 versioned
 vgpu
 vIMS
+vims
 Virtualised
 Virtualized
 vm
