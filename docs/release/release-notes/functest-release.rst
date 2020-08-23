@@ -69,8 +69,12 @@ Kubernetes
 The internal test cases are:
 
  * k8s_smoke
- * xrally_kubernetes
  * k8s_conformance
+ * xrally_kubernetes
+ * kube_hunter
+ * kube_bench
+ * xrally_kubernetes_full
+ * k8s_vims
 
 Release Data
 ============
@@ -100,6 +104,9 @@ Software
 
  * https://hub.docker.com/r/opnfv/functest-kubernetes-healthcheck
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-security
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-benchmarking
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-cnf
 
 Docker tag for master: latest
 
