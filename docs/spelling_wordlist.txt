@@ -14,6 +14,7 @@ ci
 Clearwater
 cloudify
 Cloudify
+cnf
 cntt
 conf
 config
@@ -128,6 +129,7 @@ vEPC
 verifier
 versioned
 vIMS
+vims
 Virtualised
 Virtualized
 vm

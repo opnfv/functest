@@ -69,8 +69,12 @@ Kubernetes
 The internal test cases are:
 
  * k8s_smoke
- * xrally_kubernetes
  * k8s_conformance
+ * xrally_kubernetes
+ * kube_hunter
+ * kube_bench
+ * xrally_kubernetes_full
+ * k8s_vims
 
 Release Data
 ============
