@@ -1,16 +1,16 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 
-======================================
-OPNFV master release note for Functest
-======================================
+====================================
+OPNFV Kali release note for Functest
+====================================
 
 Abstract
 ========
 
 This document contains the release notes of the Functest project.
 
-OPNFV master Release
-====================
+OPNFV Kali Release
+==================
 
 Functest deals with functional testing of the OPNFV solution.
 It includes test cases developed within the project, test cases developed in
@@ -67,8 +67,12 @@ Kubernetes
 The internal test cases are:
 
  * k8s_smoke
- * xrally_kubernetes
  * k8s_conformance
+ * xrally_kubernetes
+ * kube_hunter
+ * kube_bench
+ * xrally_kubernetes_full
+ * k8s_vims
 
 Release Data
 ============
@@ -76,7 +80,7 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Repository branch**                | stable/kali                          |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -98,8 +102,11 @@ Software
 
  * https://hub.docker.com/r/opnfv/functest-kubernetes-healthcheck
  * https://hub.docker.com/r/opnfv/functest-kubernetes-smoke
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-security
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-benchmarking
+ * https://hub.docker.com/r/opnfv/functest-kubernetes-cnf
 
-Docker tag for master: latest
+Docker tag for Kali: kali
 
 Documents
 ---------

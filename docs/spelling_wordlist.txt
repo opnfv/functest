@@ -14,6 +14,7 @@ ci
 Clearwater
 cloudify
 Cloudify
+cnf
 cntt
 conf
 config
@@ -52,6 +53,7 @@ juju
 Juju
 jumphost
 Jumphost
+kali
 kube
 kubernetes
 Kubernetes
@@ -128,6 +130,7 @@ vEPC
 verifier
 versioned
 vIMS
+vims
 Virtualised
 Virtualized
 vm
