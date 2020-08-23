@@ -13,7 +13,6 @@ Functest Dockers for OpenStack deployment
 -----------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-core
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
   * opnfv/functest-smoke-cntt
@@ -233,9 +232,11 @@ Functest Dockers for Kubernetes deployment
 ------------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-kubernetes-core
   * opnfv/functest-kubernetes-healthcheck
   * opnfv/functest-kubernetes-smoke
+  * opnfv/functest-kubernetes-security
+  * opnfv/functest-kubernetes-benchmarking
+  * opnfv/functest-kubernetes-cnf
 
 Preparing your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -278,9 +279,61 @@ Results shall be displayed as follows::
   +---------------------------+------------------+---------------+------------------+----------------+
   |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +---------------------------+------------------+---------------+------------------+----------------+
-  |     xrally_kubernetes     |     functest     |     smoke     |      16:12       |      PASS      |
-  |      k8s_conformance      |     functest     |     smoke     |      149:59      |      PASS      |
+  |      k8s_conformance      |     functest     |     smoke     |      68:21       |      PASS      |
+  |     xrally_kubernetes     |     functest     |     smoke     |      13:40       |      PASS      |
   +---------------------------+------------------+---------------+------------------+----------------+
+
+Testing security suite
+^^^^^^^^^^^^^^^^^^^^^^
+
+Run smoke suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-security:jerma
+
+Results shall be displayed as follows::
+
+  +---------------------+------------------+------------------+------------------+----------------+
+  |      TEST CASE      |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +---------------------+------------------+------------------+------------------+----------------+
+  |     kube_hunter     |     functest     |     security     |      00:19       |      PASS      |
+  |      kube_bench     |     functest     |     security     |      00:01       |      PASS      |
+  +---------------------+------------------+------------------+------------------+----------------+
+
+Testing benchmarking suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run benchmarking suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-benchmarking:jerma
+
+Results shall be displayed as follows::
+
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |           TEST CASE            |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |     xrally_kubernetes_full     |     functest     |     benchmarking     |      34:58       |      PASS      |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+
+Testing cnf suite
+^^^^^^^^^^^^^^^^^
+
+Run cnf suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-cnf:jerma
+
+Results shall be displayed as follows::
+
+  +-------------------+------------------+--------------+------------------+----------------+
+  |     TEST CASE     |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +-------------------+------------------+--------------+------------------+----------------+
+  |      k8s_vims     |     functest     |     cnf      |      20:32       |      PASS      |
+  +-------------------+------------------+--------------+------------------+----------------+
 
 Environment variables
 =====================
