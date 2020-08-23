@@ -14,6 +14,8 @@ ci
 Clearwater
 cloudify
 Cloudify
+cnf
+cntt
 conf
 config
 dashboarding
@@ -130,6 +132,7 @@ vEPC
 verifier
 versioned
 vIMS
+vims
 Virtualised
 Virtualized
 vm

@@ -13,7 +13,6 @@ Functest Dockers for OpenStack deployment
 -----------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-core
   * opnfv/functest-healthcheck
   * opnfv/functest-smoke
   * opnfv/functest-benchmarking
@@ -175,9 +174,11 @@ Functest Dockers for Kubernetes deployment
 ------------------------------------------
 Docker images are available on the dockerhub:
 
-  * opnfv/functest-kubernetes-core
   * opnfv/functest-kubernetes-healthcheck
   * opnfv/functest-kubernetes-smoke
+  * opnfv/functest-kubernetes-security
+  * opnfv/functest-kubernetes-benchmarking
+  * opnfv/functest-kubernetes-cnf
 
 Preparing your environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -217,11 +218,64 @@ Run smoke suite::
 
 Results shall be displayed as follows::
 
-  +-------------------------+------------------+---------------+------------------+----------------+
-  |        TEST CASE        |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
-  +-------------------------+------------------+---------------+------------------+----------------+
-  |     k8s_conformance     |     functest     |     smoke     |      135:54      |      PASS      |
-  +-------------------------+------------------+---------------+------------------+----------------+
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
+  +---------------------------+------------------+---------------+------------------+----------------+
+  |      k8s_conformance      |     functest     |     smoke     |      94:11       |      PASS      |
+  |     xrally_kubernetes     |     functest     |     smoke     |      13:39       |      PASS      |
+  +---------------------------+------------------+---------------+------------------+----------------+
+
+Testing security suite
+^^^^^^^^^^^^^^^^^^^^^^
+
+Run smoke suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-security:iruya
+
+Results shall be displayed as follows::
+
+  +---------------------+------------------+------------------+------------------+----------------+
+  |      TEST CASE      |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
+  +---------------------+------------------+------------------+------------------+----------------+
+  |     kube_hunter     |     functest     |     security     |      00:17       |      PASS      |
+  |      kube_bench     |     functest     |     security     |      00:02       |      PASS      |
+  +---------------------+------------------+------------------+------------------+----------------+
+
+Testing benchmarking suite
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run benchmarking suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-benchmarking:iruya
+
+Results shall be displayed as follows::
+
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |           TEST CASE            |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+  |     xrally_kubernetes_full     |     functest     |     benchmarking     |      38:21       |      PASS      |
+  +--------------------------------+------------------+----------------------+------------------+----------------+
+
+Testing cnf suite
+^^^^^^^^^^^^^^^^^
+
+Run cnf suite::
+
+  sudo docker run -it --env-file env \
+      -v $(pwd)/config:/root/.kube/config \
+      opnfv/functest-kubernetes-cnf:iruya
+
+Results shall be displayed as follows::
+
+  +-------------------+------------------+--------------+------------------+----------------+
+  |     TEST CASE     |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +-------------------+------------------+--------------+------------------+----------------+
+  |      k8s_vims     |     functest     |     cnf      |      18:14       |      PASS      |
+  +-------------------+------------------+--------------+------------------+----------------+
 
 Environment variables
 =====================
