@@ -678,8 +678,12 @@ tiers:
                           (?!.*test_flavors_microversions.FlavorsV255TestJSON)\
                           (?!.*test_flavors_microversions.FlavorsV261TestJSON)\
                           (?!.*test_live_migration.LiveAutoBlockMigrationV225Test.test_iscsi_volume)\
+                          (?!.*test_live_migration.LiveAutoBlockMigrationV225Test.test_live_block_migration)\
+                          (?!.*test_live_migration.LiveAutoBlockMigrationV225Test.test_live_block_migration_paused)\
                           (?!.*test_live_migration.LiveAutoBlockMigrationV225Test.test_volume_backed_live_migration)\
                           (?!.*test_live_migration.LiveMigrationTest.test_iscsi_volume)\
+                          (?!.*test_live_migration.LiveMigrationTest.test_live_block_migration)\
+                          (?!.*test_live_migration.LiveMigrationTest.test_live_block_migration_paused)\
                           (?!.*test_live_migration.LiveMigrationTest.test_volume_backed_live_migration)\
                           (?!.*test_live_migration.LiveMigrationRemoteConsolesV26Test)\
                           (?!.*test_quotas.QuotasAdminTestV257)\
@@ -709,6 +713,7 @@ tiers:
                           (?!.*test_attach_volume.AttachVolumeMultiAttach)\
                           (?!.*identity.admin.v2)(?!.*identity.v2)\
                           (?!.*image.v1)\
+                          (?!.*image.v2.test_images.ImportImagesTest)\
                           (?!.*admin.test_dhcp_agent_scheduler)\
                           (?!.*admin.test_routers_dvr)\
                           (?!.*test_metering_extensions)(?!.*network.test_tags)\
