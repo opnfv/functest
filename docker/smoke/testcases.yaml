@@ -220,6 +220,7 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -239,6 +240,7 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -258,6 +260,7 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
