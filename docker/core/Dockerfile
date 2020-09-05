@@ -8,10 +8,12 @@ COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.T
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
 RUN apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
-        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
+        grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ \
+        libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev \
+        libxml2-dev libxslt-dev && \
     git init /src/requirements && \
     (cd /src/requirements && \
         git fetch --tags https://review.opendev.org/openstack/requirements $OPENSTACK_TAG && \
