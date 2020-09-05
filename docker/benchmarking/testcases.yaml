@@ -2,7 +2,6 @@
 tiers:
     -
         name: benchmarking
-        order: 3
         description: >-
             Run several OpenStack performance tools
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
