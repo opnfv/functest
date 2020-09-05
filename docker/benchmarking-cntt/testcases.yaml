@@ -2,7 +2,6 @@
 tiers:
     -
         name: benchmarking_cntt
-        order: 4
         description: >-
             Run several OpenStack performance tools
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
