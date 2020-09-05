@@ -2,7 +2,6 @@
 tiers:
     -
         name: healthcheck
-        order: 0
         description: >-
             First tier to be executed to verify the basic
             operations in the VIM.
@@ -180,7 +179,6 @@ tiers:
 
     -
         name: smoke
-        order: 1
         description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
@@ -467,7 +465,6 @@ tiers:
 
     -
         name: smoke_cntt
-        order: 2
         description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
@@ -744,7 +741,6 @@ tiers:
 
     -
         name: benchmarking
-        order: 3
         description: >-
             Run several OpenStack performance tools
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
@@ -809,7 +805,6 @@ tiers:
 
     -
         name: benchmarking_cntt
-        order: 4
         description: >-
             Run several OpenStack performance tools
             https://docs.openstack.org/performance-docs/latest/methodologies/tools.html
@@ -852,7 +847,6 @@ tiers:
 
     -
         name: vnf
-        order: 5
         description: >-
             Collection of VNF test cases.
         testcases:

@@ -2,7 +2,6 @@
 tiers:
     -
         name: healthcheck
-        order: 0
         description: >-
             First tier to be executed to verify the basic
             operations in the VIM.

@@ -2,7 +2,6 @@
 tiers:
     -
         name: smoke_cntt
-        order: 2
         description: >-
             Set of basic Functional tests to validate the OPNFV scenarios.
         testcases:
