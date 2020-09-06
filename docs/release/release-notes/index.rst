@@ -10,5 +10,3 @@ Functest Release Notes
    :maxdepth: 4
 
    functest-release.rst
-
-Build date: |today|
