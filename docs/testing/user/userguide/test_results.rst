@@ -114,7 +114,8 @@ Kubernetes healthcheck suite::
   +-------------------+------------------+---------------------+------------------+----------------+
   |     TEST CASE     |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +-------------------+------------------+---------------------+------------------+----------------+
-  |     k8s_smoke     |     functest     |     healthcheck     |      01:44       |      PASS      |
+  |     k8s_quick     |     functest     |     healthcheck     |      00:33       |      PASS      |
+  |     k8s_smoke     |     functest     |     healthcheck     |      00:49       |      PASS      |
   +-------------------+------------------+---------------------+------------------+----------------+
 
 Kubernetes smoke suite::
@@ -145,11 +146,12 @@ Kubernetes benchmarking suite::
 
 Kubernetes cnf suite::
 
-  +-------------------+------------------+--------------+------------------+----------------+
-  |     TEST CASE     |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
-  +-------------------+------------------+--------------+------------------+----------------+
-  |      k8s_vims     |     functest     |     cnf      |      20:32       |      PASS      |
-  +-------------------+------------------+--------------+------------------+----------------+
+  +-------------------------+------------------+--------------+------------------+----------------+
+  |        TEST CASE        |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
+  +-------------------------+------------------+--------------+------------------+----------------+
+  |     cnf_conformance     |     functest     |     cnf      |      05:19       |      PASS      |
+  |         k8s_vims        |     functest     |     cnf      |      20:32       |      PASS      |
+  +-------------------------+------------------+--------------+------------------+----------------+
 
 Results are automatically pushed to the test results database, some additional
 result files are pushed to OPNFV artifact web sites.
