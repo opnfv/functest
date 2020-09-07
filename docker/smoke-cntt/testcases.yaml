@@ -79,7 +79,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 11
+                tests_count: 9
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Cinder project.
@@ -88,6 +88,8 @@ tiers:
                     args:
                         mode: "(?!.*test_incremental_backup)\
                             (?!.*test_consistencygroups)\
+                            (?!.*test_backup_crossproject_admin_negative)\
+                            (?!.*test_backup_crossproject_user_negative)\
                             (^cinder_tempest_plugin.)"
                         option:
                             - '--concurrency=4'

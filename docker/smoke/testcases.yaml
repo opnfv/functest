@@ -33,8 +33,10 @@ tiers:
                 run:
                     name: tempest_common
                     args:
-                        mode:
-                            '(?!.*test_incremental_backup)(^cinder_tempest_plugin.)'
+                        mode: "(?!.*test_incremental_backup)\
+                            (?!.*test_backup_crossproject_admin_negative)\
+                            (?!.*test_backup_crossproject_user_negative)\
+                            (^cinder_tempest_plugin.)"
                         option:
                             - '--concurrency=4'
 
