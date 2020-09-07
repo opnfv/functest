@@ -400,7 +400,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
                         option:
                             - '--concurrency=4'
 
@@ -420,7 +420,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
                         option:
                             - '--concurrency=4'
 
@@ -440,7 +440,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*compute.test_floating_ips_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
                         option:
                             - '--concurrency=4'
 
