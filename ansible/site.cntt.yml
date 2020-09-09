@@ -4,6 +4,9 @@
   roles:
     - role: collivier.xtesting
       project: functest
+      docker_tags:
+        - hunter:
+            branch: stable/hunter
       suites:
         - container: functest-healthcheck
           tests:
