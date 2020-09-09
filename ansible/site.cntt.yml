@@ -4,6 +4,9 @@
   roles:
     - role: collivier.xtesting
       project: functest
+      docker_tags:
+        - jerma:
+            branch: stable/jerma
       suites:
         - container: functest-healthcheck
           tests:
