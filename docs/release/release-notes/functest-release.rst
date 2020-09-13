@@ -73,7 +73,8 @@ The internal test cases are:
  * k8s_conformance
  * xrally_kubernetes
  * kube_hunter
- * kube_bench
+ * kube_bench_master
+ * kube_bench_node
  * xrally_kubernetes_full
  * cnf_conformance
  * k8s_vims
