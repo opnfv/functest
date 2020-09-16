@@ -329,8 +329,9 @@ Results shall be displayed as follows::
   +-------------------------+------------------+--------------+------------------+----------------+
   |        TEST CASE        |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +-------------------------+------------------+--------------+------------------+----------------+
-  |     cnf_conformance     |     functest     |     cnf      |      05:30       |      PASS      |
-  |         k8s_vims        |     functest     |     cnf      |      20:28       |      PASS      |
+  |         k8s_vims        |     functest     |     cnf      |      09:06       |      PASS      |
+  |        helm_vims        |     functest     |     cnf      |      08:54       |      PASS      |
+  |     cnf_conformance     |     functest     |     cnf      |      02:00       |      PASS      |
   +-------------------------+------------------+--------------+------------------+----------------+
 
 Environment variables
