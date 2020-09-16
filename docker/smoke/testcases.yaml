@@ -221,9 +221,11 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
                             - '--concurrency=4'
 
@@ -241,9 +243,11 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
                             - '--concurrency=4'
 
@@ -261,9 +265,11 @@ tiers:
                         mode: "(?!.*test_unmanage_snapshot_rbac)\
                           (?!.*test_show_auto_allocated_topology)\
                           (?!.*test_delete_auto_allocated_topology)\
+                          (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network))"
+                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
                             - '--concurrency=4'
 
