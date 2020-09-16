@@ -75,8 +75,9 @@ The internal test cases are:
  * kube_bench_master
  * kube_bench_node
  * xrally_kubernetes_full
- * cnf_conformance
  * k8s_vims
+ * helm_vims
+ * cnf_conformance
 
 The OPNFV projects integrated into Functest framework for automation are:
 
