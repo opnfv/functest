@@ -151,8 +151,9 @@ Kubernetes cnf suite::
   +-------------------------+------------------+--------------+------------------+----------------+
   |        TEST CASE        |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +-------------------------+------------------+--------------+------------------+----------------+
-  |     cnf_conformance     |     functest     |     cnf      |      05:22       |      PASS      |
-  |         k8s_vims        |     functest     |     cnf      |      19:12       |      PASS      |
+  |         k8s_vims        |     functest     |     cnf      |      09:09       |      PASS      |
+  |        helm_vims        |     functest     |     cnf      |      08:01       |      PASS      |
+  |     cnf_conformance     |     functest     |     cnf      |      02:15       |      PASS      |
   +-------------------------+------------------+--------------+------------------+----------------+
 
 Results are automatically pushed to the test results database, some additional
