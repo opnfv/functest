@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:leguer
 
 ARG PATROLE_TAG=master
 ARG NEUTRON_TEMPEST_TAG=master

@@ -5,6 +5,9 @@
     - role: collivier.xtesting
       project: functest
       gerrit_project: functest
+      docker_tags:
+        - leguer:
+            branch: stable/leguer
       builds:
         dependencies:
           - repo: _
