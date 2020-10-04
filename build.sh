@@ -18,9 +18,10 @@ build_opts=("--pull=true" --no-cache "--force-rm=true")
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:jerma|${repo}/functest-core:amd64-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:amd64-jerma|g" \
-    {} +
+    -e "s|opnfv/functest-smoke:jerma|${repo}/functest-smoke:amd64-jerma|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:jerma|\
+${repo}/functest-benchmarking:amd64-jerma|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
@@ -38,9 +39,10 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:jerma|${repo}/functest-core:arm64-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:arm64-jerma|g" \
-    {} +
+    -e "s|opnfv/functest-smoke:jerma|${repo}/functest-smoke:arm64-jerma|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:jerma|\
+${repo}/functest-benchmarking:arm64-jerma|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm64-jerma" .)
@@ -58,9 +60,10 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:jerma|${repo}/functest-core:arm-jerma|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:jerma|${repo}/functest-tempest:arm-jerma|g" \
-    {} +
+    -e "s|opnfv/functest-smoke:jerma|${repo}/functest-smoke:arm-jerma|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:jerma|\
+${repo}/functest-benchmarking:arm-jerma|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm-jerma" .)
