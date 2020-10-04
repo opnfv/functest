@@ -19,6 +19,11 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-tempest|${repo}/functest-tempest:amd64-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke|${repo}/functest-smoke:amd64-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking|\
+${repo}/functest-benchmarking:amd64-latest|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
@@ -37,6 +42,11 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:arm64-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-tempest|${repo}/functest-tempest:arm64-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke|${repo}/functest-smoke:arm64-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking|\
+${repo}/functest-benchmarking:arm64-latest|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm64-latest" .)
@@ -55,6 +65,11 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:arm-latest|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-tempest|${repo}/functest-tempest:arm-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke|${repo}/functest-smoke:arm-latest|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking|\
+${repo}/functest-benchmarking:arm-latest|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm-latest" .)
