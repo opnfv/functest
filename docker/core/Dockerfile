@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-ARG BRANCH=master
+ARG BRANCH=stable/leguer
 ARG OPENSTACK_TAG=master
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch

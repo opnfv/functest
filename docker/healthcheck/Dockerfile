@@ -1,7 +1,7 @@
 FROM opnfv/functest-core:leguer
 
 ARG ODL_TAG=89b88a0a23561f0bda62338b394ec41655679b2d
-ARG TEMPEST_HORIZON_TAG=master
+ARG TEMPEST_HORIZON_TAG=1.1.0
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
