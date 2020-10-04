@@ -18,10 +18,15 @@ build_opts=("--pull=true" --no-cache "--force-rm=true")
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:iruya|${repo}/functest-core:amd64-iruya|g" {} +
-find . -name Dockerfile -exec sed -i \
+
     -e \
     "s|opnfv/functest-tempest:iruya|${repo}/functest-tempest:amd64-iruya|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:iruya|${repo}/functest-smoke:amd64-iruya|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:iruya|\
+${repo}/functest-benchmarking:amd64-iruya|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
@@ -42,6 +47,11 @@ find . -name Dockerfile -exec sed -i \
     -e \
     "s|opnfv/functest-tempest:iruya|${repo}/functest-tempest:arm64-iruya|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:iurya|${repo}/functest-smoke:arm64-iruya|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:iruya|\
+${repo}/functest-benchmarking:arm64-iruya|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm64-iruya" .)
@@ -61,6 +71,11 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e \
     "s|opnfv/functest-tempest:iruya|${repo}/functest-tempest:arm-iruya|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:iruya|${repo}/functest-smoke:arm-iruya|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:iruya|\
+${repo}/functest-benchmarking:arm-iruya|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm-iruya" .)
