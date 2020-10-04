@@ -23,6 +23,12 @@ find . -name Dockerfile -exec sed -i \
     -e \
     "s|opnfv/functest-tempest:hunter|${repo}/functest-tempest:amd64-hunter|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:hunter|${repo}/functest-smoke:amd64-hunter|g" \
+    {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:hunter|\
+${repo}/functest-benchmarking:amd64-hunter|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
@@ -43,6 +49,12 @@ find . -name Dockerfile -exec sed -i \
     -e \
     "s|opnfv/functest-tempest:hunter|${repo}/functest-tempest:arm64-hunter|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:hunter|${repo}/functest-smoke:arm64-hunter|g" \
+    {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:hunter|\
+${repo}/functest-benchmarking:arm64-hunter|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm64-hunter" .)
@@ -63,6 +75,11 @@ find . -name Dockerfile -exec sed -i \
     -e \
     "s|opnfv/functest-tempest:hunter|${repo}/functest-tempest:arm-hunter|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-smoke:hunter|${repo}/functest-smoke:arm-hunter|g" {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:hunter|\
+${repo}/functest-benchmarking:arm-hunter|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm-hunter" .)
