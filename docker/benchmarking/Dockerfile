@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:leguer
 
 ARG VMTP_TAG=master
 ARG NEUTRON_TAG=master
