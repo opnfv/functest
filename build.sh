@@ -18,9 +18,11 @@ build_opts=("--pull=true" --no-cache "--force-rm=true")
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:leguer|${repo}/functest-core:amd64-leguer|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:leguer|${repo}/functest-tempest:amd64-leguer|g" \
+    -e "s|opnfv/functest-smoke:leguer|${repo}/functest-smoke:amd64-leguer|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:leguer|\
+${repo}/functest-benchmarking:amd64-leguer|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build "${build_opts[@]}" \
@@ -38,9 +40,11 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:leguer|${repo}/functest-core:arm64-leguer|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:leguer|${repo}/functest-tempest:arm64-leguer|g" \
+    -e "s|opnfv/functest-smoke:leguer|${repo}/functest-smoke:arm64-leguer|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:leguer|\
+${repo}/functest-benchmarking:arm64-leguer|g" {} +
 for dir in ${arm64_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm64-leguer" .)
@@ -58,9 +62,11 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:leguer|${repo}/functest-core:arm-leguer|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e \
-    "s|opnfv/functest-tempest:leguer|${repo}/functest-tempest:arm-leguer|g" \
+    -e "s|opnfv/functest-smoke:leguer|${repo}/functest-smoke:arm-leguer|g" \
     {} +
+find . -name Dockerfile -exec sed -i \
+    -e "s|opnfv/functest-benchmarking:leguer|\
+${repo}/functest-benchmarking:arm-leguer|g" {} +
 for dir in ${arm_dirs}; do
     (cd "${dir}" && docker build "${build_opts[@]}" \
         -t "${repo}/functest-${dir##**/}:arm-leguer" .)
