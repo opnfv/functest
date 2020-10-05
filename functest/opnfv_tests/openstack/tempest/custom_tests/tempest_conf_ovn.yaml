@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: latest
+    max_microversion: 2.87
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false
@@ -54,7 +54,7 @@ network-feature-enabled:
     port_security: true
     floating_ips: true
 placement:
-    max_microversion: latest
+    max_microversion: 1.36
 validation:
     image_ssh_user: cirros
     ssh_timeout: 196
@@ -62,7 +62,7 @@ validation:
     run_validation: true
     connect_method: floating
 volume:
-    max_microversion: latest
+    max_microversion: 3.62
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s

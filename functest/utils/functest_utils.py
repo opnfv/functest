@@ -117,7 +117,7 @@ def get_openstack_version(cloud):
         if version > (2, 87):
             osversion = "Master"
         elif version > (2, 79):
-            osversion = "Ussuri"
+            osversion = "Ussuri or Victoria"
         elif version > (2, 72):
             osversion = "Train"
         elif version > (2, 65):
