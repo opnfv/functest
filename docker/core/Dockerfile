@@ -1,7 +1,7 @@
 FROM alpine:3.12
 
 ARG BRANCH=stable/leguer
-ARG OPENSTACK_TAG=master
+ARG OPENSTACK_TAG=stable/victoria
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
