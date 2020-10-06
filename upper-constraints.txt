@@ -19,7 +19,7 @@ xtesting===0.91.0
 git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf#egg=bandit
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
--e git+https://opendev.org/openstack/tempest@25.0.0#egg=tempest
+-e git+https://opendev.org/openstack/tempest@cfddd400ce403bc6fb3740c0722eebd021f8b11c#egg=tempest
 -e git+https://opendev.org/openstack/rally.git@3.1.0#egg=rally
 git+https://opendev.org/openstack/rally-openstack.git@2.0.0#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@e4c605fa0ae0cae63ce5ac19ce8516f0bdd5e868#egg=xrally-kubernetes
