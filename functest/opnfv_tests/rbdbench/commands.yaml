@@ -1,0 +1,12 @@
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type write --io-size 8K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type write --io-size 16K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type write --io-size 32K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename> --io-type write --io-size 8K --io-threads 32 --io-total 100G --io-pattern rand,
+rbd -p <rbd_poolname> bench <rbd_imagename> --io-type write --io-size 16K --io-threads 32 --io-total 100G --io-pattern rand,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type write --io-size 32K --io-threads 32 --io-total 100G --io-pattern rand,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type read --io-size 8K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type read --io-size 16K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type read --io-size 32K --io-threads 32 --io-total 100G --io-pattern seq,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type read --io-size 8K --io-threads 32 --io-total 100G --io-pattern rand,
+rbd -p <rbd_poolname> bench <rbd_imagename> --io-type read --io-size 16K --io-threads 32 --io-total 100G --io-pattern rand,
+rbd -p <rbd_poolname> bench <rbd_imagename>  --io-type read --io-size 32K --io-threads 32 --io-total 100G --io-pattern rand
