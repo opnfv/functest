@@ -10,7 +10,8 @@ docker/smoke \
 docker/benchmarking \
 docker/vnf \
 docker/smoke-cntt \
-docker/benchmarking-cntt"}
+docker/benchmarking-cntt \
+docker/rbdbench"}
 arm_dirs=${arm_dirs-${amd64_dirs}}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=("--pull=true" --no-cache "--force-rm=true")
