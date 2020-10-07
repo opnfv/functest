@@ -1,0 +1,18 @@
+---
+tiers:
+    -
+        name: rbdbench
+        order: 1
+        description: >-
+            Storage benchmarking for storage client.
+        testcases:
+            -
+                case_name: storage_validation
+                project_name: rbdbench
+                criteria: 100
+                blocking: false
+                description: >-
+                  This testcase is used for storage benchmarking on the
+                  respective storage client.
+                run:
+                    name: 'storage_validation'
