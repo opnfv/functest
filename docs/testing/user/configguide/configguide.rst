@@ -72,25 +72,25 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:leguer
 
 Results shall be displayed as follows::
 
   +--------------------------+------------------+---------------------+------------------+----------------+
   |        TEST CASE         |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +--------------------------+------------------+---------------------+------------------+----------------+
-  |     connection_check     |     functest     |     healthcheck     |      00:03       |      PASS      |
-  |      tenantnetwork1      |     functest     |     healthcheck     |      00:05       |      PASS      |
+  |     connection_check     |     functest     |     healthcheck     |      00:02       |      PASS      |
+  |      tenantnetwork1      |     functest     |     healthcheck     |      00:04       |      PASS      |
   |      tenantnetwork2      |     functest     |     healthcheck     |      00:06       |      PASS      |
-  |         vmready1         |     functest     |     healthcheck     |      00:06       |      PASS      |
-  |         vmready2         |     functest     |     healthcheck     |      00:08       |      PASS      |
-  |        singlevm1         |     functest     |     healthcheck     |      00:32       |      PASS      |
-  |        singlevm2         |     functest     |     healthcheck     |      00:37       |      PASS      |
-  |        vping_ssh         |     functest     |     healthcheck     |      00:46       |      PASS      |
-  |      vping_userdata      |     functest     |     healthcheck     |      00:39       |      PASS      |
-  |       cinder_test        |     functest     |     healthcheck     |      01:05       |      PASS      |
-  |      tempest_smoke       |     functest     |     healthcheck     |      05:39       |      PASS      |
-  |     tempest_horizon      |     functest     |     healthcheck     |      01:05       |      PASS      |
+  |         vmready1         |     functest     |     healthcheck     |      00:05       |      PASS      |
+  |         vmready2         |     functest     |     healthcheck     |      00:06       |      PASS      |
+  |        singlevm1         |     functest     |     healthcheck     |      00:31       |      PASS      |
+  |        singlevm2         |     functest     |     healthcheck     |      00:35       |      PASS      |
+  |        vping_ssh         |     functest     |     healthcheck     |      00:47       |      PASS      |
+  |      vping_userdata      |     functest     |     healthcheck     |      00:42       |      PASS      |
+  |       cinder_test        |     functest     |     healthcheck     |      01:09       |      PASS      |
+  |      tempest_smoke       |     functest     |     healthcheck     |      04:50       |      PASS      |
+  |     tempest_horizon      |     functest     |     healthcheck     |      01:00       |      PASS      |
   |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
   +--------------------------+------------------+---------------------+------------------+----------------+
 
@@ -104,28 +104,31 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:leguer
 
 Results shall be displayed as follows::
 
   +---------------------------+------------------+---------------+------------------+----------------+
   |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +---------------------------+------------------+---------------+------------------+----------------+
-  |      tempest_neutron      |     functest     |     smoke     |      15:30       |      PASS      |
-  |       tempest_cinder      |     functest     |     smoke     |      02:01       |      PASS      |
-  |      tempest_keystone     |     functest     |     smoke     |      01:17       |      PASS      |
-  |        tempest_heat       |     functest     |     smoke     |      22:14       |      PASS      |
-  |     tempest_telemetry     |     functest     |     smoke     |      00:00       |      SKIP      |
-  |        rally_sanity       |     functest     |     smoke     |      17:24       |      PASS      |
-  |      refstack_compute     |     functest     |     smoke     |      07:03       |      PASS      |
-  |      refstack_object      |     functest     |     smoke     |      02:09       |      PASS      |
-  |     refstack_platform     |     functest     |     smoke     |      07:31       |      PASS      |
-  |        tempest_full       |     functest     |     smoke     |      41:52       |      PASS      |
-  |      tempest_scenario     |     functest     |     smoke     |      08:42       |      PASS      |
-  |        tempest_slow       |     functest     |     smoke     |      43:42       |      PASS      |
-  |          patrole          |     functest     |     smoke     |      02:42       |      PASS      |
-  |      tempest_barbican     |     functest     |     smoke     |      02:30       |      PASS      |
+  |      tempest_neutron      |     functest     |     smoke     |      11:58       |      PASS      |
+  |       tempest_cinder      |     functest     |     smoke     |      02:13       |      PASS      |
+  |      tempest_keystone     |     functest     |     smoke     |      01:18       |      PASS      |
+  |        tempest_heat       |     functest     |     smoke     |      23:24       |      PASS      |
+  |     tempest_telemetry     |     functest     |     smoke     |      01:54       |      PASS      |
+  |        rally_sanity       |     functest     |     smoke     |      20:29       |      PASS      |
+  |      refstack_compute     |     functest     |     smoke     |      05:16       |      PASS      |
+  |      refstack_object      |     functest     |     smoke     |      01:59       |      PASS      |
+  |     refstack_platform     |     functest     |     smoke     |      06:42       |      PASS      |
+  |        tempest_full       |     functest     |     smoke     |      31:30       |      PASS      |
+  |      tempest_scenario     |     functest     |     smoke     |      09:57       |      PASS      |
+  |        tempest_slow       |     functest     |     smoke     |      57:15       |      PASS      |
+  |       patrole_admin       |     functest     |     smoke     |      22:15       |      PASS      |
+  |       patrole_member      |     functest     |     smoke     |      23:58       |      PASS      |
+  |       patrole_reader      |     functest     |     smoke     |      22:15       |      PASS      |
+  |      tempest_barbican     |     functest     |     smoke     |      03:37       |      PASS      |
   |      tempest_octavia      |     functest     |     smoke     |      00:00       |      SKIP      |
+  |       tempest_cyborg      |     functest     |     smoke     |      00:00       |      SKIP      |
   +---------------------------+------------------+---------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
@@ -139,21 +142,21 @@ Run smoke-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke-cntt
+      opnfv/functest-smoke-cntt:leguer
 
 Results shall be displayed as follows::
 
   +-------------------------------+------------------+---------------+------------------+----------------+
   |           TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +-------------------------------+------------------+---------------+------------------+----------------+
-  |      tempest_neutron_cntt     |     functest     |     smoke     |      11:35       |      PASS      |
-  |      tempest_cinder_cntt      |     functest     |     smoke     |      01:58       |      PASS      |
-  |     tempest_keystone_cntt     |     functest     |     smoke     |      01:13       |      PASS      |
-  |       tempest_heat_cntt       |     functest     |     smoke     |      22:32       |      PASS      |
-  |       rally_sanity_cntt       |     functest     |     smoke     |      17:16       |      PASS      |
-  |       tempest_full_cntt       |     functest     |     smoke     |      41:13       |      PASS      |
-  |     tempest_scenario_cntt     |     functest     |     smoke     |      08:57       |      PASS      |
-  |       tempest_slow_cntt       |     functest     |     smoke     |      35:58       |      PASS      |
+  |      tempest_neutron_cntt     |     functest     |     smoke     |      10:03       |      PASS      |
+  |      tempest_cinder_cntt      |     functest     |     smoke     |      02:10       |      PASS      |
+  |     tempest_keystone_cntt     |     functest     |     smoke     |      01:17       |      PASS      |
+  |       tempest_heat_cntt       |     functest     |     smoke     |      22:44       |      PASS      |
+  |       rally_sanity_cntt       |     functest     |     smoke     |      17:37       |      PASS      |
+  |       tempest_full_cntt       |     functest     |     smoke     |      29:48       |      PASS      |
+  |     tempest_scenario_cntt     |     functest     |     smoke     |      09:59       |      PASS      |
+  |       tempest_slow_cntt       |     functest     |     smoke     |      41:57       |      PASS      |
   +-------------------------------+------------------+---------------+------------------+----------------+
 
 Testing benchmarking suite
@@ -164,17 +167,17 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking
+      opnfv/functest-benchmarking:leguer
 
 Results shall be displayed as follows::
 
   +--------------------+------------------+----------------------+------------------+----------------+
   |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
   +--------------------+------------------+----------------------+------------------+----------------+
-  |     rally_full     |     functest     |     benchmarking     |      93:03       |      PASS      |
-  |     rally_jobs     |     functest     |     benchmarking     |      27:05       |      PASS      |
-  |        vmtp        |     functest     |     benchmarking     |      17:56       |      PASS      |
-  |       shaker       |     functest     |     benchmarking     |      24:02       |      PASS      |
+  |     rally_full     |     functest     |     benchmarking     |      104:28      |      PASS      |
+  |     rally_jobs     |     functest     |     benchmarking     |      30:00       |      PASS      |
+  |        vmtp        |     functest     |     benchmarking     |      23:43       |      PASS      |
+  |       shaker       |     functest     |     benchmarking     |      28:49       |      PASS      |
   +--------------------+------------------+----------------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
@@ -188,17 +191,17 @@ Run benchmarking-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking-cntt
+      opnfv/functest-benchmarking-cntt:leguer
 
 Results shall be displayed as follows::
 
   +-------------------------+------------------+----------------------+------------------+----------------+
   |        TEST CASE        |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
   +-------------------------+------------------+----------------------+------------------+----------------+
-  |     rally_full_cntt     |     functest     |     benchmarking     |      89:52       |      PASS      |
-  |     rally_jobs_cntt     |     functest     |     benchmarking     |      19:39       |      PASS      |
-  |           vmtp          |     functest     |     benchmarking     |      16:59       |      PASS      |
-  |          shaker         |     functest     |     benchmarking     |      23:43       |      PASS      |
+  |     rally_full_cntt     |     functest     |     benchmarking     |      90:27       |      PASS      |
+  |     rally_jobs_cntt     |     functest     |     benchmarking     |      22:58       |      PASS      |
+  |           vmtp          |     functest     |     benchmarking     |      23:43       |      PASS      |
+  |          shaker         |     functest     |     benchmarking     |      28:49       |      PASS      |
   +-------------------------+------------------+----------------------+------------------+----------------+
 
 Testing vnf suite
@@ -209,18 +212,18 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf
+      opnfv/functest-vnf:leguer
 
 Results shall be displayed as follows::
 
   +----------------------+------------------+--------------+------------------+----------------+
   |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +----------------------+------------------+--------------+------------------+----------------+
-  |       cloudify       |     functest     |     vnf      |      05:08       |      PASS      |
-  |     cloudify_ims     |     functest     |     vnf      |      24:46       |      PASS      |
-  |       heat_ims       |     functest     |     vnf      |      33:12       |      PASS      |
-  |     vyos_vrouter     |     functest     |     vnf      |      15:53       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      27:52       |      PASS      |
+  |       cloudify       |     functest     |     vnf      |      04:23       |      PASS      |
+  |     cloudify_ims     |     functest     |     vnf      |      24:42       |      PASS      |
+  |       heat_ims       |     functest     |     vnf      |      30:33       |      PASS      |
+  |     vyos_vrouter     |     functest     |     vnf      |      17:31       |      PASS      |
+  |       juju_epc       |     functest     |     vnf      |      37:21       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
 Functest Dockers for Kubernetes deployment
@@ -247,7 +250,7 @@ Run healthcheck suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-healthcheck
+      opnfv/functest-kubernetes-healthcheck:leguer
 
 A config file in the current dir 'config' is also required, which should be
 volume mapped to ~/.kube/config inside kubernetes container.
@@ -257,8 +260,8 @@ Results shall be displayed as follows::
   +-------------------+------------------+---------------------+------------------+----------------+
   |     TEST CASE     |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
   +-------------------+------------------+---------------------+------------------+----------------+
-  |     k8s_quick     |     functest     |     healthcheck     |      00:18       |      PASS      |
-  |     k8s_smoke     |     functest     |     healthcheck     |      01:14       |      PASS      |
+  |     k8s_quick     |     functest     |     healthcheck     |      00:13       |      PASS      |
+  |     k8s_smoke     |     functest     |     healthcheck     |      00:26       |      PASS      |
   +-------------------+------------------+---------------------+------------------+----------------+
 
 Testing smoke suite
@@ -268,15 +271,15 @@ Run smoke suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-smoke
+      opnfv/functest-kubernetes-smoke:leguer
 
 Results shall be displayed as follows::
 
   +---------------------------+------------------+---------------+------------------+----------------+
   |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
   +---------------------------+------------------+---------------+------------------+----------------+
-  |      k8s_conformance      |     functest     |     smoke     |      94:26       |      PASS      |
-  |     xrally_kubernetes     |     functest     |     smoke     |      13:05       |      PASS      |
+  |      k8s_conformance      |     functest     |     smoke     |      103:05      |      PASS      |
+  |     xrally_kubernetes     |     functest     |     smoke     |      14:17       |      PASS      |
   +---------------------------+------------------+---------------+------------------+----------------+
 
 Testing security suite
@@ -286,16 +289,16 @@ Run smoke suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-security
+      opnfv/functest-kubernetes-security:leguer
 
 Results shall be displayed as follows::
 
   +---------------------------+------------------+------------------+------------------+----------------+
   |         TEST CASE         |     PROJECT      |       TIER       |     DURATION     |     RESULT     |
   +---------------------------+------------------+------------------+------------------+----------------+
-  |        kube_hunter        |     functest     |     security     |      00:19       |      PASS      |
-  |     kube_bench_master     |     functest     |     security     |      00:02       |      PASS      |
-  |      kube_bench_node      |     functest     |     security     |      00:01       |      PASS      |
+  |        kube_hunter        |     functest     |     security     |      00:18       |      PASS      |
+  |     kube_bench_master     |     functest     |     security     |      00:07       |      PASS      |
+  |      kube_bench_node      |     functest     |     security     |      00:06       |      PASS      |
   +---------------------------+------------------+------------------+------------------+----------------+
 
 Testing benchmarking suite
@@ -305,14 +308,14 @@ Run benchmarking suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-benchmarking
+      opnfv/functest-kubernetes-benchmarking:leguer
 
 Results shall be displayed as follows::
 
   +--------------------------------+------------------+----------------------+------------------+----------------+
   |           TEST CASE            |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
   +--------------------------------+------------------+----------------------+------------------+----------------+
-  |     xrally_kubernetes_full     |     functest     |     benchmarking     |      34:16       |      PASS      |
+  |     xrally_kubernetes_full     |     functest     |     benchmarking     |      39:15       |      PASS      |
   +--------------------------------+------------------+----------------------+------------------+----------------+
 
 Testing cnf suite
@@ -322,16 +325,16 @@ Run cnf suite::
 
   sudo docker run -it --env-file env \
       -v $(pwd)/config:/root/.kube/config \
-      opnfv/functest-kubernetes-cnf
+      opnfv/functest-kubernetes-cnf:leguer
 
 Results shall be displayed as follows::
 
   +-------------------------+------------------+--------------+------------------+----------------+
   |        TEST CASE        |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
   +-------------------------+------------------+--------------+------------------+----------------+
-  |         k8s_vims        |     functest     |     cnf      |      09:06       |      PASS      |
-  |        helm_vims        |     functest     |     cnf      |      08:54       |      PASS      |
-  |     cnf_conformance     |     functest     |     cnf      |      02:00       |      PASS      |
+  |         k8s_vims        |     functest     |     cnf      |      09:27       |      PASS      |
+  |        helm_vims        |     functest     |     cnf      |      09:12       |      PASS      |
+  |     cnf_conformance     |     functest     |     cnf      |      02:55       |      PASS      |
   +-------------------------+------------------+--------------+------------------+----------------+
 
 Environment variables
