@@ -57,6 +57,8 @@ kube
 kubernetes
 Kubernetes
 kvm
+leguer
+Leguer
 linux
 login
 metadata

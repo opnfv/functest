@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 
 ======================================
-OPNFV master release note for Functest
+OPNFV Leguer release note for Functest
 ======================================
 
 Abstract
@@ -86,7 +86,7 @@ Release Data
 +--------------------------------------+--------------------------------------+
 | **Project**                          | functest                             |
 +--------------------------------------+--------------------------------------+
-| **Repository branch**                | master                               |
+| **Repository branch**                | stable/leguer                        |
 +--------------------------------------+--------------------------------------+
 
 Deliverables
@@ -112,7 +112,7 @@ Software
  * https://hub.docker.com/r/opnfv/functest-kubernetes-benchmarking
  * https://hub.docker.com/r/opnfv/functest-kubernetes-cnf
 
-Docker tag for master: latest
+Docker tag for Leguer: leguer
 
 Documents
 ---------
