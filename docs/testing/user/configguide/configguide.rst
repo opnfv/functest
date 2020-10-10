@@ -123,9 +123,12 @@ Results shall be displayed as follows::
   |        tempest_full       |     functest     |     smoke     |      41:52       |      PASS      |
   |      tempest_scenario     |     functest     |     smoke     |      08:42       |      PASS      |
   |        tempest_slow       |     functest     |     smoke     |      43:42       |      PASS      |
-  |          patrole          |     functest     |     smoke     |      02:42       |      PASS      |
+  |       patrole_admin       |     functest     |     smoke     |      21:06       |      PASS      |
+  |       patrole_member      |     functest     |     smoke     |      21:23       |      PASS      |
+  |       patrole_reader      |     functest     |     smoke     |      21:56       |      PASS      |
   |      tempest_barbican     |     functest     |     smoke     |      02:30       |      PASS      |
   |      tempest_octavia      |     functest     |     smoke     |      00:00       |      SKIP      |
+  |       tempest_cyborg      |     functest     |     smoke     |      00:00       |      SKIP      |
   +---------------------------+------------------+---------------+------------------+----------------+
 
 Note: if the scenario does not support some tests, they are indicated as SKIP.
