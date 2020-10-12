@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b317b4d_68874109",
+        "filename": "build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-10-12T08:07:35Z",
+      "side": 1,
+      "message": "Not clear we need another container.\nAre these tests disruptive?",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4c94dd_011e7b54",
+        "filename": "docker/rbdbench/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-10-12T08:07:35Z",
+      "side": 1,
+      "message": "latest",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33195c01_85c39763",
+        "filename": "docker/rbdbench/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-10-12T08:07:35Z",
+      "side": 1,
+      "message": "3.8",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a82a6f1_739a4255",
+        "filename": "functest/opnfv_tests/rbdbench/cred.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-10-12T08:07:35Z",
+      "side": 1,
+      "message": "I would have rather considered a env var first\nSee https://git.opnfv.org/functest/tree/functest/utils/env.py",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c41c44c_dfe05338",
+        "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-10-12T08:07:35Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t see functest.opnfv_tests.rbdbench.rbdbench:StorageValidation",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    }
+  ]
+}
