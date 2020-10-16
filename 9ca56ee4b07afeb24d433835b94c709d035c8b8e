@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9abdfbf5_9be4d3d6",
+        "filename": "docs/com/pres/rfp/rfp.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2020-10-16T11:41:43Z",
+      "side": 1,
+      "message": "quickly",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 49
+      },
+      "revId": "9ca56ee4b07afeb24d433835b94c709d035c8b8e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c4e08c_2cc96398",
+        "filename": "docs/com/pres/rfp/rfp.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2020-10-16T11:41:43Z",
+      "side": 1,
+      "message": "separate",
+      "range": {
+        "startLine": 28,
+        "startChar": 32,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "9ca56ee4b07afeb24d433835b94c709d035c8b8e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f69a41e_26bae96f",
+        "filename": "docs/com/pres/rfp/rfp.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 385
+      },
+      "writtenOn": "2020-10-16T11:41:43Z",
+      "side": 1,
+      "message": "- **XtestingCI** eases deploying plug-and-play CI/CD tool-chains anywhere, in a\n  few commands\n- **CNTT** defines conformance suites and its playbooks leverage these 3\n  softwares",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "9ca56ee4b07afeb24d433835b94c709d035c8b8e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    }
+  ]
+}
