@@ -261,39 +261,27 @@ Functest offers a possibility to test a customized list of Tempest test cases.
 To enable that, add a new entry in docker/smoke/testcases.yaml on the
 "smoke" container with the following content::
 
-    -
-        case_name: tempest_custom
-        project_name: functest
-        criteria: 100
-        blocking: false
-        description: >-
-            The test case allows running a customized list of tempest
-            test cases
-        dependencies:
-            installer: ''
-            scenario: ''
-        run:
-            module: 'functest.opnfv_tests.openstack.tempest.tempest'
-            class: 'TempestCustom'
-
-Also, a list of the Tempest test cases must be provided to the container or
-modify the existing one in
-/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt
-
-Example of custom list of tests 'my-custom-tempest-tests.txt'::
-
-    tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops[compute,id-7fff3fb3-91d8-4fd0-bd7d-0204f1f180ba,network,smoke]
-    tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops[compute,id-f323b3ba-82f8-4db7-8ea6-6a895869ec49,network,smoke]
+  -
+      case_name: tempest_custom
+      project_name: functest
+      criteria: 100
+      blocking: false
+      description: >-
+          The test case allows running a customized list of tempest
+          test cases
+      run:
+          name: tempest_common
+          args:
+              mode: "tempest.scenario.test_server_basic_ops.TestServerBasicOps.test_server_basic_ops|\
+                  tempest.scenario.test_network_basic_ops.TestNetworkBasicOps.test_network_basic_ops"
 
 This is an example of running a customized list of Tempest tests in Functest::
 
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python3.8/site-packages/functest/ci/testcases.yaml \
-      -v $(pwd)/my-custom-tempest-tests.txt:/usr/lib/python3.8/site-packages/functest/opnfv_tests/openstack/tempest/custom_tests/test_list.txt \
+      -v $(pwd)/my-custom-testcases.yaml:/usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml \
       opnfv/functest-smoke run_tests -t tempest_custom
-
 
 Rally
 ^^^^^
