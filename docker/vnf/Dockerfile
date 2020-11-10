@@ -24,6 +24,8 @@ RUN apk --no-cache add --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=rally/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=xrally-kubernetes/d upper-constraints.opnfv.txt && \
     git clone --depth 1 -b $VIMS_TEST_TAG https://github.com/Metaswitch/clearwater-live-test /src/vims-test && \
     sed -i s/unf_ext\ \(.*\)/unf_ext\ \(0.0.7.4\)/g /src/vims-test/Gemfile.lock && \
     git init /src/vims-test/quaff && \

@@ -21,19 +21,21 @@ RUN apk --no-cache add --virtual .build-deps --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=rally/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=xrally-kubernetes/d upper-constraints.opnfv.txt && \
     git init /src/rally && \
     (cd /src/rally && \
         git fetch --tags https://opendev.org/openstack/rally.git $RALLY_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/rally/ && \
+    (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
+    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
+        /src/rally && \
     (git clone https://opendev.org/openstack/rally-openstack.git /src/rally-openstack && \
         cd /src/rally-openstack && git checkout $RALLY_OPENSTACK_TAG) && \
     update-requirements -s --source /src/openstack-requirements /src/rally-openstack && \
     pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         tempest /src/rally-openstack && \
-    (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
-    pip3 install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
-        /src/rally && \
     rm -r upper-constraints.txt upper-constraints.opnfv.txt /src/rally /src/rally-openstack \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch && \
     mkdir -p /etc/rally && \
