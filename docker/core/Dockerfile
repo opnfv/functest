@@ -16,6 +16,8 @@ RUN apk --no-cache add --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt && apk add --no-cache py-pynacl ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt  && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=rally/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=xrally-kubernetes/d upper-constraints.opnfv.txt && \
     pip install --no-cache-dir --src /src -cupper-constraints.opnfv.txt -cupper-constraints.txt \
         -e git+https://opendev.org/openstack/requirements@$OPENSTACK_TAG#egg=openstack_requirements && \
     git init /src/functest && \
