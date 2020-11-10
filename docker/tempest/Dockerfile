@@ -21,6 +21,8 @@ RUN apk --no-cache add --virtual .build-deps --update \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d upper-constraints.txt ;; esac && \
     wget -q -O- https://git.opnfv.org/functest/plain/upper-constraints.txt?h=$BRANCH > upper-constraints.opnfv.txt && \
     sed -i -E /#egg=functest/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=rally/d upper-constraints.opnfv.txt && \
+    sed -i -E /#egg=xrally-kubernetes/d upper-constraints.opnfv.txt && \
     git init /src/rally && \
     (cd /src/rally && \
         git fetch --tags https://opendev.org/openstack/rally.git $RALLY_TAG && \
