@@ -51,6 +51,7 @@
             - tempest_smoke
             - tempest_horizon
         - container: functest-smoke
+          timeout: 2h
           tests:
             - tempest_neutron
             - tempest_cinder
@@ -71,12 +72,14 @@
             - tempest_octavia
             - tempest_cyborg
         - container: functest-benchmarking
+          timeout: 4h
           tests:
             - rally_full
             - rally_jobs
             - vmtp
             - shaker
         - container: functest-vnf
+          timeout: 2h
           tests:
             - cloudify
             - cloudify_ims
