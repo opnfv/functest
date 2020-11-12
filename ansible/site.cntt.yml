@@ -23,6 +23,7 @@
             - odl
             - tempest_smoke
         - container: functest-smoke-cntt
+          timeout: 2h
           tests:
             - tempest_neutron_cntt
             - tempest_cinder_cntt
@@ -33,12 +34,14 @@
             - tempest_scenario_cntt
             - tempest_slow_cntt
         - container: functest-benchmarking-cntt
+          timeout: 4h
           tests:
             - rally_full_cntt
             - rally_jobs_cntt
             - vmtp
             - shaker
         - container: functest-vnf
+          timeout: 2h
           tests:
             - cloudify
             - cloudify_ims
