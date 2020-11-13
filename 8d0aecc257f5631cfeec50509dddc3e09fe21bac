@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db7370b3_e9a674db",
+        "filename": "build.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 7654
+      },
+      "writtenOn": "2020-11-13T07:16:51Z",
+      "side": 1,
+      "message": "NO, these tests are not disruptive.",
+      "parentUuid": "6b317b4d_68874109",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d4c94dd_011e7b54",
         "filename": "docker/rbdbench/Dockerfile",
         "patchSetId": 1
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "17379a6a_51f725b1",
+        "filename": "functest/opnfv_tests/rbdbench/cred.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7654
+      },
+      "writtenOn": "2020-11-13T07:16:51Z",
+      "side": 1,
+      "message": "Since the user can run this test on any host which has rbd installed, so we have captured the requirements in this separate file. Also, suggest us if still this needs to be changed.",
+      "parentUuid": "4a82a6f1_739a4255",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c41c44c_dfe05338",
         "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
         "patchSetId": 1
@@ -81,6 +117,24 @@
       "writtenOn": "2020-10-12T08:07:35Z",
       "side": 1,
       "message": "Sorry I don\u0027t see functest.opnfv_tests.rbdbench.rbdbench:StorageValidation",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c008aa98_5bebc1db",
+        "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7654
+      },
+      "writtenOn": "2020-11-13T07:16:51Z",
+      "side": 1,
+      "message": "It is already present in setup.cfg",
+      "parentUuid": "4c41c44c_dfe05338",
       "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": true
