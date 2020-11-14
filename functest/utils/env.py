@@ -40,7 +40,8 @@ INPUTS = {
     'SKIP_DOWN_HYPERVISORS': 'False',
     'PUBLIC_ENDPOINT_ONLY': 'False',
     'DASHBOARD_URL': '',
-    'VMTP_HYPERVISORS': ''
+    'VMTP_HYPERVISORS': '',
+    'NO_TENANT_NETWORK': 'False'
 }
 
 
