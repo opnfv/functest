@@ -16,6 +16,7 @@ import os_client_config
 import shade
 from xtesting.core import testcase
 
+from functest.utils import env
 from functest.utils import functest_utils
 
 
@@ -51,6 +52,9 @@ class ConnectionCheck(testcase.TestCase):
             self.start_time = time.time()
             self.__logger.debug(
                 "list_services: %s", functest_utils.list_services(self.cloud))
+            if env.get('NO_TENANT_NETWORK').lower() == 'true':
+                self.func_list.remove("list_floating_ip_pools")
+                self.func_list.remove("list_floating_ips")
             for func in self.func_list:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
