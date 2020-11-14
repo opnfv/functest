@@ -27,6 +27,8 @@ tiers:
                     It creates and configures all tenant network ressources
                     required by advanced testcases (subnet, network and
                     router).
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: tenantnetwork1
 
@@ -39,6 +41,8 @@ tiers:
                     It creates new user/project before creating and configuring
                     all tenant network ressources required by a testcase
                     (subnet, network and router).
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: tenantnetwork2
 
