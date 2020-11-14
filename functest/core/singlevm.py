@@ -212,7 +212,9 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         vm1 = self.cloud.create_server(
             name if name else '{}-vm_{}'.format(self.case_name, self.guid),
             image=self.image.id, flavor=self.flavor.id,
-            auto_ip=False, network=self.network.id,
+            auto_ip=False,
+            network=self.network.id if self.network else env.get(
+                "EXTERNAL_NETWORK"),
             timeout=self.create_server_timeout, wait=True, **kwargs)
         self.__logger.debug("vm: %s", vm1)
         return vm1
@@ -417,10 +419,12 @@ class SingleVm1(VmReady1):
         - None on error
         """
         assert vm1
-        fip = self.cloud.create_floating_ip(
-            network=self.ext_net.id, server=vm1, wait=True,
-            timeout=self.create_floating_ip_timeout)
-        self.__logger.debug("floating_ip: %s", fip)
+        fip = None
+        if env.get('NO_TENANT_NETWORK').lower() != 'true':
+            fip = self.cloud.create_floating_ip(
+                network=self.ext_net.id, server=vm1, wait=True,
+                timeout=self.create_floating_ip_timeout)
+            self.__logger.debug("floating_ip: %s", fip)
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.client.AutoAddPolicy())
         for loop in range(self.ssh_connect_loops):
@@ -428,7 +432,7 @@ class SingleVm1(VmReady1):
                 p_console = self.cloud.get_server_console(vm1)
                 self.__logger.debug("vm console: \n%s", p_console)
                 ssh.connect(
-                    fip.floating_ip_address,
+                    fip.floating_ip_address if fip else vm1.public_v4,
                     username=getattr(
                         config.CONF,
                         '{}_image_user'.format(self.case_name), self.username),
@@ -441,7 +445,7 @@ class SingleVm1(VmReady1):
             except Exception as exc:  # pylint: disable=broad-except
                 self.__logger.debug(
                     "try %s: cannot connect to %s: %s", loop + 1,
-                    fip.floating_ip_address, exc)
+                    fip.floating_ip_address if fip else vm1.public_v4, exc)
                 time.sleep(9)
         else:
             self.__logger.error(

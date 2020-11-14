@@ -268,7 +268,8 @@ class TenantNetwork1(testcase.TestCase):
         try:
             assert self.cloud
             self.start_time = time.time()
-            self.create_network_resources()
+            if env.get('NO_TENANT_NETWORK').lower() != 'true':
+                self.create_network_resources()
             self.result = 100
             status = testcase.TestCase.EX_OK
         except Exception:  # pylint: disable=broad-except
