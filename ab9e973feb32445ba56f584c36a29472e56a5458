@@ -34,6 +34,24 @@
       "revId": "ab9e973feb32445ba56f584c36a29472e56a5458",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46b32e66_36cd4f2a",
+        "filename": "functest/utils/env.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 7590
+      },
+      "writtenOn": "2020-11-16T17:17:45Z",
+      "side": 1,
+      "message": "NVM. I found that I can pass in using env file.",
+      "parentUuid": "f73d7550_be35440e",
+      "revId": "ab9e973feb32445ba56f584c36a29472e56a5458",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": false
     }
   ]
 }
