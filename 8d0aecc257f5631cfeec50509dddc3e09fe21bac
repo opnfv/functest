@@ -138,6 +138,24 @@
       "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b6ce6b_3885e53e",
+        "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2020-11-17T12:47:42Z",
+      "side": 1,
+      "message": "yes in setup.cfg but not in rbdbench.py",
+      "parentUuid": "c008aa98_5bebc1db",
+      "revId": "8d0aecc257f5631cfeec50509dddc3e09fe21bac",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
     }
   ]
 }
