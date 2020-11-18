@@ -133,7 +133,14 @@ class RallyBase(singlevm.VmReady2):
         if self.network:
             task_args['netid'] = str(self.network.id)
         else:
-            task_args['netid'] = ''
+            LOGGER.warning(
+                'No tenant network created. '
+                'Trying EXTERNAL_NETWORK as a fallback')
+            if env.get("EXTERNAL_NETWORK"):
+                network = self.cloud.get_network(env.get("EXTERNAL_NETWORK"))
+                task_args['netid'] = str(network.id) if network else ''
+            else:
+                task_args['netid'] = ''
 
         return task_args
 
