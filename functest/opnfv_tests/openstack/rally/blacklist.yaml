@@ -30,3 +30,4 @@ functionality:
             - NeutronNetworks.create_and_delete_floating_ips
             - NeutronNetworks.create_and_list_floating_ips
             - NeutronNetworks.associate_and_dissociate_floating_ips
+            - VMTasks.dd_load_test
