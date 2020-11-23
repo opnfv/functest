@@ -46,9 +46,11 @@ identity-feature-enabled:
     external_idp: false
     project_tags: true
     application_credentials: true
+    access_rules: true
 image-feature-enabled:
     api_v2: true
     api_v1: false
+    import_image: false
 network-feature-enabled:
     port_admin_state_change: true
     port_security: true
@@ -73,7 +75,8 @@ volume-feature-enabled:
     clone: true
     manage_snapshot: true
     manage_volume: true
-    extend_attached_volume: false
+    extend_attached_volume: true
+    extend_attached_encrypted_volume: false
     consistency_group: false
     volume_revert: true
 load_balancer:
@@ -96,3 +99,5 @@ heat_plugin:
     auth_version: 3
 heat_features_enabled:
     multi_cloud: false
+rbac:
+    enable_rbac: true
