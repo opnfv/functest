@@ -225,6 +225,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         Returns: True or False on errors
         """
         assert self.cloud
+        console = ''
         for iloop in range(loop):
             console = self.cloud.get_server_console(name)
             self.__logger.debug("console: \n%s", console)
@@ -237,7 +238,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 iloop + 1, regex, console)
             time.sleep(10)
         self.__logger.error("cannot find regex '%s' in console", regex)
-        return False
+        return not console or console.isspace()
 
     def clean_orphan_security_groups(self):
         """Clean all security groups which are not owned by an existing tenant
