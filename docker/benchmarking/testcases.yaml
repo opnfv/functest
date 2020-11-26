@@ -45,7 +45,7 @@ tiers:
                     perform ping connectivity, round trip time measurement
                     (latency) and TCP/UDP throughput
                 dependencies:
-                    - POD_ARCH: '^(?!aarch64$)'
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: vmtp
 
@@ -60,6 +60,6 @@ tiers:
                     is able to deploy OpenStack instances and networks in
                     different topologies.
                 dependencies:
-                    - POD_ARCH: '^(?!aarch64$)'
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: shaker
