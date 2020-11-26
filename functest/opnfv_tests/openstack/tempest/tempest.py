@@ -291,6 +291,8 @@ class TempestCommon(singlevm.VmReady2):
             assert os.path.exists(
                 account_file), "{} doesn't exist".format(account_file)
             rconfig.set('auth', 'test_accounts_file', account_file)
+        if env.get('NO_TENANT_NETWORK').lower() == 'true':
+            rconfig.set('auth', 'create_isolated_networks', False)
         rconfig.set('identity', 'admin_role', admin_role_name)
         rconfig.set('identity', 'default_domain_id', domain_id)
         if not rconfig.has_section('network'):
@@ -510,8 +512,11 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.read(self.conf_file)
         if not rconfig.has_section('network'):
             rconfig.add_section('network')
-        rconfig.set('network', 'public_network_id', self.ext_net.id)
-        rconfig.set('network', 'floating_network_name', self.ext_net.name)
+        if self.ext_net:
+            rconfig.set('network', 'public_network_id', self.ext_net.id)
+            rconfig.set('network', 'floating_network_name', self.ext_net.name)
+        else:
+            rconfig.set('network-feature-enabled', 'floating_ips', False)
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
@@ -521,7 +526,9 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.read(self.conf_file)
         if not rconfig.has_section('compute'):
             rconfig.add_section('compute')
-        rconfig.set('compute', 'fixed_network_name', self.network.name)
+        rconfig.set(
+            'compute', 'fixed_network_name',
+            self.network.name if self.network else env.get("EXTERNAL_NETWORK"))
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
@@ -531,7 +538,12 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.read(self.conf_file)
         if not rconfig.has_section('validation'):
             rconfig.add_section('validation')
-        rconfig.set('validation', 'network_for_ssh', self.network.name)
+        rconfig.set(
+            'validation', 'connect_method',
+            'floating' if self.ext_net else 'fixed')
+        rconfig.set(
+            'validation', 'network_for_ssh',
+            self.network.name if self.network else env.get("EXTERNAL_NETWORK"))
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
@@ -727,10 +739,22 @@ class TempestHeat(TempestCommon):
         rconfig.set('heat_plugin', 'instance_type', self.flavor_alt.id)
         rconfig.set('heat_plugin', 'minimal_image_ref', self.image.id)
         rconfig.set('heat_plugin', 'minimal_instance_type', self.flavor.id)
-        rconfig.set('heat_plugin', 'floating_network_name', self.ext_net.name)
-        rconfig.set('heat_plugin', 'fixed_network_name', self.network.name)
-        rconfig.set('heat_plugin', 'fixed_subnet_name', self.subnet.name)
-        rconfig.set('heat_plugin', 'network_for_ssh', self.network.name)
+        if self.ext_net:
+            rconfig.set(
+                'heat_plugin', 'floating_network_name', self.ext_net.name)
+        if self.network:
+            rconfig.set('heat_plugin', 'fixed_network_name', self.network.name)
+            rconfig.set('heat_plugin', 'fixed_subnet_name', self.subnet.name)
+            rconfig.set('heat_plugin', 'network_for_ssh', self.network.name)
+        else:
+            LOGGER.warning(
+                'No tenant network created. '
+                'Trying EXTERNAL_NETWORK as a fallback')
+            rconfig.set(
+                'heat_plugin', 'fixed_network_name',
+                env.get("EXTERNAL_NETWORK"))
+            rconfig.set(
+                'heat_plugin', 'network_for_ssh', env.get("EXTERNAL_NETWORK"))
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
