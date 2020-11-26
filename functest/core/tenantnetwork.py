@@ -149,7 +149,6 @@ class TenantNetwork1(testcase.TestCase):
     __logger = logging.getLogger(__name__)
     cidr = '192.168.120.0/24'
     shared_network = False
-    allow_no_fip = False
 
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
@@ -223,7 +222,7 @@ class TenantNetwork1(testcase.TestCase):
         Raises: expection on error
         """
         assert self.cloud
-        if not self.allow_no_fip:
+        if env.get('NO_TENANT_NETWORK').lower() != 'true':
             assert self.ext_net
         provider = {}
         if hasattr(config.CONF, '{}_network_type'.format(self.case_name)):
