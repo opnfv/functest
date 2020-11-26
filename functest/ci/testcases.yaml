@@ -888,6 +888,8 @@ tiers:
                     This test case deploys an OpenSource vIMS solution from
                     Clearwater using the Cloudify orchestrator. It also runs
                     some signaling traffic.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: cloudify_ims
 
@@ -900,6 +902,8 @@ tiers:
                     This test case deploys an OpenSource vIMS solution from
                     Clearwater using the OpenStack Heat orchestrator.
                     It also runs some signaling traffic.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: heat_ims
 
@@ -910,6 +914,8 @@ tiers:
                 blocking: false
                 description: >-
                     This test case is vRouter testing.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: vyos_vrouter
 
@@ -921,5 +927,7 @@ tiers:
                 description: >-
                     vEPC validation with Juju as VNF manager and ABoT as test
                     executor.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: juju_epc
