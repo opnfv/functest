@@ -69,7 +69,6 @@ class RallyBase(singlevm.VmReady2):
 
     visibility = 'public'
     shared_network = True
-    allow_no_fip = True
     task_timeout = 3600
     username = 'cirros'
 
