@@ -77,7 +77,8 @@ class Cloudify(singlevm.SingleVm2):
         self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
         self.cfy_client = CloudifyClient(
-            host=self.fip.floating_ip_address,
+            host=self.fip.floating_ip_address if self.fip else (
+                self.sshvm.public_v4),
             username='admin', password='admin', tenant='default_tenant')
         self.__logger.info("Attemps running status of the Manager")
         secret_key = "foo"
