@@ -30,17 +30,17 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     update-requirements -s --source /src/requirements /src/patrole/ && \
     git init /src/neutron-tempest-plugin && \
     (cd /src/neutron-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/neutron-tempest-plugin.git $NEUTRON_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/neutron-tempest-plugin.git $NEUTRON_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/neutron-tempest-plugin && \
     git init /src/cinder-tempest-plugin && \
     (cd /src/cinder-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/cinder-tempest-plugin && \
     git init /src/keystone-tempest-plugin && \
     (cd /src/keystone-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/keystone-tempest-plugin.git $KEYSTONE_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/keystone-tempest-plugin.git $KEYSTONE_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/keystone-tempest-plugin && \
     git init /src/barbican-tempest-plugin && \
@@ -50,22 +50,22 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     update-requirements -s --source /src/requirements /src/barbican-tempest-plugin/ && \
     git init /src/octavia-tempest-plugin && \
     (cd /src/octavia-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/octavia-tempest-plugin.git $OCTAVIA_TAG && \
+        git fetch --tags https://opendev.org/openstack/octavia-tempest-plugin.git $OCTAVIA_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/octavia-tempest-plugin && \
     git init /src/heat-tempest-plugin && \
     (cd /src/heat-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/heat-tempest-plugin && \
     git init /src/telemetry-tempest-plugin && \
     (cd /src/telemetry-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/telemetry-tempest-plugin.git $TELEMETRY_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/telemetry-tempest-plugin.git $TELEMETRY_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/telemetry-tempest-plugin && \
     git init /src/cyborg-tempest-plugin && \
     (cd /src/cyborg-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/cyborg-tempest-plugin.git $CYBORG_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/cyborg-tempest-plugin.git $CYBORG_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/cyborg-tempest-plugin && \
     pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
