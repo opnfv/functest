@@ -36,12 +36,12 @@ RUN apk --no-cache add --update libxml2 libxslt libpcre16 libpcre32 && \
     update-requirements -s --source /src/openstack-requirements /src/neutron-tempest-plugin && \
     git init /src/cinder-tempest-plugin && \
     (cd /src/cinder-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/cinder-tempest-plugin && \
     git init /src/keystone-tempest-plugin && \
     (cd /src/keystone-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/keystone-tempest-plugin.git $KEYSTONE_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/keystone-tempest-plugin.git $KEYSTONE_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/openstack-requirements /src/keystone-tempest-plugin && \
     git init /src/barbican-tempest-plugin && \
@@ -51,7 +51,7 @@ RUN apk --no-cache add --update libxml2 libxslt libpcre16 libpcre32 && \
     update-requirements -s --source /src/openstack-requirements /src/barbican-tempest-plugin/ && \
     git init /src/heat-tempest-plugin && \
     (cd /src/heat-tempest-plugin && \
-        git fetch --tags https://git.openstack.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
+        git fetch --tags https://opendev.org/openstack/heat-tempest-plugin.git $HEAT_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     pip install --no-cache-dir --src /src -cupper-constraints.txt -cupper-constraints.opnfv.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
