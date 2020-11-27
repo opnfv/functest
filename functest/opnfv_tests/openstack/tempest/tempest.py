@@ -502,12 +502,14 @@ class TempestCommon(singlevm.VmReady2):
         """Update network section in tempest.conf"""
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
-        if not rconfig.has_section('network'):
-            rconfig.add_section('network')
         if self.ext_net:
+            if not rconfig.has_section('network'):
+                rconfig.add_section('network')
             rconfig.set('network', 'public_network_id', self.ext_net.id)
             rconfig.set('network', 'floating_network_name', self.ext_net.name)
         else:
+            if not rconfig.has_section('network-feature-enabled'):
+                rconfig.add_section('network-feature-enabled')
             rconfig.set('network-feature-enabled', 'floating_ips', False)
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
