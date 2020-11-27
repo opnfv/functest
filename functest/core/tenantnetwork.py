@@ -155,19 +155,19 @@ class TenantNetwork1(testcase.TestCase):
         self.res_dir = os.path.join(self.dir_results, self.case_name)
         self.output_log_name = 'functest.log'
         self.output_debug_log_name = 'functest.debug.log'
+        self.ext_net = None
         try:
             cloud_config = os_client_config.get_config()
             self.cloud = self.orig_cloud = shade.OpenStackCloud(
                 cloud_config=cloud_config)
         except Exception:  # pylint: disable=broad-except
             self.cloud = self.orig_cloud = None
-            self.ext_net = None
             self.__logger.exception("Cannot connect to Cloud")
-        try:
-            self.ext_net = self.get_external_network(self.cloud)
-        except Exception:  # pylint: disable=broad-except
-            self.ext_net = None
-            self.__logger.exception("Cannot get the external network")
+        if env.get('NO_TENANT_NETWORK').lower() != 'true':
+            try:
+                self.ext_net = self.get_external_network(self.cloud)
+            except Exception:  # pylint: disable=broad-except
+                self.__logger.exception("Cannot get the external network")
         self.guid = str(uuid.uuid4())
         self.network = None
         self.subnet = None
