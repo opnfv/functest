@@ -60,7 +60,6 @@ validation:
     ssh_timeout: 196
     ip_version_for_ssh: 4
     run_validation: true
-    connect_method: floating
 volume:
     max_microversion: 3.62
     storage_protocol: ceph
