@@ -239,6 +239,7 @@ tiers:
                           (?!.*test_routers_negative.DvrRoutersNegativeTest)\
                           (?!.*test_routers.RoutersIpV6Test.test_create_router_set_gateway_with_fixed_ip)\
                           (?!.*test_routers.RoutersTest.test_create_router_set_gateway_with_fixed_ip)\
+                          (?!.*test_object_services.ObjectTest.test_create_object_with_transfer_encoding)\
                           (?!.*test_encrypted_volumes_extend)\
                           (?!.*test_group_snapshots.GroupSnapshotsV319Test.test_reset_group_snapshot_status)\
                           (?!.*test_multi_backend)\
