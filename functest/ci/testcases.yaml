@@ -806,6 +806,7 @@ tiers:
                           (?!.*test_encrypted_cinder_volumes)\
                           (?!.*test_minbw_allocation_placement)\
                           (?!.*test_network_basic_ops.TestNetworkBasicOps.test_router_rescheduling)\
+                          (?!.*test_shelve_instance.TestShelveInstance.test_cold_migrate_unshelved_instance)\
                           (?!.*test_volume_migrate_attached)\
                           (?!.*test_network_advanced_server_ops.TestNetworkAdvancedServerOps.test_server_connectivity_cold_migration_revert)\
                           (?=.*\\[.*\\bslow\\b.*\\])(^tempest.)"
