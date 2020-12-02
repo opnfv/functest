@@ -32,7 +32,7 @@ class Shaker(singlevm.SingleVm2):
 
     __logger = logging.getLogger(__name__)
 
-    filename = '/home/opnfv/functest/images/shaker-image-1.3.0+stretch.qcow2'
+    filename = '/home/opnfv/functest/images/shaker-image-1.3.4+stretch.qcow2'
     flavor_ram = 512
     flavor_vcpus = 1
     flavor_disk = 3
