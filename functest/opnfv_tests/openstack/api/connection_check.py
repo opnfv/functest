@@ -55,6 +55,7 @@ class ConnectionCheck(testcase.TestCase):
             if env.get('NO_TENANT_NETWORK').lower() == 'true':
                 self.func_list.remove("list_floating_ip_pools")
                 self.func_list.remove("list_floating_ips")
+                self.func_list.remove("list_routers")
             for func in self.func_list:
                 self.__logger.debug(
                     "%s: %s", func, getattr(self.cloud, func)())
