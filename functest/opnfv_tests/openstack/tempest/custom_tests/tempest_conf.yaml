@@ -53,7 +53,6 @@ image-feature-enabled:
 network-feature-enabled:
     port_admin_state_change: true
     port_security: true
-    floating_ips: true
 placement:
     max_microversion: 1.36
 validation:
