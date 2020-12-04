@@ -514,6 +514,7 @@ class TempestCommon(singlevm.VmReady2):
                 rconfig.add_section('network')
             rconfig.set('network', 'public_network_id', self.ext_net.id)
             rconfig.set('network', 'floating_network_name', self.ext_net.name)
+            rconfig.set('network-feature-enabled', 'floating_ips', True)
         else:
             if not rconfig.has_section('network-feature-enabled'):
                 rconfig.add_section('network-feature-enabled')
