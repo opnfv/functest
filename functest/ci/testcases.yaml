@@ -406,6 +406,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
@@ -428,6 +429,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
@@ -450,6 +452,7 @@ tiers:
                           (?!.*test_delete_auto_allocated_topology)\
                           (?!.*test_create_network_provider_segmentation_id)\
                           (?!.*compute.test_floating_ips_rbac)\
+                          (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
