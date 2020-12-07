@@ -395,8 +395,7 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        create_floating_ip_args:
-          floating_network: {{ floating_network }}
+        floating_network: {{ floating_network }}
         nics:
           - net-id: {{ netid }}
       context:
@@ -412,8 +411,7 @@
     -
       args:
         {{ vm_params(image_name, flavor_name) }}
-        create_floating_ip_args:
-          floating_network: {{ floating_network }}
+        floating_network: {{ floating_network }}
         nics:
           - net-id: {{ netid }}
       context:
