@@ -16,6 +16,40 @@
       "revId": "6106ac743b1bf1b45580fddd81586d88ca296364",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dee123_461fc748",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 7590
+      },
+      "writtenOn": "2020-12-08T17:11:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6106ac743b1bf1b45580fddd81586d88ca296364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcaf94df_3fd96cfb",
+        "filename": "functest/ci/testcases.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 7590
+      },
+      "writtenOn": "2020-12-08T17:11:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6106ac743b1bf1b45580fddd81586d88ca296364",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
     }
   ]
 }
