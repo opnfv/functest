@@ -500,7 +500,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.add_section("auth")
         if env.get("NEW_USER_ROLE").lower() != "member":
             tempest_roles = []
-            if "tempest_roles" in rconfig["auth"]:
+            if rconfig.has_option("auth", "tempest_roles"):
                 tempest_roles = functest_utils.convert_ini_to_list(
                     rconfig.get("auth", "tempest_roles"))
             rconfig.set(
