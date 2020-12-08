@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "293d5894_f88c9da0",
+        "filename": "functest/opnfv_tests/openstack/tempest/tempest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 7590
+      },
+      "writtenOn": "2020-12-08T14:58:45Z",
+      "side": 1,
+      "message": "In this logic, the tempest_roles will only take effect if NEW_USER_ROLE is not the default \"member\" value. I can imagine in some use cases, the SUT want to have \"member\" and other user roles. I\u0027d suggest to check the condition is the NEW_USER_ROLE is not member OR tempest_roles exists in config.",
+      "revId": "9a2159370b6f1b3e4e16b457e26c48b5ee8a67f5",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    }
+  ]
+}
