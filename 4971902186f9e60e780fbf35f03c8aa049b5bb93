@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc95bc1b_18261f11",
+        "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 7656
+      },
+      "writtenOn": "2020-12-08T09:30:00Z",
+      "side": 1,
+      "message": "will check and revert asap.",
+      "parentUuid": "9428963f_3e76e38b",
+      "revId": "4971902186f9e60e780fbf35f03c8aa049b5bb93",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b94b342f_81b927b7",
         "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2020-12-08T08:21:59Z",
       "side": 1,
       "message": "Could you leverage logging?",
+      "revId": "4971902186f9e60e780fbf35f03c8aa049b5bb93",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f0f6b0_7943d641",
+        "filename": "functest/opnfv_tests/rbdbench/rbdbench.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7656
+      },
+      "writtenOn": "2020-12-08T09:30:00Z",
+      "side": 1,
+      "message": "sure, will change logging.",
+      "parentUuid": "b94b342f_81b927b7",
       "revId": "4971902186f9e60e780fbf35f03c8aa049b5bb93",
       "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
       "unresolved": true
