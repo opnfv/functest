@@ -785,6 +785,7 @@ tiers:
                     name: tempest_scenario
                     args:
                         mode: "\
+                          (?!.*test_minbw_allocation_placement)\
                           (?!.*test_volume_boot_pattern.TestVolumeBootPattern.test_boot_server_from_encrypted_volume_luks)\
                           (?!.*\\[.*\\bslow\\b.*\\])(^tempest.scenario)"
                         option:
