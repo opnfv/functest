@@ -33,5 +33,6 @@ functionality:
             - VMTasks.dd_load_test
             - NeutronNetworks.create_and_delete_routers
             - NeutronNetworks.create_and_list_routers
+            - NeutronNetworks.create_and_update_routers
             - NeutronNetworks.set_and_clear_router_gateway
             - Quotas.neutron_update
