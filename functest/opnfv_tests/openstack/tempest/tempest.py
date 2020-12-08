@@ -272,19 +272,6 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.set('compute-feature-enabled', 'live_migration', True)
         if os.environ.get('OS_REGION_NAME'):
             rconfig.set('identity', 'region', os.environ.get('OS_REGION_NAME'))
-        if env.get("NEW_USER_ROLE").lower() != "member":
-            rconfig.set(
-                'auth', 'tempest_roles',
-                functest_utils.convert_list_to_ini([env.get("NEW_USER_ROLE")]))
-        if not json.loads(env.get("USE_DYNAMIC_CREDENTIALS").lower()):
-            rconfig.set('auth', 'use_dynamic_credentials', False)
-            account_file = os.path.join(
-                getattr(config.CONF, 'dir_functest_data'), 'accounts.yaml')
-            assert os.path.exists(
-                account_file), "{} doesn't exist".format(account_file)
-            rconfig.set('auth', 'test_accounts_file', account_file)
-        if env.get('NO_TENANT_NETWORK').lower() == 'true':
-            rconfig.set('auth', 'create_isolated_networks', False)
         rconfig.set('identity', 'admin_role', admin_role_name)
         rconfig.set('identity', 'default_domain_id', domain_id)
         if not rconfig.has_section('network'):
@@ -498,6 +485,33 @@ class TempestCommon(singlevm.VmReady2):
         with open(rally_conf, 'w') as config_file:
             rconfig.write(config_file)
 
+    def update_auth_section(self):
+        """Update auth section in tempest.conf"""
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if not rconfig.has_section("auth"):
+            rconfig.add_section("auth")
+        if env.get("NEW_USER_ROLE").lower() != "member":
+            tempest_roles = []
+            if "tempest_roles" in rconfig["auth"]:
+                tempest_roles = functest_utils.convert_ini_to_list(
+                    rconfig.get("auth", "tempest_roles"))
+            rconfig.set(
+                'auth', 'tempest_roles',
+                functest_utils.convert_list_to_ini(
+                    [env.get("NEW_USER_ROLE")] + tempest_roles))
+        if not json.loads(env.get("USE_DYNAMIC_CREDENTIALS").lower()):
+            rconfig.set('auth', 'use_dynamic_credentials', False)
+            account_file = os.path.join(
+                getattr(config.CONF, 'dir_functest_data'), 'accounts.yaml')
+            assert os.path.exists(
+                account_file), "{} doesn't exist".format(account_file)
+            rconfig.set('auth', 'test_accounts_file', account_file)
+        if env.get('NO_TENANT_NETWORK').lower() == 'true':
+            rconfig.set('auth', 'create_isolated_networks', False)
+        with open(self.conf_file, 'w') as config_file:
+            rconfig.write(config_file)
+
     def update_network_section(self):
         """Update network section in tempest.conf"""
         rconfig = configparser.RawConfigParser()
@@ -606,6 +620,7 @@ class TempestCommon(singlevm.VmReady2):
             flavor_alt_id=self.flavor_alt.id,
             admin_role_name=self.role_name, cidr=self.cidr,
             domain_id=self.project.domain.id)
+        self.update_auth_section()
         self.update_network_section()
         self.update_compute_section()
         self.update_validation_section()
