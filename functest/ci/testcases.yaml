@@ -296,6 +296,8 @@ tiers:
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Compute testcases.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: refstack
                     args:
@@ -330,6 +332,8 @@ tiers:
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Platform testcases.
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: refstack
                     args:
