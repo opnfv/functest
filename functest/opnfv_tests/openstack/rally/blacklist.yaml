@@ -26,6 +26,7 @@ functionality:
         tests:
             - HeatStacks.create_and_delete_stack
             - NovaServers.boot_and_associate_floating_ip
+            - NovaServers.boot_server_and_list_interfaces
             - NovaServers.boot_server_associate_and_dissociate_floating_ip
             - NeutronNetworks.create_and_delete_floating_ips
             - NeutronNetworks.create_and_list_floating_ips
@@ -33,6 +34,7 @@ functionality:
             - VMTasks.dd_load_test
             - NeutronNetworks.create_and_delete_routers
             - NeutronNetworks.create_and_list_routers
+            - NeutronNetworks.create_and_show_routers
             - NeutronNetworks.create_and_update_routers
             - NeutronNetworks.set_and_clear_router_gateway
             - Quotas.neutron_update
