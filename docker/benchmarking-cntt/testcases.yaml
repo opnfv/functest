@@ -50,8 +50,6 @@ tiers:
                     VMTP is a small python application that will automatically
                     perform ping connectivity, round trip time measurement
                     (latency) and TCP/UDP throughput
-                dependencies:
-                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: vmtp
 
@@ -65,7 +63,5 @@ tiers:
                     like iperf, iperf3 and netperf (with help of flent). Shaker
                     is able to deploy OpenStack instances and networks in
                     different topologies.
-                dependencies:
-                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: shaker
