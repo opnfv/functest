@@ -776,6 +776,8 @@ tiers:
                 description: >-
                     This test case runs a group of Rally jobs used in
                     OpenStack gating
+                dependencies:
+                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: rally_jobs
                     args:
