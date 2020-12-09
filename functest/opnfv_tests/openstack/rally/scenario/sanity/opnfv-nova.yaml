@@ -55,9 +55,6 @@
               - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network:
-          networks_per_tenant: 1
-          start_cidr: "100.1.0.0/25"
         quotas:
           {{ unlimited_neutron() }}
           {{ unlimited_nova(keypairs=true) }}
@@ -76,9 +73,6 @@
           - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network:
-          networks_per_tenant: 1
-          start_cidr: "100.1.0.0/25"
         quotas:
           {{ unlimited_volumes() }}
           {{ unlimited_neutron() }}
@@ -100,9 +94,6 @@
           - net-id: {{ netid }}
       context:
         {% call user_context(tenants_amount, users_amount, use_existing_users) %}
-        network:
-          networks_per_tenant: 1
-          start_cidr: "100.1.0.0/25"
         quotas:
           {{ unlimited_neutron() }}
           {{ unlimited_nova() }}
