@@ -720,6 +720,9 @@ class TempestHeat(TempestCommon):
             name='{}-user2_{}'.format(self.case_name, self.project.guid),
             password=self.project.password,
             domain_id=self.project.domain.id)
+        self.orig_cloud.grant_role(
+            self.role_name, user=self.user2.id,
+            project=self.project.project.id, domain=self.project.domain.id)
         if not self.orig_cloud.get_role("heat_stack_owner"):
             self.role = self.orig_cloud.create_role("heat_stack_owner")
         self.orig_cloud.grant_role(
