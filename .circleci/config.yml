@@ -8,10 +8,10 @@ jobs:
       - checkout
       - run:
           name: Install dependendencies
-          command: sudo apt-get update && sudo apt-get install python2.7-dev enchant
+          command: sudo apt-get update && sudo apt-get install enchant
       - run:
           name: Run tox
-          command: sudo pip install tox && tox
+          command: sudo pip install tox tox-pip-version && tox
       - store_artifacts:
           path: api/build
           destination: api
