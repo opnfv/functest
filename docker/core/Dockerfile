@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.13
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
@@ -10,7 +10,7 @@ RUN apk --no-cache add --update \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev && \
+        openssl-dev libjpeg-turbo-dev rust cargo && \
     apk --no-cache add --update py3-distlib\>=0.3.1 \
         --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main && \
     git init /src/requirements && \
@@ -24,10 +24,10 @@ RUN apk --no-cache add --update \
     sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
-    pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
         -e /src/requirements && \
     update-requirements -s --source /src/requirements /src/functest && \
-    pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
         -e /src/functest && \
     (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
     sed -i -E /#egg=rally/d /src/functest/upper-constraints.txt && \

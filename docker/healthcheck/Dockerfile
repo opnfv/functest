@@ -11,7 +11,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git fetch --tags https://opendev.org/openstack/tempest-horizon.git $TEMPEST_HORIZON_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/tempest-horizon/ && \
-    pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         /src/tempest-horizon -rthirdparty-requirements.txt && \
     git init /src/odl_test && \
