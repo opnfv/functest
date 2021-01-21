@@ -11,7 +11,7 @@ jobs:
           command: sudo apt-get update && sudo apt-get install enchant
       - run:
           name: Run tox
-          command: sudo pip install tox tox-pip-version && tox
+          command: sudo pip install tox && tox
       - store_artifacts:
           path: api/build
           destination: api
