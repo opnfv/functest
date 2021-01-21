@@ -16,6 +16,10 @@ xtesting
 os-client-config # Apache-2.0
 shade # Apache-2.0
 ruamel.yaml.jinja2 # MIT
-tempest # Apache-2.0
-rally
-rally-openstack
+functest @ git+https://gerrit.opnfv.org/gerrit/functest.git
+cloudify-rest-client @ git+https://github.com/collivier/cloudify-rest-client.git@4.3.3-py3
+bandit @ git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf
+-e tempest @ git+https://opendev.org/openstack/tempest.git#tempest
+-e rally @ git+https://opendev.org/openstack/rally.git#rally
+rally-openstack @ git+https://opendev.org/openstack/rally-openstack.git#rally-openstack
+xrally-kubernetes git+https://github.com/xrally/xrally-kubernetes.git#xrally-kubernetes
