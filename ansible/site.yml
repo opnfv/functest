@@ -16,6 +16,7 @@
             - singlevm2
             - vping_ssh
             - vping_userdata
+            - sctp
             - cinder_test
             - odl
             - tempest_smoke
