@@ -118,6 +118,17 @@ tiers:
                     name: vping_userdata
 
             -
+                case_name: sctp
+                project_name: functest
+                criteria: 100
+                blocking: true
+                description: >-
+                    This test case verifies:  1) Boot 2 VMs. 2) Check SCTP
+                    connectivity between them
+                run:
+                    name: sctp
+
+            -
                 case_name: cinder_test
                 project_name: functest
                 criteria: 100
