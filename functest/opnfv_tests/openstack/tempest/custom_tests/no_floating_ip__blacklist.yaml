@@ -1,0 +1,61 @@
+---
+# The purpose of this file is to define the list of tempest test cases that have
+# indirect dependencies on such Neutron L3 extensions as router, floating ip, etc.
+# These test cases currently are not skipped by dynamic extension check in
+# OpenStack Tempest for various reasons when running against a L2 only deployment.
+-
+    scenarios:
+        - os-*
+        - ovs
+    tests:
+        - neutron_tempest_plugin.api.admin.test_dhcp_agent_scheduler.DHCPAgentSchedulersTestJSON.test_list_networks_hosted_by_one_dhcp
+        - neutron_tempest_plugin.api.admin.test_dhcp_agent_scheduler.DHCPAgentSchedulersTestJSON.test_dhcp_port_status_active
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_wildcard_policy_delete_blocked_on_default_ext
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_delete_policies_while_tenant_attached_to_net
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_external_update_policy_from_wildcard_to_specific_tenant
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_policy_allows_tenant_to_allocate_floatingip
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_policy_allows_tenant_to_attach_ext_gw
+        - neutron_tempest_plugin.api.admin.test_external_network_extension.ExternalNetworksRBACTestJSON.test_regular_client_shares_with_another
+        - neutron_tempest_plugin.api.admin.test_floating_ips_admin_actions.FloatingIPAdminTestJSON.test_associate_floating_ip_with_port_from_another_project
+        - neutron_tempest_plugin.api.admin.test_floating_ips_admin_actions.FloatingIPAdminTestJSON.test_create_floatingip_with_specified_ip_address
+        - neutron_tempest_plugin.api.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful_fixedips_outrange
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_create_floatingip_with_timestamp
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_create_router_with_timestamp
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_show_floatingip_attribute_with_timestamp
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_show_router_attribute_with_timestamp
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_update_floatingip_with_timestamp
+        - neutron_tempest_plugin.api.test_timestamp.TestTimeStampWithL3.test_update_router_with_timestamp
+
+        - tempest.api.network.admin.test_dhcp_agent_scheduler.DHCPAgentSchedulersTestJSON.test_list_networks_hosted_by_one_dhcp
+        - tempest.api.network.admin.test_external_network_extension.ExternalNetworksTestJSON.test_list_external_networks
+        - tempest.api.network.admin.test_external_network_extension.ExternalNetworksTestJSON.test_show_external_networks_attribute
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful_fixedips
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful_fixedips_duplicate
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful_fixedips_outrange
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcp_stateful_router
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_64_subnets
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_invalid_options
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_stateless_eui64
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_stateless_no_ra
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_stateless_no_ra_no_dhcp
+        - tempest.api.network.test_dhcp_ipv6.NetworksTestDHCPv6.test_dhcpv6_two_subnets
+        - tempest.api.network.test_ports.PortsIpV6TestJSON.test_port_list_filter_by_router_id
+        - tempest.api.network.test_ports.PortsTestJSON.test_port_list_filter_by_router_id
+
+        - tempest.api.compute.servers.test_attach_interfaces.AttachInterfacesTestJSON.test_create_list_show_delete_interfaces_by_network_port
+        - tempest.api.compute.servers.test_create_server_multi_nic.ServersTestMultiNic.test_verify_duplicate_network_nics
+        - tempest.api.compute.servers.test_device_tagging.TaggedAttachmentsTest.test_tagged_attachment
+        - tempest.api.compute.servers.test_device_tagging.TaggedBootDevicesTest.test_tagged_boot_devices
+
+        - heat_tempest_plugin.tests.scenario.test_server_signal.ServerSignalIntegrationTest.test_server_signal_userdata_format_raw
+        - heat_tempest_plugin.tests.scenario.test_server_signal.ServerSignalIntegrationTest.test_server_signal_userdata_format_software_config
+
+        - tempest.scenario.test_volume_backup_restore.TestVolumeBackupRestore.test_volume_backup_restore
+
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_create_floating_ip
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_create_floating_ip_floatingip_address
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_delete_floating_ip
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_list_floating_ips
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_show_floating_ip
+        - patrole_tempest_plugin.tests.api.network.test_floating_ips_rbac.FloatingIpsRbacTest.test_update_floating_ip
