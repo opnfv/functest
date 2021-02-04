@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab09b09e_659c3b30",
+        "filename": "functest/opnfv_tests/openstack/sctp/sctp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2021-02-04T12:31:45Z",
+      "side": 1,
+      "message": "2021",
+      "revId": "fa1892aa0d2c324f14b0a88a34aba0d3bb7c113e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beeefa5b_5d226a24",
+        "filename": "functest/opnfv_tests/openstack/sctp/sctp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2021-02-04T12:31:45Z",
+      "side": 1,
+      "message": "Could we leverage cirros or at least the latest ubuntu LTS?",
+      "revId": "fa1892aa0d2c324f14b0a88a34aba0d3bb7c113e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2982471d_2fde30e3",
+        "filename": "functest/opnfv_tests/openstack/sctp/sctp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2021-02-04T12:31:45Z",
+      "side": 1,
+      "message": "it should not be part of a review (dev debug)",
+      "revId": "fa1892aa0d2c324f14b0a88a34aba0d3bb7c113e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919c4808_c2e2bcc4",
+        "filename": "functest/opnfv_tests/openstack/sctp/sctp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3405
+      },
+      "writtenOn": "2021-02-04T12:31:45Z",
+      "side": 1,
+      "message": "should be up by default via network manager",
+      "revId": "fa1892aa0d2c324f14b0a88a34aba0d3bb7c113e",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5",
+      "unresolved": true
+    }
+  ]
+}
