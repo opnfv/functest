@@ -30,3 +30,4 @@ sphinxcontrib-spelling===4.2.1
 boto3===1.7.62
 ujson===2.0.3
 kubernetes===10.0.0
+ansible-lint===4.2.0
