@@ -20,3 +20,4 @@ sphinx===1.7.6
 sphinxcontrib-spelling===4.2.1
 ujson===2.0.3
 kubernetes===10.0.0
+ansible-lint===4.2.0
