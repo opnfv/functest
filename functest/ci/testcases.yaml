@@ -179,7 +179,7 @@ tiers:
                 run:
                     name: tempest_horizon
                     args:
-                        mode: '^tempest_horizon.'
+                        mode: '^tempest.scenario.test_dashboard_basic_ops.'
 
     -
         name: smoke
