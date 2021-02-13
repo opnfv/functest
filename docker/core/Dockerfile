@@ -8,7 +8,8 @@ COPY Fixes-race-condition-in-test_add_remove_fixed_ip.patch /tmp/Fixes-race-cond
 COPY object-storage-fix-and-cleanup-header-checks.patch /tmp/object-storage-fix-and-cleanup-header-checks.patch
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
-RUN apk --no-cache add --update \
+RUN apk -U upgrade && \
+    apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
         libstdc++ && \
