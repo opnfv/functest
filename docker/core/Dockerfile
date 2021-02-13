@@ -3,7 +3,8 @@ FROM alpine:3.9
 ARG BRANCH=stable/hunter
 ARG OPENSTACK_TAG=stable/rocky
 
-RUN apk --no-cache add --update \
+RUN apk -U upgrade && \
+    apk --no-cache add --update \
         python libffi openssl libjpeg-turbo py-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
         libstdc++ && \
