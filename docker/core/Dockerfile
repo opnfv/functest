@@ -4,6 +4,7 @@ ARG BRANCH=stable/iruya
 ARG OPENSTACK_TAG=stable/stein
 
 RUN apk -U upgrade && \
+    apk --no-cache add --update libcurl --repository=http://dl-cdn.alpinelinux.org/alpine/v3.11/main && \
     apk --no-cache add --update \
         python3 libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap \
