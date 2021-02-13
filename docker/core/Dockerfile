@@ -5,7 +5,8 @@ ARG OPENSTACK_TAG=stable/victoria
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
-RUN apk --no-cache add --update \
+RUN apk -U upgrade && \
+    apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
         grep sed wget ca-certificates git openssh-client qemu-img iputils coreutils mailcap libstdc++ && \
     apk --no-cache add --virtual .build-deps --update \
