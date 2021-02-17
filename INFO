@@ -11,18 +11,6 @@ IRC: Server:freenode.net Channel:#opnfv-functest
 Repository: functest
 
 Committers:
-Morgan Richomme <morgan.richomme@orange.com>
 Cedric Ollivier <cedric.ollivier@orange.com>
-Juha Kosonen <juha.kosonen@nokia.com>
-Valentin Boucher <valentin.boucher@kontron.com>
-Viktor Tikkanen <viktor.tikkanen@nokia.com>
-Linda Wang <wangwulin@huawei.com>
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
-
-Link(s) to approval of additional committers:
-
-http://lists.opnfv.org/pipermail/opnfv-tech-discuss/2015-April/001971.html
-http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2015/opnfv-testperf.2015-09-29-13.00.html
-http://ircbot.wl.linuxfoundation.org/meetings/opnfv-testperf/2016/opnfv-testperf.2016-03-01-08.00.html
-http://ircbot.wl.linuxfoundation.org/meetings/opnfv-functest/2016/opnfv-functest.2016-10-11-08.01.html
