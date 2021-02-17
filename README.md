@@ -19,10 +19,10 @@ datacenters as the lowest cost (50 euros hardware and software included).
 |-------------------|--------------------|
 | Hunter	          | Rocky              |
 | Iruya             | Stein              |
-| Jerma	            | Train              |
+| **Jerma**	        | **Train**          |
 | Kali              | Ussuri             |
 | Leguer            | Victoria           |
-| **Master**	      | **next Wallaby**   |
+| Master	          | next Wallaby       |
 
 ## Prepare your environment
 
@@ -50,7 +50,7 @@ export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=XXX
 ```
 
-mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/jerma | bash -s -- images && ls -1 images/*
 ```
 images/cirros-0.4.0-aarch64-disk.img
 images/cirros-0.4.0-x86_64-disk.img
@@ -63,31 +63,31 @@ images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
 images/vyos-1.1.8-amd64.qcow2
 ```
 
-### Run healthcheck suite
+## Run healthcheck suite
 
 ```bash
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-healthcheck
+    opnfv/functest-healthcheck;jerma
 ```
 
 ```
 +--------------------------+------------------+---------------------+------------------+----------------+
 |        TEST CASE         |     PROJECT      |         TIER        |     DURATION     |     RESULT     |
 +--------------------------+------------------+---------------------+------------------+----------------+
-|     connection_check     |     functest     |     healthcheck     |      00:03       |      PASS      |
-|      tenantnetwork1      |     functest     |     healthcheck     |      00:05       |      PASS      |
-|      tenantnetwork2      |     functest     |     healthcheck     |      00:06       |      PASS      |
-|         vmready1         |     functest     |     healthcheck     |      00:06       |      PASS      |
+|     connection_check     |     functest     |     healthcheck     |      00:02       |      PASS      |
+|      tenantnetwork1      |     functest     |     healthcheck     |      00:04       |      PASS      |
+|      tenantnetwork2      |     functest     |     healthcheck     |      00:05       |      PASS      |
+|         vmready1         |     functest     |     healthcheck     |      00:05       |      PASS      |
 |         vmready2         |     functest     |     healthcheck     |      00:08       |      PASS      |
-|        singlevm1         |     functest     |     healthcheck     |      00:32       |      PASS      |
-|        singlevm2         |     functest     |     healthcheck     |      00:37       |      PASS      |
-|        vping_ssh         |     functest     |     healthcheck     |      00:46       |      PASS      |
-|      vping_userdata      |     functest     |     healthcheck     |      00:39       |      PASS      |
-|       cinder_test        |     functest     |     healthcheck     |      01:05       |      PASS      |
-|      tempest_smoke       |     functest     |     healthcheck     |      05:39       |      PASS      |
-|     tempest_horizon      |     functest     |     healthcheck     |      01:05       |      PASS      |
+|        singlevm1         |     functest     |     healthcheck     |      00:35       |      PASS      |
+|        singlevm2         |     functest     |     healthcheck     |      00:34       |      PASS      |
+|        vping_ssh         |     functest     |     healthcheck     |      00:44       |      PASS      |
+|      vping_userdata      |     functest     |     healthcheck     |      00:30       |      PASS      |
+|       cinder_test        |     functest     |     healthcheck     |      01:10       |      PASS      |
+|      tempest_smoke       |     functest     |     healthcheck     |      11:18       |      PASS      |
+|     tempest_horizon      |     functest     |     healthcheck     |      01:15       |      PASS      |
 |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
 +--------------------------+------------------+---------------------+------------------+----------------+
 ```
@@ -98,31 +98,27 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-smoke
+    opnfv/functest-smoke:jerma
 ```
 
 ```
 +---------------------------+------------------+---------------+------------------+----------------+
 |         TEST CASE         |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
 +---------------------------+------------------+---------------+------------------+----------------+
-|      tempest_neutron      |     functest     |     smoke     |      15:30       |      PASS      |
-|       tempest_cinder      |     functest     |     smoke     |      02:01       |      PASS      |
-|      tempest_keystone     |     functest     |     smoke     |      01:17       |      PASS      |
-|        tempest_heat       |     functest     |     smoke     |      22:14       |      PASS      |
-|     tempest_telemetry     |     functest     |     smoke     |      00:00       |      SKIP      |
-|        rally_sanity       |     functest     |     smoke     |      17:24       |      PASS      |
-|      refstack_compute     |     functest     |     smoke     |      07:03       |      PASS      |
-|      refstack_object      |     functest     |     smoke     |      02:09       |      PASS      |
-|     refstack_platform     |     functest     |     smoke     |      07:31       |      PASS      |
-|        tempest_full       |     functest     |     smoke     |      41:52       |      PASS      |
-|      tempest_scenario     |     functest     |     smoke     |      08:42       |      PASS      |
-|        tempest_slow       |     functest     |     smoke     |      43:42       |      PASS      |
-|       patrole_admin       |     functest     |     smoke     |      21:06       |      PASS      |
-|       patrole_member      |     functest     |     smoke     |      21:23       |      PASS      |
-|       patrole_reader      |     functest     |     smoke     |      21:56       |      PASS      |
-|      tempest_barbican     |     functest     |     smoke     |      02:30       |      PASS      |
+|      tempest_neutron      |     functest     |     smoke     |      14:49       |      PASS      |
+|       tempest_cinder      |     functest     |     smoke     |      01:40       |      PASS      |
+|      tempest_keystone     |     functest     |     smoke     |      01:12       |      PASS      |
+|        tempest_heat       |     functest     |     smoke     |      21:53       |      PASS      |
+|        rally_sanity       |     functest     |     smoke     |      17:10       |      PASS      |
+|      refstack_compute     |     functest     |     smoke     |      07:53       |      PASS      |
+|      refstack_object      |     functest     |     smoke     |      01:59       |      PASS      |
+|     refstack_platform     |     functest     |     smoke     |      07:52       |      PASS      |
+|        tempest_full       |     functest     |     smoke     |      34:39       |      PASS      |
+|      tempest_scenario     |     functest     |     smoke     |      08:30       |      PASS      |
+|        tempest_slow       |     functest     |     smoke     |      44:40       |      PASS      |
+|          patrole          |     functest     |     smoke     |      02:43       |      PASS      |
+|      tempest_barbican     |     functest     |     smoke     |      02:26       |      PASS      |
 |      tempest_octavia      |     functest     |     smoke     |      00:00       |      SKIP      |
-|       tempest_cyborg      |     functest     |     smoke     |      00:00       |      SKIP      |
 +---------------------------+------------------+---------------+------------------+----------------+
 ```
 
@@ -132,21 +128,21 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-smoke-cntt
+    opnfv/functest-smoke-cntt:jerma
 ```
 
 ```
 +-------------------------------+------------------+---------------+------------------+----------------+
 |           TEST CASE           |     PROJECT      |      TIER     |     DURATION     |     RESULT     |
 +-------------------------------+------------------+---------------+------------------+----------------+
-|      tempest_neutron_cntt     |     functest     |     smoke     |      11:35       |      PASS      |
-|      tempest_cinder_cntt      |     functest     |     smoke     |      01:58       |      PASS      |
-|     tempest_keystone_cntt     |     functest     |     smoke     |      01:13       |      PASS      |
-|       tempest_heat_cntt       |     functest     |     smoke     |      22:32       |      PASS      |
-|       rally_sanity_cntt       |     functest     |     smoke     |      17:16       |      PASS      |
-|       tempest_full_cntt       |     functest     |     smoke     |      41:13       |      PASS      |
-|     tempest_scenario_cntt     |     functest     |     smoke     |      08:57       |      PASS      |
-|       tempest_slow_cntt       |     functest     |     smoke     |      35:58       |      PASS      |
+|      tempest_neutron_cntt     |     functest     |     smoke     |      12:21       |      PASS      |
+|      tempest_cinder_cntt      |     functest     |     smoke     |      01:31       |      PASS      |
+|     tempest_keystone_cntt     |     functest     |     smoke     |      01:08       |      PASS      |
+|       tempest_heat_cntt       |     functest     |     smoke     |      21:47       |      PASS      |
+|       rally_sanity_cntt       |     functest     |     smoke     |      16:09       |      PASS      |
+|       tempest_full_cntt       |     functest     |     smoke     |      39:11       |      PASS      |
+|     tempest_scenario_cntt     |     functest     |     smoke     |      08:32       |      PASS      |
+|       tempest_slow_cntt       |     functest     |     smoke     |      32:22       |      PASS      |
 +-------------------------------+------------------+---------------+------------------+----------------+
 ```
 
@@ -156,17 +152,17 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-benchmarking
+    opnfv/functest-benchmarking:jerma
 ```
 
 ```
 +--------------------+------------------+----------------------+------------------+----------------+
 |     TEST CASE      |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
 +--------------------+------------------+----------------------+------------------+----------------+
-|     rally_full     |     functest     |     benchmarking     |      93:03       |      PASS      |
-|     rally_jobs     |     functest     |     benchmarking     |      27:05       |      PASS      |
-|        vmtp        |     functest     |     benchmarking     |      17:56       |      PASS      |
-|       shaker       |     functest     |     benchmarking     |      24:02       |      PASS      |
+|     rally_full     |     functest     |     benchmarking     |      91:42       |      PASS      |
+|     rally_jobs     |     functest     |     benchmarking     |      25:24       |      PASS      |
+|        vmtp        |     functest     |     benchmarking     |      16:47       |      PASS      |
+|       shaker       |     functest     |     benchmarking     |      23:43       |      PASS      |
 +--------------------+------------------+----------------------+------------------+----------------+
 ```
 
@@ -176,17 +172,17 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-benchmarking-cntt
+    opnfv/functest-benchmarking-cntt:jerma
 ```
 
 ```
 +-------------------------+------------------+----------------------+------------------+----------------+
 |        TEST CASE        |     PROJECT      |         TIER         |     DURATION     |     RESULT     |
 +-------------------------+------------------+----------------------+------------------+----------------+
-|     rally_full_cntt     |     functest     |     benchmarking     |      89:52       |      PASS      |
-|     rally_jobs_cntt     |     functest     |     benchmarking     |      19:39       |      PASS      |
-|           vmtp          |     functest     |     benchmarking     |      16:59       |      PASS      |
-|          shaker         |     functest     |     benchmarking     |      23:43       |      PASS      |
+|     rally_full_cntt     |     functest     |     benchmarking     |      86:41       |      PASS      |
+|     rally_jobs_cntt     |     functest     |     benchmarking     |      19:16       |      PASS      |
+|           vmtp          |     functest     |     benchmarking     |      17:05       |      PASS      |
+|          shaker         |     functest     |     benchmarking     |      23:33       |      PASS      |
 +-------------------------+------------------+----------------------+------------------+----------------+
 ```
 
@@ -196,17 +192,17 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-vnf
+    opnfv/functest-vnf:jerma
 ```
 
 ```
 +----------------------+------------------+--------------+------------------+----------------+
 |      TEST CASE       |     PROJECT      |     TIER     |     DURATION     |     RESULT     |
 +----------------------+------------------+--------------+------------------+----------------+
-|       cloudify       |     functest     |     vnf      |      05:08       |      PASS      |
-|     cloudify_ims     |     functest     |     vnf      |      24:46       |      PASS      |
-|       heat_ims       |     functest     |     vnf      |      33:12       |      PASS      |
-|     vyos_vrouter     |     functest     |     vnf      |      15:53       |      PASS      |
-|       juju_epc       |     functest     |     vnf      |      27:52       |      PASS      |
+|       cloudify       |     functest     |     vnf      |      04:41       |      PASS      |
+|     cloudify_ims     |     functest     |     vnf      |      21:03       |      PASS      |
+|       heat_ims       |     functest     |     vnf      |      30:04       |      PASS      |
+|     vyos_vrouter     |     functest     |     vnf      |      16:21       |      PASS      |
+|       juju_epc       |     functest     |     vnf      |      28:33       |      PASS      |
 +----------------------+------------------+--------------+------------------+----------------+
 ```
