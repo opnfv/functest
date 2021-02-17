@@ -63,7 +63,7 @@ images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
 images/vyos-1.1.8-amd64.qcow2
 ```
 
-### Run healthcheck suite
+## Run healthcheck suite
 
 ```bash
 sudo docker run --env-file env \
