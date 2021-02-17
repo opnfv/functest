@@ -1,9 +1,9 @@
 Project: Base System Functionality Testing Project (functest)
 Project Creation Date: January 20, 2015
 Project Category: Integration & Testing
-Lifecycle State: Incubation
-Primary Contact: Cedric Ollivier (cedric.ollivier@orange.com)
-Project Lead: Cedric Ollivier (cedric.ollivier@orange.com)
+Lifecycle State: Mature
+Primary Contact: Cédric Ollivier (cedric.ollivier@orange.com)
+Project Lead: Cédric Ollivier (cedric.ollivier@orange.com)
 Jira Project Name: Base System Functionality Testing Project
 Jira Project Prefix: FUNCTEST
 Mailing list tag: [functest]
@@ -11,6 +11,6 @@ IRC: Server:freenode.net Channel:#opnfv-functest
 Repository: functest
 
 Committers:
-Cedric Ollivier <cedric.ollivier@orange.com>
+Cédric Ollivier <cedric.ollivier@orange.com>
 
 Link to TSC approval of the project: http://meetbot.opnfv.org/meetings/opnfv-meeting/2015/opnfv-meeting.2015-01-20-14.57.html
