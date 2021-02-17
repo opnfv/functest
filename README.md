@@ -69,7 +69,7 @@ images/vyos-1.1.8-amd64.qcow2
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-healthcheck;jerma
+    opnfv/functest-healthcheck:jerma
 ```
 
 ```
