@@ -20,7 +20,7 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
-        pip3 install --no-cache-dir -c/src/requirements/upper-constraints.txt \
+        pip3 install --use-deprecated=legacy-resolver --no-cache-dir -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt lxml && \
         sed -i -E /^numpy=/d /src/requirements/upper-constraints.txt && apk add py3-numpy ;; esac && \
     git init /src/patrole && \
@@ -68,14 +68,14 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://opendev.org/openstack/cyborg-tempest-plugin.git $CYBORG_TEMPEST_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/cyborg-tempest-plugin && \
-    pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin /src/telemetry-tempest-plugin \
         /src/cyborg-tempest-plugin && \
     mkdir -p /home/opnfv/functest/data/refstack && \
-    pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         git+https://opendev.org/openstack/neutron.git@$NEUTRON_TAG#egg=neutron \
         git+https://opendev.org/openstack/glance.git@$GLANCE_TAG#egg=glance \
