@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.13
 
 ARG BRANCH=stable/leguer
 ARG OPENSTACK_TAG=stable/victoria
@@ -26,7 +26,7 @@ RUN apk -U upgrade && \
     sed -i -E /^neutron==+.*$/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
-    pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
         -e /src/requirements && \
     update-requirements -s --source /src/requirements /src/functest && \
     pip3 install --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
