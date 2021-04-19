@@ -19,3 +19,4 @@ ruamel.yaml===0.15.100
 sphinxcontrib-spelling===4.3.0
 kubernetes===11.0.0
 ansible-lint===4.2.0
+setuptools_scm===6.0.1
