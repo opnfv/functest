@@ -158,20 +158,17 @@ class OSTempestTesting(unittest.TestCase):
             args[2].assert_called_once_with(
                 self.tempestcommon.list, self.tempestcommon.raw_list)
 
+    @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
+                'subprocess.Popen')
+    @mock.patch('six.moves.builtins.open', mock.mock_open())
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.LOGGER.info')
-    def test_run_verifier_tests_default(self, mock_logger_info):
-        with mock.patch('six.moves.builtins.open', mock.mock_open()), \
-            mock.patch('six.moves.builtins.iter',
-                       return_value=[r'\} tempest\.']), \
-            mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
-                       'subprocess.Popen'):
-            self.tempestcommon.tempest_list = 'test_tempest_list'
-            cmd = ["rally", "verify", "start", "--load-list",
-                   self.tempestcommon.tempest_list]
-            with self.assertRaises(Exception):
-                self.tempestcommon.run_verifier_tests()
-                mock_logger_info. \
-                    assert_any_call("Starting Tempest test suite: '%s'.", cmd)
+    def test_run_verifier_tests_default(self, *args):
+        self.tempestcommon.tempest_list = 'test_tempest_list'
+        cmd = ["rally", "verify", "start", "--load-list",
+               self.tempestcommon.tempest_list]
+        with self.assertRaises(Exception):
+            self.tempestcommon.run_verifier_tests()
+            args[0].assert_any_call("Starting Tempest test suite: '%s'.", cmd)
 
     @mock.patch('functest.opnfv_tests.openstack.tempest.tempest.'
                 'os.path.exists', return_value=False)
