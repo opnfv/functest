@@ -21,4 +21,4 @@ sphinxcontrib-spelling===4.2.1
 ujson===2.0.3
 kubernetes===10.0.0
 ansible-lint===4.2.0
-setuptools_scm===6.0.1
+setuptools_scm===5.0.1
