@@ -8,14 +8,14 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
-        pip3 install --no-cache-dir -c/src/requirements/upper-constraints.txt \
+        pip3 install --use-deprecated=legacy-resolver --no-cache-dir -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt lxml ;; esac && \
     git init /src/vmtp && \
     (cd /src/vmtp && \
         git fetch --tags https://review.opendev.org/x/vmtp.git $VMTP_TAG && \
         git checkout FETCH_HEAD) && \
     update-requirements -s --source /src/requirements /src/vmtp/ && \
-    pip3 install --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
+    pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt \
         /src/vmtp && \
     mkdir -p /home/opnfv/functest/data/rally/neutron/rally-jobs && \
