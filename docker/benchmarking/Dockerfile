@@ -1,7 +1,7 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:wallaby
 
-ARG VMTP_TAG=master
-ARG NEUTRON_TAG=master
+ARG VMTP_TAG=326f466feb5ec9fc5644c8867d51b808bc83b2bb
+ARG NEUTRON_TAG=stable/wallaby
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \

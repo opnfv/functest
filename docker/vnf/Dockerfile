@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:wallaby
 
 ARG VIMS_TEST_TAG=release-130
 ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909

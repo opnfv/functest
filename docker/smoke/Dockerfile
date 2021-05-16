@@ -1,19 +1,19 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:wallaby
 
-ARG PATROLE_TAG=master
-ARG NEUTRON_TEMPEST_TAG=master
-ARG CINDER_TEMPEST_TAG=master
-ARG KEYSTONE_TEMPEST_TAG=master
-ARG NEUTRON_TAG=master
-ARG GLANCE_TAG=master
-ARG NOVA_TAG=master
-ARG KEYSTONE_TAG=master
-ARG CINDER_TAG=master
-ARG BARBICAN_TAG=master
-ARG OCTAVIA_TAG=master
-ARG HEAT_TEMPEST_TAG=master
-ARG TELEMETRY_TEMPEST_TAG=master
-ARG CYBORG_TEMPEST_TAG=master
+ARG PATROLE_TAG=0.12.0
+ARG NEUTRON_TEMPEST_TAG=1.4.0
+ARG CINDER_TEMPEST_TAG=1.4.0
+ARG KEYSTONE_TEMPEST_TAG=0.7.0
+ARG NEUTRON_TAG=stable/wallaby
+ARG GLANCE_TAG=stable/wallaby
+ARG NOVA_TAG=stable/wallaby
+ARG KEYSTONE_TAG=stable/wallaby
+ARG CINDER_TAG=stable/wallaby
+ARG BARBICAN_TAG=1.2.0
+ARG OCTAVIA_TAG=1.6.0
+ARG HEAT_TEMPEST_TAG=1.2.0
+ARG TELEMETRY_TEMPEST_TAG=1.2.0
+ARG CYBORG_TEMPEST_TAG=1.2.0
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
