@@ -5,6 +5,9 @@
     - role: collivier.xtesting
       project: functest
       gerrit_project: functest
+      docker_tags:
+        - wallaby:
+            branch: stable/wallaby
       builds:
         dependencies:
           - repo: _
