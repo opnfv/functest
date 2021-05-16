@@ -1,6 +1,6 @@
 FROM opnfv/functest-core:wallaby
 
-ARG VMTP_TAG=326f466feb5ec9fc5644c8867d51b808bc83b2bb
+ARG VMTP_TAG=5ac228a575153e059e3d683d5e125415dd32e89f
 ARG NEUTRON_TAG=stable/wallaby
 
 RUN apk --no-cache add --update libxml2 libxslt && \
