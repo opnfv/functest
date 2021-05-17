@@ -39,7 +39,7 @@ class TempestCommon(singlevm.VmReady2):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
-    filename_alt = '/home/opnfv/functest/images/cirros-0.4.0-x86_64-disk.img'
+    filename_alt = '/home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.img'
     shared_network = True
     tempest_conf_yaml = pkg_resources.resource_filename(
         'functest',
@@ -564,8 +564,7 @@ class TempestCommon(singlevm.VmReady2):
             config.CONF, '{}_image'.format(self.case_name), self.filename)
         if not rconfig.has_section('scenario'):
             rconfig.add_section('scenario')
-        rconfig.set('scenario', 'img_file', os.path.basename(filename))
-        rconfig.set('scenario', 'img_dir', os.path.dirname(filename))
+        rconfig.set('scenario', 'img_file', filename)
         rconfig.set('scenario', 'img_disk_format', getattr(
             config.CONF, '{}_image_format'.format(self.case_name),
             self.image_format))
