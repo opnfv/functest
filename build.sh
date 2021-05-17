@@ -16,9 +16,11 @@ arm64_dirs=${arm64_dirs-${amd64_dirs}}
 build_opts=("--pull=true" --no-cache "--force-rm=true")
 
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:amd64-wallaby|g" {} +
+    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:amd64-wallaby|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-smoke:wallaby|${repo}/functest-smoke:amd64-wallaby|g" {} +
+    -e "s|opnfv/functest-smoke:wallaby|\
+${repo}/functest-smoke:amd64-wallaby|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:wallaby|\
 ${repo}/functest-benchmarking:amd64-wallaby|g" {} +
@@ -37,9 +39,11 @@ find . -name Dockerfile -exec git checkout {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|alpine:3.13|arm64v8/alpine:3.13|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:arm64-wallaby|g" {} +
+    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:arm64-wallaby|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-smoke:wallaby|${repo}/functest-smoke:arm64-wallaby|g" {} +
+    -e "s|opnfv/functest-smoke:wallaby|\
+${repo}/functest-smoke:arm64-wallaby|g" {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:wallaby|\
 ${repo}/functest-benchmarking:arm64-wallaby|g" {} +
@@ -58,9 +62,11 @@ find . -name Dockerfile -exec git checkout {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|alpine:3.13|arm32v6/alpine:3.13|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:arm-wallaby|g" {} +
+    -e "s|opnfv/functest-core:wallaby|${repo}/functest-core:arm-wallaby|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-smoke:wallaby|${repo}/functest-smoke:arm-wallaby|g" {} +
+    -e "s|opnfv/functest-smoke:wallaby|${repo}/functest-smoke:arm-wallaby|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:wallaby|\
 ${repo}/functest-benchmarking:arm-wallaby|g" {} +
