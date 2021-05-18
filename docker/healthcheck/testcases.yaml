@@ -177,6 +177,6 @@ tiers:
                 dependencies:
                     - DASHBOARD_URL: '^(?!\s*$).+'
                 run:
-                    name: tempest_horizon
+                    name: tempest_common
                     args:
                         mode: '^tempest.scenario.test_dashboard_basic_ops.'
