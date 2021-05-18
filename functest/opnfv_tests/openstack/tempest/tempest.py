@@ -582,6 +582,18 @@ class TempestCommon(singlevm.VmReady2):
         with open(self.conf_file, 'w') as config_file:
             rconfig.write(config_file)
 
+    def update_dashboard_section(self, **kwargs):
+        rconfig = configparser.RawConfigParser()
+        rconfig.read(self.conf_file)
+        if env.get('DASHBOARD_URL'):
+            if not rconfig.has_section('dashboard'):
+                rconfig.add_section('dashboard')
+            rconfig.set('dashboard', 'dashboard_url', env.get('DASHBOARD_URL'))
+        else:
+            rconfig.set('service_available', 'horizon', False)
+        with open(self.conf_file, 'w') as config_file:
+            rconfig.write(config_file)
+
     def configure(self, **kwargs):  # pylint: disable=unused-argument
         """
         Create all openstack resources for tempest-based testcases and write
@@ -624,6 +636,7 @@ class TempestCommon(singlevm.VmReady2):
         self.update_compute_section()
         self.update_validation_section()
         self.update_scenario_section()
+        self.update_dashboard_section()
         self.backup_tempest_config(self.conf_file, self.res_dir)
 
     def run(self, **kwargs):
@@ -680,21 +693,6 @@ class TempestCommon(singlevm.VmReady2):
                 self.details.get("tests_number", 0) != self.tests_count):
             return testcase.TestCase.EX_TESTCASE_FAILED
         return super(TempestCommon, self).is_successful()
-
-
-class TempestHorizon(TempestCommon):
-    """Tempest Horizon testcase implementation class."""
-
-    def configure(self, **kwargs):
-        super(TempestHorizon, self).configure(**kwargs)
-        rconfig = configparser.RawConfigParser()
-        rconfig.read(self.conf_file)
-        if not rconfig.has_section('dashboard'):
-            rconfig.add_section('dashboard')
-        rconfig.set('dashboard', 'dashboard_url', env.get('DASHBOARD_URL'))
-        with open(self.conf_file, 'w') as config_file:
-            rconfig.write(config_file)
-        self.backup_tempest_config(self.conf_file, self.res_dir)
 
 
 class TempestHeat(TempestCommon):
