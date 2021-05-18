@@ -15,7 +15,7 @@ echo "VOL_DEV_NAME: $VOL_DEV_NAME"
 echo "$(lsblk -l -o NAME)"
 
 if [ ! -z $(lsblk -l -o NAME | grep $VOL_DEV_NAME) ]; then
-    sudo /usr/sbin/mkfs.ext4 -F /dev/$VOL_DEV_NAME
+    sudo mkfs.ext4 -F /dev/$VOL_DEV_NAME
     sudo mount /dev/$VOL_DEV_NAME $DEST
     sudo touch $DEST/new_data
     if [ -f $DEST/new_data ]; then
