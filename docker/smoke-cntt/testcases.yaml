@@ -109,6 +109,7 @@ tiers:
                     name: tempest_common
                     args:
                         mode: "(?!.*api.identity.v3.test_oauth1_tokens)\
+                            (?!.*rbac)\
                             (?!.*scenario.test_federated_authentication)\
                             keystone_tempest_plugin."
                         option:
