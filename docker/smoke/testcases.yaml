@@ -231,6 +231,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -254,6 +255,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -277,6 +279,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
