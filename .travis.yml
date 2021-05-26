@@ -7,6 +7,7 @@ dist: focal
 before_script:
   - sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
   - sudo pip install tox tox-pip-version
+  - sudo apt-get update && apt-get install enchant
   - sudo -E docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
   - (cd .. && git clone https://github.com/estesp/manifest-tool)
   - (cd ../manifest-tool && git checkout v0.9.0)
