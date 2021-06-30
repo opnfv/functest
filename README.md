@@ -17,12 +17,13 @@ datacenters as the lowest cost (50 euros hardware and software included).
 
 | Functest releases | OpenStack releases |
 |-------------------|--------------------|
-| Hunter	          | Rocky              |
+| Hunter            | Rocky              |
 | Iruya             | Stein              |
 | Jerma	            | Train              |
 | Kali              | Ussuri             |
 | Leguer            | Victoria           |
-| **Master**	      | **next Wallaby**   |
+| Wallaby           | Wallaby            |
+| **Master**        | **next Xena**      |
 
 ## Prepare your environment
 
