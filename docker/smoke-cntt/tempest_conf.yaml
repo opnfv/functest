@@ -1,6 +1,6 @@
 ---
 compute:
-    max_microversion: 2.79
+    max_microversion: 2.88
 compute-feature-enabled:
     attach_encrypted_volume: false
     block_migration_for_live_migration: false
@@ -62,7 +62,7 @@ validation:
     ip_version_for_ssh: 4
     run_validation: true
 volume:
-    max_microversion: 3.59
+    max_microversion: 3.64
     storage_protocol: ceph
     manage_volume_ref: source-name,volume-%s
     manage_snapshot_ref: source-name,snapshot-%s
