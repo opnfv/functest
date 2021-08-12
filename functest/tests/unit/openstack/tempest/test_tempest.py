@@ -269,10 +269,9 @@ class OSTempestTesting(unittest.TestCase):
 
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'tempest.subprocess.Popen') as mock_popen:
-            mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': b'test_deploy_id'}
-            mock_stdout.configure_mock(**attrs)
-            mock_popen.return_value = mock_stdout
+            attrs = {'return_value.__enter__.return_value.'
+                     'stdout.readline.return_value': b'test_deploy_id'}
+            mock_popen.configure_mock(**attrs)
 
             self.assertEqual(self.tempestcommon.get_verifier_id(),
                              'test_deploy_id')
@@ -281,10 +280,9 @@ class OSTempestTesting(unittest.TestCase):
         setattr(config.CONF, 'tempest_verifier_name', 'test_deploy_name')
         with mock.patch('functest.opnfv_tests.openstack.tempest.'
                         'tempest.subprocess.Popen') as mock_popen:
-            mock_stdout = mock.Mock()
-            attrs = {'stdout.readline.return_value': b'test_deploy_id'}
-            mock_stdout.configure_mock(**attrs)
-            mock_popen.return_value = mock_stdout
+            attrs = {'return_value.__enter__.return_value.'
+                     'stdout.readline.return_value': b'test_deploy_id'}
+            mock_popen.configure_mock(**attrs)
 
             self.assertEqual(rally.RallyBase.get_verifier_deployment_id(),
                              'test_deploy_id')

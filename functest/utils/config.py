@@ -13,12 +13,12 @@ from functest.utils import env
 class Config():
     def __init__(self):
         try:
-            # pylint: disable=bad-continuation
             with open(pkg_resources.resource_filename(
                     'functest', 'ci/config_functest.yaml')) as yfile:
                 self.functest_yaml = yaml.safe_load(yfile)
         except Exception as error:
-            raise Exception('Parse config failed: {}'.format(str(error)))
+            raise Exception(
+                'Parse config failed: {}'.format(str(error))) from error
 
     @staticmethod
     def _merge_dicts(dict1, dict2):
@@ -59,7 +59,8 @@ class Config():
         try:
             self._parse(None, self.functest_yaml)
         except Exception as error:
-            raise Exception('Parse config failed: {}'.format(str(error)))
+            raise Exception(
+                'Parse config failed: {}'.format(str(error))) from error
 
 
 CONF = Config()

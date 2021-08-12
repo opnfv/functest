@@ -101,10 +101,8 @@ class VmController():
 
     def command_create_and_execute(self, ssh, test_cmd_file_path,
                                    cmd_input_param, prompt_file_path):
-        prompt_file = open(prompt_file_path,
-                           'r')
-        prompt = yaml.safe_load(prompt_file)
-        prompt_file.close()
+        with open(prompt_file_path, 'r') as prompt_file:
+            prompt = yaml.safe_load(prompt_file)
         config_mode_prompt = prompt["config_mode"]
 
         commands = self.command_gen_from_template(test_cmd_file_path,

@@ -51,14 +51,14 @@ class CloudifyVrouter(cloudify.Cloudify):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vyos_vrouter"
-        super(CloudifyVrouter, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
         # Retrieve the configuration
         try:
             self.config = getattr(
                 config.CONF, 'vnf_{}_config'.format(self.case_name))
-        except Exception:
-            raise Exception("VNF config file not found")
+        except Exception as exc:
+            raise Exception("VNF config file not found") from exc
 
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/router')
@@ -127,7 +127,7 @@ class CloudifyVrouter(cloudify.Cloudify):
         network, security group, fip, VM creation
         """
         # network creation
-        super(CloudifyVrouter, self).execute()
+        super().execute()
         start_time = time.time()
         self.put_private_key()
         self.upload_cfy_plugins(self.cop_yaml, self.cop_wgn)
@@ -231,4 +231,4 @@ class CloudifyVrouter(cloudify.Cloudify):
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-        super(CloudifyVrouter, self).clean()
+        super().clean()
