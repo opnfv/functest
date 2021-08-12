@@ -56,7 +56,7 @@ class Vmtp(singlevm.VmReady2):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'vmtp'
-        super(Vmtp, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.config = "{}/vmtp.conf".format(self.res_dir)
         (_, self.privkey_filename) = tempfile.mkstemp()
         (_, self.pubkey_filename) = tempfile.mkstemp()
@@ -173,7 +173,7 @@ class Vmtp(singlevm.VmReady2):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            assert super(Vmtp, self).run(**kwargs) == self.EX_OK
+            assert super().run(**kwargs) == self.EX_OK
             status = testcase.TestCase.EX_RUN_ERROR
             if self.orig_cloud.get_role("admin"):
                 role_name = "admin"
@@ -204,7 +204,7 @@ class Vmtp(singlevm.VmReady2):
     def clean(self):
         try:
             assert self.cloud
-            super(Vmtp, self).clean()
+            super().clean()
             os.remove(self.privkey_filename)
             os.remove(self.pubkey_filename)
             self.cloud.delete_network("pns-internal-net_{}".format(self.guid))

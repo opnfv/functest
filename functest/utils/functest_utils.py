@@ -39,21 +39,19 @@ def execute_command(cmd, info=False, error_msg="",
             LOGGER.info(msg_exec)
         else:
             LOGGER.debug(msg_exec)
-    popen = subprocess.Popen(
-        cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    if output_file:
-        ofd = open(output_file, "w")
-    for line in iter(popen.stdout.readline, b''):
+    with subprocess.Popen(
+            cmd, shell=True, stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT) as popen:
         if output_file:
-            ofd.write(line.decode("utf-8"))
-        else:
-            line = line.decode("utf-8").replace('\n', '')
-            print(line)
-            sys.stdout.flush()
-    if output_file:
-        ofd.close()
-    popen.stdout.close()
-    returncode = popen.wait()
+            with open(output_file, "w") as ofd:
+                for line in iter(popen.stdout.readline, b''):
+                    if output_file:
+                        ofd.write(line.decode("utf-8"))
+                    else:
+                        line = line.decode("utf-8").replace('\n', '')
+                        print(line)
+                        sys.stdout.flush()
+        returncode = popen.wait()
     if returncode != 0:
         if verbose:
             LOGGER.error(error_msg)

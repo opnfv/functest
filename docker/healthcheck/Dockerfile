@@ -1,6 +1,6 @@
 FROM opnfv/functest-core
 
-ARG ODL_TAG=89b88a0a23561f0bda62338b394ec41655679b2d
+ARG ODL_TAG=89b88a0a23561f0bda623.9b394ec41655679b2d
 
 COPY thirdparty-requirements.txt thirdparty-requirements.txt
 RUN apk --no-cache add --virtual .build-deps --update \
@@ -11,5 +11,5 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git thirdparty-requirements.txt && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]
