@@ -83,7 +83,7 @@ class JujuEpc(singlevm.SingleVm2):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "juju_epc"
-        super(JujuEpc, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
         # Retrieve the configuration
         self.case_dir = pkg_resources.resource_filename(
@@ -91,8 +91,8 @@ class JujuEpc(singlevm.SingleVm2):
         try:
             self.config = getattr(
                 config.CONF, 'vnf_{}_config'.format(self.case_name))
-        except Exception:
-            raise Exception("VNF config file not found")
+        except Exception as exc:
+            raise Exception("VNF config file not found") from exc
         self.config_file = os.path.join(self.case_dir, self.config)
         self.orchestrator = dict(
             requirements=functest_utils.get_parameter_from_yaml(
@@ -212,7 +212,7 @@ class JujuEpc(singlevm.SingleVm2):
         return not stdout.channel.recv_exit_status()
 
     def publish_image_alt(self, name=None):
-        image_alt = super(JujuEpc, self).publish_image_alt(name)
+        image_alt = super().publish_image_alt(name)
         region_name = self.cloud.region_name if self.cloud.region_name else (
             'RegionOne')
         (_, stdout, stderr) = self.ssh.exec_command(
@@ -375,7 +375,7 @@ class JujuEpc(singlevm.SingleVm2):
         except OSError as ex:
             if ex.errno != errno.EEXIST:
                 self.__logger.exception("Cannot create %s", self.res_dir)
-                raise Exception
+                raise Exception from ex
         self.__logger.info("ENV:\n%s", env.string())
         try:
             assert self._install_juju()
@@ -407,7 +407,7 @@ class JujuEpc(singlevm.SingleVm2):
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-        super(JujuEpc, self).clean()
+        super().clean()
 
 
 def sig_test_format(sig_test):

@@ -49,7 +49,7 @@ class ODLTests(robotframework.RobotFramework):
     __logger = logging.getLogger(__name__)
 
     def __init__(self, **kwargs):
-        super(ODLTests, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.res_dir = os.path.join(
             getattr(config.CONF, 'dir_results'), 'odl')
         self.xml_file = os.path.join(self.res_dir, 'output.xml')
@@ -135,7 +135,7 @@ class ODLTests(robotframework.RobotFramework):
         else:
             if not self.set_robotframework_vars(odlusername, odlpassword):
                 return self.EX_RUN_ERROR
-        return super(ODLTests, self).run(variable=variable, suites=suites)
+        return super().run(variable=variable, suites=suites)
 
     def run(self, **kwargs):
         """Run suites in OPNFV environment

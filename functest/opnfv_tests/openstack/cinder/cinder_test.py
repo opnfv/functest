@@ -35,7 +35,7 @@ class CinderCheck(singlevm.SingleVm2):
         """Initialize testcase."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cinder_test"
-        super(CinderCheck, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
         self.vm2 = None
         self.fip2 = None
@@ -52,7 +52,7 @@ class CinderCheck(singlevm.SingleVm2):
         return self._write_data() or self._read_data()
 
     def prepare(self):
-        super(CinderCheck, self).prepare()
+        super().prepare()
         self.vm2 = self.boot_vm(
             '{}-vm2_{}'.format(self.case_name, self.guid),
             key_name=self.keypair.id,
@@ -124,4 +124,4 @@ class CinderCheck(singlevm.SingleVm2):
             self.cloud.delete_floating_ip(self.fip2.id)
         if self.volume:
             self.cloud.delete_volume(self.volume.id)
-        super(CinderCheck, self).clean()
+        super().clean()

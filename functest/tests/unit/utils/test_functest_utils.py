@@ -100,10 +100,10 @@ class FunctestUtilsTesting(unittest.TestCase):
                            mock.mock_open()) as mopen:
             stream = six.BytesIO()
             stream.write(self.cmd_readline().encode("utf-8"))
-            mock_obj2 = mock.Mock()
-            attrs = {'stdout': stream, 'wait.return_value': 1}
-            mock_obj2.configure_mock(**attrs)
-            mock_subproc_open.return_value = mock_obj2
+            attrs = {
+                'return_value.__enter__.return_value.stdout': stream,
+                'return_value.__enter__.return_value.wait.return_value': 1}
+            mock_subproc_open.configure_mock(**attrs)
             resp = functest_utils.execute_command(
                 self.cmd, info=True, error_msg=self.error_msg, verbose=True,
                 output_file=self.output_file)
@@ -121,10 +121,10 @@ class FunctestUtilsTesting(unittest.TestCase):
                            mock.mock_open()) as mopen:
             stream = six.BytesIO()
             stream.write(self.cmd_readline().encode("utf-8"))
-            mock_obj2 = mock.Mock()
-            attrs = {'stdout': stream, 'wait.return_value': 0}
-            mock_obj2.configure_mock(**attrs)
-            mock_subproc_open.return_value = mock_obj2
+            attrs = {
+                'return_value.__enter__.return_value.stdout': stream,
+                'return_value.__enter__.return_value.wait.return_value': 0}
+            mock_subproc_open.configure_mock(**attrs)
             resp = functest_utils.execute_command(
                 self.cmd, info=True, error_msg=self.error_msg, verbose=True,
                 output_file=self.output_file)
@@ -140,10 +140,10 @@ class FunctestUtilsTesting(unittest.TestCase):
                 as mock_subproc_open:
             stream = six.BytesIO()
             stream.write(self.cmd_readline().encode("utf-8"))
-            mock_obj2 = mock.Mock()
-            attrs = {'stdout': stream, 'wait.return_value': 0}
-            mock_obj2.configure_mock(**attrs)
-            mock_subproc_open.return_value = mock_obj2
+            attrs = {
+                'return_value.__enter__.return_value.stdout': stream,
+                'return_value.__enter__.return_value.wait.return_value': 0}
+            mock_subproc_open.configure_mock(**attrs)
             resp = functest_utils.execute_command(
                 self.cmd, info=False, error_msg="", verbose=False,
                 output_file=None)
@@ -154,12 +154,13 @@ class FunctestUtilsTesting(unittest.TestCase):
         # pylint: disable=unused-argument
         with mock.patch('functest.utils.functest_utils.subprocess.Popen') \
                 as mock_subproc_open:
+            attrs = {}
             stream = six.BytesIO()
             stream.write(self.cmd_readline().encode("utf-8"))
-            mock_obj2 = mock.Mock()
-            attrs = {'stdout': stream, 'wait.return_value': 1}
-            mock_obj2.configure_mock(**attrs)
-            mock_subproc_open.return_value = mock_obj2
+            attrs = {
+                'return_value.__enter__.return_value.stdout': stream,
+                'return_value.__enter__.return_value.wait.return_value': 1}
+            mock_subproc_open.configure_mock(**attrs)
             resp = functest_utils.execute_command(
                 self.cmd, info=False, error_msg="", verbose=False,
                 output_file=None)

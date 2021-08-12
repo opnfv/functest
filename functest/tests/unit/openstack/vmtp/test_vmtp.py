@@ -74,7 +74,6 @@ class VmtpTesting(unittest.TestCase):
 
     @mock.patch('six.moves.builtins.open')
     def test_generate_keys2(self, *args):
-        # pylint: disable=bad-continuation
         with mock.patch.object(
                 self.testcase.cloud, "create_keypair",
                 side_effect=shade.OpenStackCloudException(None)) as mock_obj, \

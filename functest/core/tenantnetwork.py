@@ -150,7 +150,7 @@ class TenantNetwork1(testcase.TestCase):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'tenantnetwork1'
-        super(TenantNetwork1, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.dir_results = os.path.join(getattr(config.CONF, 'dir_results'))
         self.res_dir = os.path.join(self.dir_results, self.case_name)
         self.output_log_name = 'functest.log'
@@ -306,7 +306,7 @@ class TenantNetwork2(TenantNetwork1):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'tenantnetwork2'
-        super(TenantNetwork2, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         try:
             assert self.cloud
             self.project = NewProject(
@@ -320,7 +320,7 @@ class TenantNetwork2(TenantNetwork1):
 
     def clean(self):
         try:
-            super(TenantNetwork2, self).clean()
+            super().clean()
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
