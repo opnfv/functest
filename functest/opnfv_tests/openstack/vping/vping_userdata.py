@@ -26,7 +26,7 @@ class VPingUserdata(singlevm.VmReady2):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_userdata"
-        super(VPingUserdata, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.logger = logging.getLogger(__name__)
         self.vm1 = None
         self.vm2 = None
@@ -39,7 +39,7 @@ class VPingUserdata(singlevm.VmReady2):
         """
         try:
             assert self.cloud
-            assert super(VPingUserdata, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             self.vm1 = self.boot_vm()
@@ -134,4 +134,4 @@ class VPingUserdata(singlevm.VmReady2):
             self.cloud.delete_server(
                 self.vm2, wait=True,
                 timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        super(VPingUserdata, self).clean()
+        super().clean()

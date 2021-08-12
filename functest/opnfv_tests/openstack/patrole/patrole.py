@@ -9,8 +9,6 @@
 
 # pylint: disable=missing-docstring
 
-import logging
-
 from six.moves import configparser
 
 from functest.opnfv_tests.openstack.tempest import tempest
@@ -18,10 +16,8 @@ from functest.opnfv_tests.openstack.tempest import tempest
 
 class Patrole(tempest.TempestCommon):
 
-    __logger = logging.getLogger(__name__)
-
     def configure(self, **kwargs):
-        super(Patrole, self).configure(**kwargs)
+        super().configure(**kwargs)
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         if not rconfig.has_section('rbac'):

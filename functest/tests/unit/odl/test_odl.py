@@ -541,7 +541,7 @@ class ODLArgParserTesting(ODLTesting):
 
     def setUp(self):
         self.parser = odl.ODLParser()
-        super(ODLArgParserTesting, self).setUp()
+        super().setUp()
 
     def test_default(self):
         self.assertEqual(self.parser.parse_args(), self.defaultargs)

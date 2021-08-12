@@ -74,7 +74,7 @@ class RallyBase(singlevm.VmReady2):
 
     def __init__(self, **kwargs):
         """Initialize RallyBase object."""
-        super(RallyBase, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         assert self.orig_cloud
         assert self.project
         if self.orig_cloud.get_role("admin"):
@@ -174,10 +174,10 @@ class RallyBase(singlevm.VmReady2):
         cmd = ("rally deployment list | awk '/" +
                getattr(config.CONF, 'rally_deployment_name') +
                "/ {print $2}'")
-        proc = subprocess.Popen(cmd, shell=True,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        deployment_uuid = proc.stdout.readline().rstrip()
+        with subprocess.Popen(
+                cmd, shell=True, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT) as proc:
+            deployment_uuid = proc.stdout.readline().rstrip()
         return deployment_uuid.decode("utf-8")
 
     @staticmethod
@@ -362,31 +362,25 @@ class RallyBase(singlevm.VmReady2):
     def apply_blacklist(self, case_file_name, result_file_name):
         """Apply blacklist."""
         LOGGER.debug("Applying blacklist...")
-        cases_file = open(case_file_name, 'r')
-        result_file = open(result_file_name, 'w')
+        with open(case_file_name, 'r') as cases_file, open(
+                result_file_name, 'w') as result_file:
+            black_tests = list(set(self.excl_func() + self.excl_scenario()))
+            if black_tests:
+                LOGGER.debug("Blacklisted tests: %s", str(black_tests))
 
-        black_tests = list(set(self.excl_func() +
-                               self.excl_scenario()))
-
-        if black_tests:
-            LOGGER.debug("Blacklisted tests: %s", str(black_tests))
-
-        include = True
-        for cases_line in cases_file:
-            if include:
-                for black_tests_line in black_tests:
-                    if re.search(black_tests_line,
-                                 cases_line.strip().rstrip(':')):
-                        include = False
-                        break
+            include = True
+            for cases_line in cases_file:
+                if include:
+                    for black_tests_line in black_tests:
+                        if re.search(black_tests_line,
+                                     cases_line.strip().rstrip(':')):
+                            include = False
+                            break
+                    else:
+                        result_file.write(str(cases_line))
                 else:
-                    result_file.write(str(cases_line))
-            else:
-                if cases_line.isspace():
-                    include = True
-
-        cases_file.close()
-        result_file.close()
+                    if cases_line.isspace():
+                        include = True
 
     @staticmethod
     def file_is_empty(file_name):
@@ -422,7 +416,8 @@ class RallyBase(singlevm.VmReady2):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
-        json_results = open(report_json_dir).read()
+        with open(report_json_dir) as json_file:
+            json_results = json_file.read()
         self._append_summary(json_results, test_name)
 
         # parse JSON operation result
@@ -648,7 +643,7 @@ class RallyBase(singlevm.VmReady2):
         self.clean_rally_logs()
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-        super(RallyBase, self).clean()
+        super().clean()
 
     def is_successful(self):
         """The overall result of the test."""
@@ -656,7 +651,7 @@ class RallyBase(singlevm.VmReady2):
             if item['task_status'] is False:
                 return testcase.TestCase.EX_TESTCASE_FAILED
 
-        return super(RallyBase, self).is_successful()
+        return super().is_successful()
 
     @staticmethod
     def update_rally_logs(res_dir, rally_conf='/etc/rally/rally.conf'):
@@ -692,7 +687,7 @@ class RallyBase(singlevm.VmReady2):
         """Run testcase."""
         self.start_time = time.time()
         try:
-            assert super(RallyBase, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.update_rally_logs(self.res_dir)
             self.create_rally_deployment(environ=self.project.get_environ())
@@ -720,7 +715,7 @@ class RallySanity(RallyBase):
         """Initialize RallySanity object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_sanity"
-        super(RallySanity, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.smoke = True
         self.scenario_dir = os.path.join(self.rally_scenario_dir, 'sanity')
 
@@ -734,7 +729,7 @@ class RallyFull(RallyBase):
         """Initialize RallyFull object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_full"
-        super(RallyFull, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.smoke = False
         self.scenario_dir = os.path.join(self.rally_scenario_dir, 'full')
 
@@ -749,13 +744,13 @@ class RallyJobs(RallyBase):
         """Initialize RallyJobs object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "rally_jobs"
-        super(RallyJobs, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.task_file = os.path.join(self.rally_dir, 'rally_jobs.yaml')
         self.task_yaml = None
 
     def prepare_run(self, **kwargs):
         """Create resources needed by test scenarios."""
-        super(RallyJobs, self).prepare_run(**kwargs)
+        super().prepare_run(**kwargs)
         with open(os.path.join(self.rally_dir,
                                'rally_jobs.yaml'), 'r') as task_file:
             self.task_yaml = yaml.safe_load(task_file)

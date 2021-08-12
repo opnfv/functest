@@ -32,13 +32,12 @@ class FunctionTestExec():
         credentials = util_info["credentials"]
         self.vnf_ctrl = VnfController(util_info)
 
-        test_cmd_map_file = open(
-            os.path.join(
-                self.util.vnf_data_dir, self.util.command_template_dir,
-                self.util.test_cmd_map_yaml_file),
-            'r')
-        self.test_cmd_map_yaml = yaml.safe_load(test_cmd_map_file)
-        test_cmd_map_file.close()
+        with open(
+                os.path.join(
+                    self.util.vnf_data_dir, self.util.command_template_dir,
+                    self.util.test_cmd_map_yaml_file),
+                'r') as test_cmd_map_file:
+            self.test_cmd_map_yaml = yaml.safe_load(test_cmd_map_file)
 
         self.util.set_credentials(credentials["cloud"])
 
