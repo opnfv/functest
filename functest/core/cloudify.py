@@ -46,11 +46,11 @@ class Cloudify(singlevm.SingleVm2):
         """Initialize Cloudify testcase object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cloudify"
-        super(Cloudify, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.cfy_client = None
 
     def prepare(self):
-        super(Cloudify, self).prepare()
+        super().prepare()
         for port in self.ports:
             self.cloud.create_security_group_rule(
                 self.sec.id, port_range_min=port, port_range_max=port,

@@ -53,14 +53,14 @@ class CloudifyIms(cloudify.Cloudify):
         """Initialize CloudifyIms testcase object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "cloudify_ims"
-        super(CloudifyIms, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
         # Retrieve the configuration
         try:
             self.config = getattr(
                 config.CONF, 'vnf_{}_config'.format(self.case_name))
-        except Exception:
-            raise Exception("VNF config file not found")
+        except Exception as exc:
+            raise Exception("VNF config file not found") from exc
 
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
@@ -114,7 +114,7 @@ class CloudifyIms(cloudify.Cloudify):
 
         network, security group, fip, VM creation
         """
-        assert super(CloudifyIms, self).execute() == 0
+        assert super().execute() == 0
         start_time = time.time()
         self.orig_cloud.set_network_quotas(
             self.project.project.name,
@@ -259,4 +259,4 @@ class CloudifyIms(cloudify.Cloudify):
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-        super(CloudifyIms, self).clean()
+        super().clean()

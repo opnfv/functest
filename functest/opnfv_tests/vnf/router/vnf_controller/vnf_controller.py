@@ -49,10 +49,8 @@ class VnfController():
     def config_vnf(self, source_vnf, destination_vnf, test_cmd_file_path,
                    parameter_file_path, prompt_file_path):
         # pylint: disable=too-many-arguments
-        parameter_file = open(parameter_file_path,
-                              'r')
-        cmd_input_param = yaml.safe_load(parameter_file)
-        parameter_file.close()
+        with open(parameter_file_path, 'r') as parameter_file:
+            cmd_input_param = yaml.safe_load(parameter_file)
 
         cmd_input_param["macaddress"] = source_vnf["data_plane_network_mac"]
         cmd_input_param["source_ip"] = source_vnf["data_plane_network_ip"]
@@ -71,19 +69,15 @@ class VnfController():
 
         res_dict_data_list = []
 
-        parameter_file = open(parameter_file_path,
-                              'r')
-        cmd_input_param = yaml.safe_load(parameter_file)
-        parameter_file.close()
+        with open(parameter_file_path, 'r') as parameter_file:
+            cmd_input_param = yaml.safe_load(parameter_file)
 
         cmd_input_param["source_ip"] = target_vnf["data_plane_network_ip"]
         cmd_input_param["destination_ip"] = reference_vnf[
             "data_plane_network_ip"]
 
-        prompt_file = open(prompt_file_path,
-                           'r')
-        prompt = yaml.safe_load(prompt_file)
-        prompt_file.close()
+        with open(prompt_file_path, 'r') as prompt_file:
+            prompt = yaml.safe_load(prompt_file)
         terminal_mode_prompt = prompt["terminal_mode"]
 
         ssh = SshClient(target_vnf["floating_ip"],

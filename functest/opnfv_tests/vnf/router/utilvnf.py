@@ -212,24 +212,21 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
     def write_result_data(self, result_data):
         test_result = []
         if not os.path.isfile(self.test_result_json_file):
-            file_fd = open(self.test_result_json_file, "w")
-            file_fd.close()
+            with open(self.test_result_json_file, "w") as file_fd:
+                pass
         else:
-            file_fd = open(self.test_result_json_file, "r")
-            test_result = json.load(file_fd)
-            file_fd.close()
+            with open(self.test_result_json_file, "r") as file_fd:
+                test_result = json.load(file_fd)
 
         test_result.append(result_data)
 
-        file_fd = open(self.test_result_json_file, "w")
-        json.dump(test_result, file_fd)
-        file_fd.close()
+        with open(self.test_result_json_file, "w") as file_fd:
+            json.dump(test_result, file_fd)
 
     def output_test_result_json(self):
         if os.path.isfile(self.test_result_json_file):
-            file_fd = open(self.test_result_json_file, "r")
-            test_result = json.load(file_fd)
-            file_fd.close()
+            with open(self.test_result_json_file, "r") as file_fd:
+                test_result = json.load(file_fd)
             output_json_data = json.dumps(test_result,
                                           sort_keys=True,
                                           indent=4)
@@ -239,8 +236,6 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
 
     @staticmethod
     def get_test_scenario(file_path):
-        test_scenario_file = open(file_path,
-                                  'r')
-        test_scenario_yaml = yaml.safe_load(test_scenario_file)
-        test_scenario_file.close()
+        with open(file_path, 'r') as test_scenario_file:
+            test_scenario_yaml = yaml.safe_load(test_scenario_file)
         return test_scenario_yaml["test_scenario_list"]

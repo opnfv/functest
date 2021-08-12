@@ -59,7 +59,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'vmready1'
-        super(VmReady1, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.image = None
         self.flavor = None
 
@@ -289,7 +289,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            assert super(VmReady1, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.image = self.publish_image()
             self.flavor = self.create_flavor()
@@ -306,7 +306,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         try:
             assert self.orig_cloud
             assert self.cloud
-            super(VmReady1, self).clean()
+            super().clean()
             if self.image:
                 self.cloud.delete_image(self.image.id)
             if self.flavor:
@@ -332,7 +332,7 @@ class VmReady2(VmReady1):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'vmready2'
-        super(VmReady2, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         try:
             assert self.orig_cloud
             self.project = tenantnetwork.NewProject(
@@ -346,7 +346,7 @@ class VmReady2(VmReady1):
 
     def clean(self):
         try:
-            super(VmReady2, self).clean()
+            super().clean()
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except
@@ -375,7 +375,7 @@ class SingleVm1(VmReady1):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'singlevm1'
-        super(SingleVm1, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.sshvm = None
         self.sec = None
         self.fip = None
@@ -480,7 +480,7 @@ class SingleVm1(VmReady1):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            assert super(SingleVm1, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             self.prepare()
@@ -511,7 +511,7 @@ class SingleVm1(VmReady1):
                 self.cloud.delete_security_group(self.sec.id)
             if self.keypair:
                 self.cloud.delete_keypair(self.keypair.name)
-            super(SingleVm1, self).clean()
+            super().clean()
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean all resources")
 
@@ -531,7 +531,7 @@ class SingleVm2(SingleVm1):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'singlevm2'
-        super(SingleVm2, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         try:
             assert self.orig_cloud
             self.project = tenantnetwork.NewProject(
@@ -545,7 +545,7 @@ class SingleVm2(SingleVm1):
 
     def clean(self):
         try:
-            super(SingleVm2, self).clean()
+            super().clean()
             assert self.project
             self.project.clean()
         except Exception:  # pylint: disable=broad-except

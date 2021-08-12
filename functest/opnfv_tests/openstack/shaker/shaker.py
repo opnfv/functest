@@ -47,7 +47,7 @@ class Shaker(singlevm.SingleVm2):
     check_console_loop = 12
 
     def __init__(self, **kwargs):
-        super(Shaker, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.role = None
 
     def check_requirements(self):
@@ -57,7 +57,7 @@ class Shaker(singlevm.SingleVm2):
             self.project.clean()
 
     def prepare(self):
-        super(Shaker, self).prepare()
+        super().prepare()
         self.cloud.create_security_group_rule(
             self.sec.id, port_range_min=self.port, port_range_max=self.port,
             protocol='tcp', direction='ingress')
@@ -142,6 +142,6 @@ class Shaker(singlevm.SingleVm2):
         return stdout.channel.recv_exit_status()
 
     def clean(self):
-        super(Shaker, self).clean()
+        super().clean()
         if self.role:
             self.orig_cloud.delete_role(self.role.id)

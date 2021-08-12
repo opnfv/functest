@@ -34,7 +34,7 @@ class ConnectionCheck(testcase.TestCase):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'connection_check'
-        super(ConnectionCheck, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.output_log_name = 'functest.log'
         self.output_debug_log_name = 'functest.debug.log'
         try:

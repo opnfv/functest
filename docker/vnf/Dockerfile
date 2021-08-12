@@ -5,7 +5,7 @@ ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia
 ARG HEAT_VIMS_TAG=release-130
 ARG VROUTER_TAG=fraser
-ARG VROUTER_BP_TAG=9b76d46a388d32d4985797620e67c2ed3315b3e4
+ARG VROUTER_BP_TAG=9b76d46a3.9d32d4985797620e67c2ed3315b3e4
 ARG ABOT_CHARM=opnfv-fraser
 
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
@@ -54,5 +54,5 @@ RUN apk --no-cache add --update \
         /src/vims-test/build-infra/.git /src/opnfv-vnf-vyos-blueprint/.git \
         /tmp/clearwater-heat-singlenet-deps.patch && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.8/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
 CMD ["run_tests", "-t", "all"]

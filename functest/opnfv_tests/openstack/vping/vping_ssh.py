@@ -29,11 +29,11 @@ class VPingSSH(singlevm.SingleVm2):
         """Initialize testcase."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "vping_ssh"
-        super(VPingSSH, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.vm2 = None
 
     def prepare(self):
-        super(VPingSSH, self).prepare()
+        super().prepare()
         self.vm2 = self.boot_vm(
             '{}-vm2_{}'.format(self.case_name, self.guid),
             security_groups=[self.sec.id])
@@ -60,4 +60,4 @@ class VPingSSH(singlevm.SingleVm2):
             self.cloud.delete_server(
                 self.vm2, wait=True,
                 timeout=getattr(config.CONF, 'vping_vm_delete_timeout'))
-        super(VPingSSH, self).clean()
+        super().clean()

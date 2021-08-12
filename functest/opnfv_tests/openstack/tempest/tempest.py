@@ -57,7 +57,7 @@ class TempestCommon(singlevm.VmReady2):
     def __init__(self, **kwargs):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'tempest'
-        super(TempestCommon, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         assert self.orig_cloud
         assert self.cloud
         assert self.project
@@ -142,22 +142,22 @@ class TempestCommon(singlevm.VmReady2):
         }
         cmd = ["rally", "verify", "show", "--uuid", verif_id]
         LOGGER.info("Showing result for a verification: '%s'.", cmd)
-        proc = subprocess.Popen(cmd,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-        for line in proc.stdout:
-            LOGGER.info(line.decode("utf-8").rstrip())
-            new_line = line.decode("utf-8").replace(' ', '').split('|')
-            if 'Tests' in new_line:
-                break
-            if 'Testscount' in new_line:
-                result['num_tests'] = int(new_line[2])
-            elif 'Success' in new_line:
-                result['num_success'] = int(new_line[2])
-            elif 'Skipped' in new_line:
-                result['num_skipped'] = int(new_line[2])
-            elif 'Failures' in new_line:
-                result['num_failures'] = int(new_line[2])
+        with subprocess.Popen(
+                cmd, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT) as proc:
+            for line in proc.stdout:
+                LOGGER.info(line.decode("utf-8").rstrip())
+                new_line = line.decode("utf-8").replace(' ', '').split('|')
+                if 'Tests' in new_line:
+                    break
+                if 'Testscount' in new_line:
+                    result['num_tests'] = int(new_line[2])
+                elif 'Success' in new_line:
+                    result['num_success'] = int(new_line[2])
+                elif 'Skipped' in new_line:
+                    result['num_skipped'] = int(new_line[2])
+                elif 'Failures' in new_line:
+                    result['num_failures'] = int(new_line[2])
         return result
 
     @staticmethod
@@ -199,10 +199,10 @@ class TempestCommon(singlevm.VmReady2):
         cmd = ("rally verify list-verifiers | awk '/" +
                getattr(config.CONF, 'tempest_verifier_name') +
                "/ {print $2}'")
-        proc = subprocess.Popen(cmd, shell=True,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.DEVNULL)
-        verifier_uuid = proc.stdout.readline().rstrip()
+        with subprocess.Popen(
+                cmd, shell=True, stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL) as proc:
+            verifier_uuid = proc.stdout.readline().rstrip()
         return verifier_uuid.decode("utf-8")
 
     @staticmethod
@@ -342,24 +342,24 @@ class TempestCommon(singlevm.VmReady2):
             os.remove(self.raw_list)
         os.rename(self.list, self.raw_list)
         cases_file = self.read_file(self.raw_list)
-        result_file = open(self.list, 'w')
-        black_tests = []
-        try:
-            deploy_scenario = env.get('DEPLOY_SCENARIO')
-            if bool(deploy_scenario):
-                # if DEPLOY_SCENARIO is set we read the file
-                black_list_file = open(black_list)
-                black_list_yaml = yaml.safe_load(black_list_file)
-                black_list_file.close()
-                for item in black_list_yaml:
-                    scenarios = item['scenarios']
-                    in_it = rally.RallyBase.in_iterable_re
-                    if in_it(deploy_scenario, scenarios):
-                        tests = item['tests']
-                        black_tests.extend(tests)
-        except Exception:  # pylint: disable=broad-except
+        with open(self.list, 'w') as result_file:
             black_tests = []
-            LOGGER.debug("Tempest blacklist file does not exist.")
+            try:
+                deploy_scenario = env.get('DEPLOY_SCENARIO')
+                if bool(deploy_scenario):
+                    # if DEPLOY_SCENARIO is set we read the file
+                    with open(black_list) as black_list_file:
+                        black_list_yaml = yaml.safe_load(black_list_file)
+                        black_list_file.close()
+                        for item in black_list_yaml:
+                            scenarios = item['scenarios']
+                            in_it = rally.RallyBase.in_iterable_re
+                            if in_it(deploy_scenario, scenarios):
+                                tests = item['tests']
+                                black_tests.extend(tests)
+            except Exception:  # pylint: disable=broad-except
+                black_tests = []
+                LOGGER.debug("Tempest blacklist file does not exist.")
 
         for cases_line in cases_file:
             for black_tests_line in black_tests:
@@ -376,25 +376,24 @@ class TempestCommon(singlevm.VmReady2):
         cmd.extend(kwargs.get('option', []))
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
-        f_stdout = open(
-            os.path.join(self.res_dir, "tempest.log"), 'w+')
+        with open(
+                os.path.join(self.res_dir, "tempest.log"), 'w+') as f_stdout:
 
-        proc = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            bufsize=1)
+            with subprocess.Popen(
+                    cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                    bufsize=1) as proc:
 
-        with proc.stdout:
-            for line in iter(proc.stdout.readline, b''):
-                if re.search(r"\} tempest\.", line.decode("utf-8")):
-                    LOGGER.info(line.rstrip())
-                elif re.search(r'(?=\(UUID=(.*)\))', line.decode("utf-8")):
-                    self.verification_id = re.search(
-                        r'(?=\(UUID=(.*)\))', line.decode("utf-8")).group(1)
-                f_stdout.write(line.decode("utf-8"))
-        proc.wait()
-        f_stdout.close()
+                with proc.stdout:
+                    for line in iter(proc.stdout.readline, b''):
+                        if re.search(r"\} tempest\.", line.decode("utf-8")):
+                            LOGGER.info(line.rstrip())
+                        elif re.search(r'(?=\(UUID=(.*)\))',
+                                       line.decode("utf-8")):
+                            self.verification_id = re.search(
+                                r'(?=\(UUID=(.*)\))',
+                                line.decode("utf-8")).group(1)
+                        f_stdout.write(line.decode("utf-8"))
+                    proc.wait()
 
         if self.verification_id is None:
             raise Exception('Verification UUID not found')
@@ -643,7 +642,7 @@ class TempestCommon(singlevm.VmReady2):
     def run(self, **kwargs):
         self.start_time = time.time()
         try:
-            assert super(TempestCommon, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             if not os.path.exists(self.res_dir):
                 os.makedirs(self.res_dir)
@@ -683,7 +682,7 @@ class TempestCommon(singlevm.VmReady2):
             self.cloud.delete_image(self.image_alt)
         if self.flavor_alt:
             self.orig_cloud.delete_flavor(self.flavor_alt.id)
-        super(TempestCommon, self).clean()
+        super().clean()
 
     def is_successful(self):
         """The overall result of the test."""
@@ -693,7 +692,7 @@ class TempestCommon(singlevm.VmReady2):
         if self.tests_count and (
                 self.details.get("tests_number", 0) != self.tests_count):
             return testcase.TestCase.EX_TESTCASE_FAILED
-        return super(TempestCommon, self).is_successful()
+        return super().is_successful()
 
 
 class TempestHeat(TempestCommon):
@@ -706,7 +705,7 @@ class TempestHeat(TempestCommon):
     flavor_alt_disk = 4
 
     def __init__(self, **kwargs):
-        super(TempestHeat, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.user2 = self.orig_cloud.create_user(
             name='{}-user2_{}'.format(self.case_name, self.project.guid),
             password=self.project.password,
@@ -723,7 +722,7 @@ class TempestHeat(TempestCommon):
 
     def configure(self, **kwargs):
         assert self.user2
-        super(TempestHeat, self).configure(**kwargs)
+        super().configure(**kwargs)
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         if not rconfig.has_section('heat_plugin'):
@@ -774,6 +773,6 @@ class TempestHeat(TempestCommon):
         """
         Cleanup all OpenStack objects. Should be called on completion.
         """
-        super(TempestHeat, self).clean()
+        super().clean()
         if self.user2:
             self.orig_cloud.delete_user(self.user2.id)

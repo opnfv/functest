@@ -57,14 +57,14 @@ class HeatIms(singlevm.VmReady2):
         """Initialize HeatIms testcase object."""
         if "case_name" not in kwargs:
             kwargs["case_name"] = "heat_ims"
-        super(HeatIms, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
         # Retrieve the configuration
         try:
             self.config = getattr(
                 config.CONF, 'vnf_{}_config'.format(self.case_name))
-        except Exception:
-            raise Exception("VNF config file not found")
+        except Exception as exc:
+            raise Exception("VNF config file not found") from exc
 
         self.case_dir = pkg_resources.resource_filename(
             'functest', 'opnfv_tests/vnf/ims')
@@ -137,7 +137,7 @@ class HeatIms(singlevm.VmReady2):
         status = testcase.TestCase.EX_RUN_ERROR
         try:
             assert self.cloud
-            assert super(HeatIms, self).run(
+            assert super().run(
                 **kwargs) == testcase.TestCase.EX_OK
             self.result = 0
             if not self.execute():
@@ -247,6 +247,6 @@ class HeatIms(singlevm.VmReady2):
             pass
         except Exception:  # pylint: disable=broad-except
             self.__logger.exception("Cannot clean stack ressources")
-        super(HeatIms, self).clean()
+        super().clean()
         if self.role:
             self.orig_cloud.delete_role(self.role.id)
