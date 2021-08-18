@@ -1,6 +1,6 @@
 FROM opnfv/functest-core
 
-ARG VMTP_TAG=master
+ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
 ARG NEUTRON_TAG=master
 
 RUN apk --no-cache add --update libxml2 libxslt && \
