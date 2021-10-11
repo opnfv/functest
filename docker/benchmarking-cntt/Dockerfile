@@ -1,4 +1,4 @@
-FROM opnfv/functest-benchmarking
+FROM opnfv/functest-benchmarking:xena
 
 COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
 COPY blacklist.yaml /src/functest/functest/opnfv_tests/openstack/rally/blacklist.yaml

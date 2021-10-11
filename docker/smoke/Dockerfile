@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:xena
 
 ARG PATROLE_TAG=master
 ARG NEUTRON_TEMPEST_TAG=master

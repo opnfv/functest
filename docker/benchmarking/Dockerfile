@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:xena
 
 ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
 ARG NEUTRON_TAG=master
