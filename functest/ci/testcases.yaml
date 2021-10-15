@@ -289,11 +289,8 @@ tiers:
             -
                 case_name: refstack_compute
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
-                deny_skipping: true
-                tests_count: 222
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Compute testcases.
@@ -326,11 +323,8 @@ tiers:
             -
                 case_name: refstack_platform
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
-                deny_skipping: true
-                tests_count: 278
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Platform testcases.
