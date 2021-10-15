@@ -52,7 +52,7 @@ See section on OpenStack credentials for details.
 
 Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/xena | bash -s -- images && ls -1 images/*
 
   images/cirros-0.5.1-aarch64-disk.img
   images/cirros-0.5.1-x86_64-disk.img
@@ -72,7 +72,7 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:xena
 
 Results shall be displayed as follows::
 
@@ -104,7 +104,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:xena
 
 Results shall be displayed as follows::
 
@@ -142,7 +142,7 @@ Run smoke-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke-cntt
+      opnfv/functest-smoke-cntt:xena
 
 Results shall be displayed as follows::
 
@@ -167,7 +167,7 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking
+      opnfv/functest-benchmarking:xena
 
 Results shall be displayed as follows::
 
@@ -191,7 +191,7 @@ Run benchmarking-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking-cntt
+      opnfv/functest-benchmarking-cntt:xena
 
 Results shall be displayed as follows::
 
@@ -212,7 +212,7 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf
+      opnfv/functest-vnf:xena
 
 Results shall be displayed as follows::
 
