@@ -8,7 +8,7 @@ robotframework>=3.0
 scp
 cloudify-rest-client
 mock!=4.0.0,!=4.0.1 # BSD
-PrettyTable<0.8 # BSD
+PrettyTable # BSD
 six # MIT
 paramiko # LGPLv2.1+
 Jinja2 # BSD License (3 clause)
