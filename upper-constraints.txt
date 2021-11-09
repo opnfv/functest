@@ -5,7 +5,7 @@ robotframework-httplibrary===0.4.2
 robotframework-requests===0.5.0
 robotframework-sshlibrary===3.3.0
 ansible===2.9.2
-xtesting===0.91.0
+xtesting===0.93.0
 git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf#egg=bandit
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
