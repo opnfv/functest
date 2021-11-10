@@ -128,7 +128,7 @@ class TempestCommon(singlevm.VmReady2):
     @staticmethod
     def read_file(filename):
         """Read file and return content as a stripped list."""
-        with open(filename) as src:
+        with open(filename, encoding='utf-8') as src:
             return [line.strip() for line in src.readlines()]
 
     @staticmethod
@@ -212,7 +212,7 @@ class TempestCommon(singlevm.VmReady2):
         """
         return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                             'verification',
-                            'verifier-{}'.format(verifier_id),
+                            f'verifier-{verifier_id}',
                             'repo')
 
     @staticmethod
@@ -222,13 +222,13 @@ class TempestCommon(singlevm.VmReady2):
         """
         return os.path.join(getattr(config.CONF, 'dir_rally_inst'),
                             'verification',
-                            'verifier-{}'.format(verifier_id),
-                            'for-deployment-{}'.format(deployment_id))
+                            f'verifier-{verifier_id}',
+                            f'for-deployment-{deployment_id}')
 
     @staticmethod
     def update_tempest_conf_file(conf_file, rconfig):
         """Update defined paramters into tempest config file"""
-        with open(TempestCommon.tempest_conf_yaml) as yfile:
+        with open(TempestCommon.tempest_conf_yaml, encoding='utf-8') as yfile:
             conf_yaml = yaml.safe_load(yfile)
         if conf_yaml:
             sections = rconfig.sections()
@@ -239,7 +239,7 @@ class TempestCommon(singlevm.VmReady2):
                 for key, value in sub_conf.items():
                     rconfig.set(section, key, value)
 
-        with open(conf_file, 'w') as config_file:
+        with open(conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     @staticmethod
@@ -324,13 +324,13 @@ class TempestCommon(singlevm.VmReady2):
                 shutil.copyfile(
                     self.tempest_custom, self.list)
             else:
-                raise Exception("Tempest test list file %s NOT found."
-                                % self.tempest_custom)
+                raise Exception(
+                    f"Tempest test list file {self.tempest_custom} NOT found.")
         else:
             testr_mode = kwargs.get(
                 'mode', r'^tempest\.(api|scenario).*\[.*\bsmoke\b.*\]$')
-            cmd = "(cd {0}; stestr list '{1}' >{2} 2>/dev/null)".format(
-                self.verifier_repo_dir, testr_mode, self.list)
+            cmd = (f"(cd {self.verifier_repo_dir}; "
+                   f"stestr list '{testr_mode}' > {self.list} 2>/dev/null)")
             output = subprocess.check_output(cmd, shell=True)
             LOGGER.info("%s\n%s", cmd, output.decode("utf-8"))
         os.remove('/etc/tempest.conf')
@@ -342,13 +342,13 @@ class TempestCommon(singlevm.VmReady2):
             os.remove(self.raw_list)
         os.rename(self.list, self.raw_list)
         cases_file = self.read_file(self.raw_list)
-        with open(self.list, 'w') as result_file:
+        with open(self.list, 'w', encoding='utf-8') as result_file:
             black_tests = []
             try:
                 deploy_scenario = env.get('DEPLOY_SCENARIO')
                 if bool(deploy_scenario):
                     # if DEPLOY_SCENARIO is set we read the file
-                    with open(black_list) as black_list_file:
+                    with open(black_list, encoding='utf-8') as black_list_file:
                         black_list_yaml = yaml.safe_load(black_list_file)
                         black_list_file.close()
                         for item in black_list_yaml:
@@ -376,12 +376,11 @@ class TempestCommon(singlevm.VmReady2):
         LOGGER.info("Starting Tempest test suite: '%s'.", cmd)
 
         with open(
-                os.path.join(self.res_dir, "tempest.log"), 'w+') as f_stdout:
-
+                os.path.join(self.res_dir, "tempest.log"), 'w+',
+                encoding='utf-8') as f_stdout:
             with subprocess.Popen(
                     cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                     bufsize=1) as proc:
-
                 with proc.stdout:
                     for line in iter(proc.stdout.readline, b''):
                         if re.search(r"\} tempest\.", line.decode("utf-8")):
@@ -399,8 +398,8 @@ class TempestCommon(singlevm.VmReady2):
         LOGGER.info('Verification UUID: %s', self.verification_id)
 
         shutil.copy(
-            "{}/tempest.log".format(self.deployment_dir),
-            "{}/tempest.debug.log".format(self.res_dir))
+            f"{self.deployment_dir}/tempest.log",
+            f"{self.res_dir}/tempest.debug.log")
 
     def parse_verifier_result(self):
         """Parse and save test results."""
@@ -417,8 +416,8 @@ class TempestCommon(singlevm.VmReady2):
                     LOGGER.error("No test has been executed")
                     return
 
-            with open(os.path.join(self.res_dir,
-                                   "rally.log"), 'r') as logfile:
+            with open(os.path.join(self.res_dir, "rally.log"),
+                      'r', encoding='utf-8') as logfile:
                 output = logfile.read()
 
             success_testcases = []
@@ -453,9 +452,8 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.read(rally_conf)
         if not rconfig.has_section('openstack'):
             rconfig.add_section('openstack')
-        rconfig.set('openstack', 'img_name_regex', '^{}$'.format(
-            self.image.name))
-        with open(rally_conf, 'w') as config_file:
+        rconfig.set('openstack', 'img_name_regex', f'^{self.image.name}$')
+        with open(rally_conf, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_default_role(self, rally_conf='/etc/rally/rally.conf'):
@@ -468,7 +466,7 @@ class TempestCommon(singlevm.VmReady2):
         if not rconfig.has_section('openstack'):
             rconfig.add_section('openstack')
         rconfig.set('openstack', 'swift_operator_role', role.name)
-        with open(rally_conf, 'w') as config_file:
+        with open(rally_conf, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     @staticmethod
@@ -480,7 +478,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.remove_option('openstack', 'img_name_regex')
         if rconfig.has_option('openstack', 'swift_operator_role'):
             rconfig.remove_option('openstack', 'swift_operator_role')
-        with open(rally_conf, 'w') as config_file:
+        with open(rally_conf, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_auth_section(self):
@@ -503,11 +501,11 @@ class TempestCommon(singlevm.VmReady2):
             account_file = os.path.join(
                 getattr(config.CONF, 'dir_functest_data'), 'accounts.yaml')
             assert os.path.exists(
-                account_file), "{} doesn't exist".format(account_file)
+                account_file), f"{account_file} doesn't exist"
             rconfig.set('auth', 'test_accounts_file', account_file)
         if env.get('NO_TENANT_NETWORK').lower() == 'true':
             rconfig.set('auth', 'create_isolated_networks', False)
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_network_section(self):
@@ -524,7 +522,7 @@ class TempestCommon(singlevm.VmReady2):
             if not rconfig.has_section('network-feature-enabled'):
                 rconfig.add_section('network-feature-enabled')
             rconfig.set('network-feature-enabled', 'floating_ips', False)
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_compute_section(self):
@@ -536,7 +534,7 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.set(
             'compute', 'fixed_network_name',
             self.network.name if self.network else env.get("EXTERNAL_NETWORK"))
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_validation_section(self):
@@ -551,7 +549,7 @@ class TempestCommon(singlevm.VmReady2):
         rconfig.set(
             'validation', 'network_for_ssh',
             self.network.name if self.network else env.get("EXTERNAL_NETWORK"))
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_scenario_section(self):
@@ -559,12 +557,12 @@ class TempestCommon(singlevm.VmReady2):
         rconfig = configparser.RawConfigParser()
         rconfig.read(self.conf_file)
         filename = getattr(
-            config.CONF, '{}_image'.format(self.case_name), self.filename)
+            config.CONF, f'{self.case_name}_image', self.filename)
         if not rconfig.has_section('scenario'):
             rconfig.add_section('scenario')
         rconfig.set('scenario', 'img_file', filename)
         rconfig.set('scenario', 'img_disk_format', getattr(
-            config.CONF, '{}_image_format'.format(self.case_name),
+            config.CONF, f'{self.case_name}_image_format',
             self.image_format))
         extra_properties = self.extra_properties.copy()
         if env.get('IMAGE_PROPERTIES'):
@@ -572,12 +570,11 @@ class TempestCommon(singlevm.VmReady2):
                 functest_utils.convert_ini_to_dict(
                     env.get('IMAGE_PROPERTIES')))
         extra_properties.update(
-            getattr(config.CONF, '{}_extra_properties'.format(
-                self.case_name), {}))
+            getattr(config.CONF, f'{self.case_name}_extra_properties', {}))
         rconfig.set(
             'scenario', 'img_properties',
             functest_utils.convert_dict_to_ini(extra_properties))
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def update_dashboard_section(self):
@@ -590,7 +587,7 @@ class TempestCommon(singlevm.VmReady2):
             rconfig.set('dashboard', 'dashboard_url', env.get('DASHBOARD_URL'))
         else:
             rconfig.set('service_available', 'horizon', False)
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def configure(self, **kwargs):  # pylint: disable=unused-argument
@@ -706,7 +703,7 @@ class TempestHeat(TempestCommon):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.user2 = self.orig_cloud.create_user(
-            name='{}-user2_{}'.format(self.case_name, self.project.guid),
+            name=f'{self.case_name}-user2_{self.project.guid}',
             password=self.project.password,
             domain_id=self.project.domain.id)
         self.orig_cloud.grant_role(
@@ -764,7 +761,7 @@ class TempestHeat(TempestCommon):
                 env.get("EXTERNAL_NETWORK"))
             rconfig.set(
                 'heat_plugin', 'network_for_ssh', env.get("EXTERNAL_NETWORK"))
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)
 

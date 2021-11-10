@@ -14,11 +14,12 @@ class Config():
     def __init__(self):
         try:
             with open(pkg_resources.resource_filename(
-                    'functest', 'ci/config_functest.yaml')) as yfile:
+                    'functest', 'ci/config_functest.yaml'),
+                    encoding='utf-8') as yfile:
                 self.functest_yaml = yaml.safe_load(yfile)
         except Exception as error:
             raise Exception(
-                'Parse config failed: {}'.format(str(error))) from error
+                f'Parse config failed: {str(error)}') from error
 
     @staticmethod
     def _merge_dicts(dict1, dict2):
@@ -34,7 +35,7 @@ class Config():
                 yield (k, dict2[k])
 
     def patch_file(self, patch_file_path):
-        with open(patch_file_path) as yfile:
+        with open(patch_file_path, encoding='utf-8') as yfile:
             patch_file = yaml.safe_load(yfile)
 
         for key in patch_file:
@@ -53,14 +54,14 @@ class Config():
     @staticmethod
     def _get_attr_further(attr_now, next):  # pylint: disable=redefined-builtin
         return attr_now if next == 'general' else (
-            '{}_{}'.format(attr_now, next) if attr_now else next)
+            f'{attr_now}_{next}' if attr_now else next)
 
     def fill(self):
         try:
             self._parse(None, self.functest_yaml)
         except Exception as error:
             raise Exception(
-                'Parse config failed: {}'.format(str(error))) from error
+                f'Parse config failed: {str(error)}') from error
 
 
 CONF = Config()

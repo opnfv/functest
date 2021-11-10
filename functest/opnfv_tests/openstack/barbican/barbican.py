@@ -32,6 +32,6 @@ class Barbican(tempest.TempestCommon):
         if not rconfig.has_section('image-feature-enabled'):
             rconfig.add_section('image-feature-enabled')
         rconfig.set('image-feature-enabled', 'api_v1', False)
-        with open(self.conf_file, 'w') as config_file:
+        with open(self.conf_file, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
         self.backup_tempest_config(self.conf_file, self.res_dir)

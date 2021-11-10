@@ -54,12 +54,12 @@ class CinderCheck(singlevm.SingleVm2):
     def prepare(self):
         super().prepare()
         self.vm2 = self.boot_vm(
-            '{}-vm2_{}'.format(self.case_name, self.guid),
+            f'{self.case_name}-vm2_{self.guid}',
             key_name=self.keypair.id,
             security_groups=[self.sec.id])
         (self.fip2, self.ssh2) = self.connect(self.vm2)
         self.volume = self.cloud.create_volume(
-            name='{}-volume_{}'.format(self.case_name, self.guid), size='2',
+            name=f'{self.case_name}-volume_{self.guid}', size='2',
             timeout=self.volume_timeout, wait=True)
 
     def _write_data(self):
@@ -76,7 +76,7 @@ class CinderCheck(singlevm.SingleVm2):
             return testcase.TestCase.EX_RUN_ERROR
         self.logger.debug("ssh: %s", self.ssh)
         (_, stdout, stderr) = self.ssh.exec_command(
-            "sh ~/write_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
+            f"sh ~/write_data.sh {env.get('VOLUME_DEVICE_NAME')}")
         self.logger.debug(
             "volume_write stdout: %s", stdout.read().decode("utf-8"))
         self.logger.debug(
@@ -104,7 +104,7 @@ class CinderCheck(singlevm.SingleVm2):
             return testcase.TestCase.EX_RUN_ERROR
         self.logger.debug("ssh: %s", self.ssh2)
         (_, stdout, stderr) = self.ssh2.exec_command(
-            "sh ~/read_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
+            f"sh ~/read_data.sh {env.get('VOLUME_DEVICE_NAME')}")
         self.logger.debug(
             "read volume stdout: %s", stdout.read().decode("utf-8"))
         self.logger.debug(

@@ -36,12 +36,12 @@ class FunctionTestExec():
                 os.path.join(
                     self.util.vnf_data_dir, self.util.command_template_dir,
                     self.util.test_cmd_map_yaml_file),
-                'r') as test_cmd_map_file:
+                'r', encoding='utf-8') as test_cmd_map_file:
             self.test_cmd_map_yaml = yaml.safe_load(test_cmd_map_file)
 
         self.util.set_credentials(credentials["cloud"])
 
-        with open(self.util.test_env_config_yaml) as file_fd:
+        with open(self.util.test_env_config_yaml, encoding='utf-8') as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 

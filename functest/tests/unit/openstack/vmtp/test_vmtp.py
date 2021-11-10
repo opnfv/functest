@@ -66,10 +66,12 @@ class VmtpTesting(unittest.TestCase):
     def test_generate_keys1(self, *args):
         self.testcase.generate_keys()
         self.testcase.cloud.create_keypair.assert_called_once_with(
-            'vmtp_{}'.format(self.testcase.guid))
+            f'vmtp_{self.testcase.guid}')
         self.testcase.cloud.delete_keypair.assert_called_once_with('id')
-        calls = [mock.call(self.testcase.privkey_filename, 'w'),
-                 mock.call(self.testcase.pubkey_filename, 'w')]
+        calls = [mock.call(
+                    self.testcase.privkey_filename, 'w', encoding='utf-8'),
+                 mock.call(
+                    self.testcase.pubkey_filename, 'w', encoding='utf-8')]
         args[0].assert_has_calls(calls, any_order=True)
 
     @mock.patch('six.moves.builtins.open')
@@ -79,7 +81,7 @@ class VmtpTesting(unittest.TestCase):
                 side_effect=shade.OpenStackCloudException(None)) as mock_obj, \
                 self.assertRaises(shade.OpenStackCloudException):
             self.testcase.generate_keys()
-        mock_obj.assert_called_once_with('vmtp_{}'.format(self.testcase.guid))
+        mock_obj.assert_called_once_with(f'vmtp_{self.testcase.guid}')
         args[0].assert_not_called()
 
 

@@ -43,7 +43,7 @@ class SshClient():  # pylint: disable=too-many-instance-attributes
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         self.util = Utilvnf()
-        with open(self.util.test_env_config_yaml) as file_fd:
+        with open(self.util.test_env_config_yaml, encoding='utf-8') as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 
