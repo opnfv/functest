@@ -61,13 +61,12 @@ class NewProject():
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
         self.project = self.orig_cloud.create_project(
-            name='{}-project_{}'.format(self.case_name[:18], self.guid),
-            description="Created by OPNFV Functest: {}".format(
-                self.case_name),
+            name=f'{self.case_name[:18]}-project_{self.guid}',
+            description=f"Created by OPNFV Functest: {self.case_name}",
             domain_id=self.domain.id)
         self.__logger.debug("project: %s", self.project)
         self.user = self.orig_cloud.create_user(
-            name='{}-user_{}'.format(self.case_name, self.guid),
+            name=f'{self.case_name}-user_{self.guid}',
             password=self.password,
             domain_id=self.domain.id)
         self.__logger.debug("user: %s", self.user)
@@ -77,7 +76,7 @@ class NewProject():
             elif self.orig_cloud.get_role(self.default_member.lower()):
                 self.role_name = self.default_member.lower()
             else:
-                raise Exception("Cannot detect {}".format(self.default_member))
+                raise Exception(f"Cannot detect {self.default_member}")
         except Exception:  # pylint: disable=broad-except
             self.__logger.info("Creating default role %s", self.default_member)
             role = self.orig_cloud.create_role(self.default_member)
@@ -222,15 +221,15 @@ class TenantNetwork1(testcase.TestCase):
         if env.get('NO_TENANT_NETWORK').lower() != 'true':
             assert self.ext_net
         provider = {}
-        if hasattr(config.CONF, '{}_network_type'.format(self.case_name)):
+        if hasattr(config.CONF, f'{self.case_name}_network_type'):
             provider["network_type"] = getattr(
-                config.CONF, '{}_network_type'.format(self.case_name))
-        if hasattr(config.CONF, '{}_physical_network'.format(self.case_name)):
+                config.CONF, f'{self.case_name}_network_type')
+        if hasattr(config.CONF, f'{self.case_name}_physical_network'):
             provider["physical_network"] = getattr(
-                config.CONF, '{}_physical_network'.format(self.case_name))
-        if hasattr(config.CONF, '{}_segmentation_id'.format(self.case_name)):
+                config.CONF, f'{self.case_name}_physical_network')
+        if hasattr(config.CONF, f'{self.case_name}_segmentation_id'):
             provider["segmentation_id"] = getattr(
-                config.CONF, '{}_segmentation_id'.format(self.case_name))
+                config.CONF, f'{self.case_name}_segmentation_id')
         domain = self.orig_cloud.get_domain(
             name_or_id=self.orig_cloud.auth.get(
                 "project_domain_name", "Default"))
@@ -238,23 +237,23 @@ class TenantNetwork1(testcase.TestCase):
             self.cloud.auth['project_name'],
             domain_id=domain.id)
         self.network = self.orig_cloud.create_network(
-            '{}-net_{}'.format(self.case_name, self.guid),
+            f'{self.case_name}-net_{self.guid}',
             provider=provider, project_id=project.id,
             shared=self.shared_network)
         self.__logger.debug("network: %s", self.network)
 
         self.subnet = self.cloud.create_subnet(
             self.network.id,
-            subnet_name='{}-subnet_{}'.format(self.case_name, self.guid),
+            subnet_name=f'{self.case_name}-subnet_{self.guid}',
             cidr=getattr(
-                config.CONF, '{}_private_subnet_cidr'.format(self.case_name),
+                config.CONF, f'{self.case_name}_private_subnet_cidr',
                 self.cidr),
             enable_dhcp=True,
             dns_nameservers=[env.get('NAMESERVER')])
         self.__logger.debug("subnet: %s", self.subnet)
 
         self.router = self.cloud.create_router(
-            name='{}-router_{}'.format(self.case_name, self.guid),
+            name=f'{self.case_name}-router_{self.guid}',
             ext_gateway_net_id=self.ext_net.id if self.ext_net else None)
         self.__logger.debug("router: %s", self.router)
         self.cloud.add_router_interface(self.router, subnet_id=self.subnet.id)

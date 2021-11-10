@@ -56,7 +56,7 @@ class CloudifyVrouter(cloudify.Cloudify):
         # Retrieve the configuration
         try:
             self.config = getattr(
-                config.CONF, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, f'vnf_{self.case_name}_config')
         except Exception as exc:
             raise Exception("VNF config file not found") from exc
 

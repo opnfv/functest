@@ -80,19 +80,18 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 functest_utils.convert_ini_to_dict(
                     env.get('IMAGE_PROPERTIES')))
         extra_properties.update(
-            getattr(config.CONF, '{}_extra_properties'.format(
-                self.case_name), {}))
+            getattr(config.CONF, f'{self.case_name}_extra_properties', {}))
         image = self.cloud.create_image(
-            name if name else '{}-img_{}'.format(self.case_name, self.guid),
+            name if name else f'{self.case_name}-img_{self.guid}',
             filename=getattr(
-                config.CONF, '{}_image'.format(self.case_name),
+                config.CONF, f'{self.case_name}_image',
                 self.filename),
             meta=extra_properties,
             disk_format=getattr(
-                config.CONF, '{}_image_format'.format(self.case_name),
+                config.CONF, f'{self.case_name}_image_format',
                 self.image_format),
             visibility=getattr(
-                config.CONF, '{}_visibility'.format(self.case_name),
+                config.CONF, f'{self.case_name}_visibility',
                 self.visibility),
             wait=True)
         self.__logger.debug("image: %s", image)
@@ -115,20 +114,18 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                 functest_utils.convert_ini_to_dict(
                     env.get('IMAGE_PROPERTIES')))
         extra_alt_properties.update(
-            getattr(config.CONF, '{}_extra_alt_properties'.format(
-                self.case_name), {}))
+            getattr(config.CONF, f'{self.case_name}_extra_alt_properties', {}))
         image = self.cloud.create_image(
-            name if name else '{}-img_alt_{}'.format(
-                self.case_name, self.guid),
+            name if name else f'{self.case_name}-img_alt_{self.guid}',
             filename=getattr(
-                config.CONF, '{}_image_alt'.format(self.case_name),
+                config.CONF, f'{self.case_name}_image_alt',
                 self.filename_alt),
             meta=extra_alt_properties,
             disk_format=getattr(
-                config.CONF, '{}_image_alt_format'.format(self.case_name),
+                config.CONF, f'{self.case_name}_image_alt_format',
                 self.image_format),
             visibility=getattr(
-                config.CONF, '{}_visibility'.format(self.case_name),
+                config.CONF, f'{self.case_name}_visibility',
                 self.visibility),
             wait=True)
         self.__logger.debug("image: %s", image)
@@ -146,12 +143,12 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.orig_cloud
         flavor = self.orig_cloud.create_flavor(
-            name if name else '{}-flavor_{}'.format(self.case_name, self.guid),
-            getattr(config.CONF, '{}_flavor_ram'.format(self.case_name),
+            name if name else f'{self.case_name}-flavor_{self.guid}',
+            getattr(config.CONF, f'{self.case_name}_flavor_ram',
                     self.flavor_ram),
-            getattr(config.CONF, '{}_flavor_vcpus'.format(self.case_name),
+            getattr(config.CONF, f'{self.case_name}_flavor_vcpus',
                     self.flavor_vcpus),
-            getattr(config.CONF, '{}_flavor_disk'.format(self.case_name),
+            getattr(config.CONF, f'{self.case_name}_flavor_disk',
                     self.flavor_disk))
         self.__logger.debug("flavor: %s", flavor)
         flavor_extra_specs = self.flavor_extra_specs.copy()
@@ -161,7 +158,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     env.get('FLAVOR_EXTRA_SPECS')))
         flavor_extra_specs.update(
             getattr(config.CONF,
-                    '{}_flavor_extra_specs'.format(self.case_name), {}))
+                    f'{self.case_name}_flavor_extra_specs', {}))
         self.orig_cloud.set_flavor_specs(flavor.id, flavor_extra_specs)
         return flavor
 
@@ -177,13 +174,12 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.orig_cloud
         flavor = self.orig_cloud.create_flavor(
-            name if name else '{}-flavor_alt_{}'.format(
-                self.case_name, self.guid),
-            getattr(config.CONF, '{}_flavor_alt_ram'.format(self.case_name),
+            name if name else f'{self.case_name}-flavor_alt_{self.guid}',
+            getattr(config.CONF, f'{self.case_name}_flavor_alt_ram',
                     self.flavor_alt_ram),
-            getattr(config.CONF, '{}_flavor_alt_vcpus'.format(self.case_name),
+            getattr(config.CONF, f'{self.case_name}_flavor_alt_vcpus',
                     self.flavor_alt_vcpus),
-            getattr(config.CONF, '{}_flavor_alt_disk'.format(self.case_name),
+            getattr(config.CONF, f'{self.case_name}_flavor_alt_disk',
                     self.flavor_alt_disk))
         self.__logger.debug("flavor: %s", flavor)
         flavor_alt_extra_specs = self.flavor_alt_extra_specs.copy()
@@ -193,7 +189,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
                     env.get('FLAVOR_EXTRA_SPECS')))
         flavor_alt_extra_specs.update(
             getattr(config.CONF,
-                    '{}_flavor_alt_extra_specs'.format(self.case_name), {}))
+                    f'{self.case_name}_flavor_alt_extra_specs', {}))
         self.orig_cloud.set_flavor_specs(
             flavor.id, flavor_alt_extra_specs)
         return flavor
@@ -210,7 +206,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
         """
         assert self.cloud
         vm1 = self.cloud.create_server(
-            name if name else '{}-vm_{}'.format(self.case_name, self.guid),
+            name if name else f'{self.case_name}-vm_{self.guid}',
             image=self.image.id, flavor=self.flavor.id,
             auto_ip=False,
             network=self.network.id if self.network else env.get(
@@ -393,14 +389,15 @@ class SingleVm1(VmReady1):
         """
         assert self.cloud
         self.keypair = self.cloud.create_keypair(
-            '{}-kp_{}'.format(self.case_name, self.guid))
+            f'{self.case_name}-kp_{self.guid}')
         self.__logger.debug("keypair: %s", self.keypair)
         self.__logger.debug("private_key:\n%s", self.keypair.private_key)
-        with open(self.key_filename, 'w') as private_key_file:
+        with open(
+                self.key_filename, 'w', encoding='utf-8') as private_key_file:
             private_key_file.write(self.keypair.private_key)
         self.sec = self.cloud.create_security_group(
-            '{}-sg_{}'.format(self.case_name, self.guid),
-            'created by OPNFV Functest ({})'.format(self.case_name))
+            f'{self.case_name}-sg_{self.guid}',
+            f'created by OPNFV Functest ({self.case_name})')
         self.cloud.create_security_group_rule(
             self.sec.id, port_range_min='22', port_range_max='22',
             protocol='tcp', direction='ingress')
@@ -434,11 +431,11 @@ class SingleVm1(VmReady1):
                     fip.floating_ip_address if fip else vm1.public_v4,
                     username=getattr(
                         config.CONF,
-                        '{}_image_user'.format(self.case_name), self.username),
+                        f'{self.case_name}_image_user', self.username),
                     key_filename=self.key_filename,
                     timeout=getattr(
                         config.CONF,
-                        '{}_vm_ssh_connect_timeout'.format(self.case_name),
+                        f'{self.case_name}_vm_ssh_connect_timeout',
                         self.ssh_connect_timeout))
                 break
             except Exception as exc:  # pylint: disable=broad-except

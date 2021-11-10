@@ -83,8 +83,8 @@ class OSTempestTesting(unittest.TestCase):
             testr_mode = self.tempestcommon.mode
         verifier_repo_dir = 'test_verifier_repo_dir'
         self.tempestcommon.verifier_repo_dir = verifier_repo_dir
-        cmd = "(cd {0}; stestr list '{1}' >{2} 2>/dev/null)".format(
-            verifier_repo_dir, testr_mode, self.tempestcommon.list)
+        cmd = (f"(cd {verifier_repo_dir}; stestr list '{testr_mode}' > "
+               f"{self.tempestcommon.list} 2>/dev/null)")
         self.tempestcommon.generate_test_list(mode=testr_mode)
         args[0].assert_called_once_with(cmd, shell=True)
         args[2].assert_called_once_with('/etc/tempest.conf')

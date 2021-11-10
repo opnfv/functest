@@ -57,7 +57,7 @@ class Vmtp(singlevm.VmReady2):
         if "case_name" not in kwargs:
             kwargs["case_name"] = 'vmtp'
         super().__init__(**kwargs)
-        self.config = "{}/vmtp.conf".format(self.res_dir)
+        self.config = f"{self.res_dir}/vmtp.conf"
         (_, self.privkey_filename) = tempfile.mkstemp()
         (_, self.pubkey_filename) = tempfile.mkstemp()
 
@@ -77,7 +77,7 @@ class Vmtp(singlevm.VmReady2):
         assert self.cloud
         assert self.ext_net
         self.router = self.cloud.create_router(
-            name='{}-router_{}'.format(self.case_name, self.guid),
+            name=f'{self.case_name}-router_{self.guid}',
             ext_gateway_net_id=self.ext_net.id)
         self.__logger.debug("router: %s", self.router)
 
@@ -87,13 +87,13 @@ class Vmtp(singlevm.VmReady2):
         Raises: Exception on error
         """
         assert self.cloud
-        name = "vmtp_{}".format(self.guid)
+        name = f"vmtp_{self.guid}"
         self.__logger.info("Creating keypair with name: '%s'", name)
         keypair = self.cloud.create_keypair(name)
         self.__logger.debug("keypair: %s", keypair)
-        with open(self.privkey_filename, 'w') as key_file:
+        with open(self.privkey_filename, 'w', encoding='utf-8') as key_file:
             key_file.write(keypair.private_key)
-        with open(self.pubkey_filename, 'w') as key_file:
+        with open(self.pubkey_filename, 'w', encoding='utf-8') as key_file:
             key_file.write(keypair.public_key)
         self.cloud.delete_keypair(keypair.id)
 
@@ -108,7 +108,7 @@ class Vmtp(singlevm.VmReady2):
         cmd = ['vmtp', '-sc']
         output = subprocess.check_output(cmd).decode("utf-8")
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        with open(self.config, "w+") as conf:
+        with open(self.config, "w+", encoding='utf-8') as conf:
             vmtp_conf = yaml.full_load(output)
             vmtp_conf["private_key_file"] = self.privkey_filename
             vmtp_conf["public_key_file"] = self.pubkey_filename
@@ -116,12 +116,11 @@ class Vmtp(singlevm.VmReady2):
             vmtp_conf["router_name"] = str(self.router.name)
             vmtp_conf["flavor_type"] = str(self.flavor.name)
             vmtp_conf["internal_network_name"] = [
-                "pns-internal-net_{}".format(self.guid),
-                "pns-internal-net2_{}".format(self.guid)]
-            vmtp_conf["vm_name_client"] = "TestClient_{}".format(self.guid)
-            vmtp_conf["vm_name_server"] = "TestServer_{}".format(self.guid)
-            vmtp_conf["security_group_name"] = "pns-security{}".format(
-                self.guid)
+                f"pns-internal-net_{self.guid}",
+                f"pns-internal-net2_{self.guid}"]
+            vmtp_conf["vm_name_client"] = f"TestClient_{self.guid}"
+            vmtp_conf["vm_name_server"] = f"TestServer_{self.guid}"
+            vmtp_conf["security_group_name"] = f"pns-security{self.guid}"
             vmtp_conf["dns_nameservers"] = [env.get('NAMESERVER')]
             vmtp_conf["generic_retry_count"] = self.create_server_timeout // 2
             vmtp_conf["ssh_retry_count"] = self.ssh_retry_timeout // 2
@@ -143,13 +142,13 @@ class Vmtp(singlevm.VmReady2):
             OS_USER_DOMAIN_NAME=self.project.domain.name,
             OS_PASSWORD=self.project.password)
         if not new_env["OS_AUTH_URL"].endswith(('v3', 'v3/')):
-            new_env["OS_AUTH_URL"] = "{}/v3".format(new_env["OS_AUTH_URL"])
+            new_env["OS_AUTH_URL"] = f'{new_env["OS_AUTH_URL"]}/v3'
         try:
             del new_env['OS_TENANT_NAME']
             del new_env['OS_TENANT_ID']
         except Exception:  # pylint: disable=broad-except
             pass
-        cmd = ['vmtp', '-d', '--json', '{}/vmtp.json'.format(self.res_dir),
+        cmd = ['vmtp', '-d', '--json', f'{self.res_dir}/vmtp.json',
                '-c', self.config]
         if env.get("VMTP_HYPERVISORS"):
             hypervisors = functest_utils.convert_ini_to_list(
@@ -160,12 +159,13 @@ class Vmtp(singlevm.VmReady2):
         output = subprocess.check_output(
             cmd, stderr=subprocess.STDOUT, env=new_env).decode("utf-8")
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        cmd = ['vmtp_genchart', '-c', '{}/vmtp.html'.format(self.res_dir),
-               '{}/vmtp.json'.format(self.res_dir)]
+        cmd = ['vmtp_genchart', '-c', f'{self.res_dir}/vmtp.html',
+               f'{self.res_dir}/vmtp.json']
         output = subprocess.check_output(
             cmd, stderr=subprocess.STDOUT).decode("utf-8")
         self.__logger.info("%s\n%s", " ".join(cmd), output)
-        with open('{}/vmtp.json'.format(self.res_dir), 'r') as res_file:
+        with open(f'{self.res_dir}/vmtp.json', 'r',
+                  encoding='utf-8') as res_file:
             self.details = json.load(res_file)
 
     def run(self, **kwargs):
@@ -207,7 +207,7 @@ class Vmtp(singlevm.VmReady2):
             super().clean()
             os.remove(self.privkey_filename)
             os.remove(self.pubkey_filename)
-            self.cloud.delete_network("pns-internal-net_{}".format(self.guid))
-            self.cloud.delete_network("pns-internal-net2_{}".format(self.guid))
+            self.cloud.delete_network(f"pns-internal-net_{self.guid}")
+            self.cloud.delete_network(f"pns-internal-net2_{self.guid}")
         except Exception:  # pylint: disable=broad-except
             pass

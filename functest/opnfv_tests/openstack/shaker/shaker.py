@@ -95,33 +95,31 @@ class Shaker(singlevm.SingleVm2):
         scpc.put('/home/opnfv/functest/conf/env_file', remote_path='~/')
         if os.environ.get('OS_CACERT'):
             scpc.put(os.environ.get('OS_CACERT'), remote_path='~/os_cacert')
+        opt = 'export OS_CACERT=~/os_cacert && ' if os.environ.get(
+            'OS_CACERT') else ''
         (_, stdout, stderr) = self.ssh.exec_command(
             'source ~/env_file && '
             'export OS_INTERFACE=public && '
-            'export OS_AUTH_URL={} && '
-            'export OS_USERNAME={} && '
-            'export OS_PROJECT_NAME={} && '
-            'export OS_PROJECT_ID={} && '
+            f'export OS_AUTH_URL={endpoint} && '
+            f'export OS_USERNAME={self.project.user.name} && '
+            f'export OS_PROJECT_NAME={self.project.project.name} && '
+            f'export OS_PROJECT_ID={self.project.project.id} && '
             'unset OS_TENANT_NAME && '
             'unset OS_TENANT_ID && '
             'unset OS_ENDPOINT_TYPE && '
-            'export OS_PASSWORD="{}" && '
-            '{}'
+            f'export OS_PASSWORD="{self.project.password}" && '
+            f'{opt}'
             'env && '
-            'timeout {} shaker --debug --image-name {} --flavor-name {} '
-            '--server-endpoint {}:9000 --external-net {} --dns-nameservers {} '
+            f'timeout {self.shaker_timeout} shaker --debug '
+            f'--image-name {self.image.name} --flavor-name {self.flavor.name} '
+            f'--server-endpoint {self.fip.floating_ip_address}:9000 '
+            f'--external-net {self.ext_net.id} '
+            f"--dns-nameservers {env.get('NAMESERVER')} "
             '--scenario openstack/full_l2,'
             'openstack/full_l3_east_west,'
             'openstack/full_l3_north_south,'
             'openstack/perf_l3_north_south '
-            '--report report.html --output report.json'.format(
-                endpoint, self.project.user.name, self.project.project.name,
-                self.project.project.id, self.project.password,
-                'export OS_CACERT=~/os_cacert && ' if os.environ.get(
-                    'OS_CACERT') else '',
-                self.shaker_timeout, self.image.name, self.flavor.name,
-                self.fip.floating_ip_address, self.ext_net.id,
-                env.get('NAMESERVER')))
+            '--report report.html --output report.json')
         self.__logger.info("output:\n%s", stdout.read().decode("utf-8"))
         self.__logger.info("error:\n%s", stderr.read().decode("utf-8"))
         if not os.path.exists(self.res_dir):
@@ -132,7 +130,9 @@ class Shaker(singlevm.SingleVm2):
         except scp.SCPException:
             self.__logger.exception("cannot get report files")
             return 1
-        with open(os.path.join(self.res_dir, 'report.json')) as json_file:
+        with open(
+                os.path.join(self.res_dir, 'report.json'),
+                encoding='utf-8') as json_file:
             data = json.load(json_file)
             for value in data["records"].values():
                 if value["status"] != "ok":
