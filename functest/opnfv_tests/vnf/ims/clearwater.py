@@ -50,7 +50,7 @@ class ClearwaterTesting():
         output_dict = {}
         self.logger.debug('Ellis IP: %s', self.ellis_ip)
         output_dict['ellis_ip'] = self.ellis_ip
-        account_url = 'http://{0}/accounts'.format(self.ellis_ip)
+        account_url = f'http://{self.ellis_ip}/accounts'
         params = {"password": "functest",
                   "full_name": "opnfv functest user",
                   "email": "functest@opnfv.org",
@@ -60,7 +60,7 @@ class ClearwaterTesting():
         number_res = self._create_ellis_account(account_url, params)
         output_dict['number'] = number_res
 
-        session_url = 'http://{0}/session'.format(self.ellis_ip)
+        session_url = f'http://{self.ellis_ip}/session'
         session_data = {
             'username': params['email'],
             'password': params['password'],
@@ -68,8 +68,8 @@ class ClearwaterTesting():
         }
         cookies = self._get_ellis_session_cookies(session_url, session_data)
 
-        number_url = 'http://{0}/accounts/{1}/numbers'.format(
-            self.ellis_ip, params['email'])
+        number_url = (
+            f"http://{self.ellis_ip}/accounts/{params['email']}/numbers")
         self.logger.debug('Create 1st calling number on Ellis')
         number_res = self._create_ellis_number(number_url, cookies)
 
@@ -97,8 +97,7 @@ class ClearwaterTesting():
                     "try %s: cannot create ellis account", iloop + 1)
                 time.sleep(30)
         raise Exception(
-            "Unable to create an account {}".format(
-                params.get('full_name')))
+            f"Unable to create an account {params.get('full_name')}")
 
     def _get_ellis_session_cookies(self, session_url, params):
         i = 15
@@ -150,24 +149,20 @@ class ClearwaterTesting():
         """
         # pylint: disable=too-many-locals,too-many-arguments
         self.logger.info('Run Clearwater live test')
-        script = ('cd {0};'
-                  'rake test[{1}] SIGNUP_CODE={2}'
-                  .format(self.test_dir,
-                          public_domain,
-                          signup_code))
+        script = (f'cd {self.test_dir};'
+                  f'rake test[{public_domain}] SIGNUP_CODE={signup_code}')
         if self.bono_ip and self.ellis_ip:
-            subscript = ' PROXY={0} ELLIS={1}'.format(
-                self.bono_ip, self.ellis_ip)
-            script = '{0}{1}'.format(script, subscript)
-        script = ('{0}{1}'.format(script, ' --trace'))
-        cmd = "/bin/bash -c '{0}'".format(script)
+            subscript = f' PROXY={self.bono_ip} ELLIS={self.ellis_ip}'
+            script = f'{script}{subscript}'
+        script = f'{script} --trace'
+        cmd = f"/bin/bash -c '{script}'"
         self.logger.debug('Live test cmd: %s', cmd)
         output_file = os.path.join(self.result_dir, "ims_test_output.txt")
         ft_utils.execute_command(cmd,
                                  error_msg='Clearwater live test failed',
                                  output_file=output_file)
 
-        with open(output_file, 'r') as ofile:
+        with open(output_file, 'r', encoding='utf-8') as ofile:
             result = ofile.read()
 
         if result != "":

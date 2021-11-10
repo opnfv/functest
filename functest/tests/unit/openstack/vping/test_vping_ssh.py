@@ -47,7 +47,7 @@ class VpingSSHTesting(unittest.TestCase):
             self.vping.prepare()
         args[0].assert_called_once_with()
         args[1].assert_called_once_with(
-            '{}-vm2_{}'.format(self.vping.case_name, self.vping.guid),
+            f'{self.vping.case_name}-vm2_{self.vping.guid}',
             security_groups=[self.vping.sec.id])
 
     @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.VPingSSH.'
@@ -58,7 +58,7 @@ class VpingSSHTesting(unittest.TestCase):
         self.vping.prepare()
         args[0].assert_called_once_with()
         args[1].assert_called_once_with(
-            '{}-vm2_{}'.format(self.vping.case_name, self.vping.guid),
+            f'{self.vping.case_name}-vm2_{self.vping.guid}',
             security_groups=[self.vping.sec.id])
 
     @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.VPingSSH.'
@@ -70,7 +70,7 @@ class VpingSSHTesting(unittest.TestCase):
         with self.assertRaises(ssh_exception.SSHException):
             self.vping.execute()
         self.vping.ssh.exec_command.assert_called_once_with(
-            'ping -c 1 {}'.format(self.vping.vm2.private_v4))
+            f'ping -c 1 {self.vping.vm2.private_v4}')
         args[0].assert_called_once_with('foo')
 
     @mock.patch('functest.opnfv_tests.openstack.vping.vping_ssh.VPingSSH.'
@@ -94,7 +94,7 @@ class VpingSSHTesting(unittest.TestCase):
             self.assertEqual(self.vping.execute(), ret)
             mock_check.assert_called_once_with('foo')
         self.vping.ssh.exec_command.assert_called_once_with(
-            'ping -c 1 {}'.format(self.vping.vm2.private_v4))
+            f'ping -c 1 {self.vping.vm2.private_v4}')
 
     def test_execute1(self):
         self._test_execute()
