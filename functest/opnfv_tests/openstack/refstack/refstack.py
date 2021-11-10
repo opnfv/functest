@@ -26,12 +26,11 @@ class Refstack(tempest.TempestCommon):
 
     def _extract_refstack_data(self, refstack_list):
         yaml_data = ""
-        with open(refstack_list) as def_file:
+        with open(refstack_list, encoding='utf-8') as def_file:
             for line in def_file:
                 try:
                     grp = re.search(r'^([^\[]*)(\[.*\])\n*$', line)
-                    yaml_data = "{}\n{}: {}".format(
-                        yaml_data, grp.group(1), grp.group(2))
+                    yaml_data = f"{yaml_data}\n{grp.group(1)}: {grp.group(2)}"
                 except Exception:  # pylint: disable=broad-except
                     self.__logger.warning("Cannot parse %s", line)
         return yaml.full_load(yaml_data)
@@ -53,8 +52,7 @@ class Refstack(tempest.TempestCommon):
         for line in output.splitlines():
             try:
                 grp = re.search(r'^([^\[]*)(\[.*\])\n*$', line.decode("utf-8"))
-                yaml_data2 = "{}\n{}: {}".format(
-                    yaml_data2, grp.group(1), grp.group(2))
+                yaml_data2 = f"{yaml_data2}\n{grp.group(1)}: {grp.group(2)}"
             except Exception:  # pylint: disable=broad-except
                 self.__logger.warning("Cannot parse %s. skipping it", line)
         return yaml.full_load(yaml_data2)
@@ -62,11 +60,11 @@ class Refstack(tempest.TempestCommon):
     def generate_test_list(self, **kwargs):
         refstack_list = os.path.join(
             getattr(config.CONF, 'dir_refstack_data'),
-            "{}.txt".format(kwargs.get('target', 'compute')))
+            f"{kwargs.get('target', 'compute')}.txt")
         self.backup_tempest_config(self.conf_file, '/etc')
         refstack_data = self._extract_refstack_data(refstack_list)
         tempest_data = self._extract_tempest_data()
-        with open(self.list, 'w') as ref_file:
+        with open(self.list, 'w', encoding='utf-8') as ref_file:
             for key in refstack_data.keys():
                 try:
                     for data in tempest_data[key]:
@@ -75,9 +73,9 @@ class Refstack(tempest.TempestCommon):
                     else:
                         self.__logger.info("%s: ids differ. skipping it", key)
                         continue
-                    ref_file.write("{}{}\n".format(
-                        key, str(tempest_data[key]).replace(
-                            "'", "").replace(", ", ",")))
+                    value = str(tempest_data[key]).replace(
+                        "'", "").replace(", ", ",")
+                    ref_file.write(f"{key}{value}\n")
                 except Exception:  # pylint: disable=broad-except
                     self.__logger.info("%s: not found. skipping it", key)
                     continue

@@ -36,7 +36,7 @@ class VnfController():
         self.util = Utilvnf()
         self.vm_controller = VmController(util_info)
 
-        with open(self.util.test_env_config_yaml) as file_fd:
+        with open(self.util.test_env_config_yaml, encoding='utf-8') as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 
@@ -49,7 +49,8 @@ class VnfController():
     def config_vnf(self, source_vnf, destination_vnf, test_cmd_file_path,
                    parameter_file_path, prompt_file_path):
         # pylint: disable=too-many-arguments
-        with open(parameter_file_path, 'r') as parameter_file:
+        with open(
+                parameter_file_path, 'r', encoding='utf-8') as parameter_file:
             cmd_input_param = yaml.safe_load(parameter_file)
 
         cmd_input_param["macaddress"] = source_vnf["data_plane_network_mac"]
@@ -69,14 +70,15 @@ class VnfController():
 
         res_dict_data_list = []
 
-        with open(parameter_file_path, 'r') as parameter_file:
+        with open(
+                parameter_file_path, 'r', encoding='utf-8') as parameter_file:
             cmd_input_param = yaml.safe_load(parameter_file)
 
         cmd_input_param["source_ip"] = target_vnf["data_plane_network_ip"]
         cmd_input_param["destination_ip"] = reference_vnf[
             "data_plane_network_ip"]
 
-        with open(prompt_file_path, 'r') as prompt_file:
+        with open(prompt_file_path, 'r', encoding='utf-8') as prompt_file:
             prompt = yaml.safe_load(prompt_file)
         terminal_mode_prompt = prompt["terminal_mode"]
 

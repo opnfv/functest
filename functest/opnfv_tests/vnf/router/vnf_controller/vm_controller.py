@@ -36,7 +36,7 @@ class VmController():
         self.util = Utilvnf()
         self.util.set_credentials(credentials["cloud"])
 
-        with open(self.util.test_env_config_yaml) as file_fd:
+        with open(self.util.test_env_config_yaml, encoding='utf-8') as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 
@@ -101,7 +101,7 @@ class VmController():
 
     def command_create_and_execute(self, ssh, test_cmd_file_path,
                                    cmd_input_param, prompt_file_path):
-        with open(prompt_file_path, 'r') as prompt_file:
+        with open(prompt_file_path, 'r', encoding='utf-8') as prompt_file:
             prompt = yaml.safe_load(prompt_file)
         config_mode_prompt = prompt["config_mode"]
 

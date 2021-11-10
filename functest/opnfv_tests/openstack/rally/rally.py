@@ -145,7 +145,7 @@ class RallyBase(singlevm.VmReady2):
 
     def _prepare_test_list(self, test_name):
         """Build the list of test cases to be executed."""
-        test_yaml_file_name = 'opnfv-{}.yaml'.format(test_name)
+        test_yaml_file_name = f'opnfv-{test_name}.yaml'
         scenario_file_name = os.path.join(self.rally_scenario_dir,
                                           test_yaml_file_name)
 
@@ -154,8 +154,8 @@ class RallyBase(singlevm.VmReady2):
                                               test_yaml_file_name)
 
             if not os.path.exists(scenario_file_name):
-                raise Exception("The scenario '%s' does not exist."
-                                % scenario_file_name)
+                raise Exception(
+                    f"The scenario '{scenario_file_name}' does not exist.")
 
         LOGGER.debug('Scenario fetched from : %s', scenario_file_name)
         test_file_name = os.path.join(self.temp_dir, test_yaml_file_name)
@@ -190,7 +190,9 @@ class RallyBase(singlevm.VmReady2):
 
         if pod_arch and pod_arch in arch_filter:
             LOGGER.info("Apply aarch64 specific to rally config...")
-            with open(RallyBase.rally_aar4_patch_path, "r") as pfile:
+            with open(
+                    RallyBase.rally_aar4_patch_path, "r",
+                    encoding='utf-8') as pfile:
                 rally_patch_conf = pfile.read()
 
             for line in fileinput.input(RallyBase.rally_conf_path):
@@ -228,7 +230,7 @@ class RallyBase(singlevm.VmReady2):
                 rconfig.add_section('openstack')
             rconfig.set(
                 'openstack', 'keystone_default_role', env.get("NEW_USER_ROLE"))
-            with open(rally_conf, 'w') as config_file:
+            with open(rally_conf, 'w', encoding='utf-8') as config_file:
                 rconfig.write(config_file)
 
     @staticmethod
@@ -239,7 +241,7 @@ class RallyBase(singlevm.VmReady2):
             rconfig.read(rally_conf)
             if rconfig.has_option('openstack', 'keystone_default_role'):
                 rconfig.remove_option('openstack', 'keystone_default_role')
-            with open(rally_conf, 'w') as config_file:
+            with open(rally_conf, 'w', encoding='utf-8') as config_file:
                 rconfig.write(config_file)
 
     @staticmethod
@@ -291,7 +293,9 @@ class RallyBase(singlevm.VmReady2):
         """Exclude scenario."""
         black_tests = []
         try:
-            with open(RallyBase.blacklist_file, 'r') as black_list_file:
+            with open(
+                    RallyBase.blacklist_file, 'r',
+                    encoding='utf-8') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
             deploy_scenario = env.get('DEPLOY_SCENARIO')
@@ -335,7 +339,9 @@ class RallyBase(singlevm.VmReady2):
         func_list = []
 
         try:
-            with open(RallyBase.blacklist_file, 'r') as black_list_file:
+            with open(
+                    RallyBase.blacklist_file, 'r',
+                    encoding='utf-8') as black_list_file:
                 black_list_yaml = yaml.safe_load(black_list_file)
 
             if env.get('BLOCK_MIGRATION').lower() == 'true':
@@ -362,8 +368,8 @@ class RallyBase(singlevm.VmReady2):
     def apply_blacklist(self, case_file_name, result_file_name):
         """Apply blacklist."""
         LOGGER.debug("Applying blacklist...")
-        with open(case_file_name, 'r') as cases_file, open(
-                result_file_name, 'w') as result_file:
+        with open(case_file_name, 'r', encoding='utf-8') as cases_file, open(
+                result_file_name, 'w', encoding='utf-8') as result_file:
             black_tests = list(set(self.excl_func() + self.excl_scenario()))
             if black_tests:
                 LOGGER.debug("Blacklisted tests: %s", str(black_tests))
@@ -408,7 +414,7 @@ class RallyBase(singlevm.VmReady2):
         LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
         # save report as JSON
-        report_json_name = '{}.json'.format(test_name)
+        report_json_name = f'{test_name}.json'
         report_json_dir = os.path.join(self.results_dir, report_json_name)
         cmd = (["rally", "task", "report", "--json", "--uuid", task_id,
                 "--out", report_json_dir])
@@ -416,7 +422,7 @@ class RallyBase(singlevm.VmReady2):
         output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
         LOGGER.info("%s\n%s", " ".join(cmd), output.decode("utf-8"))
 
-        with open(report_json_dir) as json_file:
+        with open(report_json_dir, encoding='utf-8') as json_file:
             json_results = json_file.read()
         self._append_summary(json_results, test_name)
 
@@ -492,7 +498,7 @@ class RallyBase(singlevm.VmReady2):
             if test in self.stests:
                 self.tests.append(test)
             else:
-                raise Exception("Test name '%s' is invalid" % test)
+                raise Exception(f"Test name '{test}' is invalid")
 
         if not os.path.exists(self.task_dir):
             os.makedirs(self.task_dir)
@@ -500,16 +506,14 @@ class RallyBase(singlevm.VmReady2):
         task = os.path.join(self.rally_dir, 'task.yaml')
         if not os.path.exists(task):
             LOGGER.error("Task file '%s' does not exist.", task)
-            raise Exception("Task file '{}' does not exist.".
-                            format(task))
+            raise Exception(f"Task file '{task}' does not exist.")
         self.task_file = os.path.join(self.task_dir, 'task.yaml')
         shutil.copyfile(task, self.task_file)
 
         task_macro = os.path.join(self.rally_dir, 'macro')
         if not os.path.exists(task_macro):
             LOGGER.error("Task macro dir '%s' does not exist.", task_macro)
-            raise Exception("Task macro dir '{}' does not exist.".
-                            format(task_macro))
+            raise Exception(f"Task macro dir '{task_macro}' does not exist.")
         macro_dir = os.path.join(self.task_dir, 'macro')
         if os.path.exists(macro_dir):
             shutil.rmtree(macro_dir)
@@ -570,7 +574,7 @@ class RallyBase(singlevm.VmReady2):
                 success_avg = 100 * item['nb_success'] / item['nb_tests']
             except ZeroDivisionError:
                 success_avg = 0
-            success_str = str("{:0.2f}".format(success_avg)) + '%'
+            success_str = f"{success_avg:0.2f}%"
             duration_str = time.strftime("%H:%M:%S",
                                          time.gmtime(item['overall_duration']))
             res_table.add_row([item['test_name'], duration_str,
@@ -588,7 +592,7 @@ class RallyBase(singlevm.VmReady2):
             self.result = 100 * total_nb_success / total_nb_tests
         except ZeroDivisionError:
             self.result = 100
-        success_rate = "{:0.2f}".format(self.result)
+        success_rate = f"{self.result:0.2f}"
         success_rate_str = str(success_rate) + '%'
         res_table.add_row(["", "", "", ""])
         res_table.add_row(["TOTAL:", total_duration_str, total_nb_tests,
@@ -664,7 +668,7 @@ class RallyBase(singlevm.VmReady2):
         rconfig.set('DEFAULT', 'use_stderr', False)
         rconfig.set('DEFAULT', 'log-file', 'rally.log')
         rconfig.set('DEFAULT', 'log_dir', res_dir)
-        with open(rally_conf, 'w') as config_file:
+        with open(rally_conf, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     @staticmethod
@@ -680,7 +684,7 @@ class RallyBase(singlevm.VmReady2):
             rconfig.remove_option('DEFAULT', 'log-file')
         if rconfig.has_option('DEFAULT', 'log_dir'):
             rconfig.remove_option('DEFAULT', 'log_dir')
-        with open(rally_conf, 'w') as config_file:
+        with open(rally_conf, 'w', encoding='utf-8') as config_file:
             rconfig.write(config_file)
 
     def run(self, **kwargs):
@@ -695,9 +699,9 @@ class RallyBase(singlevm.VmReady2):
             self.run_tests(**kwargs)
             self._generate_report()
             self.export_task(
-                "{}/{}.html".format(self.results_dir, self.case_name))
+                f"{self.results_dir}/{self.case_name}.html")
             self.export_task(
-                "{}/{}.xml".format(self.results_dir, self.case_name),
+                f"{self.results_dir}/{self.case_name}.xml",
                 export_type="junit-xml")
             res = testcase.TestCase.EX_OK
         except Exception:   # pylint: disable=broad-except
@@ -751,14 +755,14 @@ class RallyJobs(RallyBase):
     def prepare_run(self, **kwargs):
         """Create resources needed by test scenarios."""
         super().prepare_run(**kwargs)
-        with open(os.path.join(self.rally_dir,
-                               'rally_jobs.yaml'), 'r') as task_file:
+        with open(
+                os.path.join(self.rally_dir, 'rally_jobs.yaml'),
+                'r', encoding='utf-8') as task_file:
             self.task_yaml = yaml.safe_load(task_file)
 
         for task in self.task_yaml:
             if task not in self.tests:
-                raise Exception("Test '%s' not in '%s'" %
-                                (task, self.tests))
+                raise Exception(f"Test '{task}' not in '{self.tests}'")
 
     def apply_blacklist(self, case_file_name, result_file_name):
         # pylint: disable=too-many-branches
@@ -770,7 +774,7 @@ class RallyJobs(RallyBase):
             LOGGER.debug("Blacklisted tests: %s", str(black_tests))
 
         template = YAML(typ='jinja2')
-        with open(case_file_name, 'r') as fname:
+        with open(case_file_name, 'r', encoding='utf-8') as fname:
             cases = template.load(fname)
         if cases.get("version", 1) == 1:
             # scenarios in dictionary
@@ -800,7 +804,7 @@ class RallyJobs(RallyBase):
                         cases['subtasks'].pop(sind)
                         break
 
-        with open(result_file_name, 'w') as fname:
+        with open(result_file_name, 'w', encoding='utf-8') as fname:
             template.dump(cases, fname)
 
     def build_task_args(self, test_name):
@@ -821,7 +825,7 @@ class RallyJobs(RallyBase):
         task_name = self.task_yaml.get(test_name).get("task")
         task = os.path.join(jobs_dir, task_name)
         if not os.path.exists(task):
-            raise Exception("The scenario '%s' does not exist." % task)
+            raise Exception(f"The scenario '{task}' does not exist.")
         LOGGER.debug('Scenario fetched from : %s', task)
 
         if not os.path.exists(self.temp_dir):

@@ -67,13 +67,12 @@ class Cloudify(singlevm.SingleVm2):
             "sudo wget https://get.docker.com/ -O script.sh && "
             "sudo chmod +x script.sh && "
             "sudo ./script.sh && "
-            "sudo docker load -i ~/{} && "
+            "sudo docker load -i "
+            f"~/{os.path.basename(self.cloudify_archive)} && "
             "sudo docker run --name cfy_manager_local -d "
             "--restart unless-stopped -v /sys/fs/cgroup:/sys/fs/cgroup:ro "
             "--tmpfs /run --tmpfs /run/lock --security-opt seccomp:unconfined "
-            "--cap-add SYS_ADMIN --network=host {}".format(
-                os.path.basename(self.cloudify_archive),
-                self.cloudify_container))
+            f"--cap-add SYS_ADMIN --network=host {self.cloudify_container}")
         self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
         self.cfy_client = CloudifyClient(
@@ -132,8 +131,8 @@ class Cloudify(singlevm.SingleVm2):
         """Upload Cloudify plugins"""
         (_, stdout, stderr) = self.ssh.exec_command(
             "sudo docker exec cfy_manager_local "
-            "cfy plugins upload -y {} {} && "
-            "sudo docker exec cfy_manager_local cfy status".format(yaml, wgn))
+            f"cfy plugins upload -y {yaml} {wgn} && "
+            "sudo docker exec cfy_manager_local cfy status")
         self.__logger.debug("output:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("error:\n%s", stderr.read().decode("utf-8"))
 
@@ -189,9 +188,8 @@ def wait_for_execution(client, execution, logger, timeout=3600, ):
         if timeout is not None:
             if time.time() > deadline:
                 raise RuntimeError(
-                    'execution of operation {0} for deployment {1} '
-                    'timed out'.format(execution.workflow_id,
-                                       execution.deployment_id))
+                    'execution of operation {execution.workflow_id} for '
+                    'deployment {execution.deployment_id} timed out')
             # update the remaining timeout
             timeout = deadline - time.time()
 
@@ -219,4 +217,4 @@ def get_execution_id(client, deployment_id):
             return execution
     raise RuntimeError('Failed to get create_deployment_environment '
                        'workflow execution.'
-                       'Available executions: {0}'.format(executions))
+                       f'Available executions: {executions}')

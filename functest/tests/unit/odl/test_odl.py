@@ -33,10 +33,10 @@ class ODLTesting(unittest.TestCase):
     logging.disable(logging.CRITICAL)
 
     _keystone_ip = "127.0.0.1"
-    _neutron_url = u"https://127.0.0.1:9696"
-    _neutron_id = u"dummy"
+    _neutron_url = "https://127.0.0.1:9696"
+    _neutron_id = "dummy"
     _sdn_controller_ip = "127.0.0.3"
-    _os_auth_url = "http://{}:5000/v3".format(_keystone_ip)
+    _os_auth_url = f"http://{_keystone_ip}:5000/v3"
     _os_projectname = "admin"
     _os_username = "admin"
     _os_password = "admin"
@@ -63,8 +63,7 @@ class ODLTesting(unittest.TestCase):
         self.test = odl.ODLTests(case_name='odl', project_name='functest')
         self.defaultargs = {'odlusername': self._odl_username,
                             'odlpassword': self._odl_password,
-                            'neutronurl': "http://{}:9696".format(
-                                self._keystone_ip),
+                            'neutronurl': f"http://{self._keystone_ip}:9696",
                             'osauthurl': self._os_auth_url,
                             'osusername': self._os_username,
                             'osuserdomainname': self._os_userdomainname,
@@ -105,7 +104,7 @@ class ODLRobotTesting(ODLTesting):
             mock_method.assert_called_once_with(
                 os.path.join(odl.ODLTests.odl_test_repo,
                              'csit/variables/Variables.robot'), inplace=True)
-            self.assertEqual(args[0].getvalue(), "{}\n".format(msg2))
+            self.assertEqual(args[0].getvalue(), f"{msg2}\n")
 
     def test_set_vars_auth_default(self):
         self._test_set_vars(
@@ -160,19 +159,19 @@ class ODLMainTesting(ODLTesting):
             args[0].assert_called_once_with(self.test.odl_variables_file)
         if len(args) > 1:
             variable = [
-                'KEYSTONEURL:{}://{}'.format(
-                    urllib.parse.urlparse(self._os_auth_url).scheme,
-                    urllib.parse.urlparse(self._os_auth_url).netloc),
-                'NEUTRONURL:{}'.format(self._neutron_url),
-                'OS_AUTH_URL:"{}"'.format(self._os_auth_url),
-                'OSUSERNAME:"{}"'.format(self._os_username),
-                'OSUSERDOMAINNAME:"{}"'.format(self._os_userdomainname),
-                'OSTENANTNAME:"{}"'.format(self._os_projectname),
-                'OSPROJECTDOMAINNAME:"{}"'.format(self._os_projectdomainname),
-                'OSPASSWORD:"{}"'.format(self._os_password),
-                'ODL_SYSTEM_IP:{}'.format(self._sdn_controller_ip),
-                'PORT:{}'.format(self._odl_webport),
-                'RESTCONFPORT:{}'.format(self._odl_restconfport)]
+                ('KEYSTONEURL:'
+                 f'{urllib.parse.urlparse(self._os_auth_url).scheme}://'
+                 f'{urllib.parse.urlparse(self._os_auth_url).netloc}'),
+                f'NEUTRONURL:{self._neutron_url}',
+                f'OS_AUTH_URL:"{self._os_auth_url}"',
+                f'OSUSERNAME:"{self._os_username}"',
+                f'OSUSERDOMAINNAME:"{self._os_userdomainname}"',
+                f'OSTENANTNAME:"{self._os_projectname}"',
+                f'OSPROJECTDOMAINNAME:"{self._os_projectdomainname}"',
+                f'OSPASSWORD:"{self._os_password}"',
+                f'ODL_SYSTEM_IP:{self._sdn_controller_ip}',
+                f'PORT:{self._odl_webport}',
+                f'RESTCONFPORT:{self._odl_restconfport}']
             args[1].assert_called_once_with(
                 odl.ODLTests.basic_suite_dir, odl.ODLTests.neutron_suite_dir,
                 include=[],
@@ -551,8 +550,8 @@ class ODLArgParserTesting(ODLTesting):
         self.defaultargs['odlip'] = self._sdn_controller_ip
         self.assertEqual(
             self.parser.parse_args(
-                ["--neutronurl={}".format(self._neutron_url),
-                 "--odlip={}".format(self._sdn_controller_ip)]),
+                [f"--neutronurl={self._neutron_url}",
+                 f"--odlip={self._sdn_controller_ip}"]),
             self.defaultargs)
 
     @mock.patch('sys.stderr', new_callable=six.StringIO)
@@ -565,7 +564,7 @@ class ODLArgParserTesting(ODLTesting):
     def _test_arg(self, arg, value):
         self.defaultargs[arg] = value
         self.assertEqual(
-            self.parser.parse_args(["--{}={}".format(arg, value)]),
+            self.parser.parse_args([f"--{arg}={value}"]),
             self.defaultargs)
 
     def test_odlusername(self):
@@ -606,7 +605,7 @@ class ODLArgParserTesting(ODLTesting):
 
     def test_pushtodb(self):
         self.defaultargs['pushtodb'] = True
-        self.assertEqual(self.parser.parse_args(["--{}".format('pushtodb')]),
+        self.assertEqual(self.parser.parse_args(["--pushtodb"]),
                          self.defaultargs)
 
     def test_multiple_args(self):
@@ -614,8 +613,8 @@ class ODLArgParserTesting(ODLTesting):
         self.defaultargs['odlip'] = self._sdn_controller_ip
         self.assertEqual(
             self.parser.parse_args(
-                ["--neutronurl={}".format(self._neutron_url),
-                 "--odlip={}".format(self._sdn_controller_ip)]),
+                [f"--neutronurl={self._neutron_url}",
+                 f"--odlip={self._sdn_controller_ip}"]),
             self.defaultargs)
 
 

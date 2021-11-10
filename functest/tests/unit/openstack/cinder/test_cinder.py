@@ -59,7 +59,7 @@ class CinderTesting(unittest.TestCase):
             self.cinder.prepare()
         args[0].assert_called_with()
         args[1].assert_called_once_with(
-            '{}-vm2_{}'.format(self.cinder.case_name, self.cinder.guid),
+            f'{self.cinder.case_name}-vm2_{self.cinder.guid}',
             security_groups=[self.cinder.sec.id],
             key_name=self.cinder.keypair.id)
         self.cinder.cloud.create_volume.assert_not_called()
@@ -81,13 +81,12 @@ class CinderTesting(unittest.TestCase):
         self.cinder.prepare()
         args[0].assert_called_once_with()
         args[1].assert_called_once_with(
-            '{}-vm2_{}'.format(self.cinder.case_name, self.cinder.guid),
+            f'{self.cinder.case_name}-vm2_{self.cinder.guid}',
             security_groups=[self.cinder.sec.id],
             key_name=self.cinder.keypair.id)
         self.cinder.connect.assert_called_once_with(args[1].return_value)
         self.cinder.cloud.create_volume.assert_called_once_with(
-            name='{}-volume_{}'.format(
-                self.cinder.case_name, self.cinder.guid),
+            name=f'{self.cinder.case_name}-volume_{self.cinder.guid}',
             size='2', timeout=self.cinder.volume_timeout, wait=True)
 
     @mock.patch('scp.SCPClient.put')
@@ -101,7 +100,7 @@ class CinderTesting(unittest.TestCase):
         self.cinder.ssh.exec_command.return_value = (None, stdout, mock.Mock())
         self.assertEqual(self.cinder._write_data(), 0)
         self.cinder.ssh.exec_command.assert_called_once_with(
-            "sh ~/write_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
+            f"sh ~/write_data.sh {env.get('VOLUME_DEVICE_NAME')}")
         self.cinder.cloud.attach_volume.assert_called_once_with(
             self.cinder.sshvm, self.cinder.volume,
             timeout=self.cinder.volume_timeout)
@@ -138,7 +137,7 @@ class CinderTesting(unittest.TestCase):
         stdout.channel.recv_exit_status.return_value = 0
         self.assertEqual(self.cinder._read_data(), 0)
         self.cinder.ssh2.exec_command.assert_called_once_with(
-            "sh ~/read_data.sh {}".format(env.get('VOLUME_DEVICE_NAME')))
+            f"sh ~/read_data.sh {env.get('VOLUME_DEVICE_NAME')}")
         self.cinder.cloud.attach_volume.assert_called_once_with(
             self.cinder.vm2, self.cinder.volume,
             timeout=self.cinder.volume_timeout)

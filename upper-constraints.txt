@@ -1,22 +1,21 @@
 git+https://gerrit.opnfv.org/gerrit/functest#egg=functest
 git+https://github.com/collivier/cloudify-rest-client.git@4.3.3-py3#egg=cloudify-rest-client
-robotframework===3.1.1
+robotframework===4.1.2
 robotframework-httplibrary===0.4.2
-robotframework-requests===0.5.0
-robotframework-sshlibrary===3.3.0
-ansible===2.9.2
+robotframework-requests===0.9.2
+robotframework-sshlibrary===4.1.2
 xtesting===0.93.0
 git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf#egg=bandit
-bandit===1.1.0
+bandit===1.7.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest@29.0.0#egg=tempest
 -e git+https://opendev.org/openstack/rally.git@3.3.0#egg=rally
 git+https://opendev.org/openstack/rally-openstack.git@2.1.0#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@2ffa85af2bff3438b6b23034b6ec6ee1de481090#egg=xrally-kubernetes
-pylint===2.9.6
-flake8===3.7.9
+pylint===2.11.1
+flake8===4.0.1
 nose===1.3.7
-ruamel.yaml===0.15.100
+ruamel.yaml===0.17.17
 sphinxcontrib-spelling===4.3.0
-ansible-lint===4.2.0
-setuptools_scm===6.0.1
+ansible-lint===5.2.1
+setuptools_scm===6.3.2

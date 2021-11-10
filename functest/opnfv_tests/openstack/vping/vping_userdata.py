@@ -44,7 +44,7 @@ class VPingUserdata(singlevm.VmReady2):
             self.result = 0
             self.vm1 = self.boot_vm()
             self.vm2 = self.boot_vm(
-                '{}-vm2_{}'.format(self.case_name, self.guid),
+                f'{self.case_name}-vm2_{self.guid}',
                 userdata=self._get_userdata())
 
             result = self._do_vping()
@@ -106,11 +106,13 @@ class VPingUserdata(singlevm.VmReady2):
         :param test_ip: the IP value to substitute into the script
         :return: the bash script contents
         """
+        ip4 = self.vm1.private_v4 or self.vm1.addresses[
+            self.network.name][0].addr
         if self.vm1.private_v4 or self.vm1.addresses[
                 self.network.name][0].addr:
             return ("#!/bin/sh\n\n"
                     "while true; do\n"
-                    " ping -c 1 %s 2>&1 >/dev/null\n"
+                    f" ping -c 1 {ip4} 2>&1 >/dev/null\n"
                     " RES=$?\n"
                     " if [ \"Z$RES\" = \"Z0\" ] ; then\n"
                     "  echo 'vPing OK'\n"
@@ -119,9 +121,7 @@ class VPingUserdata(singlevm.VmReady2):
                     "  echo 'vPing KO'\n"
                     " fi\n"
                     " sleep 1\n"
-                    "done\n" % str(
-                        self.vm1.private_v4 or self.vm1.addresses[
-                            self.network.name][0].addr))
+                    "done\n")
         return None
 
     def clean(self):

@@ -64,7 +64,7 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
         if not os.path.exists(self.vnf_data_dir):
             os.makedirs(self.vnf_data_dir)
 
-        with open(self.test_env_config_yaml) as file_fd:
+        with open(self.test_env_config_yaml, encoding='utf-8') as file_fd:
             test_env_config_yaml = yaml.safe_load(file_fd)
         file_fd.close()
 
@@ -98,9 +98,7 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
         return mac_address
 
     def get_blueprint_outputs(self, cfy_manager_ip, deployment_name):
-        url = "http://%s/deployments/%s/outputs" % (
-            cfy_manager_ip, deployment_name)
-
+        url = f"http://{cfy_manager_ip}/deployments/{deployment_name}/outputs"
         response = requests.get(
             url,
             auth=requests.auth.HTTPBasicAuth('admin', 'admin'),
@@ -212,20 +210,28 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
     def write_result_data(self, result_data):
         test_result = []
         if not os.path.isfile(self.test_result_json_file):
-            with open(self.test_result_json_file, "w") as file_fd:
+            with open(
+                    self.test_result_json_file, "w",
+                    encoding="utf-8") as file_fd:
                 pass
         else:
-            with open(self.test_result_json_file, "r") as file_fd:
+            with open(
+                    self.test_result_json_file, "r",
+                    encoding="utf-8") as file_fd:
                 test_result = json.load(file_fd)
 
         test_result.append(result_data)
 
-        with open(self.test_result_json_file, "w") as file_fd:
+        with open(
+                self.test_result_json_file, "w",
+                encoding="utf-8") as file_fd:
             json.dump(test_result, file_fd)
 
     def output_test_result_json(self):
         if os.path.isfile(self.test_result_json_file):
-            with open(self.test_result_json_file, "r") as file_fd:
+            with open(
+                    self.test_result_json_file, "r",
+                    encoding="utf-8") as file_fd:
                 test_result = json.load(file_fd)
             output_json_data = json.dumps(test_result,
                                           sort_keys=True,
@@ -236,6 +242,6 @@ class Utilvnf():  # pylint: disable=too-many-instance-attributes
 
     @staticmethod
     def get_test_scenario(file_path):
-        with open(file_path, 'r') as test_scenario_file:
+        with open(file_path, "r", encoding="utf-8") as test_scenario_file:
             test_scenario_yaml = yaml.safe_load(test_scenario_file)
         return test_scenario_yaml["test_scenario_list"]

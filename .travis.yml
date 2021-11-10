@@ -18,7 +18,7 @@ jobs:
     - stage: run unit tests
       script: >
         tox -e \
-          docs,pep8,pylint,yamllint,ansiblelint,bashate,bandit,py38,cover
+          docs,pep8,pylint,yamllint,bashate,bandit,py38,cover
     - stage: build functest-core images
       script: sudo -E bash build.sh
       env:

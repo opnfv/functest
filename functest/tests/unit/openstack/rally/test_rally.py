@@ -50,7 +50,7 @@ class OSRallyTesting(unittest.TestCase):
 
     @staticmethod
     def check_scenario_file(value):
-        yaml_file = 'opnfv-{}.yaml'.format('test_file_name')
+        yaml_file = 'opnfv-test_file_name.yaml'
         if yaml_file in value:
             return False
         return True
@@ -64,7 +64,7 @@ class OSRallyTesting(unittest.TestCase):
 
     @staticmethod
     def check_temp_dir(value):
-        yaml_file = 'opnfv-{}.yaml'.format('test_file_name')
+        yaml_file = 'opnfv-test_file_name.yaml'
         if yaml_file in value:
             return True
         return False
@@ -95,7 +95,7 @@ class OSRallyTesting(unittest.TestCase):
             self, mock_method, mock_os_makedirs, mock_path_exists):
         mock_path_exists.side_effect = self.check_temp_dir
 
-        yaml_file = 'opnfv-{}.yaml'.format('test_file_name')
+        yaml_file = 'opnfv-test_file_name.yaml'
         ret_val = os.path.join(self.rally_base.temp_dir, yaml_file)
         self.assertEqual(self.rally_base._prepare_test_list('test_file_name'),
                          ret_val)
@@ -423,8 +423,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('subprocess.check_output',
                 side_effect=subprocess.CalledProcessError('', ''))
     def test_export_task_ko(self, *args):
-        file_name = "{}/{}.html".format(
-            self.rally_base.results_dir, self.rally_base.case_name)
+        file_name = (f"{self.rally_base.results_dir}/"
+                     f"{self.rally_base.case_name}.html")
         with self.assertRaises(subprocess.CalledProcessError):
             self.rally_base.export_task(file_name)
         cmd = ["rally", "task", "export", "--type", "html", "--deployment",
@@ -434,8 +434,8 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('subprocess.check_output', return_value=b'')
     def test_export_task(self, *args):
-        file_name = "{}/{}.html".format(
-            self.rally_base.results_dir, self.rally_base.case_name)
+        file_name = (f"{self.rally_base.results_dir}/"
+                     f"{self.rally_base.case_name}.html")
         self.assertEqual(self.rally_base.export_task(file_name), None)
         cmd = ["rally", "task", "export", "--type", "html", "--deployment",
                str(getattr(config.CONF, 'rally_deployment_name')),
@@ -445,8 +445,8 @@ class OSRallyTesting(unittest.TestCase):
     @mock.patch('subprocess.check_output',
                 side_effect=subprocess.CalledProcessError('', ''))
     def test_verify_report_ko(self, *args):
-        file_name = "{}/{}.html".format(
-            self.rally_base.results_dir, self.rally_base.case_name)
+        file_name = (f"{self.rally_base.results_dir}/"
+                     f"{self.rally_base.case_name}.html")
         with self.assertRaises(subprocess.CalledProcessError):
             self.rally_base.verify_report(file_name, "1")
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid", "1",
@@ -455,8 +455,8 @@ class OSRallyTesting(unittest.TestCase):
 
     @mock.patch('subprocess.check_output', return_value=b'')
     def test_verify_report(self, *args):
-        file_name = "{}/{}.html".format(
-            self.rally_base.results_dir, self.rally_base.case_name)
+        file_name = (f"{self.rally_base.results_dir}/"
+                     f"{self.rally_base.case_name}.html")
         self.assertEqual(self.rally_base.verify_report(file_name, "1"), None)
         cmd = ["rally", "verify", "report", "--type", "html", "--uuid", "1",
                "--to", file_name]
