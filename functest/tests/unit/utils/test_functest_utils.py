@@ -108,9 +108,10 @@ class FunctestUtilsTesting(unittest.TestCase):
                 self.cmd, info=True, error_msg=self.error_msg, verbose=True,
                 output_file=self.output_file)
             self.assertEqual(resp, 1)
-            msg_exec = ("Executing command: '%s'" % self.cmd)
+            msg_exec = f"Executing command: '{self.cmd}'"
             mock_logger_info.assert_called_once_with(msg_exec)
-            mopen.assert_called_once_with(self.output_file, "w")
+            mopen.assert_called_once_with(
+                self.output_file, "w", encoding='utf-8')
             mock_logger_error.assert_called_once_with(self.error_msg)
 
     @mock.patch('functest.utils.functest_utils.LOGGER.info')
@@ -129,9 +130,10 @@ class FunctestUtilsTesting(unittest.TestCase):
                 self.cmd, info=True, error_msg=self.error_msg, verbose=True,
                 output_file=self.output_file)
             self.assertEqual(resp, 0)
-            msg_exec = ("Executing command: '%s'" % self.cmd)
+            msg_exec = (f"Executing command: '{self.cmd}'")
             mock_logger_info.assert_called_once_with(msg_exec)
-            mopen.assert_called_once_with(self.output_file, "w")
+            mopen.assert_called_once_with(
+                self.output_file, "w", encoding='utf-8')
 
     @mock.patch('sys.stdout')
     def test_exec_cmd_args_missing_ok(self, stdout=None):
@@ -175,9 +177,9 @@ class FunctestUtilsTesting(unittest.TestCase):
             mock_yaml.return_value = self.file_yaml
             functest_utils.get_parameter_from_yaml(self.parameter,
                                                    self.test_file)
-            self.assertTrue(("The parameter %s is not"
-                             " defined in config_functest.yaml" %
-                             self.parameter) in excep.exception)
+            self.assertTrue((f"The parameter {self.parameter} is not"
+                             " defined in config_functest.yaml"
+                             ) in excep.exception)
 
     def test_get_param_from_yaml_def(self):
         with mock.patch('six.moves.builtins.open', mock.mock_open()), \

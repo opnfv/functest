@@ -9,7 +9,6 @@ pylint # GPLv2
 sphinx!=1.6.6,!=1.6.7,!=2.1.0,!=3.0.0,!=3.4.2 # BSD
 sphinx-rtd-theme
 yamllint
-ansible-lint
 doc8 # Apache-2.0
 bashate # Apache-2.0
 bandit

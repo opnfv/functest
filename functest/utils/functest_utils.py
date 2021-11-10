@@ -32,8 +32,8 @@ def execute_command_raise(cmd, info=False, error_msg="",
 def execute_command(cmd, info=False, error_msg="",
                     verbose=True, output_file=None):
     if not error_msg:
-        error_msg = ("The command '%s' failed." % cmd)
-    msg_exec = ("Executing command: '%s'" % cmd)
+        error_msg = f"The command '{cmd}' failed."
+    msg_exec = f"Executing command: '{cmd}'"
     if verbose:
         if info:
             LOGGER.info(msg_exec)
@@ -43,7 +43,7 @@ def execute_command(cmd, info=False, error_msg="",
             cmd, shell=True, stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT) as popen:
         if output_file:
-            with open(output_file, "w") as ofd:
+            with open(output_file, "w", encoding='utf-8') as ofd:
                 for line in iter(popen.stdout.readline, b''):
                     if output_file:
                         ofd.write(line.decode("utf-8"))
@@ -65,14 +65,14 @@ def get_parameter_from_yaml(parameter, yfile):
     parameter must be given in string format with dots
     Example: general.openstack.image_name
     """
-    with open(yfile) as yfd:
+    with open(yfile, encoding='utf-8') as yfd:
         file_yaml = yaml.safe_load(yfd)
     value = file_yaml
     for element in parameter.split("."):
         value = value.get(element)
         if value is None:
-            raise ValueError("The parameter %s is not defined in"
-                             " %s" % (parameter, yfile))
+            raise ValueError(f"The parameter {parameter} is not defined in"
+                             f" {yfile}")
     return value
 
 
@@ -195,14 +195,13 @@ def search_services(cloud, name_or_id=None, filters=None):
 def convert_dict_to_ini(value):
     "Convert dict to oslo.conf input"
     assert isinstance(value, dict)
-    return ",".join("{}:{}".format(
-        key, val) for (key, val) in six.iteritems(value))
+    return ",".join(f"{key}:{val}" for (key, val) in six.iteritems(value))
 
 
 def convert_list_to_ini(value):
     "Convert list to oslo.conf input"
     assert isinstance(value, list)
-    return ",".join("{}".format(val) for val in value)
+    return ",".join(val for val in value)
 
 
 def convert_ini_to_dict(value):

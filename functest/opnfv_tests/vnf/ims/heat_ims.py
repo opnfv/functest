@@ -62,7 +62,7 @@ class HeatIms(singlevm.VmReady2):
         # Retrieve the configuration
         try:
             self.config = getattr(
-                config.CONF, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, f'vnf_{self.case_name}_config')
         except Exception as exc:
             raise Exception("VNF config file not found") from exc
 
@@ -112,9 +112,10 @@ class HeatIms(singlevm.VmReady2):
             project=self.project.project.id,
             domain=self.project.domain.id)
         self.keypair = self.cloud.create_keypair(
-            '{}-kp_{}'.format(self.case_name, self.guid))
+            f'{self.case_name}-kp_{self.guid}')
         self.__logger.info("keypair:\n%s", self.keypair.private_key)
-        with open(self.key_filename, 'w') as private_key_file:
+        with open(
+                self.key_filename, 'w', encoding='utf-8') as private_key_file:
             private_key_file.write(self.keypair.private_key)
 
         if self.deploy_vnf() and self.test_vnf():

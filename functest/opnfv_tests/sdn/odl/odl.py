@@ -66,10 +66,10 @@ class ODLTests(robotframework.RobotFramework):
         try:
             for line in fileinput.input(cls.odl_variables_file,
                                         inplace=True):
-                print(re.sub("@{AUTH}.*",
-                             "@{{AUTH}}           {}    {}".format(
-                                 odlusername, odlpassword),
-                             line.rstrip()))
+                print(re.sub(
+                    "@{AUTH}.*",
+                    f"@{{AUTH}}           {odlusername}    {odlpassword}",
+                    line.rstrip()))
             return True
         except Exception:  # pylint: disable=broad-except
             cls.__logger.exception("Cannot set ODL creds:")
@@ -111,9 +111,8 @@ class ODLTests(robotframework.RobotFramework):
             odlusername = kwargs['odlusername']
             odlpassword = kwargs['odlpassword']
             osauthurl = kwargs['osauthurl']
-            keystoneurl = "{}://{}".format(
-                urllib.parse.urlparse(osauthurl).scheme,
-                urllib.parse.urlparse(osauthurl).netloc)
+            keystoneurl = (f"{urllib.parse.urlparse(osauthurl).scheme}://"
+                           f"{urllib.parse.urlparse(osauthurl).netloc}")
             variable = ['KEYSTONEURL:' + keystoneurl,
                         'NEUTRONURL:' + kwargs['neutronurl'],
                         'OS_AUTH_URL:"' + osauthurl + '"',

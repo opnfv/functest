@@ -35,7 +35,7 @@ class VPingSSH(singlevm.SingleVm2):
     def prepare(self):
         super().prepare()
         self.vm2 = self.boot_vm(
-            '{}-vm2_{}'.format(self.case_name, self.guid),
+            f'{self.case_name}-vm2_{self.guid}',
             security_groups=[self.sec.id])
 
     def execute(self):
@@ -46,10 +46,9 @@ class VPingSSH(singlevm.SingleVm2):
         assert self.ssh
         if not self.check_regex_in_console(self.vm2.name):
             return 1
-        (_, stdout, stderr) = self.ssh.exec_command(
-            'ping -c 1 {}'.format(
-                self.vm2.private_v4 or self.vm2.addresses[
-                    self.network.name][0].addr))
+        ip4 = self.vm2.private_v4 or self.vm2.addresses[
+            self.network.name][0].addr
+        (_, stdout, stderr) = self.ssh.exec_command(f'ping -c 1 {ip4}')
         self.__logger.info("output:\n%s", stdout.read().decode("utf-8"))
         self.__logger.info("error:\n%s", stderr.read().decode("utf-8"))
         return stdout.channel.recv_exit_status()

@@ -90,7 +90,7 @@ class JujuEpc(singlevm.SingleVm2):
             'functest', 'opnfv_tests/vnf/epc')
         try:
             self.config = getattr(
-                config.CONF, 'vnf_{}_config'.format(self.case_name))
+                config.CONF, f'vnf_{self.case_name}_config')
         except Exception as exc:
             raise Exception("VNF config file not found") from exc
         self.config_file = os.path.join(self.case_dir, self.config)
@@ -138,7 +138,7 @@ class JujuEpc(singlevm.SingleVm2):
         try:
             self.public_auth_url = self.get_public_auth_url(self.orig_cloud)
             if not self.public_auth_url.endswith(('v3', 'v3/')):
-                self.public_auth_url = "{}/v3".format(self.public_auth_url)
+                self.public_auth_url = f"{self.public_auth_url}/v3"
         except Exception:  # pylint: disable=broad-except
             self.public_auth_url = None
         self.sec = None
@@ -168,7 +168,7 @@ class JujuEpc(singlevm.SingleVm2):
             'url': self.public_auth_url,
             'region': self.cloud.region_name if self.cloud.region_name else (
                 'RegionOne')}
-        with open(clouds_yaml, 'w') as yfile:
+        with open(clouds_yaml, 'w', encoding='utf-8') as yfile:
             yfile.write(CLOUD_TEMPLATE.format(**cloud_data))
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put(clouds_yaml, remote_path='~/')
@@ -189,7 +189,7 @@ class JujuEpc(singlevm.SingleVm2):
                 "project_domain_name", "Default"),
             'user_domain_n': self.cloud.auth.get(
                 "user_domain_name", "Default")}
-        with open(credentials_yaml, 'w') as yfile:
+        with open(credentials_yaml, 'w', encoding='utf-8') as yfile:
             yfile.write(CREDS_TEMPLATE.format(**creds_data))
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put(credentials_yaml, remote_path='~/')
@@ -205,8 +205,8 @@ class JujuEpc(singlevm.SingleVm2):
             'RegionOne')
         (_, stdout, stderr) = self.ssh.exec_command(
             '/snap/bin/juju metadata generate-image -d /home/ubuntu '
-            '-i {} -s xenial -r {} -u {}'.format(
-                self.image.id, region_name, self.public_auth_url))
+            f'-i {self.image.id} -s xenial -r {region_name} '
+            f'-u {self.public_auth_url}')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         return not stdout.channel.recv_exit_status()
@@ -217,8 +217,8 @@ class JujuEpc(singlevm.SingleVm2):
             'RegionOne')
         (_, stdout, stderr) = self.ssh.exec_command(
             '/snap/bin/juju metadata generate-image -d /home/ubuntu '
-            '-i {} -s trusty -r {} -u {}'.format(
-                image_alt.id, region_name, self.public_auth_url))
+            f'-i {image_alt.id} -s trusty -r {region_name} '
+            f'-u {self.public_auth_url}')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         return image_alt
@@ -236,18 +236,16 @@ class JujuEpc(singlevm.SingleVm2):
         region_name = self.cloud.region_name if self.cloud.region_name else (
             'RegionOne')
         (_, stdout, stderr) = self.ssh.exec_command(
-            'timeout {} '
-            '/snap/bin/juju bootstrap abot-epc/{} abot-controller '
+            f'timeout {JujuEpc.juju_timeout} '
+            f'/snap/bin/juju bootstrap abot-epc/{region_name} abot-controller '
             '--agent-version 2.3.9 --metadata-source /home/ubuntu '
             '--constraints mem=2G --bootstrap-series xenial '
-            '--config network={} '
+            f'--config network={self.network.id} '
             '--config ssl-hostname-verification=false '
-            '--config external-network={} '
+            f'--config external-network={self.ext_net.id} '
             '--config use-floating-ip=true '
             '--config use-default-secgroup=true '
-            '--debug'.format(
-                JujuEpc.juju_timeout, region_name, self.network.id,
-                self.ext_net.id))
+            '--debug')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         return not stdout.channel.recv_exit_status()
@@ -256,14 +254,14 @@ class JujuEpc(singlevm.SingleVm2):
         """Check application status."""
         for i in range(10):
             (_, stdout, stderr) = self.ssh.exec_command(
-                '/snap/bin/juju status --format short {}'.format(name))
+                f'/snap/bin/juju status --format short {name}')
             output = stdout.read().decode("utf-8")
             self.__logger.debug("stdout:\n%s", output)
             self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
             if stdout.channel.recv_exit_status():
                 continue
             ret = re.search(
-                r'(?=workload:({})\))'.format(status), output)
+                rf'(?=workload:({status})\))', output)
             if ret:
                 self.__logger.info("%s workload is %s", name, status)
                 break
@@ -295,7 +293,7 @@ class JujuEpc(singlevm.SingleVm2):
             return not stdout.channel.recv_exit_status()
         (_, stdout, stderr) = self.ssh.exec_command(
             'PATH=/snap/bin/:$PATH '
-            'timeout {} juju-wait'.format(JujuEpc.juju_timeout))
+            f'timeout {JujuEpc.juju_timeout} juju-wait')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         if stdout.channel.recv_exit_status():
@@ -312,12 +310,11 @@ class JujuEpc(singlevm.SingleVm2):
                 return False
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.put(
-            '{}/featureFiles'.format(self.case_dir), remote_path='~/',
+            f'{self.case_dir}/featureFiles', remote_path='~/',
             recursive=True)
         (_, stdout, stderr) = self.ssh.exec_command(
-            'timeout {} /snap/bin/juju scp -- -r -v ~/featureFiles '
-            'abot-epc-basic/0:/etc/rebaca-test-suite/'.format(
-                JujuEpc.juju_timeout))
+            f'timeout {JujuEpc.juju_timeout} /snap/bin/juju scp -- -r -v '
+            '~/featureFiles abot-epc-basic/0:/etc/rebaca-test-suite/')
         output = stdout.read().decode("utf-8")
         self.__logger.debug("stdout:\n%s", output)
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
@@ -327,15 +324,15 @@ class JujuEpc(singlevm.SingleVm2):
         """Run test on ABoT."""
         start_time = time.time()
         (_, stdout, stderr) = self.ssh.exec_command(
-            '/snap/bin/juju run-action abot-epc-basic/0 '
-            'run tagnames={}'.format(self.details['test_vnf']['tag_name']))
+            "/snap/bin/juju run-action abot-epc-basic/0 "
+            f"run tagnames={self.details['test_vnf']['tag_name']}")
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         if stdout.channel.recv_exit_status():
             return not stdout.channel.recv_exit_status()
         (_, stdout, stderr) = self.ssh.exec_command(
             'PATH=/snap/bin/:$PATH '
-            'timeout {} juju-wait'.format(JujuEpc.juju_timeout))
+            f'timeout {JujuEpc.juju_timeout} juju-wait')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         if stdout.channel.recv_exit_status():
@@ -343,9 +340,9 @@ class JujuEpc(singlevm.SingleVm2):
         duration = time.time() - start_time
         self.__logger.info("Getting results from Abot node....")
         (_, stdout, stderr) = self.ssh.exec_command(
-            'timeout {} /snap/bin/juju scp -- -v abot-epc-basic/0:'
-            '/var/lib/abot-epc-basic/artifacts/TestResults.json .'.format(
-                JujuEpc.juju_timeout))
+            f'timeout {JujuEpc.juju_timeout} /snap/bin/juju scp '
+            '-- -v abot-epc-basic/0:'
+            '/var/lib/abot-epc-basic/artifacts/TestResults.json .')
         self.__logger.debug("stdout:\n%s", stdout.read().decode("utf-8"))
         self.__logger.debug("stderr:\n%s", stderr.read().decode("utf-8"))
         if stdout.channel.recv_exit_status():
@@ -353,8 +350,7 @@ class JujuEpc(singlevm.SingleVm2):
         scpc = scp.SCPClient(self.ssh.get_transport())
         scpc.get('TestResults.json', self.res_dir)
         self.__logger.info("Parsing the Test results...")
-        res = (process_abot_test_result('{}/TestResults.json'.format(
-            self.res_dir)))
+        res = process_abot_test_result(f'{self.res_dir}/TestResults.json')
         short_result = sig_test_format(res)
         self.__logger.info(short_result)
         self.details['test_vnf'].update(
@@ -433,7 +429,7 @@ def sig_test_format(sig_test):
 
 def process_abot_test_result(file_path):
     """ Process ABoT Result """
-    with open(file_path) as test_result:
+    with open(file_path, encoding='utf-8') as test_result:
         data = json.load(test_result)
         res = []
         for tests in data:
