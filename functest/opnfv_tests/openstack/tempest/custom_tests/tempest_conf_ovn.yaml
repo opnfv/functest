@@ -11,6 +11,7 @@ compute-feature-enabled:
     console_output: true
     disk_config: true
     enable_instance_password: true
+    hostname_fqdn_sanitization: true
     interface_attach: true
     live_migration: true
     live_migrate_back_and_forth: false
