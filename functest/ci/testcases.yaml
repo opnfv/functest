@@ -734,6 +734,7 @@ tiers:
                           (?!.*test_security_groups_negative.SecurityGroupsNegativeTestJSON.test_update_security_group_with_invalid_sg_des)\
                           (?!.*test_security_groups_negative.SecurityGroupsNegativeTestJSON.test_update_security_group_with_invalid_sg_id)\
                           (?!.*test_security_groups_negative.SecurityGroupsNegativeTestJSON.test_update_security_group_with_invalid_sg_name)\
+                          (?!.*test_create_server.ServersTestFqdnHostnames.test_create_server_with_fqdn_name)\
                           (?!.*test_server_metadata.ServerMetadataTestJSON)\
                           (?!.*test_server_metadata_negative.ServerMetadataNegativeTestJSON.test_delete_metadata_non_existent_server)\
                           (?!.*test_server_metadata_negative.ServerMetadataNegativeTestJSON.test_metadata_items_limit)\
