@@ -794,6 +794,8 @@ tiers:
                     args:
                         mode: "\
                           (?!.*test_minbw_allocation_placement)\
+                          (?!.*test_unified_limits.ImageQuotaTest.test_image_count_uploading_quota)\
+                          (?!.*test_unified_limits.ImageQuotaTest.test_image_stage_quota)\
                           (?!.*test_volume_boot_pattern.TestVolumeBootPattern.test_boot_server_from_encrypted_volume_luks)\
                           (?!.*\\[.*\\bslow\\b.*\\])(^tempest.scenario)"
                         option:
