@@ -407,6 +407,17 @@ tiers:
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
+                          (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_group_type_specs)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_quota_classes_rbac)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -431,6 +442,17 @@ tiers:
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
+                          (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_group_type_specs)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_quota_classes_rbac)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
@@ -455,6 +477,17 @@ tiers:
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
+                          (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_group_type_specs)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
+                          (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_quota_classes_rbac)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
+                          (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
                         option:
