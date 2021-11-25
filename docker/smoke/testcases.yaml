@@ -229,6 +229,7 @@ tiers:
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_policy_minimum_bandwidth_rule_rbac)\
                           (?!.*test_group_type_specs)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
@@ -264,6 +265,7 @@ tiers:
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_policy_minimum_bandwidth_rule_rbac)\
                           (?!.*test_group_type_specs)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
@@ -299,6 +301,7 @@ tiers:
                           (?!.*test_create_image_from_volume_backed_server)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
+                          (?!.*test_policy_minimum_bandwidth_rule_rbac)\
                           (?!.*test_group_type_specs)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
