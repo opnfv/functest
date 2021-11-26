@@ -108,7 +108,6 @@ tiers:
             -
                 case_name: refstack_compute
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
@@ -143,7 +142,6 @@ tiers:
             -
                 case_name: refstack_platform
                 project_name: functest
-                enabled: false
                 criteria: 100
                 blocking: false
                 description: >-
