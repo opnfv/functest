@@ -348,20 +348,6 @@
       sla:
         {{ no_failures_sla() }}
 
-  CinderVolumeTypes.create_and_update_volume_type:
-    -
-      args:
-        description: "test"
-        update_description: "test update"
-      context:
-        {{ user_context(tenants_amount, users_amount, use_existing_users) }}
-        api_versions:
-          {{ volume_service(version=volume_version, service_type=volume_service_type) }}
-      runner:
-        {{ constant_runner(concurrency=concurrency, times=iterations, is_smoke=smoke) }}
-      sla:
-        {{ no_failures_sla() }}
-
   CinderVolumeTypes.create_volume_type_and_encryption_type:
     -
       args:
