@@ -10,7 +10,7 @@ bandit===1.7.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest@29.0.0#egg=tempest
 -e git+https://opendev.org/openstack/rally.git@3.3.0#egg=rally
-git+https://opendev.org/openstack/rally-openstack.git@2.1.0#egg=rally-openstack
+git+https://opendev.org/openstack/rally-openstack.git@2.2.0#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@2ffa85af2bff3438b6b23034b6ec6ee1de481090#egg=xrally-kubernetes
 pylint===2.11.1
 flake8===4.0.1
