@@ -232,11 +232,20 @@ tiers:
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_group_snapshots_rbac)\
+                          (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
+                          (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV318RbacTest)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
@@ -268,11 +277,20 @@ tiers:
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_group_snapshots_rbac)\
+                          (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
+                          (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV318RbacTest)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
@@ -304,11 +322,20 @@ tiers:
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_create_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_delete_group_type)\
                           (?!.*test_groups_rbac.GroupTypesV3RbacTest.test_update_group_type)\
+                          (?!.*test_group_snapshots_rbac)\
+                          (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
+                          (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_show_volume_details_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_update_volume_image_metadata)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV318RbacTest)\
+                          (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
                           (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
