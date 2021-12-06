@@ -420,6 +420,7 @@ tiers:
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
                           (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV310RbacTest)\
                           (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
@@ -465,6 +466,7 @@ tiers:
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
                           (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV310RbacTest)\
                           (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
@@ -510,6 +512,7 @@ tiers:
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
                           (?!.*test_user_messages_rbac)\
+                          (?!.*test_volume_actions_rbac.VolumesActionsV310RbacTest)\
                           (?!.*test_volume_actions_rbac.VolumesActionsV312RbacTest)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_delete_volume_image_metadata)\
                           (?!.*test_volume_metadata_rbac.VolumeMetadataV3RbacTest.test_list_volumes_details_image_metadata)\
