@@ -682,6 +682,9 @@ tiers:
                     args:
                         mode: "(?!.*functional.test_lbaasv2)\
                           (?!.*functional.test_encryption_vol_type)\
+                          (?!.*functional.test_event_sinks)\
+                          (?!.*functional.test_stack_events)\
+                          (?!.*functional.test_waitcondition)\
                           (?!.*RemoteStackTest.test_stack_create_with_cloud_credential)\
                           (?!.*scenario.test_aodh_alarm)\
                           (?!.*tests.scenario.test_autoscaling_lb)\
