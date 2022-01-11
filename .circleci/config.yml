@@ -3,12 +3,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7.4
+      - image: circleci/python:3.7
     steps:
       - checkout
       - run:
           name: Install dependendencies
-          command: sudo apt-get update && sudo apt-get install enchant
+          command: sudo apt-get update && sudo apt-get install enchant-2
       - run:
           name: Run tox
           command: sudo pip install tox tox-pip-version && tox
