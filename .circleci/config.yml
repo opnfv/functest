@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install dependendencies
-          command: sudo apt-get update && sudo apt-get install enchant
+          command: sudo apt-get update && sudo apt-get install enchant-2
       - run:
           name: Run tox
           command: sudo pip install tox tox-pip-version && tox
