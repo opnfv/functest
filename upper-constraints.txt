@@ -10,8 +10,8 @@ git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf#egg
 bandit===1.1.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest@24.0.0#egg=tempest
--e git+https://opendev.org/openstack/rally.git@3.0.0#egg=rally
-git+https://opendev.org/openstack/rally-openstack.git@dc2f8f5a8be295cb3f7bb5be462ee74ef1fe6b6b#egg=rally-openstack
+-e git+https://opendev.org/openstack/rally.git@3.3.0#egg=rally
+git+https://opendev.org/openstack/rally-openstack.git@1c470d56f4dd63374f41f7b243092b0a0751a22f#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@e4c605fa0ae0cae63ce5ac19ce8516f0bdd5e868#egg=xrally-kubernetes
 pylint===1.9.5;python_version=='2.7'
 pylint===2.4.4;python_version=='3.8'
