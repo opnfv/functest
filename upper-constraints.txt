@@ -3,7 +3,7 @@ git+https://github.com/collivier/cloudify-rest-client.git@4.3.3-py3#egg=cloudify
 robotframework===4.1.2
 robotframework-httplibrary===0.4.2
 robotframework-requests===0.9.2
-robotframework-sshlibrary===4.1.2
+robotframework-sshlibrary===3.8.0
 xtesting===0.94.0
 git+https://github.com/PyCQA/bandit@3d0824676974e7e2e9635c10bc4f12e261f1dbdf#egg=bandit
 bandit===1.7.0
