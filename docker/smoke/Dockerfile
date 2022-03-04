@@ -90,5 +90,5 @@ RUN apk --no-cache add --update libxml2 libxslt && \
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
 COPY platform.txt /home/opnfv/functest/data/refstack/platform.txt
-COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /etc/xtesting/testcases.yaml
 CMD ["run_tests", "-t", "all"]

@@ -11,5 +11,5 @@ RUN apk --no-cache add --virtual .build-deps --update \
         git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git thirdparty-requirements.txt && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /etc/xtesting/testcases.yaml
 CMD ["run_tests", "-t", "all"]

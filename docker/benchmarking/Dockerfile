@@ -26,5 +26,5 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     cp /src/neutron/rally-jobs/task-neutron.yaml /home/opnfv/functest/data/rally/neutron/rally-jobs/ && \
     rm -r /src/vmtp /src/neutron && \
     apk del .build-deps
-COPY testcases.yaml /usr/lib/python3.9/site-packages/xtesting/ci/testcases.yaml
+COPY testcases.yaml /etc/xtesting/testcases.yaml
 CMD ["run_tests", "-t", "all"]

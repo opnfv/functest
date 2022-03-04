@@ -47,8 +47,8 @@ RUN apk -U upgrade && \
     rm -r /src/requirements/.git /src/functest/.git \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
-    cp /src/functest/functest/ci/logging.ini /usr/lib/python3.9/site-packages/xtesting/ci/ && \
-    cp /src/functest/functest/ci/logging.debug.ini /usr/lib/python3.9/site-packages/xtesting/ci/ && \
+    cp /src/functest/functest/ci/logging.ini /etc/xtesting/ && \
+    cp /src/functest/functest/ci/logging.debug.ini /etc/xtesting/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
     bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
