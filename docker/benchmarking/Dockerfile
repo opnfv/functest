@@ -1,7 +1,7 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:yoga
 
 ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
-ARG NEUTRON_TAG=master
+ARG NEUTRON_TAG=stable/yoga
 
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \

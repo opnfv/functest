@@ -42,8 +42,8 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-core:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-core:latest
+          --template ${DOCKER_USERNAME}/functest-core:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-core:yoga
     - stage: build all functest images
       script: sudo -E bash build.sh
       env:
@@ -121,23 +121,23 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-healthcheck:latest
+          --template ${DOCKER_USERNAME}/functest-healthcheck:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-healthcheck:yoga
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-smoke:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-smoke:latest
+          --template ${DOCKER_USERNAME}/functest-smoke:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-smoke:yoga
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-benchmarking:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-benchmarking:latest
+          --template ${DOCKER_USERNAME}/functest-benchmarking:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-benchmarking:yoga
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-vnf:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-vnf:latest
+          --template ${DOCKER_USERNAME}/functest-vnf:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-vnf:yoga
     - stage: build all functest cntt images
       script: sudo -E bash build.sh
       env:
@@ -179,10 +179,10 @@ jobs:
       script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-smoke-cntt:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-smoke-cntt:latest
+          --template ${DOCKER_USERNAME}/functest-smoke-cntt:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-smoke-cntt:yoga
     - script: >
         sudo manifest-tool push from-args \
           --platforms linux/amd64,linux/arm,linux/arm64 \
-          --template ${DOCKER_USERNAME}/functest-benchmarking-cntt:ARCH-latest \
-          --target ${DOCKER_USERNAME}/functest-benchmarking-cntt:latest
+          --template ${DOCKER_USERNAME}/functest-benchmarking-cntt:ARCH-yoga \
+          --target ${DOCKER_USERNAME}/functest-benchmarking-cntt:yoga
