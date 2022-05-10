@@ -155,7 +155,7 @@ class ClearwaterTesting():
             subscript = f' PROXY={self.bono_ip} ELLIS={self.ellis_ip}'
             script = f'{script}{subscript}'
         script = f'{script} --trace'
-        cmd = f"/bin/bash -c '{script}'"
+        cmd = f"/bin/sh -c '{script}'"
         self.logger.debug('Live test cmd: %s', cmd)
         output_file = os.path.join(self.result_dir, "ims_test_output.txt")
         ft_utils.execute_command(cmd,

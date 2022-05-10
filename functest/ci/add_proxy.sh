@@ -1,8 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
-pushd "${1:-/home/opnfv/functest/images}" > /dev/null
+initdir=$(pwd)
+cd "${1:-/home/opnfv/functest/images}"
 
 http_proxy_host=${http_proxy_host:-proxy}
 http_proxy_port=${http_proxy_port:-8080}
@@ -89,7 +90,7 @@ for image in $images; do
     fi
     guestmount -a "${image}" -i --rw "${tmpdir}"
     add_proxy "${tmpdir}/etc/environment"
-    if [[ ${image} == "ubuntu"* ]]; then
+    if expr "$image" : 'ubuntu' ; then
         add_proxy_apt "${tmpdir}/etc/apt/apt.conf"
         add_proxy_juju_env "${tmpdir}/etc/juju-proxy.conf"
         add_proxy_juju_systemd "${tmpdir}/etc/juju-proxy-systemd.conf"
@@ -133,5 +134,5 @@ else
 fi
 
 rmdir "${tmpdir}"
-popd > /dev/null
+cd initdir
 
