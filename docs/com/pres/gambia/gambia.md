@@ -94,7 +94,7 @@ the classical ONAP testing virtual machine (**> 1GB**).
   full CI/CD toolchains in few minutes** (Jenkins, Minio, TestAPI, MongoDB and
   Docker registry)
 
-```bash
+```shell
 virtualenv xtesting
 . xtesting/bin/activate
 pip install ansible docker

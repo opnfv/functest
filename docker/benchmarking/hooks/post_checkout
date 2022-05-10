@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 from="${DOCKER_REPO%/*}/functest-core:${DOCKER_TAG}"
 sed -i "s|^FROM.*$|FROM ${from}|" Dockerfile

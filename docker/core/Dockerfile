@@ -49,9 +49,10 @@ RUN apk -U upgrade && \
         /tmp/Create-new-server-in-test_create_backup.patch && \
     cp /src/functest/functest/ci/logging.ini /etc/xtesting/ && \
     cp /src/functest/functest/ci/logging.debug.ini /etc/xtesting/ && \
-    bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
+    sh -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
     ln -s /var/lib/xtesting /home/opnfv/functest && \
-    bash -c "mkdir -p /home/opnfv/functest{/conf,/data,/images,/results} /home/opnfv/repos/vnfs" && \
+    sh -c "mkdir -p /home/opnfv/functest/conf /home/opnfv/functest/conf/data /home/opnfv/functest/conf/images /home/opnfv/functest/conf/results && \
+    mkdir -p /home/opnfv/repos/vnfs" && \
     mkdir -p /etc/rally && \
     printf "[database]\nconnection = 'sqlite:////var/lib/rally/database/rally.sqlite'\n" > /etc/rally/rally.conf && \
     printf "\n[openstack]\nneutron_bind_l2_agent_types = Open vSwitch agent,Linux bridge agent,OVN Controller Gateway agent\n" >> /etc/rally/rally.conf && \
