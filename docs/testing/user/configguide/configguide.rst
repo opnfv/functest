@@ -52,7 +52,7 @@ See section on OpenStack credentials for details.
 
 Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- images && ls -1 images/*
 
   images/cirros-0.5.1-aarch64-disk.img
   images/cirros-0.5.1-x86_64-disk.img

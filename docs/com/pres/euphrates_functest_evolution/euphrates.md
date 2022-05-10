@@ -120,7 +120,7 @@ export OS_IDENTITY_API_VERSION=3
 
 #### Retrieve all the images
 ```
-mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- images && ls -1 images/*
 images/CentOS-7-aarch64-GenericCloud.qcow2
 images/CentOS-7-aarch64-GenericCloud.qcow2.xz
 images/CentOS-7-x86_64-GenericCloud.qcow2

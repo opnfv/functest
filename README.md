@@ -49,7 +49,7 @@ export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=XXX
 ```
 
-mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | bash -s -- images && ls -1 images/*
+mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- images && ls -1 images/*
 ```
 images/cirros-0.5.1-aarch64-disk.img
 images/cirros-0.5.1-x86_64-disk.img
@@ -64,7 +64,7 @@ images/vyos-1.1.8-amd64.qcow2
 
 ## Run healthcheck suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
@@ -93,7 +93,7 @@ sudo docker run --env-file env \
 
 ## Run smoke suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
@@ -127,7 +127,7 @@ sudo docker run --env-file env \
 
 ## Run smoke CNTT suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
@@ -151,7 +151,7 @@ sudo docker run --env-file env \
 
 ## Run benchmarking suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
@@ -171,7 +171,7 @@ sudo docker run --env-file env \
 
 ## Run benchmarking CNTT suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
@@ -191,7 +191,7 @@ sudo docker run --env-file env \
 
 ## Run vnf suite
 
-```bash
+```shell
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
