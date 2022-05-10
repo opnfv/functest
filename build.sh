@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -13,7 +13,7 @@ docker/smoke-cntt \
 docker/benchmarking-cntt"}
 arm_dirs=${arm_dirs-${amd64_dirs}}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
-build_opts=("--pull=true" --no-cache "--force-rm=true")
+build_opts="--pull=true --no-cache --force-rm=true"
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core|${repo}/functest-core:amd64-latest|g" {} +
@@ -24,7 +24,7 @@ find . -name Dockerfile -exec sed -i \
 ${repo}/functest-benchmarking:amd64-latest|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
-        docker build "${build_opts[@]}" \
+        docker build $build_opts \
             -t "${repo}/functest-${dir##**/}:amd64-latest" .)
         docker push "${repo}/functest-${dir##**/}:amd64-latest"
     [ "${dir}" != "docker/core" ] &&
@@ -44,7 +44,7 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking|\
 ${repo}/functest-benchmarking:arm64-latest|g" {} +
 for dir in ${arm64_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build $build_opts \
         -t "${repo}/functest-${dir##**/}:arm64-latest" .)
     docker push "${repo}/functest-${dir##**/}:arm64-latest"
     [ "${dir}" != "docker/core" ] &&
@@ -65,7 +65,7 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking|\
 ${repo}/functest-benchmarking:arm-latest|g" {} +
 for dir in ${arm_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build $build_opts \
         -t "${repo}/functest-${dir##**/}:arm-latest" .)
     docker push "${repo}/functest-${dir##**/}:arm-latest"
     [ "${dir}" != "docker/core" ] &&

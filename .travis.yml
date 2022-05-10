@@ -20,19 +20,19 @@ jobs:
         tox -e \
           docs,pep8,pylint,yamllint,bashate,bandit,py38,cover
     - stage: build functest-core images
-      script: sudo -E bash build.sh
+      script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/core"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/core"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
@@ -45,73 +45,73 @@ jobs:
           --template ${DOCKER_USERNAME}/functest-core:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-core:latest
     - stage: build all functest images
-      script: sudo -E bash build.sh
+      script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/healthcheck"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/healthcheck"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs=""
         - arm_dirs="docker/healthcheck"
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/smoke"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/smoke"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs=""
         - arm_dirs="docker/smoke"
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/benchmarking"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/benchmarking"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs=""
         - arm_dirs="docker/benchmarking"
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/vnf"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/vnf"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
@@ -139,37 +139,37 @@ jobs:
           --template ${DOCKER_USERNAME}/functest-vnf:ARCH-latest \
           --target ${DOCKER_USERNAME}/functest-vnf:latest
     - stage: build all functest cntt images
-      script: sudo -E bash build.sh
+      script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/smoke-cntt"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/smoke-cntt"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs=""
         - arm_dirs="docker/smoke-cntt"
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs="docker/benchmarking-cntt"
         - arm64_dirs=""
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""
         - arm64_dirs="docker/benchmarking-cntt"
         - arm_dirs=""
-    - script: sudo -E bash build.sh
+    - script: sudo -E sh build.sh
       env:
         - REPO="${DOCKER_USERNAME}"
         - amd64_dirs=""

@@ -17,7 +17,7 @@ commands whatever the architecture.
 
 ## Install Docker
 
-```bash
+```shell
 wget https://downloads.raspberrypi.org/raspbian/images/raspbian-2018-11-15/2018-11-13-raspbian-stretch.zip
 unzip 2018-11-13-raspbian-stretch.zip
 sudo dd bs=4M if=2018-11-13-raspbian-stretch.img of=/dev/mmcblk0 conv=fsync
@@ -25,7 +25,7 @@ sudo dd bs=4M if=2018-11-13-raspbian-stretch.img of=/dev/mmcblk0 conv=fsync
 
 ## Install Docker
 
-```bash
+```shell
 curl -sSL https://get.docker.com | sudo sh
 ```
 

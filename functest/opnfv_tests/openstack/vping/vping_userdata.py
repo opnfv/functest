@@ -104,7 +104,7 @@ class VPingUserdata(singlevm.VmReady2):
         """
         Returns the post VM creation script to be added into the VM's userdata
         :param test_ip: the IP value to substitute into the script
-        :return: the bash script contents
+        :return: the shell script contents
         """
         ip4 = self.vm1.private_v4 or self.vm1.addresses[
             self.network.name][0].addr
