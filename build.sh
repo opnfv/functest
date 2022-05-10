@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -13,7 +13,7 @@ docker/smoke-cntt \
 docker/benchmarking-cntt"}
 arm_dirs=${arm_dirs-${amd64_dirs}}
 arm64_dirs=${arm64_dirs-${amd64_dirs}}
-build_opts=("--pull=true" --no-cache "--force-rm=true")
+build_opts="--pull=true --no-cache --force-rm=true"
 
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:yoga|${repo}/functest-core:amd64-yoga|g" {} +
@@ -24,9 +24,9 @@ find . -name Dockerfile -exec sed -i \
 ${repo}/functest-benchmarking:amd64-yoga|g" {} +
 for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
-        docker build "${build_opts[@]}" \
+        docker build $build_opts \
             -t "${repo}/functest-${dir##**/}:amd64-yoga" .)
-        docker push "${repo}/functest-${dir##**/}:amd64-yoga"
+        docker push "${repo}/functest-${dir##**/}:amd64-latyogaest"
     [ "${dir}" != "docker/core" ] &&
         (docker rmi "${repo}/functest-${dir##**/}:amd64-yoga" || true)
 done
@@ -44,7 +44,7 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:yoga|\
 ${repo}/functest-benchmarking:arm64-yoga|g" {} +
 for dir in ${arm64_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build $build_opts \
         -t "${repo}/functest-${dir##**/}:arm64-yoga" .)
     docker push "${repo}/functest-${dir##**/}:arm64-yoga"
     [ "${dir}" != "docker/core" ] &&
@@ -65,9 +65,9 @@ find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:yoga|\
 ${repo}/functest-benchmarking:arm-yoga|g" {} +
 for dir in ${arm_dirs}; do
-    (cd "${dir}" && docker build "${build_opts[@]}" \
+    (cd "${dir}" && docker build $build_opts \
         -t "${repo}/functest-${dir##**/}:arm-yoga" .)
-    docker push "${repo}/functest-${dir##**/}:arm-yoga"
+    docker push "${repo}/functest-${dir##**/}:arm-layogatest"
     [ "${dir}" != "docker/core" ] &&
         (docker rmi "${repo}/functest-${dir##**/}:arm-yoga" || true)
 done

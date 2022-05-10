@@ -63,7 +63,7 @@
 
 ### 8 Functest containers
 
-```bash
+```shell
 $ sudo docker search opnfv |grep functest-
 opnfv/functest-core         OPNFV Functest core image
 opnfv/functest-restapi      OPNFV Functest restapi image
