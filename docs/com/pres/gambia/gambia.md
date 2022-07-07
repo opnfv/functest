@@ -85,7 +85,7 @@ the classical ONAP testing virtual machine (**> 1GB**).
   - all ONAP Robot Framework files retrieved from the original repositories
   - testcases.yaml describing the testcases
 
-[Orange-OpenSource/xtesting-onap-robot](https://github.com/Orange-OpenSource/xtesting-onap-robot/)  
+[Orange-OpenSource/xtesting-onap-robot](https://github.com/Orange-OpenSource/xtesting-onap-robot/)
 
 
 ###  What's new in Xtesting?
