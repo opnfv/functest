@@ -1,0 +1,16 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '.patch$'
+        # trailing blanks shall not preferably be fixed in patch files
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.3.0
+    hooks:
+      - id: remove-tabs
+        stages: [commit]
+        exclude: '^(.git/|docs/make.bat|docs/Makefile|)'
+
