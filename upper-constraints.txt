@@ -21,3 +21,4 @@ ruamel.yaml===0.17.17
 sphinxcontrib-spelling===4.3.0
 ansible-lint===5.2.1
 setuptools_scm===6.3.2
+pre-commit===3.1.1
