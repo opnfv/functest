@@ -69,7 +69,7 @@
 						* Test cases
 						* Results
 					</section>
-	
+
 					<section data-markdown>
 						## Status Currently
 						* From many projects
@@ -87,7 +87,7 @@
 						</aside>
 						</script>
 					</section>
-	
+
 					<section data-markdown>
 						## Help building
 						* Dashboards
@@ -135,8 +135,8 @@
 						<li>Scripts to support databse backup/restore/update</li>
 						<li>Support installation</li>
                         <aside class='notes'>
-							So you can discover and understand the capabilities of the service without 
-                            access to source code, documentation, or through network traffic inspection, 
+							So you can discover and understand the capabilities of the service without
+                            access to source code, documentation, or through network traffic inspection,
                             and also you can interact with the TestAPI directly through swagger website.
                         </aside>
                         </ul>
@@ -148,12 +148,12 @@
 					<section data-markdown>
 						# API Evoluation
 					</section>
-					
+
 					<section>
 						<h2> URI changes...</h2>
-						<div style="text-align:left""> 
+						<div style="text-align:left"">
 							<p> testresults.opnfv.org/<span style="color:lightblue">TestAPI</span> => <br>testresults.opnfv.org/<span style="color:yellow">test/api/v1</span> </p>
-			
+
 							<p> /test/api/v1/<b>pods</b></p>
 							<p> /test/api/v1/<b>projects</b></p>
 							<p> /test/api/v1/projects/qtip/<b>cases</b></p>
@@ -200,7 +200,7 @@
 					<section>
 						<h2>unit tests</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-umry8364@umry8364-Latitude-E6400:~/Dev/OPNFV/releng/utils/test/result_collection_api$ ./run_test.sh 
+umry8364@umry8364-Latitude-E6400:~/Dev/OPNFV/releng/utils/test/result_collection_api$ ./run_test.sh
 Tests running...
 WARNING:tornado.general:404 GET /dashboard/v1/results?case=vPing&pod=zte-pod1&version=C&installer=fuel&period=5 (127.0.0.1): Project name missing
 WARNING:tornado.access:404 GET /dashboard/v1/results?case=vPing&pod=zte-pod1&version=C&installer=fuel&period=5 (127.0.0.1) 2.30ms

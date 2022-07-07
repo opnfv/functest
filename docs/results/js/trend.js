@@ -63,13 +63,13 @@ var trend = function(container, trend_data) {
         .attr("d", valueline(trend_data))
     .attr("stroke", "steelblue")
     .attr("fill", "none");
- 
+
     trend_svg.selectAll(".dot")
       .data(trend_data)
       .enter().append("circle")
       .attr("r", 2.5)
         .attr("cx", function(d) { return trend_x(d.date); })
-        .attr("cy", function(d) { return trend_y(d.score); });   
+        .attr("cy", function(d) { return trend_y(d.score); });
 
      return trend;
 }

@@ -30,13 +30,13 @@ body {
   bottom: 1em;
   left: 1em;
   font-size: 0.5em;
-  
+
 	}
 
 .reveal .slides > section, .reveal .slides > section > section {
   line-height: 1.3;
   font-weight: inherit; }
- 
+
 .reveal .opnfv-title {
   background-image: url("../../img/title-bg.png" no-repeat);
 }
@@ -83,7 +83,7 @@ body {
 
 .reveal h1 {
   text-shadow: none; }
-  
+
 
 /*********************************************
  * OTHER
