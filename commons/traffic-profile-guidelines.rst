@@ -11,11 +11,11 @@ Introduction
 ------------
 
 In order to have consistent testing profiles, it has been suggested to define and store traffic profiles.
-These profiles shall be based on operator representative scenario. 
+These profiles shall be based on operator representative scenario.
 
-These reference profiles may be used by any test projects, unitary, functional or performance tests. 
-It is possible to adapt them to specific testcases. 
-It is recommended to use them in order to avoid getting as many profiles as tests. 
+These reference profiles may be used by any test projects, unitary, functional or performance tests.
+It is possible to adapt them to specific testcases.
+It is recommended to use them in order to avoid getting as many profiles as tests.
 It should be helpful to compare the results of test scenario.
 
 .. _howto:
