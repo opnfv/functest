@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.16
 
 ARG BRANCH=master
 ARG OPENSTACK_TAG=master
@@ -25,9 +25,6 @@ RUN apk -U upgrade && \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
     sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
-    sed -i -E /^six=/d /src/requirements/upper-constraints.txt && \
-    sed -i -E /^distlib=/d /src/requirements/upper-constraints.txt && \
-    sed -i -E /^packaging=/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
     pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
@@ -47,6 +44,7 @@ RUN apk -U upgrade && \
     rm -r /src/requirements/.git /src/functest/.git \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
+    mkdir -p /etc/xtesting && \
     cp /src/functest/functest/ci/logging.ini /etc/xtesting/ && \
     cp /src/functest/functest/ci/logging.debug.ini /etc/xtesting/ && \
     bash -c "mkdir -p /var/lib/xtesting /home/opnfv" && \
