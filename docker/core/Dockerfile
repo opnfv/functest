@@ -12,8 +12,6 @@ RUN apk -U upgrade && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
         openssl-dev libjpeg-turbo-dev rust cargo && \
-    apk --no-cache add --update py3-distlib\>=0.3.1 \
-        --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main && \
     git init /src/requirements && \
     (cd /src/requirements && \
         git fetch --tags https://review.opendev.org/openstack/requirements $OPENSTACK_TAG && \
