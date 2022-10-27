@@ -1,4 +1,4 @@
-FROM opnfv/functest-core
+FROM opnfv/functest-core:zed
 
 ARG ODL_TAG=89b88a0a23561f0bda62338b394ec41655679b2d
 
