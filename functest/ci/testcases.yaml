@@ -704,7 +704,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 125
+                tests_count: 124
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Heat project.
