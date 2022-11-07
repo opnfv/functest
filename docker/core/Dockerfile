@@ -25,6 +25,7 @@ RUN apk -U upgrade && \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
     sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
+    sed -i -E /^neutron=/d /src/requirements/upper-constraints.txt && \
     sed -i -E /^six=/d /src/requirements/upper-constraints.txt && \
     sed -i -E /^distlib=/d /src/requirements/upper-constraints.txt && \
     sed -i -E /^packaging=/d /src/requirements/upper-constraints.txt && \
