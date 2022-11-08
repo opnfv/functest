@@ -29,7 +29,7 @@ class Cloudify(singlevm.SingleVm2):
     __logger = logging.getLogger(__name__)
 
     filename = ('/home/opnfv/functest/images/'
-                'ubuntu-16.04-server-cloudimg-amd64-disk1.img')
+                'ubuntu-18.04-server-cloudimg-amd64.img')
     flavor_ram = 4096
     flavor_vcpus = 2
     flavor_disk = 40
@@ -64,9 +64,8 @@ class Cloudify(singlevm.SingleVm2):
         scpc.put(self.cloudify_archive,
                  remote_path=os.path.basename(self.cloudify_archive))
         (_, stdout, stderr) = self.ssh.exec_command(
-            "sudo wget https://get.docker.com/ -O script.sh && "
-            "sudo chmod +x script.sh && "
-            "sudo ./script.sh && "
+            "sudo apt-get update && "
+            "sudo apt-get install -y docker.io && "
             "sudo docker load -i ~/{} && "
             "sudo docker run --name cfy_manager_local -d "
             "--restart unless-stopped -v /sys/fs/cgroup:/sys/fs/cgroup:ro "
