@@ -90,6 +90,7 @@ object-storage-feature-enabled:
       tempurl,crossdomain,container_quotas,staticweb,account_quotas,slo"
     object_versioning: true
     discoverability: true
+    tempurl_digest_hashlib: sha1
 heat_plugin:
     skip_functional_test_list: EncryptionVolTypeTest
     skip_scenario_test_list: "AodhAlarmTest,SoftwareConfigIntegrationTest,\
