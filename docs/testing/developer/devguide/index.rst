@@ -208,13 +208,6 @@ Additional dashboarding is managed at the testing group level, see `[5]`_ for
 details.
 
 
-=======
-How TOs
-=======
-
-See How to section on Functest wiki `[6]`_
-
-
 ==========
 References
 ==========
@@ -228,7 +221,5 @@ _`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 _`[4]`: https://wiki.opnfv.org/display/functest/2017+Beijing?preview=%2F11699623%2F11700523%2FTestAPI+-+test+results+collection+service.pptx
 
 _`[5]`: https://lfanalytics.io/projects/lfn%2Fopnfv/dashboard
-
-_`[6]`: https://wiki.opnfv.org/pages/viewpage.action?pageId=7768932
 
 IRC support chan: #opnfv-functest
