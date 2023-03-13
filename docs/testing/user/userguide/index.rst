@@ -40,7 +40,7 @@ References
 
 `[11]`_: Robot Framework web site
 
-`[13]`_: SNAPS wiki
+`[13]`_: SNAPS
 
 `[14]`_: vRouter
 
@@ -64,7 +64,7 @@ IRC support chan: #opnfv-functest
 .. _`[9]`: https://github.com/openstack/interop
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: https://robotframework.org/
-.. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
+.. _`[13]`: https://git.opnfv.org/snaps/
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://aptira.com/testing-openstack-tempest-part-1/
 .. _`[16]`: http://testresults.opnfv.org/test/
