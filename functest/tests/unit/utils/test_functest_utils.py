@@ -336,19 +336,19 @@ class FunctestUtilsTesting(unittest.TestCase):
         args[0].assert_called_once_with(cloud)
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
-                return_value=(2, 92))
-    def test_openstack_version14(self, *args):
-        cloud = mock.Mock()
-        self.assertEqual(functest_utils.get_openstack_version(
-            cloud), "Zed")
-        args[0].assert_called_once_with(cloud)
-
-    @mock.patch('functest.utils.functest_utils.get_nova_version',
                 return_value=(2, 89))
-    def test_openstack_version14(self, *args):
+    def test_openstack_version15(self, *args):
         cloud = mock.Mock()
         self.assertEqual(functest_utils.get_openstack_version(
             cloud), "Xena")
+        args[0].assert_called_once_with(cloud)
+
+    @mock.patch('functest.utils.functest_utils.get_nova_version',
+                return_value=(2, 92))
+    def test_openstack_version16(self, *args):
+        cloud = mock.Mock()
+        self.assertEqual(functest_utils.get_openstack_version(
+            cloud), "Zed")
         args[0].assert_called_once_with(cloud)
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
