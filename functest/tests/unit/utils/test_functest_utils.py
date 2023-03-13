@@ -337,7 +337,7 @@ class FunctestUtilsTesting(unittest.TestCase):
 
     @mock.patch('functest.utils.functest_utils.get_nova_version',
                 return_value=(2, 89))
-    def test_openstack_version14(self, *args):
+    def test_openstack_version15(self, *args):
         cloud = mock.Mock()
         self.assertEqual(functest_utils.get_openstack_version(
             cloud), "Xena")
