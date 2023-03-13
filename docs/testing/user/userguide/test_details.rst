@@ -405,7 +405,7 @@ The kubernetes testcases are distributed across various Tiers:
 .. _`[9]`: https://github.com/openstack/interop
 .. _`[10]`: https://github.com/openstack/interop/blob/master/2016.08/procedure.rst
 .. _`[11]`: https://robotframework.org/
-.. _`[13]`: https://wiki.opnfv.org/display/PROJ/SNAPS-OO
+.. _`[13]`: https://git.opnfv.org/snaps/
 .. _`[14]`: https://github.com/oolorg/opnfv-functest-vrouter
 .. _`[15]`: https://github.com/RebacaInc/abot_charm
 .. _`[16]`: https://github.com/kubernetes/community/blob/master/contributors/devel/sig-testing/e2e-tests.md
