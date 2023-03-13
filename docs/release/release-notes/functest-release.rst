@@ -141,8 +141,8 @@ Key benefits
  * all testcases can run in parallel (tested with 4 executors in our gates)
  * no remaining resources detected in our gates after multiple runs
 
-.. _`Functest toolchains`: https://wiki.opnfv.org/pages/viewpage.action?pageId=32015004
-.. _`Raspberry PI`: https://wiki.opnfv.org/display/functest/Run+Functest+containers+on+Raspberry+PI
+.. _`Functest toolchains`: https://github.com/collivier/ansible-role-xtesting
+.. _`Raspberry PI`: https://github.com/opnfv/functest/blob/master/PI.md
 
 Code quality
 ------------
@@ -153,7 +153,6 @@ Code quality
 Useful links
 ============
 
- * wiki project page: https://wiki.opnfv.org/display/functest/Opnfv+Functional+Testing
  * Functest git repository: https://github.com/opnfv/functest
  * Functest CI dashboard: https://build.opnfv.org/ci/view/functest/
  * JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611
