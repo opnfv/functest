@@ -19,3 +19,4 @@ ruamel.yaml.jinja2 # MIT
 tempest # Apache-2.0
 rally
 rally-openstack
+munch  # MIT
