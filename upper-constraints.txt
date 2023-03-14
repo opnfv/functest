@@ -14,7 +14,9 @@ git+https://opendev.org/openstack/rally-openstack.git#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
 pylint===2.11.1
 flake8===4.0.1
-nose===1.3.7
+pytest===7.1.2
+pytest-cov===3.0.0
+pytest-html===3.1.1
 ruamel.yaml===0.17.17
 sphinxcontrib-spelling===4.3.0
 ansible-lint===5.2.1
