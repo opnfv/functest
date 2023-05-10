@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import time
 
+from oslo_utils import strutils
 import pkg_resources
 from six.moves import configparser
 from xtesting.core import testcase
@@ -741,6 +742,14 @@ class TempestHeat(TempestCommon):
         rconfig.set('heat_plugin', 'admin_password', self.project.password)
         rconfig.set(
             'heat_plugin', 'admin_project_name', self.project.project.name)
+        if os.environ.get('OS_CACERT'):
+            rconfig.set('heat_plugin', 'ca_file', os.environ.get('OS_CACERT'))
+        if os.environ.get('OS_INSECURE'):
+            rconfig.set(
+                'heat_plugin', 'disable_ssl_certificate_validation',
+                strutils.bool_from_string(os.environ.get('OS_INSECURE')))
+        rconfig.set('heat_plugin', 'endpoint_type',
+                    os.environ.get('OS_INTERFACE', 'public'))
         rconfig.set('heat_plugin', 'image_ref', self.image_alt.id)
         rconfig.set('heat_plugin', 'instance_type', self.flavor_alt.id)
         rconfig.set('heat_plugin', 'minimal_image_ref', self.image.id)

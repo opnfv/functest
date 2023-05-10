@@ -20,3 +20,4 @@ tempest # Apache-2.0
 rally
 rally-openstack
 munch  # MIT
+oslo.utils!=3.39.1,!=3.40.0,!=3.40.1  # Apache-2.0
