@@ -1,6 +1,6 @@
 ---
 compute:
-    min_microversion: '2.36'
+    min_microversion: '2.44'
     max_microversion: latest
 compute-feature-enabled:
     attach_encrypted_volume: false
