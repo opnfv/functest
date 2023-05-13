@@ -308,8 +308,6 @@ tiers:
                 project_name: functest
                 criteria: 100
                 blocking: false
-                deny_skipping: true
-                tests_count: 58
                 description: >-
                     This test case runs a sub group of tests of the OpenStack
                     Object testcases.
