@@ -1,0 +1,13 @@
+#!/bin/bash
+
+./download-frozen-image-v2.sh /data/docker \
+  opnfv/functest-healthcheck:latest \
+  opnfv/functest-smoke:latest \
+  opnfv/functest-smoke-cntt:latest \
+  opnfv/functest-benchmarking:latest \
+  opnfv/functest-benchmarking-cntt:latest \
+  opnfv/functest-vnf:latest
+mkdir -p /data/images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- /data/images && ls -1 /data/images/*
+git clone https://github.com/opnfv/functest
+
+exit 0
