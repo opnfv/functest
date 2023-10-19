@@ -1,0 +1,17 @@
+#!/bin/bash
+
+download-frozen-image-v2.sh /data/docker/functest \
+  opnfv/functest-healthcheck:kali \
+  opnfv/functest-smoke:kali \
+  opnfv/functest-smoke-cntt:kali \
+  opnfv/functest-benchmarking:kali \
+  opnfv/functest-benchmarking-cntt:kali \
+  opnfv/functest-vnf:kali
+mkdir -p /data/images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/kali | sh -s -- /data/images && ls -1 /data/images/*
+git init /home/debian/functest && \
+(cd /home/debian/functest && \
+  git fetch --tags https://git.opnfv.org/functest stable/kali && \
+  git checkout FETCH_HEAD) && \
+chown -R 1000:1000 /home/debian/functest
+
+exit 0
