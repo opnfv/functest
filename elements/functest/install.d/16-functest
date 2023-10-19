@@ -1,0 +1,17 @@
+#!/bin/bash
+
+download-frozen-image-v2.sh /data/docker/functest \
+  opnfv/functest-healthcheck:leguer \
+  opnfv/functest-smoke:leguer \
+  opnfv/functest-smoke-cntt:leguer \
+  opnfv/functest-benchmarking:leguer \
+  opnfv/functest-benchmarking-cntt:leguer \
+  opnfv/functest-vnf:leguer
+mkdir -p /data/images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/leguer | sh -s -- /data/images && ls -1 /data/images/*
+git init /home/debian/functest && \
+(cd /home/debian/functest && \
+  git fetch --tags https://git.opnfv.org/functest stable/leguer && \
+  git checkout FETCH_HEAD) && \
+chown -R 1000:1000 /home/debian/functest
+
+exit 0
