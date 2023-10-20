@@ -8,6 +8,6 @@
   opnfv/functest-benchmarking-cntt:latest \
   opnfv/functest-vnf:latest
 mkdir -p /data/images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- /data/images && ls -1 /data/images/*
-git clone https://github.com/opnfv/functest
+git clone https://git.opnfv.org/functest
 
 exit 0
