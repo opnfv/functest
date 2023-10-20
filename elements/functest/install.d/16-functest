@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./download-frozen-image-v2.sh /data/docker \
+./download-frozen-image-v2.sh /data/docker/functest \
   opnfv/functest-healthcheck:latest \
   opnfv/functest-smoke:latest \
   opnfv/functest-smoke-cntt:latest \
