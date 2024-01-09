@@ -3,9 +3,9 @@
 # process, which may cause wedges in the gate later.
 coverage!=4.4 # Apache-2.0
 mock!=4.0.0,!=4.0.1 # BSD
-pytest  # MIT
-pytest-html  #MPL-2.0
-pytest-cov
+pytest # MIT
+pytest-html #MPL-2.0
+pytest-cov # MIT
 flake8 # MIT
 pylint # GPLv2
 sphinx!=1.6.6,!=1.6.7,!=2.1.0,!=3.0.0,!=3.4.2 # BSD
