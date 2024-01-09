@@ -4,6 +4,9 @@
   roles:
     - role: collivier.xtesting
       project: functest
+      docker_tags:
+        - yoga:
+            branch: stable/yoga
       suites:
         - container: functest-healthcheck
           tests:
