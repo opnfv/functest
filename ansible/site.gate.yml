@@ -4,13 +4,18 @@
   roles:
     - role: collivier.xtesting
       project: functest
+      use_gerrit: true
       gerrit_project: functest
+      git_url: https://gerrit.opnfv.org/gerrit/functest
+      docker_tags:
+        - xena:
+            branch: stable/xena
+            dependency: '3.14'
       builds:
-        dependencies:
-          - repo: _
-            dport:
-            container: alpine
-            tag: '3.14'
+        dependency:
+          repo: _
+          dport:
+          container: alpine
         steps:
           - name: build opnfv/functest-core
             containers:
