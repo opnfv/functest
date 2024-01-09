@@ -1,0 +1,7 @@
+Verified+1: Anuket Required GHA Bot <releng+anuket-required-gha@linuxfoundation.org>
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Tue, 09 Jan 2024 14:49:39 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/functest/+/74444
+Project: functest
+Branch: refs/heads/stable/wallaby
