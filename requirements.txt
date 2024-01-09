@@ -8,9 +8,9 @@ robotframework>=3.0
 scp
 cloudify-rest-client
 mock!=4.0.0,!=4.0.1 # BSD
-PrettyTable # BSD
+PrettyTable!=3.4.0 # BSD
 six # MIT
-paramiko # LGPLv2.1+
+paramiko!=2.9.0,!=2.9.1 # LGPLv2.1+
 Jinja2 # BSD License (3 clause)
 xtesting
 os-client-config # Apache-2.0
@@ -19,4 +19,4 @@ ruamel.yaml.jinja2 # MIT
 tempest # Apache-2.0
 rally
 rally-openstack
-munch  # MIT
+munch # MIT
