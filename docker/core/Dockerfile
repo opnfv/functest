@@ -1,7 +1,7 @@
 FROM alpine:3.14
 
 ARG BRANCH=stable/xena
-ARG OPENSTACK_TAG=stable/xena
+ARG OPENSTACK_TAG=unmaintained/xena
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
