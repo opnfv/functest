@@ -18,7 +18,7 @@ ARG CYBORG_TEMPEST_TAG=master
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev autoconf automake && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
         pip3 install --use-deprecated=legacy-resolver --no-cache-dir -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt lxml && \

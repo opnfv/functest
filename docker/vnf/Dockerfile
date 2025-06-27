@@ -5,7 +5,7 @@ ARG QUAFF_TAG=59213d6d8ee29433552bb75f505cdc96b0b18909
 ARG CLOUDIFY_VIMS_TAG=gambia
 ARG HEAT_VIMS_TAG=release-130
 ARG VROUTER_TAG=fraser
-ARG VROUTER_BP_TAG=9b76d46a388d32d4985797620e67c2ed3315b3e4
+ARG VROUTER_BP_TAG=8a6d3eb9f6e5e9f387e16507971462bfa7514700
 ARG ABOT_CHARM=opnfv-fraser
 
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
@@ -38,7 +38,7 @@ RUN apk --no-cache add --update \
         patch -p1 < /tmp/clearwater-heat-singlenet-deps.patch) && \
     git init /src/opnfv-vnf-vyos-blueprint && \
     (cd /src/opnfv-vnf-vyos-blueprint && \
-        git fetch --tags https://github.com/oolorg/opnfv-vnf-vyos-blueprint.git $VROUTER_BP_TAG && \
+        git fetch --tags https://github.com/collivier/opnfv-vnf-vyos-blueprint $VROUTER_BP_TAG && \
         git checkout FETCH_HEAD) && \
     mkdir -p /home/opnfv/functest/data/router && \
     git init /home/opnfv/functest/data/router/opnfv-vnf-data && \

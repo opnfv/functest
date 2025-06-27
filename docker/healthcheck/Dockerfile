@@ -7,7 +7,7 @@ RUN apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev openssl-dev && \
     git init /src/odl_test && \
     (cd /src/odl_test && \
-        git fetch --tags https://git.opendaylight.org/gerrit/integration/test $ODL_TAG && \
+        git fetch --tags https://github.com/opendaylight/integration-test $ODL_TAG && \
         git checkout FETCH_HEAD) && \
     rm -r /src/odl_test/.git thirdparty-requirements.txt && \
     apk del .build-deps

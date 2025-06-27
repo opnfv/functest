@@ -9,9 +9,9 @@ bandit===1.7.5
 bandit===1.7.0
 ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/tempest#egg=tempest
--e git+https://opendev.org/openstack/rally.git#egg=rally
-git+https://opendev.org/openstack/rally-openstack.git#egg=rally-openstack
-git+https://github.com/xrally/xrally-kubernetes.git#egg=xrally-kubernetes
+-e git+https://opendev.org/openstack/rally.git@3.4.0#egg=rally
+git+https://opendev.org/openstack/rally-openstack.git@2.3.0#egg=rally-openstack
+git+https://github.com/xrally/xrally-kubernetes.git@2ffa85af2bff3438b6b23034b6ec6ee1de481090#egg=xrally-kubernetes
 pylint===2.11.1
 flake8===4.0.1
 pytest===7.1.2
@@ -22,3 +22,4 @@ sphinxcontrib-spelling===4.3.0
 ansible-lint===5.2.1
 setuptools_scm===6.3.2
 pre-commit===3.1.1
+os-faults==0.2.7
