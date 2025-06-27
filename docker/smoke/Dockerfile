@@ -1,14 +1,14 @@
 FROM opnfv/functest-core:yoga
 
 ARG PATROLE_TAG=0.14.0
-ARG NEUTRON_TEMPEST_TAG=1.9.0
+ARG NEUTRON_TEMPEST_TAG=1.8.0
 ARG CINDER_TEMPEST_TAG=1.6.0
 ARG KEYSTONE_TEMPEST_TAG=0.9.0
-ARG NEUTRON_TAG=stable/yoga
-ARG GLANCE_TAG=stable/yoga
-ARG NOVA_TAG=stable/yoga
-ARG KEYSTONE_TAG=stable/yoga
-ARG CINDER_TAG=stable/yoga
+ARG NEUTRON_TAG=unmaintained/yoga
+ARG GLANCE_TAG=unmaintained/yoga
+ARG NOVA_TAG=unmaintained/yoga
+ARG KEYSTONE_TAG=unmaintained/yoga
+ARG CINDER_TAG=unmaintained/yoga
 ARG BARBICAN_TAG=1.6.0
 ARG OCTAVIA_TAG=1.9.0
 ARG HEAT_TEMPEST_TAG=1.5.0
@@ -18,7 +18,7 @@ ARG CYBORG_TEMPEST_TAG=1.4.0
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev autoconf automake && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
         pip3 install --use-deprecated=legacy-resolver --no-cache-dir -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt lxml && \
