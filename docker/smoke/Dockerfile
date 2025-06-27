@@ -4,11 +4,11 @@ ARG PATROLE_TAG=0.13.0
 ARG NEUTRON_TEMPEST_TAG=1.7.0
 ARG CINDER_TEMPEST_TAG=1.5.0
 ARG KEYSTONE_TEMPEST_TAG=0.8.0
-ARG NEUTRON_TAG=stable/xena
-ARG GLANCE_TAG=stable/xena
-ARG NOVA_TAG=stable/xena
-ARG KEYSTONE_TAG=stable/xena
-ARG CINDER_TAG=stable/xena
+ARG NEUTRON_TAG=unmaintained/xena
+ARG GLANCE_TAG=unmaintained/xena
+ARG NOVA_TAG=unmaintained/xena
+ARG KEYSTONE_TAG=unmaintained/xena
+ARG CINDER_TAG=unmaintained/xena
 ARG BARBICAN_TAG=1.5.0
 ARG OCTAVIA_TAG=1.8.1
 ARG HEAT_TEMPEST_TAG=1.4.0
@@ -18,7 +18,7 @@ ARG CYBORG_TEMPEST_TAG=1.3.0
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
-        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev && \
+        openssl-dev libjpeg-turbo-dev libxml2-dev libxslt-dev autoconf && \
     case $(uname -m) in aarch*|arm*) CFLAGS="-O0" \
         pip3 install --use-deprecated=legacy-resolver --no-cache-dir -c/src/requirements/upper-constraints.txt \
         -c/src/functest/upper-constraints.txt lxml && \
