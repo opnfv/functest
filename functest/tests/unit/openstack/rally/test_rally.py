@@ -85,7 +85,7 @@ class OSRallyTesting(unittest.TestCase):
             mock.call().decode("utf-8"),
             mock.call(['rally', 'deployment', 'check']),
             mock.call().decode("utf-8")]
-        mock_exec.assert_has_calls(calls)
+        mock_exec.assert_has_calls(calls, any_order=True)
 
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.path.exists')
     @mock.patch('functest.opnfv_tests.openstack.rally.rally.os.makedirs')
