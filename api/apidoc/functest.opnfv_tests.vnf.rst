@@ -6,7 +6,6 @@ Subpackages
 
 .. toctree::
 
-    functest.opnfv_tests.vnf.epc
     functest.opnfv_tests.vnf.ims
     functest.opnfv_tests.vnf.router
 
