@@ -27,7 +27,6 @@ dockerhub
 enduser
 env
 EnvironmentVariable
-epc
 fds
 frontend
 functest
@@ -67,10 +66,8 @@ nofeature
 noha
 nosdn
 octavia
-odl
 onboarding
 ons
-Opendaylight
 openstack
 Openstack
 opnfv
