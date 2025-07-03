@@ -29,7 +29,7 @@ RUN apk --no-cache add --update \
         git checkout FETCH_HEAD) && \
     git init /src/cloudify_vims && \
     (cd /src/cloudify_vims && \
-        git fetch --tags https://github.com/Orange-OpenSource/opnfv-cloudify-clearwater.git $CLOUDIFY_VIMS_TAG && \
+        git fetch --tags https://github.com/collivier/opnfv-cloudify-clearwater.git $CLOUDIFY_VIMS_TAG && \
         git checkout FETCH_HEAD) && \
     git init  /src/heat_vims && \
     (cd /src/heat_vims && \
