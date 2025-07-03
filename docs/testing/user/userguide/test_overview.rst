@@ -80,13 +80,6 @@ validate the scenario for the release.
 |             |               |            | benchmarking OpenStack modules   |
 |             |               |            | See the Rally documents `[3]`_   |
 +-------------+---------------+------------+----------------------------------+
-| Controllers | smoke         | odl        | Opendaylight Test suite          |
-|             |               |            | Limited test suite to check the  |
-|             |               |            | basic neutron (Layer 2)          |
-|             |               |            | operations mainly based on       |
-|             |               |            | upstream testcases. See below    |
-|             |               |            | for details                      |
-+-------------+---------------+------------+----------------------------------+
 | VNF         | vnf           | cloudify   | Example of a real VNF deployment |
 |             |               | \_ims      | to show the NFV capabilities of  |
 |             |               |            | the platform. The IP Multimedia  |
@@ -97,16 +90,6 @@ validate the scenario for the release.
 |             |               +------------+----------------------------------+
 |             |               | vyos       | vRouter testing                  |
 |             |               | \_vrouter  |                                  |
-|             |               +------------+----------------------------------+
-|             |               | juju_epc   | Validates deployment of a complex|
-|             |               |            | mobility VNF on OPNFV Platform.  |
-|             |               |            | Uses Juju for deploying the OAI  |
-|             |               |            | EPC  and ABot for defining test  |
-|             |               |            | scenarios using high-level DSL.  |
-|             |               |            | VNF tests reference 3GPP         |
-|             |               |            | Technical Specs and are executed |
-|             |               |            | through protocol drivers provided|
-|             |               |            | by ABot.                         |
 +-------------+---------------+------------+----------------------------------+
 | Kubernetes  | healthcheck   | k8s_smoke  | Test a running Kubernetes        |
 |             |               |            | cluster and ensure it satisfies  |
