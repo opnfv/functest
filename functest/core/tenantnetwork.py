@@ -25,7 +25,7 @@ import uuid
 
 import os_client_config
 import shade
-from tempest.lib.common.utils import data_utils
+from tempest.lib.common.utils import data_utils  # pylint: disable=import-error
 from xtesting.core import testcase
 
 from functest.utils import config

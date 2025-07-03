@@ -31,7 +31,6 @@ cat env::
   EXTERNAL_NETWORK=XXX # if not first network with router:external=True
   DASHBOARD_URL=XXX  # else tempest_horizon will be skipped
   NEW_USER_ROLE=XXX # if not member
-  SDN_CONTROLLER_IP=XXX  # if odl scenario
   VOLUME_DEVICE_NAME=XXX  # if not vdb
   FLAVOR_EXTRA_SPECS=hw:mem_page_size:large    # if fdio scenarios
 
@@ -91,7 +90,6 @@ Results shall be displayed as follows::
   |       cinder_test        |     functest     |     healthcheck     |      01:05       |      PASS      |
   |      tempest_smoke       |     functest     |     healthcheck     |      05:39       |      PASS      |
   |     tempest_horizon      |     functest     |     healthcheck     |      01:05       |      PASS      |
-  |           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
   +--------------------------+------------------+---------------------+------------------+----------------+
 
 NOTE: the duration is a reference and it might vary depending on your SUT.
@@ -353,7 +351,7 @@ the deployment.
 
 The format for the DEPLOY_SCENARIO env variable can be described as follows:
   * vim: (os|k8s) = OpenStack or Kubernetes
-  * controller is one of ( nosdn | odl )
+  * controller: nosdn
   * nfv_feature is one or more of ( ovs | kvm | sfc | bgpvpn | nofeature )
   * ha_mode (high availability) is one of ( ha | noha )
 
