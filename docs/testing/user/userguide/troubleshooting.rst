@@ -311,23 +311,6 @@ To check any possible problems with Rally, the logs are stored under
 
 .. _`[3]`: https://rally.readthedocs.io/en/latest/index.html
 
-Controllers
------------
-
-Opendaylight
-^^^^^^^^^^^^
-
-If the Basic Restconf test suite fails, check that the ODL controller is
-reachable and its Restconf module has been installed.
-
-If the Neutron Reachability test fails, verify that the modules
-implementing Neutron requirements have been properly installed.
-
-If any of the other test cases fails, check that Neutron and ODL have
-been correctly configured to work together. Check Neutron configuration
-files, accounts, IP addresses etc.).
-
-
 Features
 --------
 
