@@ -147,12 +147,3 @@ Code quality
 
  * pylint: 10.00/10
  * code coverage: 70%
-
-Useful links
-============
-
- * Functest git repository: https://github.com/opnfv/functest
- * Functest CI dashboard: https://build.opnfv.org/ci/view/functest/
- * JIRA dashboard: https://jira.opnfv.org/secure/Dashboard.jspa?selectPageId=10611
- * Functest IRC channel: #opnfv-functest
- * Reporting page: http://testresults.opnfv.org/reporting/master/functest/functest.html
