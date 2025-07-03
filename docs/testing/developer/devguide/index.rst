@@ -201,13 +201,6 @@ A web page is automatically generated every day to display the status based on
 jinja2 templates `[3]`_.
 
 
-Dashboard
-=========
-
-Additional dashboarding is managed at the testing group level, see `[5]`_ for
-details.
-
-
 ==========
 References
 ==========
@@ -219,7 +212,5 @@ _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest u
 _`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 
 _`[4]`: https://wiki.opnfv.org/display/functest/2017+Beijing?preview=%2F11699623%2F11700523%2FTestAPI+-+test+results+collection+service.pptx
-
-_`[5]`: https://lfanalytics.io/projects/lfn%2Fopnfv/dashboard
 
 IRC support chan: #opnfv-functest
