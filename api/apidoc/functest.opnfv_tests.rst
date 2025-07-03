@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     functest.opnfv_tests.openstack
-    functest.opnfv_tests.sdn
     functest.opnfv_tests.vnf
 
 Module contents
