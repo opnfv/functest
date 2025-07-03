@@ -82,7 +82,6 @@ The internal test cases in Euphrates are:
  * connection_check
  * vping_ssh
  * vping_userdata
- * odl
  * rally_full
  * rally_sanity
  * tempest_smoke
@@ -93,14 +92,13 @@ By internal, we mean that this particular test cases have been developed and/or
 integrated by functest contributors and the associated code is hosted in the
 Functest repository.
 An internal case can be fully developed or a simple integration of
-upstream suites (e.g. Tempest/Rally developed in OpenStack, or odl suites are
+upstream suites (e.g. Tempest/Rally developed in OpenStack are
 just integrated in Functest).
 
 The structure of this repository is detailed in `[1]`_.
 The main internal test cases are in the opnfv_tests subfolder of the
 repository, the internal test cases can be grouped by domain:
 
- * sdn: odl, odl_fds
  * openstack: connection_check, vping_ssh, vping_userdata, tempest_*, rally_*
  * vnf: cloudify_ims
 
@@ -201,13 +199,6 @@ A web page is automatically generated every day to display the status based on
 jinja2 templates `[3]`_.
 
 
-Dashboard
-=========
-
-Additional dashboarding is managed at the testing group level, see `[5]`_ for
-details.
-
-
 ==========
 References
 ==========
@@ -219,7 +210,5 @@ _`[2]`: http://artifacts.opnfv.org/functest/docs/userguide/index.html functest u
 _`[3]`: https://github.com/opnfv/releng-testresults/tree/master/reporting
 
 _`[4]`: https://wiki.opnfv.org/display/functest/2017+Beijing?preview=%2F11699623%2F11700523%2FTestAPI+-+test+results+collection+service.pptx
-
-_`[5]`: https://lfanalytics.io/projects/lfn%2Fopnfv/dashboard
 
 IRC support chan: #opnfv-functest
