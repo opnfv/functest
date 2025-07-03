@@ -6,7 +6,6 @@ ARG CLOUDIFY_VIMS_TAG=gambia
 ARG HEAT_VIMS_TAG=release-130
 ARG VROUTER_TAG=fraser
 ARG VROUTER_BP_TAG=8a6d3eb9f6e5e9f387e16507971462bfa7514700
-ARG ABOT_CHARM=opnfv-fraser
 
 COPY clearwater-heat-singlenet-deps.patch /tmp/clearwater-heat-singlenet-deps.patch
 RUN apk --no-cache add --update \
@@ -44,10 +43,6 @@ RUN apk --no-cache add --update \
     git init /home/opnfv/functest/data/router/opnfv-vnf-data && \
     (cd /home/opnfv/functest/data/router/opnfv-vnf-data && \
         git fetch --tags https://github.com/oolorg/opnfv-vnf-data.git $VROUTER_TAG && \
-        git checkout FETCH_HEAD) && \
-    git init /src/epc-requirements/abot_charm && \
-    (cd /src/epc-requirements/abot_charm && \
-        git fetch --tags https://github.com/collivier/abot_charm.git $ABOT_CHARM && \
         git checkout FETCH_HEAD) && \
     (cd /src/vims-test && bundle config build.nokogiri --use-system-libraries && bundle install --system && bundle update rest-client) && \
     rm -r /src/vims-test/.git /src/cloudify_vims/.git /src/heat_vims/.git /src/vims-test/quaff/.git \

@@ -223,7 +223,6 @@ Results shall be displayed as follows::
   |     cloudify_ims     |     functest     |     vnf      |      24:46       |      PASS      |
   |       heat_ims       |     functest     |     vnf      |      33:12       |      PASS      |
   |     vyos_vrouter     |     functest     |     vnf      |      15:53       |      PASS      |
-  |       juju_epc       |     functest     |     vnf      |      27:52       |      PASS      |
   +----------------------+------------------+--------------+------------------+----------------+
 
 Functest Dockers for Kubernetes deployment
