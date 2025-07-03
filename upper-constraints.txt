@@ -12,7 +12,8 @@ ruamel.yaml.jinja2==0.2.2
 -e git+https://opendev.org/openstack/rally.git@3.4.0#egg=rally
 git+https://opendev.org/openstack/rally-openstack.git@2.3.0#egg=rally-openstack
 git+https://github.com/xrally/xrally-kubernetes.git@2ffa85af2bff3438b6b23034b6ec6ee1de481090#egg=xrally-kubernetes
-pylint===2.11.1
+pylint===3.2.7
+astroid===3.2.4
 flake8===4.0.1
 nose===1.3.7
 ruamel.yaml===0.17.17
