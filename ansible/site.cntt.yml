@@ -17,7 +17,6 @@
             - vping_ssh
             - vping_userdata
             - cinder_test
-            - odl
             - tempest_smoke
             - tempest_horizon
         - container: functest-smoke-cntt
