@@ -3,4 +3,3 @@ host=gerrit.opnfv.org
 port=29418
 project=functest.git
 defaultbranch=stable/yoga
-

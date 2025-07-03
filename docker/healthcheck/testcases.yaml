@@ -131,24 +131,6 @@ tiers:
                     name: cinder_test
 
             -
-                case_name: odl
-                project_name: functest
-                criteria: 100
-                blocking: true
-                description: >-
-                    Test Suite for the OpenDaylight SDN Controller. It
-                    integrates some test suites from upstream using
-                    Robot as the test framework.
-                dependencies:
-                    - DEPLOY_SCENARIO: 'odl'
-                run:
-                    name: odl
-                    args:
-                        suites:
-                            - /src/odl_test/csit/suites/integration/basic
-                            - /src/odl_test/csit/suites/openstack/neutron
-
-            -
                 case_name: tempest_smoke
                 project_name: functest
                 criteria: 100
