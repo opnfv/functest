@@ -13,7 +13,6 @@ Functest User Guide
    test_overview.rst
    test_details.rst
    test_results.rst
-   reporting.rst
    troubleshooting.rst
 
 
