@@ -53,16 +53,3 @@ tiers:
                     - NO_TENANT_NETWORK: '^(?![tT]rue$)'
                 run:
                     name: vyos_vrouter
-
-            -
-                case_name: juju_epc
-                project_name: functest
-                criteria: 100
-                blocking: false
-                description: >-
-                    vEPC validation with Juju as VNF manager and ABoT as test
-                    executor.
-                dependencies:
-                    - NO_TENANT_NETWORK: '^(?![tT]rue$)'
-                run:
-                    name: juju_epc

@@ -60,7 +60,6 @@ The internal test cases are:
  * cloudify_ims
  * heat_ims
  * vyos_vrouter
- * juju_epc
 
 Kubernetes
 ----------
