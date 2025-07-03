@@ -88,7 +88,6 @@ sudo docker run --env-file env \
 |       cinder_test        |     functest     |     healthcheck     |      01:05       |      PASS      |
 |      tempest_smoke       |     functest     |     healthcheck     |      05:39       |      PASS      |
 |     tempest_horizon      |     functest     |     healthcheck     |      01:05       |      PASS      |
-|           odl            |     functest     |     healthcheck     |      00:00       |      SKIP      |
 +--------------------------+------------------+---------------------+------------------+----------------+
 ```
 
@@ -207,6 +206,5 @@ sudo docker run --env-file env \
 |     cloudify_ims     |     functest     |     vnf      |      24:46       |      PASS      |
 |       heat_ims       |     functest     |     vnf      |      33:12       |      PASS      |
 |     vyos_vrouter     |     functest     |     vnf      |      15:53       |      PASS      |
-|       juju_epc       |     functest     |     vnf      |      27:52       |      PASS      |
 +----------------------+------------------+--------------+------------------+----------------+
 ```
