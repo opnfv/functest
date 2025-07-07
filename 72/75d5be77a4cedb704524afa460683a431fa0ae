@@ -1,0 +1,8 @@
+Code-Review+2: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: Cedric Ollivier <cedric.ollivier@orange.com>
+Verified+1: Anuket Required GHA Bot <releng+anuket-required-gha@linuxfoundation.org>
+Submitted-by: Cedric Ollivier <cedric.ollivier@orange.com>
+Submitted-at: Mon, 07 Jul 2025 13:30:13 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/functest/+/74918
+Project: functest
+Branch: refs/heads/stable/yoga
