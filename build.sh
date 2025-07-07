@@ -26,7 +26,7 @@ for dir in ${amd64_dirs}; do
     (cd "${dir}" &&
         docker build $build_opts \
             -t "${repo}/functest-${dir##**/}:amd64-yoga" .)
-        docker push "${repo}/functest-${dir##**/}:amd64-latyogaest"
+        docker push "${repo}/functest-${dir##**/}:amd64-yoga"
     [ "${dir}" != "docker/core" ] &&
         (docker rmi "${repo}/functest-${dir##**/}:amd64-yoga" || true)
 done
