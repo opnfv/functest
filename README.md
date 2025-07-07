@@ -21,7 +21,10 @@ datacenters as the lowest cost (50 euros hardware and software included).
 | Kali              | Ussuri             |
 | Leguer            | Victoria           |
 | Wallaby           | Wallaby            |
-| **Master**        | **next Xena**      |
+| Xena              | Xena               |
+| Yoga              | Yoga               |
+| Zed               | Zed                |
+| **Master**        | **next 2023.1**    |
 
 ## Prepare your environment
 
@@ -49,7 +52,7 @@ export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=XXX
 ```
 
-mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- images && ls -1 images/*
+mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=master | sh -s -- images && ls -1 images/*
 ```
 images/cirros-0.6.1-aarch64-disk.img
 images/cirros-0.6.1-x86_64-disk.img
