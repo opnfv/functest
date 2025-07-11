@@ -3,6 +3,7 @@ FROM opnfv/functest-core:zed
 ARG VMTP_TAG=34a82c9f3598ec7f5d8de0a6d5139b92931db4cc
 ARG NEUTRON_TAG=unmaintained/zed
 
+COPY attrdict.patch /tmp/attrdict.patch
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
@@ -24,7 +25,9 @@ RUN apk --no-cache add --update libxml2 libxslt && \
         git fetch --tags https://opendev.org/openstack/neutron.git $NEUTRON_TAG && \
         git checkout FETCH_HEAD) && \
     cp /src/neutron/rally-jobs/task-neutron.yaml /home/opnfv/functest/data/rally/neutron/rally-jobs/ && \
-    rm -r /src/vmtp /src/neutron && \
+    (cd /usr/lib/python3.10/site-packages/attrdict && \
+        patch -p2 < /tmp/attrdict.patch) && \
+    rm -r /src/vmtp /src/neutron /tmp/attrdict.patch && \
     apk del .build-deps
 COPY testcases.yaml /etc/xtesting/testcases.yaml
 CMD ["run_tests", "-t", "all"]
