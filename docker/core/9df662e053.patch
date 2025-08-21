@@ -1,0 +1,37 @@
+From 9df662e053a42afa667706d542f2896e288d69ab Mon Sep 17 00:00:00 2001
+From: Cyril Roelandt <cyril@redhat.com>
+Date: Tue, 12 Nov 2024 23:01:12 +0100
+Subject: [PATCH] Use time.sleep() instead of eventlet.sleep()
+
+In a patched environment, time.sleep will be eventlet.sleep, so this
+does not have any actual impact, but it removes one direct dependency on
+eventlet.
+
+Change-Id: I54112d061fa8118a9a6d91abf07442d8834425b5
+---
+ cinderclient/client.py | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/cinderclient/client.py b/cinderclient/client.py
+index c99a2e7a6..f065c9fc9 100644
+--- a/cinderclient/client.py
++++ b/cinderclient/client.py
+@@ -25,6 +25,7 @@ import logging
+ import os
+ import pkgutil
+ import re
++from time import sleep
+ import urllib
+ from urllib import parse as urlparse
+ 
+@@ -42,10 +43,6 @@ from cinderclient import api_versions
+ from cinderclient import exceptions
+ import cinderclient.extension
+ 
+-try:
+-    from eventlet import sleep
+-except ImportError:
+-    from time import sleep
+ 
+ try:
+     osprofiler_web = importutils.try_import("osprofiler.web")
