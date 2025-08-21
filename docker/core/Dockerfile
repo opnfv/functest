@@ -5,6 +5,7 @@ ARG OPENSTACK_TAG=unmaintained/yoga
 
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
+COPY 9df662e053.patch /tmp/9df662e053.patch
 RUN apk -U upgrade && \
     apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
@@ -35,6 +36,7 @@ RUN apk -U upgrade && \
     pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
         -e /src/functest && \
     (cd /src/rally && patch -p1 < /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch) && \
+    (cd /usr/lib/python3.10/site-packages/cinderclient && patch -p2 < /tmp/9df662e053.patch) && \
     sed -i -E /#egg=rally/d /src/functest/upper-constraints.txt && \
     sed -i -E /#egg=tempest/d /src/functest/upper-constraints.txt && \
     (cd /src/tempest && \
@@ -43,7 +45,7 @@ RUN apk -U upgrade && \
         patch -p1 < /tmp/Create-new-server-in-test_create_backup.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
-    rm -r /src/requirements/.git /src/functest/.git \
+    rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
     mkdir -p /etc/xtesting && \
