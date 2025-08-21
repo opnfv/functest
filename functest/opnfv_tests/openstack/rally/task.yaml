@@ -4,7 +4,7 @@
 {%- endif %}
 
 {%- from "macro/macro.yaml" import user_context, vm_params, unlimited_volumes, constant_runner, rps_runner, no_failures_sla -%}
-{%- from "macro/macro.yaml" import volumes, unlimited_nova, unlimited_neutron, glance_args, volume_service -%}
+{%- from "macro/macro.yaml" import volumes, unlimited_nova, unlimited_neutron, glance_args -%}
 
 ---
 {% if "authenticate" in service_list %}

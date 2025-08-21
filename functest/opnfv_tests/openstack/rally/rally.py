@@ -61,8 +61,6 @@ class RallyBase(singlevm.VmReady2):
     tenants_amount = 3
     iterations_amount = 10
     concurrency = 4
-    volume_version = 3
-    volume_service_type = "volumev3"
     blacklist_file = os.path.join(rally_dir, "blacklist.yaml")
     task_dir = os.path.join(getattr(config.CONF, 'dir_rally_data'), 'task')
     temp_dir = os.path.join(task_dir, 'var')
@@ -119,8 +117,6 @@ class RallyBase(singlevm.VmReady2):
         task_args['iterations'] = self.iterations_amount
         task_args['concurrency'] = self.concurrency
         task_args['smoke'] = self.smoke
-        task_args['volume_version'] = self.volume_version
-        task_args['volume_service_type'] = self.volume_service_type
         task_args['block_migration'] = env.get("BLOCK_MIGRATION").lower()
         task_args['username'] = self.username
 

@@ -95,9 +95,3 @@
         disk_format: {{ type }}
         image_location: {{ location }}
 {%- endmacro %}
-
-{%- macro volume_service(version, service_type) %}
-          cinder:
-            version: {{ version }}
-            service_type: {{ service_type }}
-{%- endmacro %}
