@@ -102,7 +102,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke
+      opnfv/functest-smoke:yoga
 
 Results shall be displayed as follows::
 
@@ -140,7 +140,7 @@ Run smoke-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke-cntt
+      opnfv/functest-smoke-cntt:yoga
 
 Results shall be displayed as follows::
 
@@ -165,7 +165,7 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking
+      opnfv/functest-benchmarking:yoga
 
 Results shall be displayed as follows::
 
@@ -189,7 +189,7 @@ Run benchmarking-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking-cntt
+      opnfv/functest-benchmarking-cntt:yoga
 
 Results shall be displayed as follows::
 
@@ -210,7 +210,7 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf
+      opnfv/functest-vnf:yoga
 
 Results shall be displayed as follows::
 
