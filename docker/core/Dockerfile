@@ -6,6 +6,7 @@ ARG OPENSTACK_TAG=unmaintained/yoga
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
 COPY 9df662e053.patch /tmp/9df662e053.patch
+COPY ba5cb852b8.patch /tmp/ba5cb852b8.patch
 RUN apk -U upgrade && \
     apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
@@ -42,10 +43,9 @@ RUN apk -U upgrade && \
     (cd /src/tempest && \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
-        patch -p1 < /tmp/Create-new-server-in-test_create_backup.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
-    rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch \
+    rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch ba5cb852b8.patch \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
     mkdir -p /etc/xtesting && \
