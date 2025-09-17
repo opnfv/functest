@@ -6,6 +6,8 @@ ARG OPENSTACK_TAG=unmaintained/zed
 COPY Switch-to-threading.Thread-for-Rally-tasks.patch /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch
 COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-test_create_backup.patch
 COPY 9df662e053.patch /tmp/9df662e053.patch
+COPY Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch
+COPY Fix-str-to-str-comparison-in-live-migration-test.patch /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch
 RUN apk -U upgrade && \
     apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
@@ -42,9 +44,12 @@ RUN apk -U upgrade && \
         git config --global user.email "opnfv-tech-discuss@lists.opnfv.org" && \
         git config --global user.name "Functest" && \
         patch -p1 < /tmp/Create-new-server-in-test_create_backup.patch && \
+        patch -p1 < /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch && \
+        patch -p1 < /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
-    rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch \
+    rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch \
+        /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
     mkdir -p /etc/xtesting && \
