@@ -233,6 +233,10 @@ tiers:
                           (?!.*test_group_snapshots_rbac)\
                           (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
@@ -282,6 +286,10 @@ tiers:
                           (?!.*test_group_snapshots_rbac)\
                           (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
@@ -331,6 +339,10 @@ tiers:
                           (?!.*test_group_snapshots_rbac)\
                           (?!.*test_groups_rbac)\
                           (?!.*test_quota_classes_rbac)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
+                          (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
+                          (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_delete_interface)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_show_interface)\
