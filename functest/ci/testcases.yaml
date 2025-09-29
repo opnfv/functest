@@ -386,6 +386,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_networks_rbac.NetworksRbacTest.test_show_network_router_external)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
                           (?!.*test_policy_minimum_bandwidth_rule_rbac)\
@@ -398,6 +399,11 @@ tiers:
                           (?!.*test_quota_classes_rbac)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_confirm_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_revert_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_shelve_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_unshelve_server)\
                           (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
@@ -439,6 +445,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_networks_rbac.NetworksRbacTest.test_show_network_router_external)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
                           (?!.*test_policy_minimum_bandwidth_rule_rbac)\
@@ -451,6 +458,11 @@ tiers:
                           (?!.*test_quota_classes_rbac)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_confirm_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_revert_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_shelve_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_unshelve_server)\
                           (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
@@ -492,6 +504,7 @@ tiers:
                           (?!.*compute.test_floating_ips_rbac)\
                           (?!.*test_reset_network)\
                           (?!.*test_create_image_from_volume_backed_server)\
+                          (?!.*test_networks_rbac.NetworksRbacTest.test_show_network_router_external)\
                           (?!.*test_network_ip_availability_rbac.NetworkIpAvailabilityExtRbacTest.test_get_network_ip_availabilities)\
                           (?!.*test_policy_bandwidth_limit_rule_rbac)\
                           (?!.*test_policy_minimum_bandwidth_rule_rbac)\
@@ -504,6 +517,11 @@ tiers:
                           (?!.*test_quota_classes_rbac)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_create_security_group_for_server)\
                           (?!.*test_security_groups_rbac.SecurtiyGroupsRbacTest.test_remove_security_group_from_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_confirm_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_revert_resize_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_shelve_server)\
+                          (?!.*test_server_actions_rbac.ServerActionsRbacTest.test_unshelve_server)\
                           (?!.*test_server_migrations_rbac.MigrateServerV225RbacTest.test_migration_live)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_add_fixed_ip)\
                           (?!.*test_server_misc_policy_actions_rbac.MiscPolicyActionsNetworkRbacTest.test_create_interface)\
