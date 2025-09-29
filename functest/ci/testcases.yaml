@@ -638,6 +638,8 @@ tiers:
                             (?!.*test_local_ip)\
                             (?!.*test_metering_extensions)\
                             (?!.*test_metering_negative)\
+                            (?!.*test_ndp_proxy)\
+                            (?!.*test_ndp_proxy_negative)\
                             (?!.*test_networks.NetworksSearchCriteriaTest.test_list_validation_filters)\
                             (?!.*test_networks.NetworksTestAdmin.test_create_tenant_network_vxlan)\
                             (?!.*test_networks.NetworksTestJSON.test_create_update_network_dns_domain)\
@@ -680,7 +682,7 @@ tiers:
                 criteria: 100
                 blocking: false
                 deny_skipping: true
-                tests_count: 10
+                tests_count: 13
                 description: >-
                     This test case runs the Tempest suite proposed by the
                     Cinder project.
@@ -691,7 +693,9 @@ tiers:
                             (?!.*test_consistencygroups)\
                             (?!.*test_backup_crossproject_admin_negative)\
                             (?!.*test_backup_crossproject_user_negative)\
+                            (?!.*test_encrypted_volume_transfer)\
                             (?!.*test_volume_encrypted.TestEncryptedCinderVolumes)\
+                            (?!.*test_volume_multiattach)\
                             (?!.*rbac)\
                             (^cinder_tempest_plugin.)"
                         option:
