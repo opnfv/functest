@@ -51,7 +51,7 @@ See section on OpenStack credentials for details.
 
 Create a directory for the different images (attached as a Docker volume)::
 
-  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/yoga | sh -s -- images && ls -1 images/*
+  mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/zed | sh -s -- images && ls -1 images/*
 
   images/cirros-0.5.1-aarch64-disk.img
   images/cirros-0.5.1-x86_64-disk.img
@@ -71,7 +71,7 @@ Run healthcheck suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-healthcheck
+      opnfv/functest-healthcheck:zed
 
 Results shall be displayed as follows::
 
@@ -102,7 +102,7 @@ Run smoke suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke:yoga
+      opnfv/functest-smoke:zed
 
 Results shall be displayed as follows::
 
@@ -140,7 +140,7 @@ Run smoke-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-smoke-cntt:yoga
+      opnfv/functest-smoke-cntt:zed
 
 Results shall be displayed as follows::
 
@@ -165,7 +165,7 @@ Run benchmarking suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking:yoga
+      opnfv/functest-benchmarking:zed
 
 Results shall be displayed as follows::
 
@@ -189,7 +189,7 @@ Run benchmarking-cntt suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-benchmarking-cntt:yoga
+      opnfv/functest-benchmarking-cntt:zed
 
 Results shall be displayed as follows::
 
@@ -210,7 +210,7 @@ Run vnf suite::
   sudo docker run --env-file env \
       -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
       -v $(pwd)/images:/home/opnfv/functest/images \
-      opnfv/functest-vnf:yoga
+      opnfv/functest-vnf:zed
 
 Results shall be displayed as follows::
 
