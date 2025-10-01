@@ -1,4 +1,4 @@
-From 6a7db50238e8478ca2056901bf47f99356b282ea Mon Sep 17 00:00:00 2001
+From 4a3ff9b843e20c34fd74f7afb971991176b6ca73 Mon Sep 17 00:00:00 2001
 From: jskunda <jskunda@redhat.com>
 Date: Wed, 15 Nov 2023 15:03:12 +0100
 Subject: [PATCH 1/2] Fix of wrong parsing of flavour name and disk_over_commit
@@ -16,14 +16,14 @@ before using this parameter.
 
 Change-Id: I8f03751815021ef6d335c1d90b3f183e178ce7dc
 ---
- .../scenario/test_network_advanced_server_ops.py | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ .../scenario/test_network_advanced_server_ops.py  | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/tempest/scenario/test_network_advanced_server_ops.py b/tempest/scenario/test_network_advanced_server_ops.py
-index b48ac3c86..59a6575ed 100644
+index e630e2940..73fce18a3 100644
 --- a/tempest/scenario/test_network_advanced_server_ops.py
 +++ b/tempest/scenario/test_network_advanced_server_ops.py
-@@ -202,7 +202,7 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
+@@ -206,7 +206,7 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
              self.assertEqual(resize_flavor, server['flavor']['id'])
          else:
              flavor = self.flavors_client.show_flavor(resize_flavor)['flavor']
@@ -32,11 +32,10 @@ index b48ac3c86..59a6575ed 100644
              for key in ['ram', 'vcpus', 'disk']:
                  self.assertEqual(flavor[key], server['flavor'][key])
          self._wait_server_status_and_check_network_connectivity(
-@@ -252,9 +252,19 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
-         block_migration = (CONF.compute_feature_enabled.
-                            block_migration_for_live_migration)
-         old_host = self.get_host_for_server(server['id'])
-+
+@@ -261,9 +261,18 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
+             floating_ip['floating_ip_address'])
+         self.useFixture(downtime_meter)
+ 
 +        migration_kwargs = {'host': None, 'block_migration': block_migration}
 +
 +        # check if microversion is less than 2.25 because of

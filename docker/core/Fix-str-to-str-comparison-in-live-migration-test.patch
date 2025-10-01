@@ -1,4 +1,4 @@
-From c39481191cf7c60e0741d825edc325522aba2a1c Mon Sep 17 00:00:00 2001
+From 45644f2f3ff64412ec5d930fe9cfdee6b9067fde Mon Sep 17 00:00:00 2001
 From: Martin Kopec <mkopec@redhat.com>
 Date: Thu, 18 Apr 2024 13:23:29 +0200
 Subject: [PATCH 2/2] Fix str to str comparison in live migration test
@@ -9,24 +9,23 @@ operation that does not work as intended. Let's fix that by using
 the tempest module created for comparing string microversions.
 
 Change-Id: Id6d18c93e8637d797404a62a23d3fcc61208fd4c
-(cherry picked from commit ba5cb852b8fb1b34a6ce31a4995b6635522f4381)
 ---
  tempest/scenario/test_network_advanced_server_ops.py | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/tempest/scenario/test_network_advanced_server_ops.py b/tempest/scenario/test_network_advanced_server_ops.py
-index 59a6575ed..d3175771c 100644
+index 73fce18a3..9861540af 100644
 --- a/tempest/scenario/test_network_advanced_server_ops.py
 +++ b/tempest/scenario/test_network_advanced_server_ops.py
-@@ -18,6 +18,7 @@ import testtools
- from tempest.common import utils
+@@ -20,6 +20,7 @@ from tempest.common import utils
+ from tempest.common.utils import net_downtime
  from tempest.common import waiters
  from tempest import config
 +from tempest.lib.common import api_version_request
  from tempest.lib import decorators
  from tempest.scenario import manager
  
-@@ -258,8 +259,11 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
+@@ -266,8 +267,11 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
          # check if microversion is less than 2.25 because of
          # disk_over_commit is depracted since compute api version 2.25
          # if min_microversion is None, it runs on version < 2.25
@@ -35,7 +34,7 @@ index 59a6575ed..d3175771c 100644
 +        api_v = api_version_request.APIVersionRequest('2.25')
          if (CONF.compute.min_microversion is None or
 -            CONF.compute.min_microversion < 2.25):
-+            min_v < api_v):
++                min_v < api_v):
              migration_kwargs['disk_over_commit'] = False
  
          self.admin_servers_client.live_migrate_server(
