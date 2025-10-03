@@ -8,6 +8,7 @@ COPY Create-new-server-in-test_create_backup.patch /tmp/Create-new-server-in-tes
 COPY 9df662e053.patch /tmp/9df662e053.patch
 COPY Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch
 COPY Fix-str-to-str-comparison-in-live-migration-test.patch /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch
+COPY Fix-the-unstable_test-syntax-for-test_live_migration.patch /tmp/Fix-the-unstable_test-syntax-for-test_live_migration.patch
 RUN apk -U upgrade && \
     apk --no-cache add --update \
         python3 py3-wheel libffi openssl libjpeg-turbo py3-pip bash \
@@ -47,11 +48,13 @@ RUN apk -U upgrade && \
         patch -p1 < /tmp/Create-new-server-in-test_create_backup.patch && \
         patch -p1 < /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch && \
         patch -p1 < /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch && \
+        patch -p1 < /tmp/Fix-the-unstable_test-syntax-for-test_live_migration.patch && \
         git commit -a -m "Backport critical bugfixes" && \
         rm ~/.gitconfig) && \
     rm -r /src/requirements/.git /src/functest/.git /tmp/9df662e053.patch /tmp/Fix-of-wrong-parsing-of-flavour-name-and-disk_over_c.patch \
         /tmp/Fix-str-to-str-comparison-in-live-migration-test.patch \
         /tmp/Switch-to-threading.Thread-for-Rally-tasks.patch \
+        Fix-the-unstable_test-syntax-for-test_live_migration.patch \
         /tmp/Create-new-server-in-test_create_backup.patch && \
     mkdir -p /etc/xtesting && \
     cp /src/functest/functest/ci/logging.ini /etc/xtesting/ && \
