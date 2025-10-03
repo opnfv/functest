@@ -260,7 +260,7 @@ tiers:
                           (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
                         option:
                             - '--concurrency=4'
 
@@ -319,7 +319,7 @@ tiers:
                           (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
                         option:
                             - '--concurrency=4'
 
@@ -378,7 +378,7 @@ tiers:
                           (?!.*test_volumes_backup_rbac.VolumesBackupsV39RbacTest)\
                           (?!.*test_volume_types_rbac)\
                           (?=.*[.*\bslow\b.*])\
-                          (^patrole_tempest_plugin.tests.api.(compute|image|network|volume))"
+                          (^patrole_tempest_plugin.tests.api.(image|network|volume))"
                         option:
                             - '--concurrency=4'
 
