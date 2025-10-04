@@ -39,7 +39,7 @@ class TempestCommon(singlevm.VmReady2):
     """TempestCommon testcases implementation class."""
 
     visibility = 'public'
-    filename_alt = '/home/opnfv/functest/images/cirros-0.6.1-x86_64-disk.img'
+    filename_alt = '/home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.img'
     shared_network = True
     tempest_conf_yaml = pkg_resources.resource_filename(
         'functest',
