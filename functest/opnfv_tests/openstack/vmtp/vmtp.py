@@ -46,7 +46,7 @@ class Vmtp(singlevm.VmReady2):
     __logger = logging.getLogger(__name__)
 
     filename = ('/home/opnfv/functest/images/'
-                'ubuntu-18.04-server-cloudimg-amd64-disk1.img')
+                'ubuntu-18.04-server-cloudimg-amd64.img')
     flavor_ram = 2048
     flavor_vcpus = 1
     flavor_disk = 0
