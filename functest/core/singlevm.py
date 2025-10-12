@@ -39,7 +39,7 @@ class VmReady1(tenantnetwork.TenantNetwork1):
     # pylint: disable=too-many-instance-attributes
 
     __logger = logging.getLogger(__name__)
-    filename = '/home/opnfv/functest/images/cirros-0.5.1-x86_64-disk.img'
+    filename = '/home/opnfv/functest/images/cirros-0.6.1-x86_64-disk.img'
     image_format = 'qcow2'
     extra_properties = {}
     filename_alt = filename
@@ -433,9 +433,6 @@ class SingleVm1(VmReady1):
                         config.CONF,
                         f'{self.case_name}_image_user', self.username),
                     key_filename=self.key_filename,
-                    disabled_algorithms={
-                        "pubkeys": ["rsa-sha2-256", "rsa-sha2-512"]
-                    },
                     timeout=getattr(
                         config.CONF,
                         f'{self.case_name}_vm_ssh_connect_timeout',
