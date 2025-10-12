@@ -433,6 +433,9 @@ class SingleVm1(VmReady1):
                         config.CONF,
                         f'{self.case_name}_image_user', self.username),
                     key_filename=self.key_filename,
+                    disabled_algorithms={
+                        "pubkeys": ["rsa-sha2-256", "rsa-sha2-512"]
+                    },
                     timeout=getattr(
                         config.CONF,
                         f'{self.case_name}_vm_ssh_connect_timeout',
