@@ -18,7 +18,8 @@ build_opts="--pull=true --no-cache --force-rm=true"
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:2023.1|${repo}/functest-core:amd64-2023.1|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-smoke:2023.1|${repo}/functest-smoke:amd64-2023.1|g" {} +
+    -e "s|opnfv/functest-smoke:2023.1|${repo}/functest-smoke:amd64-2023.1|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:2023.1|\
 ${repo}/functest-benchmarking:amd64-2023.1|g" {} +
@@ -39,7 +40,8 @@ find . -name Dockerfile -exec sed -i \
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-core:2023.1|${repo}/functest-core:arm64-2023.1|g" {} +
 find . -name Dockerfile -exec sed -i \
-    -e "s|opnfv/functest-smoke:2023.1|${repo}/functest-smoke:arm64-2023.1|g" {} +
+    -e "s|opnfv/functest-smoke:2023.1|${repo}/functest-smoke:arm64-2023.1|g" \
+    {} +
 find . -name Dockerfile -exec sed -i \
     -e "s|opnfv/functest-benchmarking:2023.1|\
 ${repo}/functest-benchmarking:arm64-2023.1|g" {} +
