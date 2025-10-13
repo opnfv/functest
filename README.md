@@ -56,12 +56,15 @@ mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/
 ```
 images/cirros-0.5.1-aarch64-disk.img
 images/cirros-0.5.1-x86_64-disk.img
+images/cirros-0.6.1-aarch64-disk.img
+images/cirros-0.6.1-x86_64-disk.img
 images/cloudify-docker-manager-community-19.01.24.tar
+images/Fedora-Cloud-Base-30-1.2.aarch64.qcow2
 images/Fedora-Cloud-Base-30-1.2.x86_64.qcow2
-images/shaker-image-1.3.0+stretch.qcow2
+images/shaker-image-1.3.4+stretch.qcow2
 images/ubuntu-14.04-server-cloudimg-amd64-disk1.img
-images/ubuntu-14.04-server-cloudimg-arm64-uefi1.img
 images/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+images/ubuntu-18.04-server-cloudimg-amd64.img
 images/vyos-1.1.8-amd64.qcow2
 ```
 
