@@ -1,14 +1,17 @@
 #!/bin/bash
 
 download-frozen-image-v2.sh /data/docker/functest \
-  opnfv/functest-healthcheck:latest \
-  opnfv/functest-smoke:latest \
-  opnfv/functest-smoke-cntt:latest \
-  opnfv/functest-benchmarking:latest \
-  opnfv/functest-benchmarking-cntt:latest \
-  opnfv/functest-vnf:latest
+  opnfv/functest-healthcheck:2023.1 \
+  opnfv/functest-smoke:2023.1 \
+  opnfv/functest-smoke-cntt:2023.1 \
+  opnfv/functest-benchmarking:2023.1 \
+  opnfv/functest-benchmarking-cntt:2023.1 \
+  opnfv/functest-vnf:2023.1
 mkdir -p /data/images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh | sh -s -- /data/images && ls -1 /data/images/*
-git clone https://git.opnfv.org/functest /home/debian/functest
+git init /home/debian/functest && \
+(cd /home/debian/functest && \
+  git fetch --tags https://git.opnfv.org/functest stable/2023.1 && \
+  git checkout FETCH_HEAD) && \
 chown -R 1000:1000 /home/debian/functest
 
 exit 0

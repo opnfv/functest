@@ -112,8 +112,10 @@ def get_openstack_version(cloud):
     version = get_nova_version(cloud)
     try:
         assert version
-        if version > (2, 93):
+        if version > (2, 95):
             osversion = "Master"
+        elif version > (2, 93):
+            osversion = "2023.1"
         elif version > (2, 90):
             osversion = "Zed"
         elif version > (2, 88):

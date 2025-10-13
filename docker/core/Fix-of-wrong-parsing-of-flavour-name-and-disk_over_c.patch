@@ -1,0 +1,58 @@
+From 4a3ff9b843e20c34fd74f7afb971991176b6ca73 Mon Sep 17 00:00:00 2001
+From: jskunda <jskunda@redhat.com>
+Date: Wed, 15 Nov 2023 15:03:12 +0100
+Subject: [PATCH 1/2] Fix of wrong parsing of flavour name and disk_over_commit
+ parameter
+
+In assertion of names of flavors there was wrongly used parameter
+of name. Instead of server['original_name'] we should use
+server['flavor']['original_name'].
+
+Also parameter disk_over_commit in function live_migrate_server
+is available until version 2.25[1], so we should check microversion
+before using this parameter.
+
+[1] - https://docs.openstack.org/api-ref/compute/#live-migrate-server-os-migratelive-action
+
+Change-Id: I8f03751815021ef6d335c1d90b3f183e178ce7dc
+---
+ .../scenario/test_network_advanced_server_ops.py  | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/tempest/scenario/test_network_advanced_server_ops.py b/tempest/scenario/test_network_advanced_server_ops.py
+index e630e2940..73fce18a3 100644
+--- a/tempest/scenario/test_network_advanced_server_ops.py
++++ b/tempest/scenario/test_network_advanced_server_ops.py
+@@ -206,7 +206,7 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
+             self.assertEqual(resize_flavor, server['flavor']['id'])
+         else:
+             flavor = self.flavors_client.show_flavor(resize_flavor)['flavor']
+-            self.assertEqual(flavor['name'], server['original_name'])
++            self.assertEqual(flavor['name'], server['flavor']['original_name'])
+             for key in ['ram', 'vcpus', 'disk']:
+                 self.assertEqual(flavor[key], server['flavor'][key])
+         self._wait_server_status_and_check_network_connectivity(
+@@ -261,9 +261,18 @@ class TestNetworkAdvancedServerOps(manager.NetworkScenarioTest):
+             floating_ip['floating_ip_address'])
+         self.useFixture(downtime_meter)
+ 
++        migration_kwargs = {'host': None, 'block_migration': block_migration}
++
++        # check if microversion is less than 2.25 because of
++        # disk_over_commit is depracted since compute api version 2.25
++        # if min_microversion is None, it runs on version < 2.25
++        if (CONF.compute.min_microversion is None or
++            CONF.compute.min_microversion < 2.25):
++            migration_kwargs['disk_over_commit'] = False
++
+         self.admin_servers_client.live_migrate_server(
+-            server['id'], host=None, block_migration=block_migration,
+-            disk_over_commit=False)
++            server['id'], **migration_kwargs)
++
+         waiters.wait_for_server_status(self.servers_client,
+                                        server['id'], 'ACTIVE')
+ 
+-- 
+2.51.0
+

@@ -24,7 +24,8 @@ datacenters as the lowest cost (50 euros hardware and software included).
 | Xena              | Xena               |
 | Yoga              | Yoga               |
 | Zed               | Zed                |
-| **Master**        | **next 2023.1**    |
+| **2023.1**        | **2023.1**         |
+| Master            | next 2023.2        |
 
 ## Prepare your environment
 
@@ -52,7 +53,7 @@ export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=XXX
 ```
 
-mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=master | sh -s -- images && ls -1 images/*
+mkdir -p images && wget -q -O- https://git.opnfv.org/functest/plain/functest/ci/download_images.sh?h=stable/2023.1 | sh -s -- images && ls -1 images/*
 ```
 images/cirros-0.5.1-aarch64-disk.img
 images/cirros-0.5.1-x86_64-disk.img
@@ -74,7 +75,7 @@ images/vyos-1.1.8-amd64.qcow2
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-healthcheck
+    opnfv/functest-healthcheck:2023.1
 ```
 
 ```
@@ -102,7 +103,7 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-smoke
+    opnfv/functest-smoke:2023.1
 ```
 
 ```
@@ -136,7 +137,7 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-smoke-cntt
+    opnfv/functest-smoke-cntt:2023.1
 ```
 
 ```
@@ -160,7 +161,7 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-benchmarking
+    opnfv/functest-benchmarking:2023.1
 ```
 
 ```
@@ -180,7 +181,7 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-benchmarking-cntt
+    opnfv/functest-benchmarking-cntt:2023.1
 ```
 
 ```
@@ -200,7 +201,7 @@ sudo docker run --env-file env \
 sudo docker run --env-file env \
     -v $(pwd)/openstack.creds:/home/opnfv/functest/conf/env_file \
     -v $(pwd)/images:/home/opnfv/functest/images \
-    opnfv/functest-vnf
+    opnfv/functest-vnf:2023.1
 ```
 
 ```
