@@ -173,7 +173,6 @@
         {{ vm_params(image_name, flavor_name) }}
         to_flavor:
           name: {{ flavor_alt_name }}
-        confirm: true
         force_delete: false
         nics:
           - net-id: {{ netid }}
