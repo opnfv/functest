@@ -1,0 +1,31 @@
+From 2b649c9cadd24c52e7d37cc29677dcae70e66de0 Mon Sep 17 00:00:00 2001
+From: Luigi Toscano <ltoscano@redhat.com>
+Date: Fri, 20 Sep 2024 22:10:13 +0200
+Subject: [PATCH] Use the proper condition for volume encryption transfer tests
+
+Like all other volume encryption tests (with attachment or boot
+from volume), make sure that also the volume encryption transfer
+tests are executed only when the appropriate configuration key
+(compute_feature_enabled.attach_encrypted_volume) is set.
+
+Change-Id: I21014b915dbecd0abaabb214f18f5241cc7c5b47
+---
+ .../scenario/test_encrypted_volume_transfer.py                  | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/cinder_tempest_plugin/scenario/test_encrypted_volume_transfer.py b/cinder_tempest_plugin/scenario/test_encrypted_volume_transfer.py
+index 7232433..bfe33b2 100644
+--- a/cinder_tempest_plugin/scenario/test_encrypted_volume_transfer.py
++++ b/cinder_tempest_plugin/scenario/test_encrypted_volume_transfer.py
+@@ -41,6 +41,8 @@ class TransferEncryptedVolumeTest(manager.EncryptionScenarioTest):
+     @classmethod
+     def skip_checks(cls):
+         super(TransferEncryptedVolumeTest, cls).skip_checks()
++        if not CONF.compute_feature_enabled.attach_encrypted_volume:
++            raise cls.skipException('Encrypted volume attach is not supported')
+         if not CONF.service_available.barbican:
+             raise cls.skipException('Barbican is required')
+ 
+-- 
+2.51.0
+

@@ -15,6 +15,7 @@ ARG HEAT_TEMPEST_TAG=1.7.0
 ARG TELEMETRY_TEMPEST_TAG=1.8.0
 ARG CYBORG_TEMPEST_TAG=2.1.0
 
+COPY Use-the-proper-condition-for-volume-encryption-trans.patch /tmp/Use-the-proper-condition-for-volume-encryption-trans.patch
 RUN apk --no-cache add --update libxml2 libxslt && \
     apk --no-cache add --virtual .build-deps --update \
         python3-dev build-base linux-headers libffi-dev \
@@ -36,7 +37,8 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     git init /src/cinder-tempest-plugin && \
     (cd /src/cinder-tempest-plugin && \
         git fetch --tags https://opendev.org/openstack/cinder-tempest-plugin.git $CINDER_TEMPEST_TAG && \
-        git checkout FETCH_HEAD) && \
+        git checkout FETCH_HEAD && \
+        patch -p1 < /tmp/Use-the-proper-condition-for-volume-encryption-trans.patch) && \
     update-requirements -s --source /src/requirements /src/cinder-tempest-plugin && \
     git init /src/keystone-tempest-plugin && \
     (cd /src/keystone-tempest-plugin && \
@@ -85,7 +87,8 @@ RUN apk --no-cache add --update libxml2 libxslt && \
     rm -r /src/patrole /src/barbican-tempest-plugin /src/neutron-tempest-plugin \
         /src/cinder-tempest-plugin /src/keystone-tempest-plugin \
         /src/octavia-tempest-plugin /src/heat-tempest-plugin \
-        /src/telemetry-tempest-plugin /src/cyborg-tempest-plugin && \
+        /src/telemetry-tempest-plugin /src/cyborg-tempest-plugin \
+        /tmp/Use-the-proper-condition-for-volume-encryption-trans.patch && \
     apk del .build-deps
 COPY compute.txt /home/opnfv/functest/data/refstack/compute.txt
 COPY object.txt /home/opnfv/functest/data/refstack/object.txt
