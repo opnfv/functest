@@ -1,4 +1,4 @@
-FROM alpine:3.16
+FROM alpine:3.17
 
 ARG BRANCH=stable/2023.1
 ARG OPENSTACK_TAG=unmaintained/2023.1
@@ -27,7 +27,7 @@ RUN apk -U upgrade && \
         git fetch --tags https://gerrit.opnfv.org/gerrit/functest $BRANCH && \
         git checkout FETCH_HEAD) && \
     sed -i -E /^tempest==+.*$/d /src/requirements/upper-constraints.txt && \
-    sed -i -E /^packaging==+.*$/d /src/requirements/upper-constraints.txt && \
+    sed -i -E /^setuptools==+.*$/d /src/requirements/upper-constraints.txt && \
     case $(uname -m) in aarch*|arm*) sed -i -E /^PyNaCl=/d /src/requirements/upper-constraints.txt && apk add --no-cache py3-pynacl ;; esac && \
     sed -i -E /#egg=functest/d /src/functest/upper-constraints.txt && \
     pip3 install --use-deprecated=legacy-resolver --no-cache-dir --src /src -c/src/functest/upper-constraints.txt -c/src/requirements/upper-constraints.txt \
