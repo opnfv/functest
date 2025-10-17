@@ -10,7 +10,7 @@
       docker_tags:
         - 2023.1:
             branch: stable/2023.1
-            dependency: '3.16'
+            dependency: '3.17'
       builds:
         dependency:
           repo: _
